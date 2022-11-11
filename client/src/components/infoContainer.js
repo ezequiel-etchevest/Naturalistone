@@ -1,13 +1,13 @@
 import {Box} from '@chakra-ui/react';
+import List from './list';
 
 const InfoContainer = () => {
 
     return(
         <Box
-        h={'92vh'}
-        w={'80vw'}
-        ml={'20vw'} 
-        border={'2px solid red'}>  
+        ml={'20vw'}
+        >
+            <List/>  
         </Box>
     )
 }
