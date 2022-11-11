@@ -9,11 +9,8 @@ const Home = () => {
     return(
         <>
         <SideBar/>
-<<<<<<< HEAD
         <Stats/>
-=======
         <infoContainer/>
->>>>>>> Keki
         </>
     )
 }
