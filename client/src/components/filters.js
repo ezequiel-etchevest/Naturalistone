@@ -1,4 +1,4 @@
-
+import { Box } from "@chakra-ui/react"
 
 
 const Filters = () => {
@@ -6,6 +6,7 @@ const Filters = () => {
 
     return (
         <>
+        <Box></Box>
         </>
     )
 }

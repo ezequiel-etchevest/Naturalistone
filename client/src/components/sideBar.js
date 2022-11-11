@@ -5,7 +5,7 @@ import { FaUsers, FaFileInvoiceDollar, FaHome } from 'react-icons/fa'
 import { CgLogOut } from 'react-icons/cg'
 import { BiStats } from 'react-icons/bi'
 import SearchBar from './searchBar';
-import mitu from '../assets/mitutu.jpg'
+import mitu from '../assets/mitutu.jpg';
 
 const LinkItems = [
   { name: 'Home', icon: FaHome },
