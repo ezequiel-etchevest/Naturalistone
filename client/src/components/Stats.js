@@ -1,14 +1,13 @@
 import {
     Box,
-    chakra,
     Flex,
-    SimpleGrid,
     Stat,
     StatLabel,
     StatNumber,
-    useColorModeValue,
+    HStack,
+    chakra,
+    Highlight
   } from '@chakra-ui/react';
-  import { ReactNode } from 'react';
   import { BsPerson } from 'react-icons/bs';
   import { FiServer } from 'react-icons/fi';
   import { GoLocation } from 'react-icons/go';
@@ -17,14 +16,19 @@ import {
     const { title, stat, icon } = props;
     return (
       <Stat
+        w={'10vw'}
         px={{ base: 2, md: 4 }}
         py={'5'}
-        shadow={'xl'}
+        shadow={'lg'}
         border={'1px solid'}
-        borderColor={useColorModeValue('gray.800', 'gray.500')}
-        rounded={'lg'}>
+        borderColor={'gray.500'}
+        rounded={'md'}
+        _hover={{
+            bg: '#E47424',
+            color: 'white'
+        }}>
         <Flex justifyContent={'space-between'}>
-          <Box pl={{ base: 2, md: 4 }}>
+          <Box pl={{ base: 2, md: 6 }}>
             <StatLabel fontWeight={'medium'} isTruncated>
               {title}
             </StatLabel>
@@ -34,7 +38,7 @@ import {
           </Box>
           <Box
             my={'auto'}
-            color={useColorModeValue('gray.800', 'gray.200')}
+            color={'gray.700'}
             alignContent={'center'}>
             {icon}
           </Box>
@@ -43,33 +47,40 @@ import {
     );
   }
   
-  export default function BasicStatistics() {
+  export default function Stats() {
     return (
-      <Box maxW="7xl" mx={'auto'} pt={5} px={{ base: 2, sm: 12, md: 17 }}>
+      <Box  p={'4vw'} ml={'20vw'} >
         <chakra.h1
-          textAlign={'center'}
-          fontSize={'4xl'}
-          py={10}
-          fontWeight={'bold'}>
-          Our company is expanding, you could be too.
-        </chakra.h1>
-        <SimpleGrid columns={{ base: 1, md: 3 }} spacing={{ base: 5, lg: 8 }}>
+        textAlign={'center'}
+        fontSize={'4xl'}
+        py={10}
+        color={'gray.700'}
+        fontWeight={'normal'}
+        fontFamily={'body'}>
+        <Highlight
+            query={['ON THE GO!']}
+            styles={{ px: '2', py: '1', color: '#E47424' }}
+            >
+        CHECK YOUR STATS ON THE GO!
+        </Highlight>
+      </chakra.h1>
+        <HStack mt={'5vh'} columns={{ base: 1, md: 3 }} spacing={{ base: 5, lg: 8 }}>
           <StatsCard
-            title={'Users'}
-            stat={'5,000'}
+            title={'Current Month Sales'}
+            stat={'$5,000'}
             icon={<BsPerson size={'3em'} />}
           />
           <StatsCard
-            title={'Servers'}
-            stat={'1,000'}
+            title={'Current Month Invoices'}
+            stat={'10'}
             icon={<FiServer size={'3em'} />}
           />
           <StatsCard
-            title={'Datacenters'}
-            stat={'7'}
+            title={'Avg monthly sales'}
+            stat={'$70.000'}
             icon={<GoLocation size={'3em'} />}
           />
-        </SimpleGrid>
+        </HStack>
       </Box>
     );
   }

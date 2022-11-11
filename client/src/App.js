@@ -9,7 +9,7 @@ function App() {
     <ChakraProvider>
     <BrowserRouter>
     <div className="App">
-      <NavBar/>
+    <NavBar/>
       <Routes>
       <Route path="/sign-in" element={<LogIn/>} />
       <Route path="/home" element={<Home/>} />

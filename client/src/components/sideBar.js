@@ -17,6 +17,7 @@ const LinkItems = [
 	return (
 
 	<Box
+  top={'0vh'}
 	pos={'fixed'}
 	bg={'whitesmoke'}
   w='20vw'

@@ -10,10 +10,9 @@ const NavBar = () => {
 
 	return (
     <Flex	
-      pos={'fixed'}
       bg={'white'}
-      w='100vw'
-      h='8vh'
+      w={'100vw'}
+      h={'8vh'}
       zIndex={'1'}>
 
         <Spacer/>
