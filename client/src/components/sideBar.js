@@ -1,14 +1,15 @@
 import {
 	Box,Icon,Flex,
   } from '@chakra-ui/react';
-
+import { FaUsers, FaFileInvoiceDollar, FaHome } from 'react-icons/fa'
+import { CgLogOut } from 'react-icons/cg'
 import SearchBar from './searchBar';
 
 const LinkItems = [
-  { name: 'Home'},
-  { name: 'Employees'},
-  { name: 'Invoices'},
-  { name: 'Log Out3'},
+  { name: 'Home', icon: FaHome },
+  { name: 'Employees', icon: FaUsers },
+  { name: 'Invoices', icon: FaFileInvoiceDollar },
+  { name: 'Log Out', icon: CgLogOut },
 ];
   
  const SideBar = () => {
@@ -21,9 +22,10 @@ const LinkItems = [
   w='20vw'
   h='100vh'
   zIndex={'10'}
+  pl={5}
 	>
   <SearchBar/>
-  <Box mt={14}>
+  <Box mt={14} pr={12} pt={'18%'}>
           {LinkItems.map((link) => (
             <NavItem
               textDecoration={'none'}
@@ -34,7 +36,7 @@ const LinkItems = [
               {link.name}
             </NavItem>
           ))}
-        </Box>
+  </Box>
   </Box>
 	);
   }
@@ -44,6 +46,7 @@ const LinkItems = [
       <Box
         bg={'none'}
         fontWeight={'normal'}
+        fontSize={'lg'}
         style={{ textDecoration: 'none' }}
         _focus={{ boxShadow: 'none' }}
         p={'1vh'}
@@ -56,7 +59,7 @@ const LinkItems = [
           role="group"
           cursor="pointer"
           _hover={{
-            bg: '#8ea26f',
+            bg: '#E2966A',
             color: 'white',
           }}
           {...rest}
@@ -64,7 +67,7 @@ const LinkItems = [
           {icon && (
             <Icon
               mr="4"
-              fontSize="16"
+              fontSize="20"
               _groupHover={{
                 color: 'white',
               }}
