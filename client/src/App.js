@@ -1,4 +1,4 @@
-import {BrowserRouter, Route, Switch} from 'react-router-dom';
+import {BrowserRouter, Route, Routes} from 'react-router-dom';
 import { ChakraProvider } from '@chakra-ui/react';
 import LogIn from './views/Log-in';
 
@@ -7,9 +7,9 @@ function App() {
     <ChakraProvider>
     <BrowserRouter>
     <div className="App">
-      <Switch>
+      <Routes>
       <Route path="/sign-in" element={<LogIn/>} />
-      </Switch> 
+      </Routes> 
     </div>
     </BrowserRouter>
     </ChakraProvider>
