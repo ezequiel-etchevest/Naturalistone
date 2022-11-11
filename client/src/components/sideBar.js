@@ -59,10 +59,9 @@ const LinkItems = [
       <Box
         bg={'none'}
         fontWeight={'normal'}
-        fontSize={'lg'}
+        fontSize={'md'}
         style={{ textDecoration: 'none' }}
         _focus={{ boxShadow: 'none' }}
-        p={'1vh'}
       >
         <Flex
           align="center"

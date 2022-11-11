@@ -3,12 +3,13 @@ import SideBar from "../components/sideBar";
 import InfoContainer from "../components/infoContainer";
 
 
-const Home = () => {
+const Invoices = () => {
     return(
         <>
         <SideBar/>
+        <InfoContainer/>
         </>
     )
 }
 
-export default Home
+export default Invoices
