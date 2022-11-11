@@ -15,9 +15,12 @@ const SearchBar = () => {
             flexDir="row"
             alignItems="center"
             justifyContent={'center'}
-            border={'2px solid black'}
+            pt={'12%'}
+            
+           
           >                                                                 
             <Input
+              w={'70%'}
               variant="unstyled"
               placeholder={'Search'}
               size="lg"
