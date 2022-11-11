@@ -6,10 +6,11 @@ import { CgLogOut } from 'react-icons/cg'
 import { BiStats } from 'react-icons/bi'
 import SearchBar from './searchBar';
 import mitu from '../assets/mitutu.jpg';
+import { Navigate, useNavigate } from 'react-router';
 
 const LinkItems = [
   { name: 'Home', icon: FaHome },
-  { name: 'Employees', icon: FaUsers },
+  // { name: 'Employees', icon: FaUsers },
   { name: 'Invoices', icon: FaFileInvoiceDollar },
   { name: 'Stats', icon: BiStats },
   { name: 'Log Out', icon: CgLogOut },
@@ -55,6 +56,7 @@ const LinkItems = [
   }
   
   const NavItem = ({ icon, link, children, ...rest }) => {
+    const navigate = useNavigate()
     return (
       <Box
         bg={'none'}
@@ -62,6 +64,7 @@ const LinkItems = [
         fontSize={'md'}
         style={{ textDecoration: 'none' }}
         _focus={{ boxShadow: 'none' }}
+        onClick={()=>navigate(`/${link.name}`)}
       >
         <Flex
           align="center"
