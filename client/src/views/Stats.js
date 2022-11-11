@@ -1,13 +1,14 @@
 import React from "react";
 import SideBar from "../components/sideBar";
-import InfoContainer from "../components/infoContainer";
+import Stats from "../components/Stats";
+
 
 
 const Home = () => {
     return(
         <>
         <SideBar/>
-        <InfoContainer/>
+        <Stats/>
         </>
     )
 }
