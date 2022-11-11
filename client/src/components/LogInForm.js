@@ -1,12 +1,14 @@
 import { Box, Input, FormControl, FormLabel, Center, Button, InputGroup, InputRightElement, VStack } from "@chakra-ui/react";
 import { Formik } from "formik";
 import { useState } from "react";
+import { useNavigate } from 'react-router-dom'
 
 
-const SignInForm = () => {
+const LogInForm = () => {
 
     const [show, setShow] = useState(false);
     const handleShowClick = () => setShow(!show);
+    const navigate = useNavigate()
 
     return (
         <Center
@@ -46,7 +48,7 @@ const SignInForm = () => {
                   </InputRightElement>
                 </InputGroup>
               </FormControl>
-                <Button>
+                <Button onClick={()=> navigate('/home')}>
                   Log In
                 </Button>
             <Box
@@ -62,4 +64,4 @@ const SignInForm = () => {
     )
 }
 
-export default SignInForm
+export default LogInForm

@@ -1,10 +1,10 @@
-import SignInForm from "../components/signInForm"
+import LogInForm from "../components/LogInForm"
 
 
 const LogIn = () => {
     return(
         <>
-        <SignInForm/>
+        <LogInForm/>
         </>
     )
     
