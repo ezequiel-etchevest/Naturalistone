@@ -3,6 +3,7 @@ import {
   } from '@chakra-ui/react';
 import { FaUsers, FaFileInvoiceDollar, FaHome } from 'react-icons/fa'
 import { CgLogOut } from 'react-icons/cg'
+import { BiStats } from 'react-icons/bi'
 import SearchBar from './searchBar';
 import mitu from '../assets/mitutu.jpg'
 
@@ -10,6 +11,7 @@ const LinkItems = [
   { name: 'Home', icon: FaHome },
   { name: 'Employees', icon: FaUsers },
   { name: 'Invoices', icon: FaFileInvoiceDollar },
+  { name: 'Stats', icon: BiStats },
   { name: 'Log Out', icon: CgLogOut },
 ];
   
@@ -70,7 +72,7 @@ const LinkItems = [
           role="group"
           cursor="pointer"
           _hover={{
-            bg: '#E2966A',
+            bg: '#E47424',
             color: 'white',
           }}
           {...rest}

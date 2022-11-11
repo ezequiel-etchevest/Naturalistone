@@ -1,14 +1,14 @@
 import {Box} from '@chakra-ui/react';
 
-const infoContainer = () => {
+const InfoContainer = () => {
 
     return(
         <Box
-        h={'300vh'}
-        w={'300vw'} 
-        border={'2px solid red'}>
-            
+        h={'92vh'}
+        w={'80vw'}
+        ml={'20vw'} 
+        border={'2px solid red'}>  
         </Box>
     )
 }
-export default infoContainer;
+export default InfoContainer;
