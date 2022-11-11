@@ -1,9 +1,10 @@
 import {
-	Box,Icon,Flex,
+	Box, Icon, Flex, Avatar, HStack, VStack, Text
   } from '@chakra-ui/react';
 import { FaUsers, FaFileInvoiceDollar, FaHome } from 'react-icons/fa'
 import { CgLogOut } from 'react-icons/cg'
 import SearchBar from './searchBar';
+import mitu from '../assets/mitutu.jpg'
 
 const LinkItems = [
   { name: 'Home', icon: FaHome },
@@ -19,19 +20,28 @@ const LinkItems = [
 	<Box
 	pos={'fixed'}
 	bg={'whitesmoke'}
-  w='20vw'
-  h='100vh'
+  w={'20vw'}
+  h={'100vh'}
   zIndex={'10'}
   pl={5}
 	>
+ 
+  <HStack mt={'4vh'} mb={'4vh'}>
+    <Avatar
+      size={'md'}
+      src={mitu}
+    />
+    <Text fontSize="s" pl={'1.5vh'}>Damian Etchevest </Text>
+  </HStack>
   <SearchBar/>
-  <Box mt={14} pr={12} pt={'18%'}>
+  <Box  pr={12} pt={'6vh'}>
           {LinkItems.map((link) => (
             <NavItem
               textDecoration={'none'}
               link={link}
               key={link.name}
               icon={link.icon}
+              mt={5}
             >
               {link.name}
             </NavItem>
