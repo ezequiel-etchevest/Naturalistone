@@ -8,9 +8,9 @@ import {
     chakra,
     Highlight
   } from '@chakra-ui/react';
-  import { BsPerson } from 'react-icons/bs';
-  import { FiServer } from 'react-icons/fi';
-  import { GoLocation } from 'react-icons/go';
+  import { BiDollar } from 'react-icons/bi';
+  import { FaSortAmountUpAlt } from 'react-icons/fa';
+  import { HiOutlineReceiptPercent } from 'react-icons/hi2';
   
   function StatsCard(props) {
     const { title, stat, icon } = props;
@@ -68,17 +68,17 @@ import {
           <StatsCard
             title={'Current Month Sales'}
             stat={'$5,000'}
-            icon={<BsPerson size={'3em'} />}
+            icon={<BiDollar size={'3em'} />}
           />
           <StatsCard
             title={'Current Month Invoices'}
             stat={'10'}
-            icon={<FiServer size={'3em'} />}
+            icon={<FaSortAmountUpAlt size={'3em'} />}
           />
           <StatsCard
-            title={'Avg monthly sales'}
+            title={'Monthly Sales (Avg)'}
             stat={'$70.000'}
-            icon={<GoLocation size={'3em'} />}
+            icon={<HiOutlineReceiptPercent size={'3em'} />}
           />
         </HStack>
       </Box>
