@@ -1,4 +1,5 @@
 import {Box} from '@chakra-ui/react';
+import List from './list';
 import Filters from './filters';
 
 
