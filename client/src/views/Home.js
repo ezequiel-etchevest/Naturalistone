@@ -10,8 +10,10 @@ const Home = () => {
     localStorage.setItem('user', JSON.stringify(user))
   }
   useEffect(()=>{
-    saveData(user)
-  })
+    if(user[0]){
+      saveData(user)
+    }
+  },[])
 
   return(
       <>
