@@ -1,29 +1,12 @@
-const express = require('express')
-const router = express.Router()
-const mysqlConnection = require('../db')
-
-router.get('/getSeller', async function(req, res){
-    const data = req.body
-
-    query_ = `SELECT * FROM  Seller`;
-    try{
-         mysqlConnection.query(query_, function(error, results, fields){
-            if(error) throw error;
-            if(results.length == 0) {
-                console.log('Error al obtener data!')
-                res.status(200).json({ estado: false, data: {}});
-            } else {
-                console.log('Data OK')
-                res.status(200).json({
-                    estado: true,
-                    data: results
-                });
-            }
-        });
-    } catch(error){
-        res.status(409).send(String(error));
-    }
-});
+const { Router } = require('express');
+const loginRouter = require('./loginRoutes')
+const sellerRouter = require('./sellersRoutes')
+const salesRouter = require('./salesRoutes')
+const mainRouter = Router();
 
 
-module.exports = router
+mainRouter.use('/login', loginRouter);
+mainRouter.use('/seller', sellerRouter);
+mainRouter.use('/sales', salesRouter);
+
+module.exports = mainRouter
