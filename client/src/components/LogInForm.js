@@ -3,7 +3,7 @@ import { Formik } from "formik";
 import { useState,  useEffect} from "react";
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux'
-import { getEmployees } from "../redux/actions";
+import { getEmployeeById, getEmployees } from "../redux/actions";
 
 
 const LogInForm = () => {
@@ -23,11 +23,6 @@ const LogInForm = () => {
     const user = employees.find( e => e.Username === inputEmail)
     if(user.Password === inputPass) return true
     else return false
-  }
-
-  const saveData = (inputEmail) => {
-    const User = employees.find( e => e.Username === inputEmail)
-    localStorage.setItem('User', JSON.stringify(User))
   }
 
     useEffect(() =>{
@@ -64,14 +59,19 @@ const LogInForm = () => {
             errores.password = 'Please enter your password'
           }else if(values.password.length < 6) {
             errores.password = 'Password must be longer than 6 characters'
-          }else if(valPassword(values.password, values.email) == false ){
-            errores.password = 'Invalid Username/Password'
           }
           return errores
         }}
         onSubmit={(values) =>{
-          saveData(values.email)
-          navigate('/home')
+         
+          const User = employees.find(e => e.Username === values.email)
+
+          if(values.email === User.Username && values.password === User.Password){
+            dispatch(getEmployeeById(User.SellerID))
+            navigate('/home')
+          }else if(valPassword(values.password, values.email) == false ){
+           alert('invalid match')
+          }
         }}>
           {({
             handleBlur,

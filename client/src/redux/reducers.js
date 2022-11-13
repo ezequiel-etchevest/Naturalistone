@@ -1,8 +1,10 @@
-import { GET_EMPLOYEES } from "./actions"
+import { GET_EMPLOYEES } from "./actions";
+import { GET_EMPLOYEES_BY_ID } from "./actions";
 
 
 const intialState = {
-    employees: []
+    employees: [],
+    user: []
 }
 
 function rootReducer (state = intialState, action) {
@@ -11,6 +13,11 @@ function rootReducer (state = intialState, action) {
             return {
                 ...state,
                 employees: action.payload
+            }
+        case GET_EMPLOYEES_BY_ID:
+            return {
+                ...state,
+                user: action.payload
             }
     }
 }
