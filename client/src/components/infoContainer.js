@@ -1,4 +1,5 @@
 import {Box} from '@chakra-ui/react';
+import List from './list';
 import Filters from './filters';
 
 
@@ -8,6 +9,7 @@ const InfoContainer = () => {
         <Box
         ml={'20vw'}> 
         <Filters/>
+        <List/>
         </Box>
     )
 }
