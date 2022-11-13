@@ -4,10 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
+    "start": "nodemon index.js",
     "test": "mocha -w ./tests/**/*.spec.js"
   },
-  "author": "Henry",
+  "author": "ETNAC",
   "license": "ISC",
   "engines": {
     "node": ">=12.18.3",

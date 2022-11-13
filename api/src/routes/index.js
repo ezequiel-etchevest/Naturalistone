@@ -1,16 +1,29 @@
-const { Router } = require('express');
-// Importar todos los routers;
-// Ejemplo: const authRouter = require('./auth.js');
+const express = require('express')
+const router = express.Router()
+const mysqlConnection = require('../db')
 
-// const dogsRouter = require('./dogsRoutes');
-// const tempRouter = require('./tempRoutes');
+router.get('/getSeller', async function(req, res){
+    const data = req.body
 
-const mainRouter = Router();
+    query_ = `SELECT * FROM  Seller`;
+    try{
+         mysqlConnection.query(query_, function(error, results, fields){
+            if(error) throw error;
+            if(results.length == 0) {
+                console.log('Error al obtener data!')
+                res.status(200).json({ estado: false, data: {}});
+            } else {
+                console.log('Data OK')
+                res.status(200).json({
+                    estado: true,
+                    data: results
+                });
+            }
+        });
+    } catch(error){
+        res.status(409).send(String(error));
+    }
+});
 
-// Configurar los routers
-// Ejemplo: router.use('/auth', authRouter);
 
-mainRouter.use('/dogs', dogsRouter);
-mainRouter.use('/temperaments', tempRouter);
-
-module.exports = mainRouter;
+module.exports = router

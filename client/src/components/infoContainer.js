@@ -9,6 +9,7 @@ const InfoContainer = () => {
         <Box
         ml={'20vw'}> 
         <Filters/>
+        <List/>
         </Box>
     )
 }

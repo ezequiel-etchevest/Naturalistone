@@ -37,7 +37,6 @@ const LinkItems = [
     />
     <Text fontSize="s" pl={'1.5vh'}>Damian Etchevest </Text>
   </HStack>
-  <SearchBar/>
   <Box  pr={12} pt={'6vh'}>
           {LinkItems.map((link) => (
             <NavItem

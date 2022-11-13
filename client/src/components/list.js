@@ -34,12 +34,9 @@ const List = () => {
     return(
         <Box
         h={'72vh'}
-        w={'80vw'}
-        mt={'20vh'} 
-        border={'2px solid green'}>
+        w={'80vw'} >
             <TableContainer>
                 <Table variant='striped' colorScheme='orange'>
-                  <TableCaption>Imperial to metric conversion factors</TableCaption>
                   <Thead>
                     <Tr>
                       <Th > Quote Number </Th>
