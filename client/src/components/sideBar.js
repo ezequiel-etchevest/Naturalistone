@@ -1,12 +1,11 @@
 import {
-	Box, Icon, Flex, Avatar, HStack, VStack, Text
+	Box, Icon, Flex, Avatar, HStack, Text
   } from '@chakra-ui/react';
-import { FaUsers, FaFileInvoiceDollar, FaHome } from 'react-icons/fa'
+import { FaFileInvoiceDollar, FaHome } from 'react-icons/fa'
 import { CgLogOut } from 'react-icons/cg'
 import { BiStats } from 'react-icons/bi'
-import SearchBar from './searchBar';
 import mitu from '../assets/mitutu.jpg';
-import { Navigate, useNavigate } from 'react-router';
+import { useNavigate } from 'react-router';
 
 const LinkItems = [
   { name: 'Home', icon: FaHome },
@@ -18,6 +17,8 @@ const LinkItems = [
   
  const SideBar = () => {
 
+  const user = JSON.parse(localStorage.getItem('User'))
+  console.log(user)
 	return (
 
 	<Box

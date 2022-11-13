@@ -7,7 +7,6 @@ export function getEmployees() {
         try{
             
             let {data} = await axios.get('http://localhost:5000/login')
-            console.log(data)
             dispatch({
                 type: GET_EMPLOYEES,
                 payload: data
