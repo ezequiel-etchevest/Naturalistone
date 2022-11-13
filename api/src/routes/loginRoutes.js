@@ -19,7 +19,7 @@ loginRouter.get('/', async function(req, res){
             }
         });
     } catch(error){
-        res.status(409).send(String(error));
+        res.status(409).send(error);
     }
 });
 
