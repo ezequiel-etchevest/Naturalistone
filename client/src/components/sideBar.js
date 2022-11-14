@@ -6,6 +6,9 @@ import { CgLogOut } from 'react-icons/cg'
 import { BiStats } from 'react-icons/bi'
 import mitu from '../assets/mitutu.jpg';
 import { useNavigate } from 'react-router';
+import { useDispatch, useSelector } from 'react-redux';
+import { logOut } from '../redux/actions';
+
 
 const LinkItems = [
   { name: 'Home', icon: FaHome },
@@ -14,11 +17,10 @@ const LinkItems = [
   { name: 'Stats', icon: BiStats },
   { name: 'Log Out', icon: CgLogOut },
 ];
-  
- const SideBar = () => {
 
-  const user = JSON.parse(localStorage.getItem('user'))
-  console.log(user)
+
+const SideBar = ({user}) => {
+
 	return (
 
 	<Box
@@ -36,7 +38,7 @@ const LinkItems = [
       size={'md'}
       src={mitu}
     />
-    <Text fontSize="s" pl={'1.5vh'}>Damian Etchevest </Text>
+    <Text fontSize="s" pl={'1.5vh'}> {user[0].FirstName} {user[0].LastName} </Text>
   </HStack>
   <Box  pr={12} pt={'6vh'}>
           {LinkItems.map((link) => (
@@ -57,6 +59,13 @@ const LinkItems = [
   
   const NavItem = ({ icon, link, children, ...rest }) => {
     const navigate = useNavigate()
+    const dispatch = useDispatch()
+
+    const handleLogOut = () => {
+      dispatch(logOut())
+      navigate('/sign-in')
+    }
+
     return (
       <Box
         bg={'none'}
@@ -64,7 +73,7 @@ const LinkItems = [
         fontSize={'md'}
         style={{ textDecoration: 'none' }}
         _focus={{ boxShadow: 'none' }}
-        onClick={()=>navigate(`/${link.name}`)}
+        onClick={link.name == 'Log Out' ? ()=> {handleLogOut()} : ()=>navigate(`/${link.name}`)}
       >
         <Flex
           align="center"

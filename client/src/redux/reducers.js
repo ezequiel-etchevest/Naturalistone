@@ -1,6 +1,8 @@
-import { GET_EMPLOYEES } from "./actions";
-import { GET_EMPLOYEES_BY_ID } from "./actions";
-
+import { 
+    GET_EMPLOYEES, 
+    GET_EMPLOYEES_BY_ID, 
+    LOG_OUT 
+} from "./actions";
 
 const intialState = {
     employees: [],
@@ -18,6 +20,15 @@ function rootReducer (state = intialState, action) {
             return {
                 ...state,
                 user: action.payload
+            }
+        case LOG_OUT:
+            return {
+                ...state,
+                user: action.payload
+            }
+        default:
+            return {
+                ...state
             }
     }
 }
