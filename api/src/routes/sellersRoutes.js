@@ -16,7 +16,7 @@ sellerRouter.get('/', async function(req, res){
                 console.log('Data OK')
                 res.status(200).json(results);
             }
-        });
+            });
     } catch(error){
         res.status(409).send(error);
     }
