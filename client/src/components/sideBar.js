@@ -19,7 +19,7 @@ const LinkItems = [
 ];
 
 
-const SideBar = ({user}) => {
+const SideBar = ({user, site, setSite}) => {
 
 	return (
 
@@ -43,6 +43,7 @@ const SideBar = ({user}) => {
   <Box  pr={12} pt={'6vh'}>
           {LinkItems.map((link) => (
             <NavItem
+              setSite={setSite}
               textDecoration={'none'}
               link={link}
               key={link.name}
@@ -57,7 +58,7 @@ const SideBar = ({user}) => {
 	);
   }
   
-  const NavItem = ({ icon, link, children, ...rest }) => {
+  const NavItem = ({ setSite, icon, link, children, ...rest }) => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
 
@@ -65,6 +66,7 @@ const SideBar = ({user}) => {
       dispatch(logOut())
       navigate('/sign-in')
     }
+    
 
     return (
       <Box
@@ -73,7 +75,7 @@ const SideBar = ({user}) => {
         fontSize={'md'}
         style={{ textDecoration: 'none' }}
         _focus={{ boxShadow: 'none' }}
-        onClick={link.name == 'Log Out' ? ()=> {handleLogOut()} : ()=>navigate(`/${link.name}`)}
+        onClick={link.name == 'Log Out' ? ()=> {handleLogOut()} : ()=>setSite(link.name)}
       >
         <Flex
           align="center"
