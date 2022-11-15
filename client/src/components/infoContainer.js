@@ -3,13 +3,13 @@ import List from './list';
 import Filters from './filters';
 
 
-const InfoContainer = () => {
+const InfoContainer = ({seller_invoices}) => {
 
     return(
         <Box
         ml={'20vw'}> 
         <Filters/>
-        <List/>
+        <List seller_invoices={seller_invoices} />
         </Box>
     )
 }

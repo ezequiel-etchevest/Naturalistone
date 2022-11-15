@@ -2,7 +2,9 @@ import axios from 'axios';
 
 export const GET_EMPLOYEES = 'GET_EMPLOYEES';
 export const GET_EMPLOYEES_BY_ID = 'GET_EMPLOYEES_BY_ID';
-export const LOG_OUT = 'LOG_OUT'
+export const LOG_OUT = 'LOG_OUT';
+export const GET_INVOICE_BY_ID = 'GET_INVOICE_BY_ID';
+export const GET_INVOICES_BY_SELLER = 'GET_INVOICEs_BY_SELLER'
 
 export function getEmployees() {
     return async function(dispatch){
@@ -47,5 +49,39 @@ export function logOut(){
                 payload: []
             })
 
+    }
+}
+
+export function getInvoicesBySeller(id){
+    return async function(dispatch){
+
+        try{
+            let {data} = await axios.get(`http://localhost:5000/sales/${id}`)
+            dispatch(
+            {
+                type: GET_INVOICES_BY_SELLER,
+                payload: data
+            })
+        }catch(error){
+            console.log({error})           
+
+        }
+    }
+}
+
+export function getInvoiceById(id){
+    return async function(dispatch){
+
+        try{
+            let {data} = await axios.get(`http://localhost:5000/sales/invoice/${id}`)
+            dispatch(
+            {
+                type: GET_INVOICE_BY_ID,
+                payload: data
+            })
+        }catch(error){
+            console.log({error})           
+
+        }
     }
 }

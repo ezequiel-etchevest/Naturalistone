@@ -38,7 +38,7 @@ const SideBar = ({user, site, setSite}) => {
       size={'md'}
       src={mitu}
     />
-    <Text fontSize="s" pl={'1.5vh'}> {user[0].FirstName} {user[0].LastName} </Text>
+    <Text fontSize="s" pl={'1.5vh'}> {user.FirstName} {user.LastName} </Text>
   </HStack>
   <Box  pr={12} pt={'6vh'}>
           {LinkItems.map((link) => (
@@ -75,7 +75,7 @@ const SideBar = ({user, site, setSite}) => {
         fontSize={'md'}
         style={{ textDecoration: 'none' }}
         _focus={{ boxShadow: 'none' }}
-        onClick={link.name == 'Log Out' ? ()=> {handleLogOut()} : ()=>setSite(link.name)}
+        onClick={link.name === 'Log Out' ? ()=> {handleLogOut()} : ()=>setSite(link.name)}
       >
         <Flex
           align="center"
