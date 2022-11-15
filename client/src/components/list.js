@@ -18,7 +18,7 @@ const ModelTr = (props) => {
     const navigate = useNavigate()
 
     return(
-        <Tr onClick={()=> {navigate(`/invoices/${id}`)}} cursor={'pointer'}>
+        <Tr onClick={()=> {navigate(`/invoices/${id}`)}} cursor={'pointer'} key={id}>
                 <Td>{id}</Td>
                 <Td>{projectName} </Td>
                 <Td>{paid}</Td>
