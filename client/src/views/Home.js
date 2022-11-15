@@ -17,7 +17,7 @@ const Home = () => {
     if(site === 'Invoices') return(<InfoContainer/>)
     if(site === 'Stats') return (<Stats/>)
   }
-  console.log(site)
+
   return(
     <>
     { user.length ? (
