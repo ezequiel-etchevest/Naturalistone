@@ -8,6 +8,7 @@ loginRouter.get('/', async function(req, res){
 
     query_ = `SELECT * FROM  Logins`;
     try{
+        console.log('lalalalalal')
          mysqlConnection.query(query_, function(error, results, fields){
             if(error) throw error;
             if(results.length == 0) {
