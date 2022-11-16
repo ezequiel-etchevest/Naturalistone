@@ -3,11 +3,9 @@ import {
     Table,
     Thead,
     Tbody,
-    Tfoot,
     Tr,
     Th,
     Td,
-    TableCaption,
     TableContainer,
   } from '@chakra-ui/react'
 import { useNavigate } from 'react-router-dom'
@@ -38,7 +36,7 @@ const ModelTr = (props) => {
 }
 
 const List = ({seller_invoices}) => {
-console.log('List',seller_invoices)
+
     return(
         <Box
         h={'72vh'}

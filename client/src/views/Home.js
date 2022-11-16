@@ -28,15 +28,14 @@ const Home = () => {
       if(user.length){
       dispatch(getInvoicesBySeller(user[0].SellerID))}
     }
-  },[dispatch])
+  },[dispatch, user])
 
     function handleSite(site){
       if(site === 'Home') return(<HomeContainer/>)
       if(site === 'Invoices') return(<InfoContainer seller_invoices={seller_invoices}/>)
       if(site === 'Stats') return (<Stats/>)
     }
-    
-    if(user) {
+
       if(user.length){
         return(
           <>
@@ -45,7 +44,7 @@ const Home = () => {
           </>
         )
     }else return (<Text>Loading </Text>)
-  }}
+  }
  
 
 export default Home

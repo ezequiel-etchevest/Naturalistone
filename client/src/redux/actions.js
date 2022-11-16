@@ -58,7 +58,6 @@ export function getInvoicesBySeller(id){
 
         try{
             let {data} = await axios.get(`http://localhost:5000/sales/${id}`)
-            console.log(data)
             dispatch(
             {
                 type: GET_INVOICES_BY_SELLER,

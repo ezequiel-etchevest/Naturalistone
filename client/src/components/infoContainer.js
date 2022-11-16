@@ -4,7 +4,7 @@ import Filters from './filters';
 
 
 const InfoContainer = ({seller_invoices}) => {
-    console.log('infoContainer',seller_invoices)
+
     return(
         <Box
         ml={'20vw'}> 
