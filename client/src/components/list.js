@@ -10,27 +10,35 @@ import {
     TableCaption,
     TableContainer,
   } from '@chakra-ui/react'
-import invoices from '../assets/fakeInvArray'
 import { useNavigate } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import { getInvoiceById } from '../redux/actions'
+
 
 const ModelTr = (props) => {
-    const { id, projectName, paid, total, deliveryDate, ShipVia } = props
+    const { Naturali_Invoice, ProjectID, InvoiceDate, Value, PaymentStatus, PaymentDate } = props
     const navigate = useNavigate()
+    const dispatch = useDispatch()
+
+    const handleClick = () => {
+      dispatch(getInvoiceById(Naturali_Invoice))
+      navigate(`/invoices/${Naturali_Invoice}`)
+    }
 
     return(
-        <Tr onClick={()=> {navigate(`/invoices/${id}`)}} cursor={'pointer'} key={id}>
-                <Td>{id}</Td>
-                <Td>{projectName} </Td>
-                <Td>{paid}</Td>
-                <Td isNumeric>{total}</Td>
-                <Td isNumeric>{deliveryDate}</Td>
-                <Td>{ShipVia}</Td>
+        <Tr onClick={() => handleClick()} cursor={'pointer'} key={Naturali_Invoice}>
+                <Td>{Naturali_Invoice}</Td>
+                <Td>{ProjectID}</Td>
+                <Td>{InvoiceDate.split('T')[0]}</Td>
+                <Td isNumeric>${Value} </Td>
+                <Td>{PaymentStatus}</Td>
+                <Td>{PaymentDate}</Td>
             </Tr>
     )
 }
 
-const List = () => {
-
+const List = ({seller_invoices}) => {
+console.log('List',seller_invoices)
     return(
         <Box
         h={'72vh'}
@@ -39,16 +47,16 @@ const List = () => {
                 <Table variant='striped' colorScheme='orange'>
                   <Thead>
                     <Tr>
-                      <Th > Quote Number </Th>
+                      <Th > Invoice Number </Th>
                       <Th> Project Name </Th>
-                      <Th > Paid </Th>
-                      <Th isNumeric> Total </Th>
-                      <Th isNumeric> Est Delivery Date </Th>
-                      <Th> Ship Via </Th>
+                      <Th > Invoice Date </Th>
+                      <Th isNumeric> Value </Th>
+                      <Th isNumeric> Payment Status</Th>
+                      <Th> Payment Date </Th>
                     </Tr>
                   </Thead>
                   <Tbody>
-                    { invoices.map(e => (
+                    { seller_invoices.map(e => (
                         ModelTr(e)
                         ))
                     }

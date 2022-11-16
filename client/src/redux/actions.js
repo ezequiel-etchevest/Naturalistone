@@ -4,7 +4,8 @@ export const GET_EMPLOYEES = 'GET_EMPLOYEES';
 export const GET_EMPLOYEES_BY_ID = 'GET_EMPLOYEES_BY_ID';
 export const LOG_OUT = 'LOG_OUT';
 export const GET_INVOICE_BY_ID = 'GET_INVOICE_BY_ID';
-export const GET_INVOICES_BY_SELLER = 'GET_INVOICEs_BY_SELLER'
+export const GET_INVOICES_BY_SELLER = 'GET_INVOICEs_BY_SELLER';
+// export const GET_CURRENT_INVOICES = 'GET_CURRENT_INVOICES'
 
 export function getEmployees() {
     return async function(dispatch){
@@ -56,9 +57,8 @@ export function getInvoicesBySeller(id){
     return async function(dispatch){
 
         try{
-            console.log('acions', {id})
             let {data} = await axios.get(`http://localhost:5000/sales/${id}`)
-            console.log('actions', {data})
+            console.log(data)
             dispatch(
             {
                 type: GET_INVOICES_BY_SELLER,
@@ -86,3 +86,19 @@ export function getInvoiceById(id){
         }
     }
 }
+// export function getCurrentInvoices(id){
+//     return async function(dispatch){
+
+//         try{
+//             let {data} = await axios.get(`http://localhost:5000/sales/invoice/${id}`)
+//             dispatch(
+//             {
+//                 type: GET_CURRENT_INVOICES,
+//                 payload: data
+//             })
+//         }catch(error){
+//             console.log({error})           
+
+//         }
+//     }
+// }
