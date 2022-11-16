@@ -64,7 +64,6 @@ export function getInvoicesBySeller(id){
             })
         }catch(error){
             console.log({error})           
-
         }
     }
 }
