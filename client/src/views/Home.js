@@ -17,24 +17,25 @@ const Home = () => {
   const user = useSelector(state=>state.user)
   const userLocal = JSON.parse(localStorage.getItem('user'))
   
-  function handleSite(site){
-    if(site === 'Home') return(<HomeContainer/>)
-    if(site === 'Invoices') return(<InfoContainer seller_invoices={seller_invoices}/>)
-    if(site === 'Stats') return (<Stats/>)
-  }
-
-  useEffect(()=>{
+  
+    useEffect(()=>{
+        if(userLocal){
+        dispatch(getEmployeeById(userLocal.SellerID))}
+      },[])
+      
+    useEffect(()=>{
     if(user){
-      if(Object.entries(user).length){
+      if(user.length){
       dispatch(getInvoicesBySeller(user[0].SellerID))}
     }
   },[dispatch])
 
-  useEffect(()=>{
-      if(userLocal){
-      dispatch(getEmployeeById(userLocal.SellerID))}
-    },[])
-
+    function handleSite(site){
+      if(site === 'Home') return(<HomeContainer/>)
+      if(site === 'Invoices') return(<InfoContainer seller_invoices={seller_invoices}/>)
+      if(site === 'Stats') return (<Stats/>)
+    }
+    
     if(user) {
       if(user.length){
         return(

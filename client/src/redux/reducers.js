@@ -3,14 +3,16 @@ import {
     GET_EMPLOYEES_BY_ID, 
     LOG_OUT ,
     GET_INVOICE_BY_ID,
-    GET_INVOICES_BY_SELLER
+    GET_INVOICES_BY_SELLER,
+    GET_CURRENT_INVOICES
 } from "./actions";
 
 const intialState = {
     employees: [],
     user: [],
     invoice: {},
-    seller_invoices: []
+    seller_invoices: [],
+    current_invoices: []
 }
 
 function rootReducer (state = intialState, action) {
@@ -41,6 +43,11 @@ function rootReducer (state = intialState, action) {
                 ...state,
                 seller_invoices: action.payload
             }
+        // case GET_CURRENT_INVOICES:
+        //     return {
+        //         ...state,
+        //         current_invoices: action.payload
+        //     }
         
         default:
             return {
