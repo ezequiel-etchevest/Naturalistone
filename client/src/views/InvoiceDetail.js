@@ -12,15 +12,16 @@ const InvoiceDetail = ({site, setSite}) => {
 
   const dispatch = useDispatch()
   const user = useSelector(state=>state.user)
+  const invoice = useSelector(state=>state.invoice)
   const userLocal = JSON.parse(localStorage.getItem('user'))
   const { id } = useParams()
 
   useEffect(()=>{
-      dispatch(getInvoiceById(id))} 
+      if(!invoice.length) dispatch(getInvoiceById(id))} 
       ,[])
 
   useEffect(()=>{
-      if(userLocal){
+      if(userLocal && !user.length){
       dispatch(getEmployeeById(userLocal.SellerID))}
     },[user])
 
@@ -29,7 +30,7 @@ const InvoiceDetail = ({site, setSite}) => {
         return(
           <>
             <SideBar user={user} site={site} setSite={setSite}/>
-            <Detail/>
+            <Detail invoice={invoice}/>
           </>
         )
     }else return (<Text>Loading </Text>)

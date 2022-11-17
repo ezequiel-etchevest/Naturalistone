@@ -23,7 +23,7 @@ const ModelTr = ({e, setSite}) => {
       dispatch(getInvoiceById(e.Naturali_Invoice))
       navigate(`/invoices/${e.Naturali_Invoice}`)
     }
-
+    
     return(
         <Tr onClick={() => handleClick()} cursor={'pointer'} key={e.Naturali_Invoice}>
                 <Td>{e.Naturali_Invoice}</Td>
@@ -56,7 +56,7 @@ const List = ({seller_invoices, setSite}) => {
                   </Thead>
                   <Tbody>
                     { seller_invoices.map((e, i) => (
-                        <ModelTr key={i} e={e} setSite={setSite}/>
+                        <ModelTr key={i} e={e} setSite={setSite}/> 
                         ))
                     }
                   </Tbody>

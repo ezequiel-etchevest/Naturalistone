@@ -8,7 +8,7 @@ export default function LastWeek(array){
         let month = parseInt(a[1])
         let day = parseInt(a[2].split('T')[0])
 
-        return {a, year, day, month}
+        return {year, day, month}
     }
 
     function getLimitDate(){
@@ -50,7 +50,11 @@ export default function LastWeek(array){
                 else return actualDate.year
             }else return actualDate.year
         }
-        return 
+        let day = limitDay()
+        let month = limitMonth()
+        let year = limitYear()
+
+        return {year, day, month}
     
     function compareDate(a, b ){
         

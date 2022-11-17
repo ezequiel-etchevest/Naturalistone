@@ -17,15 +17,15 @@ const Home = ({site, setSite}) => {
   const userLocal = JSON.parse(localStorage.getItem('user'))
     
     useEffect(()=>{
-        if(userLocal){
+        if(userLocal && !user.length){
         dispatch(getEmployeeById(userLocal.SellerID))}
       },[])
       
     useEffect(()=>{
-      if(user.length){
+      if(user.length && !seller_invoices.length){
       dispatch(getInvoicesBySeller(user[0].SellerID))
     }
-  },[ user])
+  },[user])
     console.log('home',{seller_invoices})
     function handleSite(site){
       if(site === 'Home') return(<HomeContainer/>)

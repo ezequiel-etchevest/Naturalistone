@@ -7,7 +7,7 @@ salesRouter.get('/:id', async function(req, res){
     
     const {id} = req.params
 
-    query_ = `SELECT * FROM  Sales WHERE SellerID = ${id}`;
+    query_ = `SELECT * FROM Sales WHERE SellerID = ${id}`;
     try{
          mysqlConnection.query(query_, function(error, results, fields){
             if(error) throw error;
