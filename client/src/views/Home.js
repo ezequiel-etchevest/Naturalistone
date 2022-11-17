@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import SideBar from "../components/sideBar";
 import { Box, Text } from "@chakra-ui/react";
 import HomeContainer from "../components/homeContainer";
@@ -8,31 +8,28 @@ import { useDispatch, useSelector } from "react-redux";
 import { getEmployeeById, getInvoicesBySeller } from "../redux/actions";
 
 
-const Home = () => {
+const Home = ({site, setSite}) => {
 
-  const [site, setSite] = useState('home')
+ 
   const dispatch = useDispatch()
-  
   const seller_invoices = useSelector(state => state.seller_invoices)
   const user = useSelector(state=>state.user)
   const userLocal = JSON.parse(localStorage.getItem('user'))
-  
-  
+    
     useEffect(()=>{
         if(userLocal){
         dispatch(getEmployeeById(userLocal.SellerID))}
       },[])
       
     useEffect(()=>{
-    if(user){
       if(user.length){
-      dispatch(getInvoicesBySeller(user[0].SellerID))}
+      dispatch(getInvoicesBySeller(user[0].SellerID))
     }
-  },[dispatch, user])
-
+  },[ user])
+    console.log('home',{seller_invoices})
     function handleSite(site){
       if(site === 'Home') return(<HomeContainer/>)
-      if(site === 'Invoices') return(<InfoContainer seller_invoices={seller_invoices}/>)
+      if(site === 'Invoices') return(<InfoContainer site={site} setSite={setSite} seller_invoices={seller_invoices}/>)
       if(site === 'Stats') return (<Stats/>)
     }
 

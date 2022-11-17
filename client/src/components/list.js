@@ -13,29 +13,30 @@ import { useDispatch } from 'react-redux'
 import { getInvoiceById } from '../redux/actions'
 
 
-const ModelTr = (props) => {
-    const { Naturali_Invoice, ProjectID, InvoiceDate, Value, PaymentStatus, PaymentDate } = props
+const ModelTr = ({e, setSite}) => {
+
     const navigate = useNavigate()
     const dispatch = useDispatch()
 
     const handleClick = () => {
-      dispatch(getInvoiceById(Naturali_Invoice))
-      navigate(`/invoices/${Naturali_Invoice}`)
+      setSite('details')
+      dispatch(getInvoiceById(e.Naturali_Invoice))
+      navigate(`/invoices/${e.Naturali_Invoice}`)
     }
 
     return(
-        <Tr onClick={() => handleClick()} cursor={'pointer'} key={Naturali_Invoice}>
-                <Td>{Naturali_Invoice}</Td>
-                <Td>{ProjectID}</Td>
-                <Td>{InvoiceDate.split('T')[0]}</Td>
-                <Td isNumeric>${Value} </Td>
-                <Td>{PaymentStatus}</Td>
-                <Td>{PaymentDate}</Td>
+        <Tr onClick={() => handleClick()} cursor={'pointer'} key={e.Naturali_Invoice}>
+                <Td>{e.Naturali_Invoice}</Td>
+                <Td>{e.ProjectID}</Td>
+                <Td>{e.InvoiceDate.split('T')[0]}</Td>
+                <Td isNumeric>${e.Value} </Td>
+                <Td>{e.PaymentStatus}</Td>
+                <Td>{e.PaymentDate}</Td>
             </Tr>
     )
 }
 
-const List = ({seller_invoices}) => {
+const List = ({seller_invoices, setSite}) => {
 
     return(
         <Box
@@ -54,8 +55,8 @@ const List = ({seller_invoices}) => {
                     </Tr>
                   </Thead>
                   <Tbody>
-                    { seller_invoices.map(e => (
-                        ModelTr(e)
+                    { seller_invoices.map((e, i) => (
+                        <ModelTr key={i} e={e} setSite={setSite}/>
                         ))
                     }
                   </Tbody>

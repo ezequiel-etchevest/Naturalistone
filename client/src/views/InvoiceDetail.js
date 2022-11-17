@@ -1,35 +1,35 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import SideBar from "../components/sideBar";
-import { Box, Text } from "@chakra-ui/react";
+import { Text } from "@chakra-ui/react";
 import { useSelector, useDispatch } from "react-redux";
-import { getInvoicesBySeller, getEmployeeById } from "../redux/actions";
+import { getInvoiceById, getEmployeeById } from "../redux/actions";
+import { useParams } from "react-router-dom";
+import Detail from '../components/detail';
 
 
 
-const InvoiceDetail = () => {
+const InvoiceDetail = ({site, setSite}) => {
+
   const dispatch = useDispatch()
   const user = useSelector(state=>state.user)
   const userLocal = JSON.parse(localStorage.getItem('user'))
-  const [site, setSite] = useState('home')
+  const { id } = useParams()
 
   useEffect(()=>{
-    if(user){
-      if(Object.entries(user).length){
-      dispatch(getInvoicesBySeller(user[0].SellerID))}
-    }
-  },[dispatch])
+      dispatch(getInvoiceById(id))} 
+      ,[])
 
   useEffect(()=>{
       if(userLocal){
       dispatch(getEmployeeById(userLocal.SellerID))}
-    },[])
+    },[user])
 
     if(user) {
       if(user.length){
         return(
           <>
             <SideBar user={user} site={site} setSite={setSite}/>
-            <Box></Box>
+            <Detail/>
           </>
         )
     }else return (<Text>Loading </Text>)

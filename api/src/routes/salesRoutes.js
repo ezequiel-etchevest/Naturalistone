@@ -27,7 +27,7 @@ salesRouter.get('/:id', async function(req, res){
 salesRouter.get('/invoice/:id', async function(req, res){
     const { id } = req.params
 
-    query_ = `SELECT * FROM  Seller WHERE Naturali_Invoice = ${id}`;
+    query_ = `SELECT * FROM  Sales WHERE Naturali_Invoice = ${id}`;
     try{
          mysqlConnection.query(query_, function(error, results, fields){
             if(error) throw error;
