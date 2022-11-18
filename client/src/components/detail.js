@@ -22,7 +22,7 @@ const Detail = ({invoice}) => {
         </Box>
 				</Box>
 				<Box>
-				<EditButtons/>  
+				<EditButtons invoice={invoice}/>  
 				</Box>      
         </Box>
     )

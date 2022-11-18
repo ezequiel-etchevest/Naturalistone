@@ -5,6 +5,8 @@ export const GET_EMPLOYEES_BY_ID = 'GET_EMPLOYEES_BY_ID';
 export const LOG_OUT = 'LOG_OUT';
 export const GET_INVOICE_BY_ID = 'GET_INVOICE_BY_ID';
 export const GET_INVOICES_BY_SELLER = 'GET_INVOICEs_BY_SELLER';
+export const PATCH_PAYMENT_METHOD = 'PATCH_PAYMENT_METHOD';
+
 // export const GET_CURRENT_INVOICES = 'GET_CURRENT_INVOICES'
 
 export function getEmployees() {
@@ -85,6 +87,28 @@ export function getInvoiceById(id){
         }
     }
 }
+
+export function patchPaymentMEthod(id, body){
+
+
+    return async function(dispatch){
+        try{
+            let {response} = await axios.patch(`http://localhost:5000/sales/invoice/${id}`, body)
+            let {data} = await axios.get(`http://localhost:5000/sales/invoice/${id}`)
+            console.log(body)
+            dispatch(
+            {
+                type: PATCH_PAYMENT_METHOD,
+                payload: data
+            })
+        }catch(error){
+            console.log({error})           
+
+        }
+    }
+}
+
+
 // export function getCurrentInvoices(id){
 //     return async function(dispatch){
 
