@@ -1,4 +1,4 @@
-import { HStack, Text, Button } from "@chakra-ui/react";
+import { HStack, Text, Button, Select, Box } from "@chakra-ui/react";
 import { MdOutlinePayments, MdOutlineLocalShipping } from 'react-icons/md';
 import { useDisclosure } from "@chakra-ui/react";
 import {
@@ -9,15 +9,40 @@ import {
     ModalFooter,
     ModalBody,
     ModalCloseButton,
-  } from '@chakra-ui/react'
+  } from '@chakra-ui/react';
+  import { useState } from "react";
+import { patchPaymentMEthod } from "../redux/actions";
+import { useDispatch } from "react-redux";
 
-const EditButtons = () => {
+const EditButtons = ({invoice}) => {
 
     const { isOpen, onOpen, onClose } = useDisclosure()
+    const [input, setInput] = useState({PaymentMethod : []})
+    const dispatch = useDispatch()
     
-    const handleClick = () =>{
-        
+    const handleSelect = (e) =>{
+      if(!input.PaymentMethod.includes(e.target.value)){
+       setInput({
+        ...input,
+        PaymentMethod : [...input.PaymentMethod, e.target.value]
+       })}
     }
+    const handleDelete = (e) =>{
+      setInput({
+        ...input,
+        PaymentMethod: input.PaymentMethod.filter( m => {
+          return m !== e.target.value
+        })
+      })
+    }
+
+  const handleSubmit = () => {
+    if(invoice){
+    dispatch(patchPaymentMEthod(invoice[0].Naturali_Invoice, input))
+    setInput({PaymentMethod : []})
+    onClose()}
+
+  }
 
     return (
         <>
@@ -45,9 +70,40 @@ const EditButtons = () => {
             >Edit Payment Method</Text>
             <MdOutlinePayments/>
         </Button>
-        <Modal>
-          <Text>Please enter the payment method</Text>
-        </Modal>
+        <Modal isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Payment Method</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <Text>
+              Please select payment method:
+            </Text>
+            <Select placeholder='Select option' onChange={(e)=>handleSelect(e)}>
+              <option value='Check'>Check</option>
+              <option value='Cash'>Cash</option>
+              <option value='Wire transfer'>Wire transfer</option>
+            </Select>
+            {
+              input.PaymentMethod.map((m, i) => {
+                return(
+                <Box m={'1vw'} key={i} display={'flex'} flexDir={'row'} bg={'whitesmoke'} w={'6vw'}justifyContent={'space-between'} alignContent={'center'} >
+                <Text>{m}</Text>
+                <Button bg={'none'} size={'xs'} value={m} onClick={(e)=>{handleDelete(e)}}>x</Button>
+                </Box>
+                )
+              })
+            }
+          </ModalBody>
+
+          <ModalFooter>
+            <Button colorScheme={'orange'} mr={3} onClick={()=>{handleSubmit()}}>
+              Submit
+            </Button>
+            <Button variant='ghost' onClick={onClose}>Cancel</Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
         <Button
          variant={'unstyled'} 
          display={'flex'} 

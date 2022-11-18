@@ -4,7 +4,8 @@ import {
     LOG_OUT ,
     GET_INVOICE_BY_ID,
     GET_INVOICES_BY_SELLER,
-    GET_CURRENT_INVOICES
+    GET_CURRENT_INVOICES,
+    PATCH_PAYMENT_METHOD
 } from "./actions";
 
 const intialState = {
@@ -43,6 +44,11 @@ function rootReducer (state = intialState, action) {
                 ...state,
                 seller_invoices: action.payload
             }
+        case PATCH_PAYMENT_METHOD:
+            return {
+                ...state,
+                invoice: action.payload
+                }
         // case GET_CURRENT_INVOICES:
         //     return {
         //         ...state,
