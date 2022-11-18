@@ -35,7 +35,7 @@ const EditButtons = ({invoice}) => {
         })
       })
     }
-    console.log(invoice)
+
   const handleSubmit = () => {
     if(invoice){
     dispatch(patchPaymentMEthod(invoice[0].Naturali_Invoice, input))
@@ -97,10 +97,10 @@ const EditButtons = ({invoice}) => {
           </ModalBody>
 
           <ModalFooter>
-            <Button colorScheme='blue' mr={3} onClick={()=>{handleSubmit()}}>
+            <Button colorScheme={'orange'} mr={3} onClick={()=>{handleSubmit()}}>
               Submit
             </Button>
-            <Button variant='ghost'>Secondary Action</Button>
+            <Button variant='ghost' onClick={onClose}>Cancel</Button>
           </ModalFooter>
         </ModalContent>
       </Modal>
