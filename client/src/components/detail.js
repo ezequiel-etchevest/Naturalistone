@@ -3,7 +3,6 @@ import EditButtons from './editButtons';
 
 
 const Detail = ({invoice}) => {
-
     return(
       <Box
         display={'flex'} flexDir={'column'} ml={'20vw'} h={'92vh'} justifyContent={'space-between'}>
