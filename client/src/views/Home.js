@@ -13,6 +13,7 @@ const Home = ({site, setSite}) => {
  
   const dispatch = useDispatch()
   const seller_invoices = useSelector(state => state.seller_invoices)
+
   const user = useSelector(state=>state.user)
   const userLocal = JSON.parse(localStorage.getItem('user'))
     
@@ -26,9 +27,10 @@ const Home = ({site, setSite}) => {
       dispatch(getInvoicesBySeller(user[0].SellerID))
     }
   },[user])
+
     function handleSite(site){
       if(site === 'Home') return(<HomeContainer/>)
-      if(site === 'Invoices') return(<InfoContainer site={site} setSite={setSite} seller_invoices={seller_invoices}/>)
+      if(site === 'Invoices') return(<InfoContainer site={site} setSite={setSite} seller_invoices={seller_invoices} userId={user[0].SellerID}/>)
       if(site === 'Stats') return (<Stats/>)
     }
 
