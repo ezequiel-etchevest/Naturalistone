@@ -30,7 +30,14 @@ const InvoiceDetail = ({site, setSite}) => {
         return(
           <>
             <SideBar user={user} site={site} setSite={setSite}/>
-            <Detail invoice={invoice}/>
+            {
+              invoice.length ? (
+                <Detail invoice={invoice}/>
+              ):(
+                <Text> Loading... </Text>
+              )
+              }
+          
           </>
         )
     }else return (<Text>Loading </Text>)

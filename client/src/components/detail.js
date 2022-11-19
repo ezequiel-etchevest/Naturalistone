@@ -10,7 +10,7 @@ const Detail = ({invoice}) => {
 				
       	<Box ml={'4vw'} mt={'6vh'}>
         	<Text fontSize={'xl'}>Invoice Details</Text>
-					<Text fontSize={'5xl'}>-{invoice[0].Naturali_Invoice}</Text>
+					<Text fontSize={'5xl'}>{invoice[0].Naturali_Invoice}</Text>
         
 				<Box ml={'4vw'} mt={'6vh'}>
         	<Text fontSize={'md'}>Customer: {invoice[0].CustomerID}</Text>

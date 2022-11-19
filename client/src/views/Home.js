@@ -26,7 +26,6 @@ const Home = ({site, setSite}) => {
       dispatch(getInvoicesBySeller(user[0].SellerID))
     }
   },[user])
-    console.log('home',{seller_invoices})
     function handleSite(site){
       if(site === 'Home') return(<HomeContainer/>)
       if(site === 'Invoices') return(<InfoContainer site={site} setSite={setSite} seller_invoices={seller_invoices}/>)

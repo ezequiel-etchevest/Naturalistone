@@ -1,5 +1,5 @@
-import { HStack, Text, Button, Select, Box } from "@chakra-ui/react";
-import { MdOutlinePayments, MdOutlineLocalShipping } from 'react-icons/md';
+import { HStack, Text, Button, Select, Box, VStack } from "@chakra-ui/react";
+import { MdOutlinePayments, MdOutlinePrint } from 'react-icons/md';
 import { useDisclosure } from "@chakra-ui/react";
 import {
     Modal,
@@ -11,7 +11,7 @@ import {
     ModalCloseButton,
   } from '@chakra-ui/react';
   import { useState } from "react";
-import { patchPaymentMEthod } from "../redux/actions";
+import { patchPaymentMethod } from "../redux/actions";
 import { useDispatch } from "react-redux";
 
 const EditButtons = ({invoice}) => {
@@ -21,11 +21,13 @@ const EditButtons = ({invoice}) => {
     const dispatch = useDispatch()
     
     const handleSelect = (e) =>{
-      if(!input.PaymentMethod.includes(e.target.value)){
-       setInput({
-        ...input,
-        PaymentMethod : [...input.PaymentMethod, e.target.value]
-       })}
+      if(e.target.value == 'Cash'|| e.target.value == 'Card'|| e.target.value == 'Wire transfer' || e.target.value == 'Check'){
+        if(!input.PaymentMethod.includes(e.target.value)){
+         setInput({
+          ...input,
+          PaymentMethod : [...input.PaymentMethod, e.target.value]
+         })}
+      }
     }
     const handleDelete = (e) =>{
       setInput({
@@ -38,27 +40,34 @@ const EditButtons = ({invoice}) => {
 
   const handleSubmit = () => {
     if(invoice){
-    dispatch(patchPaymentMEthod(invoice[0].Naturali_Invoice, input))
+    dispatch(patchPaymentMethod(invoice[0].Naturali_Invoice, input))
     setInput({PaymentMethod : []})
     onClose()}
 
   }
-
+  const handleCancel = () =>{
+    setInput({PaymentMethod : []})
+    onClose()
+  }
     return (
         <>
-        <HStack mb={'2vh'} spacing={'2vw'}>
+        <VStack ml={'4vw'} mb={'20vh'} spacing={'2vw'} align={'flex-start'}>
         <Button
+        rounded={'md'}
+        bg={'gray.200'}
+        shadow={'md'}
         onClick={onOpen}
         variant={'unstyled'} 
         display={'flex'} 
-        w={'17vw'}
-        h={'10vh'}
+        w={'19vw'}
+        h={'6vh'}
         borderRadius={'sm'} 
         placeContent={'center'}
         alignItems={'center'}
         color={'gray.700'}
         _hover={{
-            color: '#E47424'
+            color: 'white',
+            bg: '#E47424'
             }}
         _active={{
           color: '#E47424'
@@ -67,7 +76,7 @@ const EditButtons = ({invoice}) => {
             pr={'1.5vh'} 
             fontFamily={'body'} 
             fontWeight={'hairline'} 
-            >Edit Payment Method</Text>
+            >Declare Payment</Text>
             <MdOutlinePayments/>
         </Button>
         <Modal isOpen={isOpen} onClose={onClose}>
@@ -79,10 +88,11 @@ const EditButtons = ({invoice}) => {
             <Text>
               Please select payment method:
             </Text>
-            <Select placeholder='Select option' onChange={(e)=>handleSelect(e)}>
+            <Select placeholder='Select Option' onChange={(e)=>handleSelect(e)}>
               <option value='Check'>Check</option>
+              <option value='Card'>Card</option>
               <option value='Cash'>Cash</option>
-              <option value='Wire transfer'>Wire transfer</option>
+              <option value='Wire transfer'>Wire Transfer</option>
             </Select>
             {
               input.PaymentMethod.map((m, i) => {
@@ -100,33 +110,34 @@ const EditButtons = ({invoice}) => {
             <Button colorScheme={'orange'} mr={3} onClick={()=>{handleSubmit()}}>
               Submit
             </Button>
-            <Button variant='ghost' onClick={onClose}>Cancel</Button>
+            <Button variant='ghost' onClick={()=> handleCancel()}>Cancel</Button>
           </ModalFooter>
         </ModalContent>
       </Modal>
-        <Button
-         variant={'unstyled'} 
-         display={'flex'} 
-         w={'17vw'}
-         h={'10vh'}
-         borderRadius={'sm'} 
-         placeContent={'center'}
-         alignItems={'center'}
-         color={'gray.700'}
-         _hover={{
-             color: '#E47424'
-             }}
-         _active={{
-           color: '#E47424'
-         }}>
-            <Text 
-            fontFamily={'body'} 
-            fontWeight={'hairline'}  
-            pr={'1.5vh'}>Edit Shipping Method</Text>
-            <MdOutlineLocalShipping/>
-        </Button>
-       
-        </HStack>
+      <Button
+        rounded={'md'}
+        bg={'gray.200'}
+        shadow={'md'}
+        variant={'unstyled'} 
+        display={'flex'} 
+        w={'19vw'}
+        h={'6vh'}
+        borderRadius={'sm'} 
+        color={'gray.700'}
+        _hover={{
+            color: 'white',
+            bg: '#E47424'
+            }}
+        _active={{
+          color: '#E47424'
+        }}>          
+        <Text 
+        pr={'1.5vh'} 
+        fontFamily={'body'} 
+        fontWeight={'hairline'} 
+        >Print</Text>
+        <MdOutlinePrint/></Button>      
+        </VStack>
         </>
     )
 }

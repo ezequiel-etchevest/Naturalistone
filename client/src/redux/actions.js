@@ -88,14 +88,13 @@ export function getInvoiceById(id){
     }
 }
 
-export function patchPaymentMEthod(id, body){
+export function patchPaymentMethod(id, body){
 
 
     return async function(dispatch){
         try{
             let {response} = await axios.patch(`http://localhost:5000/sales/invoice/${id}`, body)
             let {data} = await axios.get(`http://localhost:5000/sales/invoice/${id}`)
-            console.log(body)
             dispatch(
             {
                 type: PATCH_PAYMENT_METHOD,
@@ -104,9 +103,7 @@ export function patchPaymentMEthod(id, body){
         }catch(error){
             console.log({error})           
 
-        }
-    }
-}
+        }}}
 
 
 // export function getCurrentInvoices(id){
