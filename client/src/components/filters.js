@@ -1,14 +1,22 @@
 import { Box, HStack, Icon, Text, Button, Input, IconButton } from "@chakra-ui/react";
 import { BsCalendar4Week } from 'react-icons/bs';
 import { SearchIcon } from '@chakra-ui/icons';
+import { getInvoicesLastWeek, getInvoicesBySeller, getInvoicesLastMonth } from "../redux/actions";
+import { useDispatch } from 'react-redux'
 
+const Filters = ({userId}) => {
+    console.log(userId)
+  const dispatch = useDispatch()
 
-
-const Filters = () => {
-    
-  // const handleClickLastWeek = () => {
-
-  // }
+  const handleClickLastWeek = () => {
+    dispatch(getInvoicesLastWeek(userId))
+  }
+  const handleClickAllInvoices = () => {
+    dispatch(getInvoicesBySeller(userId))
+  }
+  const handleClickLastMonth = () => {
+    dispatch(getInvoicesLastMonth(userId))
+  }
 
     return (
         <>
@@ -31,7 +39,31 @@ const Filters = () => {
           <Text 
             pr={'1.5vh'} 
             fontFamily={'body'} 
-            fontWeight={'hairline'} 
+            fontWeight={'hairline'}
+            onClick={()=> handleClickAllInvoices()} 
+            >All Invoices</Text>
+            <BsCalendar4Week/>
+        </Button>
+        <Button
+        variant={'unstyled'} 
+        display={'flex'} 
+        w={'17vw'}
+        h={'10vh'}
+        borderRadius={'sm'} 
+        placeContent={'center'}
+        alignItems={'center'}
+        color={'gray.700'}
+        _hover={{
+            color: '#E47424'
+            }}
+        _active={{
+          color: '#E47424'
+        }}>
+          <Text 
+            pr={'1.5vh'} 
+            fontFamily={'body'} 
+            fontWeight={'hairline'}
+            onClick={()=> handleClickLastWeek()} 
             >Last Week Invoices</Text>
             <BsCalendar4Week/>
         </Button>
@@ -52,7 +84,8 @@ const Filters = () => {
          }}>
             <Text 
             fontFamily={'body'} 
-            fontWeight={'hairline'}  
+            fontWeight={'hairline'}
+            onClick={()=> handleClickLastMonth()}  
             pr={'1.5vh'}>Last Moth Invoices</Text>
             <BsCalendar4Week/>
         </Button>

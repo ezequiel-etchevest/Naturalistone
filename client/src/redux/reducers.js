@@ -4,8 +4,9 @@ import {
     LOG_OUT ,
     GET_INVOICE_BY_ID,
     GET_INVOICES_BY_SELLER,
-    GET_CURRENT_INVOICES,
-    PATCH_PAYMENT_METHOD
+    GET_INVOICES_LASTWEEK,
+    PATCH_PAYMENT_METHOD,
+    GET_INVOICES_LASTMONTH
 } from "./actions";
 
 const intialState = {
@@ -13,7 +14,7 @@ const intialState = {
     user: [],
     invoice: {},
     seller_invoices: [],
-    current_invoices: []
+    all_invoices_by_seller: []
 }
 
 function rootReducer (state = intialState, action) {
@@ -31,7 +32,11 @@ function rootReducer (state = intialState, action) {
         case LOG_OUT:
             return {
                 ...state,
-                user: action.payload
+                user: action.payload,
+                seller_invoices: [],
+                employees: [],
+                invoice: {},
+                all_invoices_by_seller: []
             }
         
         case GET_INVOICE_BY_ID:
@@ -42,6 +47,7 @@ function rootReducer (state = intialState, action) {
         case GET_INVOICES_BY_SELLER:
             return {
                 ...state,
+                all_invoices_by_seller: action.payload,
                 seller_invoices: action.payload
             }
         case PATCH_PAYMENT_METHOD:
@@ -49,11 +55,16 @@ function rootReducer (state = intialState, action) {
                 ...state,
                 invoice: action.payload
                 }
-        // case GET_CURRENT_INVOICES:
-        //     return {
-        //         ...state,
-        //         current_invoices: action.payload
-        //     }
+        case GET_INVOICES_LASTWEEK:
+            return {
+                ...state,
+                seller_invoices: action.payload
+            }
+        case GET_INVOICES_LASTMONTH:
+            return {
+                ...state,
+                seller_invoices: action.payload
+            }
         
         default:
             return {

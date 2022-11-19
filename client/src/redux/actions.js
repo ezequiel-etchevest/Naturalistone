@@ -6,8 +6,8 @@ export const LOG_OUT = 'LOG_OUT';
 export const GET_INVOICE_BY_ID = 'GET_INVOICE_BY_ID';
 export const GET_INVOICES_BY_SELLER = 'GET_INVOICEs_BY_SELLER';
 export const PATCH_PAYMENT_METHOD = 'PATCH_PAYMENT_METHOD';
-
-// export const GET_CURRENT_INVOICES = 'GET_CURRENT_INVOICES'
+export const GET_INVOICES_LASTWEEK = 'GET_INVOICES_LASTWEEK'
+export const GET_INVOICES_LASTMONTH = 'GET_INVOICES_LASTMONTH'
 
 export function getEmployees() {
     return async function(dispatch){
@@ -109,19 +109,36 @@ export function patchPaymentMEthod(id, body){
 }
 
 
-// export function getCurrentInvoices(id){
-//     return async function(dispatch){
+export function getInvoicesLastWeek(id){
+    return async function(dispatch){
 
-//         try{
-//             let {data} = await axios.get(`http://localhost:5000/sales/invoice/${id}`)
-//             dispatch(
-//             {
-//                 type: GET_CURRENT_INVOICES,
-//                 payload: data
-//             })
-//         }catch(error){
-//             console.log({error})           
+        try{
+            let {data} = await axios.get(`http://localhost:5000/sales/lastWeek/${id}`)
+            dispatch(
+            {
+                type: GET_INVOICES_LASTWEEK,
+                payload: data
+            })
+        }catch(error){
+            console.log({error})           
 
-//         }
-//     }
-// }
+        }
+    }
+}
+
+export function getInvoicesLastMonth(id){
+    return async function(dispatch){
+
+        try{
+            let {data} = await axios.get(`http://localhost:5000/sales/lastMonth/${id}`)
+            dispatch(
+            {
+                type: GET_INVOICES_LASTMONTH,
+                payload: data
+            })
+        }catch(error){
+            console.log({error})           
+
+        }
+    }
+}

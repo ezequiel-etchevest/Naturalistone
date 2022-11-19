@@ -6,9 +6,9 @@ const mysqlConnection = require('../db')
 loginRouter.get('/', async function(req, res){
     const data = req.body
 
-    query_ = `SELECT * FROM  Loginss`;
+
+    query_ = `SELECT * FROM  Logins`;
     try{
-        console.log('lalalalalal')
          mysqlConnection.query(query_, function(error, results, fields){
             if(!results.length) {
                 console.log('Error al obtener data!')
