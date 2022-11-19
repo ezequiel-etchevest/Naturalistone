@@ -13,6 +13,7 @@ import {
   import { useState } from "react";
 import { patchPaymentMethod } from "../redux/actions";
 import { useDispatch } from "react-redux";
+import { Signature } from "./signaturePad";
 
 const EditButtons = ({invoice}) => {
 
@@ -105,7 +106,7 @@ const EditButtons = ({invoice}) => {
               })
             }
           </ModalBody>
-
+            <Signature/>
           <ModalFooter>
             <Button colorScheme={'orange'} mr={3} onClick={()=>{handleSubmit()}}>
               Submit
