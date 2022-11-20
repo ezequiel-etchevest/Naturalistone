@@ -7,7 +7,8 @@ export const GET_INVOICE_BY_ID = 'GET_INVOICE_BY_ID';
 export const GET_INVOICES_BY_SELLER = 'GET_INVOICEs_BY_SELLER';
 export const PATCH_PAYMENT_METHOD = 'PATCH_PAYMENT_METHOD';
 export const GET_INVOICES_LASTWEEK = 'GET_INVOICES_LASTWEEK'
-export const GET_INVOICES_LASTMONTH = 'GET_INVOICES_LASTMONTH'
+export const GET_INVOICES_LASTMONTH = 'GET_INVOICES_LASTMONTH';
+export const GET_FILTERED_INVOICES = 'GET_FILTERED_INVOICES'
 
 export function getEmployees() {
     return async function(dispatch){
@@ -48,8 +49,7 @@ export function logOut(){
         localStorage.clear()
         dispatch(
             {
-                type: LOG_OUT,
-                payload: []
+                type: LOG_OUT
             })
 
     }
@@ -132,6 +132,22 @@ export function getInvoicesLastMonth(id){
             {
                 type: GET_INVOICES_LASTMONTH,
                 payload: data
+            })
+        }catch(error){
+            console.log({error})           
+
+        }
+    }
+}
+
+export function getFilteredInvoices(filteredInvoices){
+    return async function(dispatch){
+        try{
+
+            dispatch(
+            {
+                type: GET_FILTERED_INVOICES,
+                payload: filteredInvoices
             })
         }catch(error){
             console.log({error})           
