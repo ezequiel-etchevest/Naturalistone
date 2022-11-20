@@ -1,5 +1,5 @@
 import {Box, Text} from '@chakra-ui/react';
-import EditButtons from './editButtons';
+import EditButtons from '../editButtons';
 
 
 const Detail = ({invoice}) => {

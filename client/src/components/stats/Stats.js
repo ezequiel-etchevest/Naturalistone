@@ -8,12 +8,16 @@ import {
     chakra,
     Highlight
   } from '@chakra-ui/react';
+  import { useDispatch, useSelector } from 'react-redux'
   import { BiDollar } from 'react-icons/bi';
   import { FaSortAmountUpAlt } from 'react-icons/fa';
   import { HiOutlineReceiptPercent } from 'react-icons/hi2';
+  import { getInvoicesLastMonth } from '../../redux/actions'
   
   function StatsCard(props) {
+    
     const { title, stat, icon } = props;
+
     return (
       <Stat
         w={'10vw'}
@@ -29,7 +33,7 @@ import {
         }}>
         <Flex justifyContent={'space-between'}>
           <Box pl={{ base: 2, md: 6 }}>
-            <StatLabel fontWeight={'medium'} isTruncated>
+            <StatLabel fontWeight={'medium'} >
               {title}
             </StatLabel>
             <StatNumber fontSize={'2xl'} fontWeight={'medium'}>
@@ -47,7 +51,12 @@ import {
     );
   }
   
-  export default function Stats() {
+  export default function Stats({all_invoices_by_seller}) {
+
+    // const seller_invoices = useSelector(state => state.all_invoices_by_seller)
+
+    console.log(all_invoices_by_seller)
+
     return (
       <Box  p={'4vw'} ml={'20vw'} >
         <chakra.h1

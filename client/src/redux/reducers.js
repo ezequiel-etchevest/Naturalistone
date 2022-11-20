@@ -7,7 +7,9 @@ import {
     GET_INVOICES_LASTWEEK,
     PATCH_PAYMENT_METHOD,
     GET_INVOICES_LASTMONTH,
-    GET_FILTERED_INVOICES
+    GET_FILTERED_INVOICES,
+    GET_ALL_PRODUCTS,
+    GET_PRODUCTS_BY_ID
 } from "./actions";
 
 const intialState = {
@@ -16,7 +18,10 @@ const intialState = {
     invoice: {},
     seller_invoices: [],
     filtered_invoices: [],
-    all_invoices_by_seller: []
+    all_invoices_by_seller: [],
+    filtered_invoices_month_week: [],
+    allProducts: [],
+    // productsByID: []
 }
 
 function rootReducer (state = intialState, action) {
@@ -37,9 +42,10 @@ function rootReducer (state = intialState, action) {
                 user: [],
                 employees: [],
                 invoice: {},
+                all_invoices_by_seller: [],
                 seller_invoices: [],
                 filtered_invoices: [],
-                filtered_invoices_month_week: []
+                filtered_invoices_month_week: [],
             }
         
         case GET_INVOICE_BY_ID:
@@ -51,7 +57,8 @@ function rootReducer (state = intialState, action) {
             return {
                 ...state,
                 seller_invoices: action.payload,
-                filtered_invoices_month_week: action.payload
+                filtered_invoices_month_week: action.payload,
+                all_invoices_by_seller: action.payload
             }
         case PATCH_PAYMENT_METHOD:
             return {
@@ -76,6 +83,17 @@ function rootReducer (state = intialState, action) {
                 seller_invoices: action.payload,
                 filtered_invoices: action.payload
             }
+        case GET_ALL_PRODUCTS:
+            return {
+                ...state,
+                allProducts: action.payload,
+            }
+        // case GET_PRODUCTS_BY_ID:
+        //     return {
+        //         ...state,
+        //         productsByID: action.payload,
+        //     }
+            
         
         default:
             return {

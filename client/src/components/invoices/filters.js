@@ -1,22 +1,23 @@
 import { Box, HStack, Icon, Text, Button, Input, IconButton, FormControl } from "@chakra-ui/react";
 import { BsCalendar4Week } from 'react-icons/bs';
 import { SearchIcon } from '@chakra-ui/icons';
-import { getInvoicesLastWeek, getInvoicesBySeller, getInvoicesLastMonth, getFilteredInvoices } from "../redux/actions";
+import { getInvoicesLastWeek, getInvoicesBySeller, getInvoicesLastMonth, getFilteredInvoices } from "../../redux/actions";
 import { useDispatch, useSelector } from 'react-redux'
 import { useState } from "react";
 
-const Filters = ({userId, seller_invoices}) => {
+const Filters = ({userId, seller_invoices, setFilteredByCustomer}) => {
 
   const dispatch = useDispatch()
-  const [errores, setErrores] = useState('')
+  const [errores, setErrores] = useState('')   
 
   const filtered_invoices_month_week = useSelector(state => state.filtered_invoices_month_week)
 
-  const handleClickLastWeek = () => {
-    dispatch(getInvoicesLastWeek(userId))
-  }
   const handleClickAllInvoices = () => {
     dispatch(getInvoicesBySeller(userId))
+    
+  }
+  const handleClickLastWeek = () => {
+    dispatch(getInvoicesLastWeek(userId))
   }
   const handleClickLastMonth = () => {
     dispatch(getInvoicesLastMonth(userId))
@@ -32,19 +33,29 @@ const Filters = ({userId, seller_invoices}) => {
       }
   }
   
-  const handleChange = (e) => {
+  const handleChangeInvoiceNumber = (e) => {
+    
     if(e.target.value.length){
       validateInput(e)
       if(!errores.length){
         const filteredInvoices = seller_invoices?.filter(d => d.Naturali_Invoice.toString().includes(e.target.value))
-        if(filteredInvoices.length){
-          dispatch(getFilteredInvoices(filteredInvoices))
-        }
+        if(!filteredInvoices.length) return alert('No Invoices match this search')
+          dispatch(getFilteredInvoices(filteredInvoices)) 
       }} else {
         dispatch(getFilteredInvoices(filtered_invoices_month_week))
         setErrores('')
       }
     }
+
+  const handleChangeCustomerName = (e) => {
+    if(e.target.value.length){
+      let filterByName = seller_invoices.filter(inv => inv.Reference.toLowerCase().includes(e.target.value))
+      if(!filterByName.length) return alert('No customer name match this search')
+      setFilteredByCustomer(filterByName)
+    } else {
+      setFilteredByCustomer([])
+    }
+  }
 
     return (
         <>
@@ -140,7 +151,7 @@ const Filters = ({userId, seller_invoices}) => {
                         size="sm"
                         borderBottomWidth="2px"
                         name='invoiceNumber'
-                        onChange={(e) => handleChange(e)}
+                        onChange={(e) => handleChangeInvoiceNumber(e)}
                       />
                       <IconButton
                         borderRadius={2}
@@ -172,10 +183,11 @@ const Filters = ({userId, seller_invoices}) => {
                   <Input
                       w={'70%'}
                       variant="unstyled"
-                      placeholder={'Company Name'}
+                      placeholder={'Customer Name'}
                       _placeholder={{ fontFamily: 'body', fontWeight: 'thin' }}
                       size="sm"
                       borderBottomWidth="2px"
+                      onChange={(e)=> handleChangeCustomerName(e)}
                     />
                     <IconButton
                       borderRadius={2}

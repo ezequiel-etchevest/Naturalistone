@@ -10,7 +10,7 @@ import {
   } from '@chakra-ui/react'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
-import { getInvoiceById } from '../redux/actions'
+import { getInvoiceById } from '../../redux/actions'
 
 
 const ModelTr = ({e, setSite}) => {
@@ -26,28 +26,29 @@ const ModelTr = ({e, setSite}) => {
     
     return(
         <Tr onClick={() => handleClick()} cursor={'pointer'} key={e.Naturali_Invoice}>
-                <Td>{e.Naturali_Invoice}</Td>
-                <Td>{e.ProjectID}</Td>
-                <Td>{e.InvoiceDate.split('T')[0]}</Td>
+                <Td textAlign={'center'}>{e.Naturali_Invoice}</Td>
+                <Td>{e.Reference}</Td>
+                <Td textAlign={'center'}>{e.InvoiceDate.split('T')[0]}</Td>
                 <Td isNumeric>${e.Value} </Td>
-                <Td>{e.PaymentStatus}</Td>
-                <Td>{e.PaymentDate}</Td>
+                <Td textAlign={'center'} >{e.PaymentStatus === null ? 'Unpaid' : 'Paid'}</Td>
+                <Td textAlign={'center'}>{e.PaymentDate}</Td>
             </Tr>
     )
 }
 
-const List = ({seller_invoices, setSite}) => {
+const List = ({seller_invoices, setSite, filteredByCustomer}) => {
 
     return(
         <Box
         h={'72vh'}
-        w={'80vw'} >
+        w={'78.8vw'} 
+        >
             <TableContainer>
-                <Table variant='striped' colorScheme='orange'>
+                <Table variant='striped' colorScheme='orange' >
                   <Thead>
                     <Tr>
                       <Th > Invoice Number </Th>
-                      <Th> Project Name </Th>
+                      <Th> Customer Name </Th>
                       <Th > Invoice Date </Th>
                       <Th isNumeric> Value </Th>
                       <Th isNumeric> Payment Status</Th>
@@ -55,10 +56,17 @@ const List = ({seller_invoices, setSite}) => {
                     </Tr>
                   </Thead>
                   <Tbody>
-                    { seller_invoices.map((e, i) => (
+                    { filteredByCustomer.length ? (
+                      filteredByCustomer.map((e, i) =>{
+                        return(
+                          <ModelTr key={i} e={e} setSite={setSite}/>
+                        )
+                      })
+                    ) : (
+                      seller_invoices.map((e, i) => (
                         <ModelTr key={i} e={e} setSite={setSite}/> 
                         ))
-                    }
+                        )}
                   </Tbody>
                 </Table>
             </TableContainer>  
