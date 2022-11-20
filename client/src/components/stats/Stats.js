@@ -11,7 +11,7 @@ import {
   import { useDispatch, useSelector } from 'react-redux'
   import { BiDollar } from 'react-icons/bi';
   import { FaSortAmountUpAlt } from 'react-icons/fa';
-  import { HiOutlineReceiptPercent } from 'react-icons/hi2';
+  import { TbReceiptTax } from 'react-icons/tb';
   import { getInvoicesLastMonth } from '../../redux/actions'
   
   function StatsCard(props) {
@@ -51,11 +51,7 @@ import {
     );
   }
   
-  export default function Stats({all_invoices_by_seller}) {
-
-    // const seller_invoices = useSelector(state => state.all_invoices_by_seller)
-
-    console.log(all_invoices_by_seller)
+  export default function Stats({currentMonth}) {
 
     return (
       <Box  p={'4vw'} ml={'20vw'} >
@@ -76,18 +72,18 @@ import {
         <HStack mt={'5vh'} columns={{ base: 1, md: 3 }} spacing={{ base: 5, lg: 8 }}>
           <StatsCard
             title={'Current Month Sales'}
-            stat={'$5,000'}
+            stat={currentMonth.TotalValue}
             icon={<BiDollar size={'3em'} />}
           />
           <StatsCard
             title={'Current Month Invoices'}
-            stat={'10'}
+            stat={currentMonth.InvoicesNumber}
             icon={<FaSortAmountUpAlt size={'3em'} />}
           />
           <StatsCard
             title={'Monthly Sales (Avg)'}
-            stat={'$70.000'}
-            icon={<HiOutlineReceiptPercent size={'3em'} />}
+            stat={currentMonth.AverageAmount}
+            icon={<TbReceiptTax size={'3em'} />}
           />
         </HStack>
       </Box>

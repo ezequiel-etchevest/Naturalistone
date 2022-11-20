@@ -11,6 +11,7 @@ export const GET_INVOICES_LASTMONTH = 'GET_INVOICES_LASTMONTH';
 export const GET_FILTERED_INVOICES = 'GET_FILTERED_INVOICES';
 export const GET_ALL_PRODUCTS = 'GET_ALL_PRODUCTS';
 export const GET_PRODUCTS_BY_ID = 'GET_PRODUCTS_BY_ID'
+export const GET_CURRENT_MONTH = 'GET_CURRENT_MONTH'
 
 export function getEmployees() {
     return async function(dispatch){
@@ -174,19 +175,18 @@ export function getAllProducts(){
         }
     }
 }
-// export function getProductsByID(){
-//     return async function(dispatch){
-//         try{ 
-//             let {data} = await axios.get(`http://localhost:5000/products/:id`)
+export function getCurrentMonth(id){
+    return async function(dispatch){
+        try{ 
+            let {data} = await axios.get(`http://localhost:5000/sales/currentMonth/${id}`)
             
-//             dispatch(
-//             {
-//                 type: GET_PRODUCTS_BY_ID,
-//                 payload: data
-//             })
-//         }catch(error){
-//             console.log({error})           
-
-//         }
-//     }
-// }
+            dispatch(
+            {
+                type: GET_CURRENT_MONTH,
+                payload: data
+            })
+        }catch(error){
+            console.log({error})
+        }
+    }
+}

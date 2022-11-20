@@ -6,7 +6,7 @@ import InfoContainer from "../components/invoices/infoContainer";
 import ProductsContainer from "../components/products/productsContainer";
 import Stats from "../components/stats/Stats";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllProducts, getEmployeeById, getInvoicesBySeller } from "../redux/actions";
+import { getAllProducts, getEmployeeById, getInvoicesBySeller, getCurrentMonth } from "../redux/actions";
 
 
 const Home = ({site, setSite}) => {
@@ -16,24 +16,32 @@ const Home = ({site, setSite}) => {
   const seller_invoices = useSelector(state => state.seller_invoices)
   const user = useSelector(state => state.user)
   const allProducts = useSelector(state => state.allProducts)
+  const currentMonth = useSelector(state => state.current_month)
 
   const userLocal = JSON.parse(localStorage.getItem('user'))
     
     useEffect(()=>{
         if(userLocal && !user.length){
-          dispatch(getEmployeeById(userLocal.SellerID))}
+          dispatch(getEmployeeById(userLocal.SellerID))
+        }
         if(!allProducts.length){
           dispatch(getAllProducts())
+        }},[])
+
+      useEffect(() => {
+        if(user.length && Object.entries(currentMonth) == 0){
+          dispatch(getCurrentMonth(user[0].SellerID))
         }
         if(user.length && !seller_invoices.length){
           dispatch(getInvoicesBySeller(user[0].SellerID))
-      }},[])
-      
+      }}, [user])
+
+      console.log('Home', seller_invoices)
     function handleSite(site){
       if(site === 'Home') return(<HomeContainer/>)
       if(site === 'Products') return(<ProductsContainer allProducts={allProducts}/>)
       if(site === 'Invoices') return(<InfoContainer site={site} setSite={setSite} seller_invoices={seller_invoices} userId={user[0].SellerID}/>)
-      if(site === 'Stats') return (<Stats />)
+      if(site === 'Stats') return (<Stats currentMonth={currentMonth} />)
     }
 
       if(user.length){
