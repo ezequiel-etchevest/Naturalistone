@@ -65,6 +65,7 @@ const SideBar = ({user, site, setSite}) => {
 
     const handleLogOut = () => {
       dispatch(logOut())
+      setSite('Home')
       navigate('/login')
     }
     
