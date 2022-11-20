@@ -32,6 +32,14 @@ function getLimitDateMonth(){
       return `${year}-${month}-${day}`
   }
   
+  function getCurrentMonth(){
+
+    const today = new Date()
+    const string = today.toISOString()
+    const actualDate = cutDate(string)
+    
+    return `${actualDate.year}-${actualDate.month}-01`
+  }
 
 
-module.exports = getLimitDateMonth
+module.exports = {getLimitDateMonth, getCurrentMonth}

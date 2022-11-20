@@ -6,9 +6,11 @@ export const LOG_OUT = 'LOG_OUT';
 export const GET_INVOICE_BY_ID = 'GET_INVOICE_BY_ID';
 export const GET_INVOICES_BY_SELLER = 'GET_INVOICEs_BY_SELLER';
 export const PATCH_PAYMENT_METHOD = 'PATCH_PAYMENT_METHOD';
-export const GET_INVOICES_LASTWEEK = 'GET_INVOICES_LASTWEEK'
+export const GET_INVOICES_LASTWEEK = 'GET_INVOICES_LASTWEEK';
 export const GET_INVOICES_LASTMONTH = 'GET_INVOICES_LASTMONTH';
-export const GET_FILTERED_INVOICES = 'GET_FILTERED_INVOICES'
+export const GET_FILTERED_INVOICES = 'GET_FILTERED_INVOICES';
+export const GET_ALL_PRODUCTS = 'GET_ALL_PRODUCTS';
+export const GET_PRODUCTS_BY_ID = 'GET_PRODUCTS_BY_ID'
 
 export function getEmployees() {
     return async function(dispatch){
@@ -155,3 +157,36 @@ export function getFilteredInvoices(filteredInvoices){
         }
     }
 }
+
+export function getAllProducts(){
+    return async function(dispatch){
+        try{ 
+            let {data} = await axios.get(`http://localhost:5000/products`)
+            
+            dispatch(
+            {
+                type: GET_ALL_PRODUCTS,
+                payload: data
+            })
+        }catch(error){
+            console.log({error})           
+
+        }
+    }
+}
+// export function getProductsByID(){
+//     return async function(dispatch){
+//         try{ 
+//             let {data} = await axios.get(`http://localhost:5000/products/:id`)
+            
+//             dispatch(
+//             {
+//                 type: GET_PRODUCTS_BY_ID,
+//                 payload: data
+//             })
+//         }catch(error){
+//             console.log({error})           
+
+//         }
+//     }
+// }
