@@ -7,7 +7,7 @@ export const GET_INVOICE_BY_ID = 'GET_INVOICE_BY_ID';
 export const GET_INVOICES_BY_SELLER = 'GET_INVOICEs_BY_SELLER';
 export const PATCH_PAYMENT_METHOD = 'PATCH_PAYMENT_METHOD';
 export const GET_INVOICES_LASTWEEK = 'GET_INVOICES_LASTWEEK'
-export const GET_INVOICES_LASTMONTH = 'GET_INVOICES_LASTMONTH'
+export const GET_INVOICES_LASTMONTH = 'GET_INVOICES_LASTMONTH';
 
 export function getEmployees() {
     return async function(dispatch){
@@ -139,3 +139,4 @@ export function getInvoicesLastMonth(id){
         }
     }
 }
+

@@ -5,7 +5,7 @@ import { getInvoicesLastWeek, getInvoicesBySeller, getInvoicesLastMonth } from "
 import { useDispatch } from 'react-redux'
 
 const Filters = ({userId}) => {
-    console.log(userId)
+
   const dispatch = useDispatch()
 
   const handleClickLastWeek = () => {

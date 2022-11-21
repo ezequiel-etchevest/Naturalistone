@@ -17,6 +17,7 @@ import { Signature } from "./signaturePad";
 
 const EditButtons = ({invoice}) => {
 
+    const [imgURL, setImgURL ] = useState(null)
     const { isOpen, onOpen, onClose } = useDisclosure()
     const [input, setInput] = useState({PaymentMethod : []})
     const dispatch = useDispatch()
@@ -38,14 +39,13 @@ const EditButtons = ({invoice}) => {
         })
       })
     }
-
   const handleSubmit = () => {
-    if(invoice){
+    if(invoice &&  imgURL ){
     dispatch(patchPaymentMethod(invoice[0].Naturali_Invoice, input))
     setInput({PaymentMethod : []})
     onClose()}
-
   }
+  
   const handleCancel = () =>{
     setInput({PaymentMethod : []})
     onClose()
@@ -106,7 +106,7 @@ const EditButtons = ({invoice}) => {
               })
             }
           </ModalBody>
-            <Signature/>
+          <Signature imgURL={imgURL} setImgURL={setImgURL}/>
           <ModalFooter>
             <Button colorScheme={'orange'} mr={3} onClick={()=>{handleSubmit()}}>
               Submit

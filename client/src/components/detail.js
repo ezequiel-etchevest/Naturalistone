@@ -1,8 +1,13 @@
 import {Box, Text} from '@chakra-ui/react';
 import EditButtons from './editButtons';
+import { useState } from 'react';
+import PdfVisual from '../pdf/pdfiVisual';
 
 
 const Detail = ({invoice}) => {
+
+	const [pdf, setPdf ] = useState('')
+
     return(
       <Box
         display={'flex'} flexDir={'column'} ml={'20vw'} h={'92vh'} justifyContent={'space-between'}>
@@ -21,8 +26,9 @@ const Detail = ({invoice}) => {
         </Box>
 				</Box>
 				<Box>
-				<EditButtons invoice={invoice}/>  
-				</Box>      
+				<EditButtons invoice={invoice} setPdf={setPdf}/>  
+				</Box>
+				<PdfVisual/>      
         </Box>
     )
 }
