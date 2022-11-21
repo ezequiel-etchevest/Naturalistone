@@ -8,12 +8,16 @@ import {
     chakra,
     Highlight
   } from '@chakra-ui/react';
+  import { useDispatch, useSelector } from 'react-redux'
   import { BiDollar } from 'react-icons/bi';
   import { FaSortAmountUpAlt } from 'react-icons/fa';
-  import { HiOutlineReceiptPercent } from 'react-icons/hi2';
+  import { TbReceiptTax } from 'react-icons/tb';
+  import { getInvoicesLastMonth } from '../../redux/actions'
   
   function StatsCard(props) {
+    
     const { title, stat, icon } = props;
+
     return (
       <Stat
         w={'10vw'}
@@ -29,7 +33,7 @@ import {
         }}>
         <Flex justifyContent={'space-between'}>
           <Box pl={{ base: 2, md: 6 }}>
-            <StatLabel fontWeight={'medium'} isTruncated>
+            <StatLabel fontWeight={'medium'} >
               {title}
             </StatLabel>
             <StatNumber fontSize={'2xl'} fontWeight={'medium'}>
@@ -47,7 +51,8 @@ import {
     );
   }
   
-  export default function Stats() {
+  export default function Stats({currentMonth}) {
+
     return (
       <Box  p={'4vw'} ml={'20vw'} >
         <chakra.h1
@@ -67,18 +72,18 @@ import {
         <HStack mt={'5vh'} columns={{ base: 1, md: 3 }} spacing={{ base: 5, lg: 8 }}>
           <StatsCard
             title={'Current Month Sales'}
-            stat={'$5,000'}
+            stat={currentMonth.TotalValue}
             icon={<BiDollar size={'3em'} />}
           />
           <StatsCard
             title={'Current Month Invoices'}
-            stat={'10'}
+            stat={currentMonth.InvoicesNumber}
             icon={<FaSortAmountUpAlt size={'3em'} />}
           />
           <StatsCard
             title={'Monthly Sales (Avg)'}
-            stat={'$70.000'}
-            icon={<HiOutlineReceiptPercent size={'3em'} />}
+            stat={currentMonth.AverageAmount}
+            icon={<TbReceiptTax size={'3em'} />}
           />
         </HStack>
       </Box>

@@ -11,7 +11,7 @@ const NavBar = () => {
 	return (
     <Flex	
       bg={'white'}
-      w={'100vw'}
+      w={'98vw'}
       h={'8vh'}
       zIndex={'1'}>
 

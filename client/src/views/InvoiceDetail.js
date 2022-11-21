@@ -4,7 +4,7 @@ import { Text } from "@chakra-ui/react";
 import { useSelector, useDispatch } from "react-redux";
 import { getInvoiceById, getEmployeeById } from "../redux/actions";
 import { useParams } from "react-router-dom";
-import Detail from '../components/detail';
+import Detail from '../components/invoices/detail';
 
 
 
