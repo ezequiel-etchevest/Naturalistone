@@ -10,17 +10,18 @@ import logo from '../assets/NaturalistoneLogo.png'
 const NavBar = () => {
 	return (
     <Flex	
-      bg={'white'}
-      w={'98vw'}
+      bg={'web.sideBar'}
+      w={'100vw'}
       h={'8vh'}
-      zIndex={'1'}>
-
-        <Spacer/>
+      zIndex={'1'}
+      justifyContent={'flex-end'}
+      pr={'2vw'}>
         <Box
           h={'8vh'}
           w={'16vw'}
-          display={'flex'}>
-            <Image src={logo}  objectFit={'contain'}/>
+          display={'flex'}
+          >
+          <Image src={logo}  objectFit={'contain'}/>
         </Box>
 
     </Flex>

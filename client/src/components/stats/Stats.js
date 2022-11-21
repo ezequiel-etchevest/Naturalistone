@@ -8,11 +8,10 @@ import {
     chakra,
     Highlight
   } from '@chakra-ui/react';
-  import { useDispatch, useSelector } from 'react-redux'
   import { BiDollar } from 'react-icons/bi';
   import { FaSortAmountUpAlt } from 'react-icons/fa';
   import { TbReceiptTax } from 'react-icons/tb';
-  import { getInvoicesLastMonth } from '../../redux/actions'
+
   
   function StatsCard(props) {
     
@@ -25,25 +24,27 @@ import {
         py={'5'}
         shadow={'lg'}
         border={'1px solid'}
-        borderColor={'gray.500'}
+        borderColor={'web.border'}
         rounded={'md'}
+        color={'web.text'}
         _hover={{
-            bg: '#E47424',
-            color: 'white'
+            bg: 'logo.orange',
+            color: 'web.text'
         }}>
         <Flex justifyContent={'space-between'}>
           <Box pl={{ base: 2, md: 6 }}>
             <StatLabel fontWeight={'medium'} >
               {title}
             </StatLabel>
-            <StatNumber fontSize={'2xl'} fontWeight={'medium'}>
+            <StatNumber fontSize={'4xl'} fontWeight={'medium'} >
               {stat}
             </StatNumber>
           </Box>
           <Box
             my={'auto'}
-            color={'gray.700'}
-            alignContent={'center'}>
+            color={'web.text'}
+            alignContent={'center'}
+            >
             {icon}
           </Box>
         </Flex>
@@ -54,14 +55,14 @@ import {
   export default function Stats({currentMonth}) {
 
     return (
-      <Box  p={'4vw'} ml={'20vw'} >
+      <Box h={'92vh'}  p={'4vw'} ml={'20vw'} bg={'web.bg'} >
         <chakra.h1
         textAlign={'center'}
         fontSize={'4xl'}
         py={10}
-        color={'gray.700'}
+        color={'web.text2'}
         fontWeight={'normal'}
-        fontFamily={'body'}>
+        >
         <Highlight
             query={['ON THE GO!']}
             styles={{ px: '2', py: '1', color: '#E47424' }}

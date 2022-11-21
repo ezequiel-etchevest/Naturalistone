@@ -1,10 +1,11 @@
-import { Box, Input, FormControl, FormLabel, Center, Button, InputGroup, InputRightElement, VStack, Text } from "@chakra-ui/react";
+import { Box, Input, FormControl, FormLabel, Center, Button, InputGroup, InputRightElement, Text, IconButton } from "@chakra-ui/react";
 import { Formik } from "formik";
 import { useState,  useEffect} from "react";
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux'
 import { getEmployeeById, getEmployees } from "../redux/actions";
-
+import {  AiOutlineEyeInvisible, AiOutlineEye } from 'react-icons/ai'
+import { CgLogIn } from 'react-icons/cg'
 
 const LogInForm = () => {
   
@@ -32,9 +33,10 @@ const LogInForm = () => {
 
     return (
         <Center
-        h={'100vh'}
+        h={'92vh'}
         w={'100vw'}
         display={'flex'}
+        bg={'web.bg'}
       >
         <Formik
         initialValues={{
@@ -82,17 +84,33 @@ const LogInForm = () => {
             touched
           })=>(
 
-          <VStack
-            p={5}
+          <Box
+            display={'flex'}
             flexDir={'column'}
+            pt={'4vh'}
+            pb={'5vh'}
+            pl={'2vw'}
+            pr={'2vw'}
             w={'25vw'}
             h={'50vh'}
-            backgroundColor={'white'}
-            placeContent={'center'}
-          >
-              <FormControl>
+            alignItems={'center'}
+            justifyContent={'space-around'}
+            backgroundColor={'web.sideBar'}
+            color={'web.text'}
+            rounded={'md'}
+            border={'1px solid'}
+            borderColor={'web.border'}
+          > 
+          <Box
+            h={'70%'}
+            display={'flex'}
+            flexDir={'column'}
+            justifyContent={'space-around'}>
+              <FormControl >
                 <FormLabel>Username </FormLabel>
                 <Input
+                  borderColor={'web.border'}
+                  bg={'web.bg'}
                   id="email"
                   placeholder="Username"
                   name="email"
@@ -100,9 +118,13 @@ const LogInForm = () => {
                   value={values.email}
                   onChange={handleChange}
                   onBlur={handleBlur}
+                  _focus={{
+                    borderColor: 'logo.orange',
+                    boxShadow: '0 0.5px 0.5px rgba(229, 103, 23, 0.075)inset, 0 0 5px rgba(255,144,0,0.6)'
+                  }}
                 />
                 {touched.email && errors.email && (
-                      <Text color="red.300" size="xxs">
+                      <Text  m={'0.5vh'} position={'absolute'} color={'web.error'} fontSize={'xs'}>
                         {errors.email}
                       </Text>
                     )}
@@ -111,6 +133,8 @@ const LogInForm = () => {
                 <FormLabel>Password</FormLabel>
                 <InputGroup>
                   <Input
+                    borderColor={'web.border'}
+                    bg={'web.bg'}
                     id="password"
                     name="password"
                     pr="70px"
@@ -119,46 +143,70 @@ const LogInForm = () => {
                     value={values.password}
                     onChange={handleChange}
                     onBlur={handleBlur}
-
+                    _focus={{
+                      borderColor: 'logo.orange',
+                      boxShadow: '0 0.5px 0.5px rgba(229, 103, 23, 0.075)inset, 0 0 5px rgba(255,144,0,0.6)'
+                    }}
                   />
-                  <InputRightElement width="70px">
-                    <Button h="30px" size="sm" onClick={handleShowClick}>
-                      {show ? 'Hide' : 'Show'}
-                    </Button>
+                  <InputRightElement width={'3vw'}>
+                    <IconButton
+                    _hover={{
+                      color: 'white'
+                    }} 
+                    color={'web.text2'} 
+                    colorScheme={'Gray'}
+                    size={'lg'}
+                    onClick={handleShowClick}
+                    icon={show ? <AiOutlineEyeInvisible/> :< AiOutlineEye/>}
+                    >
+                    </IconButton>
                   </InputRightElement>
                 </InputGroup>
                 {touched.password && errors.password && (
-                      <Text color="red.300" size="xs">
+                      <Text m={'0.5vh'} position={'absolute'} color={'web.error'} fontSize={'xs'}>
                         {errors.password}
                       </Text>)}
               </FormControl>
+          </Box>
+              <Box mt={'2vh'}>
               {Object.entries(errors).length ? (
                     <Button
+                      rightIcon={<CgLogIn/>}
+                      p={'3vh'}
+                      pb={'3.2vh'}
+                      bg={'logo.orange'}
+                      color={'web.text'}
                       disabled={true}
                       type="submit"
-                      mt="10px"
-                      onClick={handleSubmit}
+                      _hover={{
+                        bg: '#c46521'
+                      }}
                     >
                       Log In
                     </Button>
                   ) : (
                     <Button
+                      rightIcon={<CgLogIn/>}
+                      boxShadow={'0px 0px 5px 0px rgba(255,144,0,0.6)'}
+                      p={'3vh'}
+                      pb={'3.2vh'}
+                      bg={'logo.orange'}
+                      color={'web.text'}
                       disabled={false}
                       type="submit"
-                      mt="10px"
                       onClick={handleSubmit}
+                      _hover={{
+                        bg: '#c46521'
+                      }}
+                      _active={{
+                        bg: '#c46521'
+                      }}
                     >
                       Log In
                     </Button>
                   )}
-            <Box
-            >
-            </Box>
-            <Center
-             
-            >        
-            </Center>
-          </VStack>
+                  </Box>
+          </Box>
 
           )}
         </Formik>

@@ -1,62 +1,66 @@
-import {
-	Box, Icon, Flex, Avatar, HStack, Text
-  } from '@chakra-ui/react';
-import { FaFileInvoiceDollar, FaHome, FaBox } from 'react-icons/fa'
+import {	Box, Icon, Flex, Avatar, HStack, Text   } from '@chakra-ui/react';
+import { FaFileInvoiceDollar, FaHome, FaBoxOpen } from 'react-icons/fa'
 import { CgLogOut } from 'react-icons/cg'
-import { BiStats } from 'react-icons/bi'
 import mitu from '../assets/mitutu.jpg';
 import { useNavigate } from 'react-router';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { logOut } from '../redux/actions';
 
 
 const LinkItems = [
   { name: 'Home', icon: FaHome },
   { name: 'Invoices', icon: FaFileInvoiceDollar },
-  { name: 'Products', icon: FaBox },
-  { name: 'Stats', icon: BiStats },
+  { name: 'Products', icon: FaBoxOpen },
   { name: 'Log Out', icon: CgLogOut },
-];
+  ];
 
 
 const SideBar = ({user, site, setSite}) => {
 
 	return (
 
-	<Box
-  top={'0vh'}
-	pos={'fixed'}
-	bg={'whitesmoke'}
-  w={'20vw'}
-  h={'100vh'}
-  zIndex={'10'}
-  pl={5}
-	>
- 
-  <HStack mt={'4vh'} mb={'4vh'}>
-    <Avatar
-      size={'md'}
-      src={mitu}
-    />
-    <Text fontSize="s" pl={'1.5vh'}> {user[0].FirstName} {user[0].LastName} </Text>
-  </HStack>
-  <Box  pr={12} pt={'6vh'}>
-          {LinkItems.map((link) => (
-            <NavItem
-              setSite={setSite}
-              site={site}
-              textDecoration={'none'}
-              link={link}
-              key={link.name}
-              icon={link.icon}
-              mt={5}
-            >
-              {link.name}
-            </NavItem>
+	  <Box
+      top={'0vh'}
+	    pos={'fixed'}
+	    bg={'web.sideBar'}
+      w={'20vw'}
+      h={'100vh'}
+      zIndex={'10'}
+      pl={'2vw'}
+      borderRight={'1px solid'}
+      borderColor={'web.border'}
+	    > 
+    <HStack mt={'4vh'} mb={'4vh'}>
+      <Avatar
+        size={'md'}
+        src={mitu}
+        />
+      <Text
+      color={'web.text'} 
+      fontWeight={'normal'} 
+      letterSpacing={'wide'} 
+      fontSize={'2.9vh'} 
+      pl={'1.5vh'}> 
+        {user[0].FirstName} {user[0].LastName}
+      </Text>
+    </HStack>
+    <Box  pr={12} pt={'6vh'}>
+      {LinkItems.map((link) => (
+        <NavItem
+          setSite={setSite}
+          site={site}
+          textDecoration={'none'}
+          link={link}
+          key={link.name}
+          icon={link.icon}
+          mt={5}
+        >
+          {link.name}
+        </NavItem>
           ))}
-  </Box>
-  </Box>
-	);
+      </Box>
+    </Box>
+	  );
   }
   
   const NavItem = ({ site, setSite, icon, link, children, ...rest }) => {
@@ -76,13 +80,13 @@ const SideBar = ({user, site, setSite}) => {
 
     return (
       <Box
+        color={'web.text2'}
         bg={'none'}
-        fontWeight={'normal'}
-        fontSize={'md'}
+        fontSize={'lg'}
         style={{ textDecoration: 'none' }}
         _focus={{ boxShadow: 'none' }}
         onClick={link.name === 'Log Out' ? ()=> {handleLogOut()} : ()=>handleClick()}
-      >
+        >
         <Flex
           align="center"
           p="3"
@@ -95,11 +99,11 @@ const SideBar = ({user, site, setSite}) => {
             color: 'white',
           }}
           {...rest}
-        >
+          >
           {icon && (
             <Icon
-              mr="4"
-              fontSize="20"
+              mr={'2vw'}
+              fontSize={'3.5vh'}
               _groupHover={{
                 color: 'white',
               }}

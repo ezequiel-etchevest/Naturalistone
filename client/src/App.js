@@ -5,13 +5,14 @@ import Home from './views/Home';
 import NavBar from './components/navBar';
 import InvoiceDetail from './views/InvoiceDetail';
 import { useState } from 'react';
+import { naturali_theme } from './theme';
 
 function App() {
 
   const [site, setSite ] = useState('home')
 
   return (
-    <ChakraProvider>
+    <ChakraProvider theme={naturali_theme}>
     <BrowserRouter>
     <div className="App">
     <NavBar/>

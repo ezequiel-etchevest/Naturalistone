@@ -1,4 +1,4 @@
-import { Box, HStack, Icon, Text, Button, Input, IconButton, FormControl } from "@chakra-ui/react";
+import { Box, HStack, Text, Button, Input, IconButton, FormControl } from "@chakra-ui/react";
 import { BsCalendar4Week } from 'react-icons/bs';
 import { SearchIcon } from '@chakra-ui/icons';
 import { getInvoicesLastWeek, getInvoicesBySeller, getInvoicesLastMonth, getFilteredInvoices } from "../../redux/actions";
@@ -9,7 +9,6 @@ const Filters = ({userId, seller_invoices, setFilteredByCustomer}) => {
 
   const dispatch = useDispatch()
   const [errores, setErrores] = useState('')   
-
   const filtered_invoices_month_week = useSelector(state => state.filtered_invoices_month_week)
 
   const handleClickAllInvoices = () => {
@@ -34,7 +33,6 @@ const Filters = ({userId, seller_invoices, setFilteredByCustomer}) => {
   }
   
   const handleChangeInvoiceNumber = (e) => {
-    
     if(e.target.value.length){
       validateInput(e)
       if(!errores.length){
@@ -59,22 +57,26 @@ const Filters = ({userId, seller_invoices, setFilteredByCustomer}) => {
 
     return (
         <>
-        <HStack ml={'2vw'} mb={'5vh'} mt={'5vh'} mr={'2vw'} h={'20vh'} spacing={'1.5vw'}>
-        <Button
-        variant={'unstyled'} 
-        display={'flex'} 
-        w={'10vw'}
-        h={'10vh'}
-        borderRadius={'sm'} 
-        placeContent={'center'}
-        alignItems={'center'}
-        color={'gray.700'}
-        _hover={{
-            color: '#E47424'
-            }}
-        _active={{
-          color: '#E47424'
-        }}>
+        <HStack 
+          ml={'2.8vw'}  
+          mr={'2vw'} 
+          h={'20vh'} 
+          spacing={'1.5vw'}>
+          <Button
+            variant={'unstyled'} 
+            display={'flex'} 
+            w={'10vw'}
+            h={'10vh'}
+            borderRadius={'sm'} 
+            placeContent={'center'}
+            alignItems={'center'}
+            color={'web.text2'}
+            _hover={{
+                color: 'logo.orange'
+                }}
+            _active={{
+              color: 'logo.orange'
+          }}>
           <Text 
             pr={'1.5vh'} 
             fontFamily={'body'} 
@@ -91,12 +93,12 @@ const Filters = ({userId, seller_invoices, setFilteredByCustomer}) => {
         borderRadius={'sm'} 
         placeContent={'center'}
         alignItems={'center'}
-        color={'gray.700'}
+        color={'web.text2'}
         _hover={{
-            color: '#E47424'
+          color: 'logo.orange'
             }}
         _active={{
-          color: '#E47424'
+          color: 'logo.orange'
         }}>
           <Text 
             pr={'1.5vh'} 
@@ -114,12 +116,12 @@ const Filters = ({userId, seller_invoices, setFilteredByCustomer}) => {
          borderRadius={'sm'} 
          placeContent={'center'}
          alignItems={'center'}
-         color={'gray.700'}
+         color={'web.text2'}
          _hover={{
-             color: '#E47424'
+          color: 'logo.orange'
              }}
          _active={{
-           color: '#E47424'
+          color: 'logo.orange'
          }}>
             <Text 
             fontFamily={'body'} 
@@ -128,81 +130,86 @@ const Filters = ({userId, seller_invoices, setFilteredByCustomer}) => {
             pr={'1.5vh'}>Last Moth Invoices</Text>
             <BsCalendar4Week/>
         </Button>
-        <Box
-        display={'flex'}
-        alignItems={'center'}
-        justifyContent={'space-between'}
-        pl={'2vw'}
-        w={'38vw'}
-        >
-          
-                <Box
-                  display={'flex'}
-                  alignItems={'center'}
-                  w={'19vw'}
-                  h={'15vh'}
-                  >
-                    <FormControl>
-                    <Input
-                        w={'70%'}
-                        variant="unstyled"
-                        placeholder={'Invoice number'}
-                        _placeholder={{ fontFamily: 'body', fontWeight: 'thin' }}
-                        size="sm"
-                        borderBottomWidth="2px"
-                        name='invoiceNumber'
-                        onChange={(e) => handleChangeInvoiceNumber(e)}
-                      />
-                      <IconButton
-                        borderRadius={2}
-                        aria-label="Search database"
-                        bgColor={'white'}
-                        ml={1}
-                        icon={<SearchIcon />}
-                        _hover={{
-                          color: 'orange',
-                        }}
-                        _active={{ color: 'gray.800'}}
-                      />
+          <Box
+            display={'flex'}
+            alignItems={'center'}
+            justifyContent={'space-between'}
+            pl={'2vw'}
+            w={'38vw'}
+            >
+            <Box
+              display={'flex'}
+              alignItems={'center'}
+              w={'19vw'}
+              h={'15vh'}
+              >
+              <FormControl>
+                <Input
+                  w={'70%'}
+                  variant={"unstyled"}
+                  placeholder={'Invoice number'}
+                  _placeholder={{ fontFamily: 'body', fontWeight: 'thin' }}
+                  size={"sm"}
+                  borderBottomWidth={"2px"}
+                  name={'invoiceNumber'}
+                  textColor={'web.text'}
+                  onChange={(e) => handleChangeInvoiceNumber(e)}
+                  borderBottomColor={'web.text2'}
+                  />
+                  <IconButton
+                    color={'web.text2'}
+                    borderRadius={2}
+                    aria-label="Search database"
+                    bgColor={'web.bg'}
+                    ml={1}
+                    icon={<SearchIcon />}
+                    _hover={{
+                      color: 'logo.orange',
+                    }}
+                    _active={{ color: 'logo.orange'}}
+                  />
                       
-                      {
-                      errores.length >= 1 && (
-                        <Box position={'absolute'} display={'flex'}>
-                         <Text color="red.300" fontSize={'12px'} display={'flex'}>
-                            {errores}
-                         </Text>
-                        </Box>
-                      )}
-                      </FormControl>
-                </Box>
-                <Box
-                  display={'flex'}
-                  alignItems={'center'} 
-                  w={'19vw'}
-                  h={'10vh'}>
-                  <Input
-                      w={'70%'}
-                      variant="unstyled"
-                      placeholder={'Customer Name'}
-                      _placeholder={{ fontFamily: 'body', fontWeight: 'thin' }}
-                      size="sm"
-                      borderBottomWidth="2px"
-                      onChange={(e)=> handleChangeCustomerName(e)}
-                    />
-                    <IconButton
-                      borderRadius={2}
-                      aria-label="Search database"
-                      bgColor={'white'}
-                      ml={1}
-                      icon={<SearchIcon />}
-                      _hover={{
-                        color: 'orange',
-                      }}
-                      _active={{ color: 'gray.800'}}
-                    />
-                  </Box>
-        </Box>
-        
+                  {
+                    errores.length >= 1 && (
+                      <Box position={'absolute'} display={'flex'}>
+                        <Text color={'web.error'} fontSize={'12px'} display={'flex'}>
+                          {errores}
+                        </Text>
+                      </Box>
+                    )}
+              </FormControl>
+            </Box>
+              <Box
+                display={'flex'}
+                alignItems={'center'} 
+                w={'19vw'}
+                h={'10vh'}>
+                <Input
+                  w={'70%'}
+                  variant="unstyled"
+                  placeholder={'Customer Name'}
+                  textColor={'web.text'}
+                  _placeholder={{ fontFamily: 'body', fontWeight: 'thin' }}
+                  size={"sm"}
+                  borderBottomWidth={"2px"}
+                  borderBottomColor={'web.text2'}
+                  onChange={(e)=> handleChangeCustomerName(e)}
+                  
+                />
+                <IconButton
+                  color={'web.text2'}
+                  borderRadius={2}
+                  aria-label="Search database"
+                  bgColor={'web.bg'}
+                  ml={1}
+                  icon={<SearchIcon />}
+                  _hover={{
+                    color: 'orange',
+                  }}
+                  _active={{ color: 'gray.800'}}
+                />
+            </Box>
+          </Box>
         </HStack>
         </>
     )

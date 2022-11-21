@@ -4,7 +4,6 @@ import { Box, Text } from "@chakra-ui/react";
 import HomeContainer from "../components/homeContainer";
 import InfoContainer from "../components/invoices/infoContainer";
 import ProductsContainer from "../components/products/productsContainer";
-import Stats from "../components/stats/Stats";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllProducts, getEmployeeById, getInvoicesBySeller, getCurrentMonth } from "../redux/actions";
 
@@ -38,10 +37,9 @@ const Home = ({site, setSite}) => {
 
       console.log('Home', seller_invoices)
     function handleSite(site){
-      if(site === 'Home') return(<HomeContainer/>)
+      if(site === 'Home') return(<HomeContainer currentMonth={currentMonth}/>)
       if(site === 'Products') return(<ProductsContainer allProducts={allProducts}/>)
       if(site === 'Invoices') return(<InfoContainer site={site} setSite={setSite} seller_invoices={seller_invoices} userId={user[0].SellerID}/>)
-      if(site === 'Stats') return (<Stats currentMonth={currentMonth} />)
     }
 
       if(user.length){

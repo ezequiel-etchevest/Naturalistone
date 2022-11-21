@@ -1,5 +1,5 @@
 import {Box, Text} from '@chakra-ui/react';
-import EditButtons from './editButtons';
+import EditButtons from '../editButtons';
 import { useState } from 'react';
 import PdfVisual from '../pdf/pdfiVisual';
 
@@ -10,7 +10,7 @@ const Detail = ({invoice}) => {
 
     return(
       <Box
-        display={'flex'} flexDir={'column'} ml={'20vw'} h={'92vh'} justifyContent={'space-between'}>
+       bg={'web.bg'} display={'flex'} flexDir={'column'} ml={'20vw'} h={'92vh'} justifyContent={'space-between'}>
 				
       	<Box ml={'4vw'} mt={'6vh'}>
         	<Text fontSize={'xl'}>Invoice Details</Text>

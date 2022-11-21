@@ -25,7 +25,15 @@ const ModelTr = ({e, setSite}) => {
     }
     
     return(
-        <Tr onClick={() => handleClick()} cursor={'pointer'} key={e.Naturali_Invoice}>
+        <Tr 
+        onClick={() => handleClick()} 
+        cursor={'pointer'} 
+        key={e.Naturali_Invoice}
+        _hover={{
+          bg: 'web.navBar',
+          color: 'logo.orange'
+          
+        }}>
                 <Td textAlign={'center'}>{e.Naturali_Invoice}</Td>
                 <Td>{e.Reference}</Td>
                 <Td textAlign={'center'}>{e.InvoiceDate.split('T')[0]}</Td>
@@ -40,22 +48,35 @@ const List = ({seller_invoices, setSite, filteredByCustomer}) => {
 
     return(
         <Box
+        display={'flex'}
+        justifyContent={'center'}
         h={'72vh'}
         w={'78.8vw'} 
         >
+          <Box
+            maxHeight={'69vh'}
+            overflow={'auto'}
+            borderColor={'web.border'}
+            bg={'web.sideBar'} 
+            border={'1px solid'} 
+            rounded={'md'} 
+            p={'3vh'}
+            w={'72vw'}
+            
+            >
             <TableContainer>
-                <Table variant='striped' colorScheme='orange' >
-                  <Thead>
-                    <Tr>
-                      <Th > Invoice Number </Th>
-                      <Th> Customer Name </Th>
-                      <Th > Invoice Date </Th>
-                      <Th isNumeric> Value </Th>
-                      <Th isNumeric> Payment Status</Th>
-                      <Th> Payment Date </Th>
+                <Table color={'web.text'} variant='simple' size={'sm'} >
+                  <Thead h={'6vh'}>
+                    <Tr >
+                      <Th color={'web.text2'}>Invoice Number </Th>
+                      <Th color={'web.text2'}>Customer Name </Th>
+                      <Th color={'web.text2'}>Invoice Date </Th>
+                      <Th color={'web.text2'} isNumeric>Value </Th>
+                      <Th color={'web.text2'} isNumeric>Payment Status</Th>
+                      <Th color={'web.text2'}>Payment Date </Th>
                     </Tr>
                   </Thead>
-                  <Tbody>
+                  <Tbody >
                     { filteredByCustomer.length ? (
                       filteredByCustomer.map((e, i) =>{
                         return(
@@ -69,7 +90,8 @@ const List = ({seller_invoices, setSite, filteredByCustomer}) => {
                         )}
                   </Tbody>
                 </Table>
-            </TableContainer>  
+            </TableContainer> 
+            </Box> 
         </Box>
     )
 }

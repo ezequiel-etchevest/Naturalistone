@@ -1,12 +1,10 @@
-import {Box} from '@chakra-ui/react';
+import Stats from './stats/Stats';
 
 
-const HomeContainer = () => {
+const HomeContainer = ({currentMonth}) => {
 
     return(
-        <Box
-        ml={'20vw'}> 
-        </Box>
+        <Stats currentMonth={currentMonth}/>
     )
 }
 export default HomeContainer;
