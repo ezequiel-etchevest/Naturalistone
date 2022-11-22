@@ -75,10 +75,14 @@ const ProductList = ({ allProducts, filteredProducts }) => {
           <Table color={'web.text'} variant={'simple'} size={'sm'}>
             <Thead h={'6vh'}>
               <Tr>
-                <Th color={'web.text2'}>Product ID</Th>
                 <Th color={'web.text2'}>Product Name</Th>
-                <Th color={'web.text2'} isNumeric>Current Stock</Th>
+                <Th color={'web.text2'}>Type</Th>
+                <Th color={'web.text2'}>Size</Th>
+                <Th color={'web.text2'}>Thickness</Th>
+                <Th color={'web.text2'} isNumeric>Price</Th>
+                <Th color={'web.text2'} isNumeric>Stock</Th>
                 <Th color={'web.text2'} isNumeric>Next Arrival</Th>
+                <Th color={'web.text2'} isNumeric>Pending Orders</Th>
               </Tr>
             </Thead>
             <Tbody>

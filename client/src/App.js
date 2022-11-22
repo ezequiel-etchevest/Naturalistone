@@ -17,6 +17,7 @@ function App() {
     <div className="App">
     <NavBar/>
       <Routes>
+      <Route path= '*'  element = {<LogIn/>} />
       <Route path="/login" element={<LogIn/>} />
       <Route path="/home" element={<Home site={site} setSite={setSite}/>} />
       <Route path='/invoices/:id' element={<InvoiceDetail site={site} setSite={setSite}/>}></Route>   
