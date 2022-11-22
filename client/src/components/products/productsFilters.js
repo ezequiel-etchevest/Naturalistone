@@ -1,4 +1,4 @@
-import { Box, HStack, Icon, Text, Button, Input, IconButton, FormControl } from "@chakra-ui/react";
+import { Box, Select, HStack, Icon, Text, Button, Input, IconButton, FormControl } from "@chakra-ui/react";
 import { SearchIcon } from '@chakra-ui/icons';
 
 const ProductsFilters = ({allProducts, setFilteredProducts}) => {
@@ -36,7 +36,40 @@ const ProductsFilters = ({allProducts, setFilteredProducts}) => {
         w={'78vw'}
         h={'20vh'}
         >
-        <Box
+        <HStack h={'15vh'} w={'55vw'} mr={'2vh'}>
+          <Select 
+            variant='outline' 
+            placeholder='Outline'
+            w={'12vw'}
+            >
+            <option value='option1'>Option 1</option>
+            <option value='option2'>Option 2</option>
+            <option value='option3'>Option 3</option>
+          </Select>
+          <Select 
+            variant='outline' 
+            placeholder='Outline'
+            w={'12vw'}
+            bg={'web.sideBar'}
+            color={'web.text'}
+            size='md'
+            borderColor={'web.border'}
+            >
+            <option value='option1'>Option 1</option>
+            <option value='option2'>Option 2</option>
+            <option value='option3'>Option 3</option>
+          </Select>
+          <Select 
+            variant='outline' 
+            placeholder='Outline'
+            w={'12vw'}
+            >
+            <option value='option1'>Option 1</option>
+            <option value='option2'>Option 2</option>
+            <option value='option3'>Option 3</option>
+          </Select>
+        </HStack>
+        {/* <Box
           display={'flex'}
           alignItems={'center'}
           w={'19vw'}
@@ -66,7 +99,7 @@ const ProductsFilters = ({allProducts, setFilteredProducts}) => {
             }}
             _active={{ color: 'logo.orange'}}
             />
-        </Box>
+        </Box> */}
         <Box
           display={'flex'}
           alignItems={'center'} 

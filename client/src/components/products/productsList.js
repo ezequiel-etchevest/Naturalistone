@@ -14,14 +14,15 @@ import { getAllProducts } from '../../redux/actions'
 
 const ModelTr = ({e}) => {
 
-    const navigate = useNavigate()
+    // const navigate = useNavigate()
     const dispatch = useDispatch()
 
     const handleClick = () => {
       dispatch(getAllProducts())
-      navigate(`/products/${e.ProdNameID}`)
+      // if(e.ProductName !== und)
+      // navigate(`/products/${e.ProductName}`)
     }
-    
+    console.log(e)
   return(
     <Tr 
       onClick={() => handleClick()} 
@@ -32,10 +33,14 @@ const ModelTr = ({e}) => {
         color: 'logo.orange'
       }} 
       >
-      <Td textAlign={'match-parent'} pl={'3vw'}>{e.ProdNameID}</Td>
-      <Td>{e.Naturali_ProdName}</Td>
-      <Td textAlign={'center'}>{e.CurrentlyAvailable}</Td>
-      <Td isNumeric> {e.NextArrival} </Td>
+      <Td textAlign={'match-parent'}>{e.ProductName}</Td>
+      <Td textAlign={'match-parent'}>{e.Type}</Td>
+      <Td textAlign={'match-parent'}>{e.Size}</Td>
+      <Td textAlign={'center'}> {e.Thickness} </Td>
+      <Td isNumeric>{e.Price}$</Td>
+      <Td textAlign={'center'}>{e.Stock === null ? 0 : e.Stock}</Td>
+      <Td textAlign={'center'}>{e.PendingPayment === null ? 0 : e.PendingPayment}</Td>
+      <Td textAlign={'center'}>{e.NextArrival === null ? '-' : e.NextArrival}</Td>
     </Tr>
   )
 }
@@ -72,17 +77,17 @@ const ProductList = ({ allProducts, filteredProducts }) => {
         w={'72vw'}
         >
         <TableContainer >
-          <Table color={'web.text'} variant={'simple'} size={'sm'}>
+          <Table color={'web.text'} variant={'simple'} size={'sm'} >
             <Thead h={'6vh'}>
               <Tr>
-                <Th color={'web.text2'}>Product Name</Th>
-                <Th color={'web.text2'}>Type</Th>
-                <Th color={'web.text2'}>Size</Th>
-                <Th color={'web.text2'}>Thickness</Th>
-                <Th color={'web.text2'} isNumeric>Price</Th>
-                <Th color={'web.text2'} isNumeric>Stock</Th>
-                <Th color={'web.text2'} isNumeric>Next Arrival</Th>
-                <Th color={'web.text2'} isNumeric>Pending Orders</Th>
+                <Th color={'web.text2'} textAlign={'match-parent'}>Product Name</Th>
+                <Th color={'web.text2'} w={'5vw'}>Type</Th>
+                <Th color={'web.text2'} w={'5vw'}>Size</Th>
+                <Th color={'web.text2'} w={'5vw'}>Thickness</Th>
+                <Th color={'web.text2'} w={'5vw'}isNumeric>Price</Th>
+                <Th color={'web.text2'} w={'5vw'}isNumeric>Stock</Th>
+                <Th color={'web.text2'} w={'5vw'}isNumeric>Reserved Stock</Th>
+                <Th color={'web.text2'} w={'5vw'}isNumeric>Next Arrival</Th>
               </Tr>
             </Thead>
             <Tbody>
