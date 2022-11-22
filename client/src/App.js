@@ -10,6 +10,7 @@ import { naturali_theme } from './theme';
 function App() {
 
   const [site, setSite ] = useState('home')
+  const userLocal = JSON.parse(localStorage.getItem('user'))
 
   return (
     <ChakraProvider theme={naturali_theme}>
@@ -17,10 +18,10 @@ function App() {
     <div className="App">
     <NavBar/>
       <Routes>
-      <Route path= '*'  element = {<LogIn/>} />
-      <Route path="/login" element={<LogIn/>} />
-      <Route path="/home" element={<Home site={site} setSite={setSite}/>} />
-      <Route path='/invoices/:id' element={<InvoiceDetail site={site} setSite={setSite}/>}></Route>   
+      <Route path= '*'  element = { userLocal ? <Home site={site} setSite={setSite}/> : <LogIn/>} />
+      <Route path="/login" element= { userLocal ? <Home site={site} setSite={setSite}/> : <LogIn/>} />
+      <Route path="/home" element={ <Home site={site} setSite={setSite}/>}/>
+      <Route path='/invoices/:id' element={ userLocal ? <InvoiceDetail site={site} setSite={setSite}/>: <LogIn/>}></Route>   
       </Routes> 
     </div>
     </BrowserRouter>

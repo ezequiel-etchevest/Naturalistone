@@ -6,12 +6,13 @@ import InfoContainer from "../components/invoices/infoContainer";
 import ProductsContainer from "../components/products/productsContainer";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllProducts, getEmployeeById, getInvoicesBySeller, getCurrentMonth } from "../redux/actions";
+import { useNavigate } from "react-router-dom";
 
 
 const Home = ({site, setSite}) => {
 
   const dispatch = useDispatch()
-
+  const navigate = useNavigate()
   const seller_invoices = useSelector(state => state.seller_invoices)
   const user = useSelector(state => state.user)
   const allProducts = useSelector(state => state.allProducts)
@@ -36,7 +37,6 @@ const Home = ({site, setSite}) => {
           dispatch(getInvoicesBySeller(user[0].SellerID))
       }}, [user])
 
-      console.log('Home', seller_invoices)
     function handleSite(site){
       if(site === 'Home') return(<HomeContainer currentMonth={currentMonth}/>)
       if(site === 'Products') return(<ProductsContainer allProducts={allProducts}/>)
@@ -50,7 +50,7 @@ const Home = ({site, setSite}) => {
             <Box>{handleSite(site)}</Box>
           </>
         )
-    }else return (<Text>Loading </Text>)
+    }else return (navigate('/login'))
   }
  
 
