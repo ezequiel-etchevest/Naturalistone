@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { getInvoiceById, getEmployeeById } from "../redux/actions";
 import { useParams } from "react-router-dom";
 import Detail from '../components/invoices/detail';
-import {Box} from '@chakra-ui/react';
+
 
 
 const InvoiceDetail = ({site, setSite}) => {

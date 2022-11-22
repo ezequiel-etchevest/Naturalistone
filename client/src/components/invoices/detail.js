@@ -1,62 +1,64 @@
-import {Box, Text} from '@chakra-ui/react';
-import EditButtons from '../editButtons';
-import { useState } from 'react';
-import PdfVisual from '../pdf/pdfiVisual';
+import {Box, Divider, Text} from '@chakra-ui/react';
+
 
 
 const Detail = ({invoice}) => {
-
-	const [pdf, setPdf ] = useState('')
 
   return(
     <Box
       bg={'web.bg'}  
       ml={'20vw'} 
-      h={'90vh'}
+      h={'92vh'}
       display={'flex'}
       flexDir={'row'}
-      >	
+      >
     	<Box
         display={'flex'}
-        flexDir={'column'}
-        border={'2px green solid'}
-        h={'86vh'}
-        pt={'4vh'}
-        w={'50vw'}
+        flexDir={'row'}
         >
         <Box
-          border={'2px blue solid'}
+          className={'invoice-details'}
+          mt={'3vh'}
+          ml={'2vw'}
+          mr={'1vw'}
+          p={'2vw'}
           h={'46vh'}
-          w={'50vw'}
+          w={'22vw'}
           display={'flex'}
-          flexDir={'row'}
-          >
-          <Box w={'25vw'} >
-            <Text fontSize={'xl'}>Invoice Details</Text>
-				    <Text fontSize={'5xl'}>{invoice[0].Naturali_Invoice}</Text>  
-          </Box>
-          <Box w={'25vw'}>
-            <Text fontSize={'md'}>Customer: {invoice[0].CustomerID}</Text>
+          flexDir={'column'}
+          color={'web.text'}
+          bg={'web.sideBar'}
+          border={'1px solid'} 
+          rounded={'md'} 
+          borderColor={'web.border'} 
+          >          
+          <Text fontSize={'xl'}>Invoice Details</Text>
+          <Box mt={'3vh'}>
+				    <Text fontSize={'md'}>Invoice number: {invoice[0].Naturali_Invoice}</Text>
+            <Text fontSize={'md'}>Customer name: {invoice[0].Reference} </Text>
+            <Text fontSize={'md'}>Customer email: {invoice[0].Email !== null ? invoice[0].Email : '-' } </Text>
 				    <Text fontSize={'md'}>Amount: ${invoice[0].Value}</Text>
 				    <Text fontSize={'md'}>Date: {invoice[0].InvoiceDate.split('T')[0]}</Text>
-				    <Text fontSize={'md'}>Payment Status: {invoice[0].PaymentStatus === null ? 'Unpaid' : 'Paid'}</Text>
-				    <Text fontSize={'md'}>Payment Method: {invoice[0].PaymentMethod === null ? '-' : invoice[0].PaymentMethod}</Text>
-				    <Text fontSize={'md'}>Shipping Method: {invoice[0].ShippingMethod === null ? '-' : invoice[0].ShippingMethod}</Text>
+            <Text fontSize={'md'}>Payment percentaje: % </Text>
+            <Text fontSize={'md'}>Pending amount: $</Text>
           </Box>
-        </Box>
-        <Box w={'50vw'} h={'40vh'} border={'2px solid pink'}></Box>
+        </Box> 
+        <Box
+          mt={'3vh'}
+          ml={'1vw'}
+          mr={'1vw'}
+          p={'2vw'} 
+          border={'1px solid'} 
+          rounded={'md'} 
+          borderColor={'web.border'} 
+          bg={'web.sideBar'}
+          h={'46vh'}
+          w={'53vw'}>
+          
+
       </Box>
-      <Box
-        border={'2px red solid'}
-        w={'30vw'}
-        h={'86vh'}
-        pt={'4vh'}
-        >
-        <Box w={'30vw'} h={'71vh'} border={'2px solid yellow'}></Box> 
-        <Box w={'30vw'} h={'11vh'} border={'2px solid green'} >
-          </Box> 
       </Box>
-    </Box>
+      </Box>	
     )}
 	{/* <Box>
 			  <EditButtons invoice={invoice} setPdf={setPdf}/>  

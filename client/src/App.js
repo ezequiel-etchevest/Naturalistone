@@ -9,7 +9,7 @@ import { naturali_theme } from './theme';
 
 function App() {
 
-  const [site, setSite ] = useState('home')
+  const [site, setSite ] = useState('Home')
   const userLocal = JSON.parse(localStorage.getItem('user'))
 
   return (

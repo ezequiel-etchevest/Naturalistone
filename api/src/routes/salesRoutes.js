@@ -14,9 +14,6 @@ salesRouter.get('/:id', async function(req, res){
 
     try{
         mysqlConnection.query(query_, function(error, results, fields){
-
-           
-
             if(error) throw error;
             if(results.length == 0) {
                 console.log('Error al obtener data!')
@@ -34,7 +31,9 @@ salesRouter.get('/:id', async function(req, res){
 salesRouter.get('/invoice/:id', async function(req, res){
     const { id } = req.params
 
-    query_ = `SELECT * FROM  Sales WHERE Naturali_Invoice = ${id}`;
+    query_ =    `SELECT Sales.*, Customers.* FROM Sales
+                LEFT JOIN Customers ON Sales.CustomerID = Customers.CustomerID 
+                WHERE Naturali_Invoice = ${id}`;
     try{
          mysqlConnection.query(query_, function(error, results, fields){
             if(error) throw error;
