@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import SideBar from "../components/sideBar";
 import { Box, Text } from "@chakra-ui/react";
 import HomeContainer from "../components/homeContainer";
@@ -16,6 +16,7 @@ const Home = ({site, setSite}) => {
   const user = useSelector(state => state.user)
   const allProducts = useSelector(state => state.allProducts)
   const currentMonth = useSelector(state => state.current_month)
+  const [focus, setFocus] = useState('AllInvoices')
 
   const userLocal = JSON.parse(localStorage.getItem('user'))
     
@@ -39,7 +40,7 @@ const Home = ({site, setSite}) => {
     function handleSite(site){
       if(site === 'Home') return(<HomeContainer currentMonth={currentMonth}/>)
       if(site === 'Products') return(<ProductsContainer allProducts={allProducts}/>)
-      if(site === 'Invoices') return(<InfoContainer site={site} setSite={setSite} seller_invoices={seller_invoices} userId={user[0].SellerID}/>)
+      if(site === 'Invoices') return(<InfoContainer site={site} setSite={setSite} seller_invoices={seller_invoices} userId={user[0].SellerID} focus={focus} setFocus={setFocus}/>)
     }
 
       if(user.length){

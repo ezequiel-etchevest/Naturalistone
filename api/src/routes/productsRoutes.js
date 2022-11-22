@@ -5,7 +5,7 @@ const mysqlConnection = require('../db')
 productsRouter.get('/', async function(req, res){
 
     query_ =    `SELECT ProdNames.*, Inventory.* FROM ProdNames 
-                LEFT JOIN Inventory ON ProdNames.ProdNameID = Inventory.ProdID`;
+                LEFT JOIN Inventory ON ProdNames.ProdNameID = Inventory.ProdID ORDER BY ProdNames.Naturali_ProdName ASC`;
 
     try{
         mysqlConnection.query(query_, function(error, results, fields){   
@@ -29,7 +29,7 @@ productsRouter.get('/:id', async function(req, res){
     const {id} = req.params
 
     query_ =    `SELECT ProdNames.*, Inventory.* FROM ProdNames 
-                LEFT JOIN Inventory ON ProdNames.ProdNameID = Inventory.ProdID WHERE ProdNameID = ${id}`;
+                LEFT JOIN Inventory ON ProdNames.ProdNameID = Inventory.ProdID WHERE ProdNameID = ${id}  ORDER BY ProdNames.Naturali_ProdName ASC`;
 
     try{
         mysqlConnection.query(query_, function(error, results, fields){   

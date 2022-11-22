@@ -26,85 +26,80 @@ const ProductsFilters = ({allProducts, setFilteredProducts}) => {
     }
 }
 
-    return (    
+  return (    
     <>
-    <Box
-        ml={'50%'}
-        mb={'5%'}
+      <Box
         display={'flex'}
         alignItems={'center'}
-        justifyContent={'space-between'}
-        pl={'2vw'}
-        w={'38vw'}
+        justifyContent={'end'}
+        mr={'2vw'}
+        w={'78vw'}
+        h={'20vh'}
         >
-            <Box
-                display={'flex'}
-                alignItems={'center'}
-                w={'19vw'}
-                h={'15vh'}
-                >
-                    <Input
-                        w={'70%'}
-                        variant="unstyled"
-                        placeholder={'Product number'}
-                        _placeholder={{ fontFamily: 'body', fontWeight: 'thin' }}
-                        size="sm"
-                        borderBottomWidth="2px"
-                        name='invoiceNumber'
-                        onChange={(e) => handleChangeProductID(e) }
-
-                      />
-                      <IconButton
-                        borderRadius={2}
-                        aria-label="Search database"
-                        bgColor={'white'}
-                        ml={1}
-                        icon={<SearchIcon />}
-                        _hover={{
-                          color: 'orange',
-                        }}
-                        _active={{ color: 'gray.800'}}
-                      />
-                      
-                      {/* {
-                      errores.length >= 1 && (
-                        <Box position={'absolute'} display={'flex'}>
-                         <Text color="red.300" fontSize={'12px'} display={'flex'}>
-                            {errores}
-                         </Text>
-                        </Box>
-                      )} */}
-                </Box>
-                <Box
-                  display={'flex'}
-                  alignItems={'center'} 
-                  w={'19vw'}
-                  h={'10vh'}>
-                  <Input
-                      w={'70%'}
-                      variant="unstyled"
-                      placeholder={'Product name'}
-                      _placeholder={{ fontFamily: 'body', fontWeight: 'thin' }}
-                      size="sm"
-                      borderBottomWidth="2px"
-                      onChange={(e) => handleChangeProductName(e)}
-
-                    />
-                    <IconButton
-                      borderRadius={2}
-                      aria-label="Search database"
-                      bgColor={'white'}
-                      ml={1}
-                      icon={<SearchIcon />}
-                      _hover={{
-                        color: 'orange',
-                      }}
-                      _active={{ color: 'gray.800'}}
-                    />
-                  </Box>
+        <Box
+          display={'flex'}
+          alignItems={'center'}
+          w={'19vw'}
+          h={'15vh'}
+          >
+          <Input
+            w={'70%'}
+            variant={"unstyled"}
+            placeholder={'Product number'}
+            _placeholder={{ fontFamily: 'body', fontWeight: 'thin' }}
+            size={"sm"}
+            borderBottomWidth={"2px"}
+            name={'productNumber'}
+            textColor={'web.text'}
+            borderBottomColor={'web.text2'}
+            onChange={(e) => handleChangeProductID(e)}
+            />
+          <IconButton
+            borderRadius={2}
+            color={'web.text2'}
+            aria-label={"Search database"}
+            bgColor={'web.bg'}
+            ml={1}
+            icon={<SearchIcon />}
+            _hover={{
+              color: 'logo.orange',
+            }}
+            _active={{ color: 'logo.orange'}}
+            />
         </Box>
-        </>
-        )
-        }
+        <Box
+          display={'flex'}
+          alignItems={'center'} 
+          w={'19vw'}
+          h={'10vh'}
+          >
+          <Input
+            w={'70%'}
+            variant={"unstyled"}
+            placeholder={'Product name'}
+            _placeholder={{ fontFamily: 'body', fontWeight: 'thin' }}
+            size={"sm"}
+            borderBottomWidth={"2px"}
+            textColor={'web.text'}
+            onChange={(e) => handleChangeProductName(e)}
+            borderBottomColor={'web.text2'}
+            />
+          <IconButton
+            borderRadius={2}
+            aria-label={"Search database"}
+            color={'web.text2'}
+            bgColor={'web.bg'}
+            ml={1}
+            icon={<SearchIcon />}
+            _hover={{
+              color: 'logo.orange',
+            }}
+            _active={{ color: 'logo.orange'}}
+            />
+          </Box>
+        </Box>
+      </>
+    )
+}
 
 export default ProductsFilters

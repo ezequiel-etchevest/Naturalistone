@@ -10,8 +10,9 @@ const ProductsContainer = ({ allProducts }) => {
     return(
         <Box
         ml={'20vw'}
+        bg={'web.bg'}
         > 
-        <Box mt = {'7.4vh'}>
+        <Box>
             <ProductsFilters allProducts={allProducts} setFilteredProducts={setFilteredProducts} />
             <ProductList allProducts={allProducts} filteredProducts={filteredProducts} />
         </Box>

@@ -5,21 +5,25 @@ import { getInvoicesLastWeek, getInvoicesBySeller, getInvoicesLastMonth, getFilt
 import { useDispatch, useSelector } from 'react-redux'
 import { useState } from "react";
 
-const Filters = ({userId, seller_invoices, setFilteredByCustomer}) => {
+const Filters = ({userId, seller_invoices, setFilteredByCustomer, focus, setFocus}) => {
 
   const dispatch = useDispatch()
   const [errores, setErrores] = useState('')   
+
   const filtered_invoices_month_week = useSelector(state => state.filtered_invoices_month_week)
+
 
   const handleClickAllInvoices = () => {
     dispatch(getInvoicesBySeller(userId))
-    
+    setFocus('AllInvoices')
   }
   const handleClickLastWeek = () => {
     dispatch(getInvoicesLastWeek(userId))
+    setFocus('LastWeek')
   }
   const handleClickLastMonth = () => {
     dispatch(getInvoicesLastMonth(userId))
+    setFocus('LastMonth')
   }
 
   const validateInput = (e) => {
@@ -61,7 +65,8 @@ const Filters = ({userId, seller_invoices, setFilteredByCustomer}) => {
           ml={'2.8vw'}  
           mr={'2vw'} 
           h={'20vh'} 
-          spacing={'1.5vw'}>
+          spacing={'1.5vw'}
+          >
           <Button
             variant={'unstyled'} 
             display={'flex'} 
@@ -70,7 +75,7 @@ const Filters = ({userId, seller_invoices, setFilteredByCustomer}) => {
             borderRadius={'sm'} 
             placeContent={'center'}
             alignItems={'center'}
-            color={'web.text2'}
+            color={focus === 'AllInvoices' ? 'logo.orange' : 'web.text2'}
             _hover={{
                 color: 'logo.orange'
                 }}
@@ -93,7 +98,7 @@ const Filters = ({userId, seller_invoices, setFilteredByCustomer}) => {
         borderRadius={'sm'} 
         placeContent={'center'}
         alignItems={'center'}
-        color={'web.text2'}
+        color={focus === 'LastWeek' ? 'logo.orange' : 'web.text2'}
         _hover={{
           color: 'logo.orange'
             }}
@@ -116,10 +121,10 @@ const Filters = ({userId, seller_invoices, setFilteredByCustomer}) => {
          borderRadius={'sm'} 
          placeContent={'center'}
          alignItems={'center'}
-         color={'web.text2'}
+         color={focus === 'LastMonth' ? 'logo.orange' : 'web.text2'}
          _hover={{
           color: 'logo.orange'
-             }}
+             }}         
          _active={{
           color: 'logo.orange'
          }}>
@@ -159,7 +164,7 @@ const Filters = ({userId, seller_invoices, setFilteredByCustomer}) => {
                   <IconButton
                     color={'web.text2'}
                     borderRadius={2}
-                    aria-label="Search database"
+                    aria-label={"Search database"}
                     bgColor={'web.bg'}
                     ml={1}
                     icon={<SearchIcon />}

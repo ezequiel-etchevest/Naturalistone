@@ -25,22 +25,22 @@ const ModelTr = ({e, setSite}) => {
     }
     
     return(
-        <Tr 
+      <Tr 
         onClick={() => handleClick()} 
         cursor={'pointer'} 
         key={e.Naturali_Invoice}
         _hover={{
           bg: 'web.navBar',
           color: 'logo.orange'
-          
-        }}>
-                <Td textAlign={'center'}>{e.Naturali_Invoice}</Td>
-                <Td>{e.Reference}</Td>
-                <Td textAlign={'center'}>{e.InvoiceDate.split('T')[0]}</Td>
-                <Td isNumeric>${e.Value} </Td>
-                <Td textAlign={'center'} >{e.PaymentStatus === null ? 'Unpaid' : 'Paid'}</Td>
-                <Td textAlign={'center'}>{e.PaymentDate}</Td>
-            </Tr>
+        }}
+        >
+        <Td textAlign={'center'}>{e.Naturali_Invoice}</Td>
+        <Td>{e.Reference}</Td>
+        <Td textAlign={'center'}>{e.InvoiceDate.split('T')[0]}</Td>
+        <Td isNumeric>${e.Value} </Td>
+        <Td textAlign={'center'} >{e.PaymentStatus === null ? 'Unpaid' : 'Paid'}</Td>
+        <Td textAlign={'center'}>{e.PaymentDate}</Td>
+      </Tr>
     )
 }
 
@@ -56,6 +56,18 @@ const List = ({seller_invoices, setSite, filteredByCustomer}) => {
           <Box
             maxHeight={'69vh'}
             overflow={'auto'}
+            css={{
+              '&::-webkit-scrollbar': {
+                width: '0.4vw',
+              },
+              '&::-webkit-scrollbar-track': {
+                width: '6px',
+              },
+              '&::-webkit-scrollbar-thumb': {
+                background: '#E47424',
+                borderRadius: '5px',
+              },
+            }}
             borderColor={'web.border'}
             bg={'web.sideBar'} 
             border={'1px solid'} 
@@ -65,13 +77,13 @@ const List = ({seller_invoices, setSite, filteredByCustomer}) => {
             
             >
             <TableContainer>
-                <Table color={'web.text'} variant='simple' size={'sm'} >
+                <Table color={'web.text'} variant={'simple'} size={'sm'} >
                   <Thead h={'6vh'}>
-                    <Tr >
-                      <Th color={'web.text2'}>Invoice Number </Th>
-                      <Th color={'web.text2'}>Customer Name </Th>
-                      <Th color={'web.text2'}>Invoice Date </Th>
-                      <Th color={'web.text2'} isNumeric>Value </Th>
+                    <Tr>
+                      <Th color={'web.text2'}>Invoice Number</Th>
+                      <Th color={'web.text2'}>Customer Name</Th>
+                      <Th color={'web.text2'}>Invoice Date</Th>
+                      <Th color={'web.text2'} isNumeric>Value</Th>
                       <Th color={'web.text2'} isNumeric>Payment Status</Th>
                       <Th color={'web.text2'}>Payment Date </Th>
                     </Tr>

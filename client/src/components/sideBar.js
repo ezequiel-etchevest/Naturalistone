@@ -44,7 +44,7 @@ const SideBar = ({user, site, setSite}) => {
         {user[0].FirstName} {user[0].LastName}
       </Text>
     </HStack>
-    <Box  pr={12} pt={'6vh'}>
+    <Box  pr={12} pt={'9vh'}>
       {LinkItems.map((link) => (
         <NavItem
           setSite={setSite}
@@ -53,7 +53,7 @@ const SideBar = ({user, site, setSite}) => {
           link={link}
           key={link.name}
           icon={link.icon}
-          mt={5}
+          mt={'4vh'}
         >
           {link.name}
         </NavItem>

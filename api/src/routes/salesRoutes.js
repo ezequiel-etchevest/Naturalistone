@@ -10,7 +10,7 @@ salesRouter.get('/:id', async function(req, res){
 
     query_ =    `SELECT Sales.*, Customers.* FROM Sales 
                 LEFT JOIN Customers ON Sales.CustomerID = Customers.CustomerID 
-                WHERE SellerID = ${id}`;
+                WHERE SellerID = ${id} ORDER BY InvoiceDate DESC`;
 
     try{
         mysqlConnection.query(query_, function(error, results, fields){
@@ -96,7 +96,7 @@ salesRouter.get('/lastWeek/:id', async function(req, res){
 
     query_ = `SELECT Sales.*, Customers.* FROM Sales 
                 LEFT JOIN Customers ON Sales.CustomerID = Customers.CustomerID 
-                WHERE SellerID = ${id} AND InvoiceDate BETWEEN "${limitDateWeek}" AND "${today}"`
+                WHERE SellerID = ${id} AND InvoiceDate BETWEEN "${limitDateWeek}" AND "${today}" ORDER BY InvoiceDate DESC`
     
 //    query_ = `SELECT * FROM Sales WHERE SellerID = ${id} AND InvoiceDate BETWEEN "${limitDateWeek}" AND "${today}"`
     try{
@@ -124,7 +124,7 @@ salesRouter.get('/lastMonth/:id', async function(req, res){
 
     query_ = `SELECT Sales.*, Customers.* FROM Sales 
                 LEFT JOIN Customers ON Sales.CustomerID = Customers.CustomerID 
-                WHERE SellerID = ${id} AND InvoiceDate BETWEEN "${limitDateMonth}" AND "${today}"`
+                WHERE SellerID = ${id} AND InvoiceDate BETWEEN "${limitDateMonth}" AND "${today}" ORDER BY InvoiceDate DESC`
     try{
        mysqlConnection.query(query_, function(error, results, fields){
 
