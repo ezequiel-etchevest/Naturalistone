@@ -8,25 +8,13 @@ import {
     Td,
     TableContainer,
   } from '@chakra-ui/react'
-// import { useNavigate } from 'react-router-dom'
-// import { useDispatch } from 'react-redux'
-// import { getInvoiceById } from '../../redux/actions'
+
 
 
 const ModelTr = ({e, setSite}) => {
-
-    // const navigate = useNavigate()
-    // const dispatch = useDispatch()
-
-    // const handleClick = () => {
-    //   setSite('details')
-    //   dispatch(getInvoiceById(e.Naturali_Invoice))
-    //   navigate(`/invoices/${e.Naturali_Invoice}`)
-    // }
     
     return(
       <Tr 
-        //onClick={() => handleClick()} 
         cursor={'pointer'} 
         key={e.Naturali_Invoice}
         _hover={{

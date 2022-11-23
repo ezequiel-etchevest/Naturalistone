@@ -1,7 +1,7 @@
 import { Box, HStack, Text, Button, Input, IconButton, FormControl } from "@chakra-ui/react";
 import { BsCalendar4Week } from 'react-icons/bs';
 import { SearchIcon } from '@chakra-ui/icons';
-import { getInvoicesLastWeek, getInvoicesBySeller, getInvoicesLastMonth, getFilteredInvoices } from "../../redux/actions";
+import { getInvoicesLastWeek, getInvoicesBySeller, getInvoicesLastMonth, getFilteredInvoices } from "../../redux/actions-invoices";
 import { useDispatch, useSelector } from 'react-redux'
 import { useState } from "react";
 

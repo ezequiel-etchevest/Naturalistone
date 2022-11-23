@@ -1,17 +1,16 @@
 import { 
     GET_EMPLOYEES, 
     GET_EMPLOYEES_BY_ID, 
-    LOG_OUT ,
-    GET_INVOICE_BY_ID,
-    GET_INVOICES_BY_SELLER,
-    GET_INVOICES_LASTWEEK,
-    PATCH_PAYMENT_METHOD,
-    GET_INVOICES_LASTMONTH,
-    GET_FILTERED_INVOICES,
-    GET_ALL_PRODUCTS,
-    GET_PRODUCTS_BY_ID,
-    GET_CURRENT_MONTH
-} from "./actions";
+    LOG_OUT } from './actions-employees';
+import { 
+    GET_INVOICE_BY_ID, 
+    GET_INVOICES_BY_SELLER, 
+    GET_INVOICES_LASTWEEK, 
+    GET_INVOICES_LASTMONTH, 
+    GET_FILTERED_INVOICES } from './actions-invoices';
+import { PATCH_PAYMENT_METHOD } from './actions-payments';
+import { GET_ALL_PRODUCTS } from './actions-products';
+import { GET_CURRENT_MONTH } from './actions-stats';
 
 const intialState = {
     employees: [],

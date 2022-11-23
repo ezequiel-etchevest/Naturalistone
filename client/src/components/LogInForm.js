@@ -3,7 +3,7 @@ import { Formik } from "formik";
 import { useState,  useEffect} from "react";
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux'
-import { getEmployeeById, getEmployees } from "../redux/actions";
+import { getEmployeeById, getEmployees } from "../redux/actions-employees";
 import {  AiOutlineEyeInvisible, AiOutlineEye } from 'react-icons/ai'
 import { CgLogIn } from 'react-icons/cg'
 

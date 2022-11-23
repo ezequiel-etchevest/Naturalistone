@@ -10,7 +10,7 @@ import {
   } from '@chakra-ui/react'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
-import { getInvoiceById } from '../../redux/actions'
+import { getInvoiceById } from '../../redux/actions-invoices'
 
 
 const ModelTr = ({e, setSite}) => {

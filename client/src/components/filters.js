@@ -1,7 +1,7 @@
 import { Box, HStack, Icon, Text, Button, Input, IconButton } from "@chakra-ui/react";
 import { BsCalendar4Week } from 'react-icons/bs';
 import { SearchIcon } from '@chakra-ui/icons';
-import { getInvoicesLastWeek, getInvoicesBySeller, getInvoicesLastMonth } from "../redux/actions";
+import { getInvoicesLastWeek, getInvoicesBySeller, getInvoicesLastMonth } from "../redux/actions-invoices";
 import { useDispatch } from 'react-redux'
 
 const Filters = ({userId}) => {

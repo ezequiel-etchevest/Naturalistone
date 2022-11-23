@@ -1,4 +1,4 @@
-import { Box, HStack, Icon, Text, Button, Input, IconButton, FormControl } from "@chakra-ui/react";
+import { Box, Input, IconButton } from "@chakra-ui/react";
 import { SearchIcon } from '@chakra-ui/icons';
 
 const ProductsFilters = ({allProducts, setFilteredProducts}) => {
