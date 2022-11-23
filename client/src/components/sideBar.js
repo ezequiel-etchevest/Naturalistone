@@ -9,7 +9,7 @@ import { logOut } from '../redux/actions';
 
 const LinkItems = [
   { name: 'Home', icon: FaHome },
-  { name: 'Invoices', icon: FaFileInvoiceDollar },
+  { name: 'Quotes', icon: FaFileInvoiceDollar },
   { name: 'Products', icon: FaBoxOpen },
   { name: 'Log Out', icon: CgLogOut },
   ];

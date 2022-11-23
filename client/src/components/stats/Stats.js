@@ -77,7 +77,7 @@ import {
             icon={<BiDollar size={'3em'} />}
           />
           <StatsCard
-            title={'Current Month Invoices'}
+            title={'Current Month Quotes'}
             stat={currentMonth.InvoicesNumber}
             icon={<FaSortAmountUpAlt size={'3em'} />}
           />
