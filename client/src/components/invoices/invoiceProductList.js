@@ -10,11 +10,11 @@ import {
   } from '@chakra-ui/react'
 
 
-const ModelTr = ({e, setSite}) => {
 
+const ModelTr = ({e, setSite}) => {
+    
     return(
       <Tr 
-        //onClick={() => handleClick()} 
         cursor={'pointer'} 
         key={e.Naturali_Invoice}
         _hover={{

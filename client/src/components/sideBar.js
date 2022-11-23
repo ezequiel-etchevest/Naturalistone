@@ -4,7 +4,7 @@ import { CgLogOut } from 'react-icons/cg'
 import mitu from '../assets/mitutu.jpg';
 import { useNavigate } from 'react-router';
 import { useDispatch } from 'react-redux';
-import { logOut } from '../redux/actions';
+import { logOut } from '../redux/actions-employees';
 
 
 const LinkItems = [

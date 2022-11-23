@@ -10,7 +10,7 @@ import {
   } from '@chakra-ui/react'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
-import { getAllProducts } from '../../redux/actions'
+import { getAllProducts } from '../../redux/actions-products'
 
 const ModelTr = ({e}) => {
 

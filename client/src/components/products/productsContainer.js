@@ -1,5 +1,5 @@
 import { Box } from "@chakra-ui/react"
-import ProductList from "./productsList"
+import ProductList from './productsList'
 import ProductsFilters from './productsFilters'
 import { useState } from "react"
 

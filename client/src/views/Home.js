@@ -1,12 +1,16 @@
 import React, { useEffect, useState } from "react";
 import SideBar from "../components/sideBar";
-import { Box, Text } from "@chakra-ui/react";
+import { Box, Button } from "@chakra-ui/react";
 import HomeContainer from "../components/homeContainer";
 import InfoContainer from "../components/invoices/infoContainer";
 import ProductsContainer from "../components/products/productsContainer";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllProducts, getEmployeeById, getInvoicesBySeller, getCurrentMonth } from "../redux/actions";
+import { getAllProducts } from '../redux/actions-products';
+import { getEmployeeById } from '../redux/actions-employees';
+import { getInvoicesBySeller } from '../redux/actions-invoices';
+import { getCurrentMonth } from "../redux/actions-stats";
 import { useNavigate } from "react-router-dom";
+
 
 
 const Home = ({site, setSite}) => {
@@ -20,22 +24,22 @@ const Home = ({site, setSite}) => {
   const [focus, setFocus] = useState('AllInvoices')
 
   const userLocal = JSON.parse(localStorage.getItem('user'))
-    
+
     useEffect(()=>{
         if(userLocal && !user.length){
           dispatch(getEmployeeById(userLocal.SellerID))
         }
         if(!allProducts.length){
           dispatch(getAllProducts())
-        }},[])
+        }},[allProducts, dispatch, userLocal, user])
 
       useEffect(() => {
-        if(user.length && Object.entries(currentMonth) == 0){
+        if(user.length && Object.entries(currentMonth) === 0){
           dispatch(getCurrentMonth(user[0].SellerID))
         }
         if(user.length && !seller_invoices.length){
           dispatch(getInvoicesBySeller(user[0].SellerID))
-      }}, [user])
+      }}, [dispatch, user, seller_invoices, currentMonth])
 
     function handleSite(site){
       if(site === 'Home') return(<HomeContainer currentMonth={currentMonth}/>)
@@ -50,7 +54,12 @@ const Home = ({site, setSite}) => {
             <Box>{handleSite(site)}</Box>
           </>
         )
-    }else return (navigate('/login'))
+    }else return (
+      <>
+      Go to log in
+      <Button onClick={()=>navigate('/login')}>Log in</Button>
+      </>
+    )
   }
  
 

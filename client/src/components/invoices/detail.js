@@ -1,4 +1,6 @@
 import {Box, Divider, Text} from '@chakra-ui/react';
+import ProductList from '../products/productsList';
+import EditButtons from '../editButtons';
 
 
 
@@ -23,7 +25,7 @@ const Detail = ({invoice}) => {
           mr={'1vw'}
           p={'2vw'}
           h={'46vh'}
-          w={'22vw'}
+          w={'28vw'}
           display={'flex'}
           flexDir={'column'}
           color={'web.text'}
@@ -34,13 +36,13 @@ const Detail = ({invoice}) => {
           >          
           <Text fontSize={'xl'}>Invoice Details</Text>
           <Box mt={'3vh'}>
-				    <Text fontSize={'md'}>Invoice number: {invoice[0].Naturali_Invoice}</Text>
-            <Text fontSize={'md'}>Customer name: {invoice[0].Reference} </Text>
-            <Text fontSize={'md'}>Customer email: {invoice[0].Email !== null ? invoice[0].Email : '-' } </Text>
-				    <Text fontSize={'md'}>Amount: ${invoice[0].Value}</Text>
-				    <Text fontSize={'md'}>Date: {invoice[0].InvoiceDate.split('T')[0]}</Text>
-            <Text fontSize={'md'}>Payment percentaje: % </Text>
-            <Text fontSize={'md'}>Pending amount: $</Text>
+				    <Text fontSize={'sm'}>Invoice number: {invoice[0].Naturali_Invoice}</Text>
+            <Text fontSize={'sm'}>Customer name: {invoice[0].Reference} </Text>
+            <Text fontSize={'sm'}>Customer email: {invoice[0].Email !== null ? invoice[0].Email : '-' } </Text>
+				    <Text fontSize={'sm'}>Amount: ${invoice[0].Value}</Text>
+				    <Text fontSize={'sm'}>Date: {invoice[0].InvoiceDate.split('T')[0]}</Text>
+            <Text fontSize={'sm'}>Payment percentaje: % </Text>
+            <Text fontSize={'sm'}>Pending amount: $</Text>
           </Box>
         </Box> 
         <Box
@@ -53,15 +55,16 @@ const Detail = ({invoice}) => {
           borderColor={'web.border'} 
           bg={'web.sideBar'}
           h={'46vh'}
-          w={'53vw'}>
+          w={'46vw'}>
+          {/* <ProductList/> */}
           
+    <Box>
+			  <EditButtons  />  
+		</Box> 
 
       </Box>
       </Box>
       </Box>	
     )}
-	{/* <Box>
-			  <EditButtons invoice={invoice} setPdf={setPdf}/>  
-		</Box>  */}
 
 export default Detail;

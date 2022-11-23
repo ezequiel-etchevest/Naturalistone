@@ -11,7 +11,7 @@ import {
     ModalCloseButton,
   } from '@chakra-ui/react';
   import { useState } from "react";
-import { patchPaymentMethod } from "../redux/actions";
+import { patchPaymentMethod } from "../redux/actions-payments";
 import { useDispatch } from "react-redux";
 import { Signature } from "./signaturePad";
 
