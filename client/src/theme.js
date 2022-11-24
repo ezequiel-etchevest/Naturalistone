@@ -10,7 +10,7 @@ export const naturali_theme = extendTheme({
         web:{
             bg: '#010409',
             navBar: '#161B22',
-            sideBar:  '#0D1117',
+            sideBar: '#0D1117',
             border: '#30363D',
             text: '#F0F6FC',
             text2: '#8B949E',
