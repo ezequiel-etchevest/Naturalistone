@@ -1,7 +1,27 @@
-import { Box, Input, IconButton } from "@chakra-ui/react";
+import { 
+  Box,
+  Select, 
+  HStack, 
+  Input, 
+  IconButton, 
+  RangeSlider,
+  RangeSliderTrack,
+  RangeSliderFilledTrack,
+  RangeSliderThumb,
+  Tooltip
+ } from "@chakra-ui/react";
+import { useState } from "react";
 import { SearchIcon } from '@chakra-ui/icons';
+import '../../assets/styleSheet.css'
+
 
 const ProductsFilters = ({allProducts, setFilteredProducts}) => {
+  
+    const [limit, setLimit] = useState(0)
+  
+    const onChange = (val) => {
+      setLimit(val);
+    }
 
     const handleChangeProductID = (e) => {
  
@@ -18,7 +38,7 @@ const ProductsFilters = ({allProducts, setFilteredProducts}) => {
     const handleChangeProductName = (e) => {
  
     if(e.target.value.length){
-        const filteredByName = allProducts?.filter(prod => prod.Naturali_ProdName.toLowerCase().includes(e.target.value))
+        const filteredByName = allProducts?.filter(prod => prod.ProductName.toLowerCase().includes(e.target.value))
         if(!filteredByName.length) return alert('No Products match this search')
         setFilteredProducts(filteredByName)
     } else {
@@ -36,38 +56,116 @@ const ProductsFilters = ({allProducts, setFilteredProducts}) => {
         w={'78vw'}
         h={'20vh'}
         >
-        <HStack h={'15vh'} w={'55vw'} mr={'2vh'}>
+        <HStack h={'15vh'} w={'50vw'} mr={'2vh'} spacing={'2vw'}>
           <Select 
             variant='outline' 
-            placeholder='Outline'
-            w={'12vw'}
-            >
-            <option value='option1'>Option 1</option>
-            <option value='option2'>Option 2</option>
-            <option value='option3'>Option 3</option>
-          </Select>
-          <Select 
-            variant='outline' 
-            placeholder='Outline'
-            w={'12vw'}
+            w={'9vw'}
+            h={'4vh'}            
             bg={'web.sideBar'}
-            color={'web.text'}
-            size='md'
+            color={'web.text2'}
             borderColor={'web.border'}
-            >
-            <option value='option1'>Option 1</option>
-            <option value='option2'>Option 2</option>
-            <option value='option3'>Option 3</option>
+            cursor={'pointer'}
+            _focus={{
+              borderColor: 'logo.orange',
+              boxShadow: '0 0.5px 0.5px rgba(229, 103, 23, 0.075)inset, 0 0 5px rgba(255,144,0,0.6)'
+            }}
+            >              
+            <option value='' className="options"> Select Type</option>
+            <option value='tile' className="options">Tile</option>
+            <option value='slab' className="options">Slab</option>
           </Select>
           <Select 
-            variant='outline' 
-            placeholder='Outline'
-            w={'12vw'}
+           variant='outline' 
+           w={'9vw'}
+           h={'4vh'}            
+           bg={'web.sideBar'}
+           color={'web.text2'}
+           borderColor={'web.border'}
+           cursor={'pointer'}
+           _focus={{
+             borderColor: 'logo.orange',
+             boxShadow: '0 0.5px 0.5px rgba(229, 103, 23, 0.075)inset, 0 0 5px rgba(255,144,0,0.6)'
+           }}
             >
-            <option value='option1'>Option 1</option>
-            <option value='option2'>Option 2</option>
-            <option value='option3'>Option 3</option>
+              <option value='' className="options">Select Size</option>
+              <option value='option1' className="options">24 x 24</option>
+              <option value='option2' className="options">24 x 48</option>
+              <option value='option3' className="options">48 x 48</option>
+              <option value='option4' className="options">12 x 24</option>
+              <option value='option5' className="options">1 x 1</option>
+              <option value='option6' className="options">2 x 2</option>
+              <option value='option7' className="options">120 x 50</option>
+              <option value='option8' className="options">126 x 63</option>
+              <option value='option9' className="options">127 x 64</option>
+              <option value='option' className="options">128 x 65</option>
           </Select>
+          <Select 
+           variant='outline' 
+           w={'9vw'}
+           h={'4vh'}            
+           bg={'web.sideBar'}
+           color={'web.text2'}
+           borderColor={'web.border'}
+           cursor={'pointer'}
+           _focus={{
+             borderColor: 'logo.orange',
+             boxShadow: '0 0.5px 0.5px rgba(229, 103, 23, 0.075)inset, 0 0 5px rgba(255,144,0,0.6)'
+           }}
+            >
+              <option value='' className="options">Select Thickness</option>
+              <option value='option10' className="options">3/4</option>
+              <option value='option11' className="options">1/2</option>
+              <option value='option12' className="options">1 1/4</option>
+          </Select>
+          <RangeSlider 
+            aria-label={['min', 'max']}
+            colorScheme={'orange'}
+            onChangeEnd={(val) => console.log(val)}
+            w={'14vw'}
+            onChange={onChange}
+            defaultValue={[120, 240]}
+            min={0}
+            max={300}
+            step={15}
+            >
+            <RangeSliderTrack bg={'web.text2'}>
+              <RangeSliderFilledTrack/>
+            </RangeSliderTrack>
+            <Tooltip
+              label={`$${limit[0]}`}
+              bg={'none'}
+              color="web.text"
+              placement="bottom"
+              isOpen
+              mt={'0.5vh'}
+              >
+              <RangeSliderThumb 
+                bg={'logo.orange'} 
+                index={0}           
+                _focus={{
+                  borderColor: 'logo.orange',
+                  boxShadow: '0 0.5px 0.5px rgba(229, 103, 23, 0.075)inset, 0 0 5px rgba(255,144,0,0.6)'
+                }}
+                />
+            </Tooltip>
+            <Tooltip
+              label={`$${limit[1]}`}
+              bg={'none'}
+              color="web.text"
+              placement="bottom"
+              mt={'0.5vh'}
+              isOpen
+              >
+              <RangeSliderThumb 
+                index={1} 
+                bg={'logo.orange'}
+                _focus={{
+                  borderColor: 'logo.orange',
+                  boxShadow: '0 0.5px 0.5px rgba(229, 103, 23, 0.075)inset, 0 0 5px rgba(255,144,0,0.6)'
+                }}  
+                />
+            </Tooltip>
+          </RangeSlider>
         </HStack>
         {/* <Box
           display={'flex'}
