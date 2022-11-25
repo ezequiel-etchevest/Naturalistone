@@ -87,7 +87,7 @@ const Filters = ({userId, seller_invoices, setFilteredByCustomer, focus, setFocu
             fontFamily={'body'} 
             fontWeight={'hairline'}
             onClick={()=> handleClickAllInvoices()} 
-            >All Invoices</Text>
+            >All Quotes</Text>
             <BsCalendar4Week/>
         </Button>
         <Button
@@ -110,7 +110,7 @@ const Filters = ({userId, seller_invoices, setFilteredByCustomer, focus, setFocu
             fontFamily={'body'} 
             fontWeight={'hairline'}
             onClick={()=> handleClickLastWeek()} 
-            >Last Week Invoices</Text>
+            >Last Week Quotes</Text>
             <BsCalendar4Week/>
         </Button>
         <Button
@@ -132,7 +132,7 @@ const Filters = ({userId, seller_invoices, setFilteredByCustomer, focus, setFocu
             fontFamily={'body'} 
             fontWeight={'hairline'}
             onClick={()=> handleClickLastMonth()}  
-            pr={'1.5vh'}>Last Moth Invoices</Text>
+            pr={'1.5vh'}>Last Moth Quotes</Text>
             <BsCalendar4Week/>
         </Button>
           <Box
@@ -152,7 +152,7 @@ const Filters = ({userId, seller_invoices, setFilteredByCustomer, focus, setFocu
                 <Input
                   w={'70%'}
                   variant={"unstyled"}
-                  placeholder={'Invoice number'}
+                  placeholder={'Quote number'}
                   _placeholder={{ fontFamily: 'body', fontWeight: 'thin' }}
                   size={"sm"}
                   borderBottomWidth={"2px"}

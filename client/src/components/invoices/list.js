@@ -83,12 +83,12 @@ const List = ({seller_invoices, setSite, filteredByCustomer}) => {
                 <Table color={'web.text'} variant={'simple'} size={'sm'} >
                   <Thead h={'6vh'}>
                     <Tr>
-                      <Th color={'web.text2'}>Invoice Number</Th>
+                      <Th color={'web.text2'}>Quote Number</Th>
                       <Th color={'web.text2'}>Customer Name</Th>
-                      <Th color={'web.text2'}>Invoice Date</Th>
-                      <Th color={'web.text2'} isNumeric>Value</Th>
-                      <Th color={'web.text2'} isNumeric>Payment Status</Th>
-                      <Th color={'web.text2'}>Payment Date </Th>
+                      <Th color={'web.text2'}>Quote Date</Th>
+                      <Th color={'web.text2'} isNumeric>Amount</Th>
+                      <Th color={'web.text2'} isNumeric>Payment %</Th>
+                      <Th color={'web.text2'}>Last Payment Date </Th>
                     </Tr>
                   </Thead>
                   <Tbody >

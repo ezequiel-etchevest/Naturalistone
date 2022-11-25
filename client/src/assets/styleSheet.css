@@ -1,0 +1,21 @@
+/* option{
+    background-color: #0D1117;
+    cursor: pointer;
+}
+option::checked {
+    background-color:#0D1117;
+  } */
+
+  select option[class="options"] {
+    background: #0D1117;
+  }
+  select option:checked {
+    background:#30363D;
+    color: #8B949E;
+  }
+  /* select option:hover {
+   background-color: #E47424 !important;;
+} */
+/* select option:hover {
+    box-shadow: 0 0 10px 100px #E47424 inset !important;;
+} */

@@ -44,7 +44,7 @@ const Home = ({site, setSite}) => {
     function handleSite(site){
       if(site === 'Home') return(<HomeContainer currentMonth={currentMonth}/>)
       if(site === 'Products') return(<ProductsContainer allProducts={allProducts}/>)
-      if(site === 'Invoices') return(<InfoContainer site={site} setSite={setSite} seller_invoices={seller_invoices} userId={user[0].SellerID} focus={focus} setFocus={setFocus}/>)
+      if(site === 'Quotes') return(<InfoContainer site={site} setSite={setSite} seller_invoices={seller_invoices} userId={user[0].SellerID} focus={focus} setFocus={setFocus}/>)
     }
 
       if(user.length){
