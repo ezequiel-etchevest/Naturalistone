@@ -9,7 +9,7 @@ import {
     GET_INVOICES_LASTMONTH, 
     GET_FILTERED_INVOICES } from './actions-invoices';
 import { PATCH_PAYMENT_METHOD } from './actions-payments';
-import { GET_ALL_PRODUCTS } from './actions-products';
+import { GET_ALL_PRODUCTS, GET_FILTERED_PRODUCTS } from './actions-products';
 import { GET_CURRENT_MONTH } from './actions-stats';
 
 const intialState = {
@@ -20,7 +20,8 @@ const intialState = {
     filtered_invoices: [],
     filtered_invoices_month_week: [],
     allProducts: [],
-    current_month: {}
+    current_month: {},
+    filtered_products:[]
     // productsByID: []
 }
 
@@ -88,13 +89,17 @@ function rootReducer (state = intialState, action) {
                 ...state,
                 allProducts: action.payload,
             }
+        case GET_FILTERED_PRODUCTS:
+            return {
+                ...state,
+                allProducts: action.payload,
+            }
         case GET_CURRENT_MONTH:
             return {
                 ...state,
                 current_month: action.payload,
             }
             
-        
         default:
             return {
                 ...state
