@@ -10,7 +10,8 @@ import {
   } from '@chakra-ui/react'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
-import { getInvoiceById } from '../../redux/actions-invoices'
+import { getInvoiceById, getInvoiceProducts } from '../../redux/actions-invoices'
+import { getPayments } from '../../redux/actions-payments'
 
 
 const ModelTr = ({e, setSite}) => {
@@ -21,6 +22,8 @@ const ModelTr = ({e, setSite}) => {
     const handleClick = () => {
       setSite('details')
       dispatch(getInvoiceById(e.Naturali_Invoice))
+      dispatch(getInvoiceProducts(e.Naturali_Invoice))
+      dispatch(getPayments(e.Naturali_Invoice))
       navigate(`/invoices/${e.Naturali_Invoice}`)
     }
     

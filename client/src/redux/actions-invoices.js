@@ -4,6 +4,7 @@ export const GET_INVOICES_BY_SELLER = 'GET_INVOICEs_BY_SELLER';
 export const GET_INVOICES_LASTWEEK = 'GET_INVOICES_LASTWEEK';
 export const GET_INVOICES_LASTMONTH = 'GET_INVOICES_LASTMONTH';
 export const GET_FILTERED_INVOICES = 'GET_FILTERED_INVOICES';
+export const GET_INVOICE_PRODUCTS = 'GET_INVOICE_PRODUCTS';
 
 
 export function getInvoicesBySeller(id){
@@ -71,19 +72,32 @@ export function getFilteredInvoices(filteredInvoices){
         }
     }
 }
+
 export function getInvoicesLastMonth(id){
     return async function(dispatch){
-
         try{
             let {data} = await axios.get(`http://localhost:5000/sales/lastMonth/${id}`)
-            dispatch(
-            {
+            dispatch({
                 type: GET_INVOICES_LASTMONTH,
                 payload: data
             })
         }catch(error){
             console.log({error})           
 
+        }
+    }
+}
+
+export function getInvoiceProducts(id){
+    return async function(dispatch){
+        try{
+            let {data} = await axios.get(`http://localhost:5000/prodSold/${id}`)
+            return dispatch({
+                type: GET_INVOICE_PRODUCTS,
+                payload: data
+            })
+        }catch(error){
+            console.log({error})
         }
     }
 }

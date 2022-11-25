@@ -19,7 +19,7 @@ const Home = ({site, setSite}) => {
   const navigate = useNavigate()
   const seller_invoices = useSelector(state => state.seller_invoices)
   const user = useSelector(state => state.user)
-  const allProducts = useSelector(state => state.allProducts)
+  const allProducts = useSelector(state => state.all_products)
   const currentMonth = useSelector(state => state.current_month)
   const [focus, setFocus] = useState('AllInvoices')
 

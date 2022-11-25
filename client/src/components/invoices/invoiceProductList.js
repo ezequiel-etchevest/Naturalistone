@@ -7,42 +7,44 @@ import {
     Th,
     Td,
     TableContainer,
+    Text,
   } from '@chakra-ui/react'
+import { useSelector } from 'react-redux'
+import ProductList from '../products/productsList'
 
 
 
-const ModelTr = ({e, setSite}) => {
+const ModelTr = ({p}) => {
     
     return(
       <Tr 
-        cursor={'pointer'} 
-        key={e.Naturali_Invoice}
+        cursor={'pointer'}
+        key={p.ProdID} 
         _hover={{
           bg: 'web.navBar',
           color: 'logo.orange'
         }}
         >
-        <Td textAlign={'center'}>{e.Naturali_Invoice}</Td>
-        <Td>{e.Reference}</Td>
-        <Td textAlign={'center'}>{e.InvoiceDate.split('T')[0]}</Td>
-        <Td isNumeric>${e.Value} </Td>
-        <Td textAlign={'center'} >{e.PaymentStatus === null ? 'Unpaid' : 'Paid'}</Td>
-        <Td textAlign={'center'}>{e.PaymentDate}</Td>
+        <Td textAlign={'center'}>{p.ProductName}</Td>
+        <Td textAlign={'center'}>{p.Quantity} </Td>
+        <Td textAlign={'center'} >${p.SalePrice}</Td>
+        <Td textAlign={'center'}>{p.Stock === null ? '0' : p.Stock}</Td>
+        <Td textAlign={'center'}>{p.NextArrival === null ? '-' : p.NextArrival}</Td>
       </Tr>
     )
 }
 
-const List = ({products}) => {
+const InvoiceProductList = () => {
+
+  const invoice_products = useSelector(state=> state.invoice_products)
 
     return(
         <Box
         display={'flex'}
         justifyContent={'center'}
-        h={'72vh'}
-        w={'78.8vw'} 
         >
           <Box
-            maxHeight={'69vh'}
+            maxHeight={'46vh'}
             overflow={'auto'}
             css={{
               '&::-webkit-scrollbar': {
@@ -56,28 +58,24 @@ const List = ({products}) => {
                 borderRadius: '5px',
               },
             }}
-            borderColor={'web.border'}
-            bg={'web.sideBar'} 
-            border={'1px solid'} 
-            rounded={'md'} 
-            p={'3vh'}
-            w={'72vw'}
-            
+            bg={'web.sideBar'}           
             >
+            <Text fontSize={'xl'} color={'web.text2'}>Products Details</Text>
             <TableContainer>
-                <Table color={'web.text'} variant={'simple'} size={'sm'} >
+                <Table mt={'2vh'} color={'web.text'} variant={'simple'} size={'sm'} >
                   <Thead h={'6vh'}>
                     <Tr>
                       <Th color={'web.text2'}>Product Name</Th>
-                      <Th color={'web.text2'}>Amount</Th>
-                      <Th color={'web.text2'}>Stock Available</Th>
+                      <Th color={'web.text2'}>Quantity</Th>
+                      <Th color={'web.text2'}>Sale Price</Th>
+                      <Th color={'web.text2'}>Stock</Th>
                       <Th color={'web.text2'}>Next Arrival</Th>
                     </Tr>
                   </Thead>
                   <Tbody >
-                    { products.map((e, i) =>{
+                    { invoice_products.map((p, i) =>{
                         return(
-                          <ModelTr p={p}/>
+                          <ModelTr p={p} key={i}/>
                         )
                       })
                     }
@@ -88,4 +86,4 @@ const List = ({products}) => {
         </Box>
     )
 }
-export default List;
+export default InvoiceProductList;
