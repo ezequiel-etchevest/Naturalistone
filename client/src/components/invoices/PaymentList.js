@@ -12,7 +12,9 @@ import {
 
 
 
-const ModelTr = ({p}) => {
+const ModelTr = ({p, totalAmount}) => {
+
+    const per = (p.Amount * 100) / totalAmount
     
     return(
       <Tr 
@@ -23,17 +25,17 @@ const ModelTr = ({p}) => {
           color: 'logo.orange'
         }}
         >
-        <Td textAlign={'center'}>{p.ProductName}</Td>
-        <Td textAlign={'center'}>{p.Quantity} </Td>
-        <Td textAlign={'center'} >${p.SalePrice}</Td>
-        <Td textAlign={'center'}>{p.Stock === null ? '0' : p.Stock}</Td>
-        <Td textAlign={'center'}>{p.NextArrival === null ? '-' : p.NextArrival}</Td>
+        <Td textAlign={'match-parent'}>{p.Date.split('T')[0]}</Td>
+        <Td textAlign={'match-parent'}>${p.Amount} </Td>
+        <Td textAlign={'match-parent'}>{p.Method}</Td>
+        <Td textAlign={'match-parent'}>{per.toFixed(2)} %</Td>
       </Tr>
     )
 }
 
-const InvoiceProductList = ({invoice_products}) => {
+const PaymentList = ({payments, totalAmount}) => {
 
+  if(payments.paymentData){
     return(
         <Box
         display={'flex'}
@@ -56,30 +58,39 @@ const InvoiceProductList = ({invoice_products}) => {
             }}
             bg={'web.sideBar'}           
             >
-            <Text fontSize={'xl'} color={'web.text2'}>Products Details</Text>
-            <TableContainer w={'44vw'}>
+            <Text fontSize={'xl'} color={'web.text2'}>Payment Details</Text>
+            <TableContainer  w={'44vw'}>
                 <Table mt={'2vh'} color={'web.text'} variant={'simple'} size={'sm'} >
                   <Thead h={'6vh'}>
                     <Tr>
-                      <Th color={'web.text2'}>Product Name</Th>
-                      <Th color={'web.text2'}>Quantity</Th>
-                      <Th color={'web.text2'}>Sale Price</Th>
-                      <Th color={'web.text2'}>Stock</Th>
-                      <Th color={'web.text2'}>Next Arrival</Th>
+                      <Th color={'web.text2'}>Payment Date</Th>
+                      <Th color={'web.text2'}>Amount</Th>
+                      <Th color={'web.text2'}>Method</Th>
+                      <Th color={'web.text2'}>Percentaje</Th>
                     </Tr>
                   </Thead>
                   <Tbody >
-                    { invoice_products.map((p, i) =>{
-                        return(
-                          <ModelTr p={p} key={i}/>
-                        )
-                      })
+                    { 
+                        payments.paymentData.map((p, i) =>{
+                          return(
+                            <ModelTr p={p} key={i} totalAmount={totalAmount}/>
+                          )})
+                          
+                          
+                    
                     }
                   </Tbody>
                 </Table>
             </TableContainer> 
             </Box> 
-        </Box>
+        </Box>)
+  }else {
+    return(
+      <Text color={'web.text'}>No payments done yet</Text>
     )
-}
-export default InvoiceProductList;
+  }
+    
+  
+  }
+
+export default PaymentList;
