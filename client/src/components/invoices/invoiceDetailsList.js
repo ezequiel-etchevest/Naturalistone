@@ -1,16 +1,7 @@
 import { Box, Text } from "@chakra-ui/react"
 
-const InvoiceDetailList = ({invoice, payment}) => {
-console.log({payment})
-  // function payments({results1, results2}){
-  //   let amount = results2[0].Value
-  //   let sumPayments = results1.reduce((acc, act)=> acc + act.Amount)
-  //   let per =(sumPayments * 100) / amount
-  //   let rest = amount - sumPayments
-  //   return [{per},{rest}]
-  // }
-  // let res = payments(payment)
-  // console.log(res)
+const InvoiceDetailList = ({invoice, payments}) => {
+
     return(
         <>
         <Box
@@ -119,7 +110,12 @@ console.log({payment})
               <Text 
               fontSize={'sm'} 
               fontWeight={'bold'}>
-                 % 
+                { payments.paymentsMath ? (
+                  payments.paymentsMath.PaymentPercentaje                  
+                  ):(
+                    0
+                  )
+              } %
               </Text>
             </Box>
             <Box>
@@ -131,7 +127,12 @@ console.log({payment})
               <Text 
                 fontSize={'sm'} 
                 fontWeight={'bold'}>
-                 $</Text>
+                 ${payments.paymentsMath  ? (
+                   payments.paymentsMath.PendingAmount
+                  ):(
+                    invoice[0].Value
+                    )
+                 }</Text>
               </Box>
             </Box>
           </Box>

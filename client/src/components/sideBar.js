@@ -15,7 +15,7 @@ const LinkItems = [
   ];
 
 
-const SideBar = ({user, site, setSite}) => {
+const SideBar = ({user}) => {
 
 	return (
 
@@ -47,8 +47,6 @@ const SideBar = ({user, site, setSite}) => {
     <Box  pr={12} pt={'9vh'}>
       {LinkItems.map((link) => (
         <NavItem
-          setSite={setSite}
-          site={site}
           textDecoration={'none'}
           link={link}
           key={link.name}
@@ -63,21 +61,15 @@ const SideBar = ({user, site, setSite}) => {
 	  );
   }
   
-  const NavItem = ({ site, setSite, icon, link, children, ...rest }) => {
+  const NavItem = ({ icon, link, children, ...rest }) => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
 
     const handleLogOut = () => {
       dispatch(logOut())
-      setSite('Home')
       navigate('/login')
     }
     
-    const handleClick = () => {
-        navigate('/home')
-        setSite(link.name)
-    }
-
     return (
       <Box
         color={'web.text2'}
@@ -85,7 +77,7 @@ const SideBar = ({user, site, setSite}) => {
         fontSize={'lg'}
         style={{ textDecoration: 'none' }}
         _focus={{ boxShadow: 'none' }}
-        onClick={link.name === 'Log Out' ? ()=> {handleLogOut()} : ()=>handleClick()}
+        onClick={link.name === 'Log Out' ? ()=> {handleLogOut()} : ()=>navigate(`/${link.name}`)}
         >
         <Flex
           align="center"

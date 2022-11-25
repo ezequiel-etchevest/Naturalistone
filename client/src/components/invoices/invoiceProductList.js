@@ -9,8 +9,6 @@ import {
     TableContainer,
     Text,
   } from '@chakra-ui/react'
-import { useSelector } from 'react-redux'
-import ProductList from '../products/productsList'
 
 
 
@@ -34,9 +32,7 @@ const ModelTr = ({p}) => {
     )
 }
 
-const InvoiceProductList = () => {
-
-  const invoice_products = useSelector(state=> state.invoice_products)
+const InvoiceProductList = ({invoice_products}) => {
 
     return(
         <Box
@@ -61,7 +57,7 @@ const InvoiceProductList = () => {
             bg={'web.sideBar'}           
             >
             <Text fontSize={'xl'} color={'web.text2'}>Products Details</Text>
-            <TableContainer>
+            <TableContainer w={'44vw'}>
                 <Table mt={'2vh'} color={'web.text'} variant={'simple'} size={'sm'} >
                   <Thead h={'6vh'}>
                     <Tr>

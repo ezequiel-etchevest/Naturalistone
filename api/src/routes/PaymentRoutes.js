@@ -1,6 +1,10 @@
 const express = require('express')
 const PaymentRouter = express.Router()
 const mysqlConnection = require('../db')
+const payments = require('../Controllers/payments')
+
+
+
 
 PaymentRouter.get('/:id', async function(req, res){
     const { id } = req.params
@@ -9,20 +13,21 @@ PaymentRouter.get('/:id', async function(req, res){
     query_2 = `SELECT * from Sales WHERE Naturali_Invoice = ${id}`;
 
     try{
-        mysqlConnection.query(query_, function(error, results1, fields){
+        mysqlConnection.query(query_, function(error, paymentData, fields){
             if(error) throw error;
-            if(results1.length == 0) {
+            if(paymentData.length == 0) {
                 console.log('Error al obtener data en getpayments')
-                res.status(400).json({ estado: false, data: {}});
+                res.status(200).json({ estado: false, data: {}});
             } else {
                 try{
-                    mysqlConnection.query(query_2, function(error, results2, fields){
+                    mysqlConnection.query(query_2, function(error, invoiceData, fields){
                         if(error) throw error;
-                        if(results2.length == 0) {
+                        if(invoiceData.length == 0) {
                             console.log('Error al obtener data en getdetails')
-                            res.status(400).json({ estado: false, data: {}});
+                            res.status(200).json({ estado: false, data: {}});
                         } else{
-                            res.status(200).json({results1,results2});
+                            let paymentsMath = payments(paymentData, invoiceData)
+                            res.status(200).json({paymentData,invoiceData, paymentsMath});
                         }})
                     }catch(error){
                         res.status(400).send(error)

@@ -18,7 +18,7 @@ const InvoiceDetail = ({site, setSite}) => {
   const { id } = useParams()
 
   useEffect(()=>{
-      if(!invoice.length) dispatch(getInvoiceById(id))} 
+      dispatch(getInvoiceById(id))} 
       ,[])
 
   useEffect(()=>{

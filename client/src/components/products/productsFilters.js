@@ -8,16 +8,10 @@ import {
   RangeSliderTrack,
   RangeSliderFilledTrack,
   RangeSliderThumb,
-  Tooltip,
-  Accordion,
-  AccordionItem,
-  AccordionButton,
-  AccordionPanel,
-  AccordionIcon,
-  Button
+  Tooltip
  } from "@chakra-ui/react";
 import { useState } from "react";
-import { SearchIcon,AddIcon, MinusIcon } from '@chakra-ui/icons';
+import { SearchIcon } from '@chakra-ui/icons';
 import '../../assets/styleSheet.css'
 
 const ProductsFilters = ({allProducts, setFilteredProducts}) => {
