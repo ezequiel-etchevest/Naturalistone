@@ -10,36 +10,29 @@ import {
   RangeSliderThumb,
   Tooltip,
   Text,
-  Button
+  Button,
+  useToast
  } from "@chakra-ui/react";
 import { useState } from "react";
 import { SearchIcon, CheckIcon } from '@chakra-ui/icons';
 import '../../assets/styleSheet.css'
 import { IoFilterSharp } from 'react-icons/io5' 
-import { getFiltered } from "../../redux/actions-products";
+import { getAllProducts, getFiltered } from "../../redux/actions-products";
 import { useDispatch } from 'react-redux'
 
 
 const ProductsFilters = ({allProducts, setFilteredProducts}) => {
 
     const dispatch = useDispatch()
+    const toast = useToast()
 
-    const [limit, setLimit] = useState([120, 240])
-    const [visibility, setVisibility] = useState('hidden')
-
+    const [limit, setLimit] = useState([0, 300])
     const [filters, setFilters] = useState({
       type:'',
       size:'',
       thickness:'',
       price: [0, 300]
     })
-
-    const onClickFilter = () => {
-      visibility === 'hidden' ? setVisibility('unset') : setVisibility('hidden')
-    }
-    const handleChange = (val) => {
-      setLimit(val);
-    }
 
 //     const handleChangeProductID = (e) => {
  
@@ -61,7 +54,6 @@ const ProductsFilters = ({allProducts, setFilteredProducts}) => {
   }
 
   const handleSize = (e) => {
-    console.log(e.target.value)
     setFilters({
       ...filters, 
       size: e.target.value
@@ -76,6 +68,7 @@ const ProductsFilters = ({allProducts, setFilteredProducts}) => {
   }
 
   const handlePrice = (e) => {
+    setLimit(e);
     setFilters({
       ...filters,
       price: e
@@ -83,8 +76,18 @@ const ProductsFilters = ({allProducts, setFilteredProducts}) => {
   }
 
   const handleFilters = () => {
-    console.log(filters)
     dispatch(getFiltered(filters))
+
+  }
+
+  const handleClear = () => {
+    setFilters({
+      type:'',
+      size:'',
+      thickness:'',
+      price: [0, 300]
+      })
+    dispatch(getAllProducts())
   }
 
   const handleChangeProductName = (e) => {
@@ -97,6 +100,9 @@ const ProductsFilters = ({allProducts, setFilteredProducts}) => {
         setFilteredProducts([])
     }
 }
+// const handleChangeSelect = (e) => {
+//     setSelect(e.target.value)
+// }
 
   return (
     <>    
@@ -109,7 +115,7 @@ const ProductsFilters = ({allProducts, setFilteredProducts}) => {
         h={'20vh'} 
         flexDir={'column-reverse'}
         >
-        <HStack visibility={visibility} h={'5vh'} w={'72vw'} display={'flex'} alignItems={'center'} mb={'3.5vh'} ml={'0.5vw'} justifyContent={'space-between'}>
+        <HStack h={'5vh'} w={'72vw'} display={'flex'} alignItems={'center'} mb={'3.5vh'} ml={'0.5vw'} justifyContent={'space-between'}>
           <Box display={'flex'} flexDir={'row'} w={'30vw'} justifyContent={'space-between'} >
           <Select 
             variant='outline' 
@@ -120,6 +126,7 @@ const ProductsFilters = ({allProducts, setFilteredProducts}) => {
             color={'web.text2'}
             borderColor={'web.border'}
             cursor={'pointer'}
+            value={filters.type}
             _focus={{
               borderColor: 'logo.orange',
               boxShadow: '0 0.5px 0.5px rgba(229, 103, 23, 0.075)inset, 0 0 5px rgba(255,144,0,0.6)'
@@ -139,6 +146,7 @@ const ProductsFilters = ({allProducts, setFilteredProducts}) => {
             color={'web.text2'}
             borderColor={'web.border'}
             cursor={'pointer'}
+            value={filters.size}
             _focus={{
               borderColor: 'logo.orange',
               boxShadow: '0 0.5px 0.5px rgba(229, 103, 23, 0.075)inset, 0 0 5px rgba(255,144,0,0.6)'
@@ -166,6 +174,7 @@ const ProductsFilters = ({allProducts, setFilteredProducts}) => {
             color={'web.text2'}
             borderColor={'web.border'}
             cursor={'pointer'}
+            value={filters.thickness}
             _focus={{
               borderColor: 'logo.orange',
               boxShadow: '0 0.5px 0.5px rgba(229, 103, 23, 0.075)inset, 0 0 5px rgba(255,144,0,0.6)'
@@ -181,7 +190,8 @@ const ProductsFilters = ({allProducts, setFilteredProducts}) => {
           <RangeSlider 
             aria-label={['min', 'max']}
             colorScheme={'orange'}
-            onChangeEnd={(val) => handleChange(val)}
+            value={filters.price}
+            onChangeEnd={(val) => console.log(val)}
             onChange={(e) => handlePrice(e)}
             w={'13vw'}
             defaultValue={[0, 300]}
@@ -200,7 +210,6 @@ const ProductsFilters = ({allProducts, setFilteredProducts}) => {
               placement="bottom"
               isOpen
               fontSize={'1.4vh'}
-              visibility={visibility} 
               >
               <RangeSliderThumb 
                 bg={'logo.orange'} 
@@ -218,7 +227,6 @@ const ProductsFilters = ({allProducts, setFilteredProducts}) => {
               placement="bottom"
               isOpen
               fontSize={'1.4vh'}
-              visibility={visibility} 
               >
               <RangeSliderThumb 
                 index={1} 
@@ -249,6 +257,7 @@ const ProductsFilters = ({allProducts, setFilteredProducts}) => {
                  }}
               _active={{
               }}
+              onClick={(e) => handleClear(e)}
               >
               <Text 
                 pr={'1.5vh'} 
@@ -296,7 +305,7 @@ const ProductsFilters = ({allProducts, setFilteredProducts}) => {
             <Button
               variant={'unstyled'} 
               display={'flex'} 
-              w={'4vw'}
+              w={'7vw'}
               h={'5vh'}
               borderRadius={'sm'} 
               placeContent={'center'}
@@ -308,7 +317,6 @@ const ProductsFilters = ({allProducts, setFilteredProducts}) => {
                  }}
               _active={{
               }}
-              onClick={onClickFilter}
               >
               <Text 
                 pr={'1.5vh'} 
@@ -344,8 +352,8 @@ const ProductsFilters = ({allProducts, setFilteredProducts}) => {
               />
             </Box>
           </Box>
-        </Box>
-      </>
+      </Box>
+    </>
     )
 }
 

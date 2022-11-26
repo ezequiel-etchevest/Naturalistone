@@ -87,11 +87,9 @@ productsRouter.get('/id/:id', async function(req, res){
 // });
 
 productsRouter.get('/filtered', async function(req, res){
+    
+    const { type, size, thickness, price1, price2 } = req.query
 
-    // query_ =    `SELECT ProdNames.*, Inventory.* FROM ProdNames 
-    //             LEFT JOIN Inventory ON ProdNames.ProdNameID = Inventory.ProdID ORDER BY ProdNames.Naturali_ProdName ASC`;   
-    const filters = req.body
-    console.log(filters)
     query_ = `SELECT    
                     ProdNames.Naturali_ProdName AS ProductName,
                     Dimension.Type,
@@ -107,13 +105,13 @@ productsRouter.get('/filtered', async function(req, res){
                   INNER JOIN Inventory ON Inventory.ProdID = Products.ProdID`
     try{
         mysqlConnection.query(query_, function(error, results, fields){   
-
+            
             if(error) throw error;
             if(results.length == 0) {
                 console.log('Error al obtener data!')
                 res.status(200).json({});
             } else {
-                const filter = filterProducts(filters, results)
+                const filter = filterProducts(type, size, thickness, price1, price2, results)
                 res.status(200).json(filter);
             }
         });

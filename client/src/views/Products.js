@@ -23,8 +23,8 @@ const Products = () => {
     useEffect(()=>{
         if(!allProducts.length){
           dispatch(getAllProducts())
-        }},[allProducts, dispatch, userLocal, user])
-
+        }},[allProducts])
+         
       if(user.length){
         return(
           <>

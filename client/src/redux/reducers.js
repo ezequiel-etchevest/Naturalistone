@@ -24,7 +24,6 @@ const intialState = {
     current_month: {},
     invoice_products: [],
     payments_by_id: {},
-    filtered_products:[]
     // productsByID: []
 }
 
@@ -50,7 +49,7 @@ function rootReducer (state = intialState, action) {
                 seller_invoices: [],
                 filtered_invoices: [],
                 filtered_invoices_month_week: [],
-                current_month:{}
+                current_month:{},
             }
         
         case GET_INVOICE_BY_ID:
@@ -95,7 +94,8 @@ function rootReducer (state = intialState, action) {
         case GET_FILTERED_PRODUCTS:
             return {
                 ...state,
-                allProducts: action.payload,
+                all_products: action.payload,
+                
             }
         case GET_CURRENT_MONTH:
             return {
