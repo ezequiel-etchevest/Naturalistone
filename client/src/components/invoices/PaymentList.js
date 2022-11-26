@@ -46,6 +46,10 @@ const ModelTr = ({p, totalAmount}) => {
 
 const PaymentList = ({payments, totalAmount, pendingAmount}) => {
 
+  const handlePendig = () => {
+    if((totalAmount - pendingAmount)=== totalAmount) return false
+    else return true
+  }
   return(
     <>
      <Box
@@ -61,12 +65,19 @@ const PaymentList = ({payments, totalAmount, pendingAmount}) => {
               flexDir={'row'} 
               justifyContent={'space-between'} 
               alignContent={'start'}>
-            <Text 
+            <Text
+              mb={'1vh'} 
               alignSelf={'center'} 
               fontSize={'xl'} 
               color={'web.text2'}
               >Payment Details</Text>
-            <AddPayment pendingAmount={pendingAmount}/>
+              {
+                handlePendig() === true ? (
+                  <AddPayment pendingAmount={pendingAmount}/>
+                ):(
+                  null
+                )
+              }
             </Box>
       {
         payments.paymentData ? (

@@ -18,7 +18,8 @@ import {
     NumberDecrementStepper,
     NumberIncrementStepper,
     NumberInputStepper,
-    NumberInputField 
+    NumberInputField, 
+    FormErrorMessage
     } from "@chakra-ui/react"
 import { SiAddthis } from 'react-icons/si';
 import { useState } from "react";
@@ -37,8 +38,10 @@ const AddPayment = ({pendingAmount}) => {
     const [input, setInput] = useState({
       Method : '',
       Amount: ''})
+    const [error, setError] = useState('')
 
     const handleCancel = () =>{
+      setDisabled(true)
       onClose()
     }
     const handleSelect = (e) =>{
@@ -50,32 +53,45 @@ const AddPayment = ({pendingAmount}) => {
       if(input.Method !== '' && input.Amount !== ''){
         setDisabled(false)
       }
+      if(input.Method == ''){
+        setDisabled(true)
+      }
+      if(input.Amount == ''){
+        setDisabled(true)
+      }
     }
     const handleInput = (e) => {
       setInput({
         ...input,
         Amount : e
        })
-       if(input.Method !== '' && input.Amount !== ''){
+       if(input.Method !== '' && input.Amount !== '' ){
         setDisabled(false)
+      }
+      if(input.Method == ''){
+        setDisabled(true)
+      }
+      if(input.Amount == ''){
+        setDisabled(true)
       }
     }
     const handleSubmit = () => {
-
-        if(input.Method !== ''){
-          
+        if(input.Method !== '' && input.Amount > 0){ 
         dispatch(patchPaymentMethod(id, input))
         setInput({
           Method : '',
           Amount: '' })
-        onClose()}
+        onClose()
+        setDisabled(true)}
+        else{
+          setError('Please complete both fields')
+        }
     }
     
     
     return(
         <>
           <ButtonGroup
-            hidden={pendingAmount === 0 ? true : false}  
             variant={'unstyled'} 
             color={'web.text2'}
             onClick={onOpen}
@@ -136,11 +152,10 @@ const AddPayment = ({pendingAmount}) => {
                 <FormControl mt={'2vh'}  isRequired>
                   <FormLabel color={'web.text'}>Amount</FormLabel>
                   <NumberInput
-
                     borderColor={'web.border'} 
                     color={'web.text2'}
                     onChange={(e)=>handleInput(e)} 
-                    step={100} 
+                    step={1} 
                     defaultValue={0} 
                     min={0} 
                     max={pendingAmount} 
@@ -156,7 +171,11 @@ const AddPayment = ({pendingAmount}) => {
                     </NumberInputStepper>
                   </NumberInput>
                 </FormControl>
-                
+                { error ? (
+                  <FormErrorMessage>{error}</FormErrorMessage>
+                  ):(
+                    null
+                  )}
               </ModalBody>
               <ModalFooter>
                 <Button
