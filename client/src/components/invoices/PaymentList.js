@@ -22,7 +22,7 @@ const ModelTr = ({p, totalAmount}) => {
     const dispatch = useDispatch()
     const per = (p.Amount * 100) / totalAmount
     const handleDelete = ()  => {
-      dispatch(deletePayment(p.idPayments))
+      dispatch(deletePayment(p.InvoiceID, p.idPayments))
     }
     return(
       <Tr 
@@ -38,7 +38,6 @@ const ModelTr = ({p, totalAmount}) => {
         <Td textAlign={'match-parent'}>{p.Method}</Td>
         <Td textAlign={'match-parent'}>{per.toFixed(2)} %</Td>
         <Td>
-          <IconButton mr={'1vh'} size={'xs'}fontSize={'2.5vh'} variant={'unstyled'} icon={<AiOutlineEdit/>}/>
           <IconButton size={'xs'}fontSize={'2.5vh'} variant={'unstyled'} icon={<AiOutlineDelete/>} onClick={()=>handleDelete()}/>
         </Td>
       </Tr>

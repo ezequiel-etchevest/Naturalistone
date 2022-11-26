@@ -56,6 +56,24 @@ PaymentRouter.post('/invoice/:id', async function(req, res){
             } else res.status(200).json({results})
         })}catch(error){
             res.status(409).send(error);
-        }})
+        }}
+)
+
+PaymentRouter.delete('/invoice/:id', async function(req, res){
+    const { id } = req.params
+    query_= `DELETE FROM Payments WHERE idPayments = ${id}`
+    try{
+    mysqlConnection.query(query_, function(error, results, fields){
+            
+        if(error) throw {error};
+        if(results.length == 0) {
+            console.log('Error en delete')
+            res.status(200).json({ estado: false, data: {}});
+        
+        } else res.status(200).json({results})
+    })}catch(error){
+        res.status(409).send(error);
+    }}
+)
        
 module.exports = PaymentRouter

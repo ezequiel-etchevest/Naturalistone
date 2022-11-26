@@ -33,11 +33,12 @@ export function getPayments(id){
         }
 }
 
-export function deletePayment(paymentID){
+export function deletePayment(invoiceID, paymentID){
+    console.log({paymentID})
     return async function(dispatch){
         try{
             let { response } = await axios.delete(`http://localhost:5000/payments/invoice/${paymentID}`)
-            let { data } = await axios.get(`http://localhost:5000/payments/${paymentID}`)
+            let { data } = await axios.get(`http://localhost:5000/payments/${invoiceID}`)
             dispatch(
             {
                 type: DELETE_PAYMENT_METHOD,

@@ -10,12 +10,10 @@ import {
     ModalFooter,
     ModalBody,
     ModalCloseButton,
-    Text,
     Select,
     useDisclosure,
     FormControl,
     FormLabel,
-    Input,
     NumberInput,
     NumberDecrementStepper,
     NumberIncrementStepper,
@@ -27,6 +25,7 @@ import { useState } from "react";
 import { useParams } from 'react-router-dom';
 import { useDispatch } from "react-redux";
 import { patchPaymentMethod } from "../../redux/actions-payments";
+import '../../assets/styleSheet.css'
 
 
 
@@ -42,7 +41,6 @@ const AddPayment = ({pendingAmount}) => {
     const handleCancel = () =>{
       onClose()
     }
-
     const handleSelect = (e) =>{
       if(e.target.value == 'Cash'|| e.target.value == 'Card'|| e.target.value == 'Wire transfer' || e.target.value == 'Check'){
          setInput({
@@ -52,7 +50,7 @@ const AddPayment = ({pendingAmount}) => {
       if(input.Method !== '' && input.Amount !== ''){
         setDisabled(false)
       }
-      }
+    }
     const handleInput = (e) => {
       setInput({
         ...input,
@@ -61,8 +59,7 @@ const AddPayment = ({pendingAmount}) => {
        if(input.Method !== '' && input.Amount !== ''){
         setDisabled(false)
       }
-      }
-
+    }
     const handleSubmit = () => {
 
         if(input.Method !== ''){
@@ -72,59 +69,87 @@ const AddPayment = ({pendingAmount}) => {
           Method : '',
           Amount: '' })
         onClose()}
-      }
+    }
     
     
     return(
         <>
-          <ButtonGroup 
+          <ButtonGroup
+            hidden={pendingAmount === 0 ? true : false}  
             variant={'unstyled'} 
             color={'web.text2'}
+            onClick={onOpen}
             _hover={{
               color: 'logo.orange'
             }}>
-            <Button 
+            <Button
               mr={'1vh'} 
               pb={'0.5vh'} 
               alignSelf={'center'} 
               fontWeight={'normal'}
-              onClick={onOpen}
+             
               >Add payment</Button>
               <IconButton
                 icon={<SiAddthis/>} 
                 size={'lg'}
                 />
           </ButtonGroup>
-          <Modal isOpen={isOpen} onClose={onClose}>
+          <Modal 
+            isOpen={isOpen} 
+            onClose={onClose}
+            >
             <ModalOverlay/>
-            <ModalContent>
-              <ModalHeader>
+            <ModalContent 
+              bg={'web.sideBar'}
+              border={'1px solid'}
+              borderColor={'web.border'}
+              >
+              <ModalHeader
+              color={'web.text'}>
                 Add payment
               </ModalHeader>
-              <ModalCloseButton />
+              <ModalCloseButton
+                color={'web.text2'}
+                _hover={{
+                  color: 'web.text'
+                }} />
               <ModalBody>
               <FormControl  isRequired>
-                <FormLabel>
+                <FormLabel color={'web.text'}>
                   Select payment method
                 </FormLabel>
-                <Select placeholder='Select Option' onChange={(e)=>handleSelect(e)}>
-                  <option value='Check'>Check</option>
-                  <option value='Card'>Card</option>
-                  <option value='Cash'>Cash</option>
-                  <option value='Wire transfer'>Wire Transfer</option>
+                <Select
+                  _focus={{
+                    borderColor: 'logo.orange',
+                    boxShadow: '0 0.5px 0.5px rgba(229, 103, 23, 0.075)inset, 0 0 5px rgba(255,144,0,0.6)'
+                  }}
+                  borderColor={'web.border'} 
+                  color={'web.text2'} 
+                  placeholder='Select Option' 
+                  onChange={(e)=>handleSelect(e)}>
+                  <option value='Check' className="options" >Check</option>
+                  <option value='Card' className="options" >Card</option>
+                  <option value='Cash' className="options" >Cash</option>
+                  <option value='Wire transfer' className="options" >Wire Transfer</option>
                 </Select>
                 </FormControl>
-                <FormControl  isRequired>
-               
-                  <FormLabel>Amount</FormLabel>
+                <FormControl mt={'2vh'}  isRequired>
+                  <FormLabel color={'web.text'}>Amount</FormLabel>
                   <NumberInput
+
+                    borderColor={'web.border'} 
+                    color={'web.text2'}
                     onChange={(e)=>handleInput(e)} 
                     step={100} 
                     defaultValue={0} 
-                    min={100} 
+                    min={0} 
                     max={pendingAmount} 
                     precision={2}>
-                    <NumberInputField />
+                    <NumberInputField                    
+                    _focus={{
+                      borderColor: 'logo.orange',
+                      boxShadow: '0 0.5px 0.5px rgba(229, 103, 23, 0.075)inset, 0 0 5px rgba(255,144,0,0.6)'
+                            }} />
                     <NumberInputStepper>
                       <NumberIncrementStepper />
                       <NumberDecrementStepper />
