@@ -11,28 +11,38 @@ import {
   Tooltip,
   Text,
   Button,
-  useToast
+  useToast,
+  Divider
  } from "@chakra-ui/react";
 import { useState } from "react";
 import { SearchIcon, CheckIcon } from '@chakra-ui/icons';
 import '../../assets/styleSheet.css'
 import { IoFilterSharp } from 'react-icons/io5' 
 import { getAllProducts, getFiltered } from "../../redux/actions-products";
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 
 const ProductsFilters = ({allProducts, setFilteredProducts}) => {
+  
+  const dispatch = useDispatch()
+  const toast = useToast()
 
-    const dispatch = useDispatch()
-    const toast = useToast()
+  // const products_errors = useSelector(state => state.products_errors)
+  // const [errors, setErrors] = useState(
+  //   {
+  //     // type: '', 
+  //     // size: '', 
+  //     // thickness: '', 
+  //     // price:''
+  //   })
 
-    const [limit, setLimit] = useState([0, 300])
-    const [filters, setFilters] = useState({
-      type:'',
-      size:'',
-      thickness:'',
-      price: [0, 300]
-    })
+  const [limit, setLimit] = useState([0, 300])
+  const [filters, setFilters] = useState({
+    type:'',
+    size:'',
+    thickness:'',
+    price: [0, 300]
+  })
 
 //     const handleChangeProductID = (e) => {
  
@@ -45,7 +55,11 @@ const ProductsFilters = ({allProducts, setFilteredProducts}) => {
 
 //     }
 // }
-
+  // const handleErrors = () => {
+  //   (products_errors?.type == '')? setErrors({type: ''}) : setErrors({ type: products_errors?.type})
+  //   (products_errors?.size !== '')? setErrors({size:''}) : setErrors({ size: products_errors?.size})
+  //   (products_errors?.thickness !== '')? setErrors({thickness: ''}) : setErrors({ thickness: products_errors?.thickness})
+  // }
   const handleType = (e) => {
     setFilters({
       ...filters,
@@ -77,9 +91,39 @@ const ProductsFilters = ({allProducts, setFilteredProducts}) => {
 
   const handleFilters = () => {
     dispatch(getFiltered(filters))
-
+    // handleErrors()
+    // handleToast()
   }
 
+  // const handleToast = () => {
+  //     if(Object.entries(errors.type).length > 0){
+  //       toast({
+  //         title: 'Search Error',
+  //         description: `${errors.type}`,
+  //         status: 'error',
+  //         duration: 9000,
+  //         isClosable: true,
+  //       })
+  //     }
+  //       if(Object.entries(errors.size).length > 0){
+  //         toast({
+  //           title: 'Search Error',
+  //           description: `${errors.size}`,
+  //           status: 'error',
+  //           duration: 9000,
+  //           isClosable: true,
+  //       })
+  //     }
+  //       if(Object.entries(errors.thickness).length > 0){
+  //         toast({
+  //           title: 'Search Error',
+  //           description: `${errors.thickness}`,
+  //           status: 'error',
+  //           duration: 9000,
+  //           isClosable: true,
+  //       })
+  //     } 
+  //   } 
   const handleClear = () => {
     setFilters({
       type:'',
@@ -87,6 +131,13 @@ const ProductsFilters = ({allProducts, setFilteredProducts}) => {
       thickness:'',
       price: [0, 300]
       })
+      // setErrors(      
+      //   {
+      //   type: '', 
+      //   size: '', 
+      //   thickness: '', 
+      //   price:''
+      // })
     dispatch(getAllProducts())
   }
 
@@ -302,7 +353,7 @@ const ProductsFilters = ({allProducts, setFilteredProducts}) => {
           justifyContent={'space-between'}
           mb={'1vh'}
           >
-            <Button
+          <Button
               variant={'unstyled'} 
               display={'flex'} 
               w={'7vw'}
@@ -352,9 +403,9 @@ const ProductsFilters = ({allProducts, setFilteredProducts}) => {
               />
             </Box>
           </Box>
+
       </Box>
     </>
-    )
+  )
 }
-
 export default ProductsFilters

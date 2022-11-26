@@ -87,7 +87,7 @@ productsRouter.get('/id/:id', async function(req, res){
 // });
 
 productsRouter.get('/filtered', async function(req, res){
-    
+
     const { type, size, thickness, price1, price2 } = req.query
 
     query_ = `SELECT    
