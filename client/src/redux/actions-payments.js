@@ -1,17 +1,18 @@
 import axios from 'axios';
-export const PATCH_PAYMENT_METHOD = 'PATCH_PAYMENT_METHOD';
+export const POST_PAYMENT_METHOD = 'POST_PAYMENT_METHOD';
+export const DELETE_PAYMENT_METHOD = 'DELETE_PAYMENT_METHOD';
 export const GET_PAYMENTS_BY_ID = 'GET_PAYMENTS_BY_ID';
 export const CLEAN_PAYMENTS_BY_ID = 'CLEAN_PAYMENTS_BY_ID';
 
-export function patchPaymentMethod(id, body){
+export function patchPaymentMethod(id, input){
 
     return async function(dispatch){
         try{
-            let {response} = await axios.patch(`http://localhost:5000/sales/invoice/${id}`, body)
-            let {data} = await axios.get(`http://localhost:5000/sales/invoice/${id}`)
+            let {response} = await axios.post(`http://localhost:5000/payments/invoice/${id}`, input)
+            let { data } = await axios.get(`http://localhost:5000/payments/${id}`)
             dispatch(
             {
-                type: PATCH_PAYMENT_METHOD,
+                type: POST_PAYMENT_METHOD,
                 payload: data
             })
         }catch(error){
@@ -31,6 +32,22 @@ export function getPayments(id){
             }
         }
 }
+
+export function deletePayment(paymentID){
+    return async function(dispatch){
+        try{
+            let { response } = await axios.delete(`http://localhost:5000/payments/invoice/${paymentID}`)
+            let { data } = await axios.get(`http://localhost:5000/payments/${paymentID}`)
+            dispatch(
+            {
+                type: DELETE_PAYMENT_METHOD,
+                payload: data
+            })
+        }catch(error){
+            console.log({error})           
+
+        }}}
+
 
 export function cleanStatePayments(){
     return async function(dispatch){

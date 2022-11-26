@@ -8,14 +8,22 @@ import {
     Td,
     TableContainer,
     Text,
-  } from '@chakra-ui/react'
+    IconButton
+  } from '@chakra-ui/react';
+
+import AddPayment from './addPayment';
+import {AiOutlineDelete, AiOutlineEdit} from 'react-icons/ai'
+import { deletePayment } from '../../redux/actions-payments';
+import { useDispatch } from 'react-redux';
 
 
 
 const ModelTr = ({p, totalAmount}) => {
-
+    const dispatch = useDispatch()
     const per = (p.Amount * 100) / totalAmount
-    
+    const handleDelete = ()  => {
+      dispatch(deletePayment(p.idPayments))
+    }
     return(
       <Tr 
         cursor={'pointer'}
@@ -29,20 +37,43 @@ const ModelTr = ({p, totalAmount}) => {
         <Td textAlign={'match-parent'}>${p.Amount} </Td>
         <Td textAlign={'match-parent'}>{p.Method}</Td>
         <Td textAlign={'match-parent'}>{per.toFixed(2)} %</Td>
+        <Td>
+          <IconButton mr={'1vh'} size={'xs'}fontSize={'2.5vh'} variant={'unstyled'} icon={<AiOutlineEdit/>}/>
+          <IconButton size={'xs'}fontSize={'2.5vh'} variant={'unstyled'} icon={<AiOutlineDelete/>} onClick={()=>handleDelete()}/>
+        </Td>
       </Tr>
     )
 }
 
-const PaymentList = ({payments, totalAmount}) => {
+const PaymentList = ({payments, totalAmount, pendingAmount}) => {
 
-  if(payments.paymentData){
-    return(
-        <Box
+  return(
+    <>
+     <Box
         display={'flex'}
         justifyContent={'center'}
         >
           <Box
-            maxHeight={'46vh'}
+            bg={'web.sideBar'}           
+            >
+            <Box 
+              w={'41vw'} 
+              display={'flex'} 
+              flexDir={'row'} 
+              justifyContent={'space-between'} 
+              alignContent={'start'}>
+            <Text 
+              alignSelf={'center'} 
+              fontSize={'xl'} 
+              color={'web.text2'}
+              >Payment Details</Text>
+            <AddPayment pendingAmount={pendingAmount}/>
+            </Box>
+      {
+        payments.paymentData ? (
+          <Box
+            maxHeight={'27vh'}
+            maxWidth={'42vw'}
             overflow={'auto'}
             css={{
               '&::-webkit-scrollbar': {
@@ -55,18 +86,16 @@ const PaymentList = ({payments, totalAmount}) => {
                 background: '#E47424',
                 borderRadius: '5px',
               },
-            }}
-            bg={'web.sideBar'}           
-            >
-            <Text fontSize={'xl'} color={'web.text2'}>Payment Details</Text>
-            <TableContainer  w={'44vw'}>
-                <Table mt={'2vh'} color={'web.text'} variant={'simple'} size={'sm'} >
+            }}>
+          <TableContainer  w={'44vw'} >
+                <Table color={'web.text'} variant={'simple'} size={'sm'} >
                   <Thead h={'6vh'}>
                     <Tr>
                       <Th color={'web.text2'}>Payment Date</Th>
                       <Th color={'web.text2'}>Amount</Th>
                       <Th color={'web.text2'}>Method</Th>
                       <Th color={'web.text2'}>Percentaje</Th>
+                      <Th color={'web.text2'}></Th>
                     </Tr>
                   </Thead>
                   <Tbody >
@@ -74,23 +103,21 @@ const PaymentList = ({payments, totalAmount}) => {
                         payments.paymentData.map((p, i) =>{
                           return(
                             <ModelTr p={p} key={i} totalAmount={totalAmount}/>
-                          )})
-                          
-                          
-                    
+                          )})                   
                     }
                   </Tbody>
                 </Table>
-            </TableContainer> 
+            </TableContainer>
             </Box> 
-        </Box>)
-  }else {
-    return(
-      <Text color={'web.text'}>No payments done yet</Text>
-    )
-  }
-    
+        ):(
+          <Text mt={'3vh'} color={'web.text'}>No payments entered yet</Text>          
+        )
+
+      }
+      </Box>
+      </Box>
+      </>
+      )}
   
-  }
 
 export default PaymentList;

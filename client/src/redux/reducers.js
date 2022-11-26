@@ -9,7 +9,11 @@ import {
     GET_INVOICES_LASTMONTH, 
     GET_FILTERED_INVOICES,
     GET_INVOICE_PRODUCTS } from './actions-invoices';
-import { PATCH_PAYMENT_METHOD, GET_PAYMENTS_BY_ID, CLEAN_PAYMENTS_BY_ID  } from './actions-payments';
+import { 
+    POST_PAYMENT_METHOD,
+    GET_PAYMENTS_BY_ID, 
+    CLEAN_PAYMENTS_BY_ID, 
+    DELETE_PAYMENT_METHOD  } from './actions-payments';
 import { GET_ALL_PRODUCTS } from './actions-products';
 import { GET_CURRENT_MONTH } from './actions-stats';
 
@@ -63,10 +67,15 @@ function rootReducer (state = intialState, action) {
                 seller_invoices: action.payload,
                 filtered_invoices_month_week: action.payload,
             }
-        case PATCH_PAYMENT_METHOD:
+        case POST_PAYMENT_METHOD:
             return {
                 ...state,
-                invoice: action.payload
+                payments_by_id: action.payload
+                }
+        case DELETE_PAYMENT_METHOD:
+            return {
+                ...state,
+                payments_by_id: action.payload
                 }
         case GET_INVOICES_LASTWEEK:
             return {

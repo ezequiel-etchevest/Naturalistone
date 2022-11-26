@@ -6,12 +6,10 @@ import NavBar from './components/navBar';
 import InvoiceDetail from './views/InvoiceDetail';
 import Quotes from './views/Quotes';
 import Products from './views/Products';
-import { useState } from 'react';
 import { naturali_theme } from './theme';
 
 function App() {
 
-  const [site, setSite ] = useState('Home')
   const userLocal = JSON.parse(localStorage.getItem('user'))
 
   return (
@@ -20,13 +18,13 @@ function App() {
     <div className="App">
     <NavBar/>
       <Routes>
-      <Route path= '*'  element = { userLocal ? <Home site={site} setSite={setSite}/> : <LogIn/>} />
-      <Route path="/login" element= { userLocal ? <Home site={site} setSite={setSite}/> : <LogIn/>} />
-      <Route path="/home" element={ <Home site={site} setSite={setSite}/>}/>
+      <Route path= '*'  element = { userLocal ? <Home /> : <LogIn/>} />
+      <Route path="/login" element= { userLocal ? <Home /> : <LogIn/>} />
+      <Route path="/home" element={ <Home/>}/>
       <Route path="/quotes" element={<Quotes/>}/>
       <Route path="/products" element={<Products/>} />
       <Route path="/products/:id"/>
-      <Route path='/quotes/:id' element={ userLocal ? <InvoiceDetail site={site} setSite={setSite}/>: <LogIn/>}></Route>   
+      <Route path='/quotes/:id' element={ userLocal ? <InvoiceDetail />: <LogIn/>}></Route>   
       </Routes> 
     </div>
     </BrowserRouter>

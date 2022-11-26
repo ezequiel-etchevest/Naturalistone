@@ -3,24 +3,14 @@ import { useSelector } from 'react-redux';
 import InvoiceProductList from '../invoices/invoiceProductList';
 import InvoiceDetailList from './invoiceDetailsList';
 import PaymentList from './PaymentList';
-import { useDispatch } from 'react-redux';
-import { getPayments } from '../../redux/actions-payments';
-import { useEffect } from 'react';
 
 
 
 
-const Detail = ({invoice}) => {
+const Detail = ({invoice, payments}) => {
 
-  const dispatch = useDispatch()
-  const payments = useSelector(state => state.payments_by_id)
   const invoice_products = useSelector(state=> state.invoice_products)
 
-  useEffect(()=>{
-    if(Object.entries(payments).length <= 1){
-      dispatch(getPayments(invoice[0].Naturali_Invoice))
-    }
-  },[payments])
     return(
       <Box
         bg={'web.bg'}  
@@ -60,7 +50,9 @@ const Detail = ({invoice}) => {
             mt={'3vh'}
             ml={'2vw'}
             mr={'1vw'}
-            p={'2vw'} 
+            pr={'2vw'}
+            pl={'2vw'}
+            pt={'2vh'}
             border={'1px solid'} 
             rounded={'md'} 
             borderColor={'web.border'} 
@@ -69,9 +61,9 @@ const Detail = ({invoice}) => {
             w={'46vw'}>
           {
            Object.entries(payments).length >= 1 ? (
-              <PaymentList payments={payments} totalAmount={invoice[0].Value}/> 
+              <PaymentList payments={payments} totalAmount={invoice[0].Value} pendingAmount={payments.paymentsMath.PendingAmount ? payments.paymentsMath.PendingAmount : null}/> 
             ) : (
-              <Text>No payments done yet</Text>
+              <Text color={'web.text'}>Loading</Text>
             )
           }
           </Box>
