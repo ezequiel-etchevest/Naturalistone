@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import InvoiceProductList from '../invoices/invoiceProductList';
 import InvoiceDetailList from './invoiceDetailsList';
 import PaymentList from './PaymentList';
-import ModalPDF from './modalPDF';
+import ModalPDF from './modalPDF'
 
 
 
