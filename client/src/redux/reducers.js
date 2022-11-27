@@ -14,7 +14,7 @@ import {
     GET_PAYMENTS_BY_ID, 
     CLEAN_PAYMENTS_BY_ID, 
     DELETE_PAYMENT_METHOD  } from './actions-payments';
-import { GET_ALL_PRODUCTS } from './actions-products';
+import { GET_ALL_PRODUCTS, GET_FILTERED_PRODUCTS } from './actions-products';
 import { GET_CURRENT_MONTH } from './actions-stats';
 
 const intialState = {
@@ -27,7 +27,8 @@ const intialState = {
     all_products: [],
     current_month: {},
     invoice_products: [],
-    payments_by_id: {}
+    payments_by_id: {},
+    products_errors:{}
     // productsByID: []
 }
 
@@ -53,7 +54,8 @@ function rootReducer (state = intialState, action) {
                 seller_invoices: [],
                 filtered_invoices: [],
                 filtered_invoices_month_week: [],
-                current_month:{}
+                current_month:{},
+                products_errors:{}
             }
         
         case GET_INVOICE_BY_ID:
@@ -99,6 +101,12 @@ function rootReducer (state = intialState, action) {
             return {
                 ...state,
                 all_products: action.payload,
+            }
+        case GET_FILTERED_PRODUCTS:
+            return {
+                ...state,
+                all_products: action.payload.filteredProds,
+                products_errors: action.payload.errorsSearch
             }
         case GET_CURRENT_MONTH:
             return {
