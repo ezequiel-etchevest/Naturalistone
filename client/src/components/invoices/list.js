@@ -47,7 +47,7 @@ const ModelTr = ({e}) => {
     )
 }
 
-const List = ({seller_invoices, setSite, filteredByCustomer}) => {
+const List = ({seller_invoices, filteredByCustomer}) => {
 
     return(
         <Box
@@ -86,7 +86,7 @@ const List = ({seller_invoices, setSite, filteredByCustomer}) => {
                       <Th color={'web.text2'}>Quote Number</Th>
                       <Th color={'web.text2'}>Customer Name</Th>
                       <Th color={'web.text2'}>Quote Date</Th>
-                      <Th color={'web.text2'} isNumeric>Amount</Th>
+                      <Th color={'web.text2'} isNumeric>Total</Th>
                       <Th color={'web.text2'} isNumeric>Payment %</Th>
                       <Th color={'web.text2'}>Last Payment Date </Th>
                     </Tr>
@@ -95,12 +95,12 @@ const List = ({seller_invoices, setSite, filteredByCustomer}) => {
                     { filteredByCustomer.length ? (
                       filteredByCustomer.map((e, i) =>{
                         return(
-                          <ModelTr key={i} e={e} setSite={setSite}/>
+                          <ModelTr key={i} e={e}/>
                         )
                       })
                     ) : (
                       seller_invoices.map((e, i) => (
-                        <ModelTr key={i} e={e} setSite={setSite}/> 
+                        <ModelTr key={i} e={e}/> 
                         ))
                         )}
                   </Tbody>

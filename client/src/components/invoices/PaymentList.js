@@ -12,7 +12,7 @@ import {
   } from '@chakra-ui/react';
 
 import AddPayment from './addPayment';
-import {AiOutlineDelete, AiOutlineEdit} from 'react-icons/ai'
+import {AiOutlineDelete } from 'react-icons/ai'
 import { deletePayment } from '../../redux/actions-payments';
 import { useDispatch } from 'react-redux';
 

@@ -2,31 +2,49 @@ const express = require('express')
 const salesRouter = express.Router()
 const mysqlConnection = require('../db')
 const  getLimitDate = require('../Controllers/LastWeek');
+const invoicesPayments = require('../Controllers/invoicesPayments')
 const  { getLimitDateMonth, getCurrentMonth } = require('../Controllers/LastMonth')
 
 salesRouter.get('/:id', async function(req, res){
     
     const {id} = req.params
 
-    query_ =    `SELECT Sales.*, Customers.* FROM Sales 
+    query_ =    `SELECT Sales.*, Customers.*, Payments.* FROM Sales 
                 LEFT JOIN Customers ON Sales.CustomerID = Customers.CustomerID 
-                WHERE SellerID = ${id} ORDER BY InvoiceDate DESC`;
-
+                LEFT JOIN Payments ON Sales.Naturali_Invoice = Payments.InvoiceID
+                WHERE SellerID = ${id}
+                ORDER BY InvoiceDate DESC`;
+    
+    query_2 = ` SELECT Sales.*, Customers.* FROM Sales
+                LEFT JOIN Customers ON Sales.CustomerId = Customers.CustomerID
+                WHERE SellerID = ${id}
+                ORDER BY InvoiceDate DESC`
     try{
-        mysqlConnection.query(query_, function(error, results, fields){
+        mysqlConnection.query(query_, function(error, Payments, fields){
             if(error) throw error;
-            if(results.length == 0) {
+            if(Payments.length == 0) {
                 console.log('Error al obtener data!')
                 res.status(200).json({});
             } else {
-                console.log('Data OK')
-                res.status(200).json(results);
-            }
-        });
-    } catch(error){
-        res.status(409).send(error);
-    }
-});
+                try{
+                    mysqlConnection.query(query_2, function(error, Invoices, fields){
+                        if(error) throw error;
+                        if(Invoices.length == 0) {
+                            console.log('Error al obtener data!')
+                            res.status(200).json({});
+                        }else{
+                            console.log('Data OK')
+                            let res = invoicesPayments(Invoices, Payments)
+                            console.log(res)
+                            res.status(200).json(res);
+
+                        }})}catch(error){
+                            res.status(409).send(error);
+                        }}});
+                } catch(error){
+                res.status(409).send(error);
+                    }
+            });
 
 salesRouter.get('/invoice/:id', async function(req, res){
     const { id } = req.params

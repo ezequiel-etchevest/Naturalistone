@@ -91,6 +91,28 @@ const Filters = ({userId, seller_invoices, setFilteredByCustomer, focus, setFocu
             <BsCalendar4Week/>
         </Button>
         <Button
+         variant={'unstyled'} 
+         display={'flex'} 
+         w={'12vw'}
+         h={'10vh'}
+         borderRadius={'sm'} 
+         placeContent={'center'}
+         alignItems={'center'}
+         color={focus === 'LastMonth' ? 'logo.orange' : 'web.text2'}
+         _hover={{
+          color: 'logo.orange'
+             }}         
+         _active={{
+          color: 'logo.orange'
+         }}>
+            <Text 
+            fontFamily={'body'} 
+            fontWeight={'hairline'}
+            onClick={()=> handleClickLastMonth()}  
+            pr={'1.5vh'}>Last Moth Quotes</Text>
+            <BsCalendar4Week/>
+        </Button>
+        <Button
         variant={'unstyled'} 
         display={'flex'} 
         w={'12vw'}
@@ -113,28 +135,7 @@ const Filters = ({userId, seller_invoices, setFilteredByCustomer, focus, setFocu
             >Last Week Quotes</Text>
             <BsCalendar4Week/>
         </Button>
-        <Button
-         variant={'unstyled'} 
-         display={'flex'} 
-         w={'12vw'}
-         h={'10vh'}
-         borderRadius={'sm'} 
-         placeContent={'center'}
-         alignItems={'center'}
-         color={focus === 'LastMonth' ? 'logo.orange' : 'web.text2'}
-         _hover={{
-          color: 'logo.orange'
-             }}         
-         _active={{
-          color: 'logo.orange'
-         }}>
-            <Text 
-            fontFamily={'body'} 
-            fontWeight={'hairline'}
-            onClick={()=> handleClickLastMonth()}  
-            pr={'1.5vh'}>Last Moth Quotes</Text>
-            <BsCalendar4Week/>
-        </Button>
+
           <Box
             display={'flex'}
             alignItems={'center'}
