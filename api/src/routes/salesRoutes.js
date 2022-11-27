@@ -50,8 +50,6 @@ salesRouter.get('/invoice/:id', async function(req, res){
     }
 });
 
-
-
 salesRouter.get('/lastWeek/:id', async function(req, res){
     
     const {id} = req.params
@@ -166,6 +164,7 @@ salesRouter.get('/currentMonth/:id', async function(req, res){
         res.status(409).send(error1);
     }   
 });
+
 
 
 module.exports = salesRouter;

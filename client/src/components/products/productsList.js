@@ -22,7 +22,7 @@ const ModelTr = ({e}) => {
       // if(e.ProductName !== und)
       // navigate(`/products/${e.ProductName}`)
     }
-    console.log(e)
+
   return(
     <Tr 
       onClick={() => handleClick()} 

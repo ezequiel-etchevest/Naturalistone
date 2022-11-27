@@ -1,8 +1,9 @@
-import { Box, Text } from '@chakra-ui/react';
+import { Box, Text, Image } from '@chakra-ui/react';
 import { useSelector } from 'react-redux';
 import InvoiceProductList from '../invoices/invoiceProductList';
 import InvoiceDetailList from './invoiceDetailsList';
 import PaymentList from './PaymentList';
+import ModalPDF from './modalPDF';
 
 
 
@@ -47,6 +48,36 @@ const Detail = ({invoice, payments}) => {
         </Box>
         </Box>
         <Box
+        display={'flex'}
+        flexDir={'row'}
+        w={'76vw'}
+        justifyContent={'space-between'}
+        >
+          <Box
+              mt={'3vh'}
+              ml={'2vw'}
+              mr={'1vw'}
+              p={'2vw'} 
+              border={'1px solid'} 
+              rounded={'md'} 
+              borderColor={'web.border'} 
+              bg={'web.sideBar'}
+              h={'39vh'}
+              w={'46vw'}
+              >
+            {
+             Object.entries(payments).length >= 1 ? (
+                <PaymentList payments={payments} totalAmount={invoice[0].Value}/> 
+              ) : (
+                <Text>No payments done yet</Text>
+              )
+            }
+          </Box>
+          <Box 
+            w={'15vw'} 
+            h={'39vh'} 
+            justifyContent={'center'} 
+            display={'flex'}
             mt={'3vh'}
             ml={'2vw'}
             mr={'1vw'}
@@ -57,8 +88,9 @@ const Detail = ({invoice, payments}) => {
             rounded={'md'} 
             borderColor={'web.border'} 
             bg={'web.sideBar'}
-            h={'39vh'}
-            w={'46vw'}>
+            // h={'39vh'}
+            // w={'46vw'}
+            >
           {
            Object.entries(payments).length >= 1 ? (
               <PaymentList payments={payments} totalAmount={invoice[0].Value} pendingAmount={payments.paymentsMath.PendingAmount ? payments.paymentsMath.PendingAmount : null}/> 
@@ -66,7 +98,10 @@ const Detail = ({invoice, payments}) => {
               <Text color={'web.text'}>Loading</Text>
             )
           }
+
+            <ModalPDF/>
           </Box>
+        </Box>
         </Box>	
       )
   }
