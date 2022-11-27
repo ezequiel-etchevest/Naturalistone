@@ -11,7 +11,7 @@ import {
   Button
 } from '@chakra-ui/react'
 import miniPDF from '../../assets/miniPDF.png'
-
+import LoadPDF from '../pdf/pdfModify'
 
 export default function ModalPDF() {
 
@@ -27,6 +27,7 @@ export default function ModalPDF() {
           <ModalCloseButton />
           <ModalBody>
             <Image src={miniPDF} />
+            {/* <LoadPDF/> */}
           </ModalBody>
           <ModalFooter>
             <Button bg={'web.sideBar'} textColor={'white'} _hover={{bg: 'logo.orange'}} mr={3} onClick={onClose}>

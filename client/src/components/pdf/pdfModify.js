@@ -11,11 +11,15 @@ const LoadPDF = () => {
     }, []);
   
     const modifyPdf = async () => {
+      // const existingPdfBytes = await fetch(
+      //   "https://netorg8591642-my.sharepoint.com/personal/irina_naturalistone_com/Documents/Naturali/InvoicesReceived/Invoice%20Naturali/3079%20Rhona%20Lake%20Como.pdf").then((res) => res.arrayBuffer());
       const existingPdfBytes = await fetch(
-        "https://pdf-lib.js.org/assets/with_update_sections.pdf"
-      ).then((res) => res.arrayBuffer());
-  
-      const pdfDoc = await PDFDocument.load(existingPdfBytes);
+        'https://pdf-lib.js.org/assets/with_update_sections.pdf').then((res) => res.arrayBuffer());
+
+   
+      var bytes = new Uint8Array(existingPdfBytes);
+
+      const pdfDoc = await PDFDocument.load(bytes);
       
       // Get the width and height of the first page
       const pages = pdfDoc.getPages();
