@@ -10,23 +10,23 @@ import {
   } from '@chakra-ui/react'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
-import { getAllProducts } from '../../redux/actions-products'
+import { getAllProducts, getProductById } from '../../redux/actions-products'
 import { useEffect } from 'react'
 
 const ModelTr = ({e}) => {
 
-    // const navigate = useNavigate()
+    const navigate = useNavigate()
     const dispatch = useDispatch()
 
-    // const handleClick = () => {
-    //   dispatch(getAllProducts())
-    //   // if(e.ProductName !== und)
-    //   // navigate(`/products/${e.ProductName}`)
-    // }
+    const handleClick = () => {
+      dispatch(getProductById(e.ProdID))
+      if(e.ProdID !== undefined)
+      navigate(`/products/${e.ProdID}`)
+    }
 
   return(
     <Tr 
-      // onClick={() => handleClick()} 
+      onClick={() => handleClick()} 
       cursor={'pointer'} 
       key={e.ProdNameID}
       _hover={{

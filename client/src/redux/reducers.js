@@ -14,7 +14,11 @@ import {
     GET_PAYMENTS_BY_ID, 
     CLEAN_PAYMENTS_BY_ID, 
     DELETE_PAYMENT_METHOD  } from './actions-payments';
-import { GET_ALL_PRODUCTS, GET_FILTERED_PRODUCTS } from './actions-products';
+import { 
+    GET_ALL_PRODUCTS,
+    GET_FILTERED_PRODUCTS,
+    GET_PRODUCT_BY_ID
+     } from './actions-products';
 import { GET_CURRENT_MONTH } from './actions-stats';
 
 const intialState = {
@@ -29,8 +33,8 @@ const intialState = {
     invoice_products: [],
     payments_by_id: {},
     products_errors:{},
-    validate_result_quotes: ''
-    // productsByID: []
+    validate_result_quotes: '',
+    product_by_id: []
 }
 
 function rootReducer (state = intialState, action) {
@@ -57,7 +61,8 @@ function rootReducer (state = intialState, action) {
                 filtered_invoices_month_week: [],
                 current_month:{},
                 products_errors:{},
-                invoice_pdf: ''
+                invoice_pdf: '',
+                product_by_id: []
             }
         
         case GET_INVOICE_BY_ID:
@@ -132,7 +137,12 @@ function rootReducer (state = intialState, action) {
             return {
                 ...state,
                 payments_by_id: action.payload
-                }                                        
+            }
+        case GET_PRODUCT_BY_ID :
+            return {
+                ...state,
+               product_by_id: action.payload
+            }                                       
         default:
             return {
                 ...state
