@@ -45,7 +45,7 @@ const AddPayment = ({pendingAmount}) => {
       onClose()
     }
     const handleSelect = (e) =>{
-      if(e.target.value == 'Cash'|| e.target.value == 'Card'|| e.target.value == 'Wire transfer' || e.target.value == 'Check'){
+      if(e.target.value === 'Cash'|| e.target.value ==='Card'|| e.target.value === 'Wire transfer' || e.target.value === 'Check'){
          setInput({
           ...input,
           Method : e.target.value
@@ -53,10 +53,10 @@ const AddPayment = ({pendingAmount}) => {
       if(input.Method !== '' && input.Amount !== ''){
         setDisabled(false)
       }
-      if(input.Method == ''){
+      if(input.Method === ''){
         setDisabled(true)
       }
-      if(input.Amount == ''){
+      if(input.Amount === ''){
         setDisabled(true)
       }
     }
@@ -68,10 +68,10 @@ const AddPayment = ({pendingAmount}) => {
        if(input.Method !== '' && input.Amount !== '' ){
         setDisabled(false)
       }
-      if(input.Method == ''){
+      if(input.Method === ''){
         setDisabled(true)
       }
-      if(input.Amount == ''){
+      if(input.Amount === ''){
         setDisabled(true)
       }
     }

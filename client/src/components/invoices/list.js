@@ -7,11 +7,13 @@ import {
     Th,
     Td,
     TableContainer,
+    useToast,
   } from '@chakra-ui/react'
 import { useNavigate } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { getInvoiceById, getInvoiceProducts } from '../../redux/actions-invoices';
 import { cleanStatePayments, getPayments } from '../../redux/actions-payments';
+import { useEffect } from 'react';
 
 
 
@@ -48,6 +50,26 @@ const ModelTr = ({e}) => {
 }
 
 const List = ({seller_invoices, filteredByCustomer}) => {
+  const result = useSelector(state=> state.validate_result_quotes)
+  const toast = useToast()
+  const id = 'test-toast'
+  
+  const validateResults = () => {
+    if(result === 'no_results'){
+      if (!toast.isActive(id)) {
+      toast({
+        id,
+        title: 'No results found',
+        description: 'Reloading all the quotes',
+        status: 'warning',
+        duration: 2000,
+        isClosable: true,
+      });
+    }}
+  }
+  useEffect(()=>{
+    validateResults()
+  })
 
     return(
         <Box
@@ -99,6 +121,7 @@ const List = ({seller_invoices, filteredByCustomer}) => {
                         )
                       })
                     ) : (
+                      
                       seller_invoices.map((e, i) => (
                         <ModelTr key={i} e={e}/> 
                         ))
