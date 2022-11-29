@@ -8,7 +8,7 @@ import {
     GET_INVOICES_LASTWEEK, 
     GET_INVOICES_LASTMONTH, 
     GET_FILTERED_INVOICES,
-    GET_INVOICE_PRODUCTS } from './actions-invoices';
+    GET_INVOICE_PRODUCTS} from './actions-invoices';
 import { 
     POST_PAYMENT_METHOD,
     GET_PAYMENTS_BY_ID, 
@@ -56,7 +56,8 @@ function rootReducer (state = intialState, action) {
                 filtered_invoices: [],
                 filtered_invoices_month_week: [],
                 current_month:{},
-                products_errors:{}
+                products_errors:{},
+                invoice_pdf: ''
             }
         
         case GET_INVOICE_BY_ID:
@@ -131,7 +132,7 @@ function rootReducer (state = intialState, action) {
             return {
                 ...state,
                 payments_by_id: action.payload
-                }                      
+                }                                        
         default:
             return {
                 ...state
