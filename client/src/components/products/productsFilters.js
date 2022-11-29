@@ -5,7 +5,7 @@ import {
   Input, 
   IconButton, 
   Text,
-  Button
+  Button,
  } from "@chakra-ui/react";
 import { useState } from "react";
 import { SearchIcon } from '@chakra-ui/icons';
@@ -19,7 +19,6 @@ import PriceSlider from "./priceSlider";
 const ProductsFilters = ({allProducts, setFilteredProducts}) => {
   
   const dispatch = useDispatch()
- 
   const [filters, setFilters] = useState({
     type:'',
     size:'',
@@ -32,6 +31,7 @@ const ProductsFilters = ({allProducts, setFilteredProducts}) => {
       ...filters,
       type: e.target.value
     })
+    dispatch(getFiltered(e.target.value, filters.size, filters.thickness, filters.price))
   }
 
   const handleSize = (e) => {
@@ -39,6 +39,7 @@ const ProductsFilters = ({allProducts, setFilteredProducts}) => {
       ...filters, 
       size: e.target.value
     })
+    dispatch(getFiltered(filters.type ,e.target.value, filters.thickness, filters.price))
   }
 
   const handleThickness = (e) => {
@@ -46,12 +47,9 @@ const ProductsFilters = ({allProducts, setFilteredProducts}) => {
       ...filters,
       thickness: e.target.value
     })
+    dispatch(getFiltered(filters.type, filters.size, e.target.value, filters.price))
   }
 
- 
-  const handleFilters = () => {
-    dispatch(getFiltered(filters))
-  }
 
   const handleClear = () => {
     setFilters({
@@ -67,7 +65,7 @@ const ProductsFilters = ({allProducts, setFilteredProducts}) => {
  
     if(e.target.value.length){
         const filteredByName = allProducts?.filter(prod => prod.ProductName.toLowerCase().includes(e.target.value))
-        if(!filteredByName.length) return alert('No Products match this search')
+        if(!filteredByName.length) return
         setFilteredProducts(filteredByName)
     } else {
         setFilteredProducts([])

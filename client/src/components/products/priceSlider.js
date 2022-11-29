@@ -8,17 +8,20 @@ import {
 		Center,
 } from '@chakra-ui/react';
 import { useState } from 'react'
-
-
+import { useDispatch } from 'react-redux'
+import { getFiltered }  from "../../redux/actions-products";
 
 let PriceSlider = ({setFilters, filters}) =>{
+
     const [limit, setLimit] = useState([0, 300])
+    const dispatch = useDispatch()
+
     const handlePrice = (e) => {
         setLimit(e);
         setFilters({
           ...filters,
           price: e
-        })
+        })  
       }
     
     return(
@@ -32,7 +35,9 @@ let PriceSlider = ({setFilters, filters}) =>{
             aria-label={['min', 'max']}
             colorScheme={'orange'}
             value={filters.price}
-            onChangeEnd={(val) => console.log(val)}
+            onChangeEnd={(val) => {
+              console.log(val)
+              dispatch(getFiltered(filters.type, filters.size, filters.thickness, val))}}
             onChange={(e) => handlePrice(e)}
             w={'20vw'}
             defaultValue={[0, 300]}
@@ -51,7 +56,7 @@ let PriceSlider = ({setFilters, filters}) =>{
               color="web.text2"
               placement={'left'}
               isOpen
-							fontSize={'2vh'}
+							fontSize={'1.8vh'}
               >
               <RangeSliderThumb
 								boxSize={'1.5vh'} 
@@ -70,7 +75,7 @@ let PriceSlider = ({setFilters, filters}) =>{
               color="web.text2"
               placement={'right'}
               isOpen
-              fontSize={'2vh'}
+              fontSize={'1.8vh'}
               >
               <RangeSliderThumb 
                 index={1}

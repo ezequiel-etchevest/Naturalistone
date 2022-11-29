@@ -52,7 +52,7 @@ const ModelTr = ({e}) => {
 }
 
 const List = ({seller_invoices, filteredByCustomer}) => {
-  console.log(seller_invoices)
+ 
   const result = useSelector(state=> state.validate_result_quotes)
   const toast = useToast()
   const id = 'test-toast'

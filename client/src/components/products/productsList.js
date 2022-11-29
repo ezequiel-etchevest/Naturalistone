@@ -11,21 +11,22 @@ import {
 import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { getAllProducts } from '../../redux/actions-products'
+import { useEffect } from 'react'
 
 const ModelTr = ({e}) => {
 
     // const navigate = useNavigate()
     const dispatch = useDispatch()
 
-    const handleClick = () => {
-      dispatch(getAllProducts())
-      // if(e.ProductName !== und)
-      // navigate(`/products/${e.ProductName}`)
-    }
+    // const handleClick = () => {
+    //   dispatch(getAllProducts())
+    //   // if(e.ProductName !== und)
+    //   // navigate(`/products/${e.ProductName}`)
+    // }
 
   return(
     <Tr 
-      onClick={() => handleClick()} 
+      // onClick={() => handleClick()} 
       cursor={'pointer'} 
       key={e.ProdNameID}
       _hover={{
@@ -47,6 +48,11 @@ const ModelTr = ({e}) => {
 
 const ProductList = ({ allProducts, filteredProducts }) => {
 
+  useEffect(() => {
+
+  },[filteredProducts, allProducts])
+
+  
   return(
     <Box
       display={'flex'}
