@@ -23,9 +23,7 @@ export function patchPaymentMethod(id, input){
 export function getPayments(id){
     return async function(dispatch){
         try{
-            console.log('id',{id})
             let { data } = await axios.get(`http://localhost:5000/payments/${id}`)
-            console.log('actions',{data})
             return dispatch({
                 type: GET_PAYMENTS_BY_ID,
                 payload: data

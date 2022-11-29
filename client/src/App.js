@@ -11,20 +11,20 @@ import { naturali_theme } from './theme';
 function App() {
 
   const userLocal = JSON.parse(localStorage.getItem('user'))
-
+  
   return (
     <ChakraProvider theme={naturali_theme}>
     <BrowserRouter>
     <div className="App">
     <NavBar/>
       <Routes>
-      <Route path= '*'  element = { userLocal ? <Home /> : <LogIn/>} />
-      <Route path="/login" element= { userLocal ? <Home /> : <LogIn/>} />
+      <Route path= '*'  element = {<Home />} />
+      <Route path="/login" element= {<LogIn/>} />
       <Route path="/home" element={ <Home/>}/>
       <Route path="/quotes" element={<Quotes/>}/>
       <Route path="/products" element={<Products/>} />
       <Route path="/products/:id"/>
-      <Route path='/quotes/:id' element={ userLocal ? <InvoiceDetail />: <LogIn/>}></Route>   
+      <Route path='/quotes/:id' element={<InvoiceDetail />} /> 
       </Routes> 
     </div>
     </BrowserRouter>

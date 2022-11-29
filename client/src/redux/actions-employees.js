@@ -27,7 +27,6 @@ export function getEmployeeById(id){
         try{
             let {data} = await axios.get(`http://localhost:5000/seller/${id}`)
             const saveData = localStorage.setItem('user', JSON.stringify(data[0]))
-
             dispatch(
             {
                 type: GET_EMPLOYEES_BY_ID,

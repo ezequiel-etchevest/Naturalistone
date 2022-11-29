@@ -26,7 +26,6 @@ salesRouter.get('/:id', async function(req, res){
                         }else{
                             let result = invoicesPayments(Invoices)
                             res.status(200).json(result);
-
                         }})}catch(error){
                             res.status(409).send(error);
                }

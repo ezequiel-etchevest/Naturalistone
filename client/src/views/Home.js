@@ -15,6 +15,7 @@ const Home = () => {
   const navigate = useNavigate()
   const user = useSelector(state => state.user)
   const currentMonth = useSelector(state => state.current_month)
+
   const userLocal = JSON.parse(localStorage.getItem('user'))
 
     useEffect(()=>{
