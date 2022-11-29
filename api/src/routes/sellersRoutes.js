@@ -10,7 +10,7 @@ sellerRouter.get('/', async function(req, res){
          mysqlConnection.query(query_, function(error, results, fields){
             if(error) throw error;
             if(results.length == 0) {
-                console.log('Error al obtener data!')
+                console.log('Error en dellerRoutes.get /')
                 res.status(400).json({ estado: false, data: {}});
             } else {
                 console.log('Data OK')
@@ -29,7 +29,7 @@ sellerRouter.get('/:id', async function(req, res){
          mysqlConnection.query(query_, function(error, results, fields){
             if(error) throw error;
             if(results.length == 0) {
-                console.log('Error al obtener data!')
+                console.log('Error en sellerRoutes.get /:id')
                 res.status(400).json({ estado: false, data: {}});
             } else {
                 console.log('Data OK')

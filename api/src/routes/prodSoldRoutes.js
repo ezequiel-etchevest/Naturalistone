@@ -19,7 +19,7 @@ prodSoldRouter.get('/:id', async function(req, res){
         mysqlConnection.query(query_, function(error, results, fields){
             if(error) throw error;
             if(results.length == 0) {
-                console.log('Error al obtener data!')
+                console.log('Error en prodSold.get /:id')
                 res.status(200).json({});
             } else {
 

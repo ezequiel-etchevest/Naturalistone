@@ -26,7 +26,7 @@ productsRouter.get('/', async function(req, res){
 
             if(error) throw error;
             if(results.length == 0) {
-                console.log('Error al obtener data!')
+                console.log('Error en productRoutes.get /:id')
                 res.status(200).json({});
             } else {
                 res.status(200).json(results);
@@ -49,7 +49,7 @@ productsRouter.get('/id/:id', async function(req, res){
 
             if(error) throw error;
             if(results.length == 0) {
-                console.log('Error al obtener data!')
+                console.log('Error en productsRoutes.get /id/:id')
                 res.status(200).json({});
             } else {
                 console.log('Data OK')
@@ -108,7 +108,7 @@ productsRouter.get('/filtered', async function(req, res){
             
             if(error) throw error;
             if(results.length == 0) {
-                console.log('Error al obtener data!')
+                console.log('Error en productsRoutes.get /filtered')
                 res.status(200).json({});
             } else {
                 const filter = filterProducts(type, size, thickness, price1, price2, results)

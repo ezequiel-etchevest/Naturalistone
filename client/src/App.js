@@ -24,7 +24,7 @@ function App() {
       <Route path="/quotes" element={<Quotes/>}/>
       <Route path="/products" element={<Products/>} />
       <Route path="/products/:id"/>
-      <Route path='/quotes/:id' element={ userLocal ? <InvoiceDetail />: <LogIn/>}></Route>   
+      <Route path='/quotes/:id' element={ <InvoiceDetail />}></Route>   
       </Routes> 
     </div>
     </BrowserRouter>

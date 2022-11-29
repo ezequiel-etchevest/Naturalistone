@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import SideBar from "../components/sideBar";
-import { Text } from "@chakra-ui/react";
+import { Box, Center, Spinner, Text } from "@chakra-ui/react";
 import { useSelector, useDispatch } from "react-redux";
 import { getInvoiceById } from '../redux/actions-invoices'
 import {getEmployeeById } from "../redux/actions-employees";
@@ -15,6 +15,9 @@ const InvoiceDetail = () => {
   const dispatch = useDispatch()
   const user = useSelector(state=>state.user)
   const invoice = useSelector(state=>state.invoice)
+  const invoice_products = useSelector(state=> state.invoice_products)
+  const payments = useSelector(state => state.payments_by_id)
+
   const userLocal = JSON.parse(localStorage.getItem('user'))
   const { id } = useParams()
 
@@ -34,10 +37,16 @@ const InvoiceDetail = () => {
           <>
             <SideBar user={user}/>
             {
-              invoice.length ? (
-                <Detail invoice={invoice}/>
+              invoice.length && Object.entries(payments).length && invoice_products ? (
+                <Detail 
+                  invoice={invoice} 
+                  invoice_products={invoice_products}
+                  payments={payments}
+                  />
                 ):(
-                <Text> Loading... </Text>
+                <Center ml={'20vh'} bg={'web.bg'} h={'92vh'}>
+                  <Spinner thickness={'4px'} size={'xl'} color={'logo.orange'}/>
+                </Center>
                 )
             }
           </>

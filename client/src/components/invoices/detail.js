@@ -8,11 +8,9 @@ import ModalPDF from './modalPDF'
 
 
 
-const Detail = ({invoice}) => {
+const Detail = ({invoice, payments, invoice_products}) => {
 
-  const invoice_products = useSelector(state=> state.invoice_products)
-  const payments = useSelector(state => state.payments_by_id)
-
+  
     return(
       <Box
         bg={'web.bg'}  

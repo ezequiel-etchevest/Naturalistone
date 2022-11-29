@@ -21,12 +21,11 @@ salesRouter.get('/:id', async function(req, res){
            mysqlConnection.query(query_, function(error, Invoices, fields){
                         if(error) throw error;
                         if(Invoices.length == 0) {
-                            console.log('Error al obtener data!')
+                            console.log('Error en salesRoutes.get /:id')
                             res.status(200).json({});
                         }else{
                             let result = invoicesPayments(Invoices)
                             res.status(200).json(result);
-
                         }})}catch(error){
                             res.status(409).send(error);
                }
@@ -43,7 +42,7 @@ salesRouter.get('/invoice/:id', async function(req, res){
          mysqlConnection.query(query_, function(error, results, fields){
             if(error) throw error;
             if(results.length == 0) {
-                console.log('Error al obtener data!')
+                console.log('Error en salesRoutes.get /invoice/:id')
                 res.status(400).json({ estado: false, data: {}});
             } else {
                 console.log('Data OK')

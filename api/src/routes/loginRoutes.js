@@ -11,7 +11,7 @@ loginRouter.get('/', async function(req, res){
     try{
          mysqlConnection.query(query_, function(error, results, fields){
             if(!results.length) {
-                console.log('Error al obtener data!')
+                console.log('Error en loginRoutes.get /')
                 res.status(400).json(error);
             } else {
                 console.log('Data OK')
