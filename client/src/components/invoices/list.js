@@ -28,6 +28,8 @@ const ModelTr = ({e}) => {
       dispatch( cleanStatePayments())
       navigate(`/quotes/${e.Naturali_Invoice}`)
     }
+
+    let i = e.Payments?.length ? e.Payments.length - 1 : 0
     
     return(
       <Tr 
@@ -43,13 +45,14 @@ const ModelTr = ({e}) => {
         <Td>{e.Reference}</Td>
         <Td textAlign={'center'}>{e.InvoiceDate.split('T')[0]}</Td>
         <Td isNumeric>${e.Value} </Td>
-        <Td textAlign={'center'} >{e.PaymentStatus === null ? 'Unpaid' : 'Paid'}</Td>
-        <Td textAlign={'center'}>{e.PaymentDate}</Td>
+        <Td textAlign={'center'} >{ e.Percentaje ? e.Percentaje : 0 } % </Td>
+        <Td textAlign={'center'}>{i === 0 ? '-' : e.Payments[i][2]}</Td>
       </Tr>
     )
 }
 
 const List = ({seller_invoices, filteredByCustomer}) => {
+  console.log(seller_invoices)
   const result = useSelector(state=> state.validate_result_quotes)
   const toast = useToast()
   const id = 'test-toast'
