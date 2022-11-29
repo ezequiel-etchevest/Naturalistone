@@ -111,11 +111,3 @@ const List = ({seller_invoices, filteredByCustomer}) => {
     )
 }
 export default List;
-
-
-
-
-// pago o no pago
-// estamated delivery date
-
-//se tiene que pdoer ordenar

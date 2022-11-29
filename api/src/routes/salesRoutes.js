@@ -34,9 +34,8 @@ salesRouter.get('/:id', async function(req, res){
                             res.status(200).json({});
                         }else{
                             console.log('Data OK')
-                            let res = invoicesPayments(Invoices, Payments)
-                            console.log(res)
-                            res.status(200).json(res);
+                            let results = invoicesPayments(Invoices, Payments)
+                            res.status(200).json(results);
 
                         }})}catch(error){
                             res.status(409).send(error);
