@@ -8,9 +8,10 @@ import ModalPDF from './modalPDF'
 
 
 
-const Detail = ({invoice, payments}) => {
+const Detail = ({invoice}) => {
 
   const invoice_products = useSelector(state=> state.invoice_products)
+  const payments = useSelector(state => state.payments_by_id)
 
     return(
       <Box
@@ -24,7 +25,13 @@ const Detail = ({invoice, payments}) => {
           display={'flex'}
           flexDir={'row'}
           >
-          <InvoiceDetailList invoice={invoice} payments={payments}/>
+            {
+              Object.entries(payments).length ? (
+                <InvoiceDetailList invoice={invoice} payments={payments}/>
+                ) : (
+                  <Text>Loading</Text>
+                )
+            }
           <Box
             mt={'3vh'}
             ml={'1vw'}
@@ -84,7 +91,13 @@ const Detail = ({invoice, payments}) => {
             pl={'2vw'}
             pt={'2vh'}
             >
-            <ModalPDF invoice={invoice} payments={payments} />
+              {
+              Object.entries(payments).length ? (
+                <ModalPDF invoice={invoice} payments={payments} />
+                ):(
+                  <Text>Loading</Text>
+                )
+              }
             </Box>
           </Box>
         </Box>	

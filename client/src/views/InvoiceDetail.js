@@ -15,7 +15,6 @@ const InvoiceDetail = () => {
   const dispatch = useDispatch()
   const user = useSelector(state=>state.user)
   const invoice = useSelector(state=>state.invoice)
-  const payments = useSelector(state => state.payments_by_id)
   const userLocal = JSON.parse(localStorage.getItem('user'))
   const { id } = useParams()
 
@@ -36,7 +35,7 @@ const InvoiceDetail = () => {
             <SideBar user={user}/>
             {
               invoice.length ? (
-                <Detail payments={payments} invoice={invoice}/>
+                <Detail invoice={invoice}/>
                 ):(
                 <Text> Loading... </Text>
                 )
