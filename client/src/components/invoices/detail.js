@@ -44,7 +44,6 @@ const Detail = ({invoice, payments}) => {
                 <Text color={'web.text'}>No products linked to this invoice</Text>
               )
             }
-             
         </Box>
         </Box>
         <Box
@@ -85,7 +84,7 @@ const Detail = ({invoice, payments}) => {
             pl={'2vw'}
             pt={'2vh'}
             >
-            <ModalPDF/>
+            <ModalPDF invoice={invoice} payments={payments} />
             </Box>
           </Box>
         </Box>	
