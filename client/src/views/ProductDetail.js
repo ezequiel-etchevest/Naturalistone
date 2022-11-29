@@ -2,26 +2,21 @@ import React, { useEffect } from "react";
 import SideBar from "../components/sideBar";
 import { Text } from "@chakra-ui/react";
 import { useSelector, useDispatch } from "react-redux";
-import { getInvoiceById } from '../redux/actions-invoices'
 import {getEmployeeById } from "../redux/actions-employees";
-import { getPayments } from "../redux/actions-payments";
 import { useParams } from "react-router-dom";
-import Detail from '../components/invoices/detail';
 
 
 
-const InvoiceDetail = () => {
+const ProductDetail = () => {
 
   const dispatch = useDispatch()
   const user = useSelector(state=>state.user)
-  const invoice = useSelector(state=>state.invoice)
   const userLocal = JSON.parse(localStorage.getItem('user'))
   const { id } = useParams()
 
   useEffect(()=>{
-      dispatch(getInvoiceById(id))
-      dispatch(getPayments(id))} 
-      ,[])
+      dispatch(getProductById(id))
+      },[])
 
   useEffect(()=>{
       if(userLocal && !user.length){
@@ -34,8 +29,8 @@ const InvoiceDetail = () => {
           <>
             <SideBar user={user}/>
             {
-              invoice.length ? (
-                <Detail invoice={invoice}/>
+              product.length ? (
+               <Text>Product</Text>
                 ):(
                 <Text> Loading... </Text>
                 )
@@ -47,4 +42,4 @@ const InvoiceDetail = () => {
  
 
 
-export default InvoiceDetail
+export default ProductDetail

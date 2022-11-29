@@ -1,15 +1,28 @@
-import { Box, HStack, Text, Button, Input, IconButton, FormControl } from "@chakra-ui/react";
+import { 
+  Box, 
+  HStack, 
+  Text, 
+  Button, 
+  Input, 
+  IconButton, 
+  FormControl, 
+  NumberInput,
+  NumberInputField, 
+  NumberDecrementStepper, 
+  NumberIncrementStepper, 
+  NumberInputStepper
+  } from "@chakra-ui/react";
 import { BsCalendar4Week } from 'react-icons/bs';
 import { SearchIcon } from '@chakra-ui/icons';
 import { getInvoicesLastWeek, getInvoicesBySeller, getInvoicesLastMonth, getFilteredInvoices } from "../../redux/actions-invoices";
 import { useDispatch, useSelector } from 'react-redux'
 import { useState } from "react";
 
+
 const Filters = ({userId, seller_invoices, setFilteredByCustomer, focus, setFocus}) => {
 
   const dispatch = useDispatch()
   const [errores, setErrores] = useState('')   
-
   const filtered_invoices_month_week = useSelector(state => state.filtered_invoices_month_week)
 
 
@@ -41,8 +54,7 @@ const Filters = ({userId, seller_invoices, setFilteredByCustomer, focus, setFocu
       validateInput(e)
       if(!errores.length){
         const filteredInvoices = seller_invoices?.filter(d => d.Naturali_Invoice.toString().includes(e.target.value))
-        if(!filteredInvoices.length) return alert('No Invoices match this search')
-          dispatch(getFilteredInvoices(filteredInvoices)) 
+        dispatch(getFilteredInvoices(filteredInvoices)) 
       }} else {
         dispatch(getFilteredInvoices(filtered_invoices_month_week))
         setErrores('')
@@ -51,8 +63,7 @@ const Filters = ({userId, seller_invoices, setFilteredByCustomer, focus, setFocu
 
   const handleChangeCustomerName = (e) => {
     if(e.target.value.length){
-      let filterByName = seller_invoices.filter(inv => inv.Reference.toLowerCase().includes(e.target.value))
-      if(!filterByName.length) return alert('No customer name match this search')
+      let filterByName = seller_invoices.filter(inv => inv.Reference.toLowerCase().includes(e.target.value.toLowerCase()))
       setFilteredByCustomer(filterByName)
     } else {
       setFilteredByCustomer([])
@@ -91,28 +102,6 @@ const Filters = ({userId, seller_invoices, setFilteredByCustomer, focus, setFocu
             <BsCalendar4Week/>
         </Button>
         <Button
-         variant={'unstyled'} 
-         display={'flex'} 
-         w={'12vw'}
-         h={'10vh'}
-         borderRadius={'sm'} 
-         placeContent={'center'}
-         alignItems={'center'}
-         color={focus === 'LastMonth' ? 'logo.orange' : 'web.text2'}
-         _hover={{
-          color: 'logo.orange'
-             }}         
-         _active={{
-          color: 'logo.orange'
-         }}>
-            <Text 
-            fontFamily={'body'} 
-            fontWeight={'hairline'}
-            onClick={()=> handleClickLastMonth()}  
-            pr={'1.5vh'}>Last Moth Quotes</Text>
-            <BsCalendar4Week/>
-        </Button>
-        <Button
         variant={'unstyled'} 
         display={'flex'} 
         w={'12vw'}
@@ -135,7 +124,28 @@ const Filters = ({userId, seller_invoices, setFilteredByCustomer, focus, setFocu
             >Last Week Quotes</Text>
             <BsCalendar4Week/>
         </Button>
-
+        <Button
+         variant={'unstyled'} 
+         display={'flex'} 
+         w={'12vw'}
+         h={'10vh'}
+         borderRadius={'sm'} 
+         placeContent={'center'}
+         alignItems={'center'}
+         color={focus === 'LastMonth' ? 'logo.orange' : 'web.text2'}
+         _hover={{
+          color: 'logo.orange'
+             }}         
+         _active={{
+          color: 'logo.orange'
+         }}>
+            <Text 
+            fontFamily={'body'} 
+            fontWeight={'hairline'}
+            onClick={()=> handleClickLastMonth()}  
+            pr={'1.5vh'}>Last Moth Quotes</Text>
+            <BsCalendar4Week/>
+        </Button>
           <Box
             display={'flex'}
             alignItems={'center'}
@@ -145,29 +155,39 @@ const Filters = ({userId, seller_invoices, setFilteredByCustomer, focus, setFocu
             >
             <Box
               display={'flex'}
-              alignItems={'center'}
+              flexDir={'row'}
+              alignItems={'flex-start'}
+              pt={'1vh'}
               w={'19vw'}
-              h={'15vh'}
+              h={'6vh'}
               >
-              <FormControl>
-                <Input
-                  w={'70%'}
+              <FormControl 
+              display={'flex'}
+              flexDir={'row'}>
+                 <NumberInput 
                   variant={"unstyled"}
-                  placeholder={'Quote number'}
-                  _placeholder={{ fontFamily: 'body', fontWeight: 'thin' }}
-                  size={"sm"}
                   borderBottomWidth={"2px"}
-                  name={'invoiceNumber'}
-                  textColor={'web.text'}
-                  onChange={(e) => handleChangeInvoiceNumber(e)}
+                  textColor={'web.text2'}
                   borderBottomColor={'web.text2'}
-                  />
+                  w={'70%'}
+                  size={"sm"}
+                  h={'4vh'}>
+                  <NumberInputField
+                    placeholder={'Quote number'}
+                    _placeholder={{ fontFamily: 'body', fontWeight: 'thin' }}
+                    name={'invoiceNumber'}
+                    onChange={(e) => handleChangeInvoiceNumber(e)}
+                    />
+                  <NumberInputStepper>
+                    <NumberIncrementStepper  border={'none'}/>
+                    <NumberDecrementStepper border={'none'}/>
+                  </NumberInputStepper>
+                </NumberInput>
                   <IconButton
+                    pb={'2vh'}
                     color={'web.text2'}
-                    borderRadius={2}
                     aria-label={"Search database"}
                     bgColor={'web.bg'}
-                    ml={1}
                     icon={<SearchIcon />}
                     _hover={{
                       color: 'logo.orange',

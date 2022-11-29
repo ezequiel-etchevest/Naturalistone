@@ -9,41 +9,29 @@ salesRouter.get('/:id', async function(req, res){
     
     const {id} = req.params
 
-    query_ =    `SELECT Sales.*, Customers.*, Payments.* FROM Sales 
-                LEFT JOIN Customers ON Sales.CustomerID = Customers.CustomerID 
-                LEFT JOIN Payments ON Sales.Naturali_Invoice = Payments.InvoiceID
+    query_ =    `SELECT Sales.*, Customers.*, Payments.idPayments, GROUP_CONCAT(
+                CONCAT (Payments.idPayments,';',Payments.Amount,';',Payments. Date))AS Payments FROM Sales 
+                LEFT JOIN Customers ON Sales.CustomerID = Customers.CustomerID
+                LEFT JOIN Payments ON Sales.Naturali_Invoice = Payments.InvoiceID 
                 WHERE SellerID = ${id}
-                ORDER BY InvoiceDate DESC`;
+                GROUP BY Sales.Naturali_Invoice
+                ORDER BY Sales.Naturali_Invoice DESC`;
     
-    query_2 = ` SELECT Sales.*, Customers.* FROM Sales
-                LEFT JOIN Customers ON Sales.CustomerId = Customers.CustomerID
-                WHERE SellerID = ${id}
-                ORDER BY InvoiceDate DESC`
     try{
-        mysqlConnection.query(query_, function(error, Payments, fields){
-            if(error) throw error;
-            if(Payments.length == 0) {
-                console.log('Error al obtener data!')
-                res.status(200).json({});
-            } else {
-                try{
-                    mysqlConnection.query(query_2, function(error, Invoices, fields){
+           mysqlConnection.query(query_, function(error, Invoices, fields){
                         if(error) throw error;
                         if(Invoices.length == 0) {
                             console.log('Error al obtener data!')
                             res.status(200).json({});
                         }else{
-                            console.log('Data OK')
-                            let results = invoicesPayments(Invoices, Payments)
-                            res.status(200).json(results);
+                            let result = invoicesPayments(Invoices)
+                            res.status(200).json(result);
 
                         }})}catch(error){
                             res.status(409).send(error);
-                        }}});
-                } catch(error){
-                res.status(409).send(error);
-                    }
-            });
+               }
+            })
+        
 
 salesRouter.get('/invoice/:id', async function(req, res){
     const { id } = req.params

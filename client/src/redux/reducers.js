@@ -29,6 +29,7 @@ const intialState = {
     invoice_products: [],
     payments_by_id: {},
     products_errors:{},
+    validate_result_quotes: ''
     // productsByID: []
 }
 
@@ -67,8 +68,9 @@ function rootReducer (state = intialState, action) {
         case GET_INVOICES_BY_SELLER:
             return {
                 ...state,
-                seller_invoices: action.payload,
-                filtered_invoices_month_week: action.payload,
+                seller_invoices: action.payload.data,
+                filtered_invoices_month_week: action.payload.data,
+                validate_result_quotes: action.payload.result
             }
         case POST_PAYMENT_METHOD:
             return {
@@ -83,14 +85,16 @@ function rootReducer (state = intialState, action) {
         case GET_INVOICES_LASTWEEK:
             return {
                 ...state,
-                seller_invoices: action.payload,
-                filtered_invoices_month_week: action.payload
+                seller_invoices: action.payload.data,
+                filtered_invoices_month_week: action.payload.data,
+                validate_result_quotes: action.payload.result
             }
         case GET_INVOICES_LASTMONTH:
             return {
                 ...state,
-                seller_invoices: action.payload,
-                filtered_invoices_month_week: action.payload
+                seller_invoices: action.payload.data,
+                filtered_invoices_month_week: action.payload.data,
+                validate_result_quotes: action.payload.result
             }
         case GET_FILTERED_INVOICES:
             return {

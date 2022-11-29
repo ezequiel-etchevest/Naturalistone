@@ -12,11 +12,19 @@ export function getInvoicesBySeller(id){
 
         try{
             let {data} = await axios.get(`http://localhost:5000/sales/${id}`)
-            dispatch(
-            {
-                type: GET_INVOICES_BY_SELLER,
-                payload: data
-            })
+            if(data.length === 0){
+                dispatch(
+                {
+                    type: GET_INVOICES_BY_SELLER,
+                    payload: {data, result: 'no_results'}
+                })
+            }else{
+                dispatch(
+                    {
+                        type: GET_INVOICES_BY_SELLER,
+                        payload: {data, result: 'results'}
+                    })
+            }
         }catch(error){
             console.log({error})           
         }
@@ -42,14 +50,21 @@ export function getInvoiceById(id){
 
 export function getInvoicesLastWeek(id){
     return async function(dispatch){
-
         try{
             let {data} = await axios.get(`http://localhost:5000/sales/lastWeek/${id}`)
-            dispatch(
-            {
-                type: GET_INVOICES_LASTWEEK,
-                payload: data
-            })
+            if(data.length === 0){
+                dispatch(
+                {
+                    type: GET_INVOICES_LASTWEEK,
+                    payload: {data, result: 'no_results'}
+                })
+            }else{
+                dispatch(
+                    {
+                        type: GET_INVOICES_LASTWEEK,
+                        payload: {data, result: 'results'}
+                    })
+            }
         }catch(error){
             console.log({error})           
 
@@ -77,10 +92,19 @@ export function getInvoicesLastMonth(id){
     return async function(dispatch){
         try{
             let {data} = await axios.get(`http://localhost:5000/sales/lastMonth/${id}`)
-            dispatch({
-                type: GET_INVOICES_LASTMONTH,
-                payload: data
-            })
+            if(data.length === 0){
+                dispatch(
+                {
+                    type: GET_INVOICES_LASTMONTH,
+                    payload: {data, result: 'no_results'}
+                })
+            }else{
+                dispatch(
+                    {
+                        type: GET_INVOICES_LASTMONTH,
+                        payload: {data, result: 'results'}
+                    })
+            }
         }catch(error){
             console.log({error})           
 

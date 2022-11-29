@@ -16,15 +16,16 @@ export default function ModalPDF({invoice, payments}) {
   
   const { isOpen, onOpen, onClose } = useDisclosure()
   const id = invoice[0].Naturali_Invoice
-  console.log(payments.paymentsMath.PaymentPercentaje)
+
   return (
     <>
       <Image onClick={onOpen} src={miniPDF} cursor={'pointer'} />
       <Modal isOpen={isOpen} onClose={onClose} size={'full'} >
         <ModalOverlay />
-        <ModalContent mt={'4vh'} mb={'4vh'} w={'60vw'} bg={'web.sideBar'} border={'1px solid'} pt={'2vh'} pb={'2vh'} borderColor={'web.border'}>
+        <ModalContent rounded={'md'} mt={'4vh'} mb={'4vh'} w={'60vw'} bg={'web.sideBar'} border={'1px solid'} pt={'2vh'} pb={'2vh'} borderColor={'web.border'}>
           <ModalBody w={'100%'} h={'100%'}>
-            {payments.paymentsMath ? (
+            {
+            Object.entries(payments.paymentsMath).length ? (
               payments.paymentsMath.PaymentPercentaje === '100.00' ? (
                 <LoadPdfPaid idpdf={id}/>
               ):(
