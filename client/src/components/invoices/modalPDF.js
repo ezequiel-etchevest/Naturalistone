@@ -22,7 +22,16 @@ export default function ModalPDF({invoice, payments}) {
       <Image onClick={onOpen} src={miniPDF} cursor={'pointer'} />
       <Modal isOpen={isOpen} onClose={onClose} size={'full'} >
         <ModalOverlay />
-        <ModalContent rounded={'md'} mt={'4vh'} mb={'4vh'} w={'60vw'} bg={'web.sideBar'} border={'1px solid'} pt={'2vh'} pb={'2vh'} borderColor={'web.border'}>
+        <ModalContent 
+          rounded={'md'} 
+          mt={'4vh'} 
+          mb={'4vh'} 
+          w={'60vw'} 
+          bg={'web.sideBar'} 
+          border={'1px solid'} 
+          pt={'2vh'} 
+          pb={'2vh'} 
+          borderColor={'web.border'}>
           <ModalBody w={'100%'} h={'100%'}>
             {
             Object.entries(payments.paymentsMath).length ? (

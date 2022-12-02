@@ -1,9 +1,9 @@
-import { Box, Text, Image } from '@chakra-ui/react';
-import { useSelector } from 'react-redux';
+import { Box, Text } from '@chakra-ui/react';
 import InvoiceProductList from '../invoices/invoiceProductList';
 import InvoiceDetailList from './invoiceDetailsList';
 import PaymentList from './PaymentList';
-import ModalPDF from './modalPDF'
+import ModalPDF from './modalPDF';
+import InvoicePanelButtons from './invoiceButtons';
 
 
 
@@ -53,8 +53,8 @@ const Detail = ({invoice, payments, invoice_products}) => {
         </Box>
         <Box
         display={'flex'}
-        flexDir={'row'}
-        w={'76vw'}
+        flexDir={'reverse'}
+        w={'80vw'}
         justifyContent={'space-between'}
         >
           <Box
@@ -67,7 +67,7 @@ const Detail = ({invoice, payments, invoice_products}) => {
               borderColor={'web.border'} 
               bg={'web.sideBar'}
               h={'39vh'}
-              w={'46vw'}
+              w={'44vw'}
               >
             {
              Object.entries(payments).length >= 1 ? (
@@ -78,16 +78,19 @@ const Detail = ({invoice, payments, invoice_products}) => {
             }
           </Box>
           <Box
-            w={'25vw'} 
-            h={'39vh'} 
-            justifyContent={'center'} 
-            display={'flex'}
+            border={'1px solid'}
+            bg={'web.sideBar'}
+            borderColor={'web.border'}
+            rounded={'md'}
+            p={'2.5vh'}
+            mr={'2vw'}
             mt={'3vh'}
-            ml={'2vw'}
-            mr={'1vw'}
-            pr={'2vw'}
-            pl={'2vw'}
-            pt={'2vh'}
+            w={'30vw'} 
+            h={'39vh'} 
+            justifyContent={'space-between'} 
+            display={'flex'}
+            flexDir={'row-reverse'}
+            ml={'1vw'}
             >
               {
               Object.entries(payments).length ? (
@@ -96,6 +99,7 @@ const Detail = ({invoice, payments, invoice_products}) => {
                   <Text>Loading</Text>
                 )
               }
+            <InvoicePanelButtons/>
             </Box>
           </Box>
         </Box>	
