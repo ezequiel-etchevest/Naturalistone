@@ -17,7 +17,6 @@ const InvoiceDetail = () => {
   const invoice = useSelector(state=>state.invoice)
   const invoice_products = useSelector(state=> state.invoice_products)
   const payments = useSelector(state => state.payments_by_id)
-
   const userLocal = JSON.parse(localStorage.getItem('user'))
   const { id } = useParams()
 

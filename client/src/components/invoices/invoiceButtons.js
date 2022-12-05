@@ -8,7 +8,7 @@ import {AiOutlineMail, AiOutlineInfoCircle} from 'react-icons/ai';
 import { BsCartPlus } from 'react-icons/bs';
 import ModalStamp from './modalStamp';
 
-const InvoicePanelButtons = ({invoice}) => {
+const InvoicePanelButtons = ({invoice, payments}) => {
     return(
         <>
 					<Box
@@ -80,7 +80,7 @@ const InvoicePanelButtons = ({invoice}) => {
             </Button>
             </ButtonGroup>
           </Box>
-            <ModalStamp invoice={invoice}/>
+            <ModalStamp invoice={invoice} payments={payments}/>
           </Box>
         
         </>

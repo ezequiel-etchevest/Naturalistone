@@ -8,7 +8,9 @@ import {
     GET_INVOICES_LASTWEEK, 
     GET_INVOICES_LASTMONTH, 
     GET_FILTERED_INVOICES,
-    GET_INVOICE_PRODUCTS} from './actions-invoices';
+    GET_INVOICE_PRODUCTS,
+    PATCH_STAMP
+    } from './actions-invoices';
 import { 
     POST_PAYMENT_METHOD,
     GET_PAYMENTS_BY_ID, 
@@ -142,7 +144,13 @@ function rootReducer (state = intialState, action) {
             return {
                 ...state,
                product_by_id: action.payload
-            }                                       
+            }
+        case PATCH_STAMP :
+            return {
+                ...state,
+                invoice: action.payload
+            }
+
         default:
             return {
                 ...state

@@ -10,20 +10,19 @@ import {
     Text,
     IconButton
   } from '@chakra-ui/react';
-
 import AddPayment from './addPayment';
 import {AiOutlineDelete } from 'react-icons/ai'
 import { deletePayment } from '../../redux/actions-payments';
 import { useDispatch } from 'react-redux';
 
 
-
-const ModelTr = ({p, totalAmount}) => {
+const ModelTr = ({p, totalAmount, invoice}) => {
     const dispatch = useDispatch()
     const per = (p.Amount * 100) / totalAmount
     const handleDelete = ()  => {
       dispatch(deletePayment(p.InvoiceID, p.idPayments))
     }
+
     return(
       <Tr 
         cursor={'pointer'}
@@ -38,13 +37,18 @@ const ModelTr = ({p, totalAmount}) => {
         <Td textAlign={'match-parent'}>{p.Method}</Td>
         <Td textAlign={'match-parent'}>{per.toFixed(2)} %</Td>
         <Td>
-          <IconButton size={'xs'}fontSize={'2.5vh'} variant={'unstyled'} icon={<AiOutlineDelete/>} onClick={()=>handleDelete()}/>
+          <IconButton
+            disabled={invoice[0].Stamped === 1 ? true : false} 
+            size={'xs'}
+            fontSize={'2.5vh'} 
+            variant={'unstyled'} 
+            icon={<AiOutlineDelete/>} onClick={()=>handleDelete()}/>
         </Td>
       </Tr>
     )
 }
 
-const PaymentList = ({payments, totalAmount}) => {
+const PaymentList = ({payments, totalAmount, invoice}) => {
   const pendingAmount = payments.paymentsMath.PendingAmount
 
   const handlePendig = () => {
@@ -52,6 +56,7 @@ const PaymentList = ({payments, totalAmount}) => {
     else return true
   }
   return(
+
     <>
      <Box
         display={'flex'}
@@ -113,7 +118,7 @@ const PaymentList = ({payments, totalAmount}) => {
                     { 
                         payments.paymentData.map((p, i) =>{
                           return(
-                            <ModelTr p={p} key={i} totalAmount={totalAmount}/>
+                            <ModelTr p={p} key={i} totalAmount={totalAmount} invoice={invoice}/>
                           )})                   
                     }
                   </Tbody>

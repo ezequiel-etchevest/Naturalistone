@@ -34,13 +34,10 @@ export default function ModalPDF({invoice, payments}) {
           borderColor={'web.border'}>
           <ModalBody w={'100%'} h={'100%'}>
             {
-            Object.entries(payments.paymentsMath).length ? (
-              payments.paymentsMath.PaymentPercentaje === '100.00' ? (
+            invoice[0].Stamped ? (
                 <LoadPdfPaid idpdf={id}/>
               ):(
                 <LoadPDF idpdf={id} />
-              )): (
-                <Text>Loading .... </Text>
               )       
             }
           </ModalBody>

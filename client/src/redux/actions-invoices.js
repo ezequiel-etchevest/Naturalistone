@@ -5,6 +5,7 @@ export const GET_INVOICES_LASTWEEK = 'GET_INVOICES_LASTWEEK';
 export const GET_INVOICES_LASTMONTH = 'GET_INVOICES_LASTMONTH';
 export const GET_FILTERED_INVOICES = 'GET_FILTERED_INVOICES';
 export const GET_INVOICE_PRODUCTS = 'GET_INVOICE_PRODUCTS';
+export const PATCH_STAMP = 'PATCH_STAMP';
 
 
 export function getInvoicesBySeller(id){
@@ -125,4 +126,19 @@ export function getInvoiceProducts(id){
         }
     }
 }
-// 
+
+export function stampInvoice(id){
+
+    return async function(dispatch){
+        try{
+            let {response} = await axios.patch(`http://localhost:5000/sales/quotes/${id}`)
+            let { data } = await axios.get(`http://localhost:5000/sales/invoice/${id}`)
+            dispatch(
+            {
+                type: PATCH_STAMP,
+                payload: data
+            })
+        }catch(error){
+            console.log({error})           
+
+        }}}

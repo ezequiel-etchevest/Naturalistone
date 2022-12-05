@@ -101,8 +101,6 @@ const AddPayment = ({pendingAmount}) => {
       }
     }
   }
-    console.log('AddPayment', pendingAmount)
-    console.log('error',error)
     return(
         <>
           <ButtonGroup

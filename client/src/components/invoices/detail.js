@@ -71,7 +71,7 @@ const Detail = ({invoice, payments, invoice_products}) => {
                 
             {
              Object.entries(payments).length >= 1 ? (
-                <PaymentList payments={payments} totalAmount={invoice[0].Value} /> 
+                <PaymentList payments={payments} totalAmount={invoice[0].Value} invoice={invoice} /> 
               ) : (
                 <Text>No payments done yet</Text>
               )
@@ -99,7 +99,7 @@ const Detail = ({invoice, payments, invoice_products}) => {
                   <Text>Loading</Text>
                 )
               }
-            <InvoicePanelButtons invoice={invoice}/>
+            <InvoicePanelButtons invoice={invoice} payments={payments}/>
             </Box>
           </Box>
         </Box>	
