@@ -25,7 +25,7 @@ export function getFiltered(type, size, thickness, price){
         try{ 
 
             let {data} = await axios.get(`http://localhost:5000/products/filtered?type=${type}&size=${size}&thickness=${thickness}&price1=${price[0]}&price2=${price[1]}`)
- 
+            console.log('Action', data)
             dispatch(
             {
                 type: GET_FILTERED_PRODUCTS,
@@ -40,7 +40,7 @@ export function getFiltered(type, size, thickness, price){
 export function getProductById(id){
     return async function(dispatch){
         try{
-            let {data} = await axios.get(`http://localhost:5000/products/${id}`)
+            let {data} = await axios.get(`http://localhost:5000/products/id/${id}`)
             dispatch(
                 {
                     type: GET_PRODUCT_BY_ID,

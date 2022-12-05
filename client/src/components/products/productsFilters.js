@@ -17,14 +17,17 @@ import PriceSlider from "./priceSlider";
 
 
 const ProductsFilters = ({allProducts, setFilteredProducts}) => {
-  
+
   const dispatch = useDispatch()
+
   const [filters, setFilters] = useState({
     type:'',
     size:'',
     thickness:'',
     price: [0, 300]
   })
+  const [limit, setLimit] = useState([0, 300])
+
 
   const handleType = (e) => {
     setFilters({
@@ -58,6 +61,7 @@ const ProductsFilters = ({allProducts, setFilteredProducts}) => {
       thickness:'',
       price: [0, 300]
       })
+    setLimit([0, 300])
     dispatch(getAllProducts())
   }
 
@@ -204,7 +208,7 @@ const ProductsFilters = ({allProducts, setFilteredProducts}) => {
           flexDir={'row'}
           justifyContent={'space-between'}
           >
-          <PriceSlider setFilters={setFilters} filters={filters}/>
+          <PriceSlider setFilters={setFilters} filters={filters} limit={limit} setLimit={setLimit} />
 
         <Button
             leftIcon={ <AiOutlineClear/>}

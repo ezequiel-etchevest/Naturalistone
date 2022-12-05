@@ -44,7 +44,8 @@ const ModelTr = ({p, totalAmount}) => {
     )
 }
 
-const PaymentList = ({payments, totalAmount, pendingAmount}) => {
+const PaymentList = ({payments, totalAmount}) => {
+  const pendingAmount = payments.paymentsMath.PendingAmount
 
   const handlePendig = () => {
     if((totalAmount - pendingAmount)=== totalAmount) return false

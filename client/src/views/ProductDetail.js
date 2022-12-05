@@ -11,16 +11,16 @@ import { useParams } from "react-router-dom";
 const ProductDetail = () => {
 
   const dispatch = useDispatch()
-  const user = useSelector(state=>state.user)
+  const user = useSelector(state => state.user)
   const product = useSelector(state => state.product_by_id)
   const userLocal = JSON.parse(localStorage.getItem('user'))
   const { id } = useParams()
 
-  useEffect(()=>{
+  useEffect(() => {
       dispatch(getProductById(id))
       },[])
 
-  useEffect(()=>{
+  useEffect(() => {
       if(userLocal && !user.length){
       dispatch(getEmployeeById(userLocal.SellerID))}
     },[user])

@@ -19,7 +19,8 @@ import {
     NumberIncrementStepper,
     NumberInputStepper,
     NumberInputField, 
-    FormErrorMessage
+    FormErrorMessage,
+    useToast
     } from "@chakra-ui/react"
 import { SiAddthis } from 'react-icons/si';
 import { useState } from "react";
@@ -33,30 +34,28 @@ import '../../assets/styleSheet.css'
 const AddPayment = ({pendingAmount}) => {
     const dispatch = useDispatch()
     const {id} = useParams()
+    const toast = useToast()
     const { isOpen, onOpen, onClose } = useDisclosure()
     const [ disabled, setDisabled ] = useState(true)
     const [input, setInput] = useState({
       Method : '',
       Amount: ''})
+
     const [error, setError] = useState('')
 
     const handleCancel = () =>{
       setDisabled(true)
       onClose()
     }
+    
     const handleSelect = (e) =>{
-      if(e.target.value === 'Cash'|| e.target.value ==='Card'|| e.target.value === 'Wire transfer' || e.target.value === 'Check'){
          setInput({
           ...input,
           Method : e.target.value
-         })}
-      if(input.Method !== '' && input.Amount !== ''){
+         })
+      if(e.target.value !== '' && input.Amount !== ''){
         setDisabled(false)
-      }
-      if(input.Method === ''){
-        setDisabled(true)
-      }
-      if(input.Amount === ''){
+      } else if (e.target.value === '' || input.Amount === 0.00){
         setDisabled(true)
       }
     }
@@ -76,19 +75,34 @@ const AddPayment = ({pendingAmount}) => {
       }
     }
     const handleSubmit = () => {
+      if(parseFloat(input.Amount) > parseFloat(pendingAmount)){
+        toast({
+          title: 'Invalid amount',
+          description: `Pending amount equals to $${pendingAmount}`,
+          status: 'error',
+          duration: 2000,
+          isClosable: true,
+        });
+      } else{
         if(input.Method !== '' && input.Amount > 0){ 
-        dispatch(patchPaymentMethod(id, input))
-        setInput({
-          Method : '',
-          Amount: '' })
-        onClose()
-        setDisabled(true)}
-        else{
-          setError('Please complete both fields')
-        }
+          dispatch(patchPaymentMethod(id, input))
+          setInput({
+            Method : '',
+            Amount: '' })
+          onClose(setError(''))
+      } else{
+        toast({
+          title: 'Inconpleted fields',
+          description: `Both fields must be completed`,
+          status: 'error',
+          duration: 2000,
+          isClosable: true,
+        });
+      }
     }
-    
-    
+  }
+    console.log('AddPayment', pendingAmount)
+    console.log('error',error)
     return(
         <>
           <ButtonGroup
@@ -139,10 +153,11 @@ const AddPayment = ({pendingAmount}) => {
                     borderColor: 'logo.orange',
                     boxShadow: '0 0.5px 0.5px rgba(229, 103, 23, 0.075)inset, 0 0 5px rgba(255,144,0,0.6)'
                   }}
+                  bg={'web.sideBar'}
                   borderColor={'web.border'} 
                   color={'web.text2'} 
-                  placeholder='Select Option' 
                   onChange={(e)=>handleSelect(e)}>
+                  <option value='' className="options" >Select Option</option>
                   <option value='Check' className="options" >Check</option>
                   <option value='Card' className="options" >Card</option>
                   <option value='Cash' className="options" >Cash</option>
@@ -152,13 +167,13 @@ const AddPayment = ({pendingAmount}) => {
                 <FormControl mt={'2vh'}  isRequired>
                   <FormLabel color={'web.text'}>Amount</FormLabel>
                   <NumberInput
+                    clampValueOnBlur={true}
                     borderColor={'web.border'} 
                     color={'web.text2'}
                     onChange={(e)=>handleInput(e)} 
                     step={1} 
                     defaultValue={0} 
                     min={0} 
-                    max={pendingAmount} 
                     precision={2}>
                     <NumberInputField                    
                     _focus={{
@@ -179,7 +194,6 @@ const AddPayment = ({pendingAmount}) => {
               </ModalBody>
               <ModalFooter>
                 <Button
-                  isDisabled={disabled} 
                   colorScheme={'orange'} 
                   mr={3} 
                   onClick={()=>handleSubmit()}>

@@ -7,9 +7,10 @@ import {
     Th,
     Td,
     TableContainer,
+    useToast
   } from '@chakra-ui/react'
 import { useNavigate } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { getAllProducts, getProductById } from '../../redux/actions-products'
 import { useEffect } from 'react'
 
@@ -21,7 +22,7 @@ const ModelTr = ({e}) => {
     const handleClick = () => {
       dispatch(getProductById(e.ProdID))
       if(e.ProdID !== undefined)
-      navigate(`/products/${e.ProdID}`)
+      navigate(`/products/id/${e.ProdID}`)
     }
 
   return(
@@ -48,8 +49,22 @@ const ModelTr = ({e}) => {
 
 const ProductList = ({ allProducts, filteredProducts }) => {
 
-  useEffect(() => {
+  const productErrors = useSelector((state) => state.products_errors)
+  const toast = useToast()
 
+  const validateToast = () => {
+    if(Object.entries(productErrors).length){
+      toast({        
+        title: `${productErrors.error}`,
+        description: 'Displaying previous results',
+        status: 'warning',
+        duration: 1500,
+        isClosable: true,})
+    }
+  }
+
+  useEffect(() => {
+    validateToast()
   },[filteredProducts, allProducts])
 
   
@@ -87,6 +102,7 @@ const ProductList = ({ allProducts, filteredProducts }) => {
             <Thead h={'6vh'}>
               <Tr>
                 <Th color={'web.text2'} textAlign={'match-parent'}>Product Name</Th>
+                
                 <Th color={'web.text2'} w={'5vw'}>Type</Th>
                 <Th color={'web.text2'} w={'5vw'}>Size</Th>
                 <Th color={'web.text2'} w={'5vw'}>Thickness</Th>
@@ -94,6 +110,7 @@ const ProductList = ({ allProducts, filteredProducts }) => {
                 <Th color={'web.text2'} w={'5vw'}isNumeric>Stock</Th>
                 <Th color={'web.text2'} w={'5vw'}isNumeric>Reserved Stock</Th>
                 <Th color={'web.text2'} w={'5vw'}isNumeric>Next Arrival</Th>
+                <Th color={'web.text2'} w={'5vw'}>Ranking</Th>
               </Tr>
             </Thead>
             <Tbody>

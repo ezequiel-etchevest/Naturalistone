@@ -10,7 +10,6 @@ import InvoicePanelButtons from './invoiceButtons';
 
 const Detail = ({invoice, payments, invoice_products}) => {
 
-  
     return(
       <Box
         bg={'web.bg'}  
@@ -44,7 +43,7 @@ const Detail = ({invoice, payments, invoice_products}) => {
             w={'48vw'}>
             {
               invoice_products.length ? (
-                <InvoiceProductList invoice_products={invoice_products} />
+                <InvoiceProductList invoice_products={invoice_products}  />
               ) : (
                 <Text color={'web.text'}>No products linked to this invoice</Text>
               )
@@ -69,9 +68,10 @@ const Detail = ({invoice, payments, invoice_products}) => {
               h={'39vh'}
               w={'44vw'}
               >
+                
             {
              Object.entries(payments).length >= 1 ? (
-                <PaymentList payments={payments} totalAmount={invoice[0].Value}/> 
+                <PaymentList payments={payments} totalAmount={invoice[0].Value} /> 
               ) : (
                 <Text>No payments done yet</Text>
               )
@@ -99,7 +99,7 @@ const Detail = ({invoice, payments, invoice_products}) => {
                   <Text>Loading</Text>
                 )
               }
-            <InvoicePanelButtons/>
+            <InvoicePanelButtons invoice={invoice}/>
             </Box>
           </Box>
         </Box>	

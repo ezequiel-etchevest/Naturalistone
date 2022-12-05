@@ -11,9 +11,9 @@ import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { getFiltered }  from "../../redux/actions-products";
 
-let PriceSlider = ({setFilters, filters}) =>{
+let PriceSlider = ({setFilters, filters, limit, setLimit}) =>{
 
-    const [limit, setLimit] = useState([0, 300])
+    
     const dispatch = useDispatch()
 
     const handlePrice = (e) => {

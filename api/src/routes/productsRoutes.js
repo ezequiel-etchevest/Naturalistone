@@ -38,7 +38,7 @@ productsRouter.get('/', async function(req, res){
     }
 });
 
-productsRouter.get('/:id', async function(req, res){
+productsRouter.get('/id/:id', async function(req, res){
 
     const {id} = req.params
 
