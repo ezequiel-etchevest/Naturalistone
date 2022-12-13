@@ -2,8 +2,7 @@ import axios from 'axios';
 export const GET_ALL_PRODUCTS = 'GET_ALL_PRODUCTS';
 export const GET_FILTERED_PRODUCTS = 'GET_FILTERED_PRODUCTS';
 export const GET_PRODUCT_BY_ID = 'GET_FPRODUCT_BY_ID';
-
-//export const GET_PRODUCTS_BY_ID = 'GET_PRODUCTS_BY_ID';
+export const CLEAN_PRODUCT_BY_ID = 'CLEAN_PRODUCT_BY_ID'
 
 export function getAllProducts(){
     return async function(dispatch){
@@ -25,7 +24,6 @@ export function getFiltered(type, size, thickness, price){
         try{ 
 
             let {data} = await axios.get(`http://localhost:5000/products/filtered?type=${type}&size=${size}&thickness=${thickness}&price1=${price[0]}&price2=${price[1]}`)
-            console.log('Action', data)
             dispatch(
             {
                 type: GET_FILTERED_PRODUCTS,
@@ -38,6 +36,7 @@ export function getFiltered(type, size, thickness, price){
 }
 
 export function getProductById(id){
+
     return async function(dispatch){
         try{
             let {data} = await axios.get(`http://localhost:5000/products/id/${id}`)
@@ -51,3 +50,16 @@ export function getProductById(id){
             }
         }
     }
+
+export function cleanProductById(){
+
+  return async function(dispatch){
+    try{
+        return dispatch({
+            type: CLEAN_PRODUCT_BY_ID,
+            payload: {}
+        })}catch(error){
+            console.log(error)
+        }
+    }
+}

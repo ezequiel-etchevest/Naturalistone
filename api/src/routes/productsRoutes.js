@@ -39,22 +39,34 @@ productsRouter.get('/', async function(req, res){
 });
 
 productsRouter.get('/id/:id', async function(req, res){
-
     const {id} = req.params
 
-    query_ =    `SELECT ProdNames.*, Inventory.* FROM ProdNames 
-                LEFT JOIN Inventory ON ProdNames.ProdNameID = Inventory.ProdID WHERE ProdNameID = ${id}  ORDER BY ProdNames.Naturali_ProdName ASC`;
-
+    query_ =    `SELECT    
+                  ProdNames.Naturali_ProdName AS ProductName,
+                  Dimension.Type,
+                  Dimension.Size,
+                  Dimension.Thickness,
+                  Products.SalePrice AS Price,
+                  Products.ProdID,
+                  Inventory.CurrentlyAvailable AS Stock,
+                  Inventory.NextArrival,
+                  Inventory.PendingPayment
+                FROM Products
+                INNER JOIN ProdNames ON ProdNames.ProdNameID = Products.ProdNameID
+                INNER JOIN Dimension ON Dimension.DimensionID = Products.DimensionID
+                INNER JOIN Inventory ON Inventory.ProdID = Products.ProdID WHERE Products.ProdID = ${id}  
+                ORDER BY ProdNames.Naturali_ProdName ASC`;
+              
     try{
         mysqlConnection.query(query_, function(error, results, fields){   
 
             if(error) throw error;
             if(results.length == 0) {
-                console.log('Error en productsRoutes.get /id/:id')
+                console.log('Error en productsRoutes.get /:id')
                 res.status(200).json({});
             } else {
                 console.log('Data OK')
-                res.status(200).json(results);
+                res.status(200).json(results[0]);
             }
         });
     } catch(error){
@@ -72,6 +84,7 @@ productsRouter.get('/filtered', async function(req, res){
                     Dimension.Size,
                     Dimension.Thickness,
                     Products.SalePrice AS Price,
+                    Products.ProdID,
                     Inventory.CurrentlyAvailable AS Stock,
                     Inventory.NextArrival,
                     Inventory.PendingPayment
