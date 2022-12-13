@@ -4,9 +4,7 @@ import {
     Stat,
     StatLabel,
     StatNumber,
-    HStack,
-    chakra,
-    Highlight
+    HStack
   } from '@chakra-ui/react';
   import { BiDollar } from 'react-icons/bi';
   import { FaSortAmountUpAlt } from 'react-icons/fa';
@@ -19,31 +17,27 @@ import {
 
     return (
       <Stat
-        w={'10vw'}
-        px={{ base: 2, md: 4 }}
-        py={'5'}
-        shadow={'lg'}
+        p={'2vh'}
+        maxW={'11vw'}
+        maxH={'16vh'}
         border={'1px solid'}
         borderColor={'web.border'}
-        rounded={'md'}
-        color={'web.text'}
-        _hover={{
-            bg: 'logo.orange',
-            color: 'web.text'
-        }}>
-        <Flex justifyContent={'space-between'}>
-          <Box pl={{ base: 2, md: 6 }}>
-            <StatLabel fontWeight={'medium'} >
-              {title}
-            </StatLabel>
-            <StatNumber fontSize={'4xl'} fontWeight={'medium'} >
-              {stat}
-            </StatNumber>
-          </Box>
+        rounded={'md'}>
+        <StatLabel 
+          fontWeight={'small'} 
+          fontSize={'1.7vh'} 
+          color={'web.text2'} >
+          {title}
+        </StatLabel>
+        <Flex justifyContent={'space-around'} my={'1vh'} >
+          <StatNumber fontSize={'2xl'} fontWeight={'medium'} color={'web.text'} >
+            {stat}
+          </StatNumber>
           <Box
             my={'auto'}
             color={'web.text'}
             alignContent={'center'}
+            fontSize={'xx-small'}
             >
             {icon}
           </Box>
@@ -52,25 +46,13 @@ import {
     );
   }
   
-  export default function Stats({currentMonth}) {
+  export default function CurrentMonthStats({currentMonth}) {
 
     return (
-      <Box h={'92vh'}  p={'4vw'} ml={'20vw'} bg={'web.bg'} >
-        <chakra.h1
-        textAlign={'center'}
-        fontSize={'4xl'}
-        py={10}
-        color={'web.text2'}
-        fontWeight={'normal'}
-        >
-        <Highlight
-            query={['ON THE GO!']}
-            styles={{ px: '2', py: '1', color: '#E47424' }}
-            >
-        CHECK YOUR STATS ON THE GO!
-        </Highlight>
-      </chakra.h1>
-        <HStack mt={'5vh'} columns={{ base: 1, md: 3 }} spacing={{ base: 5, lg: 8 }}>
+        <Box maxW={'35vw'} maxH={'15vh'}>
+        <HStack  
+          spacing={'2vh'}
+          >
           <StatsCard
             title={'Current Month Sales'}
             stat={currentMonth.TotalValue}
@@ -87,6 +69,6 @@ import {
             icon={<TbReceiptTax size={'3em'} />}
           />
         </HStack>
-      </Box>
+        </Box>
     );
   }

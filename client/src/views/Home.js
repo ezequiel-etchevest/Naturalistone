@@ -24,7 +24,7 @@ const Home = () => {
         }},[dispatch, userLocal, user])
 
       useEffect(() => {
-        if(user.length && Object.entries(currentMonth) === 0){
+        if(user.length && Object.entries(currentMonth).length === 0){
           dispatch(getCurrentMonth(user[0].SellerID))
         }}, [dispatch, user, currentMonth])
 
