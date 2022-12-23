@@ -6,7 +6,7 @@ import { getInvoiceById } from '../redux/actions-invoices'
 import {getEmployeeById } from "../redux/actions-employees";
 import { getPayments } from "../redux/actions-payments";
 import { useParams } from "react-router-dom";
-import Detail from '../components/invoices/detail';
+import Detail from '../components/invoices/invoiceDetail/detail';
 
 
 
