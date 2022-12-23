@@ -15,7 +15,7 @@ import {
   } from '@chakra-ui/react'
 import { TfiStamp } from 'react-icons/tfi';
 import { useDispatch } from 'react-redux';
-import { stampInvoice } from '../../redux/actions-invoices';
+import { stampInvoice } from '../../../redux/actions-invoices';
   
   export default function ModalStamp({invoice, payments}) {
     

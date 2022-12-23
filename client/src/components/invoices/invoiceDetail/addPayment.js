@@ -26,8 +26,8 @@ import { SiAddthis } from 'react-icons/si';
 import { useState } from "react";
 import { useParams } from 'react-router-dom';
 import { useDispatch } from "react-redux";
-import { patchPaymentMethod } from "../../redux/actions-payments";
-import '../../assets/styleSheet.css'
+import { patchPaymentMethod } from "../../../redux/actions-payments";
+import '../../../assets/styleSheet.css'
 
 
 

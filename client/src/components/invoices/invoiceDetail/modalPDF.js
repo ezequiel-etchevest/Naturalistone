@@ -7,9 +7,9 @@ import {
   Image,
   Text
 } from '@chakra-ui/react'
-import miniPDF from '../../assets/miniPDF.png'
-import LoadPDF from '../pdf/pdfModify'
-import LoadPdfPaid from '../pdf/pdfPaidFunction'
+import miniPDF from '../../../assets/miniPDF.png'
+import LoadPDF from '../../pdf/pdfModify'
+import LoadPdfPaid from '../../pdf/pdfPaidFunction'
 
 
 export default function ModalPDF({invoice, payments}) {

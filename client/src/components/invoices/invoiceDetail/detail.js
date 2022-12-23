@@ -1,5 +1,5 @@
 import { Box, Text } from '@chakra-ui/react';
-import InvoiceProductList from '../invoices/invoiceProductList';
+import InvoiceProductList from './invoiceProductList';
 import InvoiceDetailList from './invoiceDetailsList';
 import PaymentList from './PaymentList';
 import ModalPDF from './modalPDF';
