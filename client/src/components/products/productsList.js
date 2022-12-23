@@ -11,7 +11,7 @@ import {
   } from '@chakra-ui/react'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { getAllProducts, getProductById } from '../../redux/actions-products'
+import { getProductById } from '../../redux/actions-products'
 import { useEffect } from 'react'
 
 const ModelTr = ({e}) => {
@@ -22,7 +22,7 @@ const ModelTr = ({e}) => {
     const handleClick = () => {
       dispatch(getProductById(e.ProdID))
       if(e.ProdID !== undefined)
-      navigate(`/products/id/${e.ProdID}`)
+      navigate(`/products/${e.ProdID}`)
     }
 
   return(
@@ -67,7 +67,7 @@ const ProductList = ({ allProducts, filteredProducts }) => {
     validateToast()
   },[filteredProducts, allProducts])
 
-  
+
   return(
     <Box
       display={'flex'}

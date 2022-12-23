@@ -1,14 +1,14 @@
 import React, { useEffect } from "react";
 import SideBar from "../components/sideBar";
-import { Text } from "@chakra-ui/react";
+import { Text, Center, Spinner} from "@chakra-ui/react";
 import { useSelector, useDispatch } from "react-redux";
 import {getEmployeeById } from "../redux/actions-employees";
-import { getProductById } from '../redux/actions-products';
+import { cleanProductById, getProductById } from '../redux/actions-products';
 import { useParams } from "react-router-dom";
+import ProductDetail from "../components/products/prodDetail";
 
 
-
-const ProductDetail = () => {
+const ProductDetailView = () => {
 
   const dispatch = useDispatch()
   const user = useSelector(state => state.user)
@@ -18,6 +18,7 @@ const ProductDetail = () => {
 
   useEffect(() => {
       dispatch(getProductById(id))
+      dispatch(cleanProductById())
       },[])
 
   useEffect(() => {
@@ -31,11 +32,13 @@ const ProductDetail = () => {
           <>
             <SideBar user={user}/>
             {
-              product.length ? (
-               <Text>Product</Text>
-                ):(
-                <Text> Loading... </Text>
-                )
+              Object.entries(product).length ? (
+
+              <ProductDetail product={product}/>
+              ) : (
+              <Center ml={'20vh'} bg={'web.bg'} h={'92vh'}>
+               <Spinner thickness={'4px'} size={'xl'} color={'logo.orange'}/>
+              </Center>)
             }
           </>
         )
@@ -44,4 +47,4 @@ const ProductDetail = () => {
  
 
 
-export default ProductDetail
+export default ProductDetailView

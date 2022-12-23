@@ -19,7 +19,8 @@ import {
 import { 
     GET_ALL_PRODUCTS,
     GET_FILTERED_PRODUCTS,
-    GET_PRODUCT_BY_ID
+    GET_PRODUCT_BY_ID,
+    CLEAN_PRODUCT_BY_ID
      } from './actions-products';
 import { GET_CURRENT_MONTH } from './actions-stats';
 
@@ -43,87 +44,87 @@ function rootReducer (state = intialState, action) {
     switch(action.type){
         case GET_EMPLOYEES:
             return {
-                ...state,
-                employees: action.payload
+              ...state,
+              employees: action.payload
             }
         case GET_EMPLOYEES_BY_ID:
             return {
-                ...state,
-                user: action.payload
+              ...state,
+              user: action.payload
             }
         case LOG_OUT:
             return {
-                ...state,
-                user: [],
-                employees: [],
-                invoice: {},
-                all_invoices_by_seller: [],
-                seller_invoices: [],
-                filtered_invoices: [],
-                filtered_invoices_month_week: [],
-                current_month:{},
-                products_errors:{},
-                invoice_pdf: '',
-                product_by_id: []
+              ...state,
+              user: [],
+              employees: [],
+              invoice: {},
+              all_invoices_by_seller: [],
+              seller_invoices: [],
+              filtered_invoices: [],
+              filtered_invoices_month_week: [],
+              current_month:{},
+              products_errors:{},
+              invoice_pdf: '',
+              product_by_id: []
             }
         
         case GET_INVOICE_BY_ID:
             return {
-                ...state,
-                invoice: action.payload
+              ...state,
+              invoice: action.payload
             }
         case GET_INVOICES_BY_SELLER:
             return {
-                ...state,
-                seller_invoices: action.payload.data,
-                filtered_invoices_month_week: action.payload.data,
-                validate_result_quotes: action.payload.result
+              ...state,
+              seller_invoices: action.payload.data,
+              filtered_invoices_month_week: action.payload.data,
+              validate_result_quotes: action.payload.result
             }
         case POST_PAYMENT_METHOD:
             return {
-                ...state,
-                payments_by_id: action.payload
-                }
+              ...state,
+              payments_by_id: action.payload
+            }
         case DELETE_PAYMENT_METHOD:
             return {
-                ...state,
-                payments_by_id: action.payload
-                }
+              ...state,
+              payments_by_id: action.payload
+            }
         case GET_INVOICES_LASTWEEK:
             return {
-                ...state,
-                seller_invoices: action.payload.data,
-                filtered_invoices_month_week: action.payload.data,
-                validate_result_quotes: action.payload.result
+              ...state,
+              seller_invoices: action.payload.data,
+              filtered_invoices_month_week: action.payload.data,
+              validate_result_quotes: action.payload.result
             }
         case GET_INVOICES_LASTMONTH:
             return {
-                ...state,
-                seller_invoices: action.payload.data,
-                filtered_invoices_month_week: action.payload.data,
-                validate_result_quotes: action.payload.result
+              ...state,
+              seller_invoices: action.payload.data,
+              filtered_invoices_month_week: action.payload.data,
+              validate_result_quotes: action.payload.result
             }
         case GET_FILTERED_INVOICES:
             return {
-                ...state,
-                seller_invoices: action.payload,
-                filtered_invoices: action.payload
+              ...state,
+              seller_invoices: action.payload,
+              filtered_invoices: action.payload
             }
         case GET_ALL_PRODUCTS:
             return {
-                ...state,
-                all_products: action.payload,
+              ...state,
+              all_products: action.payload,
             }
         case GET_FILTERED_PRODUCTS:
             return {
-                ...state,
-                all_products: action.payload.filteredProds,
-                products_errors: action.payload.errorsSearch
+              ...state,
+              all_products: action.payload.filteredProds,
+              products_errors: action.payload.errorsSearch
             }
         case GET_CURRENT_MONTH:
             return {
-                ...state,
-                current_month: action.payload,
+              ...state,
+              current_month: action.payload,
             }
         case GET_INVOICE_PRODUCTS:
             return {
@@ -132,28 +133,33 @@ function rootReducer (state = intialState, action) {
             }
         case GET_PAYMENTS_BY_ID:
             return {
-                ...state,
-                payments_by_id: action.payload
+              ...state,
+              payments_by_id: action.payload
             }
         case CLEAN_PAYMENTS_BY_ID:
             return {
-                ...state,
-                payments_by_id: action.payload
+              ...state,
+              payments_by_id: action.payload
             }
         case GET_PRODUCT_BY_ID :
             return {
-                ...state,
-               product_by_id: action.payload
+              ...state,
+              product_by_id: action.payload
+            }
+        case CLEAN_PRODUCT_BY_ID:
+            return {
+              ...state,
+              product_by_id: action.payload
             }
         case PATCH_STAMP :
             return {
-                ...state,
-                invoice: action.payload
+              ...state,
+              invoice: action.payload
             }
 
         default:
             return {
-                ...state
+              ...state
             }
     }
 }

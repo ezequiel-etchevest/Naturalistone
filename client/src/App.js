@@ -4,10 +4,10 @@ import LogIn from './views/Log-in';
 import Home from './views/Home';
 import NavBar from './components/navBar';
 import InvoiceDetail from './views/InvoiceDetail';
-import ProductDetail from './views/ProductDetail';
 import Quotes from './views/Quotes';
 import Products from './views/Products';
 import { naturali_theme } from './theme';
+import ProductDetailView from './views/ProductDetailView';
 
 function App() {
 
@@ -24,7 +24,7 @@ function App() {
       <Route path="/home" element={ <Home/>}/>
       <Route path="/quotes" element={<Quotes/>}/>
       <Route path="/products" element={<Products/>} />
-      <Route path="/products/id/:id" element={<ProductDetail/>}/>
+      <Route path="/products/:id" element={<ProductDetailView/>}/>
       <Route path='/quotes/:id' element={<InvoiceDetail />} /> 
       </Routes> 
     </div>
