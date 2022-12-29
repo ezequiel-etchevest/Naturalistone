@@ -33,6 +33,7 @@ const InvoicePanelButtons = ({invoice, payments}) => {
               disabled={true}
               icon={<AiOutlineInfoCircle/>}/>
             <Button
+              
               variant={'unstyled'}           
               fontWeight={'normal'}
               disabled={true}
