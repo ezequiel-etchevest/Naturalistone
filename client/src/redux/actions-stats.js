@@ -7,7 +7,6 @@ export function getCurrentMonth(id){
     return async function(dispatch){
         try{ 
             let {data} = await axios.get(`http://localhost:5000/sales/currentMonth/${id}`)
-            
             dispatch(
             {
                 type: GET_CURRENT_MONTH,

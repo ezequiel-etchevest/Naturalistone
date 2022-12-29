@@ -15,9 +15,9 @@ productsRouter.get('/', async function(req, res){
                     Dimension.Thickness,
                     Products.SalePrice AS Price,
                     Products.ProdID,
-                    Inventory.CurrentlyAvailable AS Stock,
-                    Inventory.NextArrival,
-                    Inventory.PendingPayment
+                    Inventory.InStock_Available AS Stock,
+                    Inventory.Incoming_Available,
+                    Inventory.InStock_PendingPayment
                   FROM Products
                   INNER JOIN ProdNames ON ProdNames.ProdNameID = Products.ProdNameID
                   INNER JOIN Dimension ON Dimension.DimensionID = Products.DimensionID
@@ -48,9 +48,9 @@ productsRouter.get('/id/:id', async function(req, res){
                   Dimension.Thickness,
                   Products.SalePrice AS Price,
                   Products.ProdID,
-                  Inventory.CurrentlyAvailable AS Stock,
-                  Inventory.NextArrival,
-                  Inventory.PendingPayment
+                  Inventory.InStock_Available AS Stock,
+                    Inventory.Incoming_Available,
+                    Inventory.InStock_PendingPayment
                 FROM Products
                 INNER JOIN ProdNames ON ProdNames.ProdNameID = Products.ProdNameID
                 INNER JOIN Dimension ON Dimension.DimensionID = Products.DimensionID
@@ -85,9 +85,9 @@ productsRouter.get('/filtered', async function(req, res){
                     Dimension.Thickness,
                     Products.SalePrice AS Price,
                     Products.ProdID,
-                    Inventory.CurrentlyAvailable AS Stock,
-                    Inventory.NextArrival,
-                    Inventory.PendingPayment
+                    Inventory.InStock_Available AS Stock,
+                    Inventory.Incoming_Available,
+                    Inventory.InStock_PendingPayment
                   FROM Products
                   INNER JOIN ProdNames ON ProdNames.ProdNameID = Products.ProdNameID
                   INNER JOIN Dimension ON Dimension.DimensionID = Products.DimensionID

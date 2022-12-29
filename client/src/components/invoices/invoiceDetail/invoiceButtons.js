@@ -36,6 +36,23 @@ const InvoicePanelButtons = ({invoice, payments}) => {
               variant={'unstyled'}           
               fontWeight={'normal'}
               disabled={true}
+              >Invoice Status</Button>
+            </ButtonGroup>
+            <ButtonGroup
+              display={'flex'}
+              spacing={0}
+              _hover={{
+              color: 'logo.orange'
+              }}>
+            <IconButton
+              variant={'unstyled'}           
+              fontWeight={'normal'}
+              disabled={true}
+              icon={<AiOutlineInfoCircle/>}/>
+            <Button
+              variant={'unstyled'}           
+              fontWeight={'normal'}
+              disabled={true}
               >Customer Details</Button>
             </ButtonGroup>
             <ButtonGroup

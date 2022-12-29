@@ -71,7 +71,7 @@ const LogInForm = () => {
           if(values.email === User.Username && values.password === User.Password){
             dispatch(getEmployeeById(User.SellerID))
             navigate('/home')
-          }else if(valPassword(values.password, values.email) == false ){
+          }else if(valPassword(values.password, values.email) === false ){
            alert('invalid match')
           }
         }}>

@@ -12,7 +12,7 @@ import {
 import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { getInvoiceById, getInvoiceProducts } from '../../redux/actions-invoices';
-import { cleanStatePayments, getPayments } from '../../redux/actions-payments';
+import { cleanStatePayments } from '../../redux/actions-payments';
 import { useEffect } from 'react';
 
 
