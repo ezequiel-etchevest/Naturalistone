@@ -9,9 +9,9 @@ salesRouter.get('/:id', async function(req, res){
     
     const {id} = req.params
 
-    query_ =    `SELECT Sales.*, Customers.*, Payments.idPayments, GROUP_CONCAT(
+    query_ =    `SELECT Sales.*, Projects.*, Payments.idPayments, GROUP_CONCAT(
                 CONCAT (Payments.idPayments,';',Payments.Amount,';',Payments. Date))AS Payments FROM Sales 
-                LEFT JOIN Customers ON Sales.CustomerID = Customers.CustomerID
+                LEFT JOIN Projects ON Sales.ProjectID = Projects.CustomerID
                 LEFT JOIN Payments ON Sales.Naturali_Invoice = Payments.InvoiceID 
                 WHERE SellerID = ${id}
                 GROUP BY Sales.Naturali_Invoice
@@ -35,8 +35,8 @@ salesRouter.get('/:id', async function(req, res){
 salesRouter.get('/invoice/:id', async function(req, res){
     const { id } = req.params
 
-    query_ =    `SELECT Sales.*, Customers.* FROM Sales
-                LEFT JOIN Customers ON Sales.CustomerID = Customers.CustomerID 
+    query_ =    `SELECT Sales.*, Projects.* FROM Sales
+                LEFT JOIN Projects ON Sales.ProjectID = Projects.CustomerID 
                 WHERE Naturali_Invoice = ${id}`;
     try{
          mysqlConnection.query(query_, function(error, results, fields){

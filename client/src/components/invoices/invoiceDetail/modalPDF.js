@@ -4,8 +4,7 @@ import {
   ModalContent,
   ModalBody,
   useDisclosure ,
-  Image,
-  Text
+  Image
 } from '@chakra-ui/react'
 import miniPDF from '../../../assets/miniPDF.png'
 import LoadPDF from '../../pdf/pdfModify'

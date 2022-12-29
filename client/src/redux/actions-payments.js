@@ -10,6 +10,7 @@ export function patchPaymentMethod(id, input){
         try{
             let {response} = await axios.post(`http://localhost:5000/payments/invoice/${id}`, input)
             let { data } = await axios.get(`http://localhost:5000/payments/${id}`)
+            console.log(response)
             dispatch(
             {
                 type: POST_PAYMENT_METHOD,
@@ -39,6 +40,7 @@ export function deletePayment(invoiceID, paymentID){
         try{
             let { response } = await axios.delete(`http://localhost:5000/payments/invoice/${paymentID}`)
             let { data } = await axios.get(`http://localhost:5000/payments/${invoiceID}`)
+            console.log(response)
             dispatch(
             {
                 type: DELETE_PAYMENT_METHOD,

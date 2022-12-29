@@ -4,7 +4,6 @@ import {
     Flex,
     Spacer
   } from '@chakra-ui/react';
-import { useState } from 'react';
 import logo from '../assets/NaturalistoneLogo.png'
 
 const NavBar = () => {

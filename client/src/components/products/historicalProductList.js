@@ -8,14 +8,11 @@ import {
   Td,
   TableContainer,
   } from "@chakra-ui/react"
-  import { useNavigate } from 'react-router-dom'
-  import { useDispatch, useSelector } from 'react-redux'
+  import {  useSelector } from 'react-redux'
 
 
 const ModelTr = ({e}) => {
 
-  const navigate = useNavigate()
-  const dispatch = useDispatch()
 
   const handleClick = () => {
     // dispatch(getProductById(e.ProdID))

@@ -4,10 +4,8 @@ import {
     RangeSliderFilledTrack,
     RangeSliderThumb,
     Tooltip,
-		Box,
 		Center,
 } from '@chakra-ui/react';
-import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { getFiltered }  from "../../redux/actions-products";
 

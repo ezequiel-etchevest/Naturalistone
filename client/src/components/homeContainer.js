@@ -1,7 +1,5 @@
 import CurrentMonthStats from './stats/Stats';
-import { Highlight, chakra, Box, VStack } from '@chakra-ui/react';
-import BarChart from './stats/BarChart';
-import PieChart from './stats/PieChart';
+import { Highlight, chakra, Box } from '@chakra-ui/react';
 
 const HomeContainer = ({currentMonth}) => {
 

@@ -24,7 +24,7 @@ const LoadPdfPaid = ({idpdf}) => {
       // Get the width and height of the first page
       const pages = pdfDoc.getPages();
       const firstPage = pages[0];
-      const { width, height } = firstPage.getSize();
+      //const { width, height } = firstPage.getSize();
   
       const pngImageBytes = await fetch(paidPic).then((res) => res.arrayBuffer())
       
