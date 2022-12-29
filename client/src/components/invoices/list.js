@@ -70,6 +70,24 @@ const List = ({seller_invoices, filteredByCustomer}) => {
       });
     }}
   }
+
+  // const noneSellerInvoices = () => {
+  //   if(!seller_invoices.length){
+  //     setTimeout(
+  //       toast({
+  //         id,
+  //         title: 'No results found',
+  //         description: 'Thers no invoices for this seller',
+  //         status: 'warning',
+  //         duration: 2000,
+  //         isClosable: true,
+  //       }), 2000
+  //     )
+  //     return ([])
+  //   }
+  //   else return seller_invoices
+  // }
+
   useEffect(()=>{
     validateResults()
   })
