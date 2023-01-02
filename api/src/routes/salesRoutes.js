@@ -16,7 +16,7 @@ salesRouter.get('/:id', async function(req, res){
                 WHERE SellerID = ${id}
                 GROUP BY Sales.Naturali_Invoice
                 ORDER BY Sales.Naturali_Invoice DESC`;
-    
+ 
     try{
            mysqlConnection.query(query_, function(error, Invoices, fields){
                         if(error) throw error;

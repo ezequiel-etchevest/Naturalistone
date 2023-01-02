@@ -25,7 +25,9 @@ const Quotes = () => {
       useEffect(() => {
         if(user.length && !seller_invoices.length){
           dispatch(getInvoicesBySeller(user[0].SellerID))
-      }}, [dispatch, user, seller_invoices])
+      }}, [dispatch, user])
+
+ //saque dependencia del useEffect seller_invoices para solucionar problema si no hay invoices.
 
       if(user.length){
         return(

@@ -13,8 +13,8 @@ const ProductInformation = ({product}) => {
         pt={'1.5vw'}
         pr={'1.5vw'}
         pb={'1.5vw'}
-        h={'26vh'}
-        w={'21vw'}
+        h={'24vh'}
+        w={'18vw'}
         display={'flex'}
         flexDir={'column'}
         color={'web.text'}
@@ -31,6 +31,7 @@ const ProductInformation = ({product}) => {
           <Text 
             color={'web.text2'} 
             ml={'1vh'}
+            fontSize={'2.4vh'}
             >
             Product Details
           </Text>
@@ -38,8 +39,8 @@ const ProductInformation = ({product}) => {
         <Box  
           display={'flex'} 
           flexDir={'column'}
-          h={'20vh'}
-          justifyContent={'space-around'}
+          mt={'2vh'}
+          justifyContent={'space-between'}
           >
           <HStack>
             <Text 
@@ -54,26 +55,21 @@ const ProductInformation = ({product}) => {
                 {product.ProductName}
             </Text>
           </HStack>
-          <Box>
-            <Text 
-              fontSize={'xs'} 
-              color={'web.text2'}
-              >
-              Product Dimentions
-            </Text>
-            <HStack spacing={'2vw'}>
-              <Text fontSize={'sm'} fontWeight={'semi-bold'}> Type: {product.Type}</Text>
-              <Text fontSize={'sm'} fontWeight={'semi-bold'}> Size: {product.Size}</Text>
-              <Text fontSize={'sm'} fontWeight={'semi-bold'}> Thickness: {product.Thickness}</Text>
-            </HStack>
-          </Box>
-          <Box 
-            display={'flex'} 
-            w={'17vw'} 
-            justifyContent={'space-between'} 
-            flexDir={'row'}
-            >
-			      <Box>
+          <Box display={'flex'} flexDir={'row'} justifyContent={'space-between'}>
+            <Box mt={'1vh'} h={'8vh'}>
+              <Text 
+                fontSize={'xs'} 
+                color={'web.text2'}
+                >
+                Product Dimentions
+              </Text>
+              <HStack mt ={'1vh'} spacing={'1.2vw'}>
+                <Text fontSize={'sm'} fontWeight={'semi-bold'}> {product.Type}</Text>
+                <Text fontSize={'sm'} fontWeight={'semi-bold'}> {product.Size}</Text>
+                <Text fontSize={'sm'} fontWeight={'semi-bold'}> {product.Thickness}</Text>
+              </HStack>
+            </Box>
+            <Box mt={'1vh'}>
               <Text 
                 color={'web.text2'} 
                 fontSize={'xs'}
@@ -82,39 +78,10 @@ const ProductInformation = ({product}) => {
               </Text>
               <Text 
                 fontSize={'sm'} 
-                fontWeight={'bold'}
+                fontWeight={'semi-bold'}
+                mt={'1vh'}
                 >
                 ${product.Price}
-              </Text>
-            </Box>
-			      <Box>
-              <Text 
-                color={'web.text2'} 
-                fontSize={'xs'}>
-                  Stock
-              </Text>
-              <Text 
-                fontSize={'sm'} 
-                fontWeight={'bold'}
-                >
-                {
-                product.Stock === null ? '--' : product.Stock
-                }
-              </Text>
-            </Box>
-			      <Box>
-              <Text 
-                color={'web.text2'} 
-                fontSize={'xs'}>
-                  Next Arrival
-              </Text>
-              <Text 
-                fontSize={'sm'} 
-                fontWeight={'bold'}
-                >
-                {
-                product.NextArrival === null ? '--' : product.NextArrival
-                }
               </Text>
             </Box>
           </Box>

@@ -3,6 +3,7 @@ import HistoricalProductList from "./historicalProductList";
 import HotProducts from "./hotProducts";
 import HistoricalPrices from "./historicalPrices";
 import ProductInformation from "./productInformation";
+import ProductInventory from "./productInventory"
 
 const ProductDetail = ({product}) => {
 
@@ -21,7 +22,7 @@ return(
         flexDir={'row'} 
         >
         <ProductInformation product={product}/>
-        <HistoricalPrices/>
+        {/* <HistoricalPrices/> */}
       </Box>
       <Box 
         border={'2px solid blue'}
@@ -34,12 +35,14 @@ return(
           flexDir={'column'}  
           border={'2px solid green'}
           >
-          <HistoricalProductList product={product}/>
+
           <HStack>
-            <HotProducts/>
+            <ProductInventory product={product}/>
+            {/* <HotProducts/> */}
           </HStack>
         </Box>
       </Box>
+      
     </Box>        
   </>
 )
