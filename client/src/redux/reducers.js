@@ -9,7 +9,8 @@ import {
     GET_INVOICES_LASTMONTH, 
     GET_FILTERED_INVOICES,
     GET_INVOICE_PRODUCTS,
-    PATCH_STAMP
+    PATCH_STAMP,
+    PATCH_STATUS
     } from './actions-invoices';
 import { 
     POST_PAYMENT_METHOD,
@@ -156,6 +157,11 @@ function rootReducer (state = intialState, action) {
               ...state,
               invoice: action.payload
             }
+        case PATCH_STATUS :
+              return {
+                ...state,
+                invoice: action.payload
+              }
 
         default:
             return {
