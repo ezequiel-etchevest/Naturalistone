@@ -28,8 +28,6 @@ const ModelTr = ({e}) => {
       dispatch( cleanStatePayments())
       navigate(`/quotes/${e.Naturali_Invoice}`)
     }
-
-    let i = e.Payments?.length ? e.Payments.length - 1 : 0
     
     return(
       <Tr 
@@ -42,11 +40,13 @@ const ModelTr = ({e}) => {
         }}
         >
         <Td textAlign={'center'}>{e.Naturali_Invoice}</Td>
+        <Td>{e.ProjectName}</Td>
         <Td>{e.Reference}</Td>
         <Td textAlign={'center'}>{e.InvoiceDate.split('T')[0]}</Td>
-        <Td isNumeric>${e.Value} </Td>
+        <Td textAlign={'center'}>{e.Status}</Td>
+        <Td isNumeric textAlign={'center'}>${e.Value} </Td>
         <Td textAlign={'center'} >{ e.Percentaje ? e.Percentaje : 0 } % </Td>
-        <Td textAlign={'center'}>{i === 0 ? '-' : e.Payments[i][2]}</Td>
+        <Td textAlign={'center'}>{ e.Payments?.length ? e.Payments[0][2] : '-'}</Td>
       </Tr>
     )
 }
@@ -73,7 +73,7 @@ const List = ({seller_invoices, filteredByCustomer}) => {
   useEffect(()=>{
     validateResults()
   })
-
+  
     return(
         <Box
         display={'flex'}
@@ -108,12 +108,14 @@ const List = ({seller_invoices, filteredByCustomer}) => {
                 <Table color={'web.text'} variant={'simple'} size={'sm'} >
                   <Thead h={'6vh'}>
                     <Tr>
-                      <Th color={'web.text2'}>Quote Number</Th>
-                      <Th color={'web.text2'}>Customer Name</Th>
-                      <Th color={'web.text2'}>Quote Date</Th>
-                      <Th color={'web.text2'} isNumeric>Total</Th>
-                      <Th color={'web.text2'} isNumeric>Payment %</Th>
-                      <Th color={'web.text2'}>Last Payment Date </Th>
+                      <Th color={'web.text2'} textAlign={'center'}>Nº</Th>
+                      <Th color={'web.text2'}  w={'12vw'}>Project</Th>
+                      <Th color={'web.text2'}>Customer</Th>
+                      <Th w={'5vw'} color={'web.text2'} textAlign={'center'}>Date</Th>
+                      <Th w={'5vw'} color={'web.text2'} textAlign={'center'}>Status</Th>
+                      <Th color={'web.text2'} w={'8vw'} textAlign={'center'} isNumeric>Total</Th>
+                      <Th color={'web.text2'} w={'8vw'} textAlign={'center'}>Paid</Th>
+                      <Th color={'web.text2'} w={'8vw'}>Last Payment Date </Th>
                     </Tr>
                   </Thead>
                   <Tbody >

@@ -9,9 +9,10 @@ salesRouter.get('/:id', async function(req, res){
     
     const {id} = req.params
 
-    query_ =    `SELECT Sales.*, Projects.*, Payments.idPayments, GROUP_CONCAT(
+    query_ =    `SELECT Sales.*, Projects.*, Customers.*, Payments.idPayments, GROUP_CONCAT(
                 CONCAT (Payments.idPayments,';',Payments.Amount,';',Payments. Date))AS Payments FROM Sales 
-                LEFT JOIN Projects ON Sales.ProjectID = Projects.CustomerID
+                LEFT JOIN Projects ON Sales.ProjectID = Projects.idProjects
+                LEFT JOIN Customers ON Projects.CustomerID = Customers.CustomerID
                 LEFT JOIN Payments ON Sales.Naturali_Invoice = Payments.InvoiceID 
                 WHERE SellerID = ${id}
                 GROUP BY Sales.Naturali_Invoice
@@ -35,8 +36,9 @@ salesRouter.get('/:id', async function(req, res){
 salesRouter.get('/invoice/:id', async function(req, res){
     const { id } = req.params
 
-    query_ =    `SELECT Sales.*, Projects.* FROM Sales
-                LEFT JOIN Projects ON Sales.ProjectID = Projects.CustomerID 
+    query_ =    `SELECT Sales.*, Projects.*, Customers.* FROM Sales
+                LEFT JOIN Projects ON Sales.ProjectID = Projects.idProjects
+                LEFT JOIN Customers ON Projects.CustomerID = Customers.CustomerID
                 WHERE Naturali_Invoice = ${id}`;
     try{
          mysqlConnection.query(query_, function(error, results, fields){
@@ -60,8 +62,9 @@ salesRouter.get('/lastWeek/:id', async function(req, res){
     const today = new Date().toISOString().split('T')[0]
     const limitDateWeek = getLimitDate()
 
-    query_ = `SELECT Sales.*, Customers.* FROM Sales 
-                LEFT JOIN Customers ON Sales.CustomerID = Customers.CustomerID 
+    query_ = `SELECT Sales.*, Customers.*, Projects.* FROM Sales 
+                LEFT JOIN Projects ON Sales.ProjectID = Projects.idProjects
+                LEFT JOIN Customers ON Projects.CustomerID = Customers.CustomerID 
                 WHERE SellerID = ${id} AND InvoiceDate BETWEEN "${limitDateWeek}" AND "${today}" ORDER BY InvoiceDate DESC`
     
 //    query_ = `SELECT * FROM Sales WHERE SellerID = ${id} AND InvoiceDate BETWEEN "${limitDateWeek}" AND "${today}"`
@@ -88,8 +91,9 @@ salesRouter.get('/lastMonth/:id', async function(req, res){
     const today = new Date().toISOString().split('T')[0]
     const limitDateMonth = getLimitDateMonth()
 
-    query_ = `SELECT Sales.*, Customers.* FROM Sales 
-                LEFT JOIN Customers ON Sales.CustomerID = Customers.CustomerID 
+    query_ =   `SELECT Sales.*, Customers.*, Projects.* FROM Sales 
+                LEFT JOIN Projects ON Sales.ProjectID = Projects.idProjects
+                LEFT JOIN Customers ON Projects.CustomerID = Customers.CustomerID 
                 WHERE SellerID = ${id} AND InvoiceDate BETWEEN "${limitDateMonth}" AND "${today}" ORDER BY InvoiceDate DESC`
     try{
        mysqlConnection.query(query_, function(error, results, fields){
@@ -170,11 +174,34 @@ salesRouter.get('/currentMonth/:id', async function(req, res){
 });
 
 
-salesRouter.patch('/quotes/:id', async function(req, res){
+salesRouter.patch('/quote/:id', async function(req, res){
     
     const {id} = req.params
 
     query_ = `UPDATE Sales SET Stamped = true WHERE Naturali_Invoice =${id}`
+
+    try{
+       mysqlConnection.query(query_, function(error, results, fields){
+
+            if(error) throw error;
+            if(results.length == 0) {
+                console.log('Failure updating Stamped Column')
+                res.status(200).json('');
+            } else {
+                console.log('Data OK')
+                res.status(200).json(results);
+            }
+        });
+    } catch(error){
+        res.status(409).send(error);
+    }
+});
+
+salesRouter.patch('/cancelquote/:id', async function(req, res){
+    
+    const {id} = req.params
+
+    query_ = `UPDATE Sales SET Status = 'Canceled' WHERE Naturali_Invoice =${id}`
 
     try{
        mysqlConnection.query(query_, function(error, results, fields){

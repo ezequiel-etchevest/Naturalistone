@@ -1,7 +1,7 @@
 import { Box, Text } from "@chakra-ui/react"
 
 const InvoiceDetailList = ({invoice, payments}) => {
-
+    console.log('invoice', {invoice})
     return(
         <>
         <Box
@@ -26,7 +26,8 @@ const InvoiceDetailList = ({invoice, payments}) => {
           <Box 
           display={'flex'} 
           flexDir={'row'} 
-          alignItems={'baseline'}>
+          alignItems={'baseline'}
+          >
             <Text 
             color={'logo.orange'} 
             fontSize={'xl'}>
@@ -41,37 +42,40 @@ const InvoiceDetailList = ({invoice, payments}) => {
           <Box 
             mt={'1vh'} 
             display={'flex'} 
-            flexDir={'column'} 
+            flexDir={'row'} 
             justifyContent={'space-around'} 
-            h={'42vh'}>
-            <Box>
+            h={'42vh'}
+            >
+            <Box
+              display={'flex'}
+              flexDir={'column'}
+              justifyContent={'space-around'}
+              w={'10vw'}>
+              <Box>
               <Text 
                 fontSize={'xs'} 
                 color={'web.text2'}>
                   Customer name
               </Text>
-            <Text 
-              fontSize={'sm'} 
-              fontWeight={'bold'}>
-                {invoice[0].Reference}</Text></Box>
-            <Box>
               <Text 
-              fontSize={'xs'} 
-              color={'web.text2'}>
-                Project name
-                </Text>
-              <Text 
-              fontSize={'sm'} 
-              fontWeight={'bold'}>
-                Example Names
+                fontSize={'sm'} 
+                fontWeight={'bold'}>
+                  {invoice[0].Reference}
               </Text>
-            </Box>
-            <Box 
-              display={'flex'} 
-              w={'17vw'} 
-              justifyContent={'space-between'} 
-              flexDir={'row'}>
-			      <Box>
+              </Box>
+              <Box>
+                <Text 
+                  fontSize={'xs'} 
+                  color={'web.text2'}>
+                  Shipping Method
+                </Text>
+                <Text 
+                  fontSize={'sm'} 
+                  fontWeight={'bold'}>
+                    {invoice[0].ShippingMethod}
+                </Text>
+              </Box>
+              <Box>
               <Text 
                 color={'web.text2'} 
                 fontSize={'xs'}>
@@ -82,8 +86,55 @@ const InvoiceDetailList = ({invoice, payments}) => {
                 fontWeight={'bold'}>
                   ${invoice[0].Value}
                   </Text>
+              </Box>
+              <Box>
+                <Text 
+                  color={'web.text2'} 
+                  fontSize={'xs'}>
+                  Payment percentaje
+                </Text>
+                <Text 
+                  fontSize={'sm'} 
+                  fontWeight={'bold'}>
+                  { payments.paymentsMath ? (
+                    payments.paymentsMath.PaymentPercentaje                  
+                    ):(
+                    0
+                    )
+                  } %
+              </Text>
+              </Box>
             </Box>
-			      <Box>
+            <Box
+              display={'flex'}
+              flexDir={'column'}
+              justifyContent={'space-around'}
+              w={'10vw'}>
+              <Box>
+                <Text 
+                  fontSize={'xs'} 
+                  color={'web.text2'}>
+                  Project name
+                </Text>
+                <Text 
+                  fontSize={'sm'} 
+                  fontWeight={'bold'}>
+                  {invoice[0].ProjectName}
+                </Text>
+              </Box>
+              <Box>
+              <Text 
+                  fontSize={'xs'} 
+                  color={'web.text2'}>
+                  Status
+                </Text>
+                <Text 
+                  fontSize={'sm'} 
+                  fontWeight={'bold'}>
+                  {invoice[0].Status}
+                </Text>
+              </Box>
+              <Box>
               <Text 
                 color={'web.text2'} 
                 fontSize={'xs'}>
@@ -95,39 +146,16 @@ const InvoiceDetailList = ({invoice, payments}) => {
                 {invoice[0].InvoiceDate.split('T')[0]}
                 </Text>
               </Box>
-            </Box>
-            <Box 
-              display={'flex'} 
-              w={'18vw'} 
-              justifyContent={'space-between'}
-              flexDir={'row'}>
-            <Box>
-              <Text 
-              color={'web.text2'} 
-              fontSize={'xs'}>
-                Payment percentaje
-              </Text>
-              <Text 
-              fontSize={'sm'} 
-              fontWeight={'bold'}>
-                { payments.paymentsMath ? (
-                  payments.paymentsMath.PaymentPercentaje                  
-                  ):(
-                    0
-                  )
-              } %
-              </Text>
-            </Box>
-            <Box>
-              <Text 
-                color={'web.text2'} 
-                fontSize={'xs'}>
-                  Pending amount
-              </Text>
-              <Text 
-                fontSize={'sm'} 
-                fontWeight={'bold'}>
-                 ${payments.paymentsMath  ? (
+              <Box>
+                <Text 
+                  color={'web.text2'} 
+                  fontSize={'xs'}>
+                    Pending amount
+                </Text>
+                <Text 
+                  fontSize={'sm'} 
+                  fontWeight={'bold'}>
+                  ${payments.paymentsMath  ? (
                    payments.paymentsMath.PendingAmount
                   ):(
                     invoice[0].Value
@@ -135,6 +163,7 @@ const InvoiceDetailList = ({invoice, payments}) => {
                  }</Text>
               </Box>
             </Box>
+            
           </Box>
         </Box> 
         </>
