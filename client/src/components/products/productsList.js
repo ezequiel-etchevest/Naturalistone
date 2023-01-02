@@ -40,9 +40,9 @@ const ModelTr = ({e}) => {
       <Td textAlign={'match-parent'}>{e.Size}</Td>
       <Td textAlign={'center'}> {e.Thickness} </Td>
       <Td isNumeric>{e.Price}$</Td>
-      <Td textAlign={'center'}>{e.Stock === null ? 0 : e.Stock}</Td>
-      <Td textAlign={'center'}>{e.PendingPayment === null ? 0 : e.PendingPayment}</Td>
-      <Td textAlign={'center'}>{e.NextArrival === null ? '-' : e.NextArrival}</Td>
+      <Td textAlign={'center'}>{e.InStock_Available === null ? 0 : e.InStock_Available}</Td>
+      <Td textAlign={'center'}>{e.Incoming_Available === null ? 0 : e.Incoming_Available}</Td>
+      <Td textAlign={'center'}>{e.NextArrival === null ? '-' : e.NextArrival}</Td>  {/*cambiar el origen de esta info */}
     </Tr>
   )
 }
@@ -102,15 +102,13 @@ const ProductList = ({ allProducts, filteredProducts }) => {
             <Thead h={'6vh'}>
               <Tr>
                 <Th color={'web.text2'} textAlign={'match-parent'}>Product Name</Th>
-                
                 <Th color={'web.text2'} w={'5vw'}>Type</Th>
                 <Th color={'web.text2'} w={'5vw'}>Size</Th>
                 <Th color={'web.text2'} w={'5vw'}>Thickness</Th>
                 <Th color={'web.text2'} w={'5vw'}isNumeric>Price</Th>
                 <Th color={'web.text2'} w={'5vw'}isNumeric>Stock</Th>
-                <Th color={'web.text2'} w={'5vw'}isNumeric>Reserved Stock</Th>
+                <Th color={'web.text2'} w={'5vw'}isNumeric>Incoming Stock</Th>
                 <Th color={'web.text2'} w={'5vw'}isNumeric>Next Arrival</Th>
-                <Th color={'web.text2'} w={'5vw'}>Ranking</Th>
               </Tr>
             </Thead>
             <Tbody>

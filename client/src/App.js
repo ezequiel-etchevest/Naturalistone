@@ -8,6 +8,7 @@ import Quotes from './views/Quotes';
 import Products from './views/Products';
 import { naturali_theme } from './theme';
 import ProductDetailView from './views/ProductDetailView';
+import Warehouse from './views/Warehouse'
 
 function App() {
 
@@ -26,6 +27,7 @@ function App() {
       <Route path="/products" element={<Products/>} />
       <Route path="/products/:id" element={<ProductDetailView/>}/>
       <Route path='/quotes/:id' element={<InvoiceDetail />} /> 
+      <Route path='/warehouse' element={<Warehouse />} /> 
       </Routes> 
     </div>
     </BrowserRouter>
