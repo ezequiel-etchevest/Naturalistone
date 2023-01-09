@@ -13,7 +13,6 @@ prodSoldRouter.get('/:id', async function(req, res){
                 INNER JOIN Inventory ON Inventory.ProdID = Products.ProdID 
                 WHERE SaleID = ${id} `;
                
-
     try{
         mysqlConnection.query(query_, function(error, results, fields){
             if(error) throw error;

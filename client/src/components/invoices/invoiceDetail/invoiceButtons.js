@@ -60,27 +60,7 @@ const InvoicePanelButtons = ({invoice, payments}) => {
                 >Contact Customer
               </Button>
               </ButtonGroup>
-              <ButtonGroup
-              	display={'flex'}
-              	spacing={0}
-                  _hover={{
-                  color: 'logo.orange'
-                	}}>
-              <IconButton
-                disabled={true}
-                variant={'unstyled'}
-                size={'md'}           
-                fontWeight={'normal'}
-                icon={<BsCartPlus/>}/>
-              <Button
-                display={'flex'}
-                disabled={true}
-                alignSelf={'flex-start'}
-                variant={'unstyled'}           
-                fontWeight={'normal'}
-                >Order Products
-              </Button>
-              </ButtonGroup>
+
           </Box>
             <ModalStamp invoice={invoice} payments={payments}/>
           </Box>

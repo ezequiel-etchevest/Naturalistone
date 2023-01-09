@@ -1,19 +1,13 @@
-import { Box, Text, HStack } from "@chakra-ui/react"
+import { Box, Text, VStack, HStack } from "@chakra-ui/react"
 
 const ProductInformation = ({product}) => {
 
   return(
     <>
       <Box
-        className={'product-details'}
-        mt={'3vh'}
-        ml={'2vw'}
-        mr={'1vw'}
-        pl={'2vw'}
-        pt={'1.5vw'}
-        pr={'1.5vw'}
-        pb={'1.5vw'}
-        h={'24vh'}
+        px={'1.5vw'}
+        py={'2vh'}
+        h={'30vh'}
         w={'18vw'}
         display={'flex'}
         flexDir={'column'}
@@ -23,67 +17,93 @@ const ProductInformation = ({product}) => {
         rounded={'md'} 
         borderColor={'web.border'}
         >          
-        <Box 
-          display={'flex'} 
-          flexDir={'row'} 
-          alignItems={'baseline'}
-          >
-          <Text 
-            color={'web.text2'} 
-            ml={'1vh'}
-            fontSize={'2.4vh'}
-            >
-            Product Details
-          </Text>
-        </Box>
-        <Box  
+        <Box
           display={'flex'} 
           flexDir={'column'}
-          mt={'2vh'}
           justifyContent={'space-between'}
           >
-          <HStack>
-            <Text 
-              color={'logo.orange'} 
-              fontSize={'xl'}
-              >
-              #{product.ProdID}
-            </Text>
-            <Text 
-              fontSize={'sm'} 
-              fontWeight={'bold'}>
+          <Box
+            display={'flex'}
+            flexDirection={'column'}
+            alignItems={'flex-start'}
+
+            >
+              <Text 
+                color={'logo.orange'} 
+                fontSize={'3.5vh'}
+                >
+                #{product.ProdID}
+              </Text>
+              <Text 
+                fontSize={'2.1vh'} 
+                fontWeight={'bold'}>
                 {product.ProductName}
-            </Text>
-          </HStack>
-          <Box display={'flex'} flexDir={'row'} justifyContent={'space-between'}>
+              </Text> 
+          </Box>
+          <Box 
+            h={'8vh'}
+            display={'flex'} 
+            flexDir={'row'} 
+            justifyContent={'space-between'}
+            px={'1vh'}
+            mt={'2vh'}>
             <Box mt={'1vh'} h={'8vh'}>
               <Text 
-                fontSize={'xs'} 
+                fontSize={'1.5vh'} 
                 color={'web.text2'}
                 >
-                Product Dimentions
+                Type
               </Text>
-              <HStack mt ={'1vh'} spacing={'1.2vw'}>
-                <Text fontSize={'sm'} fontWeight={'semi-bold'}> {product.Type}</Text>
-                <Text fontSize={'sm'} fontWeight={'semi-bold'}> {product.Size}</Text>
-                <Text fontSize={'sm'} fontWeight={'semi-bold'}> {product.Thickness}</Text>
-              </HStack>
+              <Text fontSize={'1.8vh'} fontWeight={'bold'}>Porcelain</Text>
             </Box>
-            <Box mt={'1vh'}>
+            <Box mt={'1vh'} w={'8vh'}>
               <Text 
                 color={'web.text2'} 
-                fontSize={'xs'}
+                fontSize={'1.5vh'}
                 >
                 Price
               </Text>
               <Text 
-                fontSize={'sm'} 
-                fontWeight={'semi-bold'}
-                mt={'1vh'}
+                fontSize={'1.8vh'} 
+                fontWeight={'bold'}
                 >
                 ${product.Price}
               </Text>
             </Box>
+          </Box>
+          <Box 
+            display={'flex'} 
+            flexDir={'row'} 
+            justifyContent={'space-between'}
+            px={'1vh'}>
+            <Box h={'8vh'}>
+              <Text 
+                fontSize={'1.5vh'} 
+                color={'web.text2'}
+                >
+                Dimentions
+              </Text>
+              <HStack  spacing={'1vh'}>
+                <Text fontSize={'1.8vh'} fontWeight={'bold'}> {product.Type}</Text>
+                <Text fontSize={'1.8vh'} fontWeight={'bold'}> {product.Size}</Text>
+                <Text fontSize={'1.8vh'} fontWeight={'bold'}> {product.Thickness}</Text>
+              </HStack>
+            </Box>
+            <Box w={'8vh'}>
+              <Text 
+                color={'web.text2'} 
+                fontSize={'1.5vh'}
+                >
+                Finish
+              </Text>
+              <Text 
+                fontSize={'1.8vh'} 
+                fontWeight={'bold'}
+                >
+                {product.Finish ? product.Finish : '-'}
+              </Text>
+            </Box>
+            
           </Box>
         </Box>
       </Box> 

@@ -13,6 +13,7 @@ productsRouter.get('/', async function(req, res){
                     Dimension.Type,
                     Dimension.Size,
                     Dimension.Thickness,
+                    Dimension.Finish,
                     Products.SalePrice AS Price,
                     Products.ProdID,
                     Inventory.*
@@ -43,6 +44,7 @@ productsRouter.get('/id/:id', async function(req, res){
                   ProdNames.Naturali_ProdName AS ProductName,
                   Dimension.Type,
                   Dimension.Size,
+                  Dimension.Finish,
                   Dimension.Thickness,
                   Products.SalePrice AS Price,
                   Products.ProdID,

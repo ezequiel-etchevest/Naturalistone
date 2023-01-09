@@ -1,20 +1,15 @@
-import { Box, Text, HStack } from "@chakra-ui/react"
+import { Box, Text, HStack, Divider } from "@chakra-ui/react"
+import NextArrivalList from "./nextArrivalList"
 
 
 const ProductInventory = ({product}) => {
-
 return(
   <>
     <Box
-      className={'product-details'}
-      mt={'3vh'}
-      ml={'2vw'}
-      mr={'1vw'}
-      pl={'2vw'}
-      pt={'1.5vw'}
-      pr={'1.5vw'}
-      pb={'1.5vw'}
-      h={'44vh'}
+      mt={'1.5vh'}
+      px={'1.5vw'}
+      py={'2vh'}
+      h={'53vh'}
       w={'18vw'}
       display={'flex'}
       flexDir={'column'}
@@ -24,63 +19,80 @@ return(
       rounded={'md'} 
       borderColor={'web.border'}
       >
-      <Text color={'web.text2'} fontSize={'2.6vh'} ml={'1vh'}>Inventory</Text>
-      <Box mt={'3vh'}>
-        <HStack
+      <Text 
+        color={'web.text2'} 
+        fontSize={'2.2vh'} 
+        >Inventory</Text>
+      <Box h={'30vh'} mt={'1vh'} px={'1vh'} py={'2vh'} display={'flex'} flexDir={'column'} justifyContent={'space-between'}>
+        <Box
           display={'flex'}
           justifyContent={'space-between'}
-          w={'14vw'}
-          mb={'2vh'}
+          mr={'1vh'}
+          ml={'1vh'}
           >
-          <Text fontSize={'sm'} color={'web.text'} fontWeight={'semi-bold'}> Stock </Text>
-          <Text fontSize={'sm'} fontWeight={'semi-bold'}> {product.InStock_Available}</Text>
-        </HStack>
-        <HStack
+          <Text fontSize={'1.6vh'} color={'web.text'} fontWeight={'semi-bold'}> Stock </Text>
+          <Text fontSize={'1.6vh'} fontWeight={'semi-bold'}> {product.InStock_Available}</Text>
+        </Box>
+        <Divider borderColor={'web.text2'}/>
+        <Box
           display={'flex'}
           justifyContent={'space-between'}
-          w={'14vw'}
-          mb={'2vh'}
+          mr={'1vh'}
+          ml={'1vh'}
           >
-          <Text fontSize={'sm'} color={'web.text'} fontWeight={'semi-bold'}> Pending Payment </Text>
-          <Text fontSize={'sm'} fontWeight={'semi-bold'}> {product.InStock_PendingPayment}</Text>
-        </HStack>
-        <HStack
+          <Text fontSize={'1.6vh'} color={'web.text'} fontWeight={'semi-bold'}> Pending Payment </Text>
+          <Text fontSize={'1.6vh'} fontWeight={'semi-bold'}> {product.InStock_PendingPayment}</Text>
+        </Box>
+        <Divider borderColor={'web.text2'}/>
+        <Box
           display={'flex'}
           justifyContent={'space-between'}
-          w={'14vw'}
-          mb={'2vh'}
+          mr={'1vh'}
+          ml={'1vh'}
           >
-          <Text fontSize={'sm'} color={'web.text'} fontWeight={'semi-bold'}> Reserved </Text>
-          <Text fontSize={'sm'} fontWeight={'semi-bold'}> {product.InStock_Reserved}</Text>
-        </HStack>
-        <HStack
+          <Text fontSize={'1.6vh'} color={'web.text'} fontWeight={'semi-bold'}> Reserved </Text>
+          <Text fontSize={'1.6vh'} fontWeight={'semi-bold'}> {product.InStock_Reserved}</Text>
+        </Box>
+        <Divider borderColor={'web.text2'}/>
+        <Box
           display={'flex'}
           justifyContent={'space-between'}
-          w={'14vw'}
-          mb={'2vh'}
+          mr={'1vh'}
+          ml={'1vh'}
           >
-          <Text fontSize={'sm'} color={'web.text'} fontWeight={'semi-bold'}> Incoming Available </Text>
-          <Text fontSize={'sm'} fontWeight={'semi-bold'}> {product.Incoming_Available}</Text>
-        </HStack>
-        <HStack
+          <Text fontSize={'1.6vh'} color={'web.text'} fontWeight={'semi-bold'}> Incoming Available </Text>
+          <Text fontSize={'1.6vh'} fontWeight={'semi-bold'}> {product.Incoming_Available}</Text>
+        </Box>
+        <Divider borderColor={'web.text2'}/>
+        <Box
           display={'flex'}
           justifyContent={'space-between'}
-          w={'14vw'}   
-          mb={'2vh'}          
+          mr={'1vh'}
+          ml={'1vh'}           
           >
-          <Text fontSize={'sm'} color={'web.text'} fontWeight={'semi-bold'} w={'10vw'}> Incoming Pending Payment </Text>
-          <Text fontSize={'sm'} fontWeight={'semi-bold'}> {product.Incoming_PendingPayment}</Text>
-        </HStack>
-        <HStack
+          <Text fontSize={'1.6vh'} color={'web.text'} fontWeight={'semi-bold'} w={'10vw'}> Incoming Pend. Payment </Text>
+          <Text fontSize={'1.6vh'} fontWeight={'semi-bold'}> {product.Incoming_PendingPayment}</Text>
+        </Box>
+        <Divider borderColor={'web.text2'}/>
+        <Box
           display={'flex'}
           justifyContent={'space-between'}
-          w={'14vw'}
-          mb={'2vh'}
+          mr={'1vh'}
+          ml={'1vh'}
           >
-          <Text fontSize={'sm'} color={'web.text'} fontWeight={'semi-bold'}> Incoming Reserved </Text>
-          <Text fontSize={'sm'} fontWeight={'semi-bold'}> {product.Incoming_Reserved}</Text>
-        </HStack>
+          <Text fontSize={'1.6vh'} color={'web.text'} fontWeight={'semi-bold'}> Incoming Reserved </Text>
+          <Text fontSize={'1.6vh'} fontWeight={'semi-bold'}> {product.Incoming_Reserved}</Text>
+        </Box>
+        
       </Box>
+      <Box pt={'1vh'}>
+          <Text 
+          color={'web.text2'} 
+          fontSize={'1.9vh'}
+          >Next Arrivals</Text>
+      </Box>
+      
+      
     </Box>
   </>
   )

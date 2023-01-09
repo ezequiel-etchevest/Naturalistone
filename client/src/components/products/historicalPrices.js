@@ -5,17 +5,13 @@ const HistoricalPrices = () => {
   
   return(
     <>
-      <Box    
-        className={'product-details'}
-        mt={'3vh'}
-        ml={'2vw'}
-        mr={'1vw'}
-        pl={'2vw'}
-        pt={'1.5vw'}
-        pr={'1.5vw'}
-        pb={'1.5vw'}
-        h={'26vh'}
-        w={'14vw'}
+      <Box
+        ml={'1vw'}
+        mt={'1.5vh'}
+        px={'1.5vw'}
+        py={'2vh'}
+        h={'30vh'}
+        w={'18vw'}
         display={'flex'}
         flexDir={'column'}
         color={'web.text'}
@@ -24,11 +20,11 @@ const HistoricalPrices = () => {
         rounded={'md'} 
         borderColor={'web.border'}
         >
-        <Text color={'web.text2'}>Historical Prices</Text>
-        <HStack spacing={'55%'} mt={'1.5vh'} justifyContent={'center'}>
+        <Text color={'web.text2'} fontSize={'2.2vh'} >Historical Prices</Text>
+        <Box mt={'1.5vh'} justifyContent={'center'}>
           <Text>Date</Text>
           <Text>Price</Text>
-        </HStack>
+        </Box>
       </Box>
     </>
   )
