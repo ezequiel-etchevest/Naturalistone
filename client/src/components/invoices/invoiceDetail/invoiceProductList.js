@@ -9,11 +9,18 @@ import {
     TableContainer,
     Text,
   } from '@chakra-ui/react'
-
+  import { useNavigate } from 'react-router-dom'
 
 
 const ModelTr = ({p}) => {
-    
+  
+  const navigate = useNavigate()
+
+  const handleClick = () => {
+    navigate(`/products/${p.ProdID}`)
+  }
+  
+
     return(
       <Tr 
         cursor={'pointer'}
@@ -22,6 +29,7 @@ const ModelTr = ({p}) => {
           bg: 'web.navBar',
           color: 'logo.orange'
         }}
+        onClick={() => handleClick()}
         >
         <Td textAlign={'center'}>{p.ProductName}</Td>
         <Td textAlign={'center'}>{p.Quantity} </Td>

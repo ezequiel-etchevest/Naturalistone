@@ -178,7 +178,7 @@ salesRouter.patch('/quote/:id', async function(req, res){
     
     const {id} = req.params
 
-    query_ = `UPDATE Sales SET Stamped = true WHERE Naturali_Invoice =${id}`
+    query_ = `UPDATE Sales SET Payment_Stamp = true WHERE Naturali_Invoice =${id}`
 
     try{
        mysqlConnection.query(query_, function(error, results, fields){

@@ -45,7 +45,7 @@ const Detail = ({invoice, payments, invoice_products}) => {
               invoice_products.length ? (
                 <InvoiceProductList invoice_products={invoice_products}  />
               ) : (
-                <Text color={'web.text'}>No products linked to this invoice</Text>
+                <Text color={'web.text'}> No products linked to this invoice</Text>
               )
             }
         </Box>

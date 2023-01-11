@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import SideBar from "../components/sideBar";
 import { Center, Spinner, Text } from "@chakra-ui/react";
 import { useSelector, useDispatch } from "react-redux";
-import { getInvoiceById } from '../redux/actions-invoices'
+import { getInvoiceById, getInvoiceProducts } from '../redux/actions-invoices'
 import {getEmployeeById } from "../redux/actions-employees";
 import { getPayments } from "../redux/actions-payments";
 import { useParams } from "react-router-dom";
@@ -22,7 +22,8 @@ const InvoiceDetail = () => {
 
   useEffect(()=>{
       dispatch(getInvoiceById(id))
-      dispatch(getPayments(id))} 
+      dispatch(getPayments(id))
+      dispatch(getInvoiceProducts(id))} 
       ,[])
 
   useEffect(()=>{

@@ -31,9 +31,10 @@ export default function ModalPDF({invoice, payments}) {
           pt={'2vh'} 
           pb={'2vh'} 
           borderColor={'web.border'}>
+            
           <ModalBody w={'100%'} h={'100%'}>
             {
-            invoice[0].Stamped ? (
+            invoice[0].Payment_Stamp != 0 ? (
                 <LoadPdfPaid idpdf={id}/>
               ):(
                 <LoadPDF idpdf={id} />

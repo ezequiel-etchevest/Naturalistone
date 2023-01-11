@@ -22,11 +22,14 @@ import { stampInvoice } from '../../../redux/actions-invoices';
   const { isOpen, onOpen, onClose } = useDisclosure()
   const id = invoice[0].Naturali_Invoice
   const dispatch = useDispatch()
+
   const handleSubmit = () => {
     dispatch(stampInvoice(id))
     onClose()
   }
-  if(invoice[0].Stamped === 0){
+  
+  if(invoice[0].Payment_Stamp == 0){
+
     return (
       <>
         <Tooltip label={payments.paymentsMath.PendingAmount === '0.00'? null : 'Pending amount should be 0'}>

@@ -133,7 +133,7 @@ export function stampInvoice(id){
         try{
             let {response} = await axios.patch(`http://localhost:5000/sales/quote/${id}`)
             let { data } = await axios.get(`http://localhost:5000/sales/invoice/${id}`)
-            console.log(response)
+
             dispatch(
             {
                 type: PATCH_STAMP,
