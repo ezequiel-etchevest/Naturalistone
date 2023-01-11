@@ -1,7 +1,7 @@
 import { Box, Text, HStack } from "@chakra-ui/react";
+import HistoricalProductList from "./historicalProductList";
 
-
-const HistoricalPrices = () => {
+const HistoricalPrices = ({history_prices}) => {
   
   return(
     <>
@@ -22,8 +22,7 @@ const HistoricalPrices = () => {
         >
         <Text color={'web.text2'} fontSize={'2.2vh'} >Historical Prices</Text>
         <Box mt={'1.5vh'} justifyContent={'center'}>
-          <Text>Date</Text>
-          <Text>Price</Text>
+          <HistoricalProductList history_prices={history_prices}/>
         </Box>
       </Box>
     </>

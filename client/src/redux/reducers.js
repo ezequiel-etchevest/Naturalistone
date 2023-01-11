@@ -21,7 +21,8 @@ import {
     GET_ALL_PRODUCTS,
     GET_FILTERED_PRODUCTS,
     GET_PRODUCT_BY_ID,
-    CLEAN_PRODUCT_BY_ID
+    CLEAN_PRODUCT_BY_ID,
+    GET_HISTORY_PRICES
      } from './actions-products';
 import { GET_CURRENT_MONTH } from './actions-stats';
 
@@ -38,7 +39,8 @@ const intialState = {
     payments_by_id: {},
     products_errors:{},
     validate_result_quotes: '',
-    product_by_id: []
+    product_by_id: [],
+    history_prices: []
 }
 
 function rootReducer (state = intialState, action) {
@@ -67,6 +69,7 @@ function rootReducer (state = intialState, action) {
               products_errors:{},
               invoice_pdf: '',
               product_by_id: []
+              
             }
         
         case GET_INVOICE_BY_ID:
@@ -161,6 +164,11 @@ function rootReducer (state = intialState, action) {
               return {
                 ...state,
                 invoice: action.payload
+              }
+        case GET_HISTORY_PRICES :
+              return {
+                ...state,
+                history_prices: action.payload
               }
 
         default:

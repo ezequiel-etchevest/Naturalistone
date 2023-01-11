@@ -2,7 +2,8 @@ import axios from 'axios';
 export const GET_ALL_PRODUCTS = 'GET_ALL_PRODUCTS';
 export const GET_FILTERED_PRODUCTS = 'GET_FILTERED_PRODUCTS';
 export const GET_PRODUCT_BY_ID = 'GET_FPRODUCT_BY_ID';
-export const CLEAN_PRODUCT_BY_ID = 'CLEAN_PRODUCT_BY_ID'
+export const CLEAN_PRODUCT_BY_ID = 'CLEAN_PRODUCT_BY_ID';
+export const  GET_HISTORY_PRICES = ' GET_HISTORY_PRICES';
 
 export function getAllProducts(){
     return async function(dispatch){
@@ -63,3 +64,20 @@ export function cleanProductById(){
         }
     }
 }
+
+export function getHistoryPrices(id){
+
+    return async function(dispatch){
+        try{
+            let {data} = await axios.get(`http://localhost:5000/prodSold/historyprice/${id}`)
+
+            dispatch(
+                {
+                    type: GET_HISTORY_PRICES,
+                    payload: data
+                })
+            }catch(error){
+                console.log({error})           
+            }
+        }
+    }
