@@ -6,11 +6,11 @@ import { getInvoiceById, getInvoiceProducts } from '../redux/actions-invoices'
 import {getEmployeeById } from "../redux/actions-employees";
 import { getPayments } from "../redux/actions-payments";
 import { useParams } from "react-router-dom";
-import Detail from '../components/invoices/invoiceDetail/detail';
+import ODetail from "../components/orders/orderDetail/ODetail";
 
 
 
-const InvoiceDetail = () => {
+const OrderDetail = () => {
 
   const dispatch = useDispatch()
   const user = useSelector(state=>state.user)
@@ -38,7 +38,7 @@ const InvoiceDetail = () => {
             <SideBar user={user}/>
             {
               invoice.length && Object.entries(payments).length && invoice_products ? (
-                <Detail 
+                <ODetail 
                   invoice={invoice} 
                   invoice_products={invoice_products}
                   payments={payments}
@@ -57,4 +57,4 @@ const InvoiceDetail = () => {
  
 
 
-export default InvoiceDetail
+export default OrderDetail

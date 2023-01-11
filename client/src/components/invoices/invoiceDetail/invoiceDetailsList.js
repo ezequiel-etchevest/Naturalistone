@@ -1,7 +1,7 @@
 import { Box, Text } from "@chakra-ui/react"
 
 const InvoiceDetailList = ({invoice, payments}) => {
-    console.log('invoice', {invoice})
+
     return(
         <>
         <Box

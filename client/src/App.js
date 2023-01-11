@@ -5,6 +5,8 @@ import Home from './views/Home';
 import NavBar from './components/navBar';
 import InvoiceDetail from './views/InvoiceDetail';
 import Quotes from './views/Quotes';
+import Orders from './views/Orders';
+import OrderDetail from './views/OrderDetail';
 import Products from './views/Products';
 import { naturali_theme } from './theme';
 import ProductDetailView from './views/ProductDetailView';
@@ -24,9 +26,11 @@ function App() {
       <Route path="/login" element= {<LogIn/>} />
       <Route path="/home" element={ <Home/>}/>
       <Route path="/quotes" element={<Quotes/>}/>
+      <Route path='/quotes/:id' element={<InvoiceDetail />} /> 
       <Route path="/products" element={<Products/>} />
       <Route path="/products/:id" element={<ProductDetailView/>}/>
-      <Route path='/quotes/:id' element={<InvoiceDetail />} /> 
+      <Route path="/orders" element={<Orders/>} />
+      <Route path="/orders/:id" element={<OrderDetail/>} />
       <Route path='/warehouse' element={<Warehouse />} /> 
       </Routes> 
     </div>

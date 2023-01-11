@@ -8,7 +8,7 @@ import InvoicePanelButtons from './invoiceButtons';
 
 
 
-const Detail = ({invoice, payments, invoice_products}) => {
+const Detail = ({invoice, payments, invoice_products, user}) => {
 
     return(
       <Box
@@ -99,7 +99,7 @@ const Detail = ({invoice, payments, invoice_products}) => {
                   <Text>Loading</Text>
                 )
               }
-            <InvoicePanelButtons invoice={invoice} payments={payments}/>
+            <InvoicePanelButtons invoice={invoice} payments={payments} user={user}/>
             </Box>
           </Box>
         </Box>	

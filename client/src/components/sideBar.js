@@ -1,5 +1,6 @@
 import {	Box, Icon, Flex, Avatar, HStack, Text   } from '@chakra-ui/react';
 import { FaFileInvoiceDollar, FaHome, FaBoxOpen } from 'react-icons/fa'
+import { IoMdBoat } from 'react-icons/io'
 import { CgLogOut } from 'react-icons/cg'
 import mitu from '../assets/mitutu.jpg';
 import { useNavigate } from 'react-router';
@@ -11,9 +12,9 @@ const LinkItems = [
   { name: 'Home', icon: FaHome },
   { name: 'Quotes', icon: FaFileInvoiceDollar },
   { name: 'Products', icon: FaBoxOpen },
+  { name: 'Orders', icon: IoMdBoat },
   { name: 'Log Out', icon: CgLogOut },
   ];
-
 
 const SideBar = ({user}) => {
 
@@ -45,7 +46,13 @@ const SideBar = ({user}) => {
       </Text>
     </HStack>
     <Box  pr={12} pt={'9vh'}>
-      {LinkItems.map((link) => (
+      
+      {/* In here we need to add other SellerIDs whom will access to Orders View */}
+      {
+      user[0].SellerID != 3 && user[0].SellerID != 5 
+      ? LinkItems
+      .filter(l => l.name !== 'Orders')
+      .map((link) => (
         <NavItem
           textDecoration={'none'}
           link={link}
@@ -55,7 +62,19 @@ const SideBar = ({user}) => {
         >
           {link.name}
         </NavItem>
-          ))}
+        )) : 
+        LinkItems.map((link) => (
+        <NavItem
+          textDecoration={'none'}
+          link={link}
+          key={link.name}
+          icon={link.icon}
+          mt={'4vh'}
+          >
+            {link.name}
+        </NavItem>
+        ))
+      }
       </Box>
     </Box>
 	  );
