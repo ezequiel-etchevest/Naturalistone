@@ -9,7 +9,7 @@ import { BsCartPlus } from 'react-icons/bs';
 import ModalStamp from './modalStamp';
 import ChangeStatus from './modalStatus';
 
-const InvoicePanelButtons = ({invoice, payments}) => {
+const InvoicePanelButtons = ({invoice, payments, user}) => {
     return(
         <>
 					<Box
@@ -22,13 +22,14 @@ const InvoicePanelButtons = ({invoice, payments}) => {
           	justifyContent={'space-between'}
           	>
             <Box>
-              <ChangeStatus invoice={invoice}/>
+              <ChangeStatus invoice={invoice} user={user}/>
               <ButtonGroup
                 display={'flex'}
                 spacing={0}
                 _hover={{
                 color: 'logo.orange'
-                }}>
+                }}
+                >
               <IconButton
                 variant={'unstyled'}           
                 fontWeight={'normal'}

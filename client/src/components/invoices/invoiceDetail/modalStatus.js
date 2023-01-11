@@ -22,7 +22,7 @@ import '../../../assets/styleSheet.css';
 
 
 
-const ChangeStatus = ({invoice}) => {
+const ChangeStatus = ({invoice, user}) => {
 
   const dispatch = useDispatch()
   const {id} = useParams()
@@ -31,23 +31,33 @@ const ChangeStatus = ({invoice}) => {
     dispatch(changeStatus(id))
     onClose()
   }
+
+  console.log('userID', user.SellerID)
+  console.log('payment', invoice[0].Payment_Stamp)
+
     return(
         <>
           <ButtonGroup
                 onClick={onOpen}
                 display={'flex'}
                 spacing={0}
-                
                 _hover={{
                 color: 'logo.orange'
-                }}>
+                }}
+                >
               <IconButton
-                disabled={invoice[0].Status === 'Pending' ? false : true }
+                disabled={
+                  user.SellerID === 3 ? false :
+                  invoice[0].Payment_Stamp == 0 ? false : true 
+                }
                 variant={'unstyled'}           
                 fontWeight={'normal'}
                 icon={<MdOutlineCancel/>}/>
               <Button
-                disabled={invoice[0].Status === 'Pending' ? false : true }
+                disabled={
+                  user.SellerID === 3 ? false :
+                  invoice[0].Payment_Stamp == 0 ? false : true 
+                }
                 variant={'unstyled'}           
                 fontWeight={'normal'}
                 >Cancel Quote</Button>
