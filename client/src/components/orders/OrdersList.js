@@ -37,12 +37,11 @@ const ModelTr = ({o}) => {
         }}
         >
         <Td textAlign={'center'}>{o.OrderID}</Td>
+        <Td textAlign={'-moz-initial'}>{o.FactoryName}</Td>
         <Td textAlign={'center'}>{o.Value}</Td>
-        <Td textAlign={'center'}>{o.FactoryName}</Td>
         <Td textAlign={'center'}>{o.InvoiceDate.split('T')[0]}</Td>
-        <Td textAlign={'center'}>{o.Payment}</Td>
         <Td isNumeric textAlign={'center'}>{o.idFreightInvoice} </Td>
-        <Td textAlign={'center'} >{o.Order_By}</Td>
+        <Td textAlign={'center'}>{o.Order_By.split('@')[0]}</Td>
         <Td textAlign={'center'}>{o.Status}</Td>
       </Tr>
     )
@@ -109,12 +108,11 @@ const OrdersList = ({orders}) => {
                   <Thead h={'6vh'}>
                     <Tr>
                       <Th color={'web.text2'} textAlign={'center'} w={'6vw'}>Order Nº</Th>
-                      <Th color={'web.text2'} textAlign={'center'} w={'6vw'}>Value</Th>
                       <Th color={'web.text2'} textAlign={'center'} w={'12vw'}>Factory</Th>
+                      <Th color={'web.text2'} textAlign={'center'} w={'6vw'}>Value</Th>
                       <Th w={'6vw'} color={'web.text2'} textAlign={'center'}>Date</Th>
-                      <Th w={'6vw'} color={'web.text2'} textAlign={'center'}>Payment</Th>
                       <Th color={'web.text2'} w={'10vw'} textAlign={'center'}>Freight Invoice N°</Th>
-                      <Th color={'web.text2'} w={'8vw'} textAlign={'center'}>Order_By</Th>
+                      <Th color={'web.text2'} w={'8vw'} textAlign={'center'}>Order By</Th>
                       <Th color={'web.text2'} w={'8vw'} textAlign={'center'}>Status </Th>
                     </Tr>
                   </Thead>
@@ -132,4 +130,6 @@ const OrdersList = ({orders}) => {
         </Box>
     )
 }
+
+
 export default OrdersList;

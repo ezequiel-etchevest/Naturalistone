@@ -25,7 +25,11 @@ import {
     GET_HISTORY_PRICES
      } from './actions-products';
 import { GET_CURRENT_MONTH } from './actions-stats';
-import { GET_ORDERS, GET_ORDERS_BY_ID} from './actions-orders';
+import { 
+    GET_ORDERS,
+    GET_ORDERS_BY_ID,
+    GET_ORDERS_PRODUCTS
+    } from './actions-orders';
 
 const intialState = {
     employees: [],
@@ -43,7 +47,8 @@ const intialState = {
     product_by_id: [],
     history_prices: [],
     orders: [],
-    order: {}
+    order: {},
+    order_products: []
 }
 
 function rootReducer (state = intialState, action) {
@@ -73,7 +78,8 @@ function rootReducer (state = intialState, action) {
               invoice_pdf: '',
               product_by_id: [],
               orders: [],
-              order: {}
+              order: {},
+              order_products: []
             }
         
         case GET_INVOICE_BY_ID:
@@ -183,6 +189,11 @@ function rootReducer (state = intialState, action) {
               return {
                 ...state,
                 order: action.payload
+              }
+        case GET_ORDERS_PRODUCTS:
+              return {
+                ...state,
+                order_products: action.payload
               }
 
         default:
