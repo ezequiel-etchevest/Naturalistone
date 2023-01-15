@@ -23,13 +23,30 @@ function EditableInputNotes() {
       } = useEditableControls()
   
       return isEditing ? (
-        <ButtonGroup justifyContent='center' size='sm'>
-          <IconButton icon={<CheckIcon />} {...getSubmitButtonProps()} />
-          <IconButton icon={<CloseIcon />} {...getCancelButtonProps()} />
+        <ButtonGroup  position={'fixed'} top={'35.5vh'} left={'53vw'} justifyContent='flex-end' size={'sm'}>
+          <IconButton 
+            variant={'ghost'}
+            _hover={{
+              bg: 'logo.orange'
+            }}  
+            icon={<CheckIcon />} {...getSubmitButtonProps()} />
+          <IconButton 
+            variant={'ghost'}
+            _hover={{
+              bg: 'logo.orange'
+            }}  
+            icon={<CloseIcon />} {...getCancelButtonProps()} />
         </ButtonGroup>
       ) : (
-        <Flex justifyContent='center'>
-          <IconButton size='sm' icon={<EditIcon />} {...getEditButtonProps()} />
+        <Flex justifyContent='flex-end' position={'fixed'} top={'12.8vh'} left={'56vw'}>
+          <IconButton 
+            size='sm' 
+            variant={'ghost'}
+            color={'web.text2'}
+            _hover={{
+              bg: 'logo.orange'
+            }} 
+            icon={<EditIcon />} {...getEditButtonProps()} />
         </Flex>
       )
     }
@@ -37,14 +54,26 @@ function EditableInputNotes() {
     return (
       <Editable
         textAlign='center'
-        defaultValue='Rasengan ⚡️'
-        fontSize='2xl'
+        fontSize='2vh'
         isPreviewFocusable={false}
+        
       >
-        <EditablePreview />
-        {/* Here is the custom input */}
-        <Input as={EditableInput} />
         <EditableControls />
+        <EditablePreview
+          h={'15vh'}
+          w={'15vw'}
+          mt={'3vh'}
+          border={'1px solid'}
+          borderColor={'web.border'} />
+        {/* Here is the custom input */}
+        <Input
+          position={'fixed'}
+          top={'19.2vh'}
+          left={'42.5vw'}  
+          h={'15vh'}
+          w={'15vw'}
+          as={EditableInput} />
+        
       </Editable>
     )
   }
