@@ -10,7 +10,7 @@ const HistoricalPrices = ({history_prices}) => {
         mt={'1.5vh'}
         px={'1.5vw'}
         py={'2vh'}
-        h={'30vh'}
+        maxHeight={'53vh'}
         w={'18vw'}
         display={'flex'}
         flexDir={'column'}

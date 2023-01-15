@@ -22,7 +22,8 @@ import {
     GET_FILTERED_PRODUCTS,
     GET_PRODUCT_BY_ID,
     CLEAN_PRODUCT_BY_ID,
-    GET_HISTORY_PRICES
+    GET_HISTORY_PRICES,
+    PATCH_PRODUCT_NOTES
      } from './actions-products';
 import { GET_CURRENT_MONTH } from './actions-stats';
 import { GET_ORDERS, GET_ORDERS_BY_ID} from './actions-orders';
@@ -183,6 +184,11 @@ function rootReducer (state = intialState, action) {
               return {
                 ...state,
                 order: action.payload
+              }
+        case PATCH_PRODUCT_NOTES: 
+              return {
+                ...state,
+                product_by_id: action.payload
               }
 
         default:

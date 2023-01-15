@@ -3,7 +3,8 @@ export const GET_ALL_PRODUCTS = 'GET_ALL_PRODUCTS';
 export const GET_FILTERED_PRODUCTS = 'GET_FILTERED_PRODUCTS';
 export const GET_PRODUCT_BY_ID = 'GET_FPRODUCT_BY_ID';
 export const CLEAN_PRODUCT_BY_ID = 'CLEAN_PRODUCT_BY_ID';
-export const  GET_HISTORY_PRICES = ' GET_HISTORY_PRICES';
+export const GET_HISTORY_PRICES = ' GET_HISTORY_PRICES';
+export const PATCH_PRODUCT_NOTES = 'PATCH_PRODUCT_NOTES';
 
 export function getAllProducts(){
     return async function(dispatch){
@@ -78,6 +79,25 @@ export function getHistoryPrices(id){
                 })
             }catch(error){
                 console.log({error})           
+            }
+        }
+    }
+
+export function updateProductNotes(id, input){
+
+    return async function(dispatch){
+        try{
+            let {response} = await axios.patch(`http://localhost:5000/products/notes/${id}`, input)
+            
+            let {data} = await axios.get(`http://localhost:5000/products/id/${id}`)
+            
+            dispatch(
+                {
+                    type: PATCH_PRODUCT_NOTES,
+                    payload: data
+                })
+            }catch(error){
+                console.log({error})     
             }
         }
     }

@@ -34,10 +34,12 @@ const HistoricalProductList = ({history_prices}) => {
     <Box
     p={'1vh'}
     display={'flex'}
-    justifyContent={'center'} 
+    justifyContent={'center'}
+    
     >
       <Box
         overflow={'auto'}
+        maxH={'50vh'}
         css={{
           '&::-webkit-scrollbar': {
             width: '0.4vw',

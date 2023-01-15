@@ -23,7 +23,7 @@ return(
         >
         <Box display={'flex'} flexDir={'row'}>
           <ProductInformation product={product}/>
-          <ProductNotes/>
+          <ProductNotes product={product}/>
         </Box>
         <Box display={'flex'} flexDir={'row'}>
           <ProductInventory product={product}/>

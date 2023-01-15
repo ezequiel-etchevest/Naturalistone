@@ -40,7 +40,7 @@ productsRouter.get('/', async function(req, res){
 productsRouter.get('/id/:id', async function(req, res){
     const {id} = req.params
 
-    query_ =    `SELECT    
+    query_ =    `SELECT
                   ProdNames.Naturali_ProdName AS ProductName,
                   Dimension.Type,
                   Dimension.Size,
@@ -48,6 +48,7 @@ productsRouter.get('/id/:id', async function(req, res){
                   Dimension.Thickness,
                   Products.SalePrice AS Price,
                   Products.ProdID,
+                  Products.Notes,
                   Inventory.*
                 FROM Products
                 INNER JOIN ProdNames ON ProdNames.ProdNameID = Products.ProdNameID
@@ -98,6 +99,30 @@ productsRouter.get('/filtered', async function(req, res){
             } else {
                 const filter = filterProducts(type, size, thickness, price1, price2, results)
                 res.status(200).json(filter);
+            }
+        });
+    } catch(error){
+        res.status(409).send(error);
+    }
+});
+
+productsRouter.patch('/notes/:id', async function(req, res){
+    
+    const {id} = req.params
+    const input = req.body
+
+    query_ = `UPDATE Products SET Notes = '${input.Notes}' WHERE ProdID =${id}`
+
+    try{
+       mysqlConnection.query(query_, function(error, results, fields){
+
+            if(error) throw error;
+            if(results.length == 0) {
+                console.log('Failure updating Notes')
+                res.status(200).json('');
+            } else {
+                console.log('Note OK')
+                res.status(200).json(results);
             }
         });
     } catch(error){
