@@ -7,9 +7,21 @@ const  { getLimitDateMonth, getCurrentMonth } = require('../Controllers/LastMont
 
 salesRouter.get('/:id', async function(req, res){
     
-    const {id} = req.params
+  const {id} = req.params
 
-    query_ =    `SELECT Sales.*, Projects.*, Customers.*, Payments.idPayments, GROUP_CONCAT(
+// agregar de ser necesario otro seller id para visualizar todos los invoices.
+
+  if(id == 3 || id == 5 || id == 15){
+
+  query_ =    `SELECT Sales.*, Projects.*, Customers.*, Payments.idPayments, GROUP_CONCAT(
+            CONCAT (Payments.idPayments,';',Payments.Amount,';',Payments. Date))AS Payments FROM Sales 
+            LEFT JOIN Projects ON Sales.ProjectID = Projects.idProjects
+            LEFT JOIN Customers ON Projects.CustomerID = Customers.CustomerID
+            LEFT JOIN Payments ON Sales.Naturali_Invoice = Payments.InvoiceID
+            GROUP BY Sales.Naturali_Invoice
+            ORDER BY Sales.Naturali_Invoice DESC` 
+  } else { 
+  query_ =    `SELECT Sales.*, Projects.*, Customers.*, Payments.idPayments, GROUP_CONCAT(
                 CONCAT (Payments.idPayments,';',Payments.Amount,';',Payments. Date))AS Payments FROM Sales 
                 LEFT JOIN Projects ON Sales.ProjectID = Projects.idProjects
                 LEFT JOIN Customers ON Projects.CustomerID = Customers.CustomerID
@@ -17,7 +29,7 @@ salesRouter.get('/:id', async function(req, res){
                 WHERE SellerID = ${id}
                 GROUP BY Sales.Naturali_Invoice
                 ORDER BY Sales.Naturali_Invoice DESC`;
- 
+  }
     try{
            mysqlConnection.query(query_, function(error, Invoices, fields){
                         if(error) throw error;
