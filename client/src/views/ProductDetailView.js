@@ -24,19 +24,19 @@ const ProductDetailView = () => {
       },[])
 
   useEffect(() => {
-      if(userLocal && !user.length){
+      if(!user.length){
       dispatch(getEmployeeById(userLocal.SellerID))}
     },[user])
 
     if(user) {
-      if(user.length){
+      if(Object.entries(userLocal).length){
         return(
           <>
             <SideBar user={user}/>
             {
               Object.entries(product).length ? (
 
-              <ProductDetail product={product} history_prices={history_prices}/>
+              <ProductDetail product={product} history_prices={history_prices} user={userLocal}/>
               ) : (
               <Center ml={'20vh'} bg={'web.bg'} h={'92vh'}>
                <Spinner thickness={'4px'} size={'xl'} color={'logo.orange'}/>

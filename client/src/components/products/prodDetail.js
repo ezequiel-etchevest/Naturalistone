@@ -5,7 +5,7 @@ import ProductInventory from "./productInventory"
 import ProductNotes from "./productNotes";
 import ProductPicture from "./ProductPicture";
 
-const ProductDetail = ({product, history_prices}) => {
+const ProductDetail = ({product, history_prices, user}) => {
 
 return(
   <>     
@@ -23,7 +23,7 @@ return(
         >
         <Box display={'flex'} flexDir={'row'}>
           <ProductInformation product={product}/>
-          <ProductNotes product={product}/>
+          <ProductNotes product={product} user={user}/>
         </Box>
         <Box display={'flex'} flexDir={'row'}>
           <ProductInventory product={product}/>

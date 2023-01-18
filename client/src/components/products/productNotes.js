@@ -1,9 +1,8 @@
 import React from "react";
 import { Box, Text } from "@chakra-ui/react";
-import { updateProductNotes } from "../../redux/actions-products";
 import EditableInputNotes from "./editableInput";
 
-const ProductNotes = ({product}) => {
+const ProductNotes = ({product, user}) => {
     return (
         <>
          <Box
@@ -21,7 +20,7 @@ const ProductNotes = ({product}) => {
           borderColor={'web.border'}
           >
           <Text color={'web.text2'} fontSize={'2.2vh'}>Notes</Text>
-          <EditableInputNotes/>
+          <EditableInputNotes product={product} user={user}/>
         </Box>
         </>
     )

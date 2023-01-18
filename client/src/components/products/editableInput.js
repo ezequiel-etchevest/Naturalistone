@@ -8,11 +8,24 @@ import {
   Input,
   Flex
  } from "@chakra-ui/react";
- import { CheckIcon, CloseIcon, EditIcon } from '@chakra-ui/icons'
+import { CheckIcon, CloseIcon, EditIcon } from '@chakra-ui/icons';
+import { useDispatch } from "react-redux";
+import { updateProductNotes } from "../../redux/actions-products";
+import { useState } from "react";
  
 
 
-function EditableInputNotes() {
+function EditableInputNotes({product, user}) {
+  const dispatch = useDispatch()
+  const [input, setInput] = useState('')
+
+  let handleSubmit = () => {
+    dispatch(updateProductNotes(input))
+  }
+  let handleChange = (e) => {
+    setInput(e.target.value)
+  }
+
     /* Here's a custom control */
     function EditableControls() {
       const {
@@ -23,8 +36,9 @@ function EditableInputNotes() {
       } = useEditableControls()
   
       return isEditing ? (
-        <ButtonGroup  position={'fixed'} top={'35.5vh'} left={'53vw'} justifyContent='flex-end' size={'sm'}>
-          <IconButton 
+        <ButtonGroup  position={'fixed'} top={'35.5vh'} left={'53vw'} justifyContent='flex-end' size={'xs'}>
+          <IconButton
+            
             variant={'ghost'}
             _hover={{
               bg: 'logo.orange'
@@ -53,13 +67,20 @@ function EditableInputNotes() {
   
     return (
       <Editable
-        textAlign='center'
+        textAlign={'center'}
         fontSize='2vh'
         isPreviewFocusable={false}
-        
+        defaultValue={product.Notes}
+        onSubmit={()=>handleSubmit()}      
       >
-        <EditableControls />
+        {
+          user.SellerID === 5 || user.SellerID === 3 ?
+          <EditableControls /> :
+          null
+        }
+        
         <EditablePreview
+          
           h={'15vh'}
           w={'15vw'}
           mt={'3vh'}
@@ -72,7 +93,8 @@ function EditableInputNotes() {
           left={'42.5vw'}  
           h={'15vh'}
           w={'15vw'}
-          as={EditableInput} />
+          as={EditableInput}
+          onChange={(e)=>{handleChange(e)}} />
         
       </Editable>
     )
