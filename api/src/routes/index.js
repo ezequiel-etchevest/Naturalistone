@@ -6,6 +6,7 @@ const productsRouter = require('./productsRoutes')
 const prodSoldRouter = require('./prodSoldRoutes')
 const paymentsRouter = require('./PaymentRoutes')
 const ordersRouter = require('./ordersRoutes')
+const invoiceErrorsRouter = require('./invoiceErrorsRoutes')
 const mainRouter = Router();
 
 
@@ -16,6 +17,7 @@ mainRouter.use('/products', productsRouter);
 mainRouter.use('/prodSold', prodSoldRouter);
 mainRouter.use('/payments', paymentsRouter);
 mainRouter.use('/orders', ordersRouter);
+mainRouter.use('/invoiceErrors', invoiceErrorsRouter);
 // mainRouter.use('/customers', customersRouter);
 
 

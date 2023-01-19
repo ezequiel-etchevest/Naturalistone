@@ -12,6 +12,7 @@ import {
     PATCH_STAMP,
     PATCH_STATUS
     } from './actions-invoices';
+import { GET_INVOICE_ERRORS } from './actions-invoiceErrors'
 import { 
     POST_PAYMENT_METHOD,
     GET_PAYMENTS_BY_ID, 
@@ -32,6 +33,8 @@ import {
     GET_ORDERS_PRODUCTS
     } from './actions-orders';
 
+
+
 const intialState = {
     employees: [],
     user: [],
@@ -49,7 +52,8 @@ const intialState = {
     history_prices: [],
     orders: [],
     order: {},
-    order_products: []
+    order_products: [],
+    invoice_errors: []
 }
 
 function rootReducer (state = intialState, action) {
@@ -80,7 +84,8 @@ function rootReducer (state = intialState, action) {
               product_by_id: [],
               orders: [],
               order: {},
-              order_products: []
+              order_products: [],
+              invoice_errors: []
             }
         
         case GET_INVOICE_BY_ID:
@@ -94,6 +99,11 @@ function rootReducer (state = intialState, action) {
               seller_invoices: action.payload.data,
               filtered_invoices_month_week: action.payload.data,
               validate_result_quotes: action.payload.result
+            }
+        case GET_INVOICE_ERRORS:
+            return {
+              ...state,
+              invoice_errors: action.payload
             }
         case POST_PAYMENT_METHOD:
             return {
@@ -201,6 +211,7 @@ function rootReducer (state = intialState, action) {
                 ...state,
                 order_products: action.payload
               }
+  
 
         default:
             return {

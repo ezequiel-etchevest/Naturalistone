@@ -47,7 +47,7 @@ ordersRouter.get('/products/:id', async function(req, res){
 
     const { id } = req.params
     
-    query_ = `SELECT ProdOrdered.*, Products.*, Dimension.*, ProdNames.Naturali_ProdName as ProductName FROM ProdOrdered
+    query_ = `SELECT ProdOrdered.*, Products.*, Dimension.*, ProdNames.Naturali_ProdName as ProductName, ProdNames.Factory_ProdName as FactoryProductName FROM ProdOrdered
     INNER JOIN Products ON  ProdOrdered.ProdID = Products.ProdID 
     INNER JOIN ProdNames ON  ProdNames.ProdNameID = Products.ProdNameID
     INNER JOIN Dimension ON Dimension.DimensionID = Products.DimensionID

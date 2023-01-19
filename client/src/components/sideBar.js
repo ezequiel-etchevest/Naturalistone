@@ -2,6 +2,7 @@ import {	Box, Icon, Flex, Avatar, HStack, Text   } from '@chakra-ui/react';
 import { FaFileInvoiceDollar, FaHome, FaBoxOpen } from 'react-icons/fa'
 import { IoMdBoat } from 'react-icons/io'
 import { CgLogOut } from 'react-icons/cg'
+import { BiError } from 'react-icons/bi'
 import mitu from '../assets/mitutu.jpg';
 import { useNavigate } from 'react-router';
 import { useDispatch } from 'react-redux';
@@ -12,6 +13,7 @@ const LinkItems = [
   { name: 'Home', icon: FaHome },
   { name: 'Quotes', icon: FaFileInvoiceDollar },
   { name: 'Products', icon: FaBoxOpen },
+  { name: 'Invoice Errors', icon: BiError },
   { name: 'Orders', icon: IoMdBoat },
   { name: 'Log Out', icon: CgLogOut },
   ];

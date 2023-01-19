@@ -15,7 +15,7 @@ const OrderProductList = ({order_products}) => {
         justifyContent={'center'}
         >
           <Box
-            maxHeight={'40vh'}
+            maxHeight={'36vh'}
             overflow={'auto'}
             css={{
               '&::-webkit-scrollbar': {
