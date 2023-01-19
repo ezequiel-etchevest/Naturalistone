@@ -65,11 +65,14 @@ const HistoricalProductList = ({history_prices}) => {
               </Thead>
               <Tbody >
                 {
-                  history_prices.map(e => {
-                    return(
-                      <ModelTr e={e}/>
-                    )
-                  })
+                  history_prices.length ? (
+                    history_prices.map((e, i) => {
+                      return(
+                        <ModelTr key={i} e={e}/>
+                      )})):(
+                        null
+                      )      
+                  
                 }
               </Tbody>
             </Table>

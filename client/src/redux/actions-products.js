@@ -83,13 +83,14 @@ export function getHistoryPrices(id){
         }
     }
 
-export function updateProductNotes(id, input){
+export function updateProductNotes(input, idProduct){
 
     return async function(dispatch){
         try{
-            let {response} = await axios.patch(`http://localhost:5000/products/notes/${id}`, input)
             
-            let {data} = await axios.get(`http://localhost:5000/products/id/${id}`)
+            let {response} = await axios.patch(`http://localhost:5000/products/notes/${idProduct}`, input)
+            
+            let {data} = await axios.get(`http://localhost:5000/products/id/${idProduct}`)
             
             dispatch(
                 {

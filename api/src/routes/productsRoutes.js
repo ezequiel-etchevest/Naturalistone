@@ -110,7 +110,8 @@ productsRouter.patch('/notes/:id', async function(req, res){
     
     const {id} = req.params
     const input = req.body
-
+    console.log(input.Notes)
+    console.log(id)
     query_ = `UPDATE Products SET Notes = '${input.Notes}' WHERE ProdID =${id}`
 
     try{
