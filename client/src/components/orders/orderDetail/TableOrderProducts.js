@@ -39,6 +39,7 @@ const ModelTr = ({p}) => {
         <Td textAlign={'center'} fontSize={'1.6vh'}>{p.Size}</Td>
         <Td textAlign={'center'} fontSize={'1.6vh'}>{p.Thickness}</Td>
         <Td textAlign={'center'} fontSize={'1.6vh'}>{p.Finish}</Td>
+        <Td textAlign={'center'} fontSize={'1.6vh'}>{p.FactoryProductName}</Td>
         <Td textAlign={'center'}>{p.Quantity} </Td>
         <Td textAlign={'center'} >${p.SalePrice}</Td>
         {/* <IconButton 
@@ -55,9 +56,9 @@ const ModelTr = ({p}) => {
 
 
 const TableOrderProducts = ({order_products}) => {
-
+  
 return(  
-  <TableContainer w={'45vw'}>
+  <TableContainer w={'74vw'}>
     <Table mt={'2vh'} color={'web.text'} variant={'simple'} size={'sm'} >
       <Thead h={'6vh'}>
         <Tr>
@@ -66,6 +67,7 @@ return(
           <Th color={'web.text2'}>Size</Th>
           <Th color={'web.text2'}>Thickness</Th>
           <Th color={'web.text2'}>Finish</Th>
+          <Th color={'web.text2'}>Factory Product Name</Th>
           <Th color={'web.text2'}>Quantity</Th>
           <Th color={'web.text2'}>Purchase Price</Th>
         </Tr>

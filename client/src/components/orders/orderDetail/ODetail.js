@@ -14,7 +14,7 @@ const ODetail = ({order, order_products}) => {
         >
         <Box
           display={'flex'}
-          flexDir={'row'}
+          flexDir={'column'}
           >
             {
               Object.entries(order).length ? (
@@ -27,16 +27,16 @@ const ODetail = ({order, order_products}) => {
             }
         <Box
             mt={'3vh'}
-            ml={'1vw'}
-            mr={'1vw'}
+            ml={'2vw'}
+            mr={'2vw'}
             pt={'1.5vw'}
             pb={'1.5vw'} 
             border={'1px solid'} 
             rounded={'md'} 
             borderColor={'web.border'} 
             bg={'web.sideBar'}
-            h={'44vh'}
-            w={'46vw'}>
+            h={'40vh'}
+            w={'76vw'}>
             {
               order_products.length ? (
                 <OrderProductList order_products={order_products}  />
@@ -46,7 +46,7 @@ const ODetail = ({order, order_products}) => {
             }
         </Box>
         </Box>
-        <Box
+        {/* <Box
         display={'flex'}
         flexDir={'reverse'}
         w={'80vw'}
@@ -87,9 +87,9 @@ const ODetail = ({order, order_products}) => {
                   <Text>Loading</Text>
                 )
               } */}
-            {/* <InvoicePanelButtons/> */}
-            </Box> 
-          </Box>
+            {/* <InvoicePanelButtons/>
+            </Box>  
+          </Box>*/}
         </Box>	
       )
   }

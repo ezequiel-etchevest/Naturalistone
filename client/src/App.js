@@ -7,6 +7,7 @@ import InvoiceDetail from './views/InvoiceDetail';
 import Quotes from './views/Quotes';
 import Orders from './views/Orders';
 import OrderDetail from './views/OrderDetail';
+import InvoiceErrors from './views/InvoiceErrors';
 import Products from './views/Products';
 import { naturali_theme } from './theme';
 import ProductDetailView from './views/ProductDetailView';
@@ -29,6 +30,7 @@ function App() {
       <Route path='/quotes/:id' element={<InvoiceDetail />} /> 
       <Route path="/products" element={<Products/>} />
       <Route path="/products/:id" element={<ProductDetailView/>}/>
+      <Route path="/Invoice Errors" element={<InvoiceErrors/>}/>
       <Route path="/orders" element={<Orders/>} />
       <Route path="/orders/:id" element={<OrderDetail/>} />
       <Route path='/warehouse' element={<Warehouse />} /> 
