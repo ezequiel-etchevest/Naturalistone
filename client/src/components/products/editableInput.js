@@ -17,13 +17,13 @@ import { useState } from "react";
 
 function EditableInputNotes({product, user}) {
   const dispatch = useDispatch()
-  const [input, setInput] = useState('')
+  const [input, setInput] = useState({})
 
   let handleSubmit = () => {
-    dispatch(updateProductNotes(input))
+    dispatch(updateProductNotes(input, product.ProdID))
   }
   let handleChange = (e) => {
-    setInput(e.target.value)
+    setInput({Notes: e.target.value})
   }
 
     /* Here's a custom control */
