@@ -1,4 +1,5 @@
 import { Box, Text } from "@chakra-ui/react"
+import CancerlOrderModal from './cancelOrderModal'
 
 const OrderDetailList = ({order}) => {
 
@@ -22,22 +23,29 @@ const OrderDetailList = ({order}) => {
         border={'1px solid'} 
         rounded={'md'} 
         borderColor={'web.border'} 
-        >          
+        >        
         <Box 
           display={'flex'} 
           flexDir={'row'} 
           alignItems={'baseline'}
+          justifyContent={'space-between'}
           >
-          <Text 
-          color={'logo.orange'} 
-          fontSize={'xl'}>
-            {order[0].OrderID}
-          </Text>
-          <Text 
-            color={'web.text2'} 
-            ml={'1vh'}>
-            Order Details
-          </Text>
+          <Box
+           display={'flex'} 
+           flexDir={'row'} 
+           alignItems={'baseline'}>
+            <Text 
+            color={'logo.orange'} 
+            fontSize={'xl'}>
+              {order[0].OrderID}
+            </Text>
+            <Text 
+              color={'web.text2'} 
+              ml={'1vh'}>
+              Order Details
+            </Text>
+          </Box>
+          <CancerlOrderModal order={order}/>  
         </Box>
         <Box 
           mt={'1vh'} 

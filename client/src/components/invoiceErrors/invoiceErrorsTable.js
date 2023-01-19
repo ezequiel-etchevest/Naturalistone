@@ -91,11 +91,12 @@ const InvoiceErrorsList = ({invoice_errors}) => {
         display={'flex'}
         justifyContent={'center'}
         h={'92vh'}
-        w={'78.8vw'}
+        w={'80vw'}
         >
           <Box
-            maxHeight={'84vh'}
+            maxHeight={'80vh'}
             overflow={'auto'}
+            mt={'7vh'}
             css={{
               '&::-webkit-scrollbar': {
                 width: '0.2vw',
@@ -108,14 +109,14 @@ const InvoiceErrorsList = ({invoice_errors}) => {
                 borderRadius: '5px',
               },
             }}
-            mt={'5vh'} 
-            ml={'3vw'} 
-            mr={'2vw'} 
             borderColor={'web.border'}
             bg={'web.sideBar'} 
             border={'1px solid'} 
             rounded={'md'} 
             p={'3vh'}
+            w={'74vw'}
+            ml={'3vw'}
+            mr={'3vw'}
             >
             <TableContainer>
                 <Table color={'web.text'} variant={'simple'} size={'sm'} >

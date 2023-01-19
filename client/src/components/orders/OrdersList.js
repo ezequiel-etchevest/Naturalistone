@@ -77,15 +77,15 @@ const OrdersList = ({orders}) => {
         display={'flex'}
         justifyContent={'center'}
         h={'92vh'}
-        w={'78.8vw'}
+        w={'80vw'}
         >
           <Box
-            maxHeight={'69vh'}
+            maxHeight={'80vh'}
             overflow={'auto'}
-            mt={'12vh'}
+            mt={'7vh'}
             css={{
               '&::-webkit-scrollbar': {
-                width: '0.4vw',
+                width: '0.2vw',
               },
               '&::-webkit-scrollbar-track': {
                 width: '6px',
@@ -100,8 +100,9 @@ const OrdersList = ({orders}) => {
             border={'1px solid'} 
             rounded={'md'} 
             p={'3vh'}
-            w={'72vw'}
-            
+            w={'74vw'}
+            ml={'3vw'}
+            mr={'3vw'}
             >
             <TableContainer >
                 <Table color={'web.text'} variant={'simple'} size={'sm'}  >

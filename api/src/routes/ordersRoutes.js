@@ -68,5 +68,28 @@ ordersRouter.get('/products/:id', async function(req, res){
     }
 });
 
+ordersRouter.patch('/cancelorder/:id', async function(req, res){
+    
+    const {id} = req.params
+
+    query_ = `UPDATE Orders SET Status = 'Canceled' WHERE OrderID =${id}`
+
+    try{
+       mysqlConnection.query(query_, function(error, results, fields){
+
+            if(error) throw error;
+            if(results.length == 0) {
+                console.log('Failure updating Status Column')
+                res.status(200).json('');
+            } else {
+                console.log('Data OK')
+                res.status(200).json(results);
+            }
+        });
+    } catch(error){
+        res.status(409).send(error);
+    }
+});
+
 
 module.exports = ordersRouter;

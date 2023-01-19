@@ -2,7 +2,6 @@ import {
     Box,
     Text,
   } from '@chakra-ui/react'
-import EditOrderModal from './editOrderModal'
 import TableOrderProducts from './TableOrderProducts'
 
 
@@ -33,7 +32,6 @@ const OrderProductList = ({order_products}) => {
             >
             <Box display={'flex'} flexDir={'row'} justifyContent={'space-between'} alignItems={'center'}>
             <Text fontSize={'xl'} color={'web.text2'}>Products Details</Text>
-            <EditOrderModal order_products={order_products}/>
             </Box>
               <TableOrderProducts order_products={order_products}/>
             </Box> 

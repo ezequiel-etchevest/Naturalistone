@@ -30,7 +30,8 @@ import { GET_CURRENT_MONTH } from './actions-stats';
 import { 
     GET_ORDERS,
     GET_ORDERS_BY_ID,
-    GET_ORDERS_PRODUCTS
+    GET_ORDERS_PRODUCTS,
+    PATCH_ORDER_STATUS
     } from './actions-orders';
 
 
@@ -210,6 +211,11 @@ function rootReducer (state = intialState, action) {
               return {
                 ...state,
                 order_products: action.payload
+              }
+        case PATCH_ORDER_STATUS:
+              return {
+                ...state,
+                orders: action.payload
               }
   
 
