@@ -22,7 +22,7 @@ export function getInvoiceErrorsByID(id, type) {
     return async function(dispatch){
         try{
             
-            let {data} = await axios.get(`http://localhost:5000/invoiceErrors?id=${id}&type=${type}`)
+            let {data} = await axios.get(`http://localhost:5000/invoiceErrors/filtered?id=${id}&type=${type}`)
             dispatch({
                 type: GET_INVOICE_ERRORS_BY_ID,
                 payload: data
