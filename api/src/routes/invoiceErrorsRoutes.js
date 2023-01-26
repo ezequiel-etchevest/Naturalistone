@@ -5,7 +5,6 @@ const mysqlConnection = require('../db')
 
 invoiceErrorsRouter.get('/', async function(req, res){
 
-    const {id} = req.params
 
     query_ = `SELECT InvoiceErrors.*, Seller.FirstName, Seller.LastName FROM InvoiceErrors
               LEFT JOIN Seller ON InvoiceErrors.SellerID = Seller.SellerID`;
@@ -24,17 +23,18 @@ invoiceErrorsRouter.get('/', async function(req, res){
     }
 });
 
-invoiceErrorsRouter.get('/:id', async function(req, res){
+invoiceErrorsRouter.get('/filtered', async function(req, res){
 
-    const {id} = req.params
+    const {id, type} = req.query
 
-    query_ = `SELECT * FROM InvoiceErrors where SellerID = ${id}`;
+    query_ = `SELECT * FROM InvoiceErrors`;
     try{
          mysqlConnection.query(query_, function(error, results){
             if(!results?.length) {
                 console.log(`No invoices on ID ${id}`)
                 res.status(200).json([]);
             } else {
+                const filter = filterInvErrors(id, type, results)
                 res.status(200).json(results);
             }
         });
