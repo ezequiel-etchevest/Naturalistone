@@ -13,7 +13,7 @@ import {
     ModalCloseButton,
     Tooltip
   } from '@chakra-ui/react'
-import { MdOutlineCancel } from 'react-icons/md';
+import { AiOutlineDelete } from 'react-icons/ai';
 import { useDispatch } from 'react-redux';
 import { cancelOrderStatus } from '../../../redux/actions-orders';
 
@@ -32,27 +32,18 @@ export default function CancerlOrderModal({order}) {
   
     return (
       <>
-      <ButtonGroup
-            onClick={onOpen}
-            display={'flex'}
-            spacing={'1vw'}
-            _hover={{
-            color: 'logo.orange'
-            }}
-            w={'10vw'}
-            >
-          <Button
-            variant={'unstyled'}           
-            fontWeight={'normal'}
-            >Cancel Order
-          </Button>
-          <IconButton
-            variant={'unstyled'}           
-            fontWeight={'normal'}
-            fontSize={'lg'}
-            icon={<MdOutlineCancel/>}
-          />
-          </ButtonGroup>
+      <IconButton
+        variant={'unstyled'}           
+        fontWeight={'normal'}
+        fontSize={'2xl'}
+        display={'flex'}
+        icon={<AiOutlineDelete/>}           
+        onClick={onOpen}
+        _hover={{
+        color: 'logo.orange'
+        }}
+        color={'web.text2'}
+      />
       <Modal 
         isOpen={isOpen} 
         onClose={onClose}
@@ -65,7 +56,7 @@ export default function CancerlOrderModal({order}) {
           >
           <ModalHeader
           color={'web.text'}>
-            Cancel Quote
+            Cancel Order
           </ModalHeader>
           <ModalCloseButton
             color={'web.text2'}

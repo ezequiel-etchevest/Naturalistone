@@ -3,7 +3,7 @@ import SideBar from "../components/sideBar";
 import { Center, Spinner, Text } from "@chakra-ui/react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
-import { getOrderProducts, getOrdersByID } from "../redux/actions-orders"
+import { getOrderProducts, getOrdersByID, cleanOrderProducts } from "../redux/actions-orders"
 import {getEmployeeById } from "../redux/actions-employees";
 import ODetail from "../components/orders/orderDetail/ODetail";
 
@@ -19,9 +19,11 @@ const OrderDetail = () => {
   const { id } = useParams()
 
   useEffect(()=>{
+    if(!Object.entries(order).length || !order_products.length){
       dispatch(getOrdersByID(id))
+      dispatch(cleanOrderProducts())
       dispatch(getOrderProducts(id))} 
-      ,[order])
+      ,[order, order_products])
 
   useEffect(()=>{
       if(userLocal && !user.length){

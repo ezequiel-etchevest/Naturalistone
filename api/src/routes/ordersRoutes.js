@@ -56,8 +56,8 @@ ordersRouter.get('/products/:id', async function(req, res){
     try{
          mysqlConnection.query(query_, function(error, results, fields){
             if(!results.length) {
-                console.log('Error en ordersRoutes.get /products/:id')
-                res.status(400).json(error);
+                console.log('No products in this order')
+                res.status(200).json([]);
             } else {
                 console.log('Orders Data OK')
                 res.status(200).json(results);
