@@ -23,7 +23,7 @@ const OrderDetail = () => {
       dispatch(getOrdersByID(id))
       dispatch(cleanOrderProducts())
       dispatch(getOrderProducts(id))} 
-      ,[order, order_products])
+     } ,[order, order_products])
 
   useEffect(()=>{
       if(userLocal && !user.length){
