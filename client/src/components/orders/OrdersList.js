@@ -11,7 +11,7 @@ import {
   } from '@chakra-ui/react'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
-import { getOrdersByID } from '../../redux/actions-orders'
+import { getOrdersByID, getOrderProducts, cleanOrderProducts } from '../../redux/actions-orders'
 
 
 
@@ -22,6 +22,8 @@ const ModelTr = ({o}) => {
 
     const handleClick = () => {
       dispatch(getOrdersByID(o.OrderID))
+      dispatch(cleanOrderProducts())
+      dispatch(getOrderProducts(o.OrderID))
       navigate(`/orders/${o.OrderID}`)
     }
     

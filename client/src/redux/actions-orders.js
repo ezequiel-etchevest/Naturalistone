@@ -1,8 +1,10 @@
+import { Action } from "@remix-run/router"
 import  axios  from "axios"
 export const GET_ORDERS = 'GET_ORDERS'
 export const GET_ORDERS_BY_ID = 'GET_ORDERS_BY_ID'
 export const GET_ORDERS_PRODUCTS = 'GET_ORDERS_PRODUCTS'
 export const PATCH_ORDER_STATUS = 'PATCH_ORDER_STATUS'
+export const CLEAN_ORDERS_PRODUCTS = 'CLEAN_ORDERS_PRODUCTS'
 
 
 export function getOrders() {
@@ -52,6 +54,21 @@ export function getOrderProducts(id) {
     }
   }
 }
+
+export function cleanOrderProducts() {
+    return async function(dispatch){
+      try{ 
+          dispatch(
+          {
+              type: CLEAN_ORDERS_PRODUCTS
+          })
+      }catch(error){
+          console.log({error})           
+  
+      }
+    }
+  }
+
 
 export function cancelOrderStatus(id) {
   return async function(dispatch){

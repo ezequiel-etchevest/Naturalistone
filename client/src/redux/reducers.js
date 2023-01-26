@@ -12,7 +12,10 @@ import {
     PATCH_STAMP,
     PATCH_STATUS
     } from './actions-invoices';
-import { GET_INVOICE_ERRORS } from './actions-invoiceErrors'
+import { 
+  GET_INVOICE_ERRORS,
+  GET_INVOICE_ERRORS_BY_ID } from './actions-invoiceErrors'
+import { GET_ALL_SELLERS } from './actions-sellers'
 import { 
     POST_PAYMENT_METHOD,
     GET_PAYMENTS_BY_ID, 
@@ -31,7 +34,8 @@ import {
     GET_ORDERS,
     GET_ORDERS_BY_ID,
     GET_ORDERS_PRODUCTS,
-    PATCH_ORDER_STATUS
+    PATCH_ORDER_STATUS,
+    CLEAN_ORDERS_PRODUCTS
     } from './actions-orders';
 
 
@@ -39,6 +43,7 @@ import {
 const intialState = {
     employees: [],
     user: [],
+    sellers:[],
     invoice: {},
     seller_invoices: [],
     filtered_invoices: [],
@@ -54,7 +59,8 @@ const intialState = {
     orders: [],
     order: {},
     order_products: [],
-    invoice_errors: []
+    invoice_errors: [],
+    invoice_errors_by_id:[]
 }
 
 function rootReducer (state = intialState, action) {
@@ -73,6 +79,7 @@ function rootReducer (state = intialState, action) {
             return {
               ...state,
               user: [],
+              sellers:[],
               employees: [],
               invoice: {},
               all_invoices_by_seller: [],
@@ -86,7 +93,8 @@ function rootReducer (state = intialState, action) {
               orders: [],
               order: {},
               order_products: [],
-              invoice_errors: []
+              invoice_errors: [],
+              invoice_errors_by_id:[]
             }
         
         case GET_INVOICE_BY_ID:
@@ -106,6 +114,12 @@ function rootReducer (state = intialState, action) {
               ...state,
               invoice_errors: action.payload
             }
+        case GET_INVOICE_ERRORS_BY_ID:
+            return {
+              ...state,
+              invoice_errors_by_id: action.payload
+            }
+
         case POST_PAYMENT_METHOD:
             return {
               ...state,
@@ -217,7 +231,16 @@ function rootReducer (state = intialState, action) {
                 ...state,
                 orders: action.payload
               }
-  
+        case CLEAN_ORDERS_PRODUCTS:
+              return {
+                ...state,
+                order_products: []
+              }
+        case GET_ALL_SELLERS:
+              return {
+                ...state,
+                sellers: action.payload
+              }
 
         default:
             return {

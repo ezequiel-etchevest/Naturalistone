@@ -28,6 +28,8 @@ const OrderProductList = ({order_products}) => {
                 borderRadius: '5px',
               },
             }}
+            pl={'2vh'}
+            pr={'2vh'}
             bg={'web.sideBar'}           
             >
             <Box display={'flex'} flexDir={'row'} justifyContent={'space-between'} alignItems={'center'}>

@@ -8,17 +8,15 @@ import {
     Th,
     Td,
     TableContainer,
-    useToast,
+
   } from '@chakra-ui/react';
-import { useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 
+const ModelTr = ({e, user}) => {
 
-const ModelTr = ({e}) => {
-
-    const navigate = useNavigate()
-    const dispatch = useDispatch()
+    // const navigate = useNavigate()
+    // const dispatch = useDispatch()
 
     // const handleClick = () => {
     //   dispatch(getInvoiceById(e.Naturali_Invoice))
@@ -26,7 +24,6 @@ const ModelTr = ({e}) => {
     //   dispatch( cleanStatePayments())
     //   navigate(`/quotes/${e.Naturali_Invoice}`)
     // }
-    
     
     return(
       <Tr 
@@ -39,14 +36,26 @@ const ModelTr = ({e}) => {
         }}
         >
         <Td textAlign={'center'}>{e.Invoice}</Td>
-        <Td textAlign={'center'}>{e.Date.split('T')[0]}</Td>
+        {
+          (user[0].SellerID === 3 || user[0].SellerID === 5 || user[0].SellerID === 15 ) ?
+          <Td textAlign={'center'}>{e.FirstName} {e.LastName}</Td>
+          : null
+        }
+        {
+          (user[0].SellerID === 3 || user[0].SellerID === 5 || user[0].SellerID === 15 ) ?
+          <Td textAlign={'center'}>{e.Type}</Td> 
+          : null
+        }
+        <Td textAlign={'center'}>{e.Date?.split('T')[0]}</Td>
         <Td>{e.Error}</Td>
       </Tr>
     )
 }
 
-const InvoiceErrorsList = ({invoice_errors}) => {
+const InvoiceErrorsList = ({invoice_errors, user, sellers, invoice_errors_by_id}) => {
  
+
+
   // const result = useSelector(state=> state.validate_result_quotes)
   // const toast = useToast()
   // const id = 'test-toast'
@@ -85,21 +94,20 @@ const InvoiceErrorsList = ({invoice_errors}) => {
 //   useEffect(()=>{
 //     validateResults()
 //   })
-  
+
     return(
         <Box
         display={'flex'}
         justifyContent={'center'}
-        h={'92vh'}
+        h={'74vh'}
         w={'80vw'}
         >
           <Box
-            maxHeight={'80vh'}
+            maxHeight={'70vh'}
             overflow={'auto'}
-            mt={'7vh'}
             css={{
               '&::-webkit-scrollbar': {
-                width: '0.2vw',
+                width: '0.2vw', 
               },
               '&::-webkit-scrollbar-track': {
                 width: '6px',
@@ -123,19 +131,37 @@ const InvoiceErrorsList = ({invoice_errors}) => {
                   <Thead h={'6vh'}>
                     <Tr>
                       <Th color={'web.text2'} w={'5vw'} textAlign={'center'}>Invoice Nº</Th>
+                      {
+                      (user[0].SellerID === 3 || user[0].SellerID === 5 || user[0].SellerID === 15 ) ?
+                      <Th w={'5vw'} color={'web.text2'} textAlign={'center'}>Seller</Th> :
+                      null
+                      }
+                      {
+                      (user[0].SellerID === 3 || user[0].SellerID === 5 || user[0].SellerID === 15 ) ?
+                      <Th w={'5vw'} color={'web.text2'} textAlign={'center'}>Type</Th> :
+                      null
+                      }
                       <Th w={'5vw'} color={'web.text2'} textAlign={'center'}>Date</Th>
                       <Th w={'15vw'} color={'web.text2'} textAlign={'center'}>Error</Th>
                     </Tr>
                   </Thead>
                   <Tbody >
-                    { invoice_errors.length ? (
-                      invoice_errors.map((e, i) =>{
+                  { 
+                    invoice_errors_by_id.length ? (
+                      invoice_errors_by_id.map((e, i) =>{
                         return(
-                          <ModelTr key={i} e={e}/>
+                          <ModelTr key={i} e={e} user={user}/>
                         )
                       })
-                    ):
-                    <Text>No Invoices </Text>}
+                    )
+                    :
+                    ( invoice_errors.map((e, i) =>{
+                      return(
+                        <ModelTr key={i} e={e} user={user}/>
+                      )
+                      })
+                    )
+                  }
                   </Tbody>
                 </Table>
             </TableContainer> 

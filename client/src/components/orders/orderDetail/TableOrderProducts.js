@@ -35,13 +35,13 @@ const ModelTr = ({p}) => {
         onClick={() => handleClick()}
         >
         <Td textAlign={'-moz-initial'}>{p.ProductName}</Td>
-        <Td textAlign={'center'} fontSize={'1.6vh'}>{p.Type}</Td>
-        <Td textAlign={'center'} fontSize={'1.6vh'}>{p.Size}</Td>
-        <Td textAlign={'center'} fontSize={'1.6vh'}>{p.Thickness}</Td>
-        <Td textAlign={'center'} fontSize={'1.6vh'}>{p.Finish}</Td>
-        <Td textAlign={'center'} fontSize={'1.6vh'}>{p.FactoryProductName}</Td>
-        <Td textAlign={'center'}>{p.Quantity} </Td>
-        <Td textAlign={'center'} >${p.SalePrice}</Td>
+        <Td textAlign={'center'} w={'6vw'} fontSize={'1.6vh'}>{p.Type}</Td>
+        <Td textAlign={'center'} w={'6vw'} fontSize={'1.6vh'}>{p.Size}</Td>
+        <Td textAlign={'center'} w={'6vw'} ontSize={'1.6vh'}>{p.Thickness}</Td>
+        <Td textAlign={'center'} w={'6vw'} fontSize={'1.6vh'}>{p.Finish}</Td>
+        <Td textAlign={'center'} w={'6vw'} fontSize={'1.6vh'}>{p.FactoryProductName}</Td>
+        <Td textAlign={'center'} w={'6vw'}> {p.Quantity} </Td>
+        <Td textAlign={'center'} w={'6vw'}>${p.SalePrice}</Td>
         {/* <IconButton 
             display={'flex'}
             variant={'unstyled'}
@@ -49,7 +49,6 @@ const ModelTr = ({p}) => {
             fontWeight={'normal'}
             icon={<BiEditAlt/>}
             /> */}
-
       </Tr>
     )
 }
@@ -60,16 +59,16 @@ const TableOrderProducts = ({order_products}) => {
 return(  
   <TableContainer w={'74vw'}>
     <Table mt={'2vh'} color={'web.text'} variant={'simple'} size={'sm'} >
-      <Thead h={'6vh'}>
+      <Thead h={'6vh'} >
         <Tr>
-          <Th color={'web.text2'}>Product Name</Th>
-          <Th color={'web.text2'}>Type</Th>
-          <Th color={'web.text2'}>Size</Th>
-          <Th color={'web.text2'}>Thickness</Th>
-          <Th color={'web.text2'}>Finish</Th>
-          <Th color={'web.text2'}>Factory Product Name</Th>
-          <Th color={'web.text2'}>Quantity</Th>
-          <Th color={'web.text2'}>Purchase Price</Th>
+          <Th color={'web.text2'} w={'14vw'}>Product Name</Th>
+          <Th color={'web.text2'} w={'6vw'} textAlign={'center'} >Type</Th>
+          <Th color={'web.text2'} w={'6vw'} textAlign={'center'} >Size</Th>
+          <Th color={'web.text2'} w={'6vw'} textAlign={'center'} >Thickness</Th>
+          <Th color={'web.text2'} w={'6vw'} textAlign={'center'} >Finish</Th>
+          <Th color={'web.text2'} w={'6vw'} textAlign={'center'} >Factory Product Name</Th>
+          <Th color={'web.text2'} w={'6vw'} textAlign={'center'} >Quantity</Th>
+          <Th color={'web.text2'} w={'6vw'} textAlign={'center'} >Purchase Price</Th>
         </Tr>
       </Thead>
       <Tbody >
