@@ -12,7 +12,6 @@ import '../../assets/carousel.css'
 
 const CarouselProduct = () => {
   const settings = {
-    dots: true,
     infinite: true,
     speed: 500,
     slidesToShow: 2,
@@ -22,21 +21,21 @@ const CarouselProduct = () => {
   };
   return(
     <>
-      <Box >
+      <Box  px={'1vh'}  >
       <Slider {...settings}>
-        <Box px={'1vh'} h={'23vh'}>
+        <Box p={'1vh'} h={'23vh'}>
           <img src={Picture1} />
         </Box>
-        <Box px={'1vh'} h={'23vh'}>
+        <Box p={'1vh'} h={'23vh'}>
           <img src={Picture2} />
         </Box >
-        <Box px={'1vh'} h={'23vh'}>
+        <Box p={'1vh'} h={'23vh'}>
           <img src={Picture3} />
         </Box>
-        <Box px={'1vh'} h={'23vh'}>
+        <Box p={'1vh'} h={'23vh'}>
           <img src={Picture4} />
         </Box>
-        <Box px={'1vh'} h={'23vh'}>
+        <Box p={'1vh'} h={'23vh'}>
           <img src={Picture5} />
         </Box>
 

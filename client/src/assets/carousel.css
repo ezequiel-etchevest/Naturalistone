@@ -7,3 +7,8 @@
     flex-wrap: nowrap;
     align-items: stretch;
   }
+.dots {
+    color: rgb(167, 83, 83);
+    display: flex;
+    flex-direction: row;
+}
