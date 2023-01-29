@@ -55,6 +55,7 @@ const ModelTr = ({e, user}) => {
       <Td onClick={() => handleClickProduct()} textAlign={'match-parent'}>{e.Type}</Td>
       <Td onClick={() => handleClickProduct()} textAlign={'match-parent'}>{e.Size}</Td>
       <Td onClick={() => handleClickProduct()} textAlign={'center'}> {e.Thickness} </Td>
+      <Td onClick={() => handleClickProduct()} textAlign={'center'}> {e.Finish === null ? '-' : e.Finish} </Td>
       <Td onClick={() => handleClickProduct()} isNumeric>{e.Price}$</Td>
       <Td onClick={() => handleClickProduct()} textAlign={'center'}>{e.InStock_Available === null ? 0 : e.InStock_Available}</Td>
       <Td onClick={() => handleClickProduct()} textAlign={'center'}>{e.Incoming_Available === null ? 0 : e.Incoming_Available}</Td>
@@ -118,14 +119,15 @@ const ProductList = ({ allProducts, filteredProducts, user }) => {
             <Thead h={'6vh'}>
               <Tr>
                 <Th color={'web.text2'} textAlign={'match-parent'}>Product Name</Th>
-                <Th color={'web.text2'} w={'5vw'}>Type</Th>
-                <Th color={'web.text2'} w={'5vw'}>Size</Th>
-                <Th color={'web.text2'} w={'5vw'}>Thickness</Th>
-                <Th color={'web.text2'} w={'5vw'}isNumeric>Price</Th>
-                <Th color={'web.text2'} w={'5vw'}isNumeric>Stock</Th>
-                <Th color={'web.text2'} w={'5vw'}isNumeric>Incoming Stock</Th>
-                <Th color={'web.text2'} w={'5vw'}isNumeric>Next Arrival</Th>
-                <Th color={'web.text2'} w={'5vw'}>Discontinued</Th>
+                <Th color={'web.text2'} w={'4vw'}>Type</Th>
+                <Th color={'web.text2'} w={'4vw'}>Size</Th>
+                <Th color={'web.text2'} w={'4vw'}>Thickness</Th>
+                <Th color={'web.text2'} w={'4vw'}>Finish</Th>
+                <Th color={'web.text2'} w={'4vw'}isNumeric>Price</Th>
+                <Th color={'web.text2'} w={'4vw'}isNumeric>Stock</Th>
+                <Th color={'web.text2'} w={'4vw'}isNumeric>Inc. Stock</Th>
+                <Th color={'web.text2'} w={'4vw'}isNumeric>Next Arrival</Th>
+                <Th color={'web.text2'} w={'4vw'}>Discontinued</Th>
               </Tr>
             </Thead>
             <Tbody>
