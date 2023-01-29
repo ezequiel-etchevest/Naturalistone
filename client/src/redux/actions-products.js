@@ -1,10 +1,12 @@
 import axios from 'axios';
+import { FaFlag } from 'react-icons/fa';
 export const GET_ALL_PRODUCTS = 'GET_ALL_PRODUCTS';
 export const GET_FILTERED_PRODUCTS = 'GET_FILTERED_PRODUCTS';
 export const GET_PRODUCT_BY_ID = 'GET_FPRODUCT_BY_ID';
 export const CLEAN_PRODUCT_BY_ID = 'CLEAN_PRODUCT_BY_ID';
 export const GET_HISTORY_PRICES = ' GET_HISTORY_PRICES';
 export const PATCH_PRODUCT_NOTES = 'PATCH_PRODUCT_NOTES';
+export const PATCH_DISCONTINUED = 'PATCH_DISCONTINUED';
 
 export function getAllProducts(){
     return async function(dispatch){
@@ -102,3 +104,25 @@ export function updateProductNotes(input, idProduct){
             }
         }
     }
+
+export function patchDiscontinued(idProduct, flag){
+
+    return async function(dispatch){
+        try{
+            
+            let {response} = await axios.patch(`http://localhost:5000/products/discontinued/${idProduct}`, flag)
+            
+            let {data} = await axios.get(`http://localhost:5000/products`)
+            
+            dispatch(
+                {
+                    type: PATCH_DISCONTINUED,
+                    payload: data
+                })
+            }catch(error){
+                console.log({error})     
+            }
+        }
+    }
+
+    

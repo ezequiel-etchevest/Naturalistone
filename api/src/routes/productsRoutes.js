@@ -16,6 +16,7 @@ productsRouter.get('/', async function(req, res){
                     Dimension.Finish,
                     Products.SalePrice AS Price,
                     Products.ProdID,
+                    Products.Discontinued_Flag,
                     Inventory.*
                   FROM Products
                   INNER JOIN ProdNames ON ProdNames.ProdNameID = Products.ProdNameID
@@ -110,8 +111,7 @@ productsRouter.patch('/notes/:id', async function(req, res){
     
     const {id} = req.params
     const input = req.body
-    console.log(input.Notes)
-    console.log(id)
+
     query_ = `UPDATE Products SET Notes = '${input.Notes}' WHERE ProdID =${id}`
 
     try{
@@ -123,6 +123,30 @@ productsRouter.patch('/notes/:id', async function(req, res){
                 res.status(200).json('');
             } else {
                 console.log('Note OK')
+                res.status(200).json(results);
+            }
+        });
+    } catch(error){
+        res.status(409).send(error);
+    }
+});
+
+productsRouter.patch('/discontinued/:id', async function(req, res){
+    
+    const {id} = req.params
+    const flag = req.body
+
+    query_ = `UPDATE Products SET Discontinued_Flag = ${flag === true ? 'False' : 'True'} WHERE ProdID =${id}`
+
+    try{
+       mysqlConnection.query(query_, function(error, results, fields){
+
+            if(error) throw error;
+            if(results.length == 0) {
+                console.log(`Failure updating Discontinued on prod ${id}`)
+                res.status(200).json('');
+            } else {
+                console.log('discontinued OK')
                 res.status(200).json(results);
             }
         });

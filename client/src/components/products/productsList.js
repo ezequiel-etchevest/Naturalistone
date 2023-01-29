@@ -7,27 +7,43 @@ import {
     Th,
     Td,
     TableContainer,
-    useToast
-  } from '@chakra-ui/react'
-import { useNavigate } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux'
-import { getProductById } from '../../redux/actions-products'
-import { useEffect } from 'react'
+    useToast,
+    Switch
+  } from '@chakra-ui/react';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { getProductById } from '../../redux/actions-products';
+import { useEffect, useState } from 'react';
+import{ TfiCheck } from 'react-icons/tfi';
+import{ ImCheckboxChecked, ImCheckboxUnchecked } from 'react-icons/im';
+import { patchDiscontinued } from '../../redux/actions-products';
 
-const ModelTr = ({e}) => {
 
+const ModelTr = ({e, user}) => {
+
+    const a = e.Discontinued_Flag === 'True' ? true : false 
     const navigate = useNavigate()
     const dispatch = useDispatch()
+    const [flag, setFlag] = useState(a)
+    console.log({flag})
 
-    const handleClick = () => {
+    const handleClickProduct = () => {
       dispatch(getProductById(e.ProdID))
       if(e.ProdID !== undefined)
       navigate(`/products/${e.ProdID}`)
     }
+    const handleClickSwitch = () => {
+      setFlag(flag === true ? false : true)
+      dispatch(patchDiscontinued(e.ProdID, flag))
+    }
+
+    let validateSeller = () => {
+      if(user[0].SellerID == 6 || user[0].SellerID == 3 || user[0].SellerID == 5 || user[0].SellerID == 15 ) return true
+      else return false
+    }
 
   return(
-    <Tr 
-      onClick={() => handleClick()} 
+    <Tr       
       cursor={'pointer'} 
       key={e.ProdNameID}
       _hover={{
@@ -35,19 +51,20 @@ const ModelTr = ({e}) => {
         color: 'logo.orange'
       }} 
       >
-      <Td textAlign={'match-parent'}>{e.ProductName}</Td>
-      <Td textAlign={'match-parent'}>{e.Type}</Td>
-      <Td textAlign={'match-parent'}>{e.Size}</Td>
-      <Td textAlign={'center'}> {e.Thickness} </Td>
-      <Td isNumeric>{e.Price}$</Td>
-      <Td textAlign={'center'}>{e.InStock_Available === null ? 0 : e.InStock_Available}</Td>
-      <Td textAlign={'center'}>{e.Incoming_Available === null ? 0 : e.Incoming_Available}</Td>
-      <Td textAlign={'center'}>{e.NextArrival === null ? '-' : e.NextArrival}</Td>  {/*cambiar el origen de esta info */}
-    </Tr>
+      <Td onClick={() => handleClickProduct()} textAlign={'match-parent'}>{e.ProductName}</Td>
+      <Td onClick={() => handleClickProduct()} textAlign={'match-parent'}>{e.Type}</Td>
+      <Td onClick={() => handleClickProduct()} textAlign={'match-parent'}>{e.Size}</Td>
+      <Td onClick={() => handleClickProduct()} textAlign={'center'}> {e.Thickness} </Td>
+      <Td onClick={() => handleClickProduct()} isNumeric>{e.Price}$</Td>
+      <Td onClick={() => handleClickProduct()} textAlign={'center'}>{e.InStock_Available === null ? 0 : e.InStock_Available}</Td>
+      <Td onClick={() => handleClickProduct()} textAlign={'center'}>{e.Incoming_Available === null ? 0 : e.Incoming_Available}</Td>
+      <Td onClick={() => handleClickProduct()} textAlign={'center'}>{e.NextArrival === undefined ? '-' : e.NextArrival}</Td>  {/*cambiar el origen de esta info */}
+      <Td pl={'3.5vw'}>{ validateSeller() === false ? (e.Discontinued_Flag === 'True' ? <ImCheckboxChecked color='logo.orange'/> : <ImCheckboxUnchecked color='logo.orange'/> ) : (<Switch  onChange={() => handleClickSwitch()} isChecked={flag} colorScheme={'orange'} size={'sm'}/>) }</Td>
+      </Tr>
   )
 }
 
-const ProductList = ({ allProducts, filteredProducts }) => {
+const ProductList = ({ allProducts, filteredProducts, user }) => {
 
   const productErrors = useSelector((state) => state.products_errors)
   const toast = useToast()
@@ -66,7 +83,6 @@ const ProductList = ({ allProducts, filteredProducts }) => {
   useEffect(() => {
     validateToast()
   },[filteredProducts, allProducts])
-
 
   return(
     <Box
@@ -97,8 +113,8 @@ const ProductList = ({ allProducts, filteredProducts }) => {
         p={'3vh'}
         w={'72vw'}
         >
-        <TableContainer >
-          <Table color={'web.text'} variant={'simple'} size={'sm'} >
+        <TableContainer>
+          <Table color={'web.text'} variant={'simple'} size={'sm'}>
             <Thead h={'6vh'}>
               <Tr>
                 <Th color={'web.text2'} textAlign={'match-parent'}>Product Name</Th>
@@ -109,6 +125,7 @@ const ProductList = ({ allProducts, filteredProducts }) => {
                 <Th color={'web.text2'} w={'5vw'}isNumeric>Stock</Th>
                 <Th color={'web.text2'} w={'5vw'}isNumeric>Incoming Stock</Th>
                 <Th color={'web.text2'} w={'5vw'}isNumeric>Next Arrival</Th>
+                <Th color={'web.text2'} w={'5vw'}>Discontinued</Th>
               </Tr>
             </Thead>
             <Tbody>
@@ -116,13 +133,13 @@ const ProductList = ({ allProducts, filteredProducts }) => {
                 filteredProducts.length ? (
                   filteredProducts.map((e, i) => {
                     return(
-                      <ModelTr key={i} e={e} />
+                      <ModelTr key={i} e={e} user={user} filteredProducts={filteredProducts}/>
                     )
                   })
                 ) : (
                   allProducts.map((e, i) => {
                     return(
-                      <ModelTr key={i} e={e} />
+                      <ModelTr key={i} e={e} user={user} allProducts={allProducts}/>
                     )
                   }
                 ))

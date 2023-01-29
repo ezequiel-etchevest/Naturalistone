@@ -3,7 +3,7 @@ import ProductList from './productsList'
 import ProductsFilters from './productsFilters'
 import { useState } from "react"
 
-const ProductsContainer = ({ allProducts }) => {
+const ProductsContainer = ({ allProducts, user }) => {
 
     const [filteredProducts, setFilteredProducts] = useState([])
 
@@ -14,7 +14,7 @@ const ProductsContainer = ({ allProducts }) => {
         > 
         <Box>
             <ProductsFilters allProducts={allProducts} setFilteredProducts={setFilteredProducts} />
-            <ProductList allProducts={allProducts} filteredProducts={filteredProducts} />
+            <ProductList allProducts={allProducts} filteredProducts={filteredProducts} user={user} />
         </Box>
         </Box>
     )

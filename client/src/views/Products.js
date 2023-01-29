@@ -29,7 +29,7 @@ const Products = () => {
         return(
           <>
             <SideBar user={user}/>
-            <ProductsContainer allProducts={allProducts}/>
+            <ProductsContainer allProducts={allProducts} user={user}/>
           </>
         )
     }else return (
