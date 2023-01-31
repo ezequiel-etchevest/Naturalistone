@@ -16,19 +16,16 @@ import {AiOutlineClear} from 'react-icons/ai';
 import PriceSlider from "./priceSlider";
 
 
-const ProductsFilters = ({allProducts, setFilteredProducts}) => {
+const ProductsFilters = ({allProducts, setFilteredProducts, values}) => {
 
   const dispatch = useDispatch()
-
   const [filters, setFilters] = useState({
     type:'',
     size:'',
     thickness:'',
-    price: [0, 300]
+    price: [values.priceMaxmin.min, values.priceMaxmin.max]
   })
-  const [limit, setLimit] = useState([0, 300])
-
-
+  const [limit, setLimit] = useState([values.priceMaxmin.min, values.priceMaxmin.max])
   const handleType = (e) => {
     setFilters({
       ...filters,
@@ -53,20 +50,18 @@ const ProductsFilters = ({allProducts, setFilteredProducts}) => {
     dispatch(getFiltered(filters.type, filters.size, e.target.value, filters.price))
   }
 
-
   const handleClear = () => {
     setFilters({
       type:'',
       size:'',
       thickness:'',
-      price: [0, 300]
+      price: [values.priceMaxmin.min, values.priceMaxmin.max]
       })
-    setLimit([0, 300])
+    setLimit([values.priceMaxmin.min, values.priceMaxmin.max])
     dispatch(getAllProducts())
   }
 
   const handleChangeProductName = (e) => {
- 
     if(e.target.value.length){
         const filteredByName = allProducts?.filter(prod => prod.ProductName.toLowerCase().includes(e.target.value))
         if(!filteredByName.length) return
@@ -118,10 +113,16 @@ const ProductsFilters = ({allProducts, setFilteredProducts}) => {
                 boxShadow: '0 0.5px 0.5px rgba(229, 103, 23, 0.075)inset, 0 0 5px rgba(255,144,0,0.6)'
               }}
               onChange={(e) => handleType(e)}
-              >              
-              <option value='' className="options"> Select Type</option>
-              <option value='Tile' className="options">Tile</option>
-              <option value='Slab' className="options">Slab</option>
+              >
+                <option value='' className="options"> Select Finish</option>
+                {
+                  values.finishValues.map(v => {
+                    return(
+                      <option value={`${v}`} className={'options'}>{`${v}`}</option>
+                    )
+                  })
+                }              
+              
             </Select>
             <Select 
               variant='outline' 
@@ -140,16 +141,14 @@ const ProductsFilters = ({allProducts, setFilteredProducts}) => {
               onChange={(e) => handleSize(e)}
               >
               <option value='' className="options">Select Size</option>
-              <option value='24x24' className="options">24 x 24</option>
-              <option value='24x48' className="options">24 x 48</option>
-              <option value='48x48' className="options">48 x 48</option>
-              <option value='12x24' className="options">12 x 24</option>
-              <option value='1x1' className="options">1 x 1</option>
-              <option value='2x2' className="options">2 x 2</option>
-              <option value='120x50' className="options">120 x 50</option>
-              <option value='126x63' className="options">126 x 63</option>
-              <option value='127x64' className="options">127 x 64</option>
-              <option value='128x65' className="options">128 x 65</option>
+              {
+                  values.sizes.map(v => {
+                    return(
+                      <option value={`${v}`} className={'options'}>{`${v}`}</option>
+                    )
+                  })
+                       
+              }
             </Select>
             <Select 
               variant='outline' 
@@ -168,9 +167,13 @@ const ProductsFilters = ({allProducts, setFilteredProducts}) => {
               onChange={(e) => handleThickness(e)}
               >
               <option value='' className="options">Select Thickness</option>
-              <option value='3/4' className="options">3/4</option>
-              <option value='1/2' className="options">1/2</option>
-              <option value='1 1/4' className="options">1 1/4</option>
+              {
+                  values.thickness.map(v => {
+                    return(
+                      <option value={`${v}`} className={'options'}>{`${v}`}</option>
+                    )
+                  })
+              }
             </Select>
           </Box>
           {/* -------------------- SEARCH INPUT ------------------------------ */}
@@ -208,7 +211,7 @@ const ProductsFilters = ({allProducts, setFilteredProducts}) => {
           flexDir={'row'}
           justifyContent={'space-between'}
           >
-          <PriceSlider setFilters={setFilters} filters={filters} limit={limit} setLimit={setLimit} />
+          <PriceSlider setFilters={setFilters} filters={filters} limit={limit} setLimit={setLimit} values={values} />
 
         <Button
             leftIcon={ <AiOutlineClear/>}

@@ -28,7 +28,8 @@ import {
     CLEAN_PRODUCT_BY_ID,
     GET_HISTORY_PRICES,
     PATCH_PRODUCT_NOTES,
-    PATCH_DISCONTINUED
+    PATCH_DISCONTINUED,
+    GET_VALUES
      } from './actions-products';
 import { GET_CURRENT_MONTH } from './actions-stats';
 import { 
@@ -89,13 +90,14 @@ function rootReducer (state = intialState, action) {
               filtered_invoices_month_week: [],
               current_month:{},
               products_errors:{},
+              product_values: {},
               invoice_pdf: '',
               product_by_id: [],
               orders: [],
               order: {},
               order_products: [],
               invoice_errors: [],
-              invoice_errors_by_id:[]
+              invoice_errors_by_id:[],
             }
         
         case GET_INVOICE_BY_ID:
@@ -222,7 +224,7 @@ function rootReducer (state = intialState, action) {
                 ...state,
                 product_by_id: action.payload
               }
-        case PATCH_PRODUCT_NOTES: 
+        case PATCH_DISCONTINUED: 
               return {
                 ...state,
                 productS: action.payload
@@ -246,6 +248,11 @@ function rootReducer (state = intialState, action) {
               return {
                 ...state,
                 sellers: action.payload
+              }
+        case GET_VALUES:
+              return {
+                ...state,
+                product_values: action.payload
               }
 
         default:

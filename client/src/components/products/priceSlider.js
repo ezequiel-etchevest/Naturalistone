@@ -9,11 +9,10 @@ import {
 import { useDispatch } from 'react-redux'
 import { getFiltered }  from "../../redux/actions-products";
 
-let PriceSlider = ({setFilters, filters, limit, setLimit}) =>{
+let PriceSlider = ({setFilters, filters, limit, setLimit, values}) =>{
 
     
     const dispatch = useDispatch()
-
     const handlePrice = (e) => {
         setLimit(e);
         setFilters({
@@ -38,9 +37,9 @@ let PriceSlider = ({setFilters, filters, limit, setLimit}) =>{
               dispatch(getFiltered(filters.type, filters.size, filters.thickness, val))}}
             onChange={(e) => handlePrice(e)}
             w={'20vw'}
-            defaultValue={[0, 300]}
-            min={0}
-            max={300}
+            defaultValue={[values.priceMaxmin.min, values.priceMaxmin.max]}
+            min={values.priceMaxmin.min}
+            max={values.priceMaxmin.max}
             step={15}
             h={'4vh'}
             >

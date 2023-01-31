@@ -14,7 +14,6 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getProductById } from '../../redux/actions-products';
 import { useEffect, useState } from 'react';
-import{ TfiCheck } from 'react-icons/tfi';
 import{ ImCheckboxChecked, ImCheckboxUnchecked } from 'react-icons/im';
 import { patchDiscontinued } from '../../redux/actions-products';
 
@@ -25,7 +24,7 @@ const ModelTr = ({e, user}) => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const [flag, setFlag] = useState(a)
-    console.log({flag})
+
 
     const handleClickProduct = () => {
       dispatch(getProductById(e.ProdID))
