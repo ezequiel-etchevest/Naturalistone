@@ -20,16 +20,16 @@ const ProductsFilters = ({allProducts, setFilteredProducts, values}) => {
 
   const dispatch = useDispatch()
   const [filters, setFilters] = useState({
-    type:'',
+    finish:'',
     size:'',
     thickness:'',
     price: [values.priceMaxmin.min, values.priceMaxmin.max]
   })
   const [limit, setLimit] = useState([values.priceMaxmin.min, values.priceMaxmin.max])
-  const handleType = (e) => {
+  const handleFinish = (e) => {
     setFilters({
       ...filters,
-      type: e.target.value
+      finish: e.target.value
     })
     dispatch(getFiltered(e.target.value, filters.size, filters.thickness, filters.price))
   }
@@ -39,7 +39,7 @@ const ProductsFilters = ({allProducts, setFilteredProducts, values}) => {
       ...filters, 
       size: e.target.value
     })
-    dispatch(getFiltered(filters.type ,e.target.value, filters.thickness, filters.price))
+    dispatch(getFiltered(filters.finish, e.target.value, filters.thickness, filters.price))
   }
 
   const handleThickness = (e) => {
@@ -47,7 +47,7 @@ const ProductsFilters = ({allProducts, setFilteredProducts, values}) => {
       ...filters,
       thickness: e.target.value
     })
-    dispatch(getFiltered(filters.type, filters.size, e.target.value, filters.price))
+    dispatch(getFiltered(filters.finish, filters.size, e.target.value, filters.price))
   }
 
   const handleClear = () => {
@@ -112,7 +112,7 @@ const ProductsFilters = ({allProducts, setFilteredProducts, values}) => {
                 borderColor: 'logo.orange',
                 boxShadow: '0 0.5px 0.5px rgba(229, 103, 23, 0.075)inset, 0 0 5px rgba(255,144,0,0.6)'
               }}
-              onChange={(e) => handleType(e)}
+              onChange={(e) => handleFinish(e)}
               >
                 <option value='' className="options"> Select Finish</option>
                 {

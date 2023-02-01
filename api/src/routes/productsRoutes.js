@@ -77,12 +77,13 @@ productsRouter.get('/id/:id', async function(req, res){
 
 productsRouter.get('/filtered', async function(req, res){
 
-    const { type, size, thickness, price1, price2 } = req.query
+    const { finish, size, thickness, price1, price2 } = req.query
 
     query_ = `SELECT    
                     ProdNames.Naturali_ProdName AS ProductName,
                     Dimension.Type,
                     Dimension.Size,
+                    Dimension.Finish,
                     Dimension.Thickness,
                     Products.SalePrice AS Price,
                     Products.ProdID,
@@ -99,7 +100,7 @@ productsRouter.get('/filtered', async function(req, res){
                 console.log('Error en productsRoutes.get /filtered')
                 res.status(200).json({});
             } else {
-                const filter = filterProducts(type, size, thickness, price1, price2, results)
+                const filter = filterProducts(finish, size, thickness, price1, price2, results)
                 res.status(200).json(filter);
             }
         });
