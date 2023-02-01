@@ -1,7 +1,7 @@
 const express = require('express')
 const productsRouter = express.Router()
 const mysqlConnection = require('../db')
-const filterProducts = require('../Controllers/productFilters')
+const filterProducts = require('../Controllers/productFiltersController')
 const { getUniqueFinishes, findMaxMinPrice, getUniqueSizes, thicknessValues } = require('../Controllers/productValues')
 
 productsRouter.get('/', async function(req, res){

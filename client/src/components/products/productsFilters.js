@@ -52,7 +52,7 @@ const ProductsFilters = ({allProducts, setFilteredProducts, values}) => {
 
   const handleClear = () => {
     setFilters({
-      type:'',
+      finish:'',
       size:'',
       thickness:'',
       price: [values.priceMaxmin.min, values.priceMaxmin.max]

@@ -10,7 +10,6 @@ const filterProducts = (finish, size, thickness, price1, price2, allProducts) =>
       let filteredFinish = filteredProds.filter((e) => e.Finish === finish)
       if(!filteredFinish.length) errorsSearch.error = `No match for Finish: ${finish}`
        else filteredProds = filteredFinish
-  
   }  
     if(size !== ''){
       let filteredSize = filteredProds.filter((e) => e.Size === size)

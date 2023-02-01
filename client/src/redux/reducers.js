@@ -157,6 +157,7 @@ function rootReducer (state = intialState, action) {
             return {
               ...state,
               all_products: action.payload,
+              products_errors: {}
             }
         case GET_FILTERED_PRODUCTS:
             return {
