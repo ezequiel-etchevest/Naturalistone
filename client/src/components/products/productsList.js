@@ -42,7 +42,7 @@ const ModelTr = ({e}) => {
       <Td isNumeric>{e.Price}$</Td>
       <Td textAlign={'center'}>{e.InStock_Available === null ? 0 : e.InStock_Available}</Td>
       <Td textAlign={'center'}>{e.Incoming_Available === null ? 0 : e.Incoming_Available}</Td>
-      <Td textAlign={'center'}>{e.NextArrival === null ? '-' : e.NextArrival}</Td>  {/*cambiar el origen de esta info */}
+      <Td textAlign={'center'}>{e.NextArrival === null ? '-' : e.NextArrival}</Td>
     </Tr>
   )
 }
@@ -97,7 +97,7 @@ const ProductList = ({ allProducts, filteredProducts }) => {
         p={'3vh'}
         w={'72vw'}
         >
-        <TableContainer >
+        <TableContainer>
           <Table color={'web.text'} variant={'simple'} size={'sm'} >
             <Thead h={'6vh'}>
               <Tr>

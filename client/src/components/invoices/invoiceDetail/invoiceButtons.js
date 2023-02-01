@@ -5,11 +5,13 @@ import{
 	IconButton
 } from '@chakra-ui/react';
 import {AiOutlineMail, AiOutlineInfoCircle} from 'react-icons/ai';
-import { BsCartPlus } from 'react-icons/bs';
 import ModalStamp from './modalStamp';
 import ChangeStatus from './modalStatus';
+import DeliveryButton from '../../deliveryQuotes/DeliveryButton';
+import DeliveryListButton from '../../deliveryQuotes/DeliveryListButton';
 
-const InvoicePanelButtons = ({invoice, payments, user}) => {
+const InvoicePanelButtons = ({invoice, payments, user, invoice_products, deliveries}) => {
+     
     return(
         <>
 					<Box
@@ -23,6 +25,8 @@ const InvoicePanelButtons = ({invoice, payments, user}) => {
           	>
             <Box>
               <ChangeStatus invoice={invoice} user={user}/>
+              <DeliveryButton invoice={invoice} user={user} invoice_products={invoice_products}/>
+              <DeliveryListButton user={user} invoice={invoice} deliveries={deliveries}/>
               <ButtonGroup
                 display={'flex'}
                 spacing={0}
@@ -61,11 +65,9 @@ const InvoicePanelButtons = ({invoice, payments, user}) => {
                 >Contact Customer
               </Button>
               </ButtonGroup>
-
           </Box>
             <ModalStamp invoice={invoice} payments={payments}/>
-          </Box>
-        
+          </Box>   
         </>
     )
 }

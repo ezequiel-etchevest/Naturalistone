@@ -19,7 +19,7 @@ const ModelTr = ({p}) => {
   const handleClick = () => {
     navigate(`/products/${p.ProdID}`)
   }
-  
+ 
 
     return(
       <Tr 
@@ -41,14 +41,14 @@ const ModelTr = ({p}) => {
 }
 
 const InvoiceProductList = ({invoice_products}) => {
-
+  
     return(
         <Box
         display={'flex'}
         justifyContent={'center'}
         >
           <Box
-            maxHeight={'46vh'}
+            maxHeight={'38vh'}
             overflow={'auto'}
             css={{
               '&::-webkit-scrollbar': {

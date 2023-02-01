@@ -17,9 +17,9 @@ const LoadPdfPaid = ({idpdf}) => {
 
       const url = `/InvoiceNaturali/${pdfID}.pdf`
       const existingPdfBytes = await fetch(url).then((res) => res.arrayBuffer());
-
       var bytes = new Uint8Array(existingPdfBytes);
       const pdfDoc = await PDFDocument.load(bytes);
+
       
       // Get the width and height of the first page
       const pages = pdfDoc.getPages();

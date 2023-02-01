@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { getInvoiceById, getInvoiceProducts } from '../redux/actions-invoices'
 import {getEmployeeById } from "../redux/actions-employees";
 import { getPayments } from "../redux/actions-payments";
+import { getDeliveriesNotes } from "../redux/actions-deliveryNotes";
 import { useParams } from "react-router-dom";
 import Detail from '../components/invoices/invoiceDetail/detail';
 
@@ -16,6 +17,7 @@ const InvoiceDetail = () => {
   const user = useSelector(state=>state.user)
   const invoice = useSelector(state=>state.invoice)
   const invoice_products = useSelector(state=> state.invoice_products)
+  const deliveries = useSelector(state => state.deliveries_notes_by_id)
   const payments = useSelector(state => state.payments_by_id)
   const userLocal = JSON.parse(localStorage.getItem('user'))
   const { id } = useParams()
@@ -23,7 +25,9 @@ const InvoiceDetail = () => {
   useEffect(()=>{
       dispatch(getInvoiceById(id))
       dispatch(getPayments(id))
-      dispatch(getInvoiceProducts(id))} 
+      dispatch(getInvoiceProducts(id))
+      dispatch(getDeliveriesNotes(id))
+    } 
       ,[])
 
   useEffect(()=>{
@@ -43,6 +47,7 @@ const InvoiceDetail = () => {
                   invoice_products={invoice_products}
                   payments={payments}
                   user={ user[0]}
+                  deliveries={deliveries}
                   />
                 ):(
                 <Center ml={'20vh'} bg={'web.bg'} h={'92vh'}>

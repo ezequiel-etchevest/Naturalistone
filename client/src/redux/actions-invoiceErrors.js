@@ -1,6 +1,6 @@
 import axios from 'axios'
 export const GET_INVOICE_ERRORS = 'GET_INVOICE_ERRORS'
-export const GET_INVOICE_ERRORS_BY_ID = 'GET_INVOICE_ERRORS_BY_ID'
+export const GET_INVOICE_ERRORS_FILTERED = 'GET_INVOICE_ERRORS_FILTERED'
 
 
 export function getInvoiceErrors() {
@@ -18,13 +18,13 @@ export function getInvoiceErrors() {
     }
 }
 
-export function getInvoiceErrorsByID(id, type) {
+export function getInvoiceErrorsFiltered(sellerID, type) {
     return async function(dispatch){
         try{
             
-            let {data} = await axios.get(`http://localhost:5000/invoiceErrors/filtered?id=${id}&type=${type}`)
+            let {data} = await axios.get(`http://localhost:5000/invoiceErrors/filtered?id=${sellerID}&type=${type}`)
             dispatch({
-                type: GET_INVOICE_ERRORS_BY_ID,
+                type: GET_INVOICE_ERRORS_FILTERED,
                 payload: data
             })
         }catch(error){

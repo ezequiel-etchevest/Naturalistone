@@ -10,7 +10,7 @@ export function patchPaymentMethod(id, input){
         try{
             let {response} = await axios.post(`http://localhost:5000/payments/invoice/${id}`, input)
             let { data } = await axios.get(`http://localhost:5000/payments/${id}`)
-            console.log(response)
+            
             dispatch(
             {
                 type: POST_PAYMENT_METHOD,
