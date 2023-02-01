@@ -23,7 +23,8 @@ const OrderDetail = () => {
       dispatch(getOrdersByID(id))
       dispatch(cleanOrderProducts())
       dispatch(getOrderProducts(id))} 
-     } ,[order, order_products])
+     } ,[])
+//ver dependencias del useEffect parea que se renderise correctamente.
 
   useEffect(()=>{
       if(userLocal && !user.length){

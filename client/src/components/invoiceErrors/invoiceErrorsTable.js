@@ -10,7 +10,6 @@ import {
     TableContainer,
 
   } from '@chakra-ui/react';
-import { useSelector } from 'react-redux';
 
 
 const ModelTr = ({e, user}) => {
@@ -52,7 +51,7 @@ const ModelTr = ({e, user}) => {
     )
 }
 
-const InvoiceErrorsList = ({invoice_errors, user, sellers, invoice_errors_by_id}) => {
+const InvoiceErrorsList = ({user, invoice_errors_by_filter, filteredInvoicesErrors, invoice_errors}) => {
  
 
 
@@ -142,25 +141,31 @@ const InvoiceErrorsList = ({invoice_errors, user, sellers, invoice_errors_by_id}
                       null
                       }
                       <Th w={'5vw'} color={'web.text2'} textAlign={'center'}>Date</Th>
-                      <Th w={'15vw'} color={'web.text2'} textAlign={'center'}>Error</Th>
+                      <Th  maxW={'50vw'} color={'web.text2'} textAlign={'center'}>Error</Th>
                     </Tr>
                   </Thead>
                   <Tbody >
-                  { 
-                    invoice_errors_by_id.length ? (
-                      invoice_errors_by_id.map((e, i) =>{
+                  {
+                    filteredInvoicesErrors.length ? 
+                      filteredInvoicesErrors.map((e, i) =>{
                         return(
                           <ModelTr key={i} e={e} user={user}/>
                         )
                       })
-                    )
-                    :
-                    ( invoice_errors.map((e, i) =>{
-                      return(
-                        <ModelTr key={i} e={e} user={user}/>
-                      )
-                      })
-                    )
+                      : 
+                      invoice_errors_by_filter.length ? 
+                        invoice_errors_by_filter.map((e, i) =>{
+                          return(
+                            <ModelTr key={i} e={e} user={user}/>
+                          )
+                          })
+                        :
+                        invoice_errors.map((e, i) =>{
+                          return(
+                            <ModelTr key={i} e={e} user={user}/>
+                          )
+                        }
+                        )
                   }
                   </Tbody>
                 </Table>

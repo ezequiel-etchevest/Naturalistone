@@ -8,12 +8,18 @@ prodSoldRouter.get('/:id', async function(req, res){
     
     const {id} = req.params
 
-    query_ =   `SELECT ProdSold.*, Naturali_ProdName AS ProductName, Inventory.* FROM Products
-                INNER JOIN ProdNames ON ProdNames.ProdNameID = Products.ProdNameID
-                INNER JOIN ProdSold ON ProdSold.ProdID = Products.ProdID
-                INNER JOIN Inventory ON Inventory.ProdID = Products.ProdID 
-                WHERE SaleID = ${id} `;
-               
+    query_ =   `SELECT ProdSold.*, Naturali_ProdName AS ProductName, Inventory.*, 
+                  Dimension.Type,
+                  Dimension.Size,
+                  Dimension.Finish,
+                  Dimension.Thickness FROM Products
+                  INNER JOIN ProdNames ON ProdNames.ProdNameID = Products.ProdNameID
+                  INNER JOIN ProdSold ON ProdSold.ProdID = Products.ProdID
+                  INNER JOIN Dimension ON Dimension.DimensionID = Products.DimensionID
+                  INNER JOIN Inventory ON Inventory.ProdID = Products.ProdID 
+                  WHERE SaleID = ${id} 
+                  ORDER BY ProdNames.Naturali_ProdName ASC`;
+
     try{
         mysqlConnection.query(query_, function(error, results, fields){
             if(error) throw error;

@@ -9,7 +9,7 @@ import {
 import miniPDF from '../../../assets/miniPDF.png'
 import LoadPDF from '../../pdf/pdfModify'
 import LoadPdfPaid from '../../pdf/pdfPaidFunction'
-
+import LoadPdfDelivery from '../../deliveryQuotes/deliveryNotePdf'
 
 export default function ModalPDF({invoice, payments}) {
   
@@ -19,7 +19,7 @@ export default function ModalPDF({invoice, payments}) {
   return (
     <>
       <Image onClick={onOpen} src={miniPDF} cursor={'pointer'} />
-      <Modal isOpen={isOpen} onClose={onClose} size={'full'} >
+      <Modal isOpen={isOpen} onClose={onClose} size={'6xl'}>
         <ModalOverlay />
         <ModalContent 
           rounded={'md'} 
@@ -37,8 +37,9 @@ export default function ModalPDF({invoice, payments}) {
             invoice[0].Payment_Stamp != 0 ? (
                 <LoadPdfPaid idpdf={id}/>
               ):(
-                <LoadPDF idpdf={id} />
-              )       
+              <LoadPDF idpdf={id} />
+              )
+           // <LoadPdfDelivery/>
             }
           </ModalBody>
         </ModalContent>

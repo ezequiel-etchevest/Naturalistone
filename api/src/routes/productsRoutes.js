@@ -91,7 +91,8 @@ productsRouter.get('/filtered', async function(req, res){
                   FROM Products
                   INNER JOIN ProdNames ON ProdNames.ProdNameID = Products.ProdNameID
                   INNER JOIN Dimension ON Dimension.DimensionID = Products.DimensionID
-                  INNER JOIN Inventory ON Inventory.ProdID = Products.ProdID`
+                  INNER JOIN Inventory ON Inventory.ProdID = Products.ProdID 
+                  ORDER BY ProdNames.Naturali_ProdName ASC`
     try{
         mysqlConnection.query(query_, function(error, results, fields){   
             
