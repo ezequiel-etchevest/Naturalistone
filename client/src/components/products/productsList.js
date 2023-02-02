@@ -55,7 +55,7 @@ const ModelTr = ({e, user}) => {
       <Td onClick={() => handleClickProduct()} textAlign={'match-parent'}>{e.Size}</Td>
       <Td onClick={() => handleClickProduct()} textAlign={'center'}> {e.Thickness} </Td>
       <Td onClick={() => handleClickProduct()} textAlign={'center'}> {e.Finish === null ? '-' : e.Finish} </Td>
-      <Td onClick={() => handleClickProduct()} isNumeric>{e.Price}$</Td>
+      <Td onClick={() => handleClickProduct()} isNumeric>${e.Price}</Td>
       <Td onClick={() => handleClickProduct()} textAlign={'center'}>{e.InStock_Available === null ? 0 : e.InStock_Available}</Td>
       <Td onClick={() => handleClickProduct()} textAlign={'center'}>{e.Incoming_Available === null ? 0 : e.Incoming_Available}</Td>
       <Td onClick={() => handleClickProduct()} textAlign={'center'}>{e.NextArrival === undefined ? '-' : e.NextArrival}</Td>  {/*cambiar el origen de esta info */}
