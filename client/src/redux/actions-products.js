@@ -110,8 +110,8 @@ export function patchDiscontinued(idProduct, flag){
 
     return async function(dispatch){
         try{
-            
-            let {response} = await axios.patch(`http://localhost:5000/products/discontinued/${idProduct}`, flag)
+            console.log({flag})
+            let {response} = await axios.patch(`http://localhost:5000/products/discontinued/${idProduct}`, {flag})
             
             let {data} = await axios.get(`http://localhost:5000/products`)
             
