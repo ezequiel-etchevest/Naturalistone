@@ -15,9 +15,12 @@ import { getInvoiceById, getInvoiceProducts } from '../../redux/actions-invoices
 import { cleanStatePayments } from '../../redux/actions-payments';
 import { useEffect } from 'react';
 
+let validateSeller = (userId) => {
+  if(userId == 6 || userId == 3 || userId == 5 || userId == 15 ) return true
+  else return false
+}
 
-
-const ModelTr = ({e}) => {
+const ModelTr = ({e, userId}) => {
 
     const navigate = useNavigate()
     const dispatch = useDispatch()
@@ -28,7 +31,7 @@ const ModelTr = ({e}) => {
       dispatch( cleanStatePayments())
       navigate(`/quotes/${e.Naturali_Invoice}`)
     }
-    
+    console.log({e})
     return(
       <Tr 
         onClick={() => handleClick()} 
@@ -40,6 +43,11 @@ const ModelTr = ({e}) => {
         }}
         >
         <Td textAlign={'center'}>{e.Naturali_Invoice}</Td>
+        {
+          validateSeller(userId) ? (
+          <Td textAlign={'center'}>{e.SellerID}</Td>
+          ):(null)
+        }
         <Td>{e.ProjectName}</Td>
         <Td>{e.Reference}</Td>
         <Td textAlign={'center'}>{e.InvoiceDate.split('T')[0]}</Td>
@@ -51,7 +59,7 @@ const ModelTr = ({e}) => {
     )
 }
 
-const List = ({seller_invoices, filteredByCustomer}) => {
+const List = ({seller_invoices, filteredByCustomer, userId}) => {
  
   const result = useSelector(state=> state.validate_result_quotes)
   const toast = useToast()
@@ -87,6 +95,7 @@ const List = ({seller_invoices, filteredByCustomer}) => {
   //   }
   //   else return seller_invoices
   // }
+
 
   useEffect(()=>{
     validateResults()
@@ -127,6 +136,9 @@ const List = ({seller_invoices, filteredByCustomer}) => {
                   <Thead h={'6vh'}>
                     <Tr>
                       <Th color={'web.text2'} textAlign={'center'}>Nº</Th>
+                      { validateSeller(userId) ? (
+                          <Th color={'web.text2'} textAlign={'center'}>Seller</Th>
+                      ):(null) }
                       <Th color={'web.text2'}  w={'12vw'}>Project</Th>
                       <Th color={'web.text2'}>Customer</Th>
                       <Th w={'5vw'} color={'web.text2'} textAlign={'center'}>Date</Th>
@@ -140,13 +152,13 @@ const List = ({seller_invoices, filteredByCustomer}) => {
                     { filteredByCustomer.length ? (
                       filteredByCustomer.map((e, i) =>{
                         return(
-                          <ModelTr key={i} e={e}/>
+                          <ModelTr key={i} e={e}userId={userId}/>
                         )
                       })
                     ) : (
                       
                       seller_invoices.map((e, i) => (
-                        <ModelTr key={i} e={e}/> 
+                        <ModelTr key={i} e={e} userId={userId}/> 
                         ))
                         )}
                   </Tbody>

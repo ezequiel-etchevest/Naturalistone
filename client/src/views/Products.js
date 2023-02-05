@@ -14,7 +14,7 @@ const Products = () => {
   const allProducts = useSelector(state => state.all_products)
   const values = useSelector(state => state.product_values)
   const userLocal = JSON.parse(localStorage.getItem('user'))
-  console.log('product',{values})
+
 
   useEffect(()=>{
       if(userLocal && !user.length){
