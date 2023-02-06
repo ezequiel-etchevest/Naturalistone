@@ -12,8 +12,39 @@ deliveryRouter.get('/:id', async function(req, res){
   try{
        mysqlConnection.query(query_, function(error, results, fields){
           if(!results.length) {
-              console.log('Error al obtener data in get.Deliveries_Products!')
-              res.status(400).json(error);
+              console.log(`Error al obtener data in get.Deliveries/:${id}!`)
+              res.status(200).json([]);
+          } else {
+              console.log('Data OK')
+              res.status(200).json(results);
+          }
+      });
+  } catch(error){
+      res.status(409).send(error);
+  }
+});
+deliveryRouter.get('/id/:id', async function(req, res){
+ 
+  const { id } = req.params
+  
+  query_ = `SELECT Deliveries_Products.*, Products.ProdID, Products.ProdNameID, 
+  ProdNames.Naturali_ProdName as ProdName,
+  Deliveries.SaleID, 
+  Deliveries.Delivery_Date,        
+  Dimension.Type,
+  Dimension.Size,
+  Dimension.Finish,
+  Dimension.Thickness FROM NaturaliStone.Deliveries_Products
+  INNER JOIN Products ON Products.ProdID = Deliveries_Products.ProdID
+  INNER JOIN Dimension ON Dimension.DimensionID = Products.DimensionID
+  INNER JOIN ProdNames ON ProdNames.ProdNameID = Products.ProdNameID
+  INNER JOIN Deliveries ON Deliveries.DeliveryNumber = Deliveries_Products.DeliveryNumber
+  WHERE Deliveries_Products.DeliveryNumber = ${id}`;
+  try{
+       mysqlConnection.query(query_, function(error, results, fields){
+          if(!results.length) {
+              console.log(`Error al obtener data in get.Deliveries/id/:${id}!`)
+              res.status(200).json([]);
           } else {
               console.log('Data OK')
               res.status(200).json(results);
@@ -58,8 +89,9 @@ deliveryRouter.post('/:id', async function(req, res){
             res.status(409).send(error2);
       }
     })
-    res.status(200).send('Delivery inserted correctly ')
+    res.status(200).send({msg:'Delivery inserted correctly', deliveryID: deliveryID})
   })
       
+
 
 module.exports = deliveryRouter

@@ -3,85 +3,95 @@ import {
   Table,
   Thead,
   Tbody,
-  Text,
   Tr,
   Th,
   Td,
   TableContainer,
-
 } from '@chakra-ui/react';
-import { useSelector } from 'react-redux';
+import { getDeliveryNote } from '../../redux/actions-deliveryNotes';
+import { useDispatch } from 'react-redux';
 
+const ModelTr = ({e, onSecondModalOpen}) => {
 
-const ModelTr = ({e, user}) => {
+  const dispatch = useDispatch()
 
+  const handleClick = async () => {
+    await dispatch(getDeliveryNote(e.DeliveryNumber))
+    onSecondModalOpen()
+  }
 
   return(
     <Tr 
-      // onClick={() => handleClick()} 
+      onClick={() => handleClick()} 
       cursor={'pointer'} 
       key={e.DeliveryNumber}
       _hover={{
         bg: 'web.navBar',
         color: 'logo.orange'
       }}
+      display={'flex'}
+      justifyContent={'space-around'}
       >
-      <Td textAlign={'center'}>{e.DeliveryNumber}</Td>
-      <Td textAlign={'center'}>{e.SaleID}</Td>
-      <Td textAlign={'center'}>{e.Delivery_Date?.split('T')[0]}</Td>
+      <Td textAlign={'center'} w={'10vw'}>{e.DeliveryNumber}</Td>
+      <Td textAlign={'center'} w={'10vw'}>{e.Delivery_Date?.split('T')[0]}</Td>
     </Tr>
   )
 }
 
-const DeliveriesList = ({user, deliveries, input}) => {
-
-  
-
-  //const deliveries = useSelector(state => state.deliveries_notes_by_id)
+const DeliveriesList = ({deliveries, input, onSecondModalOpen, setDeliveryID}) => {
   
   return(
       <Box
       display={'flex'}
       justifyContent={'center'}
+      h={'52vh'}
+      mt={'3vh'}
+      border={'1px solid'}
+      borderColor={'web.border'}
+      borderRadius={'md'}
+      w={'28vw'}
+      py={'3vh'}
+
       >
         <Box
-          maxHeight={'58vh'}
-          overflow={'auto'}
-          css={{
-            '&::-webkit-scrollbar': {
-              width: '0.2vw', 
-            },
-            '&::-webkit-scrollbar-track': {
-              width: '6px',
-            },
-            '&::-webkit-scrollbar-thumb': {
-              background: '#E47424',
-              borderRadius: '5px',
-            },
-          }}
           borderColor={'web.border'}
           bg={'web.sideBar'} 
           rounded={'md'} 
-          p={'3vh'}
-          w={'40vw'}
-          ml={'3vw'}
-          mr={'3vw'}
+          w={'25vw'}
           >
-          <TableContainer>
-              <Table color={'web.text'} variant={'simple'} size={'sm'} >
+          <TableContainer  h={'46vh'} w={'25vw'}>
+              <Table color={'web.text'} variant={'simple'} size={'sm'}>
                 <Thead h={'6vh'}>
-                  <Tr>
-                    <Th color={'web.text2'} w={'7vw'} textAlign={'center'}>Delivery note Nº</Th>
-                    <Th color={'web.text2'} w={'7vw'}  textAlign={'center'}>Sale ID</Th>
-                    <Th w={'5vw'} color={'web.text2'} textAlign={'center'}>Date</Th>
+                  <Tr display={'flex'} flexDir={'row'} justifyContent={'space-around'}>
+                    <Th color={'web.text2'} w={'10vw'} borderBottom={'none'}>Delivery note Nº</Th>
+                    <Th w={'6vw'} color={'web.text2'} borderBottom={'none'}>Date</Th>
                   </Tr>
                 </Thead>
-                <Tbody>
+                <Box
+                  maxHeight={'56vh'}
+                  overflow={'auto'}
+                  css={{
+                    '&::-webkit-scrollbar': {
+                      width: '0.2vw',
+                       
+                    },
+                    '&::-webkit-scrollbar-track': {
+                      width: '6px',
+                    },
+                    '&::-webkit-scrollbar-thumb': {
+                      background: '#E47424',
+                      borderRadius: '5px',
+                    },
+                  }}
+                  display={'flex'}
+                  w={'25vw'}
+                  >
+                <Tbody w={'24vw'}> 
                 {
                   input.length ?
                   input.map((e, i) =>{
                     return(
-                      <ModelTr key={i} e={e}/>
+                      <ModelTr key={i} e={e} onSecondModalOpen={onSecondModalOpen} setDeliveryID={setDeliveryID}/>
                     )
                   })
                   :
@@ -89,13 +99,14 @@ const DeliveriesList = ({user, deliveries, input}) => {
                   deliveries.length ? 
                     deliveries.map((e, i) =>{
                       return(
-                        <ModelTr key={i} e={e}/>
+                        <ModelTr key={i} e={e} onSecondModalOpen={onSecondModalOpen} setDeliveryID={setDeliveryID}/>
                       )
                     })
                   : 
-                    <Text>NO DELIVERIES DONE TO THIS INVOICE YET</Text>)
+                   null)
                   }
                 </Tbody>
+                </Box>
               </Table>
           </TableContainer> 
           </Box> 

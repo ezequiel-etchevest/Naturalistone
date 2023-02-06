@@ -75,6 +75,7 @@ const ModelTr = ({p, setQuantities, quantities}) => {
           color: 'logo.orange'
         }}
         onBlur={() => handleOnBlur()}
+        
         //onClick={() => handleClick()}
         >
         <Td w={'10vw'}>
@@ -82,19 +83,22 @@ const ModelTr = ({p, setQuantities, quantities}) => {
             clampValueOnBlur={true}
             borderColor={'web.border'} 
             color={'web.text2'}
-            w={'6vw'}
+            size={'md'}
+            w={'7vw'}
             ml={'1vw'}
+            h={'4vh'}
             onChange={(e)=>handleInput(e)} 
             step={1} 
             defaultValue={0} 
             min={0} 
-            precision={0}
+            precision={2}
             >
             <NumberInputField                    
             _focus={{
               borderColor: 'logo.orange',
               boxShadow: '0 0.5px 0.5px rgba(229, 103, 23, 0.075)inset, 0 0 5px rgba(255,144,0,0.6)'
-                    }} />
+                    }} 
+              h={'4vh'}/>
             <NumberInputStepper>
               <NumberIncrementStepper />
               <NumberDecrementStepper />
@@ -118,14 +122,14 @@ const DeliveryProductList = ({invoice_products, setQuantities, quantities}) => {
         <Box
         display={'flex'}
         justifyContent={'center'}
-       
+        w={'60vw'}
         >
           <Box
-            maxHeight={'60vh'}
+            maxHeight={'54vh'}
             overflow={'auto'}
             css={{
               '&::-webkit-scrollbar': {
-                width: '0.4vw',
+                width: '0.2vw',
               },
               '&::-webkit-scrollbar-track': {
                 width: '6px',
@@ -137,8 +141,8 @@ const DeliveryProductList = ({invoice_products, setQuantities, quantities}) => {
             }}
             bg={'web.sideBar'}           
             >
-            <TableContainer>
-                <Table mt={'1vh'} color={'web.text'} variant={'simple'} size={'sm'}border={'2px solid red'}>
+            <TableContainer >
+                <Table mt={'1vh'} color={'web.text'} variant={'simple'} size={'sm'}>
                   <Thead h={'6vh'}>
                     <Tr>
                       <Th color={'web.text2'} textAlign={'center'} w={'10vw'}>Delivery Quantity</Th>

@@ -5,10 +5,10 @@ import {
     useDisclosure,
     } from "@chakra-ui/react"
 import { BsListUl } from 'react-icons/bs';
-import DeliveryListModal from "./DeliveryListModal";
+import DeliveryNotesListModal from "./DeliveryNotesListModal";
 
 
-const DeliveryListButton = ({user, invoice, deliveries}) => {
+const DeliveryNotesListButton = ({user, invoice, deliveries}) => {
 
   const { isOpen, onOpen, onClose } = useDisclosure()
    
@@ -33,10 +33,10 @@ const DeliveryListButton = ({user, invoice, deliveries}) => {
         fontWeight={'normal'}
         >Delivery Notes List
       </Button>
-    <DeliveryListModal isOpen={isOpen} onClose={onClose} invoice={invoice} deliveries={deliveries}/> 
+    <DeliveryNotesListModal isOpen={isOpen} onClose={onClose} invoice={invoice} deliveries={deliveries}/> 
     </ButtonGroup>
   </>
   )
 }
 
-export default DeliveryListButton
+export default DeliveryNotesListButton

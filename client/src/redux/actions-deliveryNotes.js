@@ -1,14 +1,13 @@
 import axios from 'axios';
 export const POST_DELIVERY_NOTE = 'POST_DELIVERY_NOTE';
 export const GET_DELIVERIESS = 'GET_DELIVERIESS';
-// export const DELETE_PAYMENT_METHOD = 'DELETE_PAYMENT_METHOD';
+export const GET_DELIVERY_BY_ID = 'GET_DELIVERY_BY_ID';
 // export const CLEAN_PAYMENTS_BY_ID = 'CLEAN_PAYMENTS_BY_ID';
 
 export function postDeliveryNote(id, quantities){
     return async function(dispatch){
         try{
             let { data } = await axios.post(`http://localhost:5000/delivery/${id}`, quantities)
-            
             dispatch(
             {
                 type: POST_DELIVERY_NOTE,
@@ -32,6 +31,18 @@ export function getDeliveriesNotes(id){
         }
 }
 
+export function getDeliveryNote(id){
+    return async function(dispatch){
+        try{
+            let { data } = await axios.get(`http://localhost:5000/delivery/id/${id}`)
+            return dispatch({
+                type: GET_DELIVERY_BY_ID,
+                payload: data
+            })}catch(error){
+                console.log(error)
+            }
+        }
+}
 // export function deletePayment(invoiceID, paymentID){
 //     console.log({paymentID})
 //     return async function(dispatch){

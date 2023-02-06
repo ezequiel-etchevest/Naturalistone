@@ -10,24 +10,25 @@ import {
     ModalCloseButton,
     Input, 
     IconButton,
-    Text
+    Text,
+    useDisclosure
     } from "@chakra-ui/react"
-import PdfDelivery from "./DeliveryDetailPDf"
+import DeliveryNotePdf from "./DeliveryPDf"
 import DeliveriesList from "./DeliveriesList"
 import { SearchIcon } from '@chakra-ui/icons';
 import { useState } from "react";
 
-const DeliveryListModal = ({isOpen, onClose, invoice, user, deliveries}) => {
+
+const DeliveryNotesListModal = ({isOpen, onClose, invoice, user, deliveries}) => {
  
 const id = invoice[0].Naturali_Invoice
 
-//   const [quantities, setQuantities] = useState([])
-  const [input, setInput] = useState([])
-  
-//   const handleSubmit = () => {
-//     dispatch(postDeliveryNote(id, quantities))
-//     onClose()
-//   }
+const [input, setInput] = useState([])
+const [deliveryID, setDeliveryID]= useState('')
+
+const { isOpen: isSecondModalOpen, onOpen: onSecondModalOpen, onClose: onSecondModalClose } = useDisclosure()
+
+
 const handleSearchInput = (e) => {
   if(e.target.value.length){
     if(deliveries.length) {
@@ -39,35 +40,33 @@ const handleSearchInput = (e) => {
   } else {
     setInput([])
   }
-  
 }
-  return(
 
+  return(
+<>
+  {/* Start Render delivery notes list modal */}
   <Modal 
-  isOpen={isOpen} 
-  onClose={onClose}
-  size={'3xl'}
-  >
+    isOpen={isOpen} 
+    onClose={onClose}
+    size={'xl'}
+    >
     <ModalOverlay />
     <ModalContent 
       bg={'web.sideBar'}
       border={'1px solid'}
       borderColor={'web.border'}
-      height={'82vh'}
-      w={'62vw'}
+      height={'80vh'}
       >
       <ModalHeader
-      ml={'1vw'}
-      mt={'3vh'}
       color={'web.text'}
       display={'flex'}
-      flexDir={'row'}
-      h={'8vh'}
-      justifyContent={'space-between'}>
-        <Text>Delivery notes submited to Invoice N° {`${id}`}</Text>
-        <Box  ml={'2vw'} mr={'2vw'} mt={'3vh'} h={'4vh'}>
+      flexDir={'column'}
+      h={'12vh'}>
+        <Text mt={'1vh'} ml={'1vw'}>Delivery notes submited to Invoice N° {`${id}`}</Text>
+        <Box display={'flex'} mt={'0.5vh'} mb={'1.5vh'} justifyContent={'flex-end'}>
           <Input
             w={'8vw'}
+            mt={'1vh'} mb={'2vh'}
             variant={"unstyled"}
             placeholder={'Delivery number'}
             _placeholder={{ fontFamily: 'body', fontWeight: 'thin' }}
@@ -91,34 +90,52 @@ const handleSearchInput = (e) => {
             }}
             _active={{ color: 'logo.orange'}}
           />
-      </Box>
-      </ModalHeader>
+        </Box>
+    </ModalHeader>
     <ModalCloseButton
       color={'web.text2'}
       _hover={{
         color: 'web.text'
       }} />
     <ModalBody color={'web.text2'} display={'flex'} justifyContent={'center'}>
-      {/* <PdfDelivery/> */}
-      <Box
-        ml={'0.5vw'}
-        mr={'0.5vw'}
-        w={'58vw'}>
-        <DeliveriesList id={id} user={user} deliveries={deliveries} input={input}/>
-      </Box>
+        <DeliveriesList id={id} user={user} deliveries={deliveries} input={input} onSecondModalOpen={onSecondModalOpen} setDeliveryID={setDeliveryID}/>
     </ModalBody>
-      <ModalFooter mb={'1vh'} mr={'1vw'}>
+      <ModalFooter mb={'1vh'}>
         <Button
           colorScheme={'orange'} 
           mr={3} 
-          // onClick={()=>handleSubmit()}
-          >
-         Confirm
-        </Button>
-        <Button variant='ghost' onClick={onClose}>Close</Button>
+          onClick={onClose}>Close</Button>
       </ModalFooter>
     </ModalContent>
   </Modal>
+  {/* Finish Render delivery notes list modal */}
+
+  {/* Start Render selected delivery modal */}
+  <Modal 
+    isOpen={isSecondModalOpen} 
+    onClose={onSecondModalClose}
+    size={'4xl'}
+    >
+    <ModalOverlay />
+    <ModalContent 
+      rounded={'md'} 
+      mt={'2vh'} 
+      mb={'2vh'} 
+      w={'64vw'} 
+      bg={'web.sideBar'} 
+      border={'1px solid'} 
+      borderColor={'web.border'}
+      >
+      <ModalHeader/>
+      <ModalBody color={'web.text2'} w={'100%'} h={'100%'}>
+        <DeliveryNotePdf/>
+        {/* idDeliveryNote={idDeliveryNote} */}
+      </ModalBody>
+      <ModalFooter/>
+    </ModalContent>
+  </Modal>
+  {/* Finish Render selected delivery modal */}
+</>
 )}
 
-export default DeliveryListModal
+export default DeliveryNotesListModal

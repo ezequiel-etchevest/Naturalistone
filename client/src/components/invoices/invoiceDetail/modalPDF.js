@@ -9,7 +9,6 @@ import {
 import miniPDF from '../../../assets/miniPDF.png'
 import LoadPDF from '../../pdf/pdfModify'
 import LoadPdfPaid from '../../pdf/pdfPaidFunction'
-import LoadPdfDelivery from '../../deliveryQuotes/deliveryNotePdf'
 
 export default function ModalPDF({invoice, payments}) {
   
@@ -39,7 +38,6 @@ export default function ModalPDF({invoice, payments}) {
               ):(
               <LoadPDF idpdf={id} />
               )
-           // <LoadPdfDelivery/>
             }
           </ModalBody>
         </ModalContent>

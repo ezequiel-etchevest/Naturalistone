@@ -97,7 +97,7 @@ const ProductList = ({ allProducts, filteredProducts, user }) => {
         overflow={'auto'}
         css={{
           '&::-webkit-scrollbar': {
-            width: '0.4vw',
+            width: '0.2vw',
           },
           '&::-webkit-scrollbar-track': {
             width: '6px',
@@ -112,9 +112,9 @@ const ProductList = ({ allProducts, filteredProducts, user }) => {
         border={'1px solid'} 
         rounded={'md'} 
         p={'3vh'}
-        w={'72vw'}
+        w={'74vw'}
         >
-        <TableContainer>
+        <TableContainer  mr={'1vw'}>
           <Table color={'web.text'} variant={'simple'} size={'sm'}>
             <Thead h={'6vh'}>
               <Tr>
