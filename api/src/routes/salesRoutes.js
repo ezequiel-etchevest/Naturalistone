@@ -52,6 +52,7 @@ salesRouter.get('/invoice/:id', async function(req, res){
                 LEFT JOIN Projects ON Sales.ProjectID = Projects.idProjects
                 LEFT JOIN Customers ON Projects.CustomerID = Customers.CustomerID
                 WHERE Naturali_Invoice = ${id}`;
+
     try{
          mysqlConnection.query(query_, function(error, results, fields){
             if(error) throw error;
@@ -74,11 +75,19 @@ salesRouter.get('/lastWeek/:id', async function(req, res){
     const today = new Date().toISOString().split('T')[0]
     const limitDateWeek = getLimitDate()
 
-    query_ = `SELECT Sales.*, Customers.*, Projects.* FROM Sales 
+    if(id == 3 || id == 5 || id == 15){
+
+      query_ = `SELECT Sales.*, Customers.*, Projects.* FROM Sales 
+      LEFT JOIN Projects ON Sales.ProjectID = Projects.idProjects
+      LEFT JOIN Customers ON Projects.CustomerID = Customers.CustomerID 
+      WHERE InvoiceDate BETWEEN "${limitDateWeek}" AND "${today}" ORDER BY InvoiceDate DESC`
+
+    } else {
+      query_ = `SELECT Sales.*, Customers.*, Projects.* FROM Sales 
                 LEFT JOIN Projects ON Sales.ProjectID = Projects.idProjects
                 LEFT JOIN Customers ON Projects.CustomerID = Customers.CustomerID 
                 WHERE SellerID = ${id} AND InvoiceDate BETWEEN "${limitDateWeek}" AND "${today}" ORDER BY InvoiceDate DESC`
-    
+  }
 //    query_ = `SELECT * FROM Sales WHERE SellerID = ${id} AND InvoiceDate BETWEEN "${limitDateWeek}" AND "${today}"`
     try{
        mysqlConnection.query(query_, function(error, results, fields){
@@ -103,10 +112,17 @@ salesRouter.get('/lastMonth/:id', async function(req, res){
     const today = new Date().toISOString().split('T')[0]
     const limitDateMonth = getLimitDateMonth()
 
-    query_ =   `SELECT Sales.*, Customers.*, Projects.* FROM Sales 
+    if(id == 3 || id == 5 || id == 15){
+      query_ =   `SELECT Sales.*, Customers.*, Projects.* FROM Sales 
+      LEFT JOIN Projects ON Sales.ProjectID = Projects.idProjects
+      LEFT JOIN Customers ON Projects.CustomerID = Customers.CustomerID 
+      WHERE InvoiceDate BETWEEN "${limitDateMonth}" AND "${today}" ORDER BY InvoiceDate DESC`
+    } else{
+      query_ =   `SELECT Sales.*, Customers.*, Projects.* FROM Sales 
                 LEFT JOIN Projects ON Sales.ProjectID = Projects.idProjects
                 LEFT JOIN Customers ON Projects.CustomerID = Customers.CustomerID 
                 WHERE SellerID = ${id} AND InvoiceDate BETWEEN "${limitDateMonth}" AND "${today}" ORDER BY InvoiceDate DESC`
+    }
     try{
        mysqlConnection.query(query_, function(error, results, fields){
 
@@ -130,9 +146,17 @@ salesRouter.get('/currentMonth/:id', async function(req, res){
     const today = new Date().toISOString().split('T')[0]
     const currentMonth = getCurrentMonth()
 
-    query_ = `SELECT ROUND(SUM(Value), 2) As TotalValue FROM Sales WHERE SellerID = ${id} AND InvoiceDate BETWEEN "${currentMonth}" AND "${today}"`
-    query_2 = `SELECT count(*) As InvoicesNumber FROM Sales where SellerID = ${id} AND InvoiceDate BETWEEN "${currentMonth}" AND "${today}"`
-    query_3 = `SELECT ROUND(AVG(Value), 2) As AvgValue FROM Sales WHERE SellerID = ${id} AND InvoiceDate BETWEEN "${currentMonth}" AND "${today}"`
+    if(id == 3 || id == 5 || id == 15){
+
+      query_ = `SELECT ROUND(SUM(Value), 2) As TotalValue FROM Sales WHERE InvoiceDate BETWEEN "${currentMonth}" AND "${today}"`
+      query_2 = `SELECT count(*) As InvoicesNumber FROM Sales WHERE InvoiceDate BETWEEN "${currentMonth}" AND "${today}"`
+      query_3 = `SELECT ROUND(AVG(Value), 2) As AvgValue FROM Sales WHERE InvoiceDate BETWEEN "${currentMonth}" AND "${today}"`
+    
+    } else {
+      query_ = `SELECT ROUND(SUM(Value), 2) As TotalValue FROM Sales WHERE SellerID = ${id} AND InvoiceDate BETWEEN "${currentMonth}" AND "${today}"`
+      query_2 = `SELECT count(*) As InvoicesNumber FROM Sales where SellerID = ${id} AND InvoiceDate BETWEEN "${currentMonth}" AND "${today}"`
+      query_3 = `SELECT ROUND(AVG(Value), 2) As AvgValue FROM Sales WHERE SellerID = ${id} AND InvoiceDate BETWEEN "${currentMonth}" AND "${today}"`
+    }
     
     try{
         mysqlConnection.query(query_, function(error1, results, fields){

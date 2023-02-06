@@ -52,7 +52,7 @@ const InvoiceProductList = ({invoice_products}) => {
             overflow={'auto'}
             css={{
               '&::-webkit-scrollbar': {
-                width: '0.4vw',
+                width: '0.2vw',
               },
               '&::-webkit-scrollbar-track': {
                 width: '6px',
@@ -65,7 +65,7 @@ const InvoiceProductList = ({invoice_products}) => {
             bg={'web.sideBar'}           
             >
             <Text fontSize={'xl'} color={'web.text2'}>Products Details</Text>
-            <TableContainer w={'44vw'}>
+            <TableContainer w={'44vw'} mr={'1vw'}>
                 <Table mt={'2vh'} color={'web.text'} variant={'simple'} size={'sm'} >
                   <Thead h={'6vh'}>
                     <Tr>

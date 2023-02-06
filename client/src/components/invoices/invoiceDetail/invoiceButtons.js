@@ -7,8 +7,8 @@ import{
 import {AiOutlineMail, AiOutlineInfoCircle} from 'react-icons/ai';
 import ModalStamp from './modalStamp';
 import ChangeStatus from './modalStatus';
-import DeliveryButton from '../../deliveryQuotes/DeliveryButton';
-import DeliveryListButton from '../../deliveryQuotes/DeliveryListButton';
+import CreateDeliveryButton from '../../deliveryQuotes/CreateDeliveryButton';
+import DeliveryNotesListButton from '../../deliveryQuotes/DeliveryNotesListButton';
 
 const InvoicePanelButtons = ({invoice, payments, user, invoice_products, deliveries}) => {
      
@@ -25,8 +25,8 @@ const InvoicePanelButtons = ({invoice, payments, user, invoice_products, deliver
           	>
             <Box>
               <ChangeStatus invoice={invoice} user={user}/>
-              <DeliveryButton invoice={invoice} user={user} invoice_products={invoice_products}/>
-              <DeliveryListButton user={user} invoice={invoice} deliveries={deliveries}/>
+              <CreateDeliveryButton invoice={invoice} user={user} invoice_products={invoice_products}/>
+              <DeliveryNotesListButton user={user} invoice={invoice} deliveries={deliveries}/>
               <ButtonGroup
                 display={'flex'}
                 spacing={0}

@@ -58,7 +58,7 @@ const ModelTr = ({e, user}) => {
       <Td onClick={() => handleClickProduct()} isNumeric>{e.Price}$</Td>
       <Td onClick={() => handleClickProduct()} textAlign={'center'}>{e.InStock_Available === null ? 0 : e.InStock_Available}</Td>
       <Td onClick={() => handleClickProduct()} textAlign={'center'}>{e.Incoming_Available === null ? 0 : e.Incoming_Available}</Td>
-      <Td onClick={() => handleClickProduct()} textAlign={'center'}>{e.NextArrival === undefined ? '-' : e.NextArrival}</Td>  {/*cambiar el origen de esta info */}
+      <Td onClick={() => handleClickProduct()} textAlign={'center'}>{e.NextArrival === undefined ? '-' : e.NextArrival}</Td>
       <Td pl={'3.5vw'}>{ validateSeller() === false ? (e.Discontinued_Flag === 'True' ? <ImCheckboxChecked color='logo.orange'/> : <ImCheckboxUnchecked color='logo.orange'/> ) : (<Switch  onChange={() => handleClickSwitch()} isChecked={flag} colorScheme={'orange'} size={'sm'}/>) }</Td>
       </Tr>
   )
@@ -96,7 +96,7 @@ const ProductList = ({ allProducts, filteredProducts, user }) => {
         overflow={'auto'}
         css={{
           '&::-webkit-scrollbar': {
-            width: '0.4vw',
+            width: '0.2vw',
           },
           '&::-webkit-scrollbar-track': {
             width: '6px',
@@ -111,9 +111,9 @@ const ProductList = ({ allProducts, filteredProducts, user }) => {
         border={'1px solid'} 
         rounded={'md'} 
         p={'3vh'}
-        w={'72vw'}
+        w={'74vw'}
         >
-        <TableContainer>
+        <TableContainer  mr={'1vw'}>
           <Table color={'web.text'} variant={'simple'} size={'sm'}>
             <Thead h={'6vh'}>
               <Tr>

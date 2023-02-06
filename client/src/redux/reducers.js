@@ -43,7 +43,8 @@ import {
 } from './actions-orders';
 import { 
     GET_DELIVERIESS,
-    POST_DELIVERY_NOTE
+    POST_DELIVERY_NOTE,
+    GET_DELIVERY_BY_ID
 } from './actions-deliveryNotes';
 
 
@@ -70,10 +71,13 @@ const intialState = {
     invoice_errors: [],
     invoice_errors_by_filter:[],
     invoice_errors_by_filter_errors:[],
-    deliveries_notes_by_id:[]
+    deliveries_notes_by_id:[],
+    deliveryID:'',
+    delivery_by_id:[]
 }
 
 function rootReducer (state = intialState, action) {
+  
     switch(action.type){
         case GET_EMPLOYEES:
             return {
@@ -108,6 +112,8 @@ function rootReducer (state = intialState, action) {
               invoice_errors_by_filter:[],
               invoice_errors_by_filter_errors:[],
               deliveries_notes_by_id:[],
+              deliveryID:'',
+              delivery_by_id:[]
             }
         
         case GET_INVOICE_BY_ID:
@@ -263,19 +269,24 @@ function rootReducer (state = intialState, action) {
               }
         case POST_DELIVERY_NOTE:
           return {
-            // ...state,
-            // delivery_note_by_id: action.payload
+            ...state,
+            deliveryID: action.payload.deliveryID
           }
         case GET_DELIVERIESS:
           return {
             ...state,
             deliveries_notes_by_id: action.payload
           }
+        case GET_DELIVERY_BY_ID:
+          return {
+            ...state,
+            delivery_by_id: action.payload
+          }
         case GET_VALUES:
-              return {
-                ...state,
-                product_values: action.payload
-              }
+           return {
+             ...state,
+             product_values: action.payload
+           }
 
         default:
             return {

@@ -116,9 +116,9 @@ const ProductsFilters = ({allProducts, setFilteredProducts, values}) => {
               >
                 <option value='' className="options"> Select Finish</option>
                 {
-                  values.finishValues.map(v => {
+                  values.finishValues.map((v, i )=> {
                     return(
-                      <option value={`${v}`} className={'options'}>{`${v}`}</option>
+                      <option value={`${v}`} key={i} className={'options'}>{`${v}`}</option>
                     )
                   })
                 }              
@@ -142,9 +142,9 @@ const ProductsFilters = ({allProducts, setFilteredProducts, values}) => {
               >
               <option value='' className="options">Select Size</option>
               {
-                  values.sizes.map(v => {
+                  values.sizes.map((v, i) => {
                     return(
-                      <option value={`${v}`} className={'options'}>{`${v}`}</option>
+                      <option value={`${v}`} key={i} className={'options'}>{`${v}`}</option>
                     )
                   })
                        
@@ -168,9 +168,9 @@ const ProductsFilters = ({allProducts, setFilteredProducts, values}) => {
               >
               <option value='' className="options">Select Thickness</option>
               {
-                  values.thickness.map(v => {
+                  values.thickness.map((v, i) => {
                     return(
-                      <option value={`${v}`} className={'options'}>{`${v}`}</option>
+                      <option value={`${v}`} key={i} className={'options'}>{`${v}`}</option>
                     )
                   })
               }
