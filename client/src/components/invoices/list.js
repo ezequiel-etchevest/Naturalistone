@@ -143,8 +143,8 @@ const List = ({seller_invoices, filteredByCustomer, userId}) => {
                       <Th color={'web.text2'}>Customer</Th>
                       <Th w={'5vw'} color={'web.text2'} textAlign={'center'}>Date</Th>
                       <Th w={'5vw'} color={'web.text2'} textAlign={'center'}>Status</Th>
-                      <Th color={'web.text2'} w={'8vw'} textAlign={'center'} isNumeric>Total</Th>
-                      <Th color={'web.text2'} w={'8vw'} textAlign={'center'}>Paid</Th>
+                      <Th color={'web.text2'} w={'5vw'} textAlign={'center'} isNumeric>Total</Th>
+                      <Th color={'web.text2'} w={'5vw'} textAlign={'center'}>Paid</Th>
                       <Th color={'web.text2'} w={'8vw'}>Last Payment Date </Th>
                     </Tr>
                   </Thead>

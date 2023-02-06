@@ -13,9 +13,10 @@ salesRouter.get('/:id', async function(req, res){
 
   if(id == 3 || id == 5 || id == 15){
 
-  query_ =    `SELECT Sales.*, Projects.*, Customers.*, Payments.idPayments, GROUP_CONCAT(
-            CONCAT (Payments.idPayments,';',Payments.Amount,';',Payments. Date))AS Payments FROM Sales 
+  query_ =    `SELECT Sales.*, Projects.*, Customers.*, Payments.idPayments, Seller.* GROUP_CONCAT(
+            CONCAT (Payments.idPayments,';',Payments.Amount,';',Payments.Date))AS Payments FROM Sales 
             LEFT JOIN Projects ON Sales.ProjectID = Projects.idProjects
+            LEFT JOIN Seller ON Sales.SellerID = Seller.SellerID
             LEFT JOIN Customers ON Projects.CustomerID = Customers.CustomerID
             LEFT JOIN Payments ON Sales.Naturali_Invoice = Payments.InvoiceID
             GROUP BY Sales.Naturali_Invoice
@@ -48,7 +49,8 @@ salesRouter.get('/:id', async function(req, res){
 salesRouter.get('/invoice/:id', async function(req, res){
     const { id } = req.params
 
-    query_ =    `SELECT Sales.*, Projects.*, Customers.* FROM Sales
+    query_ =    `SELECT Sales.*, Projects.*, Customers.*, Seller.* FROM Sales
+                LEFT JOIN Seller ON Sales.SellerID = Seller.SellerID
                 LEFT JOIN Projects ON Sales.ProjectID = Projects.idProjects
                 LEFT JOIN Customers ON Projects.CustomerID = Customers.CustomerID
                 WHERE Naturali_Invoice = ${id}`;
@@ -79,7 +81,6 @@ salesRouter.get('/lastWeek/:id', async function(req, res){
                 LEFT JOIN Customers ON Projects.CustomerID = Customers.CustomerID 
                 WHERE SellerID = ${id} AND InvoiceDate BETWEEN "${limitDateWeek}" AND "${today}" ORDER BY InvoiceDate DESC`
     
-//    query_ = `SELECT * FROM Sales WHERE SellerID = ${id} AND InvoiceDate BETWEEN "${limitDateWeek}" AND "${today}"`
     try{
        mysqlConnection.query(query_, function(error, results, fields){
 
@@ -138,21 +139,21 @@ salesRouter.get('/currentMonth/:id', async function(req, res){
         mysqlConnection.query(query_, function(error1, results, fields){
            if(error1) throw error1;
            if(results.length == 0) {
-            //    console.log('Error al obtener data en CurrentMonth Value!')
+
                res.status(400).send('Error obtaining data in CurrentMonth Value!', error1);
             } else {
                try{
                    mysqlConnection.query(query_2, function(error2, results2, fields){
                        if(error2) throw error2;
                        if(results2.length == 0) {
-                        //    console.log('Error al obtener data en Invoice number Count!')
+
                            res.status(400).json('Error obtaining data in Invoice number Count!', error2);
                         } else {
                             try{
                                 mysqlConnection.query(query_3, function(error3, results3, fields){
                                     if(error3) throw error3;
                                     if(results3.length == 0) {
-                                        // console.log('Error al obtener data en PaymentStatus!')
+
                                         res.status(400).json('Error obtaining data in Average Value!');
                                     }else {
                                         console.log('Data CurrentMonth Value OK')

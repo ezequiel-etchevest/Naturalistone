@@ -209,9 +209,12 @@ const Filters = ({userId, seller_invoices, setFilteredByCustomer, focus, setFocu
                 display={'flex'}
                 alignItems={'center'} 
                 w={'19vw'}
-                h={'10vh'}>
+                h={'10vh'}
+                >
                 <Input
+                  mb={'0.5vh'}
                   w={'70%'}
+                  minH={'4.5vh'}
                   variant="unstyled"
                   placeholder={'Customer Name'}
                   textColor={'web.text'}
