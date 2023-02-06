@@ -12,7 +12,7 @@ const InfoContainer = ({seller_invoices, userId, focus, setFocus}) => {
         ml={'20vw'}
         bg={'web.bg'}> 
         <Filters seller_invoices={seller_invoices} userId={userId} setFilteredByCustomer={setFilteredByCustomer} setFocus={setFocus} focus={focus}/>
-        <List seller_invoices={seller_invoices} filteredByCustomer={filteredByCustomer} />
+        <List seller_invoices={seller_invoices} filteredByCustomer={filteredByCustomer} userId={userId} />
         </Box>
     )
 }
