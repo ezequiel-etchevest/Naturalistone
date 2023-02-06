@@ -1,17 +1,15 @@
 
-const filterProducts = (type, size, thickness, price1, price2, allProducts) => {
+const filterProducts = (finish, size, thickness, price1, price2, allProducts) => {
 
   let filteredProds = allProducts
   let errorsSearch = {}
     // if(type !== ''){
     //   filteredProds = filteredProds.filter((e) => e.Type === type)
     // } 
-    if(type !== ''){
-      let filteredType = filteredProds.filter((e) => e.Type === type)
-      if(!filteredType.length) errorsSearch.error = `No match for Type: ${type}`
-       else filteredProds = filteredType
-        
-      
+    if(finish !== ''){
+      let filteredFinish = filteredProds.filter((e) => e.Finish === finish)
+      if(!filteredFinish.length) errorsSearch.error = `No match for Finish: ${finish}`
+       else filteredProds = filteredFinish
   }  
     if(size !== ''){
       let filteredSize = filteredProds.filter((e) => e.Size === size)

@@ -1,13 +1,13 @@
 const express = require('express')
 const invoiceErrorsRouter = express.Router()
 const mysqlConnection = require('../db')
-
+const filterInvoiceErrorsController = require('../Controllers/invoiceErrorsFiltersController')
 
 invoiceErrorsRouter.get('/', async function(req, res){
 
 
     query_ = `SELECT InvoiceErrors.*, Seller.FirstName, Seller.LastName FROM InvoiceErrors
-              LEFT JOIN Seller ON InvoiceErrors.SellerID = Seller.SellerID`;
+              LEFT JOIN Seller ON InvoiceErrors.SellerID = Seller.SellerID Order By Date desc`;
     try{
          mysqlConnection.query(query_, function(error, results, fields){
             if(!results.length) {
@@ -27,15 +27,16 @@ invoiceErrorsRouter.get('/filtered', async function(req, res){
 
     const {id, type} = req.query
 
-    query_ = `SELECT * FROM InvoiceErrors`;
+    query_ = `SELECT InvoiceErrors.*, Seller.FirstName, Seller.LastName FROM InvoiceErrors
+              LEFT JOIN Seller ON InvoiceErrors.SellerID = Seller.SellerID  Order By Date desc`;
     try{
          mysqlConnection.query(query_, function(error, results){
             if(!results?.length) {
                 console.log(`No invoices on ID ${id}`)
                 res.status(200).json([]);
             } else {
-                const filter = filterInvErrors(id, type, results)
-                res.status(200).json(results);
+                const filter = filterInvoiceErrorsController(id, type, results)
+                res.status(200).json(filter);
             }
         });
     } catch(error){

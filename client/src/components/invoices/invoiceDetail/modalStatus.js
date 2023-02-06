@@ -32,9 +32,6 @@ const ChangeStatus = ({invoice, user}) => {
     onClose()
   }
 
-  console.log('userID', user.SellerID)
-  console.log('payment', invoice[0].Payment_Stamp)
-
     return(
         <>
           <ButtonGroup

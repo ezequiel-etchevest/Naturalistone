@@ -15,7 +15,6 @@ const Products = () => {
   const values = useSelector(state => state.product_values)
   const userLocal = JSON.parse(localStorage.getItem('user'))
 
-
   useEffect(()=>{
       if(userLocal && !user.length){
         dispatch(getEmployeeById(userLocal.SellerID))

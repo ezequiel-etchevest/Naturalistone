@@ -1,7 +1,7 @@
 const express = require('express')
 const productsRouter = express.Router()
 const mysqlConnection = require('../db')
-const filterProducts = require('../Controllers/productFilters')
+const filterProducts = require('../Controllers/productFiltersController')
 const { getUniqueFinishes, findMaxMinPrice, getUniqueSizes, thicknessValues } = require('../Controllers/productValues')
 
 productsRouter.get('/', async function(req, res){
@@ -77,12 +77,13 @@ productsRouter.get('/id/:id', async function(req, res){
 
 productsRouter.get('/filtered', async function(req, res){
 
-    const { type, size, thickness, price1, price2 } = req.query
+    const { finish, size, thickness, price1, price2 } = req.query
 
     query_ = `SELECT    
                     ProdNames.Naturali_ProdName AS ProductName,
                     Dimension.Type,
                     Dimension.Size,
+                    Dimension.Finish,
                     Dimension.Thickness,
                     Products.SalePrice AS Price,
                     Products.ProdID,
@@ -90,7 +91,8 @@ productsRouter.get('/filtered', async function(req, res){
                   FROM Products
                   INNER JOIN ProdNames ON ProdNames.ProdNameID = Products.ProdNameID
                   INNER JOIN Dimension ON Dimension.DimensionID = Products.DimensionID
-                  INNER JOIN Inventory ON Inventory.ProdID = Products.ProdID`
+                  INNER JOIN Inventory ON Inventory.ProdID = Products.ProdID 
+                  ORDER BY ProdNames.Naturali_ProdName ASC`
     try{
         mysqlConnection.query(query_, function(error, results, fields){   
             
@@ -99,7 +101,7 @@ productsRouter.get('/filtered', async function(req, res){
                 console.log('Error en productsRoutes.get /filtered')
                 res.status(200).json({});
             } else {
-                const filter = filterProducts(type, size, thickness, price1, price2, results)
+                const filter = filterProducts(finish, size, thickness, price1, price2, results)
                 res.status(200).json(filter);
             }
         });
@@ -135,9 +137,10 @@ productsRouter.patch('/notes/:id', async function(req, res){
 productsRouter.patch('/discontinued/:id', async function(req, res){
     
     const {id} = req.params
-    const flag = req.body
-
-    query_ = `UPDATE Products SET Discontinued_Flag = ${flag === true ? 'False' : 'True'} WHERE ProdID =${id}`
+    const {flag} = req.body
+    const val = flag === true ? 'False' : 'True'
+    console.log(val)
+    query_ = `UPDATE Products SET Discontinued_Flag = "${val}" WHERE ProdID =${id}`
 
     try{
        mysqlConnection.query(query_, function(error, results, fields){

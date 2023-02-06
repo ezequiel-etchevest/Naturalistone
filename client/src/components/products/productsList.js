@@ -20,10 +20,11 @@ import { patchDiscontinued } from '../../redux/actions-products';
 
 const ModelTr = ({e, user}) => {
 
-    const a = e.Discontinued_Flag === 'True' ? true : false 
+  const a = e.Discontinued_Flag === 'True' ? true : false 
+  const [flag, setFlag] = useState(a)
+
     const navigate = useNavigate()
     const dispatch = useDispatch()
-    const [flag, setFlag] = useState(a)
 
 
     const handleClickProduct = () => {
@@ -55,10 +56,10 @@ const ModelTr = ({e, user}) => {
       <Td onClick={() => handleClickProduct()} textAlign={'match-parent'}>{e.Size}</Td>
       <Td onClick={() => handleClickProduct()} textAlign={'center'}> {e.Thickness} </Td>
       <Td onClick={() => handleClickProduct()} textAlign={'center'}> {e.Finish === null ? '-' : e.Finish} </Td>
-      <Td onClick={() => handleClickProduct()} isNumeric>{e.Price}$</Td>
+      <Td onClick={() => handleClickProduct()} isNumeric>${e.Price}</Td>
       <Td onClick={() => handleClickProduct()} textAlign={'center'}>{e.InStock_Available === null ? 0 : e.InStock_Available}</Td>
       <Td onClick={() => handleClickProduct()} textAlign={'center'}>{e.Incoming_Available === null ? 0 : e.Incoming_Available}</Td>
-      <Td onClick={() => handleClickProduct()} textAlign={'center'}>{e.NextArrival === undefined ? '-' : e.NextArrival}</Td>  {/*cambiar el origen de esta info */}
+      <Td onClick={() => handleClickProduct()} textAlign={'center'}>{e.NextArrival === undefined ? '-' : e.NextArrival}</Td>
       <Td pl={'3.5vw'}>{ validateSeller() === false ? (e.Discontinued_Flag === 'True' ? <ImCheckboxChecked color='logo.orange'/> : <ImCheckboxUnchecked color='logo.orange'/> ) : (<Switch  onChange={() => handleClickSwitch()} isChecked={flag} colorScheme={'orange'} size={'sm'}/>) }</Td>
       </Tr>
   )

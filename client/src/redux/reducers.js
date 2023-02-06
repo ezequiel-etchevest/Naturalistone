@@ -1,7 +1,8 @@
 import { 
     GET_EMPLOYEES, 
     GET_EMPLOYEES_BY_ID, 
-    LOG_OUT } from './actions-employees';
+    LOG_OUT 
+} from './actions-employees';
 import { 
     GET_INVOICE_BY_ID, 
     GET_INVOICES_BY_SELLER, 
@@ -11,10 +12,11 @@ import {
     GET_INVOICE_PRODUCTS,
     PATCH_STAMP,
     PATCH_STATUS
-    } from './actions-invoices';
+} from './actions-invoices';
 import { 
   GET_INVOICE_ERRORS,
-  GET_INVOICE_ERRORS_BY_ID } from './actions-invoiceErrors'
+  GET_INVOICE_ERRORS_FILTERED 
+} from './actions-invoiceErrors'
 import { GET_ALL_SELLERS } from './actions-sellers'
 import { 
     POST_PAYMENT_METHOD,
@@ -38,7 +40,11 @@ import {
     GET_ORDERS_PRODUCTS,
     PATCH_ORDER_STATUS,
     CLEAN_ORDERS_PRODUCTS
-    } from './actions-orders';
+} from './actions-orders';
+import { 
+    GET_DELIVERIESS,
+    POST_DELIVERY_NOTE
+} from './actions-deliveryNotes';
 
 
 
@@ -62,7 +68,9 @@ const intialState = {
     order: {},
     order_products: [],
     invoice_errors: [],
-    invoice_errors_by_id:[]
+    invoice_errors_by_filter:[],
+    invoice_errors_by_filter_errors:[],
+    deliveries_notes_by_id:[]
 }
 
 function rootReducer (state = intialState, action) {
@@ -97,7 +105,9 @@ function rootReducer (state = intialState, action) {
               order: {},
               order_products: [],
               invoice_errors: [],
-              invoice_errors_by_id:[],
+              invoice_errors_by_filter:[],
+              invoice_errors_by_filter_errors:[],
+              deliveries_notes_by_id:[],
             }
         
         case GET_INVOICE_BY_ID:
@@ -117,10 +127,11 @@ function rootReducer (state = intialState, action) {
               ...state,
               invoice_errors: action.payload
             }
-        case GET_INVOICE_ERRORS_BY_ID:
+        case GET_INVOICE_ERRORS_FILTERED:
             return {
               ...state,
-              invoice_errors_by_id: action.payload
+              invoice_errors_by_filter: action.payload.filteredInvoicesErrors,
+              invoice_errors_by_filter_errors: action.payload.errorsSearch
             }
 
         case POST_PAYMENT_METHOD:
@@ -157,6 +168,7 @@ function rootReducer (state = intialState, action) {
             return {
               ...state,
               all_products: action.payload,
+              products_errors: {}
             }
         case GET_FILTERED_PRODUCTS:
             return {
@@ -249,6 +261,16 @@ function rootReducer (state = intialState, action) {
                 ...state,
                 sellers: action.payload
               }
+        case POST_DELIVERY_NOTE:
+          return {
+            // ...state,
+            // delivery_note_by_id: action.payload
+          }
+        case GET_DELIVERIESS:
+          return {
+            ...state,
+            deliveries_notes_by_id: action.payload
+          }
         case GET_VALUES:
               return {
                 ...state,
