@@ -13,7 +13,7 @@ salesRouter.get('/:id', async function(req, res){
 
   if(id == 3 || id == 5 || id == 15){
 
-  query_ =    `SELECT Sales.*, Projects.*, Customers.*, Payments.idPayments, Seller.* GROUP_CONCAT(
+  query_ =    `SELECT Sales.*, Projects.*, Customers.*, Payments.idPayments, Seller.*, GROUP_CONCAT(
             CONCAT (Payments.idPayments,';',Payments.Amount,';',Payments.Date))AS Payments FROM Sales 
             LEFT JOIN Projects ON Sales.ProjectID = Projects.idProjects
             LEFT JOIN Seller ON Sales.SellerID = Seller.SellerID
