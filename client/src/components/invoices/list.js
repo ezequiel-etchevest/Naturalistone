@@ -31,7 +31,6 @@ const ModelTr = ({e, userId}) => {
       dispatch( cleanStatePayments())
       navigate(`/quotes/${e.Naturali_Invoice}`)
     }
-    console.log({e})
     return(
       <Tr 
         onClick={() => handleClick()} 
@@ -42,19 +41,19 @@ const ModelTr = ({e, userId}) => {
           color: 'logo.orange'
         }}
         >
-        <Td textAlign={'center'}>{e.Naturali_Invoice}</Td>
+        <Td fontSize={'xs'} textAlign={'center'}>{e.Naturali_Invoice}</Td>
         {
           validateSeller(userId) ? (
-          <Td textAlign={'center'}>{e.SellerID}</Td>
+          <Td  fontSize={'xs'}textAlign={'center'}>{e.FirstName} {e.LastName}</Td>
           ):(null)
         }
-        <Td>{e.ProjectName}</Td>
-        <Td>{e.Reference}</Td>
-        <Td textAlign={'center'}>{e.InvoiceDate.split('T')[0]}</Td>
-        <Td textAlign={'center'}>{e.Status}</Td>
-        <Td isNumeric textAlign={'center'}>${e.Value} </Td>
-        <Td textAlign={'center'} >{ e.Percentaje ? e.Percentaje : 0 } % </Td>
-        <Td textAlign={'center'}>{ e.Payments?.length ? e.Payments[0][2] : '-'}</Td>
+        <Td fontSize={'xs'}>{e.ProjectName}</Td>
+        <Td fontSize={'xs'}>{e.Reference}</Td>
+        <Td fontSize={'xs'} textAlign={'center'}>{e.InvoiceDate.split('T')[0]}</Td>
+        <Td fontSize={'xs'} textAlign={'center'}>{e.Status}</Td>
+        <Td fontSize={'xs'} isNumeric textAlign={'center'}>${e.Value} </Td>
+        <Td fontSize={'xs'} textAlign={'center'} >{ e.Percentaje ? e.Percentaje : 0 } % </Td>
+        <Td fontSize={'xs'} textAlign={'center'}>{ e.Payments?.length ? e.Payments[0][2] : '-'}</Td>
       </Tr>
     )
 }
@@ -105,6 +104,7 @@ const List = ({seller_invoices, filteredByCustomer, userId}) => {
         <Box
         display={'flex'}
         justifyContent={'center'}
+        ml={'1vh'}
         h={'72vh'}
         w={'78.8vw'} 
         >
@@ -128,24 +128,24 @@ const List = ({seller_invoices, filteredByCustomer, userId}) => {
             border={'1px solid'} 
             rounded={'md'} 
             p={'3vh'}
-            w={'72vw'}
+            w={'76vw'}
             
             >
             <TableContainer>
-                <Table color={'web.text'} variant={'simple'} size={'sm'} >
+                <Table color={'web.text'}variant={'simple'} size={'sm'}>
                   <Thead h={'6vh'}>
                     <Tr>
-                      <Th color={'web.text2'} textAlign={'center'}>Nº</Th>
+                      <Th w={'2vw'} color={'web.text2'} textAlign={'center'}>Nº</Th>
                       { validateSeller(userId) ? (
-                          <Th color={'web.text2'} textAlign={'center'}>Seller</Th>
+                          <Th color={'web.text2'}  w={'3vw'} textAlign={'center'}>Seller</Th>
                       ):(null) }
-                      <Th color={'web.text2'}  w={'12vw'}>Project</Th>
-                      <Th color={'web.text2'}>Customer</Th>
-                      <Th w={'5vw'} color={'web.text2'} textAlign={'center'}>Date</Th>
-                      <Th w={'5vw'} color={'web.text2'} textAlign={'center'}>Status</Th>
-                      <Th color={'web.text2'} w={'5vw'} textAlign={'center'} isNumeric>Total</Th>
-                      <Th color={'web.text2'} w={'5vw'} textAlign={'center'}>Paid</Th>
-                      <Th color={'web.text2'} w={'8vw'}>Last Payment Date </Th>
+                      <Th color={'web.text2'} w={'3vw'}>Project</Th>
+                      <Th w={'3vw'} color={'web.text2'}>Customer</Th>
+                      <Th w={'3vw'} color={'web.text2'} textAlign={'center'}>Date</Th>
+                      <Th w={'3vw'} color={'web.text2'} textAlign={'center'}>Status</Th>
+                      <Th color={'web.text2'} w={'3vw'} textAlign={'center'} isNumeric>Total</Th>
+                      <Th color={'web.text2'} w={'2vw'} textAlign={'center'}>Paid</Th>
+                      <Th color={'web.text2'} w={'3vw'}>Last Payment Date </Th>
                     </Tr>
                   </Thead>
                   <Tbody >
