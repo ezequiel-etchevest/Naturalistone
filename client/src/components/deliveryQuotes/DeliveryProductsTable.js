@@ -7,7 +7,7 @@ import {
     Th,
     Td,
     TableContainer,
-    Text,
+    useToast,
     NumberInput,
     NumberDecrementStepper,
     NumberIncrementStepper,
@@ -18,10 +18,10 @@ import {
   import { useState } from 'react'
 
 
-const ModelTr = ({p, setQuantities, quantities}) => {
+const ModelTr = ({p, setQuantities, quantities, setDisabled}) => {
   
   const navigate = useNavigate()
-
+  const toast = useToast()
 
   const [input, setInput] = useState({
       quantity:'',
@@ -30,12 +30,25 @@ const ModelTr = ({p, setQuantities, quantities}) => {
       type:'',
       size:'',
       thickness:'',
-      finish:''
+      finish:'',
+      SalePrice: '',
+      Delivered: '',
+      InStock_Reserved: '',
     })
   
 
 
   const handleInput = (e) => {
+    if( e > p.InStock_Reserved ){
+      toast({
+        title: 'Invalid amount',
+        description: `Input quantity lower than $${p.InStock_Reserved}`,
+        status: 'error',
+        duration: 2000,
+        isClosable: true,
+      })
+      setDisabled(true)
+    } else {
     setInput({
       quantity: e,
       prodID:p.ProdID,
@@ -44,8 +57,12 @@ const ModelTr = ({p, setQuantities, quantities}) => {
       size:p.Size,
       thickness:p.Thickness,
       finish:p.Finish,
+      SalePrice: p.SalePrice,
+      Delivered: p.Delivered,
+      InStock_Reserved: p.InStock_Reserved,
     })
-  };
+  setDisabled(false)
+}};
 
 
   const handleOnBlur = () => {
@@ -54,9 +71,20 @@ const ModelTr = ({p, setQuantities, quantities}) => {
     if (quantities.length) {
       quantities.forEach(e => {
         if (e.prodID === input.prodID) {
+          if(input.quantity > p.InStock_Reserved ){
+            toast({
+              title: 'Invalid amount',
+              description: `Input quantity lower than $${p.InStock_Reserved}`,
+              status: 'error',
+              duration: 2000,
+              isClosable: true,
+            })
+            setDisabled(true);
+          } else {
           e.quantity = input.quantity;
           updated = true;
-        }
+          setDisabled(false)
+        }}
       });
     }
   
@@ -65,7 +93,6 @@ const ModelTr = ({p, setQuantities, quantities}) => {
     }
   }
  
-
     return(
       <Tr 
         cursor={'pointer'}
@@ -111,12 +138,12 @@ const ModelTr = ({p, setQuantities, quantities}) => {
         <Td textAlign={'center'} w={'6vw'}>{p.Thickness} </Td>
         <Td textAlign={'center'} w={'6vw'}>{p.Finish} </Td>
         <Td textAlign={'center'} w={'6vw'}>{p.Quantity} </Td>
-        <Td textAlign={'center'} w={'6vw'}></Td>
+        <Td textAlign={'center'} w={'6vw'}>{p.InStock_Reserved}</Td>
       </Tr>
     )
 }
 
-const DeliveryProductList = ({invoice_products, setQuantities, quantities}) => {
+const DeliveryProductList = ({invoice_products, setQuantities, quantities, setDisabled}) => {
  
     return(
         <Box
@@ -152,14 +179,14 @@ const DeliveryProductList = ({invoice_products, setQuantities, quantities}) => {
                       <Th color={'web.text2'} textAlign={'center'} w={'6vw'}>Thickness</Th>
                       <Th color={'web.text2'} textAlign={'center'} w={'6vw'}>Finish</Th>
                       <Th color={'web.text2'} textAlign={'center'} w={'6vw'}>Quantity</Th>
-                      <Th color={'web.text2'} textAlign={'center'} w={'6vw'}>Remaining</Th>
-                      
+                      <Th color={'web.text2'} textAlign={'center'} w={'6vw'}>Stock Reserved</Th>
                     </Tr>
                   </Thead>
                   <Tbody >
-                    { invoice_products.map((p, i) =>{
+                    { 
+                      invoice_products.map((p, i) =>{
                         return(
-                          <ModelTr p={p} key={i} id={i} setQuantities={setQuantities} quantities={quantities}/>
+                          <ModelTr p={p} key={i} id={i} setQuantities={setQuantities} quantities={quantities} setDisabled={setDisabled}/>
                         )
                       })
                     }

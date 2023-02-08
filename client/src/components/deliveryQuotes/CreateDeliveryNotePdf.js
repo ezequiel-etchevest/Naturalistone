@@ -21,7 +21,7 @@ const CreateDeliveryNotePdf = ({quantities, deliveryID, id}) => {
 
    
 async function CreateForm() {
-  console.log('CreateDeliveryNotePDF',deliveryID)
+
   const url = `/DeliveryNote/DemoDeliveryNote.pdf`
   const existingPdfBytes = await fetch(url).then((res) => res.arrayBuffer());
   var bytes = new Uint8Array(existingPdfBytes);

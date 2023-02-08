@@ -2,6 +2,7 @@ import { extendTheme } from '@chakra-ui/react';
 import "@fontsource/roboto"
 
 
+
 export const naturali_theme = extendTheme({
     colors: {
         logo: {

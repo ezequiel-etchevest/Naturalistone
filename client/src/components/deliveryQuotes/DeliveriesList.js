@@ -8,8 +8,9 @@ import {
   Td,
   TableContainer,
 } from '@chakra-ui/react';
-import { getDeliveryNote } from '../../redux/actions-deliveryNotes';
+import { getDeliveryNote, getDeliveriesNotes } from '../../redux/actions-deliveryNotes';
 import { useDispatch } from 'react-redux';
+import { useEffect } from 'react';
 
 const ModelTr = ({e, onSecondModalOpen}) => {
 
@@ -38,8 +39,14 @@ const ModelTr = ({e, onSecondModalOpen}) => {
   )
 }
 
-const DeliveriesList = ({deliveries, input, onSecondModalOpen, setDeliveryID}) => {
+const DeliveriesList = ({deliveries, input, onSecondModalOpen, setDeliveryID, id}) => {
   
+  const dispatch = useDispatch()
+  useEffect(()=>{
+    dispatch(getDeliveriesNotes(id))
+  } 
+    ,[dispatch]) 
+
   return(
       <Box
       display={'flex'}
@@ -51,15 +58,29 @@ const DeliveriesList = ({deliveries, input, onSecondModalOpen, setDeliveryID}) =
       borderRadius={'md'}
       w={'28vw'}
       py={'3vh'}
-
       >
         <Box
           borderColor={'web.border'}
           bg={'web.sideBar'} 
           rounded={'md'} 
           w={'25vw'}
+          maxHeight={'46vh'}
+          overflow={'auto'}
+          css={{
+            '&::-webkit-scrollbar': {
+              width: '0.2vw',
+               
+            },
+            '&::-webkit-scrollbar-track': {
+              width: '6px',
+            },
+            '&::-webkit-scrollbar-thumb': {
+              background: '#E47424',
+              borderRadius: '5px',
+            },
+          }}
           >
-          <TableContainer  h={'46vh'} w={'25vw'}>
+          <TableContainer  w={'25vw'}>
               <Table color={'web.text'} variant={'simple'} size={'sm'}>
                 <Thead h={'6vh'}>
                   <Tr display={'flex'} flexDir={'row'} justifyContent={'space-around'}>
@@ -67,26 +88,7 @@ const DeliveriesList = ({deliveries, input, onSecondModalOpen, setDeliveryID}) =
                     <Th w={'6vw'} color={'web.text2'} borderBottom={'none'}>Date</Th>
                   </Tr>
                 </Thead>
-                <Box
-                  maxHeight={'56vh'}
-                  overflow={'auto'}
-                  css={{
-                    '&::-webkit-scrollbar': {
-                      width: '0.2vw',
-                       
-                    },
-                    '&::-webkit-scrollbar-track': {
-                      width: '6px',
-                    },
-                    '&::-webkit-scrollbar-thumb': {
-                      background: '#E47424',
-                      borderRadius: '5px',
-                    },
-                  }}
-                  display={'flex'}
-                  w={'25vw'}
-                  >
-                <Tbody w={'24vw'}> 
+                <Tbody> 
                 {
                   input.length ?
                   input.map((e, i) =>{
@@ -98,15 +100,15 @@ const DeliveriesList = ({deliveries, input, onSecondModalOpen, setDeliveryID}) =
                   (
                   deliveries.length ? 
                     deliveries.map((e, i) =>{
+                     
                       return(
                         <ModelTr key={i} e={e} onSecondModalOpen={onSecondModalOpen} setDeliveryID={setDeliveryID}/>
                       )
                     })
                   : 
-                   null)
-                  }
+                  null)
+                }
                 </Tbody>
-                </Box>
               </Table>
           </TableContainer> 
           </Box> 

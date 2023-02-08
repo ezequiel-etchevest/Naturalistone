@@ -35,7 +35,7 @@ const handleSearchInput = (e) => {
       const filteredByID = deliveries.filter(delivery => delivery.DeliveryNumber.toString().includes(e.target.value))
        if(!filteredByID.length) return 
        setInput(filteredByID)
-       console.log(filteredByID)
+
     }
   } else {
     setInput([])

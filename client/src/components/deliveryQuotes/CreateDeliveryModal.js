@@ -26,15 +26,17 @@ const CreateDeliveryModal = ({invoice, user, isOpen, onClose, invoice_products})
   const id = invoice[0].Naturali_Invoice
  
   const [quantities, setQuantities] = useState([])
- 
+  const [disabled, setDisabled] = useState(true)
+  
+
   const deliveryID = useSelector(state => state.deliveryID)
-  console.log('CreateDeliveryModal',deliveryID)
-  const handleSubmit = () => {
-    dispatch(postDeliveryNote(id, quantities))
+
+  const handleSubmit = async () => {
+    await dispatch(postDeliveryNote(id, quantities))
     onSecondModalOpen()
     onClose()
   }
-  console.log(deliveryID)
+
   const handleSecondModalClose = () => {
     onSecondModalClose()
     setQuantities([])
@@ -68,13 +70,18 @@ const CreateDeliveryModal = ({invoice, user, isOpen, onClose, invoice_products})
           color: 'web.text'
         }} />
       <ModalBody color={'web.text2'} display={'flex'} justifyContent={'center'}>
-        <DeliveryProductList invoice_products={invoice_products} setQuantities={setQuantities} quantities={quantities}/>
+        <DeliveryProductList 
+        invoice_products={invoice_products} 
+        setQuantities={setQuantities}
+        quantities={quantities}
+        setDisabled={setDisabled}/>
       </ModalBody>
       <ModalFooter mb={'1vh'} mr={'1vw'}>
         <Button
           colorScheme={'orange'} 
           mr={3} 
           onClick={()=>handleSubmit()}
+          disabled={disabled}
           >
          Confirm
         </Button>

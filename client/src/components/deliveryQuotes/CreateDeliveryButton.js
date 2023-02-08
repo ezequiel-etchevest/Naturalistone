@@ -11,7 +11,6 @@ const CreateDeliveryButton = ({invoice, user, invoice_products}) => {
 
   const { isOpen, onOpen, onClose } = useDisclosure()
   
- //creo que esta llegando tarde el deliveryID cuando creo un pdf. revisar
  //tambien tengo que ver el componente de las notas, xq hay un problema en la tabla con un child de tbody
  //falta hacer la logica para remaining pero todavia no estan las tablas
  //tengo que poner condiciones al input para que no supere ciertos valores segun lo que haya disponible

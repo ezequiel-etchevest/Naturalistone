@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import SideBar from "../components/sideBar";
-import { Button } from "@chakra-ui/react";
+import { Center, Spinner, Text, Box } from "@chakra-ui/react";
 import ProductsContainer from "../components/products/productsContainer";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllProducts, getValues } from '../redux/actions-products';
@@ -25,7 +25,7 @@ const Products = () => {
         if(!allProducts.length) dispatch(getAllProducts())
         },[allProducts])
          
-      if(user.length && values){
+      if(user.length && values && allProducts){
         return(
           <>
             <SideBar user={user}/>
@@ -33,10 +33,9 @@ const Products = () => {
           </>
         )
     }else return (
-      <>
-      Go to log in
-      <Button>Log in</Button>
-      </>
+      <Center  bg={'web.bg'} h={'92vh'}>
+        <Spinner thickness={'4px'} ml={'0.5vw'} size={'xl'} color={'logo.orange'}/>
+      </Center>
     )
   }
  

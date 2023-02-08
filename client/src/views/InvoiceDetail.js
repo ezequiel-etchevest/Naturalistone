@@ -29,6 +29,7 @@ const InvoiceDetail = () => {
       dispatch(getDeliveriesNotes(id))
     } 
       ,[])
+      
 
   useEffect(()=>{
       if(userLocal && !user.length){
