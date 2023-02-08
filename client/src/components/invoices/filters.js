@@ -10,7 +10,8 @@ import {
   NumberInputField, 
   NumberDecrementStepper, 
   NumberIncrementStepper, 
-  NumberInputStepper
+  NumberInputStepper,
+  Select
   } from "@chakra-ui/react";
 import { BsCalendar4Week } from 'react-icons/bs';
 import { SearchIcon } from '@chakra-ui/icons';
@@ -72,13 +73,17 @@ const Filters = ({userId, seller_invoices, setFilteredByCustomer, focus, setFocu
 
     return (
         <>
-        <HStack 
-          ml={'2.8vw'}  
+        <HStack
+          border={'2px solid blue'} 
+          ml={'2vw'}
           mr={'2vw'} 
           h={'20vh'} 
-          spacing={'1.5vw'}
+          w={'76vw'}
+          justifyContent={'space-between'}
           >
-          <Button
+          {/*3 buttons box : All, Last Week, Last Month */}
+          <HStack w={'20vw'}>
+            <Button
             variant={'unstyled'} 
             display={'flex'} 
             w={'10vw'}
@@ -98,67 +103,74 @@ const Filters = ({userId, seller_invoices, setFilteredByCustomer, focus, setFocu
             fontFamily={'body'} 
             fontWeight={'hairline'}
             onClick={()=> handleClickAllInvoices()} 
-            >All Quotes</Text>
+            >All</Text>
             <BsCalendar4Week/>
-        </Button>
-        <Button
-        variant={'unstyled'} 
-        display={'flex'} 
-        w={'12vw'}
-        h={'10vh'}
-        borderRadius={'sm'} 
-        placeContent={'center'}
-        alignItems={'center'}
-        color={focus === 'LastWeek' ? 'logo.orange' : 'web.text2'}
-        _hover={{
-          color: 'logo.orange'
-            }}
-        _active={{
-          color: 'logo.orange'
-        }}>
-          <Text 
-            pr={'1.5vh'} 
-            fontFamily={'body'} 
-            fontWeight={'hairline'}
-            onClick={()=> handleClickLastWeek()} 
-            >Last Week Quotes</Text>
-            <BsCalendar4Week/>
-        </Button>
-        <Button
-         variant={'unstyled'} 
-         display={'flex'} 
-         w={'12vw'}
-         h={'10vh'}
-         borderRadius={'sm'} 
-         placeContent={'center'}
-         alignItems={'center'}
-         color={focus === 'LastMonth' ? 'logo.orange' : 'web.text2'}
-         _hover={{
-          color: 'logo.orange'
-             }}         
-         _active={{
-          color: 'logo.orange'
-         }}>
-            <Text 
-            fontFamily={'body'} 
-            fontWeight={'hairline'}
-            onClick={()=> handleClickLastMonth()}  
-            pr={'1.5vh'}>Last Moth Quotes</Text>
-            <BsCalendar4Week/>
-        </Button>
+            </Button>
+            <Button
+              variant={'unstyled'} 
+              display={'flex'} 
+              w={'12vw'}
+              h={'10vh'}
+              borderRadius={'sm'} 
+              placeContent={'center'}
+              alignItems={'center'}
+              color={focus === 'LastWeek' ? 'logo.orange' : 'web.text2'}
+              _hover={{
+                color: 'logo.orange'
+                  }}
+              _active={{
+                color: 'logo.orange'
+              }}>
+              <Text 
+                pr={'1.5vh'} 
+                fontFamily={'body'} 
+                fontWeight={'hairline'}
+                onClick={()=> handleClickLastWeek()} 
+                >Last Week</Text>
+                <BsCalendar4Week/>
+            </Button>
+            <Button
+              variant={'unstyled'} 
+              display={'flex'} 
+              w={'12vw'}
+              h={'10vh'}
+              borderRadius={'sm'} 
+              placeContent={'center'}
+              alignItems={'center'}
+              color={focus === 'LastMonth' ? 'logo.orange' : 'web.text2'}
+              _hover={{
+               color: 'logo.orange'
+                  }}         
+              _active={{
+               color: 'logo.orange'
+              }}>
+                <Text 
+                fontFamily={'body'} 
+                fontWeight={'hairline'}
+                onClick={()=> handleClickLastMonth()}  
+                pr={'1.5vh'}>Last Moth</Text>
+                <BsCalendar4Week/>
+            </Button>
+          </HStack>
+          {/*Inputs and select */}
           <Box
+            border={'2px solid red'}
             display={'flex'}
             alignItems={'center'}
             justifyContent={'space-between'}
-            pl={'2vw'}
-            w={'38vw'}
+            w={'45vw'}
             >
+            <Select w={'15vw'}>
+              <option>Hola</option>
+            </Select>
             <Box
+              border={'2px solid green'}
               display={'flex'}
               flexDir={'row'}
               alignItems={'flex-start'}
+              justifyContent={'space-between'}
               pt={'1vh'}
-              w={'19vw'}
+              w={'15vw'}
               h={'6vh'}
               >
               <FormControl 
@@ -169,7 +181,7 @@ const Filters = ({userId, seller_invoices, setFilteredByCustomer, focus, setFocu
                   borderBottomWidth={"2px"}
                   textColor={'web.text2'}
                   borderBottomColor={'web.text2'}
-                  w={'70%'}
+                  w={'80%'}
                   size={"sm"}
                   h={'4vh'}>
                   <NumberInputField
@@ -208,12 +220,12 @@ const Filters = ({userId, seller_invoices, setFilteredByCustomer, focus, setFocu
               <Box
                 display={'flex'}
                 alignItems={'center'} 
-                w={'19vw'}
+                w={'15vw'}
                 h={'10vh'}
                 >
                 <Input
                   mb={'0.5vh'}
-                  w={'70%'}
+                  w={'80%'}
                   minH={'4.5vh'}
                   variant="unstyled"
                   placeholder={'Customer Name'}

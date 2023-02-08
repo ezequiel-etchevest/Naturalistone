@@ -8,6 +8,8 @@ import {
     Td,
     TableContainer,
     useToast,
+    Text,
+    Center
   } from '@chakra-ui/react'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
@@ -78,24 +80,6 @@ const List = ({seller_invoices, filteredByCustomer, userId}) => {
     }}
   }
 
-  // const noneSellerInvoices = () => {
-  //   if(!seller_invoices.length){
-  //     setTimeout(
-  //       toast({
-  //         id,
-  //         title: 'No results found',
-  //         description: 'Thers no invoices for this seller',
-  //         status: 'warning',
-  //         duration: 2000,
-  //         isClosable: true,
-  //       }), 2000
-  //     )
-  //     return ([])
-  //   }
-  //   else return seller_invoices
-  // }
-
-
   useEffect(()=>{
     validateResults()
   })
@@ -129,41 +113,50 @@ const List = ({seller_invoices, filteredByCustomer, userId}) => {
             rounded={'md'} 
             p={'3vh'}
             w={'76vw'}
-            
             >
-            <TableContainer>
-                <Table color={'web.text'}variant={'simple'} size={'sm'}>
-                  <Thead h={'6vh'}>
-                    <Tr>
-                      <Th w={'2vw'} color={'web.text2'} textAlign={'center'}>Nº</Th>
-                      { validateSeller(userId) ? (
-                          <Th color={'web.text2'}  w={'3vw'} textAlign={'center'}>Seller</Th>
-                      ):(null) }
-                      <Th color={'web.text2'} w={'3vw'}>Project</Th>
-                      <Th w={'3vw'} color={'web.text2'}>Customer</Th>
-                      <Th w={'3vw'} color={'web.text2'} textAlign={'center'}>Date</Th>
-                      <Th w={'3vw'} color={'web.text2'} textAlign={'center'}>Status</Th>
-                      <Th color={'web.text2'} w={'3vw'} textAlign={'center'} isNumeric>Total</Th>
-                      <Th color={'web.text2'} w={'2vw'} textAlign={'center'}>Paid</Th>
-                      <Th color={'web.text2'} w={'3vw'}>Last Payment Date </Th>
-                    </Tr>
-                  </Thead>
-                  <Tbody >
-                    { filteredByCustomer.length ? (
-                      filteredByCustomer.map((e, i) =>{
-                        return(
-                          <ModelTr key={i} e={e}userId={userId}/>
-                        )
-                      })
-                    ) : (
-                      
-                      seller_invoices.map((e, i) => (
-                        <ModelTr key={i} e={e} userId={userId}/> 
-                        ))
-                        )}
-                  </Tbody>
-                </Table>
-            </TableContainer> 
+              {
+                seller_invoices.length ? (
+                  <TableContainer>
+                      <Table color={'web.text'}variant={'simple'} size={'sm'}>
+                        <Thead h={'6vh'}>
+                          <Tr>
+                            <Th w={'2vw'} color={'web.text2'} textAlign={'center'}>Nº</Th>
+                            { validateSeller(userId) ? (
+                                <Th color={'web.text2'}  w={'3vw'} textAlign={'center'}>Seller</Th>
+                            ):(null) }
+                            <Th color={'web.text2'} w={'3vw'}>Project</Th>
+                            <Th w={'3vw'} color={'web.text2'}>Customer</Th>
+                            <Th w={'3vw'} color={'web.text2'} textAlign={'center'}>Date</Th>
+                            <Th w={'3vw'} color={'web.text2'} textAlign={'center'}>Status</Th>
+                            <Th color={'web.text2'} w={'3vw'} textAlign={'center'} isNumeric>Total</Th>
+                            <Th color={'web.text2'} w={'2vw'} textAlign={'center'}>Paid</Th>
+                            <Th color={'web.text2'} w={'3vw'}>Last Payment Date </Th>
+                          </Tr>
+                        </Thead>
+                        <Tbody >
+                          { 
+                          filteredByCustomer.length ? (
+                            filteredByCustomer.map((e, i) =>{
+                              return(
+                                <ModelTr key={i} e={e}userId={userId}/>
+                              )
+                            })
+                          ) : (
+
+                              seller_invoices.map((e, i) => (
+                                <ModelTr key={i} e={e} userId={userId}/> 
+                                ))                          
+                          )
+                              }
+                        </Tbody>
+                      </Table>
+                  </TableContainer> 
+                ) : (
+                  <Center w={'full'} h={'full'}>
+                  <Text userSelect={'none'} fontSize={'2vh'}>No quotes found</Text>
+                  </Center>
+                )
+              }
             </Box> 
         </Box>
     )
