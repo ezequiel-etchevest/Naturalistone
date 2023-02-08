@@ -65,8 +65,8 @@ const InvoicePanelButtons = ({invoice, payments, user, invoice_products, deliver
                 >Contact Customer
               </Button>
               </ButtonGroup>
-          </Box>
             <ModalStamp invoice={invoice} payments={payments}/>
+          </Box>
           </Box>   
         </>
     )

@@ -117,6 +117,7 @@ export function getInvoiceProducts(id){
     return async function(dispatch){
         try{
             let {data} = await axios.get(`http://localhost:5000/prodSold/${id}`)
+ 
             return dispatch({
                 type: GET_INVOICE_PRODUCTS,
                 payload: data

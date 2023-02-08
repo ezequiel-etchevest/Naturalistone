@@ -23,11 +23,13 @@ salesRouter.get('/:id', async function(req, res){
                 GROUP BY Sales.Naturali_Invoice
                 ORDER BY Sales.Naturali_Invoice DESC` 
   } else { 
-  query_ =    `SELECT Sales.*, Projects.*, Customers.*, Payments.idPayments, GROUP_CONCAT(
+  query_ =    `SELECT Sales.*, Projects.*, Customers.*, Payments.idPayments, Seller.FirstName, Seller.LastName, 
+                GROUP_CONCAT(
                 CONCAT(Payments.idPayments,';',Payments.Amount,';',Payments.Date))AS Payments FROM Sales 
                 LEFT JOIN Projects ON Sales.ProjectID = Projects.idProjects
                 LEFT JOIN Customers ON Projects.CustomerID = Customers.CustomerID
-                LEFT JOIN Payments ON Sales.Naturali_Invoice = Payments.InvoiceID 
+                LEFT JOIN Payments ON Sales.Naturali_Invoice = Payments.InvoiceID
+                LEFT JOIN Seller ON Sales.SellerID = Seller.SellerID  
                 WHERE SellerID = ${id}
                 GROUP BY Sales.Naturali_Invoice
                 ORDER BY Sales.Naturali_Invoice DESC`;
@@ -50,8 +52,10 @@ salesRouter.get('/:id', async function(req, res){
 salesRouter.get('/invoice/:id', async function(req, res){
     const { id } = req.params
 
-    query_ =    `SELECT Sales.*, Projects.*, Customers.*, Seller.* FROM Sales
-                LEFT JOIN Seller ON Sales.SellerID = Seller.SellerID
+//Replased Seller.* for , Seller.FirstName, Seller.LastName, Seller.SellerID//
+
+    query_ =    `SELECT Sales.*, Projects.*, Customers.*, Seller.FirstName, Seller.LastName, Seller.SellerID FROM Sales
+                LEFT JOIN Seller ON Sales.SellerID = Seller.SellerID 
                 LEFT JOIN Projects ON Sales.ProjectID = Projects.idProjects
                 LEFT JOIN Customers ON Projects.CustomerID = Customers.CustomerID
                 WHERE Naturali_Invoice = ${id}`;

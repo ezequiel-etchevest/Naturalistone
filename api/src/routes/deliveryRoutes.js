@@ -34,12 +34,15 @@ deliveryRouter.get('/id/:id', async function(req, res){
   Dimension.Type,
   Dimension.Size,
   Dimension.Finish,
-  Dimension.Thickness FROM NaturaliStone.Deliveries_Products
+  Dimension.Thickness, 
+  ProdSold.* FROM NaturaliStone.Deliveries_Products
   INNER JOIN Products ON Products.ProdID = Deliveries_Products.ProdID
   INNER JOIN Dimension ON Dimension.DimensionID = Products.DimensionID
   INNER JOIN ProdNames ON ProdNames.ProdNameID = Products.ProdNameID
   INNER JOIN Deliveries ON Deliveries.DeliveryNumber = Deliveries_Products.DeliveryNumber
+  INNER JOIN ProdSold ON ProdSold.ProdID = Products.ProdID
   WHERE Deliveries_Products.DeliveryNumber = ${id}`;
+  
   try{
        mysqlConnection.query(query_, function(error, results, fields){
           if(!results.length) {

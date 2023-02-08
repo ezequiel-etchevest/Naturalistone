@@ -36,7 +36,6 @@ import { stampInvoice } from '../../../redux/actions-invoices';
         <ButtonGroup
           display={'flex'}
           spacing={0}
-          placeContent={'space-between'}
             _hover={{
             color: 'logo.orange'
           }}>
@@ -104,7 +103,6 @@ import { stampInvoice } from '../../../redux/actions-invoices';
       <ButtonGroup
         display={'flex'}
         spacing={0}
-        placeContent={'space-between'}
           _hover={{
           color: 'logo.orange'
         }}>
