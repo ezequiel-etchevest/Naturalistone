@@ -24,86 +24,49 @@ const ProductInformation = ({product}) => {
           >
           <Box
             display={'flex'}
-            flexDirection={'column'}
+            flexDirection={'row'}
             alignItems={'flex-start'}
-
+            justifyContent={'space-between'}
+            
+            w={'15vw'}
             >
-              <Text 
-                color={'logo.orange'} 
-                fontSize={'3.5vh'}
-                >
-                #{product.ProdID}
-              </Text>
-              <Text 
-                fontSize={'2.1vh'} 
-                fontWeight={'bold'}>
-                {product.ProductName}
-              </Text> 
+            <Text fontSize={'3vh'} pt={'1vh'} color={'logo.orange'}>{product.ProductName}</Text>
           </Box>
+          <Box display={'flex'} flexDir={'row'} justifyContent={'space-around'} mt={'2vh'}>
           <Box 
             h={'8vh'}
             display={'flex'} 
-            flexDir={'row'} 
-            justifyContent={'space-between'}
+            flexDir={'column'} 
+            w={'8vw'}
             px={'1vh'}
-            mt={'2vh'}>
-            <Box mt={'1vh'} h={'8vh'}>
-              <Text 
-                fontSize={'1.5vh'} 
-                color={'web.text2'}
-                >
-                Type
-              </Text>
-              <Text fontSize={'1.8vh'} fontWeight={'bold'}>Porcelain</Text>
-            </Box>
-            <Box mt={'1vh'} w={'8vh'}>
-              <Text 
-                color={'web.text2'} 
-                fontSize={'1.5vh'}
-                >
-                Price
-              </Text>
-              <Text 
-                fontSize={'1.8vh'} 
-                fontWeight={'bold'}
-                >
-                ${product.Price}
-              </Text>
-            </Box>
+            justifyContent={'space-around'}
+            alignContent={'center'}>
+              <Text fontSize={'2vh'} color={'web.text2'}> Type </Text>
+              <Text fontSize={'2.2vh'} fontWeight={'semi-bold'}>Porcelain {product.Type}</Text>
           </Box>
           <Box 
+            h={'8vh'}
+            w={'6vw'}
             display={'flex'} 
-            flexDir={'row'} 
-            justifyContent={'space-between'}
-            px={'1vh'}>
-            <Box h={'8vh'}>
-              <Text 
-                fontSize={'1.5vh'} 
-                color={'web.text2'}
-                >
-                Dimentions
-              </Text>
-              <HStack  spacing={'1vh'}>
-                <Text fontSize={'1.8vh'} fontWeight={'bold'}> {product.Type}</Text>
-                <Text fontSize={'1.8vh'} fontWeight={'bold'}> {product.Size}</Text>
-                <Text fontSize={'1.8vh'} fontWeight={'bold'}> {product.Thickness}</Text>
+            flexDir={'column'}
+            justifyContent={'space-around'}>
+              <Text fontSize={'2vh'} textAlign={'center'}color={'web.text2'}>Price</Text>
+              <Text fontSize={'2.2vh'} textAlign={'center'}fontWeight={'semi-bold'} fon>$ {product.Price}</Text>
+          </Box>
+          </Box>
+          <Box
+            h={'8vh'} 
+            display={'flex'} 
+            flexDir={'column'} 
+            justifyContent={'space-around'}
+            px={'1vh'}
+            mt={'1.5vh'}>
+              <Text fontSize={'2vh'} color={'web.text2'}> Dimentions</Text>
+              <HStack  spacing={'2vw'}>
+                <Text fontSize={'2.2vh'} fontWeight={'semi-bold'}> {product.Size}</Text>
+                <Text fontSize={'2.2vh'} fontWeight={'semi-bold'}> {product.Thickness}</Text>
+                <Text fontSize={'2.2vh'} fontWeight={'semi-bold'}>{product.Finish ? product.Finish : '-'}</Text>
               </HStack>
-            </Box>
-            <Box w={'8vh'}>
-              <Text 
-                color={'web.text2'} 
-                fontSize={'1.5vh'}
-                >
-                Finish
-              </Text>
-              <Text 
-                fontSize={'1.8vh'} 
-                fontWeight={'bold'}
-                >
-                {product.Finish ? product.Finish : '-'}
-              </Text>
-            </Box>
-            
           </Box>
         </Box>
       </Box> 

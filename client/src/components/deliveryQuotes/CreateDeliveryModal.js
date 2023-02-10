@@ -27,19 +27,30 @@ const CreateDeliveryModal = ({invoice, user, isOpen, onClose, invoice_products})
  
   const [quantities, setQuantities] = useState([])
   const [disabled, setDisabled] = useState(true)
+  const [errors, setErrors] = useState([])
   
-
+  //console.log(disabled)
   const deliveryID = useSelector(state => state.deliveryID)
 
   const handleSubmit = async () => {
-    await dispatch(postDeliveryNote(id, quantities))
-    onSecondModalOpen()
-    onClose()
+      await dispatch(postDeliveryNote(id, quantities))
+      onSecondModalOpen()
+      onClose()
+      handleClear()
   }
 
   const handleSecondModalClose = () => {
     onSecondModalClose()
+    handleClear()
+  }
+  const handleFirstModalClose = () => {
+    onClose()
+    handleClear()
+  }
+  const handleClear = () => {
     setQuantities([])
+    setErrors([])
+    setDisabled(true)
   }
 
   return(
@@ -47,7 +58,7 @@ const CreateDeliveryModal = ({invoice, user, isOpen, onClose, invoice_products})
 {/* Start Create delivery modal */}
   <Modal 
     isOpen={isOpen} 
-    onClose={onClose}
+    onClose={handleFirstModalClose}
     size={'6xl'}
     >
     <ModalOverlay />
@@ -74,6 +85,8 @@ const CreateDeliveryModal = ({invoice, user, isOpen, onClose, invoice_products})
         invoice_products={invoice_products} 
         setQuantities={setQuantities}
         quantities={quantities}
+        errors={errors} 
+        setErrors={setErrors}
         setDisabled={setDisabled}/>
       </ModalBody>
       <ModalFooter mb={'1vh'} mr={'1vw'}>

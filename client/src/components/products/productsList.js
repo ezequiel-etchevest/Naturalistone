@@ -52,7 +52,7 @@ const ModelTr = ({e, user}) => {
       }} 
       >
       <Td onClick={() => handleClickProduct()} textAlign={'match-parent'}>{e.ProductName}</Td>
-      <Td onClick={() => handleClickProduct()} textAlign={'match-parent'}>{e.Type}</Td>
+      <Td onClick={() => handleClickProduct()} textAlign={'match-parent'}>{e.Material} - {e.Type}</Td>
       <Td onClick={() => handleClickProduct()} textAlign={'match-parent'}>{e.Size}</Td>
       <Td onClick={() => handleClickProduct()} textAlign={'center'}> {e.Thickness} </Td>
       <Td onClick={() => handleClickProduct()} textAlign={'center'}> {e.Finish === null ? '-' : e.Finish} </Td>
@@ -69,7 +69,7 @@ const ProductList = ({ allProducts, filteredProducts, user }) => {
 
   const productErrors = useSelector((state) => state.products_errors)
   const toast = useToast()
-
+console.log(allProducts)
   const validateToast = () => {
     if(Object.entries(productErrors).length){
       toast({        
@@ -119,13 +119,13 @@ const ProductList = ({ allProducts, filteredProducts, user }) => {
             <Thead h={'6vh'}>
               <Tr>
                 <Th color={'web.text2'} textAlign={'match-parent'}>Product Name</Th>
-                <Th color={'web.text2'} w={'4vw'}>Type</Th>
+                <Th color={'web.text2'} w={'8vw'}>Type</Th>
                 <Th color={'web.text2'} w={'4vw'}>Size</Th>
                 <Th color={'web.text2'} w={'4vw'}>Thickness</Th>
                 <Th color={'web.text2'} w={'4vw'}>Finish</Th>
                 <Th color={'web.text2'} w={'4vw'}isNumeric>Price</Th>
-                <Th color={'web.text2'} w={'4vw'}isNumeric>Stock</Th>
-                <Th color={'web.text2'} w={'4vw'}isNumeric>Inc. Stock</Th>
+                <Th color={'web.text2'} w={'4vw'}isNumeric>In Stock</Th>
+                <Th color={'web.text2'} w={'4vw'}isNumeric>Incoming</Th>
                 <Th color={'web.text2'} w={'4vw'}isNumeric>Next Arrival</Th>
                 <Th color={'web.text2'} w={'4vw'}>Discontinued</Th>
               </Tr>

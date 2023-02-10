@@ -28,7 +28,7 @@ function App() {
       <Route path="/home" element={ <Home/>}/>
       <Route path="/quotes" element={<Quotes/>}/>
       <Route path='/quotes/:id' element={<InvoiceDetail />} /> 
-      <Route path="/products" element={<Products/>} />
+      <Route path="/inventory" element={<Products/>} />
       <Route path="/products/:id" element={<ProductDetailView/>}/>
       <Route path="/Invoice Errors" element={<InvoiceErrors/>}/>
       <Route path="/orders" element={<Orders/>} />

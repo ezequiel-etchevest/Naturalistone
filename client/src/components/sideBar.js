@@ -12,7 +12,7 @@ import { logOut } from '../redux/actions-employees';
 const LinkItems = [
   { name: 'Home', icon: FaHome },
   { name: 'Quotes', icon: FaFileInvoiceDollar },
-  { name: 'Products', icon: FaBoxOpen },
+  { name: 'Inventory', icon: FaBoxOpen },
   { name: 'Invoice Errors', icon: BiError },
   { name: 'Orders', icon: IoMdBoat },
   { name: 'Log Out', icon: CgLogOut },

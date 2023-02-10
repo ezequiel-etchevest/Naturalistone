@@ -19,7 +19,8 @@ const ModelTr = ({e}) => {
       _hover={{
         bg: 'web.navBar',
         color: 'logo.orange'
-      }} 
+      }}
+      color={'web.text'} 
       >
       <Td textAlign={'match-parent'}>{e.InvoiceDate.split('T')[0]}</Td>
       <Td textAlign={'center'}>{e.SalePrice}</Td>
@@ -59,8 +60,8 @@ const HistoricalProductList = ({history_prices}) => {
             <Table w={'13vw'} variant={'simple'} size={'sm'} >
               <Thead >
                 <Tr >
-                  <Th color={'web.text'} fontSize={'1.5vh'} fontWeight={'medium'} textAlign={'center'} >Date</Th>
-                  <Th color={'web.text'} fontSize={'1.5vh'} fontWeight={'medium'} textAlign={'center'}>Value</Th>
+                  <Th color={'web.text2'} fontSize={'1.5vh'} fontWeight={'medium'} textAlign={'center'} >Date</Th>
+                  <Th color={'web.text2'} fontSize={'1.5vh'} fontWeight={'medium'} textAlign={'center'}>Value</Th>
                 </Tr>
               </Thead>
               <Tbody >
