@@ -8,9 +8,6 @@ import {
   FormControl, 
   NumberInput,
   NumberInputField, 
-  NumberDecrementStepper, 
-  NumberIncrementStepper, 
-  NumberInputStepper,
   Select
   } from "@chakra-ui/react";
 import { BsCalendar4Week } from 'react-icons/bs';
@@ -20,12 +17,16 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useState } from "react";
 
 
-const Filters = ({userId, seller_invoices, setFilteredByCustomer, focus, setFocus}) => {
+const Filters = ({userId, seller_invoices, setFilteredByCustomer, focus, setFocus, seller_values}) => {
 
   const dispatch = useDispatch()
-  const [errores, setErrores] = useState('')   
+  const [errores, setErrores] = useState('')
   const filtered_invoices_month_week = useSelector(state => state.filtered_invoices_month_week)
 
+  let validateSeller = () => {
+    if(userId == 6 || userId == 3 || userId == 5 || userId == 15 ) return true
+    else return false
+  }
 
   const handleClickAllInvoices = () => {
     dispatch(getInvoicesBySeller(userId))
@@ -74,7 +75,6 @@ const Filters = ({userId, seller_invoices, setFilteredByCustomer, focus, setFocu
     return (
         <>
         <HStack
-          border={'2px solid blue'} 
           ml={'2vw'}
           mr={'2vw'} 
           h={'20vh'} 
@@ -130,6 +130,7 @@ const Filters = ({userId, seller_invoices, setFilteredByCustomer, focus, setFocu
                 <BsCalendar4Week/>
             </Button>
             <Button
+              userSelect={'none'}
               variant={'unstyled'} 
               display={'flex'} 
               w={'12vw'}
@@ -154,21 +155,17 @@ const Filters = ({userId, seller_invoices, setFilteredByCustomer, focus, setFocu
           </HStack>
           {/*Inputs and select */}
           <Box
-            border={'2px solid red'}
             display={'flex'}
             alignItems={'center'}
-            justifyContent={'space-between'}
-            w={'45vw'}
+            justifyContent={'flex-end'}
+            w={'48vw'}
             >
-            <Select w={'15vw'}>
-              <option>Hola</option>
-            </Select>
             <Box
-              border={'2px solid green'}
+              ml={'2vh'}
               display={'flex'}
               flexDir={'row'}
               alignItems={'flex-start'}
-              justifyContent={'space-between'}
+              justifyItems={'flex-end'}
               pt={'1vh'}
               w={'15vw'}
               h={'6vh'}
@@ -190,10 +187,6 @@ const Filters = ({userId, seller_invoices, setFilteredByCustomer, focus, setFocu
                     name={'invoiceNumber'}
                     onChange={(e) => handleChangeInvoiceNumber(e)}
                     />
-                  <NumberInputStepper>
-                    <NumberIncrementStepper  border={'none'}/>
-                    <NumberDecrementStepper border={'none'}/>
-                  </NumberInputStepper>
                 </NumberInput>
                   <IconButton
                     pb={'2vh'}
@@ -217,7 +210,7 @@ const Filters = ({userId, seller_invoices, setFilteredByCustomer, focus, setFocu
                     )}
               </FormControl>
             </Box>
-              <Box
+            <Box
                 display={'flex'}
                 alignItems={'center'} 
                 w={'15vw'}
@@ -250,6 +243,36 @@ const Filters = ({userId, seller_invoices, setFilteredByCustomer, focus, setFocu
                   _active={{ color: 'gray.800'}}
                 />
             </Box>
+            <Select
+              display={validateSeller() === true ? 'unset' : 'none'}
+              placeholder="Select seller"
+              w={'14vw'}
+              variant='outline' 
+              h={'4.2vh'}
+              fontSize={'xs'}            
+              bg={'web.bg'}
+              color={'web.text2'}
+              borderColor={'web.text2'}
+              cursor={'pointer'}
+              _focus={{
+                borderColor: 'logo.orange',
+                boxShadow: '0 0.5px 0.5px rgba(229, 103, 23, 0.075)inset, 0 0 5px rgba(255,144,0,0.6)'
+              }}>
+              {
+                validateSeller() === true ? (
+                  seller_values ? (
+                    seller_values.map((e, i) => {
+                      return(
+                        <option key={i} value={e}>{e}</option>
+                      )
+                    })
+
+                  ): ( null)
+                ):(
+                  null
+                )
+              }
+            </Select>
           </Box>
         </HStack>
         </>
