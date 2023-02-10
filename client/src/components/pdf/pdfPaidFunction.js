@@ -15,7 +15,7 @@ const LoadPdfPaid = ({idpdf}) => {
   
     const modifyPdf = async () => {
 
-      //const url = `https://netorg8591642-my.sharepoint.com/:f:/g/personal/irina_naturalistone_com/EuA-Cr0-Z-tJojSeZXDx-MgBQJiFxcQo3ndaFifr11jCLA?e=giHGBa/${pdfID}.pdf`
+      const url = `https://netorg8591642-my.sharepoint.com/:f:/g/personal/irina_naturalistone_com/EuA-Cr0-Z-tJojSeZXDx-MgBQJiFxcQo3ndaFifr11jCLA?e=giHGBa/${pdfID}.pdf`
       //const url = `https://netorg8591642-my.sharepoint.com/personal/irina_naturalistone_com/_layouts/15/onedrive.aspx?id=%2Fpersonal%2Firina%5Fnaturalistone%5Fcom%2FDocuments%2FNaturali%2FInvoicesReceived%2FParsed%20Documents%2FInvoice%20Naturali%2F${pdfID}%2Epdf&parent=%2Fpersonal%2Firina%5Fnaturalistone%5Fcom%2FDocuments%2FNaturali%2FInvoicesReceived%2FParsed%20Documents%2FInvoice%20Naturali`
       
       const existingPdfBytes = await fetch(url).then((res) => res.arrayBuffer());
