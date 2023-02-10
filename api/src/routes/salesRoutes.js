@@ -4,6 +4,7 @@ const mysqlConnection = require('../db')
 const  getLimitDate = require('../Controllers/LastWeek');
 const invoicesPayments = require('../Controllers/invoicesPayments')
 const  { getLimitDateMonth, getCurrentMonth } = require('../Controllers/LastMonth')
+const uniqueFormatNames = require('../Controllers/quotesValues')
 
 salesRouter.get('/:id', async function(req, res){
     
@@ -30,7 +31,7 @@ salesRouter.get('/:id', async function(req, res){
                 LEFT JOIN Customers ON Projects.CustomerID = Customers.CustomerID
                 LEFT JOIN Payments ON Sales.Naturali_Invoice = Payments.InvoiceID
                 LEFT JOIN Seller ON Sales.SellerID = Seller.SellerID  
-                WHERE SellerID = ${id}
+                WHERE Seller.SellerID = ${id}
                 GROUP BY Sales.Naturali_Invoice
                 ORDER BY Sales.Naturali_Invoice DESC`;
   }
@@ -258,6 +259,35 @@ salesRouter.patch('/cancelquote/:id', async function(req, res){
                 res.status(200).json(results);
             }
         });
+    } catch(error){
+        res.status(409).send(error);
+    }
+});
+
+salesRouter.get('/values/seller', async function(req, res){
+
+    query_ =   `SELECT Sales.*, Projects.*, Customers.*, Payments.idPayments, Seller.FirstName, Seller.LastName,
+                GROUP_CONCAT(
+                CONCAT(Payments.idPayments,';',Payments.Amount,';',Payments.Date))AS Payments FROM Sales 
+                LEFT JOIN Projects ON Sales.ProjectID = Projects.idProjects
+                LEFT JOIN Customers ON Projects.CustomerID = Customers.CustomerID
+                LEFT JOIN Payments ON Sales.Naturali_Invoice = Payments.InvoiceID 
+                LEFT JOIN Seller ON Sales.SellerID = Seller.SellerID 
+                GROUP BY Sales.Naturali_Invoice
+                ORDER BY Sales.Naturali_Invoice DESC` 
+            
+    try{
+         mysqlConnection.query(query_, function(error, results, fields){
+            if(error) throw error;
+            if(results.length == 0) {
+                console.log('Error en salesRoutes.get /values')
+                res.status(200).json({ estado: false, data: {}});
+            } else {
+                console.log('Data OK')
+                let values = uniqueFormatNames(results)
+                res.status(200).json(values);
+            }
+            });
     } catch(error){
         res.status(409).send(error);
     }

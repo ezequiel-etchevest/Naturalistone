@@ -2,6 +2,7 @@ const express = require('express')
 const sellerRouter = express.Router()
 const mysqlConnection = require('../db')
 
+
 sellerRouter.get('/', async function(req, res){
     const data = req.body
 
@@ -10,7 +11,7 @@ sellerRouter.get('/', async function(req, res){
          mysqlConnection.query(query_, function(error, results, fields){
             if(error) throw error;
             if(results.length == 0) {
-                console.log('Error en dellerRoutes.get /')
+                console.log('Error en sellerRoutes.get /')
                 res.status(400).json({ estado: false, data: {}});
             } else {
                 console.log('Data OK')
@@ -40,5 +41,7 @@ sellerRouter.get('/:id', async function(req, res){
         res.status(409).send(error);
     }
 });
+
+
 
 module.exports = sellerRouter;

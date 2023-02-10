@@ -5,6 +5,7 @@ export const GET_INVOICES_LASTWEEK = 'GET_INVOICES_LASTWEEK';
 export const GET_INVOICES_LASTMONTH = 'GET_INVOICES_LASTMONTH';
 export const GET_FILTERED_INVOICES = 'GET_FILTERED_INVOICES';
 export const GET_INVOICE_PRODUCTS = 'GET_INVOICE_PRODUCTS';
+export const GET_SELLER_VALUES = 'GET_SELLER_VALUES';
 export const PATCH_STAMP = 'PATCH_STAMP';
 export const PATCH_STATUS = 'PATCH_STATUS';
 
@@ -160,6 +161,21 @@ export function changeStatus(id){
                 })
         }catch(error){
             console.log({error})     
+        }
+    }
+}
+
+export function getSellerValues(){
+    return async function(dispatch){
+        try{
+            let {data} = await axios.get(`http://localhost:5000/sales/values/seller`)
+ 
+            return dispatch({
+                type: GET_SELLER_VALUES,
+                payload: data
+            })
+        }catch(error){
+            console.log({error})
         }
     }
 }

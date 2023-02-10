@@ -11,7 +11,8 @@ import {
     GET_FILTERED_INVOICES,
     GET_INVOICE_PRODUCTS,
     PATCH_STAMP,
-    PATCH_STATUS
+    PATCH_STATUS,
+    GET_SELLER_VALUES
 } from './actions-invoices';
 import { 
   GET_INVOICE_ERRORS,
@@ -113,7 +114,8 @@ function rootReducer (state = intialState, action) {
               invoice_errors_by_filter_errors:[],
               deliveries_notes_by_id:[],
               deliveryID:'',
-              delivery_by_id:[]
+              delivery_by_id:[],
+              seller_values:[]
             }
         
         case GET_INVOICE_BY_ID:
@@ -287,7 +289,11 @@ function rootReducer (state = intialState, action) {
              ...state,
              product_values: action.payload
            }
-
+        case GET_SELLER_VALUES:
+          return{
+            ...state,
+            seller_values: action.payload
+          }
         default:
             return {
               ...state

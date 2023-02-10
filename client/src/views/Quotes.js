@@ -4,20 +4,21 @@ import { Button } from "@chakra-ui/react";
 import InfoContainer from "../components/invoices/infoContainer";
 import { useDispatch, useSelector } from "react-redux";
 import { getEmployeeById } from '../redux/actions-employees';
-import { getInvoicesBySeller } from '../redux/actions-invoices';
+import { getInvoicesBySeller, getSellerValues } from '../redux/actions-invoices';
 import { Link} from "react-router-dom";
 
 
-
 const Quotes = () => {
-
+  
   const dispatch = useDispatch()
   const seller_invoices = useSelector(state => state.seller_invoices)
   const user = useSelector(state => state.user)
   const [focus, setFocus] = useState('AllInvoices')
   const userLocal = JSON.parse(localStorage.getItem('user'))
+  const seller_values = useSelector(state => state.seller_values)
 
     useEffect(()=>{
+        if(seller_values === undefined) dispatch(getSellerValues())
         if(userLocal && !user.length){
           dispatch(getEmployeeById(userLocal.SellerID))
         }})
@@ -33,7 +34,8 @@ const Quotes = () => {
         return(
           <>
             <SideBar user={user}/>
-            <InfoContainer 
+            <InfoContainer
+              seller_values={seller_values}
               seller_invoices={seller_invoices} 
               userId={user[0].SellerID} 
               focus={focus} 
