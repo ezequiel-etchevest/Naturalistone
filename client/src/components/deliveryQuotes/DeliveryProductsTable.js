@@ -44,7 +44,7 @@ const ModelTr = ({p, setQuantities, quantities, errors, setErrors, setDisabled})
       size:p.Size,
       thickness:p.Thickness,
       finish:p.Finish,
-      inStock_Reserved: p.InStock_Reserved
+      InStock_Reserved: p.InStock_Reserved
     })
 
   let upd = false;
@@ -80,33 +80,25 @@ const ModelTr = ({p, setQuantities, quantities, errors, setErrors, setDisabled})
       quantities.forEach(e => {
         if (e.prodID === input.prodID) {
           e.quantity = input.quantity;
-          // if(e.quantity == 0){
-          //   setQuantities(quantities.filter(q => q.prodID !== input.prodID))
-          // }
+          if(e.quantity == 0){
+            setQuantities(quantities.filter(q => q.prodID !== input.prodID))
+          }
           updated = true;
-
-          // if(parseInt(e.quantity) === 0){
-          //   setQuantities(quantities.filter(q => q.prodID !== input.prodID))
-           
-          // } else if (parseInt(input.quantity) > 0){
-
-          //     if(e.quantity <= p.InStock_Reserved){
-          //       setErrors(errors.filter(err=> err !== p.prodID))
-          //     }
-          // }}
     }});  
     }
   
     if (!updated){
+      if(input.quantity > 0){
       setQuantities([...quantities, input])
-  }
+      // handleDisableChange()
+  }}
   }
 
-  // const handleDisableChange = async () => {
-  //   setDisabled(false)
+  // const handleDisableChange = () => {
+  //   if(!errors.length && quantities.length)setDisabled(false)
+  //   else setDisabled(true)
   // }  
 
-  
     return(
       <Tr 
         cursor={'pointer'}
@@ -156,9 +148,7 @@ const ModelTr = ({p, setQuantities, quantities, errors, setErrors, setDisabled})
 }
 
 const DeliveryProductList = ({invoice_products, setQuantities, quantities, errors, setErrors, setDisabled}) => {
-  
- console.log('quantities',quantities)
- //console.log('erroooooors',errors)
+
     return(
         <Box
         display={'flex'}

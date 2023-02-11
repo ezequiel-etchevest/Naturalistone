@@ -34,7 +34,8 @@ deliveryRouter.get('/id/:id', async function(req, res){
   Dimension.Type,
   Dimension.Size,
   Dimension.Finish,
-  Dimension.Thickness, 
+  Dimension.Thickness,
+  Dimension.Material,  
   ProdSold.* FROM NaturaliStone.Deliveries_Products
   INNER JOIN Products ON Products.ProdID = Deliveries_Products.ProdID
   INNER JOIN Dimension ON Dimension.DimensionID = Products.DimensionID
