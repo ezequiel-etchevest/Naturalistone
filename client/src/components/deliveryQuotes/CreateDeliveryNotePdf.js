@@ -7,7 +7,7 @@ const CreateDeliveryNotePdf = ({quantities, deliveryID, id}) => {
 
     const [pdfInfo, setPdfInfo] = useState([]);
     const viewer = useRef(null);
-   
+    console.log('createDeliveryNotepdf',quantities)
     useEffect(() => {
         CreateForm();
     }, []);

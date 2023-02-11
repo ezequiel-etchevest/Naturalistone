@@ -29,23 +29,21 @@ const CreateDeliveryModal = ({invoice, user, isOpen, onClose, invoice_products})
   const [disabled, setDisabled] = useState(true)
   const [errors, setErrors] = useState([])
   
-  //console.log(disabled)
   const deliveryID = useSelector(state => state.deliveryID)
 
   const handleSubmit = async () => {
       await dispatch(postDeliveryNote(id, quantities))
       onSecondModalOpen()
       onClose()
-      handleClear()
   }
 
   const handleSecondModalClose = () => {
-    onSecondModalClose()
     handleClear()
+    onSecondModalClose()
   }
   const handleFirstModalClose = () => {
-    onClose()
     handleClear()
+    onClose()
   }
   const handleClear = () => {
     setQuantities([])
