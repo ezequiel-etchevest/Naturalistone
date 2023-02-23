@@ -2,17 +2,27 @@ import axios from 'axios';
 export const POST_DELIVERY_NOTE = 'POST_DELIVERY_NOTE';
 export const GET_DELIVERIESS = 'GET_DELIVERIESS';
 export const GET_DELIVERY_BY_ID = 'GET_DELIVERY_BY_ID';
+export const POST_DELIVERY_NOTE_FAIL = 'POST_DELIVERY_NOTE_FAIL';
 // export const CLEAN_PAYMENTS_BY_ID = 'CLEAN_PAYMENTS_BY_ID';
 
 export function postDeliveryNote(id, quantities){
     return async function(dispatch){
         try{
             let { data } = await axios.post(`http://localhost:5000/delivery/${id}`, quantities)
-            dispatch(
-            {
-                type: POST_DELIVERY_NOTE,
-                payload: data
-            })
+
+            if(data.val){
+                dispatch(
+                {
+                    type: POST_DELIVERY_NOTE,
+                    payload: data.deliveryID
+                })
+            } else {
+                dispatch(
+                    {
+                        type: POST_DELIVERY_NOTE_FAIL,
+                        payload: data.deliveryID
+                    })
+            }
         }catch(error){
             console.log({error})           
 

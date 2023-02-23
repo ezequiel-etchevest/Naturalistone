@@ -51,7 +51,7 @@ const ProductInformation = ({product}) => {
             flexDir={'column'}
             justifyContent={'space-around'}>
               <Text fontSize={'2vh'} textAlign={'center'}color={'web.text2'}>Price</Text>
-              <Text fontSize={'2.2vh'} textAlign={'center'}fontWeight={'semi-bold'} fon>$ {product.Price}</Text>
+              <Text fontSize={'2.2vh'} textAlign={'center'}fontWeight={'semi-bold'} fon>$ {product.Price.toLocaleString('en-US')}</Text>
           </Box>
           </Box>
           <Box

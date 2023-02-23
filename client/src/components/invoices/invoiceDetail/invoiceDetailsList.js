@@ -1,7 +1,7 @@
 import { Box, Text } from "@chakra-ui/react"
 
 const InvoiceDetailList = ({invoice, payments}) => {
-
+  
     return(
         <>
         <Box
@@ -84,7 +84,7 @@ const InvoiceDetailList = ({invoice, payments}) => {
                 <Text 
                 fontSize={'sm'} 
                 fontWeight={'bold'}>
-                  ${invoice[0].Value}
+                  ${invoice[0].Value.toLocaleString('en-US')}
                   </Text>
               </Box>
               <Box>
@@ -97,7 +97,7 @@ const InvoiceDetailList = ({invoice, payments}) => {
                   fontSize={'sm'} 
                   fontWeight={'bold'}>
                   { payments.paymentsMath ? (
-                    payments.paymentsMath.PaymentPercentaje                  
+                    Math.round(payments.paymentsMath.PaymentPercentaje)                  
                     ):(
                     0
                     )
@@ -156,9 +156,9 @@ const InvoiceDetailList = ({invoice, payments}) => {
                   fontSize={'sm'} 
                   fontWeight={'bold'}>
                   ${payments.paymentsMath  ? (
-                   payments.paymentsMath.PendingAmount
+                   Number(payments.paymentsMath.PendingAmount).toLocaleString('en-US')
                   ):(
-                    invoice[0].Value
+                    invoice[0].Value.toLocaleString('en-US')
                     )
                  }</Text>
               </Box>

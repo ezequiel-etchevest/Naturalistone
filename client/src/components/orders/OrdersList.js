@@ -40,7 +40,7 @@ const ModelTr = ({o}) => {
         >
         <Td textAlign={'center'}>{o.OrderID}</Td>
         <Td textAlign={'-moz-initial'}>{o.FactoryName}</Td>
-        <Td textAlign={'center'}>{o.Value}</Td>
+        <Td textAlign={'center'}>{o.Value.toLocaleString('en-US')}</Td>
         <Td textAlign={'center'}>{o.InvoiceDate.split('T')[0]}</Td>
         <Td isNumeric textAlign={'center'}>{o.idFreightInvoice} </Td>
         <Td textAlign={'center'}>{o.Order_By.split('@')[0]}</Td>

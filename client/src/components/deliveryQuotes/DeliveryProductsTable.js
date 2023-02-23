@@ -24,15 +24,18 @@ const ModelTr = ({p, setQuantities, quantities, errors, setErrors, setDisabled})
   const toast = useToast()
 
   const [input, setInput] = useState({
-      quantity: 0,
-      prodID:'',
-      prodName:'',
-      type:'',
-      size:'',
-      thickness:'',
-      finish:'',
+      quantity: p.InStock_Reserved,
+      prodID:p.ProdID,
+      prodName: p.ProductName,
+      type: p.Type,
+      size:p.Size,
+      thickness:p.Thickness,
+      finish:p.Finish,
+      InStock_Reserved: p.InStock_Reserved,
+      SalePrice: p.SalePrice,
+      delivered: p.Delivered
     })
-  
+
 
   const handleInput = (e) => {
 
@@ -44,7 +47,9 @@ const ModelTr = ({p, setQuantities, quantities, errors, setErrors, setDisabled})
       size:p.Size,
       thickness:p.Thickness,
       finish:p.Finish,
-      InStock_Reserved: p.InStock_Reserved
+      InStock_Reserved: p.InStock_Reserved,
+      SalePrice: p.SalePrice,
+      delivered: p.Delivered
     })
 
   let upd = false;
@@ -121,7 +126,7 @@ const ModelTr = ({p, setQuantities, quantities, errors, setErrors, setDisabled})
             h={'4vh'}
             onChange={(e)=>handleInput(e)} 
             step={1} 
-            //defaultValue={} 
+            defaultValue={p.InStock_Reserved} 
             min={0} 
             precision={0}
             >
@@ -143,6 +148,7 @@ const ModelTr = ({p, setQuantities, quantities, errors, setErrors, setDisabled})
         <Td textAlign={'center'} w={'6vw'}>{p.Thickness} </Td>
         <Td textAlign={'center'} w={'6vw'}>{p.Finish} </Td>
         <Td textAlign={'center'} w={'6vw'}>{p.InStock_Reserved}</Td>
+        <Td textAlign={'center'} w={'6vw'}>{p.Quantity - p.Delivered}</Td>
       </Tr>
     )
 }
@@ -153,7 +159,9 @@ const DeliveryProductList = ({invoice_products, setQuantities, quantities, error
         <Box
         display={'flex'}
         justifyContent={'center'}
-        w={'60vw'}
+        w={'64vw'}
+        pl={'1vw'}
+        pr={'1vw'}
         >
           <Box
             maxHeight={'54vh'}
@@ -183,6 +191,7 @@ const DeliveryProductList = ({invoice_products, setQuantities, quantities, error
                       <Th color={'web.text2'} textAlign={'center'} w={'6vw'}>Thickness</Th>
                       <Th color={'web.text2'} textAlign={'center'} w={'6vw'}>Finish</Th>
                       <Th color={'web.text2'} textAlign={'center'} w={'6vw'}>Stock Reserved</Th>
+                      <Th color={'web.text2'} textAlign={'center'} w={'6vw'}>Remaining</Th>
                     </Tr>
                   </Thead>
                   <Tbody >

@@ -23,7 +23,7 @@ const ModelTr = ({e}) => {
       color={'web.text'} 
       >
       <Td textAlign={'match-parent'}>{e.InvoiceDate.split('T')[0]}</Td>
-      <Td textAlign={'center'}>{e.SalePrice}</Td>
+      <Td textAlign={'center'}>{e.SalePrice.toLocaleString('en-US')}</Td>
     </Tr>
   )
 }

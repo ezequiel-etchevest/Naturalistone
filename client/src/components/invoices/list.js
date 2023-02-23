@@ -53,8 +53,8 @@ const ModelTr = ({e, userId}) => {
         <Td fontSize={'xs'}>{e.Reference}</Td>
         <Td fontSize={'xs'} textAlign={'center'}>{e.InvoiceDate.split('T')[0]}</Td>
         <Td fontSize={'xs'} textAlign={'center'}>{e.Status}</Td>
-        <Td fontSize={'xs'} isNumeric textAlign={'center'}>${e.Value} </Td>
-        <Td fontSize={'xs'} textAlign={'center'} >{ e.Percentaje ? e.Percentaje : 0 } % </Td>
+        <Td fontSize={'xs'} isNumeric textAlign={'center'}>$ {e.Value.toLocaleString('en-US')} </Td>
+        <Td fontSize={'xs'} textAlign={'center'} >{ e.Percentaje ? Math.round(e.Percentaje) : 0 } % </Td>
         <Td fontSize={'xs'} textAlign={'center'}>{ e.Payments?.length ? e.Payments[0][2] : '-'}</Td>
       </Tr>
     )

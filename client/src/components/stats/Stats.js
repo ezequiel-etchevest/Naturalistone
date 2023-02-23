@@ -37,7 +37,7 @@ function StatsCard(props) {
             {title}
           </StatLabel>
           <StatNumber fontSize={'4xl'} fontWeight={'medium'} >
-            {stat}
+            {stat?.toLocaleString('en-US')}
           </StatNumber>
         </Box>
         <Box
@@ -53,7 +53,7 @@ function StatsCard(props) {
 }
 
 export default function Stats({currentMonth}) {
-
+  
   return (
     <Box h={'92vh'}  p={'4vw'} bg={'web.bg'} >
       <HStack mt={'5vh'} columns={{ base: 1, md: 3 }} spacing={{ base: 5, lg: 8 }}>

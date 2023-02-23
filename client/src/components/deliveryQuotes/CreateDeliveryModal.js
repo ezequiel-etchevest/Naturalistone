@@ -6,6 +6,7 @@ import {
     ModalContent,
     ModalHeader,
     ModalFooter,
+    Text,
     ModalBody,
     ModalCloseButton,
     useDisclosure
@@ -26,15 +27,24 @@ const CreateDeliveryModal = ({invoice, user, isOpen, onClose, invoice_products})
   const id = invoice[0].Naturali_Invoice
  
   const [quantities, setQuantities] = useState([])
-  const [disabled, setDisabled] = useState(true)
+  const [disabled, setDisabled] = useState(false)
   const [errors, setErrors] = useState([])
   
   const deliveryID = useSelector(state => state.deliveryID)
+  const deliveryID_error = useSelector(state => state.deliveryID_error)
+
+  const val = () => {
+    if(deliveryID_error === false) return true 
+    else return false
+  }
 
   const handleSubmit = async () => {
       await dispatch(postDeliveryNote(id, quantities))
-      onSecondModalOpen()
-      onClose()
+
+      if(await val()){
+        onSecondModalOpen()
+        onClose()
+      }
   }
 
   const handleSecondModalClose = () => {
@@ -86,6 +96,9 @@ const CreateDeliveryModal = ({invoice, user, isOpen, onClose, invoice_products})
         errors={errors} 
         setErrors={setErrors}
         setDisabled={setDisabled}/>
+        {
+          deliveryID_error?.length ? (<Text>{deliveryID_error}</Text>) : (null)
+        }
       </ModalBody>
       <ModalFooter mb={'1vh'} mr={'1vw'}>
         <Button

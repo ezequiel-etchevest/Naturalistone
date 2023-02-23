@@ -33,9 +33,9 @@ const ModelTr = ({p, totalAmount, invoice}) => {
         }}
         >
         <Td textAlign={'match-parent'}>{p.Date.split('T')[0]}</Td>
-        <Td textAlign={'match-parent'}>${p.Amount} </Td>
-        <Td textAlign={'match-parent'}>{p.Method}</Td>
-        <Td textAlign={'match-parent'}>{per.toFixed(2)} %</Td>
+        <Td textAlign={'match-parent'}>${p.Amount.toLocaleString('en-US')} </Td>
+        <Td textAlign={'match-parent'} w={'4vw'}>{p.Method}</Td>
+        <Td textAlign={'center'} w={'3vw'}>{Math.round(per.toFixed(2))} %</Td>
         <Td>
           <IconButton
             disabled={invoice[0].Stamped === 1 ? true : false} 

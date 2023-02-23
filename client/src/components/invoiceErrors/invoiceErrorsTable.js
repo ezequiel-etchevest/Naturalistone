@@ -46,7 +46,7 @@ const ModelTr = ({e, user}) => {
           : null
         }
         <Td textAlign={'center'}>{e.Date?.split('T')[0]}</Td>
-        <Td>{e.Error}</Td>
+        <Td maxW={'30vw'}>{e.Error}</Td>
       </Tr>
     )
 }
@@ -126,7 +126,7 @@ const InvoiceErrorsList = ({user, invoice_errors_by_filter, filteredInvoicesErro
             mr={'3vw'}
             >
             <TableContainer>
-                <Table color={'web.text'} variant={'simple'} size={'sm'} >
+                <Table color={'web.text'} variant={'simple'} size={'sm'}>
                   <Thead h={'6vh'}>
                     <Tr>
                       <Th color={'web.text2'} w={'5vw'} textAlign={'center'}>Invoice Nº</Th>
@@ -141,10 +141,10 @@ const InvoiceErrorsList = ({user, invoice_errors_by_filter, filteredInvoicesErro
                       null
                       }
                       <Th w={'5vw'} color={'web.text2'} textAlign={'center'}>Date</Th>
-                      <Th  maxW={'50vw'} color={'web.text2'} textAlign={'center'}>Error</Th>
+                      <Th color={'web.text2'} textAlign={'center'}>Error</Th>
                     </Tr>
                   </Thead>
-                  <Tbody >
+                  <Tbody>
                   {
                     filteredInvoicesErrors.length ? 
                       filteredInvoicesErrors.map((e, i) =>{
