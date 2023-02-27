@@ -14,13 +14,11 @@ import {
     NumberInputField,
     useToast, 
   } from '@chakra-ui/react'
-  import { useNavigate } from 'react-router-dom'
   import { useState } from 'react'
 
 
-const ModelTr = ({p, setQuantities, quantities, errors, setErrors, setDisabled}) => {
+const ModelTr = ({p, setQuantities, quantities, errors, setErrors, setDisabledConfirm}) => {
   
-  const navigate = useNavigate()
   const toast = useToast()
 
   const [input, setInput] = useState({
@@ -40,19 +38,11 @@ const ModelTr = ({p, setQuantities, quantities, errors, setErrors, setDisabled})
   const handleInput = (e) => {
 
     setInput({
-      quantity: e,
-      prodID:p.ProdID,
-      prodName: p.ProductName,
-      type: p.Type,
-      size:p.Size,
-      thickness:p.Thickness,
-      finish:p.Finish,
-      InStock_Reserved: p.InStock_Reserved,
-      SalePrice: p.SalePrice,
-      delivered: p.Delivered
+      ...input,
+      quantity: parseFloat(e),
     })
 
-  let upd = false;
+
   
   if (errors.length) {
     errors.forEach(err => {
@@ -60,10 +50,8 @@ const ModelTr = ({p, setQuantities, quantities, errors, setErrors, setDisabled})
         if(e >= 0 && e <= p.InStock_Reserved){
           setErrors(errors.filter(error=> error !== input.prodID))
         }
-        upd = true
       }})}  
 
-  if(!upd){
     if( e > p.InStock_Reserved ){
       setErrors([...errors, p.ProdID])
       toast({
@@ -74,7 +62,6 @@ const ModelTr = ({p, setQuantities, quantities, errors, setErrors, setDisabled})
         isClosable: true,
       })
     }
-  }
 }
 
 
@@ -85,7 +72,7 @@ const ModelTr = ({p, setQuantities, quantities, errors, setErrors, setDisabled})
       quantities.forEach(e => {
         if (e.prodID === input.prodID) {
           e.quantity = input.quantity;
-          if(e.quantity == 0){
+          if(e.quantity === 0){
             setQuantities(quantities.filter(q => q.prodID !== input.prodID))
           }
           updated = true;
@@ -95,14 +82,8 @@ const ModelTr = ({p, setQuantities, quantities, errors, setErrors, setDisabled})
     if (!updated){
       if(input.quantity > 0){
       setQuantities([...quantities, input])
-      // handleDisableChange()
   }}
   }
-
-  // const handleDisableChange = () => {
-  //   if(!errors.length && quantities.length)setDisabled(false)
-  //   else setDisabled(true)
-  // }  
 
     return(
       <Tr 
@@ -153,7 +134,7 @@ const ModelTr = ({p, setQuantities, quantities, errors, setErrors, setDisabled})
     )
 }
 
-const DeliveryProductList = ({invoice_products, setQuantities, quantities, errors, setErrors, setDisabled}) => {
+const DeliveryProductList = ({invoice_products, setQuantities, quantities, errors, setErrors, setDisabledConfirm}) => {
 
     return(
         <Box
@@ -197,7 +178,7 @@ const DeliveryProductList = ({invoice_products, setQuantities, quantities, error
                   <Tbody >
                     { invoice_products.map((p, i) =>{
                         return(
-                          <ModelTr p={p} key={i} id={i} setQuantities={setQuantities} quantities={quantities} errors={errors} setErrors={setErrors} setDisabled={setDisabled}/>
+                          <ModelTr p={p} key={i} id={i} setQuantities={setQuantities} quantities={quantities} errors={errors} setErrors={setErrors} setDisabledConfirm={setDisabledConfirm}/>
                         )
                       })
                     }

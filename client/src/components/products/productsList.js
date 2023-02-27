@@ -69,7 +69,7 @@ const ProductList = ({ allProducts, filteredProducts, user }) => {
 
   const productErrors = useSelector((state) => state.products_errors)
   const toast = useToast()
-console.log(allProducts)
+
   const validateToast = () => {
     if(Object.entries(productErrors).length){
       toast({        

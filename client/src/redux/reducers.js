@@ -46,7 +46,8 @@ import {
     GET_DELIVERIESS,
     POST_DELIVERY_NOTE,
     GET_DELIVERY_BY_ID,
-    POST_DELIVERY_NOTE_FAIL
+    POST_DELIVERY_NOTE_FAIL,
+    CLEAN_DELIVERY_NOTE_FAIL
 } from './actions-deliveryNotes';
 
 
@@ -116,6 +117,7 @@ function rootReducer (state = intialState, action) {
               invoice_errors_by_filter_errors:[],
               deliveries_notes_by_id:[],
               deliveryID:'',
+              deliveryID_error:'',
               delivery_by_id:[],
               seller_values:[]
             }
@@ -280,7 +282,12 @@ function rootReducer (state = intialState, action) {
         case POST_DELIVERY_NOTE_FAIL:
           return {
             ...state,
-            deliveryID_error: action.payload
+            deliveryID_error: true
+          }
+        case CLEAN_DELIVERY_NOTE_FAIL:
+          return {
+            ...state,
+            deliveryID_error: ''
           }
         case GET_DELIVERIESS:
           return {

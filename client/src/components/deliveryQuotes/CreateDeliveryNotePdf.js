@@ -13,8 +13,10 @@ const CreateDeliveryNotePdf = ({quantities, deliveryID, id}) => {
     }, []);
 
     const products = {};
+    
+    const filteredQuantities = quantities.filter(prod => prod.quantity !== 0)
 
-    quantities.forEach((product, index) => {
+    filteredQuantities.forEach((product, index) => {
       const variableName = `${index + 1}`;
       products[variableName] = product;
     });
