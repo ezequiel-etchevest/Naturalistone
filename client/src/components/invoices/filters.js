@@ -23,11 +23,10 @@ const Filters = ({userId, seller_invoices, setFilteredByCustomer, focus, setFocu
   const [errores, setErrores] = useState('')
   const filtered_invoices_month_week = useSelector(state => state.filtered_invoices_month_week)
 
-  let validateSeller = () => {
+  const validateSeller = () => {
     if(userId == 6 || userId == 3 || userId == 5 || userId == 15 ) return true
     else return false
   }
-
   const handleClickAllInvoices = () => {
     dispatch(getInvoicesBySeller(userId))
     setFocus('AllInvoices')
@@ -40,7 +39,6 @@ const Filters = ({userId, seller_invoices, setFilteredByCustomer, focus, setFocu
     dispatch(getInvoicesLastMonth(userId))
     setFocus('LastMonth')
   }
-
   const validateInput = (e) => {
       if(!/^[0-9]*$/.test(e.target.value)){
         setErrores('Special characters or letters not alowed') 
@@ -50,7 +48,6 @@ const Filters = ({userId, seller_invoices, setFilteredByCustomer, focus, setFocu
         setErrores('')
       }
   }
-  
   const handleChangeInvoiceNumber = (e) => {
     if(e.target.value.length){
       validateInput(e)
@@ -61,8 +58,7 @@ const Filters = ({userId, seller_invoices, setFilteredByCustomer, focus, setFocu
         dispatch(getFilteredInvoices(filtered_invoices_month_week))
         setErrores('')
       }
-    }
-
+  }
   const handleChangeCustomerName = (e) => {
     if(e.target.value.length){
       let filterByName = seller_invoices.filter(inv => inv.Reference.toLowerCase().includes(e.target.value.toLowerCase()))
@@ -71,7 +67,10 @@ const Filters = ({userId, seller_invoices, setFilteredByCustomer, focus, setFocu
       setFilteredByCustomer([])
     }
   }
-
+  const handleSellerSelect = (e) => {
+    const filteredBySeller = seller_invoices?.filter( d => d.SellerID == e.target.value)
+    dispatch(getFilteredInvoices(filteredBySeller)) 
+  }
     return (
         <>
         <HStack
@@ -82,11 +81,11 @@ const Filters = ({userId, seller_invoices, setFilteredByCustomer, focus, setFocu
           justifyContent={'space-between'}
           >
           {/*3 buttons box : All, Last Week, Last Month */}
-          <HStack w={'20vw'}>
+          <HStack w={'25vw'} spacing={'1vh'}>
             <Button
             variant={'unstyled'} 
             display={'flex'} 
-            w={'10vw'}
+            w={'8vw'}
             h={'10vh'}
             borderRadius={'sm'} 
             placeContent={'center'}
@@ -109,7 +108,7 @@ const Filters = ({userId, seller_invoices, setFilteredByCustomer, focus, setFocu
             <Button
               variant={'unstyled'} 
               display={'flex'} 
-              w={'12vw'}
+              w={'15vw'}
               h={'10vh'}
               borderRadius={'sm'} 
               placeContent={'center'}
@@ -133,7 +132,7 @@ const Filters = ({userId, seller_invoices, setFilteredByCustomer, focus, setFocu
               userSelect={'none'}
               variant={'unstyled'} 
               display={'flex'} 
-              w={'12vw'}
+              w={'15vw'}
               h={'10vh'}
               borderRadius={'sm'} 
               placeContent={'center'}
@@ -244,11 +243,12 @@ const Filters = ({userId, seller_invoices, setFilteredByCustomer, focus, setFocu
                 />
             </Box>
             <Select
+              onChange={(e)=>handleSellerSelect(e)}
               display={validateSeller() === true ? 'unset' : 'none'}
               placeholder="Select seller"
               w={'14vw'}
               variant='outline' 
-              h={'4.2vh'}
+              h={'4.4vh'}
               fontSize={'xs'}            
               bg={'web.bg'}
               color={'web.text2'}
@@ -263,7 +263,7 @@ const Filters = ({userId, seller_invoices, setFilteredByCustomer, focus, setFocu
                   seller_values ? (
                     seller_values.map((e, i) => {
                       return(
-                        <option key={i} value={e}>{e}</option>
+                        <option key={i} value={e.sellerID}>{e.name}</option>
                       )
                     })
 
