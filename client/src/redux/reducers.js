@@ -30,8 +30,7 @@ import {
     CLEAN_PRODUCT_BY_ID,
     GET_HISTORY_PRICES,
     PATCH_PRODUCT_NOTES,
-    PATCH_DISCONTINUED,
-    GET_VALUES
+    PATCH_DISCONTINUED
      } from './actions-products';
 import { GET_CURRENT_MONTH } from './actions-stats';
 import { 
@@ -56,6 +55,7 @@ const intialState = {
     user: [],
     sellers:[],
     invoice: {},
+    product_values: {},
     // seller_invoices_all: [],
     seller_invoices: [],
     // filtered_invoices:[],
@@ -179,8 +179,9 @@ function rootReducer (state = intialState, action) {
         case GET_FILTERED_PRODUCTS:
             return {
               ...state,
-              all_products: action.payload.filteredProds,
-              products_errors: action.payload.errorsSearch
+              all_products: action.payload.filter.filteredProds,
+              products_errors: action.payload.filter.errorsSearch,
+              product_values: action.payload.filteredValues
             }
         case GET_CURRENT_MONTH:
             return {
@@ -293,11 +294,7 @@ function rootReducer (state = intialState, action) {
             ...state,
             delivery_by_id: action.payload
           }
-        case GET_VALUES:
-           return {
-             ...state,
-             product_values: action.payload
-           }
+
         case GET_SELLER_VALUES:
           return{
             ...state,

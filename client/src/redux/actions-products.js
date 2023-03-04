@@ -7,7 +7,7 @@ export const CLEAN_PRODUCT_BY_ID = 'CLEAN_PRODUCT_BY_ID';
 export const GET_HISTORY_PRICES = ' GET_HISTORY_PRICES';
 export const PATCH_PRODUCT_NOTES = 'PATCH_PRODUCT_NOTES';
 export const PATCH_DISCONTINUED = 'PATCH_DISCONTINUED';
-export const GET_VALUES = 'GET_VALUES'
+
 
 export function getAllProducts(){
     return async function(dispatch){
@@ -24,11 +24,11 @@ export function getAllProducts(){
         }
     }
 }
-export function getFiltered(finish, size, thickness, price){
+export function getFiltered(finish, size, thickness, material, price){
     return async function(dispatch){
-        try{ 
-
-            let {data} = await axios.get(`http://localhost:5000/products/filtered?finish=${finish}&size=${size}&thickness=${thickness}&price1=${price[0]}&price2=${price[1]}`)
+        try{
+            
+            let {data} = await axios.get(`http://localhost:5000/products/filtered?finish=${finish}&size=${size}&thickness=${thickness}&material=${material}&price1=${price[0] ? price[0] : null}&price2=${price[1]? price[1] : null}`)
             dispatch(
             {
                 type: GET_FILTERED_PRODUCTS,
@@ -126,19 +126,4 @@ export function patchDiscontinued(idProduct, flag){
         }
     }
 
-export function getValues(){
-    return async function(dispatch){
-        try {
-            let { data } = await axios.get(`http://localhost:5000/products/values`)
-            console.log({data})
-            dispatch(
-                {
-                    type: GET_VALUES,
-                    payload: data
-                })
-        } catch (error) {
-            console.log({error})
-        }
-    }
-}
     

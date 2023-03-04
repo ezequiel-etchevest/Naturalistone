@@ -1,5 +1,5 @@
 
-const filterProducts = (finish, size, thickness, price1, price2, allProducts) => {
+const filterProducts = (finish, size, thickness, material, price1, price2, allProducts) => {
 
   let filteredProds = allProducts
   let errorsSearch = {}
@@ -21,6 +21,11 @@ const filterProducts = (finish, size, thickness, price1, price2, allProducts) =>
       if(!filteredThik.length) errorsSearch.error = `No match for Thickness: ${thickness}`
       else filteredProds = filteredThik
     }
+    if(material !== ''){
+      let filteredThik = filteredProds.filter((e) => e.Material === material)
+      if(!filteredThik.length) errorsSearch.error = `No match for Material: ${material}`
+      else filteredProds = filteredThik
+    }
     if(!!price1 && !!price2 ){
       let filteredPrice = filteredProds.filter((e) => e.Price >= price1 && e.Price <= price2)
       if(!filteredPrice.length) errorsSearch.error = `No match for Price range: ${price1} - ${price2}`
@@ -30,30 +35,3 @@ const filterProducts = (finish, size, thickness, price1, price2, allProducts) =>
 }
 
 module.exports = filterProducts
-
-
-
-// const filterProducts = (type, size, thickness, price1, price2, allProducts) => {
-
-//   let filteredProds = allProducts
-//   let errorsSearch = {type: '', size: '', thickness:''}
-
-    // if(type !== ''){
-    //     filteredType = filteredProds.filter((e) => e.Type === type)
-    //     if(!filteredType.length) errorsSearch.type = `No products match search Type: ${type}`
-    //      else filteredProds = filteredType
-    // }  
-//     if(size !== ''){
-//       if(e.Size !== size) errorsSearch.size = `No products match search Size: ${size}`
-//       else return filteredProds = filteredProds.filter((e) => e.Size === size)
-//       } 
-//     if(thickness !== ''){
-//       if(e.Thickness === thickness) errorsSearch.thickness = `No products match search Thickness: ${thickness}`
-//       else return filteredProds = filteredProds.filter((e) => e.Thickness === thickness)
-//     }
-//     if(!!price1 && !!price2 ){
-//         filteredProds = filteredProds.filter((e) => e.Price >= price1 && e.Price <= price2)
-//     }
-//     console.log(errorsSearch)
-//   return filteredProds
-// }

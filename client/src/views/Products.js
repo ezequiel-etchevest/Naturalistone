@@ -3,7 +3,7 @@ import SideBar from "../components/sideBar";
 import { Center, Spinner, Text, Box } from "@chakra-ui/react";
 import ProductsContainer from "../components/products/productsContainer";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllProducts, getValues } from '../redux/actions-products';
+import { getAllProducts, getFiltered } from '../redux/actions-products';
 import { getEmployeeById } from "../redux/actions-employees";
 
 
@@ -22,8 +22,7 @@ const Products = () => {
       }},[dispatch, userLocal, user])
 
     useEffect(()=>{
-        dispatch(getValues())
-        if(!allProducts.length) dispatch(getAllProducts())
+        if(!allProducts?.length ) dispatch(getFiltered('','','','','',''))
         },[allProducts])
          
       if(user.length && values && allProducts){

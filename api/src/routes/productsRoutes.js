@@ -2,7 +2,7 @@ const express = require('express')
 const productsRouter = express.Router()
 const mysqlConnection = require('../db')
 const filterProducts = require('../Controllers/productFiltersController')
-const { getUniqueFinishes, findMaxMinPrice, getUniqueSizes, thicknessValues } = require('../Controllers/productValues')
+const { prodValues, findMaxMinPrice } = require('../Controllers/productValues')
 
 productsRouter.get('/', async function(req, res){
 
@@ -79,7 +79,7 @@ productsRouter.get('/id/:id', async function(req, res){
 
 productsRouter.get('/filtered', async function(req, res){
 
-    const { finish, size, thickness, price1, price2 } = req.query
+    const { finish, size, thickness, material, price1, price2 } = req.query
 
     query_ = `SELECT    
                     ProdNames.Naturali_ProdName AS ProductName,
@@ -104,8 +104,10 @@ productsRouter.get('/filtered', async function(req, res){
                 console.log('Error en productsRoutes.get /filtered')
                 res.status(200).json({});
             } else {
-                const filter = filterProducts(finish, size, thickness, price1, price2, results)
-                res.status(200).json(filter);
+                const filter = filterProducts(finish, size, thickness, material, price1, price2, results)
+                let price = findMaxMinPrice(results)
+                let filteredValues = prodValues(filter.filteredProds, price)
+                res.status(200).json({filter, filteredValues});
             }
         });
     } catch(error){
@@ -162,45 +164,6 @@ productsRouter.patch('/discontinued/:id', async function(req, res){
     }
 });
 
-productsRouter.get('/values', async function(req, res){
-
-    // query_ =    `SELECT ProdNames.*, Inventory.* FROM ProdNames 
-    //             LEFT JOIN Inventory ON ProdNames.ProdNameID = Inventory.ProdID ORDER BY ProdNames.Naturali_ProdName ASC`;   
-    
-    query_ = `SELECT    
-                    ProdNames.Naturali_ProdName AS ProductName,
-                    Dimension.Type,
-                    Dimension.Size,
-                    Dimension.Thickness,
-                    Dimension.Finish,
-                    Dimension.Material,
-                    Products.SalePrice AS Price,
-                    Products.ProdID,
-                    Products.Discontinued_Flag,
-                    Inventory.*
-                  FROM Products
-                  INNER JOIN ProdNames ON ProdNames.ProdNameID = Products.ProdNameID
-                  INNER JOIN Dimension ON Dimension.DimensionID = Products.DimensionID
-                  INNER JOIN Inventory ON Inventory.ProdID = Products.ProdID`
-    try{
-        mysqlConnection.query(query_, function(error, results, fields){   
-
-            if(error) throw error;
-            if(results.length == 0) {
-                console.log('Error en productRoutes.get /:id')
-                res.status(200).json({});
-            } else {
-                let finishValues = getUniqueFinishes(results)
-                let priceMaxmin = findMaxMinPrice(results)
-                let sizes = getUniqueSizes(results)
-                let thickness = thicknessValues(results)
-                res.status(200).json({finishValues, priceMaxmin, sizes, thickness});
-            }
-        });
-    } catch(error){
-        res.status(409).send(error);
-    }
-});
 
 
 module.exports = productsRouter;
