@@ -17,12 +17,9 @@ import { getInvoiceById, getInvoiceProducts } from '../../redux/actions-invoices
 import { cleanStatePayments } from '../../redux/actions-payments';
 import { useEffect } from 'react';
 
-let validateSeller = (userId) => {
-  if(userId == 6 || userId == 3 || userId == 5 || userId == 15 ) return true
-  else return false
-}
 
-const ModelTr = ({e, userId}) => {
+
+const ModelTr = ({e, validateSeller}) => {
 
     const navigate = useNavigate()
     const dispatch = useDispatch()
@@ -45,7 +42,7 @@ const ModelTr = ({e, userId}) => {
         >
         <Td fontSize={'xs'} textAlign={'center'}>{e.Naturali_Invoice}</Td>
         {
-          validateSeller(userId) ? (
+          validateSeller() ? (
           <Td  fontSize={'xs'}textAlign={'center'}>{e.FirstName} {e.LastName}</Td>
           ):(null)
         }
@@ -60,19 +57,23 @@ const ModelTr = ({e, userId}) => {
     )
 }
 
-const List = ({seller_invoices, filteredByCustomer, userId}) => {
+const List = ({seller_invoices, user}) => {
  
   const result = useSelector(state=> state.validate_result_quotes)
   const toast = useToast()
   const id = 'test-toast'
-  
+
+  const validateSeller = () => {
+    if(user[0].Secction7Flag === 1) return true
+    else return false
+  }
+
   const validateResults = () => {
     if(result === 'no_results'){
       if (!toast.isActive(id)) {
       toast({
         id,
         title: 'No results found',
-        description: 'Reloading all the quotes',
         status: 'warning',
         duration: 2000,
         isClosable: true,
@@ -83,7 +84,7 @@ const List = ({seller_invoices, filteredByCustomer, userId}) => {
   useEffect(()=>{
     validateResults()
   })
-  
+
     return(
         <Box
         display={'flex'}
@@ -121,10 +122,10 @@ const List = ({seller_invoices, filteredByCustomer, userId}) => {
                         <Thead h={'6vh'}>
                           <Tr>
                             <Th w={'2vw'} color={'web.text2'} textAlign={'center'}>Nº</Th>
-                            { validateSeller(userId) ? (
+                            { validateSeller() ? (
                                 <Th color={'web.text2'}  w={'3vw'} textAlign={'center'}>Seller</Th>
                             ):(null) }
-                            <Th color={'web.text2'} w={'3vw'}>Project</Th>
+                            <Th color={'web.text2'}  w={'3vw'}>Project</Th>
                             <Th w={'3vw'} color={'web.text2'}>Customer</Th>
                             <Th w={'3vw'} color={'web.text2'} textAlign={'center'}>Date</Th>
                             <Th w={'3vw'} color={'web.text2'} textAlign={'center'}>Status</Th>
@@ -135,19 +136,10 @@ const List = ({seller_invoices, filteredByCustomer, userId}) => {
                         </Thead>
                         <Tbody >
                           { 
-                          filteredByCustomer.length ? (
-                            filteredByCustomer.map((e, i) =>{
-                              return(
-                                <ModelTr key={i} e={e}userId={userId}/>
-                              )
-                            })
-                          ) : (
-
-                              seller_invoices.map((e, i) => (
-                                <ModelTr key={i} e={e} userId={userId}/> 
-                                ))                          
-                          )
-                              }
+                            seller_invoices.map((e, i) => (
+                              <ModelTr key={i} e={e} user={user} validateSeller={validateSeller}/> 
+                              ))
+                          }
                         </Tbody>
                       </Table>
                   </TableContainer> 

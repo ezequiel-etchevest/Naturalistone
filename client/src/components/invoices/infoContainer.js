@@ -3,16 +3,14 @@ import List from './list';
 import Filters from './filters';
 import { useState } from 'react'
 
-const InfoContainer = ({seller_invoices, userId, focus, setFocus, seller_values}) => {
-
-    const [filteredByCustomer, setFilteredByCustomer] = useState([]) 
+const InfoContainer = ({seller_invoices, user, focus, setFocus, seller_values}) => {
 
     return(
         <Box
         ml={'20vw'}
         bg={'web.bg'}> 
-        <Filters seller_values={seller_values} seller_invoices={seller_invoices} userId={userId} setFilteredByCustomer={setFilteredByCustomer} setFocus={setFocus} focus={focus}/>
-        <List seller_invoices={seller_invoices} filteredByCustomer={filteredByCustomer} userId={userId} />
+        <Filters seller_values={seller_values} seller_invoices={seller_invoices} user={user} setFocus={setFocus} focus={focus}/>
+        <List seller_invoices={seller_invoices} user={user} />
         </Box>
     )
 }

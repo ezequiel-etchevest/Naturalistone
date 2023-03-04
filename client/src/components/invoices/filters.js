@@ -8,37 +8,55 @@ import {
   FormControl, 
   NumberInput,
   NumberInputField, 
-  Select
+  Select,
   } from "@chakra-ui/react";
 import { BsCalendar4Week } from 'react-icons/bs';
 import { SearchIcon } from '@chakra-ui/icons';
-import { getInvoicesLastWeek, getInvoicesBySeller, getInvoicesLastMonth, getFilteredInvoices } from "../../redux/actions-invoices";
+import {  getInvoicesBySeller, getFilteredInvoices } from "../../redux/actions-invoices";
 import { useDispatch, useSelector } from 'react-redux'
 import { useState } from "react";
+import '../../assets/styleSheet.css';
+import {AiOutlineClear} from 'react-icons/ai';
 
-
-const Filters = ({userId, seller_invoices, setFilteredByCustomer, focus, setFocus, seller_values}) => {
+const Filters = ({user, seller_invoices, focus, setFocus, seller_values}) => {
 
   const dispatch = useDispatch()
   const [errores, setErrores] = useState('')
-  const filtered_invoices_month_week = useSelector(state => state.filtered_invoices_month_week)
+  const [inputValues, setInputValues] = useState(
+    {
+      inputName: '',
+      inputNumber: '',
+      selectSeller: '',
+      timeFilter: 'All'
+    }
+    )
+
+  const userId  =  user[0].SellerID
 
   const validateSeller = () => {
-    if(userId == 6 || userId == 3 || userId == 5 || userId == 15 ) return true
+    
+    if(user[0].Secction7Flag === 1) return true
     else return false
   }
+
   const handleClickAllInvoices = () => {
-    dispatch(getInvoicesBySeller(userId))
-    setFocus('AllInvoices')
+    setInputValues({...inputValues, timeFilter: 'All'})
+    dispatch(getInvoicesBySeller(userId, {...inputValues, timeFilter: 'All'}))
+    setFocus('All')
   }
+
   const handleClickLastWeek = () => {
-    dispatch(getInvoicesLastWeek(userId))
+    setInputValues({...inputValues, timeFilter: 'LastWeek'})
+    dispatch(getInvoicesBySeller(userId, {...inputValues, timeFilter: 'LastWeek'}))
     setFocus('LastWeek')
   }
+
   const handleClickLastMonth = () => {
-    dispatch(getInvoicesLastMonth(userId))
+    setInputValues({...inputValues, timeFilter: 'LastMonth'})
+    dispatch(getInvoicesBySeller(userId, {...inputValues, timeFilter: 'LastMonth'}))
     setFocus('LastMonth')
   }
+
   const validateInput = (e) => {
       if(!/^[0-9]*$/.test(e.target.value)){
         setErrores('Special characters or letters not alowed') 
@@ -52,45 +70,80 @@ const Filters = ({userId, seller_invoices, setFilteredByCustomer, focus, setFocu
     if(e.target.value.length){
       validateInput(e)
       if(!errores.length){
-        const filteredInvoices = seller_invoices?.filter(d => d.Naturali_Invoice.toString().includes(e.target.value))
-        dispatch(getFilteredInvoices(filteredInvoices)) 
-      }} else {
-        dispatch(getFilteredInvoices(filtered_invoices_month_week))
-        setErrores('')
+        setInputValues({...inputValues, inputNumber: e.target.value})
+        dispatch(getInvoicesBySeller(userId, {...inputValues, inputNumber: e.target.value}))
       }
-  }
-  const handleChangeCustomerName = (e) => {
-    if(e.target.value.length){
-      let filterByName = seller_invoices.filter(inv => inv.Reference.toLowerCase().includes(e.target.value.toLowerCase()))
-      setFilteredByCustomer(filterByName)
     } else {
-      setFilteredByCustomer([])
+      setInputValues({...inputValues, inputNumber: ''})
+      dispatch(getInvoicesBySeller(userId, {...inputValues, inputNumber: ''}))
     }
   }
-  const handleSellerSelect = (e) => {
-    const filteredBySeller = seller_invoices?.filter( d => d.SellerID == e.target.value)
-    dispatch(getFilteredInvoices(filteredBySeller)) 
+
+  const handleChangeCustomerName = (e) => {
+    if(e.target.value.length){
+      setInputValues({...inputValues, inputName: e.target.value})
+      dispatch(getInvoicesBySeller(userId, {...inputValues, inputName: e.target.value}))
+    } else {
+      setInputValues({...inputValues, inputName: ''})
+      dispatch(getInvoicesBySeller(userId, {...inputValues, inputName: ''}))
+    }
   }
+
+  const handleSellerSelect = (e) => {
+    setInputValues({...inputValues, selectSeller: e.target.value})
+    dispatch(getInvoicesBySeller(userId, {...inputValues, selectSeller: e.target.value}))
+  }
+
+  const handleClear = () => {
+    setInputValues({
+      inputNumber:'',
+      inputName: '',
+      selectSeller:'',
+      timeFilter:'All'
+    })
+    dispatch(getInvoicesBySeller(userId, {      
+    inputNumber:'',
+    inputName: '',
+    selectSeller:'',
+    timeFilter:'All'}
+    ))
+    setFocus('All')
+  }
+
+  const uniqueSellerIDs = seller_invoices?.reduce((acc, cur) => {
+    if (!acc.includes(cur.SellerID)) {
+      acc.push(cur.SellerID);
+    }
+    return acc;
+  }, []);
+
+  const matchedSellers = seller_values?.filter((seller) => {
+    return uniqueSellerIDs.includes(seller.sellerID);
+  });
+
     return (
         <>
         <HStack
           ml={'2vw'}
           mr={'2vw'} 
-          h={'20vh'} 
+          h={'20vh'}
           w={'76vw'}
           justifyContent={'space-between'}
           >
           {/*3 buttons box : All, Last Week, Last Month */}
-          <HStack w={'25vw'} spacing={'1vh'}>
+          <HStack w={'25vw'} spacing={'1vh'} 
+          // mt={'7vh'} display={'flex'} alignSelf={'flex-start'}
+          > 
             <Button
-            variant={'unstyled'} 
+            variant={'unstyled'}
+            onClick={()=> handleClickAllInvoices()}  
             display={'flex'} 
             w={'8vw'}
-            h={'10vh'}
+            h={'5vh'}
             borderRadius={'sm'} 
             placeContent={'center'}
             alignItems={'center'}
-            color={focus === 'AllInvoices' ? 'logo.orange' : 'web.text2'}
+            color={focus === 'All' ? 'logo.orange' : 'web.text2'}
             _hover={{
                 color: 'logo.orange'
                 }}
@@ -101,15 +154,15 @@ const Filters = ({userId, seller_invoices, setFilteredByCustomer, focus, setFocu
             pr={'1.5vh'} 
             fontFamily={'body'} 
             fontWeight={'hairline'}
-            onClick={()=> handleClickAllInvoices()} 
             >All</Text>
             <BsCalendar4Week/>
             </Button>
             <Button
               variant={'unstyled'} 
               display={'flex'} 
+              onClick={()=> handleClickLastWeek()}
               w={'15vw'}
-              h={'10vh'}
+              h={'5vh'}
               borderRadius={'sm'} 
               placeContent={'center'}
               alignItems={'center'}
@@ -123,8 +176,7 @@ const Filters = ({userId, seller_invoices, setFilteredByCustomer, focus, setFocu
               <Text 
                 pr={'1.5vh'} 
                 fontFamily={'body'} 
-                fontWeight={'hairline'}
-                onClick={()=> handleClickLastWeek()} 
+                fontWeight={'hairline'} 
                 >Last Week</Text>
                 <BsCalendar4Week/>
             </Button>
@@ -132,8 +184,9 @@ const Filters = ({userId, seller_invoices, setFilteredByCustomer, focus, setFocu
               userSelect={'none'}
               variant={'unstyled'} 
               display={'flex'} 
+              onClick={()=> handleClickLastMonth()}
               w={'15vw'}
-              h={'10vh'}
+              h={'5vh'}
               borderRadius={'sm'} 
               placeContent={'center'}
               alignItems={'center'}
@@ -146,8 +199,7 @@ const Filters = ({userId, seller_invoices, setFilteredByCustomer, focus, setFocu
               }}>
                 <Text 
                 fontFamily={'body'} 
-                fontWeight={'hairline'}
-                onClick={()=> handleClickLastMonth()}  
+                fontWeight={'hairline'}  
                 pr={'1.5vh'}>Last Moth</Text>
                 <BsCalendar4Week/>
             </Button>
@@ -179,7 +231,9 @@ const Filters = ({userId, seller_invoices, setFilteredByCustomer, focus, setFocu
                   borderBottomColor={'web.text2'}
                   w={'80%'}
                   size={"sm"}
-                  h={'4vh'}>
+                  h={'4vh'}
+                  value={inputValues.inputNumber}
+                  >
                   <NumberInputField
                     placeholder={'Quote number'}
                     _placeholder={{ fontFamily: 'body', fontWeight: 'thin' }}
@@ -226,6 +280,7 @@ const Filters = ({userId, seller_invoices, setFilteredByCustomer, focus, setFocu
                   size={"sm"}
                   borderBottomWidth={"2px"}
                   borderBottomColor={'web.text2'}
+                  value={inputValues.inputName}
                   onChange={(e)=> handleChangeCustomerName(e)}
                   
                 />
@@ -242,37 +297,61 @@ const Filters = ({userId, seller_invoices, setFilteredByCustomer, focus, setFocu
                   _active={{ color: 'gray.800'}}
                 />
             </Box>
+            <Box display={'flex'} flexDir={'column'}  w={'12vw'} h={'10vh'} ml={'2vw'}pt={'3vh'}>
             <Select
               onChange={(e)=>handleSellerSelect(e)}
-              display={validateSeller() === true ? 'unset' : 'none'}
-              placeholder="Select seller"
-              w={'14vw'}
+              display={validateSeller() === true ? 'unset' : 'none'}  
+              w={'10vw'}
               variant='outline' 
               h={'4.4vh'}
               fontSize={'xs'}            
-              bg={'web.bg'}
+              bg={'web.sideBar'}
               color={'web.text2'}
-              borderColor={'web.text2'}
+              borderColor={'web.border'}
               cursor={'pointer'}
+              value={inputValues.selectSeller}
               _focus={{
                 borderColor: 'logo.orange',
                 boxShadow: '0 0.5px 0.5px rgba(229, 103, 23, 0.075)inset, 0 0 5px rgba(255,144,0,0.6)'
               }}>
+              <option value='' className="options">Select seller</option>
               {
                 validateSeller() === true ? (
-                  seller_values ? (
-                    seller_values.map((e, i) => {
+                  matchedSellers?.map((e, i) => {
                       return(
-                        <option key={i} value={e.sellerID}>{e.name}</option>
+                        <option key={i} className={'options'} value={e.sellerID}>{e.name}</option>
                       )
                     })
 
                   ): ( null)
-                ):(
-                  null
-                )
               }
             </Select>
+            <Button
+            mt={'2vh'}
+            leftIcon={ <AiOutlineClear/>}
+            variant={'unstyled'} 
+            display={'flex'} 
+            w={'10vw'}
+            h={'10vh'}
+            borderRadius={'sm'} 
+            placeContent={'center'}
+            alignItems={'center'}
+            color={'web.text2'} 
+            _hover={{
+               color: 'logo.orange'
+               }}
+            _active={{
+            }}
+            onClick={(e) => handleClear(e)}
+            >
+            <Text 
+              pr={'1.5vh'} 
+              fontFamily={'body'} 
+              fontWeight={'hairline'}
+              >Clear filters
+            </Text>
+            </Button>
+            </Box>
           </Box>
         </HStack>
         </>

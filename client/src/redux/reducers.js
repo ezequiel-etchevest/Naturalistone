@@ -6,8 +6,7 @@ import {
 import { 
     GET_INVOICE_BY_ID, 
     GET_INVOICES_BY_SELLER, 
-    GET_INVOICES_LASTWEEK, 
-    GET_INVOICES_LASTMONTH, 
+    GET_INVOICES_BY_SELLER_ALL, 
     GET_FILTERED_INVOICES,
     GET_INVOICE_PRODUCTS,
     PATCH_STAMP,
@@ -57,9 +56,9 @@ const intialState = {
     user: [],
     sellers:[],
     invoice: {},
+    // seller_invoices_all: [],
     seller_invoices: [],
-    filtered_invoices: [],
-    filtered_invoices_month_week: [],
+    // filtered_invoices:[],
     all_products: [],
     current_month: {},
     invoice_products: [],
@@ -100,10 +99,9 @@ function rootReducer (state = intialState, action) {
               sellers:[],
               employees: [],
               invoice: {},
-              all_invoices_by_seller: [],
               seller_invoices: [],
-              filtered_invoices: [],
-              filtered_invoices_month_week: [],
+              // filtered_invoices:[],
+              // seller_invoices_all: [],
               current_month:{},
               products_errors:{},
               product_values: {},
@@ -131,9 +129,17 @@ function rootReducer (state = intialState, action) {
             return {
               ...state,
               seller_invoices: action.payload.data,
-              filtered_invoices_month_week: action.payload.data,
               validate_result_quotes: action.payload.result
             }
+ 
+        // case GET_INVOICES_BY_SELLER_ALL:
+        //     return {
+        //       ...state,
+        //       seller_invoices_all: action.payload.data,
+        //       filtered_invoices: action.payload.data,
+        //       seller_invoices: action.payload.data,
+        //     }
+            
         case GET_INVOICE_ERRORS:
             return {
               ...state,
@@ -156,32 +162,20 @@ function rootReducer (state = intialState, action) {
               ...state,
               payments_by_id: action.payload
             }
-        case GET_INVOICES_LASTWEEK:
-            return {
-              ...state,
-              seller_invoices: action.payload.data,
-              filtered_invoices_month_week: action.payload.data,
-              validate_result_quotes: action.payload.result
-            }
-        case GET_INVOICES_LASTMONTH:
-            return {
-              ...state,
-              seller_invoices: action.payload.data,
-              filtered_invoices_month_week: action.payload.data,
-              validate_result_quotes: action.payload.result
-            }
-        case GET_FILTERED_INVOICES:
-            return {
-              ...state,
-              seller_invoices: action.payload,
-              filtered_invoices: action.payload
-            }
+
+        // case GET_FILTERED_INVOICES:
+        //     return {
+        //       ...state,
+        //       filtered_invoices: action.payload
+        //     }
+
         case GET_ALL_PRODUCTS:
             return {
               ...state,
               all_products: action.payload,
               products_errors: {}
             }
+
         case GET_FILTERED_PRODUCTS:
             return {
               ...state,
