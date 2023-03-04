@@ -7,7 +7,7 @@ import {
   Text,
   Button,
  } from "@chakra-ui/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { SearchIcon } from '@chakra-ui/icons';
 import '../../assets/styleSheet.css';
 import { getAllProducts, getFiltered } from "../../redux/actions-products";
@@ -23,15 +23,17 @@ const ProductsFilters = ({allProducts, setFilteredProducts, values}) => {
     finish:'',
     size:'',
     thickness:'',
+    material: '',
     price: [values.priceMaxmin.min, values.priceMaxmin.max]
   })
+
   const [limit, setLimit] = useState([values.priceMaxmin.min, values.priceMaxmin.max])
   const handleFinish = (e) => {
     setFilters({
       ...filters,
       finish: e.target.value
     })
-    dispatch(getFiltered(e.target.value, filters.size, filters.thickness, filters.price))
+    dispatch(getFiltered(e.target.value, filters.size, filters.thickness, filters.material, filters.price))
   }
 
   const handleSize = (e) => {
@@ -39,7 +41,7 @@ const ProductsFilters = ({allProducts, setFilteredProducts, values}) => {
       ...filters, 
       size: e.target.value
     })
-    dispatch(getFiltered(filters.finish, e.target.value, filters.thickness, filters.price))
+    dispatch(getFiltered(filters.finish, e.target.value, filters.thickness, filters.material, filters.price))
   }
 
   const handleThickness = (e) => {
@@ -47,18 +49,26 @@ const ProductsFilters = ({allProducts, setFilteredProducts, values}) => {
       ...filters,
       thickness: e.target.value
     })
-    dispatch(getFiltered(filters.finish, filters.size, e.target.value, filters.price))
+    dispatch(getFiltered(filters.finish, filters.size, e.target.value, filters.material, filters.price))
   }
 
+  const handleMaterial = (e) => {
+    setFilters({
+      ...filters,
+      material: e.target.value
+    })
+    dispatch(getFiltered(filters.finish, filters.size, filters.thickness, e.target.value, filters.price))
+  }
   const handleClear = () => {
     setFilters({
       finish:'',
       size:'',
       thickness:'',
+      material:'',
       price: [values.priceMaxmin.min, values.priceMaxmin.max]
       })
-    setLimit([values.priceMaxmin.min, values.priceMaxmin.max])
-    dispatch(getAllProducts())
+      dispatch(getFiltered('','','','', '',''))
+      setLimit([values.priceMaxmin.min, values.priceMaxmin.max])
   }
 
   const handleChangeProductName = (e) => {
@@ -70,7 +80,8 @@ const ProductsFilters = ({allProducts, setFilteredProducts, values}) => {
         setFilteredProducts([])
     }
   }
-
+  // useEffect(()=>{
+  //   },[values])
   return (
     <>    
       <Box
@@ -107,7 +118,7 @@ const ProductsFilters = ({allProducts, setFilteredProducts, values}) => {
               color={'web.text2'}
               borderColor={'web.border'}
               cursor={'pointer'}
-              value={filters.type}
+              value={filters.finish}
               _focus={{
                 borderColor: 'logo.orange',
                 boxShadow: '0 0.5px 0.5px rgba(229, 103, 23, 0.075)inset, 0 0 5px rgba(255,144,0,0.6)'
@@ -169,6 +180,31 @@ const ProductsFilters = ({allProducts, setFilteredProducts, values}) => {
               <option value='' className="options">Select Thickness</option>
               {
                   values.thickness.map((v, i) => {
+                    return(
+                      <option value={`${v}`} key={i} className={'options'}>{`${v}`}</option>
+                    )
+                  })
+              }
+            </Select>
+            <Select 
+              variant='outline' 
+              w={'11vw'}
+              h={'4.2vh'}
+              fontSize={'xs'}             
+              bg={'web.sideBar'}
+              color={'web.text2'}
+              borderColor={'web.border'}
+              cursor={'pointer'}
+              value={filters.material}
+              _focus={{
+                borderColor: 'logo.orange',
+                boxShadow: '0 0.5px 0.5px rgba(229, 103, 23, 0.075)inset, 0 0 5px rgba(255,144,0,0.6)'
+              }}
+              onChange={(e) => handleMaterial(e)}
+              >
+              <option value='' className="options">Select Material</option>
+              {
+                  values.materials.map((v, i) => {
                     return(
                       <option value={`${v}`} key={i} className={'options'}>{`${v}`}</option>
                     )
