@@ -1,7 +1,6 @@
 import {Box} from '@chakra-ui/react';
 import List from './list';
 import Filters from './filters';
-import { useState } from 'react'
 
 const InfoContainer = ({seller_invoices, user, focus, setFocus, seller_values}) => {
 

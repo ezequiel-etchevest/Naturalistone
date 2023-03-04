@@ -90,11 +90,11 @@ const List = ({seller_invoices, user}) => {
         display={'flex'}
         justifyContent={'center'}
         ml={'1vh'}
-        h={'72vh'}
+        h={'75vh'}
         w={'78.8vw'} 
         >
           <Box
-            maxHeight={'69vh'}
+            maxHeight={'73vh'}
             overflow={'auto'}
             css={{
               '&::-webkit-scrollbar': {
@@ -121,17 +121,17 @@ const List = ({seller_invoices, user}) => {
                       <Table color={'web.text'}variant={'simple'} size={'sm'}>
                         <Thead h={'6vh'}>
                           <Tr>
-                            <Th w={'2vw'} color={'web.text2'} textAlign={'center'}>Nº</Th>
+                            <Th color={'web.text2'} textAlign={'center'}>Nº</Th>
                             { validateSeller() ? (
-                                <Th color={'web.text2'}  w={'3vw'} textAlign={'center'}>Seller</Th>
+                                <Th color={'web.text2'} textAlign={'center'}>Seller</Th>
                             ):(null) }
-                            <Th color={'web.text2'}  w={'3vw'}>Project</Th>
-                            <Th w={'3vw'} color={'web.text2'}>Customer</Th>
-                            <Th w={'3vw'} color={'web.text2'} textAlign={'center'}>Date</Th>
-                            <Th w={'3vw'} color={'web.text2'} textAlign={'center'}>Status</Th>
-                            <Th color={'web.text2'} w={'3vw'} textAlign={'center'} isNumeric>Total</Th>
-                            <Th color={'web.text2'} w={'2vw'} textAlign={'center'}>Paid</Th>
-                            <Th color={'web.text2'} w={'3vw'}>Last Payment Date </Th>
+                            <Th color={'web.text2'}  minW={'3vw'}maxW={'3vw'}>Project</Th>
+                            <Th color={'web.text2'}>Customer</Th>
+                            <Th color={'web.text2'} textAlign={'center'}>Date</Th>
+                            <Th color={'web.text2'} textAlign={'center'}>Status</Th>
+                            <Th color={'web.text2'} textAlign={'center'} isNumeric>Total</Th>
+                            <Th color={'web.text2'} textAlign={'center'}>Paid</Th>
+                            <Th color={'web.text2'} >Last Payment</Th>
                           </Tr>
                         </Thead>
                         <Tbody >

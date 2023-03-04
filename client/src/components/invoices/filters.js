@@ -9,6 +9,8 @@ import {
   NumberInput,
   NumberInputField, 
   Select,
+  Divider,
+  Tooltip,
   } from "@chakra-ui/react";
 import { BsCalendar4Week } from 'react-icons/bs';
 import { SearchIcon } from '@chakra-ui/icons';
@@ -21,6 +23,7 @@ import {AiOutlineClear} from 'react-icons/ai';
 const Filters = ({user, seller_invoices, focus, setFocus, seller_values}) => {
 
   const dispatch = useDispatch()
+  const [ disabled, setDisabled ] = useState(false)
   const [errores, setErrores] = useState('')
   const [inputValues, setInputValues] = useState(
     {
@@ -38,25 +41,24 @@ const Filters = ({user, seller_invoices, focus, setFocus, seller_values}) => {
     if(user[0].Secction7Flag === 1) return true
     else return false
   }
-
   const handleClickAllInvoices = () => {
     setInputValues({...inputValues, timeFilter: 'All'})
     dispatch(getInvoicesBySeller(userId, {...inputValues, timeFilter: 'All'}))
-    setFocus('All')
-  }
 
+  }
   const handleClickLastWeek = () => {
     setInputValues({...inputValues, timeFilter: 'LastWeek'})
     dispatch(getInvoicesBySeller(userId, {...inputValues, timeFilter: 'LastWeek'}))
-    setFocus('LastWeek')
   }
-
   const handleClickLastMonth = () => {
     setInputValues({...inputValues, timeFilter: 'LastMonth'})
     dispatch(getInvoicesBySeller(userId, {...inputValues, timeFilter: 'LastMonth'}))
-    setFocus('LastMonth')
   }
-
+  const handleTimeSelect = (e) => {
+    if(e.target.value === 'All') return handleClickAllInvoices()
+    if(e.target.value === 'Lastweek') return handleClickLastWeek()
+    if(e.target.value === 'Lastmonth') return handleClickLastMonth()
+  }
   const validateInput = (e) => {
       if(!/^[0-9]*$/.test(e.target.value)){
         setErrores('Special characters or letters not alowed') 
@@ -78,7 +80,6 @@ const Filters = ({user, seller_invoices, focus, setFocus, seller_values}) => {
       dispatch(getInvoicesBySeller(userId, {...inputValues, inputNumber: ''}))
     }
   }
-
   const handleChangeCustomerName = (e) => {
     if(e.target.value.length){
       setInputValues({...inputValues, inputName: e.target.value})
@@ -88,12 +89,10 @@ const Filters = ({user, seller_invoices, focus, setFocus, seller_values}) => {
       dispatch(getInvoicesBySeller(userId, {...inputValues, inputName: ''}))
     }
   }
-
   const handleSellerSelect = (e) => {
     setInputValues({...inputValues, selectSeller: e.target.value})
     dispatch(getInvoicesBySeller(userId, {...inputValues, selectSeller: e.target.value}))
   }
-
   const handleClear = () => {
     setInputValues({
       inputNumber:'',
@@ -109,106 +108,31 @@ const Filters = ({user, seller_invoices, focus, setFocus, seller_values}) => {
     ))
     setFocus('All')
   }
-
   const uniqueSellerIDs = seller_invoices?.reduce((acc, cur) => {
     if (!acc.includes(cur.SellerID)) {
       acc.push(cur.SellerID);
     }
     return acc;
   }, []);
-
   const matchedSellers = seller_values?.filter((seller) => {
     return uniqueSellerIDs.includes(seller.sellerID);
   });
 
     return (
-        <>
+
+      <Box>
         <HStack
+          pt={'2vh'}
           ml={'2vw'}
           mr={'2vw'} 
-          h={'20vh'}
+          h={'17vh'}
           w={'76vw'}
           justifyContent={'space-between'}
           >
-          {/*3 buttons box : All, Last Week, Last Month */}
-          <HStack w={'25vw'} spacing={'1vh'} 
-          // mt={'7vh'} display={'flex'} alignSelf={'flex-start'}
-          > 
-            <Button
-            variant={'unstyled'}
-            onClick={()=> handleClickAllInvoices()}  
-            display={'flex'} 
-            w={'8vw'}
-            h={'5vh'}
-            borderRadius={'sm'} 
-            placeContent={'center'}
-            alignItems={'center'}
-            color={focus === 'All' ? 'logo.orange' : 'web.text2'}
-            _hover={{
-                color: 'logo.orange'
-                }}
-            _active={{
-              color: 'logo.orange'
-          }}>
-          <Text 
-            pr={'1.5vh'} 
-            fontFamily={'body'} 
-            fontWeight={'hairline'}
-            >All</Text>
-            <BsCalendar4Week/>
-            </Button>
-            <Button
-              variant={'unstyled'} 
-              display={'flex'} 
-              onClick={()=> handleClickLastWeek()}
-              w={'15vw'}
-              h={'5vh'}
-              borderRadius={'sm'} 
-              placeContent={'center'}
-              alignItems={'center'}
-              color={focus === 'LastWeek' ? 'logo.orange' : 'web.text2'}
-              _hover={{
-                color: 'logo.orange'
-                  }}
-              _active={{
-                color: 'logo.orange'
-              }}>
-              <Text 
-                pr={'1.5vh'} 
-                fontFamily={'body'} 
-                fontWeight={'hairline'} 
-                >Last Week</Text>
-                <BsCalendar4Week/>
-            </Button>
-            <Button
-              userSelect={'none'}
-              variant={'unstyled'} 
-              display={'flex'} 
-              onClick={()=> handleClickLastMonth()}
-              w={'15vw'}
-              h={'5vh'}
-              borderRadius={'sm'} 
-              placeContent={'center'}
-              alignItems={'center'}
-              color={focus === 'LastMonth' ? 'logo.orange' : 'web.text2'}
-              _hover={{
-               color: 'logo.orange'
-                  }}         
-              _active={{
-               color: 'logo.orange'
-              }}>
-                <Text 
-                fontFamily={'body'} 
-                fontWeight={'hairline'}  
-                pr={'1.5vh'}>Last Moth</Text>
-                <BsCalendar4Week/>
-            </Button>
-          </HStack>
           {/*Inputs and select */}
           <Box
             display={'flex'}
             alignItems={'center'}
-            justifyContent={'flex-end'}
             w={'48vw'}
             >
             <Box
@@ -297,42 +221,63 @@ const Filters = ({user, seller_invoices, focus, setFocus, seller_values}) => {
                   _active={{ color: 'gray.800'}}
                 />
             </Box>
-            <Box display={'flex'} flexDir={'column'}  w={'12vw'} h={'10vh'} ml={'2vw'}pt={'3vh'}>
+            </Box>
+             {/*Selects */}
+          <HStack w={'30vw'}> 
             <Select
-              onChange={(e)=>handleSellerSelect(e)}
-              display={validateSeller() === true ? 'unset' : 'none'}  
-              w={'10vw'}
-              variant='outline' 
-              h={'4.4vh'}
-              fontSize={'xs'}            
-              bg={'web.sideBar'}
-              color={'web.text2'}
-              borderColor={'web.border'}
-              cursor={'pointer'}
-              value={inputValues.selectSeller}
-              _focus={{
-                borderColor: 'logo.orange',
-                boxShadow: '0 0.5px 0.5px rgba(229, 103, 23, 0.075)inset, 0 0 5px rgba(255,144,0,0.6)'
-              }}>
-              <option value='' className="options">Select seller</option>
-              {
-                validateSeller() === true ? (
-                  matchedSellers?.map((e, i) => {
-                      return(
-                        <option key={i} className={'options'} value={e.sellerID}>{e.name}</option>
-                      )
-                    })
-
-                  ): ( null)
-              }
+          onChange={(e)=>handleTimeSelect(e)} 
+          w={'11vw'}
+          variant='outline' 
+          h={'4.4vh'}
+          fontSize={'xs'}            
+          bg={'web.sideBar'}
+          color={'web.text2'}
+          borderColor={'web.border'}
+          cursor={'pointer'}
+          _focus={{
+            borderColor: 'logo.orange',
+            boxShadow: '0 0.5px 0.5px rgba(229, 103, 23, 0.075)inset, 0 0 5px rgba(255,144,0,0.6)'
+          }}>
+          <option value='All' className="options">All</option>
+          <option value='Lastweek' className="options">Last week</option>
+          <option value='Lastmonth' className="options">Last month</option>
+          {
+          }
             </Select>
-            <Button
-            mt={'2vh'}
-            leftIcon={ <AiOutlineClear/>}
+            <Select
+          onChange={(e)=>handleSellerSelect(e)}
+          display={validateSeller() === true ? 'unset' : 'none'}  
+          w={'15vw'}
+          variant='outline' 
+          h={'4.4vh'}
+          fontSize={'xs'}            
+          bg={'web.sideBar'}
+          color={'web.text2'}
+          borderColor={'web.border'}
+          cursor={'pointer'}
+          value={inputValues.selectSeller}
+          _focus={{
+            borderColor: 'logo.orange',
+            boxShadow: '0 0.5px 0.5px rgba(229, 103, 23, 0.075)inset, 0 0 5px rgba(255,144,0,0.6)'
+          }}>
+          <option value='' className="options">Select seller</option>
+          {
+            validateSeller() === true ? (
+              matchedSellers?.map((e, i) => {
+                  return(
+                    <option key={i} className={'options'} value={e.sellerID}>{e.name}</option>
+              )})
+                  
+              ): ( null)
+          }
+            </Select>
+            </HStack>
+        <Divider orientation={'vertical'} h={'5vh'}/>
+        <Tooltip label={'Clear all filters'}>      
+        <IconButton
+            icon={ <AiOutlineClear/>}
             variant={'unstyled'} 
             display={'flex'} 
-            w={'10vw'}
-            h={'10vh'}
             borderRadius={'sm'} 
             placeContent={'center'}
             alignItems={'center'}
@@ -344,17 +289,13 @@ const Filters = ({user, seller_invoices, focus, setFocus, seller_values}) => {
             }}
             onClick={(e) => handleClear(e)}
             >
-            <Text 
-              pr={'1.5vh'} 
-              fontFamily={'body'} 
-              fontWeight={'hairline'}
-              >Clear filters
-            </Text>
-            </Button>
-            </Box>
-          </Box>
+            </IconButton>
+          </Tooltip>   
+          
         </HStack>
-        </>
+
+
+      </Box>
     )
 }
 
