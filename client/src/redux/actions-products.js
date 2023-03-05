@@ -24,11 +24,12 @@ export function getAllProducts(){
         }
     }
 }
-export function getFiltered(finish, size, thickness, material, price){
+export function getFiltered(finish, size, thickness, material, search, price){
     return async function(dispatch){
+        console.log(search)
         try{
             
-            let {data} = await axios.get(`http://localhost:5000/products/filtered?finish=${finish}&size=${size}&thickness=${thickness}&material=${material}&price1=${price[0] ? price[0] : null}&price2=${price[1]? price[1] : null}`)
+            let {data} = await axios.get(`http://localhost:5000/products/filtered?finish=${finish}&size=${size}&thickness=${thickness}&material=${material}&search=${search}&price1=${price[0] ? price[0] : ''}&price2=${price[1]? price[1] : ''}`)
             dispatch(
             {
                 type: GET_FILTERED_PRODUCTS,

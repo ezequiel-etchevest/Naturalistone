@@ -1,4 +1,4 @@
-const prodValues = (arr, price) => {
+const prodValues = (arr, search, price) => {
 
 
 function getUniqueFinishes(arr) {
@@ -26,7 +26,8 @@ const materialsValues = (arr) => {
   let thickness = thicknessValues(arr)
   let materials = materialsValues(arr)
 
-  return {finishValues, priceMaxmin, sizes, thickness, materials}
+
+  return {finishValues, priceMaxmin, sizes, thickness, materials, search}
 }
 function findMaxMinPrice(arr) {
   let minPrice = Infinity;

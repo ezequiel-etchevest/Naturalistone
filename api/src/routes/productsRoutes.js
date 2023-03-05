@@ -79,7 +79,7 @@ productsRouter.get('/id/:id', async function(req, res){
 
 productsRouter.get('/filtered', async function(req, res){
 
-    const { finish, size, thickness, material, price1, price2 } = req.query
+    const { finish, size, thickness, material, search, price1, price2 } = req.query
 
     query_ = `SELECT    
                     ProdNames.Naturali_ProdName AS ProductName,
@@ -104,9 +104,9 @@ productsRouter.get('/filtered', async function(req, res){
                 console.log('Error en productsRoutes.get /filtered')
                 res.status(200).json({});
             } else {
-                const filter = filterProducts(finish, size, thickness, material, price1, price2, results)
+                const filter = filterProducts(finish, size, thickness, material, search, price1, price2, results)
                 let price = findMaxMinPrice(results)
-                let filteredValues = prodValues(filter.filteredProds, price)
+                let filteredValues = prodValues(filter.filteredProds, search, price)
                 res.status(200).json({filter, filteredValues});
             }
         });

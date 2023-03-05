@@ -24,6 +24,7 @@ const ProductsFilters = ({allProducts, setFilteredProducts, values}) => {
     size:'',
     thickness:'',
     material: '',
+    search:'',
     price: [values.priceMaxmin.min, values.priceMaxmin.max]
   })
 
@@ -33,7 +34,7 @@ const ProductsFilters = ({allProducts, setFilteredProducts, values}) => {
       ...filters,
       finish: e.target.value
     })
-    dispatch(getFiltered(e.target.value, filters.size, filters.thickness, filters.material, filters.price))
+    dispatch(getFiltered(e.target.value, filters.size, filters.thickness, filters.material, filters.search, filters.price))
   }
 
   const handleSize = (e) => {
@@ -41,7 +42,7 @@ const ProductsFilters = ({allProducts, setFilteredProducts, values}) => {
       ...filters, 
       size: e.target.value
     })
-    dispatch(getFiltered(filters.finish, e.target.value, filters.thickness, filters.material, filters.price))
+    dispatch(getFiltered(filters.finish, e.target.value, filters.thickness, filters.material, filters.search, filters.price))
   }
 
   const handleThickness = (e) => {
@@ -49,7 +50,7 @@ const ProductsFilters = ({allProducts, setFilteredProducts, values}) => {
       ...filters,
       thickness: e.target.value
     })
-    dispatch(getFiltered(filters.finish, filters.size, e.target.value, filters.material, filters.price))
+    dispatch(getFiltered(filters.finish, filters.size, e.target.value, filters.material, filters.search, filters.price))
   }
 
   const handleMaterial = (e) => {
@@ -57,7 +58,7 @@ const ProductsFilters = ({allProducts, setFilteredProducts, values}) => {
       ...filters,
       material: e.target.value
     })
-    dispatch(getFiltered(filters.finish, filters.size, filters.thickness, e.target.value, filters.price))
+    dispatch(getFiltered(filters.finish, filters.size, filters.thickness, e.target.value, filters.search, filters.price))
   }
   const handleClear = () => {
     setFilters({
@@ -65,21 +66,20 @@ const ProductsFilters = ({allProducts, setFilteredProducts, values}) => {
       size:'',
       thickness:'',
       material:'',
+      search:'',
       price: [values.priceMaxmin.min, values.priceMaxmin.max]
       })
-      dispatch(getFiltered('','','','', '',''))
+      dispatch(getFiltered('','','','', '','',''))
       setLimit([values.priceMaxmin.min, values.priceMaxmin.max])
   }
 
   const handleChangeProductName = (e) => {
-    if(e.target.value.length){
-        const filteredByName = allProducts?.filter(prod => prod.ProductName.toLowerCase().includes(e.target.value))
-        if(!filteredByName.length) return
-        setFilteredProducts(filteredByName)
-    } else {
-        setFilteredProducts([])
+      setFilters({
+        ...filters,
+        search: e.target.value
+      })
+      dispatch(getFiltered(filters.finish, filters.size, filters.thickness, filters.material, e.target.value, filters.price))
     }
-  }
   // useEffect(()=>{
   //   },[values])
   return (
@@ -222,6 +222,7 @@ const ProductsFilters = ({allProducts, setFilteredProducts, values}) => {
               size={"sm"}
               borderBottomWidth={"2px"}
               textColor={'web.text'}
+              value={filters.search}
               onChange={(e) => handleChangeProductName(e)}
               borderBottomColor={'web.text2'}
               />

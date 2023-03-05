@@ -33,8 +33,7 @@ let PriceSlider = ({setFilters, filters, limit, setLimit, values}) =>{
             colorScheme={'orange'}
             value={filters.price}
             onChangeEnd={(val) => {
-              console.log(val)
-              dispatch(getFiltered(filters.finish, filters.size, filters.thickness,filters.material, val))}}
+              dispatch(getFiltered(filters.finish, filters.size, filters.thickness,filters.material, filters.search, val))}}
             onChange={(e) => handlePrice(e)}
             w={'20vw'}
             defaultValue={[values.priceMaxmin.min, values.priceMaxmin.max]}

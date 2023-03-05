@@ -22,7 +22,7 @@ const Products = () => {
       }},[dispatch, userLocal, user])
 
     useEffect(()=>{
-        if(!allProducts?.length ) dispatch(getFiltered('','','','','',''))
+        if(!allProducts?.length ) dispatch(getFiltered('','','','','','',''))
         },[allProducts])
          
       if(user.length && values && allProducts){

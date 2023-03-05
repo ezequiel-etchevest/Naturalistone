@@ -8,7 +8,9 @@ import {
     Td,
     TableContainer,
     useToast,
-    Switch
+    Switch,
+    Text,
+    Center
   } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -65,7 +67,7 @@ const ModelTr = ({e, user}) => {
   )
 }
 
-const ProductList = ({ allProducts, filteredProducts, user }) => {
+const ProductList = ({ allProducts, user }) => {
 
   const productErrors = useSelector((state) => state.products_errors)
   const toast = useToast()
@@ -83,7 +85,7 @@ const ProductList = ({ allProducts, filteredProducts, user }) => {
 
   useEffect(() => {
     validateToast()
-  },[filteredProducts, allProducts])
+  },[allProducts])
 
   return(
     <Box
@@ -114,6 +116,7 @@ const ProductList = ({ allProducts, filteredProducts, user }) => {
         p={'3vh'}
         w={'74vw'}
         >
+        {allProducts.length && !Object.entries(productErrors).length ? 
         <TableContainer  mr={'1vw'}>
           <Table color={'web.text'} variant={'simple'} size={'sm'}>
             <Thead h={'6vh'}>
@@ -132,23 +135,22 @@ const ProductList = ({ allProducts, filteredProducts, user }) => {
             </Thead>
             <Tbody>
               { 
-                filteredProducts.length ? (
-                  filteredProducts.map((e, i) => {
-                    return(
-                      <ModelTr key={i} e={e} user={user} filteredProducts={filteredProducts}/>
-                    )
-                  })
-                ) : (
                   allProducts.map((e, i) => {
                     return(
-                      <ModelTr key={i} e={e} user={user} allProducts={allProducts}/>
+                      <ModelTr key={i} e={e} user={user}/>
                     )
-                  }
-                ))
+                  })
               }
             </Tbody>
           </Table>
         </TableContainer>
+        :
+        (
+          <Center w={'full'} h={'full'}>
+          <Text userSelect={'none'} fontSize={'2vh'}>No products found</Text>
+          </Center>
+        )
+        }
       </Box>  
     </Box>
   )

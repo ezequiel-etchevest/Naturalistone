@@ -1,5 +1,5 @@
 
-const filterProducts = (finish, size, thickness, material, price1, price2, allProducts) => {
+const filterProducts = (finish, size, thickness, material, search, price1, price2, allProducts) => {
 
   let filteredProds = allProducts
   let errorsSearch = {}
@@ -22,10 +22,16 @@ const filterProducts = (finish, size, thickness, material, price1, price2, allPr
       else filteredProds = filteredThik
     }
     if(material !== ''){
-      let filteredThik = filteredProds.filter((e) => e.Material === material)
-      if(!filteredThik.length) errorsSearch.error = `No match for Material: ${material}`
-      else filteredProds = filteredThik
+      let filteredMat= filteredProds.filter((e) => e.Material === material)
+      if(!filteredMat.length) errorsSearch.error = `No match for Material: ${material}`
+      else filteredProds = filteredMat
     }
+    if(search !== ''){
+      let filteredSearch= filteredProds.filter(e => e.ProductName.toLowerCase().includes(search))
+      if(!filteredSearch.length) errorsSearch.error = `No match for Search: ${search}`
+      else filteredProds = filteredSearch
+    }
+
     if(!!price1 && !!price2 ){
       let filteredPrice = filteredProds.filter((e) => e.Price >= price1 && e.Price <= price2)
       if(!filteredPrice.length) errorsSearch.error = `No match for Price range: ${price1} - ${price2}`
