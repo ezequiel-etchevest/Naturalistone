@@ -8,7 +8,7 @@ import { useParams } from "react-router-dom";
 import ProductDetail from "../components/products/prodDetail";
 
 
-const ProductDetailView = () => {
+const ProductDetailView = ({focus, setFocus}) => {
 
   const dispatch = useDispatch()
   const user = useSelector(state => state.user)
@@ -32,7 +32,7 @@ const ProductDetailView = () => {
       if(Object.entries(userLocal).length){
         return(
           <>
-            <SideBar user={user}/>
+            <SideBar user={user} focus={focus} setFocus={setFocus}/>
             {
               Object.entries(product).length ? (
 

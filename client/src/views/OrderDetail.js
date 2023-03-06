@@ -8,7 +8,7 @@ import {getEmployeeById } from "../redux/actions-employees";
 import ODetail from "../components/orders/orderDetail/ODetail";
 
 
-const OrderDetail = () => {
+const OrderDetail = ({focus, setFocus}) => {
 
   const dispatch = useDispatch()
   const user = useSelector(state=>state.user)
@@ -35,7 +35,7 @@ const OrderDetail = () => {
       if(user.length){
         return(
           <>
-            <SideBar user={user}/>
+            <SideBar user={user} focus={focus} setFocus={setFocus}/>
             {
               Object.entries(order).length ? (
                 <ODetail 

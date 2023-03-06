@@ -53,24 +53,24 @@ const InvoiceDetailList = ({invoice, payments}) => {
               w={'10vw'}>
               <Box>
               <Text 
-                fontSize={'xs'} 
+                fontSize={'1.6vh'} 
                 color={'web.text2'}>
                   Customer name
               </Text>
               <Text 
-                fontSize={'sm'} 
+                fontSize={'2.05vh'} 
                 fontWeight={'bold'}>
                   {invoice[0].Reference}
               </Text>
               </Box>
               <Box>
                 <Text 
-                  fontSize={'xs'} 
+                  fontSize={'1.6vh'} 
                   color={'web.text2'}>
                   Shipping Method
                 </Text>
                 <Text 
-                  fontSize={'sm'} 
+                  fontSize={'2.05vh'} 
                   fontWeight={'bold'}>
                     {invoice[0].ShippingMethod}
                 </Text>
@@ -78,11 +78,11 @@ const InvoiceDetailList = ({invoice, payments}) => {
               <Box>
               <Text 
                 color={'web.text2'} 
-                fontSize={'xs'}>
+                fontSize={'1.6vh'}>
                   Amount
                 </Text>
                 <Text 
-                fontSize={'sm'} 
+                fontSize={'2.05vh'}
                 fontWeight={'bold'}>
                   ${invoice[0].Value.toLocaleString('en-US')}
                   </Text>
@@ -90,11 +90,11 @@ const InvoiceDetailList = ({invoice, payments}) => {
               <Box>
                 <Text 
                   color={'web.text2'} 
-                  fontSize={'xs'}>
+                  fontSize={'1.6vh'}>
                   Payment percentaje
                 </Text>
                 <Text 
-                  fontSize={'sm'} 
+                  fontSize={'2.05vh'} 
                   fontWeight={'bold'}>
                   { payments.paymentsMath ? (
                     Math.round(payments.paymentsMath.PaymentPercentaje)                  
@@ -112,24 +112,24 @@ const InvoiceDetailList = ({invoice, payments}) => {
               w={'10vw'}>
               <Box>
                 <Text 
-                  fontSize={'xs'} 
+                  fontSize={'1.6vh'} 
                   color={'web.text2'}>
                   Project name
                 </Text>
                 <Text 
-                  fontSize={'sm'} 
+                  fontSize={'2.05vh'} 
                   fontWeight={'bold'}>
                   {invoice[0].ProjectName}
                 </Text>
               </Box>
               <Box>
               <Text 
-                  fontSize={'xs'} 
+                  fontSize={'1.6vh'} 
                   color={'web.text2'}>
                   Status
                 </Text>
                 <Text 
-                  fontSize={'sm'} 
+                  fontSize={'2.05vh'} 
                   fontWeight={'bold'}>
                   {invoice[0].Status}
                 </Text>
@@ -137,11 +137,11 @@ const InvoiceDetailList = ({invoice, payments}) => {
               <Box>
               <Text 
                 color={'web.text2'} 
-                fontSize={'xs'}>
+                fontSize={'1.6vh'}>
                   Date
               </Text>
               <Text 
-              fontSize={'sm'} 
+              fontSize={'2.05vh'}
               fontWeight={'bold'}>
                 {invoice[0].InvoiceDate.split('T')[0]}
                 </Text>
@@ -149,11 +149,11 @@ const InvoiceDetailList = ({invoice, payments}) => {
               <Box>
                 <Text 
                   color={'web.text2'} 
-                  fontSize={'xs'}>
+                  fontSize={'1.6vh'}>
                     Pending amount
                 </Text>
                 <Text 
-                  fontSize={'sm'} 
+                  fontSize={'2.05vh'} 
                   fontWeight={'bold'}>
                   ${payments.paymentsMath  ? (
                    Number(payments.paymentsMath.PendingAmount).toLocaleString('en-US')

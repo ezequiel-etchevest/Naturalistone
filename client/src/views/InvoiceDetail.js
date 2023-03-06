@@ -11,7 +11,7 @@ import Detail from '../components/invoices/invoiceDetail/detail';
 
 
 
-const InvoiceDetail = () => {
+const InvoiceDetail = ({focus, setFocus}) => {
 
   const dispatch = useDispatch()
   const user = useSelector(state=>state.user)
@@ -40,7 +40,7 @@ const InvoiceDetail = () => {
       if(user.length){
         return(
           <>
-            <SideBar user={user}/>
+            <SideBar user={user} focus={focus} setFocus={setFocus}/>
             {
               invoice.length && Object.entries(payments).length && invoice_products && deliveries ? (
                 <Detail 
