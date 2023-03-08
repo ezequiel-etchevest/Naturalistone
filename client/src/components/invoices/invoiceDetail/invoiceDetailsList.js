@@ -5,6 +5,7 @@ const InvoiceDetailList = ({invoice, payments}) => {
     return(
         <>
         <Box
+          userSelect={'none'}
           className={'invoice-details'}
           mt={'3vh'}
           ml={'2vw'}

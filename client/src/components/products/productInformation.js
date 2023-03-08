@@ -1,10 +1,11 @@
-import { Box, Text, VStack, HStack } from "@chakra-ui/react"
+import { Box, Text, HStack } from "@chakra-ui/react"
 
 const ProductInformation = ({product}) => {
 
   return(
     <>
       <Box
+        userSelect={'none'}
         px={'1.5vw'}
         py={'2vh'}
         h={'30vh'}
@@ -65,7 +66,7 @@ const ProductInformation = ({product}) => {
             justifyContent={'space-around'}
             mt={'1.5vh'}>
               <Text fontSize={'1.6vh'} color={'web.text2'}> Dimentions</Text>
-              <HStack  spacing={'2vw'}>
+              <HStack >
                 <Text fontSize={'2.05vh'} fontWeight={'bold'}>{product.Size}{' - '}{product.Thickness}{' - '}{product.Finish ? product.Finish : '-'}</Text>
               </HStack>
           </Box>

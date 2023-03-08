@@ -35,7 +35,7 @@ export default function CancerlOrderModal({order}) {
       <IconButton
         variant={'unstyled'}           
         fontWeight={'normal'}
-        fontSize={'2xl'}
+        fontSize={'xl'}
         display={'flex'}
         icon={<AiOutlineDelete/>}           
         onClick={onOpen}
