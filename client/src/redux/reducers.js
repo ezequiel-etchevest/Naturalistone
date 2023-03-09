@@ -256,7 +256,7 @@ function rootReducer (state = intialState, action) {
         case PATCH_ORDER_STATUS:
               return {
                 ...state,
-                orders: action.payload
+                order: action.payload
               }
         case CLEAN_ORDERS_PRODUCTS:
               return {

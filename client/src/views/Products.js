@@ -7,7 +7,7 @@ import { getAllProducts, getFiltered } from '../redux/actions-products';
 import { getEmployeeById } from "../redux/actions-employees";
 
 
-const Products = () => {
+const Products = ({focus, setFocus}) => {
 
   const dispatch = useDispatch()
   const user = useSelector(state => state.user)
@@ -28,7 +28,7 @@ const Products = () => {
       if(user.length && values && allProducts){
         return(
           <>
-            <SideBar user={user}/>
+            <SideBar user={user} focus={focus} setFocus={setFocus}/>
             <ProductsContainer allProducts={allProducts} user={user} values={values}/>
           </>
         )

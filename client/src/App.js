@@ -11,29 +11,30 @@ import InvoiceErrors from './views/InvoiceErrors';
 import Products from './views/Products';
 import { naturali_theme } from './theme';
 import ProductDetailView from './views/ProductDetailView';
-import Warehouse from './views/Warehouse'
+import Warehouse from './views/Warehouse';
+import { useState } from 'react';
 
 function App() {
 
   const userLocal = JSON.parse(localStorage.getItem('user'))
-  
+  const [focus, setFocus] = useState('Home')
   return (
     <ChakraProvider theme={naturali_theme}>
     <BrowserRouter>
     <div className="App">
     <NavBar/>
       <Routes>
-      <Route path= '*'  element = {<Home />} />
+      <Route path= '*'  element = {<Home focus={focus} setFocus={setFocus} />} />
       <Route path="/login" element= {<LogIn/>} />
-      <Route path="/home" element={ <Home/>}/>
-      <Route path="/quotes" element={<Quotes/>}/>
-      <Route path='/quotes/:id' element={<InvoiceDetail />} /> 
-      <Route path="/inventory" element={<Products/>} />
-      <Route path="/products/:id" element={<ProductDetailView/>}/>
-      <Route path="/Invoice Errors" element={<InvoiceErrors/>}/>
-      <Route path="/orders" element={<Orders/>} />
-      <Route path="/orders/:id" element={<OrderDetail/>} />
-      <Route path='/warehouse' element={<Warehouse />} /> 
+      <Route path="/home" element={ <Home focus={focus} setFocus={setFocus}/>}/>
+      <Route path="/quotes" element={<Quotes focus={focus} setFocus={setFocus}/>}/>
+      <Route path='/quotes/:id' element={<InvoiceDetail focus={focus} setFocus={setFocus} />} /> 
+      <Route path="/inventory" element={<Products focus={focus} setFocus={setFocus}/>} />
+      <Route path="/products/:id" element={<ProductDetailView focus={focus} setFocus={setFocus}/>}/>
+      <Route path="/Invoice Errors" element={<InvoiceErrors focus={focus} setFocus={setFocus}/>}/>
+      <Route path="/orders" element={<Orders focus={focus} setFocus={setFocus}/>} />
+      <Route path="/orders/:id" element={<OrderDetail focus={focus} setFocus={setFocus}/>} />
+      <Route path='/warehouse' element={<Warehouse focus={focus} setFocus={setFocus} />} /> 
       </Routes> 
     </div>
     </BrowserRouter>

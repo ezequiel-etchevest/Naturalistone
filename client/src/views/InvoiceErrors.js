@@ -8,7 +8,7 @@ import { getInvoiceErrors } from "../redux/actions-invoiceErrors";
 import { getSellers } from "../redux/actions-sellers";
 import { getEmployeeById } from '../redux/actions-employees';
 
-const InvoiceErrors = () => {
+const InvoiceErrors = ({focus, setFocus}) => {
 
   const dispatch = useDispatch()
   const invoice_errors = useSelector(state => state.invoice_errors)
@@ -40,7 +40,7 @@ const InvoiceErrors = () => {
   if(user.length){
     return(
     <>
-      <SideBar user={user}/>
+      <SideBar user={user} focus={focus} setFocus={setFocus}/>
       <InvoiceErrorsContainer invoice_errors={invoice_errors} user={user} sellers={sellers} invoice_errors_by_filter={invoice_errors_by_filter} />
     </>
     )

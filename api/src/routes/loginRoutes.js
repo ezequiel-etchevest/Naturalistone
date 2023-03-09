@@ -10,9 +10,10 @@ loginRouter.get('/', async function(req, res){
     query_ = `SELECT * FROM  Logins`;
     try{
          mysqlConnection.query(query_, function(error, results, fields){
+            if(!results)  res.status(200).json('Chequea tu conexion a internet');
             if(!results.length) {
                 console.log('Error en loginRoutes.get /')
-                res.status(400).json(error);
+                res.status(200).json(error);
             } else {
                 console.log('Data OK')
                 res.status(200).json(results);
