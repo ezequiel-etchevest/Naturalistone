@@ -76,7 +76,6 @@ const ProductList = ({ allProducts, user }) => {
     if(Object.entries(productErrors).length){
       toast({        
         title: `${productErrors.error}`,
-        description: 'Displaying previous results',
         status: 'warning',
         duration: 1500,
         isClosable: true,})

@@ -27,7 +27,7 @@ const filterProducts = (finish, size, thickness, material, search, price1, price
       else filteredProds = filteredMat
     }
     if(search !== ''){
-      let filteredSearch= filteredProds.filter(e => e.ProductName.toLowerCase().includes(search))
+      let filteredSearch= filteredProds.filter(e => e.ProductName?.toLowerCase().includes(search))
       if(!filteredSearch.length) errorsSearch.error = `No match for Search: ${search}`
       else filteredProds = filteredSearch
     }
