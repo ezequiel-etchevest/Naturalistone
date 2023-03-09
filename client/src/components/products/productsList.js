@@ -91,11 +91,12 @@ const ProductList = ({ allProducts, user }) => {
     <Box
       display={'flex'}
       justifyContent={'center'}
-      h={'72vh'}
-      w={'78.8vw'} 
+      h={'69vh'}
+      w={'78.8vw'}
+      ml={'1vh'} 
       >
       <Box
-        maxHeight={'69vh'}
+        maxHeight={'67vh'}
         overflow={'auto'}
         css={{
           '&::-webkit-scrollbar': {
@@ -114,7 +115,7 @@ const ProductList = ({ allProducts, user }) => {
         border={'1px solid'} 
         rounded={'md'} 
         p={'3vh'}
-        w={'74vw'}
+        w={'76vw'}
         >
         {allProducts.length && !Object.entries(productErrors).length ? 
         <TableContainer  mr={'1vw'}>

@@ -27,7 +27,8 @@ let PriceSlider = ({setFilters, filters, limit, setLimit, values}) =>{
 				bg={'web.sideBar'} 
 				border={'1px solid'} 
 				borderColor={'web.border'}
-				w={'32vw'}>
+				w={'26vw'}
+        >
         <RangeSlider 
             aria-label={['min', 'max']}
             colorScheme={'orange'}
@@ -35,7 +36,7 @@ let PriceSlider = ({setFilters, filters, limit, setLimit, values}) =>{
             onChangeEnd={(val) => {
               dispatch(getFiltered(filters.finish, filters.size, filters.thickness,filters.material, filters.search, val))}}
             onChange={(e) => handlePrice(e)}
-            w={'20vw'}
+            w={'16vw'}
             defaultValue={[values.priceMaxmin.min, values.priceMaxmin.max]}
             min={values.priceMaxmin.min}
             max={values.priceMaxmin.max}

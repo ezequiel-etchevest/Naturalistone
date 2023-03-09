@@ -20,7 +20,7 @@ import { useState } from "react";
 import '../../assets/styleSheet.css';
 import {AiOutlineClear} from 'react-icons/ai';
 
-const Filters = ({user, seller_invoices, focus, setFocus, seller_values}) => {
+const   Filters = ({user, seller_invoices, focus, setFocus, seller_values}) => {
 
   const dispatch = useDispatch()
   const [ disabled, setDisabled ] = useState(false)
@@ -198,7 +198,7 @@ const Filters = ({user, seller_invoices, focus, setFocus, seller_values}) => {
                   w={'80%'}
                   minH={'4.5vh'}
                   variant="unstyled"
-                  placeholder={'Customer Name'}
+                  placeholder={'Customer name'}
                   textColor={'web.text'}
                   _placeholder={{ fontFamily: 'body', fontWeight: 'thin' }}
                   size={"sm"}
