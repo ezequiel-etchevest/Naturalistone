@@ -6,12 +6,10 @@ import {
     useDisclosure,
     Button,
     Text,
-    ButtonGroup,
     IconButton,
     ModalFooter,
     ModalHeader,
-    ModalCloseButton,
-    Tooltip
+    ModalCloseButton
   } from '@chakra-ui/react'
 import { AiOutlineDelete } from 'react-icons/ai';
 import { useDispatch } from 'react-redux';
@@ -35,7 +33,7 @@ export default function CancerlOrderModal({order}) {
       <IconButton
         variant={'unstyled'}           
         fontWeight={'normal'}
-        fontSize={'2xl'}
+        fontSize={'xl'}
         display={'flex'}
         icon={<AiOutlineDelete/>}           
         onClick={onOpen}

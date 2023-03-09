@@ -9,7 +9,7 @@ import { getEmployeeById } from '../redux/actions-employees';
 
 
 
-const Orders = () => {
+const Orders = ({focus, setFocus}) => {
 
   const dispatch = useDispatch()
   const orders = useSelector(state => state.orders)
@@ -29,7 +29,7 @@ const Orders = () => {
       if(user.length){
         return(
           <>
-            <SideBar user={user}/>
+            <SideBar user={user} focus={focus} setFocus={setFocus}/>
             <OrdersContainer orders={orders}/>
           </>
         )

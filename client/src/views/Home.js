@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 
 
 
-const Home = () => {
+const Home = ({focus, setFocus}) => {
 
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -31,7 +31,7 @@ const Home = () => {
       if(user.length){
         return(
           <>
-            <SideBar user={user}/>
+            <SideBar user={user} focus={focus} setFocus={setFocus}/>
             <HomeContainer currentMonth={currentMonth}/>
           </>
         )

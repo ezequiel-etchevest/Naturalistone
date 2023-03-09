@@ -6,8 +6,6 @@ import {
 import { 
     GET_INVOICE_BY_ID, 
     GET_INVOICES_BY_SELLER, 
-    GET_INVOICES_BY_SELLER_ALL, 
-    GET_FILTERED_INVOICES,
     GET_INVOICE_PRODUCTS,
     PATCH_STAMP,
     PATCH_STATUS,
@@ -56,9 +54,7 @@ const intialState = {
     sellers:[],
     invoice: {},
     product_values: {},
-    // seller_invoices_all: [],
     seller_invoices: [],
-    // filtered_invoices:[],
     all_products: [],
     current_month: {},
     invoice_products: [],
@@ -256,7 +252,7 @@ function rootReducer (state = intialState, action) {
         case PATCH_ORDER_STATUS:
               return {
                 ...state,
-                orders: action.payload
+                order: action.payload
               }
         case CLEAN_ORDERS_PRODUCTS:
               return {

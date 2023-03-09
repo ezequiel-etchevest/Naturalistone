@@ -2,7 +2,6 @@ import {
   Box, 
   HStack, 
   Text, 
-  Button, 
   Input, 
   IconButton, 
   FormControl, 
@@ -12,15 +11,14 @@ import {
   Divider,
   Tooltip,
   } from "@chakra-ui/react";
-import { BsCalendar4Week } from 'react-icons/bs';
 import { SearchIcon } from '@chakra-ui/icons';
-import {  getInvoicesBySeller, getFilteredInvoices } from "../../redux/actions-invoices";
-import { useDispatch, useSelector } from 'react-redux'
+import {  getInvoicesBySeller } from "../../redux/actions-invoices";
+import { useDispatch } from 'react-redux'
 import { useState } from "react";
 import '../../assets/styleSheet.css';
 import {AiOutlineClear} from 'react-icons/ai';
 
-const   Filters = ({user, seller_invoices, focus, setFocus, seller_values}) => {
+const Filters = ({user, seller_invoices, setFocusFilter, seller_values}) => {
 
   const dispatch = useDispatch()
   const [ disabled, setDisabled ] = useState(false)
@@ -106,7 +104,7 @@ const   Filters = ({user, seller_invoices, focus, setFocus, seller_values}) => {
     selectSeller:'',
     timeFilter:'All'}
     ))
-    setFocus('All')
+    setFocusFilter('All')
   }
   const uniqueSellerIDs = seller_invoices?.reduce((acc, cur) => {
     if (!acc.includes(cur.SellerID)) {
@@ -238,7 +236,7 @@ const   Filters = ({user, seller_invoices, focus, setFocus, seller_values}) => {
             borderColor: 'logo.orange',
             boxShadow: '0 0.5px 0.5px rgba(229, 103, 23, 0.075)inset, 0 0 5px rgba(255,144,0,0.6)'
           }}>
-          <option value='All' className="options">All</option>
+          <option value='All' className="options">All time</option>
           <option value='Lastweek' className="options">Last week</option>
           <option value='Lastmonth' className="options">Last month</option>
           {
@@ -273,7 +271,7 @@ const   Filters = ({user, seller_invoices, focus, setFocus, seller_values}) => {
             </Select>
             </HStack>
         <Divider orientation={'vertical'} h={'5vh'}/>
-        <Tooltip label={'Clear all filters'}>      
+        <Tooltip label={'Clear all filters'} fontWeight={'hairline'}>      
         <IconButton
             icon={ <AiOutlineClear/>}
             variant={'unstyled'} 

@@ -32,10 +32,10 @@ const ModelTr = ({p, totalAmount, invoice}) => {
           color: 'logo.orange'
         }}
         >
-        <Td textAlign={'match-parent'}>{p.Date.split('T')[0]}</Td>
-        <Td textAlign={'match-parent'}>${p.Amount.toLocaleString('en-US')} </Td>
-        <Td textAlign={'match-parent'} w={'4vw'}>{p.Method}</Td>
-        <Td textAlign={'center'} w={'3vw'}>{Math.round(per.toFixed(2))} %</Td>
+        <Td textAlign={'match-parent'} fontSize={'1.6vh'}>{p.Date.split('T')[0]}</Td>
+        <Td textAlign={'match-parent'} fontSize={'1.6vh'}>${p.Amount.toLocaleString('en-US')} </Td>
+        <Td textAlign={'match-parent'} fontSize={'1.6vh'}>{p.Method}</Td>
+        <Td textAlign={'center'} fontSize={'1.6vh'} >{Math.round(per.toFixed(2))} %</Td>
         <Td>
           <IconButton
             disabled={invoice[0].Stamped === 1 ? true : false} 
@@ -66,17 +66,17 @@ const PaymentList = ({payments, totalAmount, invoice}) => {
             bg={'web.sideBar'}           
             >
             <Box 
-              w={'41vw'} 
               display={'flex'} 
               flexDir={'row'} 
               justifyContent={'space-between'} 
-              alignContent={'start'}>
+              >
             <Text
               mb={'1vh'} 
               alignSelf={'center'} 
-              fontSize={'xl'} 
+              fontSize={'2.6vh'} 
               color={'web.text2'}
               >Payment Details</Text>
+
               {
                 handlePendig() === true ? (
                   <AddPayment pendingAmount={pendingAmount}/>
@@ -103,15 +103,15 @@ const PaymentList = ({payments, totalAmount, invoice}) => {
                 borderRadius: '5px',
               },
             }}>
-          <TableContainer  w={'44vw'} >
+          <TableContainer  w={'40vw'} >
                 <Table color={'web.text'} variant={'simple'} size={'sm'} >
                   <Thead h={'6vh'}>
                     <Tr>
-                      <Th color={'web.text2'}>Payment Date</Th>
-                      <Th color={'web.text2'}>Amount</Th>
-                      <Th color={'web.text2'}>Method</Th>
-                      <Th color={'web.text2'}>Percentaje</Th>
-                      <Th color={'web.text2'}></Th>
+                      <Th color={'web.text2'} fontSize={'1.6vh'}>Payment Date</Th>
+                      <Th color={'web.text2'} fontSize={'1.6vh'}>Amount</Th>
+                      <Th color={'web.text2'} fontSize={'1.6vh'}>Method</Th>
+                      <Th color={'web.text2'} fontSize={'1.6vh'}>Percentaje</Th>
+                      <Th color={'web.text2'} fontSize={'1.6vh'}></Th>
                     </Tr>
                   </Thead>
                   <Tbody >

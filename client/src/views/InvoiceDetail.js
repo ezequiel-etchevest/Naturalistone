@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import SideBar from "../components/sideBar";
-import { Center, Spinner, Text, Box } from "@chakra-ui/react";
+import { Center, Spinner } from "@chakra-ui/react";
 import { useSelector, useDispatch } from "react-redux";
 import { getInvoiceById, getInvoiceProducts } from '../redux/actions-invoices'
 import {getEmployeeById } from "../redux/actions-employees";
@@ -11,7 +11,7 @@ import Detail from '../components/invoices/invoiceDetail/detail';
 
 
 
-const InvoiceDetail = () => {
+const InvoiceDetail = ({focus, setFocus}) => {
 
   const dispatch = useDispatch()
   const user = useSelector(state=>state.user)
@@ -40,7 +40,7 @@ const InvoiceDetail = () => {
       if(user.length){
         return(
           <>
-            <SideBar user={user}/>
+            <SideBar user={user} focus={focus} setFocus={setFocus}/>
             {
               invoice.length && Object.entries(payments).length && invoice_products && deliveries ? (
                 <Detail 

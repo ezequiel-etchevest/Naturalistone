@@ -1,7 +1,6 @@
 import { 
   Box,
-  Select, 
-  HStack, 
+  Select,  
   Input, 
   IconButton, 
   Tooltip,
@@ -10,7 +9,7 @@ import {
 import { useEffect, useState } from "react";
 import { SearchIcon } from '@chakra-ui/icons';
 import '../../assets/styleSheet.css';
-import { getAllProducts, getFiltered } from "../../redux/actions-products";
+import { getFiltered } from "../../redux/actions-products";
 import { useDispatch } from 'react-redux';
 import {AiOutlineClear} from 'react-icons/ai';
 import PriceSlider from "./priceSlider";
@@ -102,73 +101,73 @@ const ProductsFilters = ({allProducts, setFilteredProducts, values}) => {
         >
           {/* -------------------- SEARCH INPUT ------------------------------ */}
         <Box ml={'2vh'} w={'15vw'} mt={'8vh'} display={'flex'} alignSelf={'flex-start'} >
-            <Input
-              mb={'3vh'}
-              w={'80%'}
-              minH={'4.5vh'}
-              variant="unstyled"
-              placeholder={'Customer name'}
-              textColor={'web.text2'}
-              _placeholder={{ fontFamily: 'body', fontWeight: 'thin' }}
-              size={"sm"}
-              value={filters.search}
-              borderBottomWidth={"2px"}
-              borderBottomColor={'web.text2'}
-              onChange={(e) => handleChangeProductName(e)}
-              />
-                <IconButton
-                  color={'web.text2'}
-                  borderRadius={2}
-                  aria-label="Search database"
-                  bgColor={'web.bg'}
-                  ml={1}
-                  icon={<SearchIcon />}
-                  _hover={{
-                    color: 'orange',
-                  }}
-                  _active={{ color: 'gray.800'}}
-                />
-            </Box>
+          <Input
+            mb={'3vh'}
+            w={'80%'}
+            minH={'4.5vh'}
+            variant="unstyled"
+            placeholder={'Customer name'}
+            textColor={'web.text2'}
+            _placeholder={{ fontFamily: 'body', fontWeight: 'thin' }}
+            size={"sm"}
+            value={filters.search}
+            borderBottomWidth={"2px"}
+            borderBottomColor={'web.text2'}
+            onChange={(e) => handleChangeProductName(e)}
+            />
+            <IconButton
+              color={'web.text2'}
+              borderRadius={2}
+              aria-label="Search database"
+              bgColor={'web.bg'}
+              ml={1}
+              icon={<SearchIcon />}
+              _hover={{
+                color: 'orange',
+              }}
+              _active={{ color: 'gray.800'}}
+            />
+        </Box>
 {/* --------------------BOX SELECTS, SLIDER AND CLEAR BUTTON ------------------------------ */}
-      <Box 
-        display={'flex'} 
-        flexDir={'row'} 
-        justifyContent={'space-between'}
-        alignItems={'center'} 
-        w={'76vw'}
-        ml={'2vh'}
-        >
+        <Box 
+          display={'flex'} 
+          flexDir={'row'} 
+          justifyContent={'space-between'}
+          alignItems={'center'} 
+          w={'76vw'}
+          ml={'2vh'}
+          >
           <Box 
             display={'flex'} 
             flexDir={'row'}
             w={'39vw'}
             justifyContent={'space-between'}>
-          <Select 
-                variant='outline' 
-                w={'9vw'}
-                h={'4.2vh'}
-                fontSize={'xs'}             
-                bg={'web.sideBar'}
-                color={'web.text2'}
-                borderColor={'web.border'}
-                cursor={'pointer'}
-                value={filters.material}
-                _focus={{
-                  borderColor: 'logo.orange',
-                  boxShadow: '0 0.5px 0.5px rgba(229, 103, 23, 0.075)inset, 0 0 5px rgba(255,144,0,0.6)'
-                }}
-                onChange={(e) => handleMaterial(e)}
-                >
+            <Select 
+              variant='outline' 
+              w={'9vw'}
+              h={'4.2vh'}
+              fontSize={'xs'}             
+              bg={'web.sideBar'}
+              color={'web.text2'}
+              borderColor={'web.border'}
+              cursor={'pointer'}
+              value={filters.material}
+              _focus={{
+                borderColor: 'logo.orange',
+                boxShadow: '0 0.5px 0.5px rgba(229, 103, 23, 0.075)inset, 0 0 5px rgba(255,144,0,0.6)'
+              }}
+              onChange={(e) => handleMaterial(e)}
+              >
                 <option value='' className="options">Type</option>
                 {
-                    values.materials.map((v, i) => {
+                  values.materials.map((v, i) => {
                       return(
                         <option value={`${v}`} key={i} className={'options'}>{`${v}`}</option>
                       )
                     })
                 }
-          </Select>
-          <Select 
+            </Select>
+            <Select 
               variant='outline' 
               w={'9vw'}
               h={'4.2vh'}
@@ -184,8 +183,8 @@ const ProductsFilters = ({allProducts, setFilteredProducts, values}) => {
               }}
               onChange={(e) => handleSize(e)}
               >
-              <option value='' className="options">Size</option>
-              {
+                <option value='' className="options">Size</option>
+                {
                   values.sizes.map((v, i) => {
                     return(
                       <option value={`${v}`} key={i} className={'options'}>{`${v}`}</option>
@@ -193,8 +192,8 @@ const ProductsFilters = ({allProducts, setFilteredProducts, values}) => {
                   })
                        
               }
-          </Select>
-          <Select 
+            </Select>
+            <Select 
               variant='outline' 
               w={'9vw'}
               h={'4.2vh'}
@@ -218,8 +217,8 @@ const ProductsFilters = ({allProducts, setFilteredProducts, values}) => {
                     )
                   })
               }
-          </Select>
-          <Select 
+            </Select>
+            <Select 
               variant='outline' 
               w={'9vw'}
               h={'4.2vh'}
@@ -243,29 +242,29 @@ const ProductsFilters = ({allProducts, setFilteredProducts, values}) => {
                     )
                   })
                 }                     
-          </Select>
+            </Select>
           </Box>
-          <Box display={'flex'} flexDir={'row'} h={'4.2vh'}>
-          <PriceSlider  setFilters={setFilters} filters={filters} limit={limit} setLimit={setLimit} values={values}/>
-          <Divider orientation={'vertical'} h={'5vh'} ml={'2vw'}/>
-        <Tooltip label={'Clear all filters'}>      
-        <IconButton
-            icon={ <AiOutlineClear/>}
-            variant={'unstyled'} 
-            display={'flex'} 
-            borderRadius={'sm'} 
-            placeContent={'center'}
-            alignItems={'center'}
-            color={'web.text2'} 
-            _hover={{
-               color: 'logo.orange'
-               }}
-            _active={{
-            }}
-            onClick={(e) => handleClear(e)}
-            >
+          <Box display={'flex'} alignItems={'center'} flexDir={'row'} h={'4.2vh'}>
+            <PriceSlider  setFilters={setFilters} filters={filters} limit={limit} setLimit={setLimit} values={values}/>
+            <Divider orientation={'vertical'} h={'5vh'} ml={'2vw'}/>
+            <Tooltip label={'Clear all filters'} fontWeight={'hairline'}>      
+            <IconButton
+              icon={ <AiOutlineClear/>}
+              variant={'unstyled'} 
+              display={'flex'} 
+              borderRadius={'sm'} 
+              placeContent={'center'}
+              alignItems={'center'}
+              color={'web.text2'} 
+              _hover={{
+                 color: 'logo.orange'
+                 }}
+              _active={{
+              }}
+              onClick={(e) => handleClear(e)}
+              >
             </IconButton>
-          </Tooltip> 
+        </Tooltip> 
           </Box> 
           </Box>  
         </Box>

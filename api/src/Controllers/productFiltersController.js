@@ -3,9 +3,7 @@ const filterProducts = (finish, size, thickness, material, search, price1, price
 
   let filteredProds = allProducts
   let errorsSearch = {}
-    // if(type !== ''){
-    //   filteredProds = filteredProds.filter((e) => e.Type === type)
-    // } 
+
     if(finish !== ''){
       let filteredFinish = filteredProds.filter((e) => e.Finish === finish)
       if(!filteredFinish.length) errorsSearch.error = `No match for Finish: ${finish}`

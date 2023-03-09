@@ -11,9 +11,7 @@ import {
     ModalCloseButton,
     useDisclosure,
     Text,
-    useToast
     } from "@chakra-ui/react"
-import { useState } from "react";
 import { useParams } from 'react-router-dom';
 import { useDispatch } from "react-redux";
 import { MdOutlineCancel } from 'react-icons/md';
@@ -35,30 +33,32 @@ const ChangeStatus = ({invoice, user}) => {
     return(
         <>
           <ButtonGroup
-                onClick={onOpen}
-                display={'flex'}
-                spacing={0}
-                _hover={{
-                color: 'logo.orange'
-                }}
-                >
-              <IconButton
-                disabled={
-                  user.SellerID === 3 ? false :
-                  invoice[0].Payment_Stamp == 0 ? false : true 
-                }
-                variant={'unstyled'}           
-                fontWeight={'normal'}
-                icon={<MdOutlineCancel/>}/>
-              <Button
-                disabled={
-                  user.SellerID === 3 ? false :
-                  invoice[0].Payment_Stamp == 0 ? false : true 
-                }
-                variant={'unstyled'}           
-                fontWeight={'normal'}
-                >Cancel Quote</Button>
-              </ButtonGroup>
+            h={'5vh'}
+            size={'sm'}
+            onClick={onOpen}
+            display={'flex'}
+            spacing={0}
+            _hover={{
+            color: 'logo.orange'
+            }}
+            >
+          <IconButton
+            disabled={
+              user.SellerID === 3 ? false :
+              invoice[0].Payment_Stamp === 0 ? false : true 
+            }
+            variant={'unstyled'}           
+            fontWeight={'normal'}
+            icon={<MdOutlineCancel/>}/>
+          <Button
+            disabled={
+              user.SellerID === 3 ? false :
+              invoice[0].Payment_Stamp === 0 ? false : true 
+            }
+            variant={'unstyled'}           
+            fontWeight={'normal'}
+            >Cancel Quote</Button>
+          </ButtonGroup>
           <Modal 
             isOpen={isOpen} 
             onClose={onClose}

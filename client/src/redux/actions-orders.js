@@ -72,7 +72,8 @@ export function cleanOrderProducts() {
 export function cancelOrderStatus(id) {
   return async function(dispatch){
     try{ 
-        let {data} = await axios.patch(`http://localhost:5000/orders/cancelorder/${id}`)
+        let { response } = await axios.patch(`http://localhost:5000/orders/cancelorder/${id}`)
+        let {data} = await axios.get(`http://localhost:5000/orders/${id}`)
         dispatch(
         {
             type: PATCH_ORDER_STATUS,
