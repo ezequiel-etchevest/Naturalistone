@@ -4,9 +4,7 @@ import {
   Stat,
   StatLabel,
   StatNumber,
-  HStack,
-  chakra,
-  Highlight
+  HStack
 } from '@chakra-ui/react';
 import { BiDollar } from 'react-icons/bi';
 import { FaSortAmountUpAlt } from 'react-icons/fa';

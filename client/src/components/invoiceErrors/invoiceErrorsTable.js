@@ -3,30 +3,17 @@ import {
     Table,
     Thead,
     Tbody,
-    Text,
     Tr,
     Th,
     Td,
     TableContainer,
-
   } from '@chakra-ui/react';
 
 
 const ModelTr = ({e, user}) => {
 
-    // const navigate = useNavigate()
-    // const dispatch = useDispatch()
-
-    // const handleClick = () => {
-    //   dispatch(getInvoiceById(e.Naturali_Invoice))
-    //   dispatch(getInvoiceProducts(e.Naturali_Invoice))
-    //   dispatch( cleanStatePayments())
-    //   navigate(`/quotes/${e.Naturali_Invoice}`)
-    // }
-    
     return(
       <Tr 
-        // onClick={() => handleClick()} 
         cursor={'pointer'} 
         key={e.Invoice}
         _hover={{

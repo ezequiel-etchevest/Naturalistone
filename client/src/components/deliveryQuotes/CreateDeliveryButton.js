@@ -18,6 +18,8 @@ const CreateDeliveryButton = ({invoice, user, invoice_products}) => {
     return(
         <>
           <ButtonGroup
+            h={'5vh'}
+            size={'sm'}
             onClick={onOpen}
             display={'flex'}
             spacing={0}

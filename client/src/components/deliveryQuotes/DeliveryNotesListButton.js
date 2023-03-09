@@ -15,6 +15,8 @@ const DeliveryNotesListButton = ({user, invoice, deliveries}) => {
   return(
   <>
     <ButtonGroup
+      h={'5vh'}
+      size={'sm'}
       onClick={onOpen}
       display={'flex'}
       spacing={0}

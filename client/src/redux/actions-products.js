@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { FaFlag } from 'react-icons/fa';
 export const GET_ALL_PRODUCTS = 'GET_ALL_PRODUCTS';
 export const GET_FILTERED_PRODUCTS = 'GET_FILTERED_PRODUCTS';
 export const GET_PRODUCT_BY_ID = 'GET_FPRODUCT_BY_ID';

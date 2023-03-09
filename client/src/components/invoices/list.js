@@ -9,7 +9,7 @@ import {
     TableContainer,
     useToast,
     Text,
-    Center
+    Center,
   } from '@chakra-ui/react'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
@@ -46,19 +46,20 @@ const ModelTr = ({e, validateSeller}) => {
           <Td  fontSize={'xs'}textAlign={'center'}>{e.FirstName} {e.LastName}</Td>
           ):(null)
         }
-        <Td fontSize={'xs'}>{e.ProjectName}</Td>
-        <Td fontSize={'xs'}>{e.Reference}</Td>
-        <Td fontSize={'xs'} textAlign={'center'}>{e.InvoiceDate.split('T')[0]}</Td>
-        <Td fontSize={'xs'} textAlign={'center'}>{e.Status}</Td>
-        <Td fontSize={'xs'} isNumeric textAlign={'center'}>$ {e.Value.toLocaleString('en-US')} </Td>
-        <Td fontSize={'xs'} textAlign={'center'} >{ e.Percentaje ? Math.round(e.Percentaje) : 0 } % </Td>
-        <Td fontSize={'xs'} textAlign={'center'}>{ e.Payments?.length ? e.Payments[0][2] : '-'}</Td>
+        <Td fontSize={'1.7vh'}>{e.ProjectName}</Td>
+        <Td fontSize={'1.7vh'}>{e.Reference}</Td>
+        <Td fontSize={'1.7vh'} textAlign={'center'}>{e.InvoiceDate.split('T')[0]}</Td>
+        <Td fontSize={'1.7vh'} textAlign={'center'}>{e.Status}</Td>
+        <Td fontSize={'1.7vh'} isNumeric textAlign={'center'}>$ {e.Value.toLocaleString('en-US')} </Td>
+        <Td fontSize={'1.7vh'} textAlign={'center'} >{ e.Percentaje ? Math.round(e.Percentaje) : 0 } % </Td>
+        <Td fontSize={'1.7vh'} textAlign={'center'}>{ e.Payments?.length ? e.Payments[0][2] : '-'}</Td>
       </Tr>
     )
 }
 
 const List = ({seller_invoices, user}) => {
- 
+
+  
   const result = useSelector(state=> state.validate_result_quotes)
   const toast = useToast()
   const id = 'test-toast'
@@ -84,7 +85,6 @@ const List = ({seller_invoices, user}) => {
   useEffect(()=>{
     validateResults()
   })
-
     return(
         <Box
         display={'flex'}
@@ -152,5 +152,6 @@ const List = ({seller_invoices, user}) => {
             </Box> 
         </Box>
     )
+  
 }
 export default List;

@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import SideBar from "../components/sideBar";
 import InvoiceErrorsContainer from '../components/invoiceErrors/invoiceErrorsContainer'
-import { Box, Button } from "@chakra-ui/react";
+import { Button } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import { getInvoiceErrors } from "../redux/actions-invoiceErrors";
 import { getSellers } from "../redux/actions-sellers";

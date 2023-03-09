@@ -7,7 +7,6 @@ import mitu from '../assets/mitutu.jpg';
 import { useNavigate } from 'react-router';
 import { useDispatch } from 'react-redux';
 import { logOut } from '../redux/actions-employees';
-import { useState } from 'react';
 
 
 const LinkItems = [

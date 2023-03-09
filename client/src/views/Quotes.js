@@ -13,7 +13,9 @@ const Quotes = ({focus, setFocus}) => {
   const dispatch = useDispatch()
   const seller_invoices = useSelector(state => state.seller_invoices)
   const user = useSelector(state => state.user)
+
   const [focusFilter, setFocusFilter] = useState('All')
+
   const userLocal = JSON.parse(localStorage.getItem('user'))
   const seller_values = useSelector(state => state.seller_values)
 
@@ -33,7 +35,6 @@ const Quotes = ({focus, setFocus}) => {
           }))
       }}, [dispatch, user])
 
- //saque dependencia del useEffect seller_invoices para solucionar problema si no hay invoices.
 
       if(user.length){
         return(

@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
 import SideBar from "../components/sideBar";
-import { Center, Spinner, Text, Box } from "@chakra-ui/react";
+import { Center, Spinner } from "@chakra-ui/react";
 import ProductsContainer from "../components/products/productsContainer";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllProducts, getFiltered } from '../redux/actions-products';
+import { getFiltered } from '../redux/actions-products';
 import { getEmployeeById } from "../redux/actions-employees";
 
 

@@ -40,7 +40,7 @@ const ModelTr = ({e, user}) => {
     }
 
     let validateSeller = () => {
-      if(user[0].SellerID == 6 || user[0].SellerID == 3 || user[0].SellerID == 5 || user[0].SellerID == 15 ) return true
+      if(user[0].SellerID === 6 || user[0].SellerID === 3 || user[0].SellerID === 5 || user[0].SellerID === 15 ) return true
       else return false
     }
 
@@ -53,15 +53,15 @@ const ModelTr = ({e, user}) => {
         color: 'logo.orange'
       }} 
       >
-      <Td onClick={() => handleClickProduct()} textAlign={'match-parent'}>{e.ProductName}</Td>
-      <Td onClick={() => handleClickProduct()} textAlign={'match-parent'}>{e.Material} - {e.Type}</Td>
-      <Td onClick={() => handleClickProduct()} textAlign={'match-parent'}>{e.Size}</Td>
-      <Td onClick={() => handleClickProduct()} textAlign={'center'}> {e.Thickness} </Td>
-      <Td onClick={() => handleClickProduct()} textAlign={'center'}> {e.Finish === null ? '-' : e.Finish} </Td>
-      <Td onClick={() => handleClickProduct()} isNumeric>${e.Price.toLocaleString('en-US')}</Td>
-      <Td onClick={() => handleClickProduct()} textAlign={'center'}>{e.InStock_Available === null ? 0 : e.InStock_Available}</Td>
-      <Td onClick={() => handleClickProduct()} textAlign={'center'}>{e.Incoming_Available === null ? 0 : e.Incoming_Available}</Td>
-      <Td onClick={() => handleClickProduct()} textAlign={'center'}>{e.NextArrival === undefined ? '-' : e.NextArrival}</Td>
+      <Td onClick={() => handleClickProduct()} fontSize={'1.7vh'} textAlign={'match-parent'}>{e.ProductName}</Td>
+      <Td onClick={() => handleClickProduct()} fontSize={'1.7vh'} textAlign={'match-parent'}>{e.Material} - {e.Type}</Td>
+      <Td onClick={() => handleClickProduct()} fontSize={'1.7vh'} textAlign={'match-parent'}>{e.Size}</Td>
+      <Td onClick={() => handleClickProduct()} fontSize={'1.7vh'} textAlign={'center'}> {e.Thickness} </Td>
+      <Td onClick={() => handleClickProduct()} fontSize={'1.7vh'} textAlign={'center'}> {e.Finish === null ? '-' : e.Finish} </Td>
+      <Td onClick={() => handleClickProduct()} fontSize={'1.7vh'} isNumeric>${e.Price.toLocaleString('en-US')}</Td>
+      <Td onClick={() => handleClickProduct()} fontSize={'1.7vh'} textAlign={'center'}>{e.InStock_Available === null ? 0 : e.InStock_Available}</Td>
+      <Td onClick={() => handleClickProduct()} fontSize={'1.7vh'} textAlign={'center'}>{e.Incoming_Available === null ? 0 : e.Incoming_Available}</Td>
+      <Td onClick={() => handleClickProduct()} fontSize={'1.7vh'} textAlign={'center'}>{e.NextArrival === undefined ? '-' : e.NextArrival}</Td>
       <Td pl={'3.5vw'}>{ validateSeller() === false ? (e.Discontinued_Flag === 'True' ? <ImCheckboxChecked color='logo.orange'/> : <ImCheckboxUnchecked color='logo.orange'/> ) : (<Switch  onChange={() => handleClickSwitch()} isChecked={flag} colorScheme={'orange'} size={'sm'}/>) }</Td>
       </Tr>
   )
@@ -122,16 +122,16 @@ const ProductList = ({ allProducts, user }) => {
           <Table color={'web.text'} variant={'simple'} size={'sm'}>
             <Thead h={'6vh'}>
               <Tr>
-                <Th color={'web.text2'} textAlign={'match-parent'}>Product Name</Th>
-                <Th color={'web.text2'} w={'8vw'}>Type</Th>
-                <Th color={'web.text2'} w={'4vw'}>Size</Th>
-                <Th color={'web.text2'} w={'4vw'}>Thickness</Th>
-                <Th color={'web.text2'} w={'4vw'}>Finish</Th>
-                <Th color={'web.text2'} w={'4vw'}isNumeric>Price</Th>
-                <Th color={'web.text2'} w={'4vw'}isNumeric>In Stock</Th>
-                <Th color={'web.text2'} w={'4vw'}isNumeric>Incoming</Th>
-                <Th color={'web.text2'} w={'4vw'}isNumeric>Next Arrival</Th>
-                <Th color={'web.text2'} w={'4vw'}>Discontinued</Th>
+                <Th color={'web.text2'} >Product Name</Th>
+                <Th color={'web.text2'} textAlign={'center'} >Type</Th>
+                <Th color={'web.text2'} textAlign={'center'}>Size</Th>
+                <Th color={'web.text2'} >Thickness</Th>
+                <Th color={'web.text2'}>Finish</Th>
+                <Th color={'web.text2'} isNumeric>Price</Th>
+                <Th color={'web.text2'} isNumeric>In Stock</Th>
+                <Th color={'web.text2'} isNumeric>Incoming</Th>
+                <Th color={'web.text2'} isNumeric>Next Arrival</Th>
+                <Th color={'web.text2'} >Discontinued</Th>
               </Tr>
             </Thead>
             <Tbody>

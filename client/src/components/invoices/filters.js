@@ -2,7 +2,6 @@ import {
   Box, 
   HStack, 
   Text, 
-  Button, 
   Input, 
   IconButton, 
   FormControl, 
@@ -12,15 +11,14 @@ import {
   Divider,
   Tooltip,
   } from "@chakra-ui/react";
-import { BsCalendar4Week } from 'react-icons/bs';
 import { SearchIcon } from '@chakra-ui/icons';
-import {  getInvoicesBySeller, getFilteredInvoices } from "../../redux/actions-invoices";
-import { useDispatch, useSelector } from 'react-redux'
+import {  getInvoicesBySeller } from "../../redux/actions-invoices";
+import { useDispatch } from 'react-redux'
 import { useState } from "react";
 import '../../assets/styleSheet.css';
 import {AiOutlineClear} from 'react-icons/ai';
 
-const Filters = ({user, seller_invoices, focusFilter, setFocusFilter, seller_values}) => {
+const Filters = ({user, seller_invoices, setFocusFilter, seller_values}) => {
 
   const dispatch = useDispatch()
   const [ disabled, setDisabled ] = useState(false)

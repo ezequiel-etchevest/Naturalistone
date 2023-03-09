@@ -6,12 +6,10 @@ import {
     useDisclosure,
     Button,
     Text,
-    ButtonGroup,
     IconButton,
     ModalFooter,
     ModalHeader,
-    ModalCloseButton,
-    Tooltip
+    ModalCloseButton
   } from '@chakra-ui/react'
 import { AiOutlineDelete } from 'react-icons/ai';
 import { useDispatch } from 'react-redux';
