@@ -8,6 +8,7 @@ import { getPayments } from "../redux/actions-payments";
 import { getDeliveriesNotes } from "../redux/actions-deliveryNotes";
 import { useParams } from "react-router-dom";
 import Detail from '../components/invoices/invoiceDetail/detail';
+import Redirect from "./RedirectPage";
 
 
 
@@ -36,6 +37,7 @@ const InvoiceDetail = ({focus, setFocus}) => {
       dispatch(getEmployeeById(userLocal.SellerID))}
     },[user])
 
+  if(userLocal){
     if(user) {
       if(user.length){
         return(
@@ -58,11 +60,21 @@ const InvoiceDetail = ({focus, setFocus}) => {
             }
           </>
         )
-    } else return (     
+    } else{
+     return (     
         <Center bg={'web.bg'} h={'92'}>
           <Spinner thickness={'4px'} size={'xl'} color={'logo.orange'}/>
         </Center>)
-  }}
+        }  
+      }
+    }else{
+      return(
+        <>
+        <Redirect/>
+        </>
+      )
+    }
+    }
  
 
 

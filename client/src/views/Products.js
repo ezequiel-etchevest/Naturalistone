@@ -5,6 +5,7 @@ import ProductsContainer from "../components/products/productsContainer";
 import { useDispatch, useSelector } from "react-redux";
 import { getFiltered } from '../redux/actions-products';
 import { getEmployeeById } from "../redux/actions-employees";
+import Redirect from "./RedirectPage";
 
 
 const Products = ({focus, setFocus}) => {
@@ -24,7 +25,7 @@ const Products = ({focus, setFocus}) => {
     useEffect(()=>{
         if(!allProducts?.length ) dispatch(getFiltered('','','','','','',''))
         },[allProducts])
-         
+    if(userLocal && user){
       if(user.length && values && allProducts){
         return(
           <>
@@ -37,6 +38,12 @@ const Products = ({focus, setFocus}) => {
         <Spinner thickness={'4px'} ml={'0.5vw'} size={'xl'} color={'logo.orange'}/>
       </Center>
     )
+    }else{
+      return(
+        <Redirect/>
+      )
+    }
+      
   }
  
 
