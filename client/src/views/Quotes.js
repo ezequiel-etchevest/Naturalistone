@@ -8,12 +8,14 @@ import { getInvoicesBySeller, getSellerValues } from '../redux/actions-invoices'
 import { Link} from "react-router-dom";
 
 
-const Quotes = () => {
+const Quotes = ({focus, setFocus}) => {
   
   const dispatch = useDispatch()
   const seller_invoices = useSelector(state => state.seller_invoices)
   const user = useSelector(state => state.user)
-  const [focus, setFocus] = useState('AllInvoices')
+
+  const [focusFilter, setFocusFilter] = useState('All')
+
   const userLocal = JSON.parse(localStorage.getItem('user'))
   const seller_values = useSelector(state => state.seller_values)
 
@@ -25,21 +27,25 @@ const Quotes = () => {
 
       useEffect(() => {
         if(user.length && !seller_invoices.length){
-          dispatch(getInvoicesBySeller(user[0].SellerID))
+          dispatch(getInvoicesBySeller(user[0].SellerID, {
+            inputName: '',
+            inputNumber: '',
+            selectSeller: '',
+            timeFilter: 'All'
+          }))
       }}, [dispatch, user])
 
- //saque dependencia del useEffect seller_invoices para solucionar problema si no hay invoices.
 
       if(user.length){
         return(
           <>
-            <SideBar user={user}/>
+            <SideBar user={user} focus={focus} setFocus={setFocus}/>
             <InfoContainer
               seller_values={seller_values}
               seller_invoices={seller_invoices} 
-              userId={user[0].SellerID} 
-              focus={focus} 
-              setFocus={setFocus}/>
+              user={user} 
+              focusFilter={focusFilter} 
+              setFocusFilter={setFocusFilter}/>
           </>
         )
     }else return (

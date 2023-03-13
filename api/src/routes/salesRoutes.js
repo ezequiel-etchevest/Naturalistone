@@ -5,49 +5,92 @@ const  getLimitDate = require('../Controllers/LastWeek');
 const invoicesPayments = require('../Controllers/invoicesPayments')
 const  { getLimitDateMonth, getCurrentMonth } = require('../Controllers/LastMonth')
 const uniqueFormatNames = require('../Controllers/quotesValues')
+const invoicesFilters = require('../Controllers/invoicesFilters')
 
 salesRouter.get('/:id', async function(req, res){
     
   const {id} = req.params
+  const { name, time, seller, number } = req.query
 
-// agregar de ser necesario otro seller id para visualizar todos los invoices.
+  query_0 = `SELECT Secction7Flag From Logins Where SellerID = ${id}` 
+  try{
+    mysqlConnection.query(query_0, function(error, results, fields){
 
-  if(id == 3 || id == 5 || id == 15){
+      if(error) throw error;
+      if(results.length === 0) {
+          console.log('Error en salesRoutes/:id Logins')
+          res.status(200).json({});
+      } else {
+      if(time === 'All' || time === ''){
+      if(results[0].Secction7Flag === 1){
+         query_ =    `SELECT Sales.*, Projects.*, Customers.*, Payments.idPayments, Seller.FirstName, Seller.LastName,
+         GROUP_CONCAT(
+         CONCAT(Payments.idPayments,';',Payments.Amount,';',Payments.Date))AS Payments FROM Sales 
+         LEFT JOIN Projects ON Sales.ProjectID = Projects.idProjects
+         LEFT JOIN Customers ON Projects.CustomerID = Customers.CustomerID
+         LEFT JOIN Payments ON Sales.Naturali_Invoice = Payments.InvoiceID 
+         LEFT JOIN Seller ON Sales.SellerID = Seller.SellerID 
+         GROUP BY Sales.Naturali_Invoice
+         ORDER BY Sales.Naturali_Invoice DESC` 
+      } else {
+        query_ =    `SELECT Sales.*, Projects.*, Customers.*, Payments.idPayments, Seller.FirstName, Seller.LastName, 
+        GROUP_CONCAT(
+        CONCAT(Payments.idPayments,';',Payments.Amount,';',Payments.Date))AS Payments FROM Sales 
+        LEFT JOIN Projects ON Sales.ProjectID = Projects.idProjects
+        LEFT JOIN Customers ON Projects.CustomerID = Customers.CustomerID
+        LEFT JOIN Payments ON Sales.Naturali_Invoice = Payments.InvoiceID
+        LEFT JOIN Seller ON Sales.SellerID = Seller.SellerID  
+        WHERE Seller.SellerID = ${id}
+        GROUP BY Sales.Naturali_Invoice
+        ORDER BY Sales.Naturali_Invoice DESC`;
+      }
+    } else {
+      const today = new Date().toISOString().split('T')[0]
+      const limitDateWeek = getLimitDate()
+      const limitDateMonth = getLimitDateMonth()
 
-  query_ =    `SELECT Sales.*, Projects.*, Customers.*, Payments.idPayments, Seller.FirstName, Seller.LastName,
-                GROUP_CONCAT(
-                CONCAT(Payments.idPayments,';',Payments.Amount,';',Payments.Date))AS Payments FROM Sales 
-                LEFT JOIN Projects ON Sales.ProjectID = Projects.idProjects
-                LEFT JOIN Customers ON Projects.CustomerID = Customers.CustomerID
-                LEFT JOIN Payments ON Sales.Naturali_Invoice = Payments.InvoiceID 
-                LEFT JOIN Seller ON Sales.SellerID = Seller.SellerID 
-                GROUP BY Sales.Naturali_Invoice
-                ORDER BY Sales.Naturali_Invoice DESC` 
-  } else { 
-  query_ =    `SELECT Sales.*, Projects.*, Customers.*, Payments.idPayments, Seller.FirstName, Seller.LastName, 
-                GROUP_CONCAT(
-                CONCAT(Payments.idPayments,';',Payments.Amount,';',Payments.Date))AS Payments FROM Sales 
-                LEFT JOIN Projects ON Sales.ProjectID = Projects.idProjects
-                LEFT JOIN Customers ON Projects.CustomerID = Customers.CustomerID
-                LEFT JOIN Payments ON Sales.Naturali_Invoice = Payments.InvoiceID
-                LEFT JOIN Seller ON Sales.SellerID = Seller.SellerID  
-                WHERE Seller.SellerID = ${id}
-                GROUP BY Sales.Naturali_Invoice
-                ORDER BY Sales.Naturali_Invoice DESC`;
+      if(results[0].Secction7Flag === 1){
+        query_ = `SELECT Sales.*, Projects.*, Customers.*, Payments.idPayments, Seller.FirstName, Seller.LastName,
+        GROUP_CONCAT(
+        CONCAT(Payments.idPayments,';',Payments.Amount,';',Payments.Date))AS Payments FROM Sales 
+        LEFT JOIN Projects ON Sales.ProjectID = Projects.idProjects
+        LEFT JOIN Customers ON Projects.CustomerID = Customers.CustomerID
+        LEFT JOIN Payments ON Sales.Naturali_Invoice = Payments.InvoiceID 
+        LEFT JOIN Seller ON Sales.SellerID = Seller.SellerID 
+        WHERE InvoiceDate BETWEEN "${time === 'LastWeek' ? limitDateWeek : limitDateMonth}" AND "${today}" 
+        GROUP BY Sales.Naturali_Invoice
+        ORDER BY Sales.Naturali_Invoice DESC`  
+      } else {
+        query_ = `SELECT Sales.*, Projects.*, Customers.*, Payments.idPayments, Seller.FirstName, Seller.LastName, 
+        GROUP_CONCAT(
+        CONCAT(Payments.idPayments,';',Payments.Amount,';',Payments.Date))AS Payments FROM Sales 
+        LEFT JOIN Projects ON Sales.ProjectID = Projects.idProjects
+        LEFT JOIN Customers ON Projects.CustomerID = Customers.CustomerID
+        LEFT JOIN Payments ON Sales.Naturali_Invoice = Payments.InvoiceID
+        LEFT JOIN Seller ON Sales.SellerID = Seller.SellerID
+        WHERE InvoiceDate BETWEEN "${time === 'LastWeek' ? limitDateWeek : limitDateMonth}" AND "${today}" AND Seller.SellerID = ${id}
+        GROUP BY Sales.Naturali_Invoice
+        ORDER BY Sales.Naturali_Invoice DESC`
+      }
+    }
+  try{
+    mysqlConnection.query(query_, function(error, Invoices, fields){
+     if(error) throw error;
+     if(Invoices.length == 0) {
+         console.log('Error en salesRoutes.get /:id')
+         res.status(200).json({});
+     }else{
+        let invoicesFiltered = invoicesFilters(Invoices, name, number, seller)
+        let result = invoicesPayments(invoicesFiltered)
+        res.status(200).json(result);
+     }})}catch(error){
+         res.status(409).send(error);
+        }
+    }})
+  } catch(error){
+      res.status(409).send(error);
   }
-    try{
-           mysqlConnection.query(query_, function(error, Invoices, fields){
-                        if(error) throw error;
-                        if(Invoices.length == 0) {
-                            console.log('Error en salesRoutes.get /:id')
-                            res.status(200).json({});
-                        }else{
-                            let result = invoicesPayments(Invoices)
-                            res.status(200).json(result);
-                        }})}catch(error){
-                            res.status(409).send(error);
-               }
-            })
+})
         
 
 salesRouter.get('/invoice/:id', async function(req, res){
@@ -77,76 +120,76 @@ salesRouter.get('/invoice/:id', async function(req, res){
     }
 });
 
-salesRouter.get('/lastWeek/:id', async function(req, res){
+// salesRouter.get('/lastWeek/:id', async function(req, res){
     
-    const {id} = req.params
-    const today = new Date().toISOString().split('T')[0]
-    const limitDateWeek = getLimitDate()
+//     const {id} = req.params
+//     const today = new Date().toISOString().split('T')[0]
+//     const limitDateWeek = getLimitDate()
 
-    if(id == 3 || id == 5 || id == 15){
+//     if(id == 3 || id == 5 || id == 15){
 
-      query_ = `SELECT Sales.*, Customers.*, Projects.* FROM Sales 
-      LEFT JOIN Projects ON Sales.ProjectID = Projects.idProjects
-      LEFT JOIN Customers ON Projects.CustomerID = Customers.CustomerID 
-      WHERE InvoiceDate BETWEEN "${limitDateWeek}" AND "${today}" ORDER BY InvoiceDate DESC`
+//       query_ = `SELECT Sales.*, Customers.*, Projects.* FROM Sales 
+//       LEFT JOIN Projects ON Sales.ProjectID = Projects.idProjects
+//       LEFT JOIN Customers ON Projects.CustomerID = Customers.CustomerID 
+//       WHERE InvoiceDate BETWEEN "${limitDateWeek}" AND "${today}" ORDER BY InvoiceDate DESC`
 
-    } else {
-      query_ = `SELECT Sales.*, Customers.*, Projects.* FROM Sales 
-                LEFT JOIN Projects ON Sales.ProjectID = Projects.idProjects
-                LEFT JOIN Customers ON Projects.CustomerID = Customers.CustomerID 
-                WHERE SellerID = ${id} AND InvoiceDate BETWEEN "${limitDateWeek}" AND "${today}" ORDER BY InvoiceDate DESC`
-  }
-//    query_ = `SELECT * FROM Sales WHERE SellerID = ${id} AND InvoiceDate BETWEEN "${limitDateWeek}" AND "${today}"`
-    try{
-       mysqlConnection.query(query_, function(error, results, fields){
+//     } else {
+//       query_ = `SELECT Sales.*, Customers.*, Projects.* FROM Sales 
+//                 LEFT JOIN Projects ON Sales.ProjectID = Projects.idProjects
+//                 LEFT JOIN Customers ON Projects.CustomerID = Customers.CustomerID 
+//                 WHERE SellerID = ${id} AND InvoiceDate BETWEEN "${limitDateWeek}" AND "${today}" ORDER BY InvoiceDate DESC`
+//   }
+// //    query_ = `SELECT * FROM Sales WHERE SellerID = ${id} AND InvoiceDate BETWEEN "${limitDateWeek}" AND "${today}"`
+//     try{
+//        mysqlConnection.query(query_, function(error, results, fields){
 
-            if(error) throw error;
-            if(results.length == 0) {
-                console.log('No invoices matched')
-                res.status(200).json([]);
-            } else {
-                console.log('Data OK')
-                res.status(200).json(results);
-            }
-        });
-    } catch(error){
-        res.status(409).send(error);
-    }
-});
+//             if(error) throw error;
+//             if(results.length == 0) {
+//                 console.log('No invoices matched')
+//                 res.status(200).json([]);
+//             } else {
+//                 console.log('Data OK')
+//                 res.status(200).json(results);
+//             }
+//         });
+//     } catch(error){
+//         res.status(409).send(error);
+//     }
+// });
 
-salesRouter.get('/lastMonth/:id', async function(req, res){
+// salesRouter.get('/lastMonth/:id', async function(req, res){
     
-    const {id} = req.params
-    const today = new Date().toISOString().split('T')[0]
-    const limitDateMonth = getLimitDateMonth()
+//     const {id} = req.params
+//     const today = new Date().toISOString().split('T')[0]
+//     const limitDateMonth = getLimitDateMonth()
 
-    if(id == 3 || id == 5 || id == 15){
-      query_ =   `SELECT Sales.*, Customers.*, Projects.* FROM Sales 
-      LEFT JOIN Projects ON Sales.ProjectID = Projects.idProjects
-      LEFT JOIN Customers ON Projects.CustomerID = Customers.CustomerID 
-      WHERE InvoiceDate BETWEEN "${limitDateMonth}" AND "${today}" ORDER BY InvoiceDate DESC`
-    } else{
-      query_ =   `SELECT Sales.*, Customers.*, Projects.* FROM Sales 
-                LEFT JOIN Projects ON Sales.ProjectID = Projects.idProjects
-                LEFT JOIN Customers ON Projects.CustomerID = Customers.CustomerID 
-                WHERE SellerID = ${id} AND InvoiceDate BETWEEN "${limitDateMonth}" AND "${today}" ORDER BY InvoiceDate DESC`
-    }
-    try{
-       mysqlConnection.query(query_, function(error, results, fields){
+//     if(id == 3 || id == 5 || id == 15){
+//       query_ =   `SELECT Sales.*, Customers.*, Projects.* FROM Sales 
+//       LEFT JOIN Projects ON Sales.ProjectID = Projects.idProjects
+//       LEFT JOIN Customers ON Projects.CustomerID = Customers.CustomerID 
+//       WHERE InvoiceDate BETWEEN "${limitDateMonth}" AND "${today}" ORDER BY InvoiceDate DESC`
+//     } else{
+//       query_ =   `SELECT Sales.*, Customers.*, Projects.* FROM Sales 
+//                 LEFT JOIN Projects ON Sales.ProjectID = Projects.idProjects
+//                 LEFT JOIN Customers ON Projects.CustomerID = Customers.CustomerID 
+//                 WHERE SellerID = ${id} AND InvoiceDate BETWEEN "${limitDateMonth}" AND "${today}" ORDER BY InvoiceDate DESC`
+//     }
+//     try{
+//        mysqlConnection.query(query_, function(error, results, fields){
 
-            if(error) throw error;
-            if(results.length == 0) {
-                console.log('No invoices matched')
-                res.status(200).json([]);
-            } else {
-                console.log('Data OK')
-                res.status(200).json(results);
-            }
-        });
-    } catch(error){
-        res.status(409).send(error);
-    }
-});
+//             if(error) throw error;
+//             if(results.length == 0) {
+//                 console.log('No invoices matched')
+//                 res.status(200).json([]);
+//             } else {
+//                 console.log('Data OK')
+//                 res.status(200).json(results);
+//             }
+//         });
+//     } catch(error){
+//         res.status(409).send(error);
+//     }
+// });
 
 salesRouter.get('/currentMonth/:id', async function(req, res){
     

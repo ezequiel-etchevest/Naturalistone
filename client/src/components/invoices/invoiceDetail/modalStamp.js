@@ -28,12 +28,14 @@ import { stampInvoice } from '../../../redux/actions-invoices';
     onClose()
   }
   
-  if(invoice[0].Payment_Stamp == 0){
+  if(invoice[0].Payment_Stamp === 0){
 
     return (
       <>
         <Tooltip label={payments.paymentsMath.PendingAmount === '0.00'? null : 'Pending amount should be 0'}>
         <ButtonGroup
+          h={'5vh'}
+          size={'sm'}
           display={'flex'}
           spacing={0}
             _hover={{

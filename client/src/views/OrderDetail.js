@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import SideBar from "../components/sideBar";
-import { Center, Spinner, Text } from "@chakra-ui/react";
+import { Center, Spinner } from "@chakra-ui/react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import { getOrderProducts, getOrdersByID, cleanOrderProducts } from "../redux/actions-orders"
@@ -8,7 +8,7 @@ import {getEmployeeById } from "../redux/actions-employees";
 import ODetail from "../components/orders/orderDetail/ODetail";
 
 
-const OrderDetail = () => {
+const OrderDetail = ({focus, setFocus}) => {
 
   const dispatch = useDispatch()
   const user = useSelector(state=>state.user)
@@ -35,7 +35,7 @@ const OrderDetail = () => {
       if(user.length){
         return(
           <>
-            <SideBar user={user}/>
+            <SideBar user={user} focus={focus} setFocus={setFocus}/>
             {
               Object.entries(order).length ? (
                 <ODetail 

@@ -41,7 +41,9 @@ const ODetail = ({order, order_products}) => {
               order_products.length ? (
                 <OrderProductList order_products={order_products}  />
               ) : (
-                <Text color={'web.text'}> No products linked to this order</Text>
+                <Center w={'full'} h={'full'}>
+                <Text userSelect={'none'} color={'web.border'} fontSize={'2.3vh'}>No products linked to this order</Text>
+                </Center>
               )
             }
         </Box>

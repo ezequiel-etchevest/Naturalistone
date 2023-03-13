@@ -2,45 +2,61 @@ import {
   Box, 
   HStack, 
   Text, 
-  Button, 
   Input, 
   IconButton, 
   FormControl, 
   NumberInput,
   NumberInputField, 
-  Select
+  Select,
+  Divider,
+  Tooltip,
   } from "@chakra-ui/react";
-import { BsCalendar4Week } from 'react-icons/bs';
 import { SearchIcon } from '@chakra-ui/icons';
-import { getInvoicesLastWeek, getInvoicesBySeller, getInvoicesLastMonth, getFilteredInvoices } from "../../redux/actions-invoices";
-import { useDispatch, useSelector } from 'react-redux'
+import {  getInvoicesBySeller } from "../../redux/actions-invoices";
+import { useDispatch } from 'react-redux'
 import { useState } from "react";
+import '../../assets/styleSheet.css';
+import {AiOutlineClear} from 'react-icons/ai';
 
-
-const Filters = ({userId, seller_invoices, setFilteredByCustomer, focus, setFocus, seller_values}) => {
+const Filters = ({user, seller_invoices, setFocusFilter, seller_values}) => {
 
   const dispatch = useDispatch()
+  const [ disabled, setDisabled ] = useState(false)
   const [errores, setErrores] = useState('')
-  const filtered_invoices_month_week = useSelector(state => state.filtered_invoices_month_week)
+  const [inputValues, setInputValues] = useState(
+    {
+      inputName: '',
+      inputNumber: '',
+      selectSeller: '',
+      timeFilter: 'All'
+    }
+    )
 
-  let validateSeller = () => {
-    if(userId == 6 || userId == 3 || userId == 5 || userId == 15 ) return true
+  const userId  =  user[0].SellerID
+
+  const validateSeller = () => {
+    
+    if(user[0].Secction7Flag === 1) return true
     else return false
   }
-
   const handleClickAllInvoices = () => {
-    dispatch(getInvoicesBySeller(userId))
-    setFocus('AllInvoices')
+    setInputValues({...inputValues, timeFilter: 'All'})
+    dispatch(getInvoicesBySeller(userId, {...inputValues, timeFilter: 'All'}))
+
   }
   const handleClickLastWeek = () => {
-    dispatch(getInvoicesLastWeek(userId))
-    setFocus('LastWeek')
+    setInputValues({...inputValues, timeFilter: 'LastWeek'})
+    dispatch(getInvoicesBySeller(userId, {...inputValues, timeFilter: 'LastWeek'}))
   }
   const handleClickLastMonth = () => {
-    dispatch(getInvoicesLastMonth(userId))
-    setFocus('LastMonth')
+    setInputValues({...inputValues, timeFilter: 'LastMonth'})
+    dispatch(getInvoicesBySeller(userId, {...inputValues, timeFilter: 'LastMonth'}))
   }
-
+  const handleTimeSelect = (e) => {
+    if(e.target.value === 'All') return handleClickAllInvoices()
+    if(e.target.value === 'Lastweek') return handleClickLastWeek()
+    if(e.target.value === 'Lastmonth') return handleClickLastMonth()
+  }
   const validateInput = (e) => {
       if(!/^[0-9]*$/.test(e.target.value)){
         setErrores('Special characters or letters not alowed') 
@@ -50,114 +66,71 @@ const Filters = ({userId, seller_invoices, setFilteredByCustomer, focus, setFocu
         setErrores('')
       }
   }
-  
   const handleChangeInvoiceNumber = (e) => {
     if(e.target.value.length){
       validateInput(e)
       if(!errores.length){
-        const filteredInvoices = seller_invoices?.filter(d => d.Naturali_Invoice.toString().includes(e.target.value))
-        dispatch(getFilteredInvoices(filteredInvoices)) 
-      }} else {
-        dispatch(getFilteredInvoices(filtered_invoices_month_week))
-        setErrores('')
+        setInputValues({...inputValues, inputNumber: e.target.value})
+        dispatch(getInvoicesBySeller(userId, {...inputValues, inputNumber: e.target.value}))
       }
-    }
-
-  const handleChangeCustomerName = (e) => {
-    if(e.target.value.length){
-      let filterByName = seller_invoices.filter(inv => inv.Reference.toLowerCase().includes(e.target.value.toLowerCase()))
-      setFilteredByCustomer(filterByName)
     } else {
-      setFilteredByCustomer([])
+      setInputValues({...inputValues, inputNumber: ''})
+      dispatch(getInvoicesBySeller(userId, {...inputValues, inputNumber: ''}))
     }
   }
+  const handleChangeCustomerName = (e) => {
+    if(e.target.value.length){
+      setInputValues({...inputValues, inputName: e.target.value})
+      dispatch(getInvoicesBySeller(userId, {...inputValues, inputName: e.target.value}))
+    } else {
+      setInputValues({...inputValues, inputName: ''})
+      dispatch(getInvoicesBySeller(userId, {...inputValues, inputName: ''}))
+    }
+  }
+  const handleSellerSelect = (e) => {
+    setInputValues({...inputValues, selectSeller: e.target.value})
+    dispatch(getInvoicesBySeller(userId, {...inputValues, selectSeller: e.target.value}))
+  }
+  const handleClear = () => {
+    setInputValues({
+      inputNumber:'',
+      inputName: '',
+      selectSeller:'',
+      timeFilter:'All'
+    })
+    dispatch(getInvoicesBySeller(userId, {      
+    inputNumber:'',
+    inputName: '',
+    selectSeller:'',
+    timeFilter:'All'}
+    ))
+    setFocusFilter('All')
+  }
+  const uniqueSellerIDs = seller_invoices?.reduce((acc, cur) => {
+    if (!acc.includes(cur.SellerID)) {
+      acc.push(cur.SellerID);
+    }
+    return acc;
+  }, []);
+  const matchedSellers = seller_values?.filter((seller) => {
+    return uniqueSellerIDs.includes(seller.sellerID);
+  });
 
     return (
-        <>
+
+      <Box>
         <HStack
+          pt={'2vh'}
           ml={'2vw'}
           mr={'2vw'} 
-          h={'20vh'} 
+          h={'17vh'}
           w={'76vw'}
           justifyContent={'space-between'}
           >
-          {/*3 buttons box : All, Last Week, Last Month */}
-          <HStack w={'20vw'}>
-            <Button
-            variant={'unstyled'} 
-            display={'flex'} 
-            w={'10vw'}
-            h={'10vh'}
-            borderRadius={'sm'} 
-            placeContent={'center'}
-            alignItems={'center'}
-            color={focus === 'AllInvoices' ? 'logo.orange' : 'web.text2'}
-            _hover={{
-                color: 'logo.orange'
-                }}
-            _active={{
-              color: 'logo.orange'
-          }}>
-          <Text 
-            pr={'1.5vh'} 
-            fontFamily={'body'} 
-            fontWeight={'hairline'}
-            onClick={()=> handleClickAllInvoices()} 
-            >All</Text>
-            <BsCalendar4Week/>
-            </Button>
-            <Button
-              variant={'unstyled'} 
-              display={'flex'} 
-              w={'12vw'}
-              h={'10vh'}
-              borderRadius={'sm'} 
-              placeContent={'center'}
-              alignItems={'center'}
-              color={focus === 'LastWeek' ? 'logo.orange' : 'web.text2'}
-              _hover={{
-                color: 'logo.orange'
-                  }}
-              _active={{
-                color: 'logo.orange'
-              }}>
-              <Text 
-                pr={'1.5vh'} 
-                fontFamily={'body'} 
-                fontWeight={'hairline'}
-                onClick={()=> handleClickLastWeek()} 
-                >Last Week</Text>
-                <BsCalendar4Week/>
-            </Button>
-            <Button
-              userSelect={'none'}
-              variant={'unstyled'} 
-              display={'flex'} 
-              w={'12vw'}
-              h={'10vh'}
-              borderRadius={'sm'} 
-              placeContent={'center'}
-              alignItems={'center'}
-              color={focus === 'LastMonth' ? 'logo.orange' : 'web.text2'}
-              _hover={{
-               color: 'logo.orange'
-                  }}         
-              _active={{
-               color: 'logo.orange'
-              }}>
-                <Text 
-                fontFamily={'body'} 
-                fontWeight={'hairline'}
-                onClick={()=> handleClickLastMonth()}  
-                pr={'1.5vh'}>Last Moth</Text>
-                <BsCalendar4Week/>
-            </Button>
-          </HStack>
           {/*Inputs and select */}
           <Box
             display={'flex'}
             alignItems={'center'}
-            justifyContent={'flex-end'}
             w={'48vw'}
             >
             <Box
@@ -180,7 +153,9 @@ const Filters = ({userId, seller_invoices, setFilteredByCustomer, focus, setFocu
                   borderBottomColor={'web.text2'}
                   w={'80%'}
                   size={"sm"}
-                  h={'4vh'}>
+                  h={'4vh'}
+                  value={inputValues.inputNumber}
+                  >
                   <NumberInputField
                     placeholder={'Quote number'}
                     _placeholder={{ fontFamily: 'body', fontWeight: 'thin' }}
@@ -221,12 +196,13 @@ const Filters = ({userId, seller_invoices, setFilteredByCustomer, focus, setFocu
                   w={'80%'}
                   minH={'4.5vh'}
                   variant="unstyled"
-                  placeholder={'Customer Name'}
+                  placeholder={'Customer name'}
                   textColor={'web.text'}
                   _placeholder={{ fontFamily: 'body', fontWeight: 'thin' }}
                   size={"sm"}
                   borderBottomWidth={"2px"}
                   borderBottomColor={'web.text2'}
+                  value={inputValues.inputName}
                   onChange={(e)=> handleChangeCustomerName(e)}
                   
                 />
@@ -243,39 +219,81 @@ const Filters = ({userId, seller_invoices, setFilteredByCustomer, focus, setFocu
                   _active={{ color: 'gray.800'}}
                 />
             </Box>
+            </Box>
+             {/*Selects */}
+          <HStack w={'30vw'}> 
             <Select
-              display={validateSeller() === true ? 'unset' : 'none'}
-              placeholder="Select seller"
-              w={'14vw'}
-              variant='outline' 
-              h={'4.2vh'}
-              fontSize={'xs'}            
-              bg={'web.bg'}
-              color={'web.text2'}
-              borderColor={'web.text2'}
-              cursor={'pointer'}
-              _focus={{
-                borderColor: 'logo.orange',
-                boxShadow: '0 0.5px 0.5px rgba(229, 103, 23, 0.075)inset, 0 0 5px rgba(255,144,0,0.6)'
-              }}>
-              {
-                validateSeller() === true ? (
-                  seller_values ? (
-                    seller_values.map((e, i) => {
-                      return(
-                        <option key={i} value={e}>{e}</option>
-                      )
-                    })
-
-                  ): ( null)
-                ):(
-                  null
-                )
-              }
+          onChange={(e)=>handleTimeSelect(e)} 
+          w={'11vw'}
+          variant='outline' 
+          h={'4.4vh'}
+          fontSize={'xs'}            
+          bg={'web.sideBar'}
+          color={'web.text2'}
+          borderColor={'web.border'}
+          cursor={'pointer'}
+          _focus={{
+            borderColor: 'logo.orange',
+            boxShadow: '0 0.5px 0.5px rgba(229, 103, 23, 0.075)inset, 0 0 5px rgba(255,144,0,0.6)'
+          }}>
+          <option value='All' className="options">All time</option>
+          <option value='Lastweek' className="options">Last week</option>
+          <option value='Lastmonth' className="options">Last month</option>
+          {
+          }
             </Select>
-          </Box>
+            <Select
+          onChange={(e)=>handleSellerSelect(e)}
+          display={validateSeller() === true ? 'unset' : 'none'}  
+          w={'15vw'}
+          variant='outline' 
+          h={'4.4vh'}
+          fontSize={'xs'}            
+          bg={'web.sideBar'}
+          color={'web.text2'}
+          borderColor={'web.border'}
+          cursor={'pointer'}
+          value={inputValues.selectSeller}
+          _focus={{
+            borderColor: 'logo.orange',
+            boxShadow: '0 0.5px 0.5px rgba(229, 103, 23, 0.075)inset, 0 0 5px rgba(255,144,0,0.6)'
+          }}>
+          <option value='' className="options">Select seller</option>
+          {
+            validateSeller() === true ? (
+              matchedSellers?.map((e, i) => {
+                  return(
+                    <option key={i} className={'options'} value={e.sellerID}>{e.name}</option>
+              )})
+                  
+              ): ( null)
+          }
+            </Select>
+            </HStack>
+        <Divider orientation={'vertical'} h={'5vh'}/>
+        <Tooltip label={'Clear all filters'} fontWeight={'hairline'}>      
+        <IconButton
+            icon={ <AiOutlineClear/>}
+            variant={'unstyled'} 
+            display={'flex'} 
+            borderRadius={'sm'} 
+            placeContent={'center'}
+            alignItems={'center'}
+            color={'web.text2'} 
+            _hover={{
+               color: 'logo.orange'
+               }}
+            _active={{
+            }}
+            onClick={(e) => handleClear(e)}
+            >
+            </IconButton>
+          </Tooltip>   
+          
         </HStack>
-        </>
+
+
+      </Box>
     )
 }
 

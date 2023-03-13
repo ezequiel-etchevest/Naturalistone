@@ -1,7 +1,6 @@
 
 import { 
     Button, 
-    ButtonGroup, 
     IconButton,
     Modal,
     ModalOverlay,
@@ -20,7 +19,8 @@ import {
     NumberInputStepper,
     NumberInputField, 
     FormErrorMessage,
-    useToast
+    useToast,
+    Tooltip
     } from "@chakra-ui/react"
 import { SiAddthis } from 'react-icons/si';
 import { useState } from "react";
@@ -103,25 +103,20 @@ const AddPayment = ({pendingAmount}) => {
   }
     return(
         <>
-          <ButtonGroup
+          <Tooltip label={'Add payment'} fontWeight={'hairline'}>
+          <IconButton
+            display={'flex'}
+            alignItems={'center'}
             variant={'unstyled'} 
             color={'web.text2'}
             onClick={onOpen}
             _hover={{
               color: 'logo.orange'
-            }}>
-            <Button
-              mr={'1vh'} 
-              pb={'0.5vh'} 
-              alignSelf={'center'} 
-              fontWeight={'normal'}
-             
-              >Add payment</Button>
-              <IconButton
-                icon={<SiAddthis/>} 
-                size={'lg'}
-                />
-          </ButtonGroup>
+            }}
+            icon={<SiAddthis/>} 
+            size={'md'}
+            />
+            </Tooltip>
           <Modal 
             isOpen={isOpen} 
             onClose={onClose}

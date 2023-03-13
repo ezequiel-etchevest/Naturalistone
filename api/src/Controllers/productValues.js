@@ -1,5 +1,8 @@
-function getUniqueFinishes(data) {
-    let finishes = data.map(obj => obj.Finish);
+const prodValues = (arr, search, price) => {
+
+
+function getUniqueFinishes(arr) {
+    let finishes = arr.map(obj => obj.Finish);
     return [...new Set(finishes)].filter(f => f !== null);
   }
 
@@ -11,21 +14,35 @@ const thicknessValues = (arr) => {
     const thicknesses = arr.map(item => item.Thickness);
     return [...new Set(thicknesses)];
   };
-function findMaxMinPrice(arr) {
-    let minPrice = Infinity;
-    let maxPrice = -Infinity;
-  
-    arr.forEach(obj => {
-      if (obj.Price < minPrice) {
-        minPrice = obj.Price;
-      }
-      if (obj.Price > maxPrice) {
-        maxPrice = obj.Price;
-      }
-    });
-  
-    return { min: minPrice, max: maxPrice };
-  }
+const materialsValues = (arr) => {
+    const materials = arr.map(item => item.Material);
+    return [...new Set(materials)];
+  };
 
-module.exports = { getUniqueFinishes, findMaxMinPrice, getUniqueSizes, thicknessValues}
+
+  let finishValues = getUniqueFinishes(arr)
+  let priceMaxmin = price
+  let sizes = getUniqueSizes(arr)
+  let thickness = thicknessValues(arr)
+  let materials = materialsValues(arr)
+
+
+  return {finishValues, priceMaxmin, sizes, thickness, materials, search}
+}
+function findMaxMinPrice(arr) {
+  let minPrice = Infinity;
+  let maxPrice = -Infinity;
+
+  arr.forEach(obj => {
+    if (obj.Price < minPrice) {
+      minPrice = obj.Price;
+    }
+    if (obj.Price > maxPrice) {
+      maxPrice = obj.Price;
+    }
+  });
+
+  return { min: minPrice, max: maxPrice };
+}
+module.exports = {prodValues, findMaxMinPrice}
   

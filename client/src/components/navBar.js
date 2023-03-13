@@ -12,7 +12,6 @@ const NavBar = () => {
       bg={'web.sideBar'}
       w={'100vw'}
       h={'8vh'}
-      zIndex={'1'}
       justifyContent={'flex-end'}
       pr={'2vw'}>
         <Box

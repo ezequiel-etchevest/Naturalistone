@@ -1,16 +1,15 @@
 import { 
   Box,
-  Select, 
-  HStack, 
+  Select,  
   Input, 
   IconButton, 
-  Text,
-  Button,
+  Tooltip,
+  Divider
  } from "@chakra-ui/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { SearchIcon } from '@chakra-ui/icons';
 import '../../assets/styleSheet.css';
-import { getAllProducts, getFiltered } from "../../redux/actions-products";
+import { getFiltered } from "../../redux/actions-products";
 import { useDispatch } from 'react-redux';
 import {AiOutlineClear} from 'react-icons/ai';
 import PriceSlider from "./priceSlider";
@@ -23,15 +22,19 @@ const ProductsFilters = ({allProducts, setFilteredProducts, values}) => {
     finish:'',
     size:'',
     thickness:'',
+    material: '',
+    search:'',
     price: [values.priceMaxmin.min, values.priceMaxmin.max]
   })
+
   const [limit, setLimit] = useState([values.priceMaxmin.min, values.priceMaxmin.max])
+
   const handleFinish = (e) => {
     setFilters({
       ...filters,
       finish: e.target.value
     })
-    dispatch(getFiltered(e.target.value, filters.size, filters.thickness, filters.price))
+    dispatch(getFiltered(e.target.value, filters.size, filters.thickness, filters.material, filters.search, filters.price))
   }
 
   const handleSize = (e) => {
@@ -39,7 +42,7 @@ const ProductsFilters = ({allProducts, setFilteredProducts, values}) => {
       ...filters, 
       size: e.target.value
     })
-    dispatch(getFiltered(filters.finish, e.target.value, filters.thickness, filters.price))
+    dispatch(getFiltered(filters.finish, e.target.value, filters.thickness, filters.material, filters.search, filters.price))
   }
 
   const handleThickness = (e) => {
@@ -47,82 +50,122 @@ const ProductsFilters = ({allProducts, setFilteredProducts, values}) => {
       ...filters,
       thickness: e.target.value
     })
-    dispatch(getFiltered(filters.finish, filters.size, e.target.value, filters.price))
+    dispatch(getFiltered(filters.finish, filters.size, e.target.value, filters.material, filters.search, filters.price))
   }
 
+  const handleMaterial = (e) => {
+    setFilters({
+      ...filters,
+      material: e.target.value
+    })
+    dispatch(getFiltered(filters.finish, filters.size, filters.thickness, e.target.value, filters.search, filters.price))
+  }
   const handleClear = () => {
     setFilters({
       finish:'',
       size:'',
       thickness:'',
+      material:'',
+      search:'',
       price: [values.priceMaxmin.min, values.priceMaxmin.max]
       })
-    setLimit([values.priceMaxmin.min, values.priceMaxmin.max])
-    dispatch(getAllProducts())
+      dispatch(getFiltered('','','','', '','',''))
+      setLimit([values.priceMaxmin.min, values.priceMaxmin.max])
   }
 
   const handleChangeProductName = (e) => {
-    if(e.target.value.length){
-        const filteredByName = allProducts?.filter(prod => prod.ProductName.toLowerCase().includes(e.target.value))
-        if(!filteredByName.length) return
-        setFilteredProducts(filteredByName)
-    } else {
-        setFilteredProducts([])
+      setFilters({
+        ...filters,
+        search: e.target.value
+      })
+      dispatch(getFiltered(filters.finish, filters.size, filters.thickness, filters.material, e.target.value, filters.price))
     }
-  }
+  useEffect(()=>{
+    return ()=> {
+      dispatch(getFiltered('','','','','','',''))
+    }
+    },[])
 
   return (
     <>    
       <Box
         display={'flex'}
-        alignItems={'flex-start'}
-        ml={'3.2vw'}
-        w={'72vw'}
-        h={'20vh'} 
         flexDir={'column'}
-        justifyContent={'space-around'}
-        pb={'2vh'}
+        alignItems={'center'}
+          ml={'2vw'}
+          mr={'2vw'}
+          mb={'6vh'} 
+          h={'17vh'}
+          w={'76vw'}
+        justifyContent={'center'}
         >
-        {/* --------------------BOX SELECTS AND CLEAR BUTTON------------------------------ */}
-        <HStack
-          mt={'3vh'}
-          h={'5vh'}
-          w={'73vw'} 
+          {/* -------------------- SEARCH INPUT ------------------------------ */}
+        <Box ml={'2vh'} w={'15vw'} mt={'8vh'} display={'flex'} alignSelf={'flex-start'} >
+          <Input
+            mb={'3vh'}
+            w={'80%'}
+            minH={'4.5vh'}
+            variant="unstyled"
+            placeholder={'Customer name'}
+            textColor={'web.text2'}
+            _placeholder={{ fontFamily: 'body', fontWeight: 'thin' }}
+            size={"sm"}
+            value={filters.search}
+            borderBottomWidth={"2px"}
+            borderBottomColor={'web.text2'}
+            onChange={(e) => handleChangeProductName(e)}
+            />
+            <IconButton
+              color={'web.text2'}
+              borderRadius={2}
+              aria-label="Search database"
+              bgColor={'web.bg'}
+              ml={1}
+              icon={<SearchIcon />}
+              _hover={{
+                color: 'orange',
+              }}
+              _active={{ color: 'gray.800'}}
+            />
+        </Box>
+{/* --------------------BOX SELECTS, SLIDER AND CLEAR BUTTON ------------------------------ */}
+        <Box 
           display={'flex'} 
-          alignItems={'center'}  
-          justifyContent={'space-between'}>
-
-        {/* --------------------BOX SELECT TYPE, SIZE AND THICKNESS------------------------------ */}
+          flexDir={'row'} 
+          justifyContent={'space-between'}
+          alignItems={'center'} 
+          w={'76vw'}
+          ml={'2vh'}
+          >
           <Box 
             display={'flex'} 
-            flexDir={'row'} 
-            w={'32vw'} 
-            justifyContent={'space-between'} >
+            flexDir={'row'}
+            w={'39vw'}
+            justifyContent={'space-between'}>
             <Select 
               variant='outline' 
               w={'9vw'}
               h={'4.2vh'}
-              fontSize={'xs'}            
+              fontSize={'xs'}             
               bg={'web.sideBar'}
               color={'web.text2'}
               borderColor={'web.border'}
               cursor={'pointer'}
-              value={filters.type}
+              value={filters.material}
               _focus={{
                 borderColor: 'logo.orange',
                 boxShadow: '0 0.5px 0.5px rgba(229, 103, 23, 0.075)inset, 0 0 5px rgba(255,144,0,0.6)'
               }}
-              onChange={(e) => handleFinish(e)}
+              onChange={(e) => handleMaterial(e)}
               >
-                <option value='' className="options"> Select Finish</option>
+                <option value='' className="options">Type</option>
                 {
-                  values.finishValues.map((v, i )=> {
-                    return(
-                      <option value={`${v}`} key={i} className={'options'}>{`${v}`}</option>
-                    )
-                  })
-                }              
-              
+                  values.materials.map((v, i) => {
+                      return(
+                        <option value={`${v}`} key={i} className={'options'}>{`${v}`}</option>
+                      )
+                    })
+                }
             </Select>
             <Select 
               variant='outline' 
@@ -140,8 +183,8 @@ const ProductsFilters = ({allProducts, setFilteredProducts, values}) => {
               }}
               onChange={(e) => handleSize(e)}
               >
-              <option value='' className="options">Select Size</option>
-              {
+                <option value='' className="options">Size</option>
+                {
                   values.sizes.map((v, i) => {
                     return(
                       <option value={`${v}`} key={i} className={'options'}>{`${v}`}</option>
@@ -152,7 +195,7 @@ const ProductsFilters = ({allProducts, setFilteredProducts, values}) => {
             </Select>
             <Select 
               variant='outline' 
-              w={'11vw'}
+              w={'9vw'}
               h={'4.2vh'}
               fontSize={'xs'}             
               bg={'web.sideBar'}
@@ -166,7 +209,7 @@ const ProductsFilters = ({allProducts, setFilteredProducts, values}) => {
               }}
               onChange={(e) => handleThickness(e)}
               >
-              <option value='' className="options">Select Thickness</option>
+              <option value='' className="options">Thickness</option>
               {
                   values.thickness.map((v, i) => {
                     return(
@@ -175,71 +218,56 @@ const ProductsFilters = ({allProducts, setFilteredProducts, values}) => {
                   })
               }
             </Select>
-          </Box>
-          {/* -------------------- SEARCH INPUT ------------------------------ */}
-        <Box pr={'3vh'}>
-            <Input
-              w={'15vw'}
-              variant={"unstyled"}
-              placeholder={'Product name'}
-              _placeholder={{ fontFamily: 'body', fontWeight: 'thin' }}
-              size={"sm"}
-              borderBottomWidth={"2px"}
-              textColor={'web.text'}
-              onChange={(e) => handleChangeProductName(e)}
-              borderBottomColor={'web.text2'}
-              />
-            <IconButton
-              borderRadius={2}
-              aria-label={"Search database"}
+            <Select 
+              variant='outline' 
+              w={'9vw'}
+              h={'4.2vh'}
+              fontSize={'xs'}            
+              bg={'web.sideBar'}
               color={'web.text2'}
-              bgColor={'web.bg'}
-              ml={1}
-              icon={<SearchIcon />}
-              _hover={{
-                color: 'logo.orange',
+              borderColor={'web.border'}
+              cursor={'pointer'}
+              value={filters.finish}
+              _focus={{
+                borderColor: 'logo.orange',
+                boxShadow: '0 0.5px 0.5px rgba(229, 103, 23, 0.075)inset, 0 0 5px rgba(255,144,0,0.6)'
               }}
-              _active={{ color: 'logo.orange'}}
-              />
-            </Box>
-            
-        </HStack>
-        <Box
-          display={'flex'}
-          alignItems={'center'}
-          w={'72vw'}
-          flexDir={'row'}
-          justifyContent={'space-between'}
-          >
-          <PriceSlider setFilters={setFilters} filters={filters} limit={limit} setLimit={setLimit} values={values} />
-
-        <Button
-            leftIcon={ <AiOutlineClear/>}
-            variant={'unstyled'} 
-            display={'flex'} 
-            w={'10vw'}
-            h={'10vh'}
-            borderRadius={'sm'} 
-            placeContent={'center'}
-            alignItems={'center'}
-            color={'web.text2'} 
-            _hover={{
-               color: 'logo.orange'
-               }}
-            _active={{
-            }}
-            onClick={(e) => handleClear(e)}
-            >
-            <Text 
-              pr={'1.5vh'} 
-              fontFamily={'body'} 
-              fontWeight={'hairline'}
-              >Clear filters
-            </Text>
-            </Button>
+              onChange={(e) => handleFinish(e)}
+              >
+                <option value='' className="options">Finish</option>
+                {
+                  values.finishValues.map((v, i )=> {
+                    return(
+                      <option value={`${v}`} key={i} className={'options'}>{`${v}`}</option>
+                    )
+                  })
+                }                     
+            </Select>
           </Box>
-
-      </Box>
+          <Box display={'flex'} alignItems={'center'} flexDir={'row'} h={'4.2vh'}>
+            <PriceSlider  setFilters={setFilters} filters={filters} limit={limit} setLimit={setLimit} values={values}/>
+            <Divider orientation={'vertical'} h={'5vh'} ml={'2vw'}/>
+            <Tooltip label={'Clear all filters'} fontWeight={'hairline'}>      
+            <IconButton
+              icon={ <AiOutlineClear/>}
+              variant={'unstyled'} 
+              display={'flex'} 
+              borderRadius={'sm'} 
+              placeContent={'center'}
+              alignItems={'center'}
+              color={'web.text2'} 
+              _hover={{
+                 color: 'logo.orange'
+                 }}
+              _active={{
+              }}
+              onClick={(e) => handleClear(e)}
+              >
+            </IconButton>
+        </Tooltip> 
+          </Box> 
+          </Box>  
+        </Box>
     </>
   )
 }

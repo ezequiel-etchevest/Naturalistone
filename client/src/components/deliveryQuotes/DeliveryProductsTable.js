@@ -14,40 +14,35 @@ import {
     NumberInputField,
     useToast, 
   } from '@chakra-ui/react'
-  import { useNavigate } from 'react-router-dom'
   import { useState } from 'react'
 
 
-const ModelTr = ({p, setQuantities, quantities, errors, setErrors, setDisabled}) => {
+const ModelTr = ({p, setQuantities, quantities, errors, setErrors, setDisabledConfirm}) => {
   
-  const navigate = useNavigate()
   const toast = useToast()
 
   const [input, setInput] = useState({
-      quantity: 0,
-      prodID:'',
-      prodName:'',
-      type:'',
-      size:'',
-      thickness:'',
-      finish:'',
-    })
-  
-
-  const handleInput = (e) => {
-
-    setInput({
-      quantity: e,
+      quantity: p.InStock_Reserved,
       prodID:p.ProdID,
       prodName: p.ProductName,
       type: p.Type,
       size:p.Size,
       thickness:p.Thickness,
       finish:p.Finish,
-      InStock_Reserved: p.InStock_Reserved
+      InStock_Reserved: p.InStock_Reserved,
+      SalePrice: p.SalePrice,
+      delivered: p.Delivered
     })
 
-  let upd = false;
+
+  const handleInput = (e) => {
+
+    setInput({
+      ...input,
+      quantity: parseFloat(e),
+    })
+
+
   
   if (errors.length) {
     errors.forEach(err => {
@@ -55,10 +50,8 @@ const ModelTr = ({p, setQuantities, quantities, errors, setErrors, setDisabled})
         if(e >= 0 && e <= p.InStock_Reserved){
           setErrors(errors.filter(error=> error !== input.prodID))
         }
-        upd = true
       }})}  
 
-  if(!upd){
     if( e > p.InStock_Reserved ){
       setErrors([...errors, p.ProdID])
       toast({
@@ -69,7 +62,6 @@ const ModelTr = ({p, setQuantities, quantities, errors, setErrors, setDisabled})
         isClosable: true,
       })
     }
-  }
 }
 
 
@@ -80,7 +72,7 @@ const ModelTr = ({p, setQuantities, quantities, errors, setErrors, setDisabled})
       quantities.forEach(e => {
         if (e.prodID === input.prodID) {
           e.quantity = input.quantity;
-          if(e.quantity == 0){
+          if(e.quantity === 0){
             setQuantities(quantities.filter(q => q.prodID !== input.prodID))
           }
           updated = true;
@@ -90,14 +82,8 @@ const ModelTr = ({p, setQuantities, quantities, errors, setErrors, setDisabled})
     if (!updated){
       if(input.quantity > 0){
       setQuantities([...quantities, input])
-      // handleDisableChange()
   }}
   }
-
-  // const handleDisableChange = () => {
-  //   if(!errors.length && quantities.length)setDisabled(false)
-  //   else setDisabled(true)
-  // }  
 
     return(
       <Tr 
@@ -121,7 +107,7 @@ const ModelTr = ({p, setQuantities, quantities, errors, setErrors, setDisabled})
             h={'4vh'}
             onChange={(e)=>handleInput(e)} 
             step={1} 
-            //defaultValue={} 
+            defaultValue={p.InStock_Reserved} 
             min={0} 
             precision={0}
             >
@@ -143,17 +129,20 @@ const ModelTr = ({p, setQuantities, quantities, errors, setErrors, setDisabled})
         <Td textAlign={'center'} w={'6vw'}>{p.Thickness} </Td>
         <Td textAlign={'center'} w={'6vw'}>{p.Finish} </Td>
         <Td textAlign={'center'} w={'6vw'}>{p.InStock_Reserved}</Td>
+        <Td textAlign={'center'} w={'6vw'}>{p.Quantity - p.Delivered}</Td>
       </Tr>
     )
 }
 
-const DeliveryProductList = ({invoice_products, setQuantities, quantities, errors, setErrors, setDisabled}) => {
+const DeliveryProductList = ({invoice_products, setQuantities, quantities, errors, setErrors, setDisabledConfirm}) => {
 
     return(
         <Box
         display={'flex'}
         justifyContent={'center'}
-        w={'60vw'}
+        w={'64vw'}
+        pl={'1vw'}
+        pr={'1vw'}
         >
           <Box
             maxHeight={'54vh'}
@@ -183,12 +172,13 @@ const DeliveryProductList = ({invoice_products, setQuantities, quantities, error
                       <Th color={'web.text2'} textAlign={'center'} w={'6vw'}>Thickness</Th>
                       <Th color={'web.text2'} textAlign={'center'} w={'6vw'}>Finish</Th>
                       <Th color={'web.text2'} textAlign={'center'} w={'6vw'}>Stock Reserved</Th>
+                      <Th color={'web.text2'} textAlign={'center'} w={'6vw'}>Remaining</Th>
                     </Tr>
                   </Thead>
                   <Tbody >
                     { invoice_products.map((p, i) =>{
                         return(
-                          <ModelTr p={p} key={i} id={i} setQuantities={setQuantities} quantities={quantities} errors={errors} setErrors={setErrors} setDisabled={setDisabled}/>
+                          <ModelTr p={p} key={i} id={i} setQuantities={setQuantities} quantities={quantities} errors={errors} setErrors={setErrors} setDisabledConfirm={setDisabledConfirm}/>
                         )
                       })
                     }

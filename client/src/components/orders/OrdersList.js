@@ -7,7 +7,7 @@ import {
     Th,
     Td,
     TableContainer,
-    useToast,
+    Text,
   } from '@chakra-ui/react'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
@@ -40,10 +40,10 @@ const ModelTr = ({o}) => {
         >
         <Td textAlign={'center'}>{o.OrderID}</Td>
         <Td textAlign={'-moz-initial'}>{o.FactoryName}</Td>
-        <Td textAlign={'center'}>{o.Value}</Td>
-        <Td textAlign={'center'}>{o.InvoiceDate.split('T')[0]}</Td>
+        <Td textAlign={'center'}>{o.Value.toLocaleString('en-US')}</Td>
+        <Td textAlign={'center'}>{o.InvoiceDate !== null ? o.InvoiceDate.split('T')[0] :  '-'}</Td>
         <Td isNumeric textAlign={'center'}>{o.idFreightInvoice} </Td>
-        <Td textAlign={'center'}>{o.Order_By.split('@')[0]}</Td>
+        <Td textAlign={'center'}>{o.Order_By !== null ? o.Order_By.split('@')[0] : '-'}</Td>
         <Td textAlign={'center'}>{o.Status}</Td>
       </Tr>
     )
@@ -51,28 +51,6 @@ const ModelTr = ({o}) => {
 
 const OrdersList = ({orders}) => {
 
-//   const result = useSelector(state=> state.validate_result_quotes)
-//   const toast = useToast()
-//   const id = 'test-toast'
-  
-//   const validateResults = () => {
-//     if(result === 'no_results'){
-//       if (!toast.isActive(id)) {
-//       toast({
-//         id,
-//         title: 'No results found',
-//         description: 'Reloading all the quotes',
-//         status: 'warning',
-//         duration: 2000,
-//         isClosable: true,
-//       });
-//     }}
-//   }
-
-
-//   useEffect(()=>{
-//     validateResults()
-//   })
   
     return(
         <Box
@@ -122,9 +100,13 @@ const OrdersList = ({orders}) => {
                   <Tbody 
                   >
                     {
-                      orders.map((o, i) => (
-                        <ModelTr key={i} o={o}/> 
-                        ))
+                      orders ? (
+                        orders?.map((o, i) => (
+                          <ModelTr key={i} o={o}/> 
+                          ))
+                      ):(
+                        <Text>Loading</Text>
+                      )
                     }
                   </Tbody>
                 </Table>

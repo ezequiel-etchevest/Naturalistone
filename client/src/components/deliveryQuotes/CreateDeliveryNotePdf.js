@@ -7,14 +7,16 @@ const CreateDeliveryNotePdf = ({quantities, deliveryID, id}) => {
 
     const [pdfInfo, setPdfInfo] = useState([]);
     const viewer = useRef(null);
-    console.log('createDeliveryNotepdf',quantities)
+    
     useEffect(() => {
         CreateForm();
     }, []);
 
     const products = {};
+    
+    const filteredQuantities = quantities.filter(prod => prod.quantity !== 0)
 
-    quantities.forEach((product, index) => {
+    filteredQuantities.forEach((product, index) => {
       const variableName = `${index + 1}`;
       products[variableName] = product;
     });

@@ -6,9 +6,9 @@ const payments = require('../Controllers/payments')
 
 PaymentRouter.get('/:id', async function(req, res){
     const { id } = req.params
-    query_ = `SELECT * FROM Payments WHERE InvoiceID = ${id}`
+    query_ = `SELECT * FROM Payments WHERE Payments.InvoiceID = ${id}`
 
-    query_2 = `SELECT * from Sales WHERE Naturali_Invoice = ${id}`;
+    query_2 = `SELECT * from Sales WHERE Sales.Naturali_Invoice = ${id}`;
 
     try{
         mysqlConnection.query(query_, function(error, paymentData, fields){

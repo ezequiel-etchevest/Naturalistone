@@ -1,4 +1,3 @@
-import { Action } from "@remix-run/router"
 import  axios  from "axios"
 export const GET_ORDERS = 'GET_ORDERS'
 export const GET_ORDERS_BY_ID = 'GET_ORDERS_BY_ID'
@@ -73,7 +72,8 @@ export function cleanOrderProducts() {
 export function cancelOrderStatus(id) {
   return async function(dispatch){
     try{ 
-        let {data} = await axios.patch(`http://localhost:5000/orders/cancelorder/${id}`)
+        let { response } = await axios.patch(`http://localhost:5000/orders/cancelorder/${id}`)
+        let {data} = await axios.get(`http://localhost:5000/orders/${id}`)
         dispatch(
         {
             type: PATCH_ORDER_STATUS,

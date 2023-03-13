@@ -1,13 +1,13 @@
 import React, { useEffect } from "react";
 import SideBar from "../components/sideBar";
-import { Center, Spinner, Text, Box } from "@chakra-ui/react";
+import { Center, Spinner } from "@chakra-ui/react";
 import ProductsContainer from "../components/products/productsContainer";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllProducts, getValues } from '../redux/actions-products';
+import { getFiltered } from '../redux/actions-products';
 import { getEmployeeById } from "../redux/actions-employees";
 
 
-const Products = () => {
+const Products = ({focus, setFocus}) => {
 
   const dispatch = useDispatch()
   const user = useSelector(state => state.user)
@@ -22,14 +22,13 @@ const Products = () => {
       }},[dispatch, userLocal, user])
 
     useEffect(()=>{
-        dispatch(getValues())
-        if(!allProducts.length) dispatch(getAllProducts())
+        if(!allProducts?.length ) dispatch(getFiltered('','','','','','',''))
         },[allProducts])
          
       if(user.length && values && allProducts){
         return(
           <>
-            <SideBar user={user}/>
+            <SideBar user={user} focus={focus} setFocus={setFocus}/>
             <ProductsContainer allProducts={allProducts} user={user} values={values}/>
           </>
         )

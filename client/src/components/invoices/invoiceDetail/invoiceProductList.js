@@ -33,7 +33,7 @@ const ModelTr = ({p}) => {
         >
         <Td textAlign={'center'}>{p.ProductName}</Td>
         <Td textAlign={'center'}>{p.Quantity} </Td>
-        <Td textAlign={'center'} >${p.SalePrice}</Td>
+        <Td textAlign={'center'} >${p.SalePrice.toLocaleString('en-US')}</Td>
         <Td textAlign={'center'}>{p.Stock === null ? '0' : p.Stock}</Td>
         <Td textAlign={'center'}>{p.NextArrival === null ? '-' : p.NextArrival}</Td>
       </Tr>

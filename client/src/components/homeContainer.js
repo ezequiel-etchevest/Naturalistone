@@ -5,7 +5,7 @@ const HomeContainer = ({currentMonth}) => {
 
   return(
     <>
-      <Box h={'92vh'} ml={'20vw'} bg={'web.bg'} display={'flex'} flexDir={'column'}>
+      <Box userSelect={'none'} h={'92vh'} ml={'20vw'} bg={'web.bg'} display={'flex'} flexDir={'column'}>
         <chakra.h1
           placeContent={'center'}
           textAlign={'center'}
@@ -23,33 +23,7 @@ const HomeContainer = ({currentMonth}) => {
             CHECK YOUR STATS ON THE GO!
           </Highlight>
         </chakra.h1>
-        {/* <Box 
-          h={'79vh'} 
-          p={'3vh'} 
-          display={'flex'} 
-          justifyContent={'center'}>
-        <Box 
-          display={'flex'} 
-          flexDir={'column'} 
-          w={'35vw'} 
-          maxH={'50vh'} 
-          justifyContent={'space-between'}  
-          mr={'2vh'}>
-        <BarChart/>
-        <CurrentMonthStats currentMonth={currentMonth}/> */}
-        <CurrentMonthStats currentMonth={currentMonth}/>
-        {/* </Box>
-        <Box 
-          display={'flex'} 
-          flexDir={'column'} 
-          w={'35vw'} 
-          maxH={'50vh'}
-          justifyContent={'space-between'} 
-          ml={'2vh'}>
-        <CurrentMonthStats currentMonth={currentMonth}/>
-        <PieChart/>
-        </Box>
-        </Box>*/}
+          <CurrentMonthStats currentMonth={currentMonth}/>
       </Box> 
       </>
     )

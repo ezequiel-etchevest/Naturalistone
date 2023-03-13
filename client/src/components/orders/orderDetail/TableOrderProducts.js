@@ -5,12 +5,9 @@ import {
   Tr,
   Td,
   Th,
-  useDisclosure,
-  IconButton,
   TableContainer,
 } from '@chakra-ui/react'
 import { useNavigate } from 'react-router-dom'
-import { BiEditAlt } from 'react-icons/bi';
 
 
 
@@ -18,7 +15,6 @@ import { BiEditAlt } from 'react-icons/bi';
 const ModelTr = ({p}) => {
   
   const navigate = useNavigate()
-  const { isOpen, onOpen, onClose } = useDisclosure()
   const handleClick = () => {
     navigate(`/products/${p.ProdID}`)
   }

@@ -18,24 +18,24 @@ const LinkItems = [
   { name: 'Log Out', icon: CgLogOut },
   ];
 
-const SideBar = ({user}) => {
 
+const SideBar = ({user, focus, setFocus}) => {
 	return (
 
 	  <Box
+      userSelect={'none'}
       top={'0vh'}
 	    pos={'fixed'}
 	    bg={'web.sideBar'}
       w={'20vw'}
       h={'100vh'}
-      zIndex={'10'}
       pl={'2vw'}
       borderRight={'1px solid'}
       borderColor={'web.border'}
 	    > 
-    <HStack mt={'4vh'} mb={'4vh'}>
+    <HStack mt={'10vh'} mb={'4vh'}>
       <Avatar
-        size={'md'}
+        size={'sm'}
         src={mitu}
         />
       <Text
@@ -47,15 +47,17 @@ const SideBar = ({user}) => {
         {user[0].FirstName} {user[0].LastName}
       </Text>
     </HStack>
-    <Box  pr={12} pt={'9vh'}>
+    <Box  pr={'2vw'} pt={'9vh'}>
       
       {/* In here we need to add other SellerIDs whom will access to Orders View */}
       {
-      user[0].SellerID != 3 && user[0].SellerID != 5 
+      user[0].Secction7Flag !== 1  
       ? LinkItems
       .filter(l => l.name !== 'Orders')
       .map((link) => (
         <NavItem
+          focus={focus}
+          setFocus={setFocus}
           textDecoration={'none'}
           link={link}
           key={link.name}
@@ -67,6 +69,8 @@ const SideBar = ({user}) => {
         )) : 
         LinkItems.map((link) => (
         <NavItem
+          focus={focus}
+          setFocus={setFocus}
           textDecoration={'none'}
           link={link}
           key={link.name}
@@ -82,7 +86,7 @@ const SideBar = ({user}) => {
 	  );
   }
   
-  const NavItem = ({ icon, link, children, ...rest }) => {
+  const NavItem = ({ focus, setFocus, icon, link, children, ...rest }) => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
 
@@ -90,26 +94,29 @@ const SideBar = ({user}) => {
       dispatch(logOut())
       navigate('/login')
     }
-    
+    const handleClick = (e) => {
+      setFocus(`${link.name}`)
+      navigate(`/${link.name}`)
+    }
     return (
       <Box
-        color={'web.text2'}
+        color={focus === link.name ? '#E47424' : 'white'}
         bg={'none'}
-        fontSize={'lg'}
+        fontSize={'2.3vh'}
         style={{ textDecoration: 'none' }}
         _focus={{ boxShadow: 'none' }}
-        onClick={link.name === 'Log Out' ? ()=> {handleLogOut()} : ()=>navigate(`/${link.name}`)}
+        onClick={link.name === 'Log Out' ? ()=> {handleLogOut()} : ()=>{handleClick()}}
         >
         <Flex
           align="center"
-          p="3"
-          mx="2"
-          borderRadius="lg"
-          role="group"
-          cursor="pointer"
+          p={'1vh'}
+          mx={'2vh'}
+          borderRadius={"md"}
+          role={"group"}
+          cursor={"pointer"}
           _hover={{
-            bg: '#E47424',
-            color: 'white',
+            border: '#E47424',
+            color: '#E47424',
           }}
           {...rest}
           >
@@ -118,7 +125,7 @@ const SideBar = ({user}) => {
               mr={'2vw'}
               fontSize={'3.5vh'}
               _groupHover={{
-                color: 'white',
+                color: '#E47424',
               }}
               as={icon}
             />

@@ -1,8 +1,8 @@
 import{
-	Box,
 	ButtonGroup,
 	Button,
-	IconButton
+	IconButton,
+  VStack
 } from '@chakra-ui/react';
 import {AiOutlineMail, AiOutlineInfoCircle} from 'react-icons/ai';
 import ModalStamp from './modalStamp';
@@ -14,20 +14,22 @@ const InvoicePanelButtons = ({invoice, payments, user, invoice_products, deliver
      
     return(
         <>
-					<Box
+					<VStack
+            pl={'1vh'}
           	w={'13vw'}
           	display={'flex'}
           	flexDir={'column'}
           	alignItems={'flex-start'}
           	textColor={'web.text2'}
-          	rounded={'md'}
           	justifyContent={'space-between'}
+            spacing={0}
           	>
-            <Box>
               <ChangeStatus invoice={invoice} user={user}/>
               <CreateDeliveryButton invoice={invoice} user={user} invoice_products={invoice_products}/>
               <DeliveryNotesListButton user={user} invoice={invoice} deliveries={deliveries}/>
               <ButtonGroup
+                h={'5vh'}
+                size={'sm'}
                 display={'flex'}
                 spacing={0}
                 _hover={{
@@ -46,6 +48,8 @@ const InvoicePanelButtons = ({invoice, payments, user, invoice_products, deliver
                 >Customer Details</Button>
               </ButtonGroup>
               <ButtonGroup
+                h={'5vh'}
+                size={'sm'}
               	display={'flex'}
               	spacing={0}
                   _hover={{
@@ -66,8 +70,7 @@ const InvoicePanelButtons = ({invoice, payments, user, invoice_products, deliver
               </Button>
               </ButtonGroup>
             <ModalStamp invoice={invoice} payments={payments}/>
-          </Box>
-          </Box>   
+          </VStack>   
         </>
     )
 }

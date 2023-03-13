@@ -6,9 +6,6 @@ import {
 import { 
     GET_INVOICE_BY_ID, 
     GET_INVOICES_BY_SELLER, 
-    GET_INVOICES_LASTWEEK, 
-    GET_INVOICES_LASTMONTH, 
-    GET_FILTERED_INVOICES,
     GET_INVOICE_PRODUCTS,
     PATCH_STAMP,
     PATCH_STATUS,
@@ -31,8 +28,7 @@ import {
     CLEAN_PRODUCT_BY_ID,
     GET_HISTORY_PRICES,
     PATCH_PRODUCT_NOTES,
-    PATCH_DISCONTINUED,
-    GET_VALUES
+    PATCH_DISCONTINUED
      } from './actions-products';
 import { GET_CURRENT_MONTH } from './actions-stats';
 import { 
@@ -45,7 +41,9 @@ import {
 import { 
     GET_DELIVERIESS,
     POST_DELIVERY_NOTE,
-    GET_DELIVERY_BY_ID
+    GET_DELIVERY_BY_ID,
+    POST_DELIVERY_NOTE_FAIL,
+    CLEAN_DELIVERY_NOTE_FAIL
 } from './actions-deliveryNotes';
 
 
@@ -55,9 +53,8 @@ const intialState = {
     user: [],
     sellers:[],
     invoice: {},
+    product_values: {},
     seller_invoices: [],
-    filtered_invoices: [],
-    filtered_invoices_month_week: [],
     all_products: [],
     current_month: {},
     invoice_products: [],
@@ -74,6 +71,7 @@ const intialState = {
     invoice_errors_by_filter_errors:[],
     deliveries_notes_by_id:[],
     deliveryID:'',
+    deliveryID_error:'',
     delivery_by_id:[]
 }
 
@@ -97,10 +95,9 @@ function rootReducer (state = intialState, action) {
               sellers:[],
               employees: [],
               invoice: {},
-              all_invoices_by_seller: [],
               seller_invoices: [],
-              filtered_invoices: [],
-              filtered_invoices_month_week: [],
+              // filtered_invoices:[],
+              // seller_invoices_all: [],
               current_month:{},
               products_errors:{},
               product_values: {},
@@ -114,6 +111,7 @@ function rootReducer (state = intialState, action) {
               invoice_errors_by_filter_errors:[],
               deliveries_notes_by_id:[],
               deliveryID:'',
+              deliveryID_error:'',
               delivery_by_id:[],
               seller_values:[]
             }
@@ -127,9 +125,17 @@ function rootReducer (state = intialState, action) {
             return {
               ...state,
               seller_invoices: action.payload.data,
-              filtered_invoices_month_week: action.payload.data,
               validate_result_quotes: action.payload.result
             }
+ 
+        // case GET_INVOICES_BY_SELLER_ALL:
+        //     return {
+        //       ...state,
+        //       seller_invoices_all: action.payload.data,
+        //       filtered_invoices: action.payload.data,
+        //       seller_invoices: action.payload.data,
+        //     }
+            
         case GET_INVOICE_ERRORS:
             return {
               ...state,
@@ -152,37 +158,26 @@ function rootReducer (state = intialState, action) {
               ...state,
               payments_by_id: action.payload
             }
-        case GET_INVOICES_LASTWEEK:
-            return {
-              ...state,
-              seller_invoices: action.payload.data,
-              filtered_invoices_month_week: action.payload.data,
-              validate_result_quotes: action.payload.result
-            }
-        case GET_INVOICES_LASTMONTH:
-            return {
-              ...state,
-              seller_invoices: action.payload.data,
-              filtered_invoices_month_week: action.payload.data,
-              validate_result_quotes: action.payload.result
-            }
-        case GET_FILTERED_INVOICES:
-            return {
-              ...state,
-              seller_invoices: action.payload,
-              filtered_invoices: action.payload
-            }
+
+        // case GET_FILTERED_INVOICES:
+        //     return {
+        //       ...state,
+        //       filtered_invoices: action.payload
+        //     }
+
         case GET_ALL_PRODUCTS:
             return {
               ...state,
               all_products: action.payload,
               products_errors: {}
             }
+
         case GET_FILTERED_PRODUCTS:
             return {
               ...state,
-              all_products: action.payload.filteredProds,
-              products_errors: action.payload.errorsSearch
+              all_products: action.payload.filter.filteredProds,
+              products_errors: action.payload.filter.errorsSearch,
+              product_values: action.payload.filteredValues
             }
         case GET_CURRENT_MONTH:
             return {
@@ -257,7 +252,7 @@ function rootReducer (state = intialState, action) {
         case PATCH_ORDER_STATUS:
               return {
                 ...state,
-                orders: action.payload
+                order: action.payload
               }
         case CLEAN_ORDERS_PRODUCTS:
               return {
@@ -272,7 +267,18 @@ function rootReducer (state = intialState, action) {
         case POST_DELIVERY_NOTE:
           return {
             ...state,
-            deliveryID: action.payload.deliveryID
+            deliveryID: action.payload,
+            deliveryID_error: false
+          }
+        case POST_DELIVERY_NOTE_FAIL:
+          return {
+            ...state,
+            deliveryID_error: true
+          }
+        case CLEAN_DELIVERY_NOTE_FAIL:
+          return {
+            ...state,
+            deliveryID_error: ''
           }
         case GET_DELIVERIESS:
           return {
@@ -284,11 +290,7 @@ function rootReducer (state = intialState, action) {
             ...state,
             delivery_by_id: action.payload
           }
-        case GET_VALUES:
-           return {
-             ...state,
-             product_values: action.payload
-           }
+
         case GET_SELLER_VALUES:
           return{
             ...state,

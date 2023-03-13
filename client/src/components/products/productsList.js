@@ -8,7 +8,9 @@ import {
     Td,
     TableContainer,
     useToast,
-    Switch
+    Switch,
+    Text,
+    Center
   } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -38,7 +40,7 @@ const ModelTr = ({e, user}) => {
     }
 
     let validateSeller = () => {
-      if(user[0].SellerID == 6 || user[0].SellerID == 3 || user[0].SellerID == 5 || user[0].SellerID == 15 ) return true
+      if(user[0].SellerID === 6 || user[0].SellerID === 3 || user[0].SellerID === 5 || user[0].SellerID === 15 ) return true
       else return false
     }
 
@@ -51,25 +53,25 @@ const ModelTr = ({e, user}) => {
         color: 'logo.orange'
       }} 
       >
-      <Td onClick={() => handleClickProduct()} textAlign={'match-parent'}>{e.ProductName}</Td>
-      <Td onClick={() => handleClickProduct()} textAlign={'match-parent'}>{e.Material} - {e.Type}</Td>
-      <Td onClick={() => handleClickProduct()} textAlign={'match-parent'}>{e.Size}</Td>
-      <Td onClick={() => handleClickProduct()} textAlign={'center'}> {e.Thickness} </Td>
-      <Td onClick={() => handleClickProduct()} textAlign={'center'}> {e.Finish === null ? '-' : e.Finish} </Td>
-      <Td onClick={() => handleClickProduct()} isNumeric>${e.Price}</Td>
-      <Td onClick={() => handleClickProduct()} textAlign={'center'}>{e.InStock_Available === null ? 0 : e.InStock_Available}</Td>
-      <Td onClick={() => handleClickProduct()} textAlign={'center'}>{e.Incoming_Available === null ? 0 : e.Incoming_Available}</Td>
-      <Td onClick={() => handleClickProduct()} textAlign={'center'}>{e.NextArrival === undefined ? '-' : e.NextArrival}</Td>
+      <Td onClick={() => handleClickProduct()} fontSize={'1.7vh'} textAlign={'match-parent'}>{e.ProductName}</Td>
+      <Td onClick={() => handleClickProduct()} fontSize={'1.7vh'} textAlign={'match-parent'}>{e.Material} - {e.Type}</Td>
+      <Td onClick={() => handleClickProduct()} fontSize={'1.7vh'} textAlign={'match-parent'}>{e.Size}</Td>
+      <Td onClick={() => handleClickProduct()} fontSize={'1.7vh'} textAlign={'center'}> {e.Thickness} </Td>
+      <Td onClick={() => handleClickProduct()} fontSize={'1.7vh'} textAlign={'center'}> {e.Finish === null ? '-' : e.Finish} </Td>
+      <Td onClick={() => handleClickProduct()} fontSize={'1.7vh'} isNumeric>${e.Price.toLocaleString('en-US')}</Td>
+      <Td onClick={() => handleClickProduct()} fontSize={'1.7vh'} textAlign={'center'}>{e.InStock_Available === null ? 0 : e.InStock_Available}</Td>
+      <Td onClick={() => handleClickProduct()} fontSize={'1.7vh'} textAlign={'center'}>{e.Incoming_Available === null ? 0 : e.Incoming_Available}</Td>
+      <Td onClick={() => handleClickProduct()} fontSize={'1.7vh'} textAlign={'center'}>{e.NextArrival === undefined ? '-' : e.NextArrival}</Td>
       <Td pl={'3.5vw'}>{ validateSeller() === false ? (e.Discontinued_Flag === 'True' ? <ImCheckboxChecked color='logo.orange'/> : <ImCheckboxUnchecked color='logo.orange'/> ) : (<Switch  onChange={() => handleClickSwitch()} isChecked={flag} colorScheme={'orange'} size={'sm'}/>) }</Td>
       </Tr>
   )
 }
 
-const ProductList = ({ allProducts, filteredProducts, user }) => {
+const ProductList = ({ allProducts, user }) => {
 
   const productErrors = useSelector((state) => state.products_errors)
   const toast = useToast()
-console.log(allProducts)
+
   const validateToast = () => {
     if(Object.entries(productErrors).length){
       toast({        
@@ -83,17 +85,18 @@ console.log(allProducts)
 
   useEffect(() => {
     validateToast()
-  },[filteredProducts, allProducts])
+  },[allProducts])
 
   return(
     <Box
       display={'flex'}
       justifyContent={'center'}
-      h={'72vh'}
-      w={'78.8vw'} 
+      h={'69vh'}
+      w={'78.8vw'}
+      ml={'1vh'} 
       >
       <Box
-        maxHeight={'69vh'}
+        maxHeight={'67vh'}
         overflow={'auto'}
         css={{
           '&::-webkit-scrollbar': {
@@ -112,43 +115,43 @@ console.log(allProducts)
         border={'1px solid'} 
         rounded={'md'} 
         p={'3vh'}
-        w={'74vw'}
+        w={'76vw'}
         >
+        {allProducts.length && !Object.entries(productErrors).length ? 
         <TableContainer  mr={'1vw'}>
           <Table color={'web.text'} variant={'simple'} size={'sm'}>
             <Thead h={'6vh'}>
               <Tr>
-                <Th color={'web.text2'} textAlign={'match-parent'}>Product Name</Th>
-                <Th color={'web.text2'} w={'8vw'}>Type</Th>
-                <Th color={'web.text2'} w={'4vw'}>Size</Th>
-                <Th color={'web.text2'} w={'4vw'}>Thickness</Th>
-                <Th color={'web.text2'} w={'4vw'}>Finish</Th>
-                <Th color={'web.text2'} w={'4vw'}isNumeric>Price</Th>
-                <Th color={'web.text2'} w={'4vw'}isNumeric>In Stock</Th>
-                <Th color={'web.text2'} w={'4vw'}isNumeric>Incoming</Th>
-                <Th color={'web.text2'} w={'4vw'}isNumeric>Next Arrival</Th>
-                <Th color={'web.text2'} w={'4vw'}>Discontinued</Th>
+                <Th color={'web.text2'} >Product Name</Th>
+                <Th color={'web.text2'} textAlign={'center'} >Type</Th>
+                <Th color={'web.text2'} textAlign={'center'}>Size</Th>
+                <Th color={'web.text2'} >Thickness</Th>
+                <Th color={'web.text2'}>Finish</Th>
+                <Th color={'web.text2'} isNumeric>Price</Th>
+                <Th color={'web.text2'} isNumeric>In Stock</Th>
+                <Th color={'web.text2'} isNumeric>Incoming</Th>
+                <Th color={'web.text2'} isNumeric>Next Arrival</Th>
+                <Th color={'web.text2'} >Discontinued</Th>
               </Tr>
             </Thead>
             <Tbody>
               { 
-                filteredProducts.length ? (
-                  filteredProducts.map((e, i) => {
-                    return(
-                      <ModelTr key={i} e={e} user={user} filteredProducts={filteredProducts}/>
-                    )
-                  })
-                ) : (
                   allProducts.map((e, i) => {
                     return(
-                      <ModelTr key={i} e={e} user={user} allProducts={allProducts}/>
+                      <ModelTr key={i} e={e} user={user}/>
                     )
-                  }
-                ))
+                  })
               }
             </Tbody>
           </Table>
         </TableContainer>
+        :
+        (
+          <Center w={'full'} h={'full'}>
+          <Text userSelect={'none'} fontSize={'2vh'}>No products found</Text>
+          </Center>
+        )
+        }
       </Box>  
     </Box>
   )
