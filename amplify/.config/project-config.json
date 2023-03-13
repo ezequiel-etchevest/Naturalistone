@@ -2,7 +2,7 @@
   "providers": [
     "awscloudformation"
   ],
-  "projectName": "NaturalistoneApp",
+  "projectName": "Naturalistone",
   "version": "3.1",
   "frontend": "javascript",
   "javascript": {
