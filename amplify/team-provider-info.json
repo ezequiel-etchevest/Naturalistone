@@ -1,0 +1,26 @@
+{
+  "staging": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-naturalistoneapp-staging-221027-authRole",
+      "UnauthRoleArn": "arn:aws:iam::503789881480:role/amplify-naturalistoneapp-staging-221027-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::503789881480:role/amplify-naturalistoneapp-staging-221027-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-naturalistoneapp-staging-221027-deployment",
+      "UnauthRoleName": "amplify-naturalistoneapp-staging-221027-unauthRole",
+      "StackName": "amplify-naturalistoneapp-staging-221027",
+      "StackId": "arn:aws:cloudformation:us-east-1:503789881480:stack/amplify-naturalistoneapp-staging-221027/dc56ba20-c1eb-11ed-b56c-126828afecc1",
+      "AmplifyAppId": "d3m1blupraxtko"
+    },
+    "categories": {
+      "function": {
+        "naturalistoneapp117a377a": {
+          "deploymentBucketName": "amplify-naturalistoneapp-staging-221027-deployment",
+          "s3Key": "amplify-builds/naturalistoneapp117a377a-7930573970327a4d6865-build.zip"
+        }
+      },
+      "api": {
+        "NaturaliRestAPI": {}
+      }
+    }
+  }
+}
