@@ -11,7 +11,7 @@ export const PATCH_DISCONTINUED = 'PATCH_DISCONTINUED';
 export function getAllProducts(){
     return async function(dispatch){
         try{ 
-            let {data} = await axios.get(`http://localhost:5000/products`)
+            let {data} = await axios.get(`/products`)
             dispatch(
             {
                 type: GET_ALL_PRODUCTS,
@@ -28,7 +28,7 @@ export function getFiltered(finish, size, thickness, material, search, price){
         console.log(search)
         try{
             
-            let {data} = await axios.get(`http://localhost:5000/products/filtered?finish=${finish}&size=${size}&thickness=${thickness}&material=${material}&search=${search}&price1=${price[0] ? price[0] : ''}&price2=${price[1]? price[1] : ''}`)
+            let {data} = await axios.get(`/products/filtered?finish=${finish}&size=${size}&thickness=${thickness}&material=${material}&search=${search}&price1=${price[0] ? price[0] : ''}&price2=${price[1]? price[1] : ''}`)
             dispatch(
             {
                 type: GET_FILTERED_PRODUCTS,
@@ -44,7 +44,7 @@ export function getProductById(id){
 
     return async function(dispatch){
         try{
-            let {data} = await axios.get(`http://localhost:5000/products/id/${id}`)
+            let {data} = await axios.get(`/products/id/${id}`)
             dispatch(
                 {
                     type: GET_PRODUCT_BY_ID,
@@ -73,7 +73,7 @@ export function getHistoryPrices(id){
 
     return async function(dispatch){
         try{
-            let {data} = await axios.get(`http://localhost:5000/prodSold/historyprice/${id}`)
+            let {data} = await axios.get(`/prodSold/historyprice/${id}`)
 
             dispatch(
                 {
@@ -91,9 +91,9 @@ export function updateProductNotes(input, idProduct){
     return async function(dispatch){
         try{
             
-            let {response} = await axios.patch(`http://localhost:5000/products/notes/${idProduct}`, input)
+            let {response} = await axios.patch(`/products/notes/${idProduct}`, input)
             
-            let {data} = await axios.get(`http://localhost:5000/products/id/${idProduct}`)
+            let {data} = await axios.get(`/products/id/${idProduct}`)
             
             dispatch(
                 {
@@ -111,9 +111,9 @@ export function patchDiscontinued(idProduct, flag){
     return async function(dispatch){
         try{
             console.log({flag})
-            let {response} = await axios.patch(`http://localhost:5000/products/discontinued/${idProduct}`, {flag})
+            let {response} = await axios.patch(`/products/discontinued/${idProduct}`, {flag})
             
-            let {data} = await axios.get(`http://localhost:5000/products`)
+            let {data} = await axios.get(`/products`)
             
             dispatch(
                 {

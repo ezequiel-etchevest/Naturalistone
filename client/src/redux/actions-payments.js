@@ -8,8 +8,8 @@ export function patchPaymentMethod(id, input){
 
     return async function(dispatch){
         try{
-            let {response} = await axios.post(`http://localhost:5000/payments/invoice/${id}`, input)
-            let { data } = await axios.get(`http://localhost:5000/payments/${id}`)
+            let {response} = await axios.post(`/payments/invoice/${id}`, input)
+            let { data } = await axios.get(`/payments/${id}`)
             
             dispatch(
             {
@@ -24,7 +24,7 @@ export function patchPaymentMethod(id, input){
 export function getPayments(id){
     return async function(dispatch){
         try{
-            let { data } = await axios.get(`http://localhost:5000/payments/${id}`)
+            let { data } = await axios.get(`/payments/${id}`)
             return dispatch({
                 type: GET_PAYMENTS_BY_ID,
                 payload: data
@@ -38,8 +38,8 @@ export function deletePayment(invoiceID, paymentID){
     console.log({paymentID})
     return async function(dispatch){
         try{
-            let { response } = await axios.delete(`http://localhost:5000/payments/invoice/${paymentID}`)
-            let { data } = await axios.get(`http://localhost:5000/payments/${invoiceID}`)
+            let { response } = await axios.delete(`/payments/invoice/${paymentID}`)
+            let { data } = await axios.get(`/payments/${invoiceID}`)
             console.log(response)
             dispatch(
             {

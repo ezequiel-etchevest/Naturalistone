@@ -13,7 +13,7 @@ export function getInvoicesBySeller(id, inputValues){
     return async function(dispatch){
 
         try{
-            let {data} = await axios.get(`http://localhost:5000/sales/${id}?name=${inputValues.inputName}&number=${inputValues.inputNumber}&seller=${inputValues.selectSeller}&time=${inputValues.timeFilter}`)
+            let {data} = await axios.get(`/sales/${id}?name=${inputValues.inputName}&number=${inputValues.inputNumber}&seller=${inputValues.selectSeller}&time=${inputValues.timeFilter}`)
 
             dispatch(
                 {
@@ -30,7 +30,7 @@ export function getInvoiceById(id){
     return async function(dispatch){
 
         try{
-            let {data} = await axios.get(`http://localhost:5000/sales/invoice/${id}`)
+            let {data} = await axios.get(`/sales/invoice/${id}`)
             dispatch(
             {
                 type: GET_INVOICE_BY_ID,
@@ -46,7 +46,7 @@ export function getInvoiceById(id){
 // export function getInvoicesLastWeek(id){
 //     return async function(dispatch){
 //         try{
-//             let {data} = await axios.get(`http://localhost:5000/sales/lastWeek/${id}`)
+//             let {data} = await axios.get(`/sales/lastWeek/${id}`)
 //             if(data.length === 0){
 //                 dispatch(
 //                 {
@@ -86,7 +86,7 @@ export function getFilteredInvoices(filteredInvoices){
 // export function getInvoicesLastMonth(id){
 //     return async function(dispatch){
 //         try{
-//             let {data} = await axios.get(`http://localhost:5000/sales/lastMonth/${id}`)
+//             let {data} = await axios.get(`/sales/lastMonth/${id}`)
 //             if(data.length === 0){
 //                 dispatch(
 //                 {
@@ -110,7 +110,7 @@ export function getFilteredInvoices(filteredInvoices){
 export function getInvoiceProducts(id){
     return async function(dispatch){
         try{
-            let {data} = await axios.get(`http://localhost:5000/prodSold/${id}`)
+            let {data} = await axios.get(`/prodSold/${id}`)
  
             return dispatch({
                 type: GET_INVOICE_PRODUCTS,
@@ -126,8 +126,8 @@ export function stampInvoice(id){
 
     return async function(dispatch){
         try{
-            let {response} = await axios.patch(`http://localhost:5000/sales/quote/${id}`)
-            let { data } = await axios.get(`http://localhost:5000/sales/invoice/${id}`)
+            let {response} = await axios.patch(`/sales/quote/${id}`)
+            let { data } = await axios.get(`/sales/invoice/${id}`)
 
             dispatch(
             {
@@ -143,9 +143,9 @@ export function changeStatus(id){
 
     return async function(dispatch){
         try{
-            let {response} = await axios.patch(`http://localhost:5000/sales/cancelquote/${id}`)
+            let {response} = await axios.patch(`/sales/cancelquote/${id}`)
             console.log({response})
-            let { data } = await axios.get(`http://localhost:5000/sales/invoice/${id}`)
+            let { data } = await axios.get(`/sales/invoice/${id}`)
             console.log(response)
             dispatch(
                 {
@@ -161,7 +161,7 @@ export function changeStatus(id){
 export function getSellerValues(){
     return async function(dispatch){
         try{
-            let {data} = await axios.get(`http://localhost:5000/sales/values/seller`)
+            let {data} = await axios.get(`/sales/values/seller`)
  
             return dispatch({
                 type: GET_SELLER_VALUES,

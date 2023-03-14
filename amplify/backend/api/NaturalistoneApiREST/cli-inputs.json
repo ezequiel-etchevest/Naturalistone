@@ -1,0 +1,26 @@
+{
+  "version": 1,
+  "paths": {
+    "/items": {
+      "name": "/items",
+      "lambdaFunction": "naturalistone956d55c0",
+      "permissions": {
+        "setting": "open"
+      }
+    },
+    "/login": {
+      "name": "/login",
+      "lambdaFunction": "naturalistonecc1789e3",
+      "permissions": {
+        "setting": "open"
+      }
+    },
+    "/seller": {
+      "name": "/seller",
+      "lambdaFunction": "naturalistonecc1789e3",
+      "permissions": {
+        "setting": "open"
+      }
+    }
+  }
+}
