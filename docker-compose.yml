@@ -1,0 +1,27 @@
+version: "3.9"
+services: 
+    expressapp:
+        container_name: expressapp
+        build: ./api
+        expose: 
+            - 5000
+        volumes:
+            - ./api:/usr/src/app
+    
+    reactapp:
+        container_name: reactapp
+        build: ./client
+        expose: 
+            - 3000
+        volumes:
+            - ./client:/usr/src/app
+    nginx:
+        build: ./nginx
+        ports:
+            - 80:80
+        links:
+            - expressapp
+            - reactapp
+        restart: always
+
+        

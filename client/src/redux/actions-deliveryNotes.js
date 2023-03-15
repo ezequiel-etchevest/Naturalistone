@@ -8,7 +8,7 @@ export const CLEAN_DELIVERY_NOTE_FAIL = 'CLEAN_DELIVERY_NOTE_FAIL';
 export function postDeliveryNote(id, quantities){
     return async function(dispatch){
         try{
-            let { data } = await axios.post(`http://localhost:5000/delivery/${id}`, quantities)
+            let { data } = await axios.post(`/delivery/${id}`, quantities)
 
             if(data.val){
                 dispatch(
@@ -43,7 +43,7 @@ export function cleanStateDeliveryNoteFail(){
 export function getDeliveriesNotes(id){
     return async function(dispatch){
         try{
-            let { data } = await axios.get(`http://localhost:5000/delivery/${id}`)
+            let { data } = await axios.get(`/delivery/${id}`)
             return dispatch({
                 type: GET_DELIVERIESS,
                 payload: data
@@ -56,7 +56,7 @@ export function getDeliveriesNotes(id){
 export function getDeliveryNote(id){
     return async function(dispatch){
         try{
-            let { data } = await axios.get(`http://localhost:5000/delivery/id/${id}`)
+            let { data } = await axios.get(`/delivery/id/${id}`)
             return dispatch({
                 type: GET_DELIVERY_BY_ID,
                 payload: data
@@ -71,8 +71,8 @@ export function getDeliveryNote(id){
 //     console.log({paymentID})
 //     return async function(dispatch){
 //         try{
-//             let { response } = await axios.delete(`http://localhost:5000/payments/invoice/${paymentID}`)
-//             let { data } = await axios.get(`http://localhost:5000/payments/${invoiceID}`)
+//             let { response } = await axios.delete(`/payments/invoice/${paymentID}`)
+//             let { data } = await axios.get(`/payments/${invoiceID}`)
 //             console.log(response)
 //             dispatch(
 //             {
