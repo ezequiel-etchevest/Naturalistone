@@ -6,7 +6,7 @@ import { store } from './redux/store'
 import axios from 'axios'
 
 import { Amplify } from 'aws-amplify';
-import awsExports from './aws-exports';
+import awsExports from '../../src/aws-exports';
 Amplify.configure(awsExports);
 
 
