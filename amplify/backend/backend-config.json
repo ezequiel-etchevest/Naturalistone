@@ -1,6 +1,6 @@
 {
   "api": {
-    "NaturalistoneApiREST": {
+    "routesNaturali": {
       "dependsOn": [
         {
           "attributes": [
@@ -8,15 +8,7 @@
             "Arn"
           ],
           "category": "function",
-          "resourceName": "naturalistone956d55c0"
-        },
-        {
-          "attributes": [
-            "Name",
-            "Arn"
-          ],
-          "category": "function",
-          "resourceName": "naturalistonecc1789e3"
+          "resourceName": "naturalistoneLambda"
         }
       ],
       "providerPlugin": "awscloudformation",
@@ -24,47 +16,26 @@
     }
   },
   "function": {
-    "naturalistone956d55c0": {
-      "build": true,
-      "providerPlugin": "awscloudformation",
-      "service": "Lambda"
-    },
-    "naturalistonecc1789e3": {
+    "naturalistoneLambda": {
       "build": true,
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
     }
   },
   "parameters": {
-    "AMPLIFY_function_naturalistone956d55c0_deploymentBucketName": {
+    "AMPLIFY_function_naturalistoneLambda_deploymentBucketName": {
       "usedBy": [
         {
           "category": "function",
-          "resourceName": "naturalistone956d55c0"
+          "resourceName": "naturalistoneLambda"
         }
       ]
     },
-    "AMPLIFY_function_naturalistone956d55c0_s3Key": {
+    "AMPLIFY_function_naturalistoneLambda_s3Key": {
       "usedBy": [
         {
           "category": "function",
-          "resourceName": "naturalistone956d55c0"
-        }
-      ]
-    },
-    "AMPLIFY_function_naturalistonecc1789e3_deploymentBucketName": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "naturalistonecc1789e3"
-        }
-      ]
-    },
-    "AMPLIFY_function_naturalistonecc1789e3_s3Key": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "naturalistonecc1789e3"
+          "resourceName": "naturalistoneLambda"
         }
       ]
     }

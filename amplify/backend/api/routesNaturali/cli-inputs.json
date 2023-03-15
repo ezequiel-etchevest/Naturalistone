@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "paths": {
+    "/login": {
+      "name": "/login",
+      "lambdaFunction": "naturalistoneLambda",
+      "permissions": {
+        "setting": "open"
+      }
+    }
+  }
+}

@@ -47,12 +47,12 @@
         "FunctionName": {
           "Fn::If": [
             "ShouldNotCreateEnvResources",
-            "naturalistonecc1789e3",
+            "naturalistoneLambda",
             {
               "Fn::Join": [
                 "",
                 [
-                  "naturalistonecc1789e3",
+                  "naturalistoneLambda",
                   "-",
                   {
                     "Ref": "env"
@@ -89,12 +89,12 @@
         "RoleName": {
           "Fn::If": [
             "ShouldNotCreateEnvResources",
-            "naturalistoneLambdaRoleb87901b5",
+            "naturalistoneLambdaRole47da98e5",
             {
               "Fn::Join": [
                 "",
                 [
-                  "naturalistoneLambdaRoleb87901b5",
+                  "naturalistoneLambdaRole47da98e5",
                   "-",
                   {
                     "Ref": "env"

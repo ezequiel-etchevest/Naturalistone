@@ -1,29 +1,25 @@
 {
-  "dev": {
+  "mainback": {
     "awscloudformation": {
-      "AuthRoleName": "amplify-naturalistone-dev-213606-authRole",
-      "UnauthRoleArn": "arn:aws:iam::503789881480:role/amplify-naturalistone-dev-213606-unauthRole",
-      "AuthRoleArn": "arn:aws:iam::503789881480:role/amplify-naturalistone-dev-213606-authRole",
+      "AuthRoleName": "amplify-naturalistone-mainback-233446-authRole",
+      "UnauthRoleArn": "arn:aws:iam::503789881480:role/amplify-naturalistone-mainback-233446-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::503789881480:role/amplify-naturalistone-mainback-233446-authRole",
       "Region": "us-east-1",
-      "DeploymentBucketName": "amplify-naturalistone-dev-213606-deployment",
-      "UnauthRoleName": "amplify-naturalistone-dev-213606-unauthRole",
-      "StackName": "amplify-naturalistone-dev-213606",
-      "StackId": "arn:aws:cloudformation:us-east-1:503789881480:stack/amplify-naturalistone-dev-213606/32c60460-c200-11ed-89e8-0ebfbfbd4b77",
-      "AmplifyAppId": "d3n1tpx7nzy3rl"
+      "DeploymentBucketName": "amplify-naturalistone-mainback-233446-deployment",
+      "UnauthRoleName": "amplify-naturalistone-mainback-233446-unauthRole",
+      "StackName": "amplify-naturalistone-mainback-233446",
+      "StackId": "arn:aws:cloudformation:us-east-1:503789881480:stack/amplify-naturalistone-mainback-233446/f4e62a50-c2d9-11ed-a6e4-128167305e21",
+      "AmplifyAppId": "d2z2dpapj7iyfx"
     },
     "categories": {
       "function": {
-        "naturalistone956d55c0": {
-          "deploymentBucketName": "amplify-naturalistone-dev-213606-deployment",
-          "s3Key": "amplify-builds/naturalistone956d55c0-63646b5a2f6245534d77-build.zip"
-        },
-        "naturalistonecc1789e3": {
-          "deploymentBucketName": "amplify-naturalistone-dev-213606-deployment",
-          "s3Key": "amplify-builds/naturalistonecc1789e3-4b494b54794d6868644d-build.zip"
+        "naturalistoneLambda": {
+          "deploymentBucketName": "amplify-naturalistone-mainback-233446-deployment",
+          "s3Key": "amplify-builds/naturalistoneLambda-537979767733392f6d44-build.zip"
         }
       },
       "api": {
-        "NaturalistoneApiREST": {}
+        "routesNaturali": {}
       }
     }
   }
