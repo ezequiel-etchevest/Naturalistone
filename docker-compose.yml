@@ -44,7 +44,7 @@ services:
     letsencrypt:
         image: jrcd/letsencrypt-nginx-proxy-letsencrypt_nginx_proxy_companion
         restart: always
-        enviroment:
+        environment:
         - NGINX_PROXY_CONTAINER=nginx-proxy
         volumes:
             - certs:/etc/nginx/certs:rw
