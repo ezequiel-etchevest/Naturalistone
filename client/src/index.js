@@ -10,7 +10,8 @@ import awsExports from '../../src/aws-exports';
 Amplify.configure(awsExports);
 
 
-axios.defaults.baseURL = process.env.REACT_APP_API;
+//axios.defaults.baseURL = process.env.REACT_APP_API;
+axios.defaults.baseURL = 'https://main.d2z2dpapj7iyfx.amplifyapp.com/'
 //axios.defaults.baseURL = "http://localhost:5000";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
