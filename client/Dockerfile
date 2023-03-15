@@ -1,8 +1,8 @@
 FROM node:16
 
-WORKDIR /Naturalistone
+WORKDIR /app
 
-COPY . /Naturalistone/
+COPY . /app
 
 ENV REACT_APP_REST=/api
 
