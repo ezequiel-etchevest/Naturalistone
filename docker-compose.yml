@@ -18,11 +18,11 @@ services:
         build: ./nginx
         ports:
             - 80:80
-        links:
+        depends_on:
             - expressapp
             - reactapp
             - nginx-proxy
-            - letsencrypt
+            - acme-companion
         environment:
             - VIRTUAL_HOST=internal-naturalistone.com ,www.internal-naturalistone.com 
             - LETSENCRYPT_HOST=internal-naturalistone.com ,www.internal-naturalistone.com   
@@ -34,19 +34,21 @@ services:
             - "80:80"
             - "443:443"
         volumes:
-            - unix//$XDG_RUNTIME_DIR/docker.sock:/var/run/docker.sock:ro
             - certs:/etc/nginx/certs:ro
             - vhostd:/etc/nginx/vhost.docker
             - html:/usr/share/nginx/html
+            - acme:/etc/acme.sh
+            - /var/run/docker.sock:/tmp/docker.sock:ro
         labels:
             - com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy
 
-    letsencrypt:
+    acme-companion:
         image: nginxproxy/acme-companion
         restart: always
         environment:
         - NGINX_PROXY_CONTAINER=nginx-proxy
         volumes:
+            - /var/run/docker.sock:/tmp/docker.sock:ro
             - certs:/etc/nginx/certs:rw
             - acme:/etc/acme.sh
             - vhostd:/etc/nginx/vhost.d
@@ -56,4 +58,3 @@ volumes:
     html:
     vhostd:
     acme:
-    unix:
