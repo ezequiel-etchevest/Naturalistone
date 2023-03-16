@@ -31,7 +31,7 @@ services:
         image: jwilder/nginx-proxy
         restart: always
         ports:
-            - "80:80"
+            - "81:81"
             - "443:443"
         volumes:
             - certs:/etc/nginx/certs:ro
