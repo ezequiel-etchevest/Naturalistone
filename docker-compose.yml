@@ -57,7 +57,7 @@ services:
     db:
         container_name: mysql
         image: mysql:latest
-        command: --default-authentication-plugin=mysql
+        command: --verbose --log-bin-index=/tmp/tmp.lm8Owcz5zs
         restart: unless-stopped
         expose:
             - "3306"
