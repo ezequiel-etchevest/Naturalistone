@@ -85,7 +85,7 @@ services:
   nginx:
     build: ./nginx
     ports:
-      - 81:81
+      - 80:80
     depends_on:
       - expressapp
       - reactapp
