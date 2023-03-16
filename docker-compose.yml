@@ -23,6 +23,7 @@ services:
             - reactapp
             - nginx-proxy
             - acme-companion
+            - db
         environment:
             - VIRTUAL_HOST=internal-naturalistone.com ,www.internal-naturalistone.com 
             - LETSENCRYPT_HOST=internal-naturalistone.com ,www.internal-naturalistone.com   
