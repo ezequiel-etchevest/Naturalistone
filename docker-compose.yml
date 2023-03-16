@@ -199,4 +199,8 @@ services:
       - acme:/etc/acme.sh
       - vhostd:/etc/nginx/vhost.d
       - html:/usr/share/nginx/html
-
+volumes:
+  certs:
+  html:
+  vhostd:
+  acme:
