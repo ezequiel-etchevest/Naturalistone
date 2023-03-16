@@ -42,7 +42,7 @@ services:
             - com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy
 
     letsencrypt:
-        image: jrcd/letsencrypt-nginx-proxy-letsencrypt_nginx_proxy_companion
+        image: jrcs/letsencrypt-nginx-proxy-letsencrypt_nginx_proxy_companion
         restart: always
         environment:
         - NGINX_PROXY_CONTAINER=nginx-proxy
