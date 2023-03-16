@@ -85,7 +85,7 @@ services:
   nginx:
     build: ./nginx
     ports:
-      - 80:80
+      - 81:81
     depends_on:
       - expressapp
       - reactapp
@@ -99,12 +99,13 @@ services:
     image: jwilder/nginx-proxy
     restart: always
     ports:
-      - "80:80"
+      - "81:81"
       - "443:443"
     volumes:
       - certs:/etc/nginx/certs:ro
       - vhostd:/etc/nginx/vhost.d
       - html:/usr/share/nginx/html
+      - acme:/etc/nginx/acme
       - /var/run/docker.sock:/tmp/docker.sock:ro
     labels:
       - com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy
