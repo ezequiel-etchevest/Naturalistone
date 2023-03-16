@@ -99,8 +99,8 @@ services:
     image: jwilder/nginx-proxy
     restart: always
     ports:
-      - "81:81"
-      - "443:443"
+      - 80:80
+      - 443:443
     volumes:
       - certs:/etc/nginx/certs:ro
       - /var/www/pedia/.well-known/acme-challenge/test.txt

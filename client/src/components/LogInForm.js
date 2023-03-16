@@ -16,12 +16,12 @@ const LogInForm = () => {
   let employees = useSelector((state)=>state?.employees)
   console.log({employees})
   const valEmailEmployee = (inputEmail) => {
-      const user = employees.find( e => e.Username === inputEmail)
+      const user = employees?.find( e => e.Username === inputEmail)
       if(user) return true
       else return false
     }
   const valPassword = (inputPass, inputEmail) => {
-    const user = employees.find( e => e.Username === inputEmail)
+    const user = employees?.find( e => e.Username === inputEmail)
     if(user.Password === inputPass) return true
     else return false
   }
