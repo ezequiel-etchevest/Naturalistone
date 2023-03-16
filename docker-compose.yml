@@ -38,19 +38,17 @@ services:
             - certs:/etc/nginx/certs:ro
             - vhostd:/etc/nginx/vhost.docker
             - html:/usr/share/nginx/html
-            - letsencrypt-acme:/etc/acme.sh
         labels:
             - com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy
 
     letsencrypt:
-        image: jrcs/letsencrypt-nginx-proxy-letsencrypt_nginx_proxy_companion
+        image: nginxproxy/acme-companion
         restart: always
         environment:
         - NGINX_PROXY_CONTAINER=nginx-proxy
         volumes:
-            - letsencrypt-acme:/etc/acme.sh
             - certs:/etc/nginx/certs:rw
-            - /var/run/docker.sock:/var/run/docker.sock:ro
+            - acme:/etc/acme.sh
             - vhostd:/etc/nginx/vhost.d
             - html:/usr/share/nginx/html
 volumes:
