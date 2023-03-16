@@ -11,15 +11,15 @@ const deliveryRouter = require('./deliveryRoutes')
 const mainRouter = Router();
 
 
-mainRouter.use('api/login', loginRouter);
-mainRouter.use('api/seller', sellerRouter);
-mainRouter.use('api/sales', salesRouter);
-mainRouter.use('api/products', productsRouter);
-mainRouter.use('api/prodSold', prodSoldRouter);
-mainRouter.use('api/payments', paymentsRouter);
-mainRouter.use('api/orders', ordersRouter);
-mainRouter.use('api/invoiceErrors', invoiceErrorsRouter);
-mainRouter.use('api/delivery', deliveryRouter);
+mainRouter.use('/api/login', loginRouter);
+mainRouter.use('/api/seller', sellerRouter);
+mainRouter.use('/api/sales', salesRouter);
+mainRouter.use('/api/products', productsRouter);
+mainRouter.use('/api/prodSold', prodSoldRouter);
+mainRouter.use('/api/payments', paymentsRouter);
+mainRouter.use('/api/orders', ordersRouter);
+mainRouter.use('/api/invoiceErrors', invoiceErrorsRouter);
+mainRouter.use('/api/delivery', deliveryRouter);
 // mainRouter.use('/customers', customersRouter);
 
 
