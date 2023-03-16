@@ -34,7 +34,7 @@ services:
             - "80:80"
             - "443:443"
         volumes:
-            - unix://$XDG_RUNTIME_DIR/docker.sock:/var/run/docker.sock:ro
+            - unix:/$XDG_RUNTIME_DIR/docker.sock:/var/run/docker.sock:ro
             - certs:/etc/nginx/certs:ro
             - vhostd:/etc/nginx/vhost.docker
             - html:/usr/share/nginx/html
