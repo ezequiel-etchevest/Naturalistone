@@ -64,11 +64,11 @@ services:
         volumes:
             - ./db:/var/lib/mysql
         environment:
-            DB_USER= admin
-            DB_PASSWORD= Ra7878782
-            DB_HOST= naturalistone.cfbecwildn3j.us-east-1.rds.amazonaws.com
-            DB_PORT= 3306
-            DB_TABLE= NaturaliStone
+            - DB_USER= admin
+            - DB_PASSWORD= Ra7878782
+            - DB_HOST= naturalistone.cfbecwildn3j.us-east-1.rds.amazonaws.com
+            - DB_PORT= 3306
+            - DB_TABLE= NaturaliStone
 volumes:
     certs:
     html:
