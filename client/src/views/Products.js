@@ -16,7 +16,6 @@ const Products = ({focus, setFocus}) => {
   const values = useSelector(state => state.product_values)
   const userLocal = JSON.parse(localStorage.getItem('user'))
 
-
   useEffect(()=>{
       if(userLocal && !user.length){
         dispatch(getEmployeeById(userLocal.SellerID))
@@ -24,8 +23,9 @@ const Products = ({focus, setFocus}) => {
 
     useEffect(()=>{
         if(!allProducts?.length ) dispatch(getFiltered('','','','','','',''))
-        },[allProducts])
-    if(userLocal && user){
+        },[allProducts, values])
+
+    if(user){
       if(user.length && values && allProducts){
         return(
           <>

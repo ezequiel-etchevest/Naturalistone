@@ -246,7 +246,7 @@ const ProductsFilters = ({allProducts, setFilteredProducts, values}) => {
           <Box display={'flex'} alignItems={'center'} flexDir={'row'} h={'4.2vh'}>
             <PriceSlider  setFilters={setFilters} filters={filters} limit={limit} setLimit={setLimit} values={values}/>
             <Divider orientation={'vertical'} h={'5vh'} ml={'2vw'}/>
-            <Tooltip label={'Clear all filters'} fontWeight={'hairline'}>      
+            <Tooltip placement={'bottom-start'} label={'Clear all filters'} fontWeight={'hairline'}>      
             <IconButton
               icon={ <AiOutlineClear/>}
               variant={'unstyled'} 

@@ -274,7 +274,7 @@ const Filters = ({user, seller_invoices, setFocusFilter, seller_values}) => {
             </Select>
             </Box>
         <Divider orientation={'vertical'} h={'5vh'}/>
-        <Tooltip label={'Clear all filters'} fontWeight={'hairline'}>      
+        <Tooltip placement={'bottom-start'} label={'Clear all filters'} fontWeight={'hairline'}>      
         <IconButton
             icon={ <AiOutlineClear/>}
             variant={'unstyled'} 

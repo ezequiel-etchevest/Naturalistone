@@ -13,7 +13,7 @@ const LinkItems = [
   { name: 'Home', icon: FaHome },
   { name: 'Quotes', icon: FaFileInvoiceDollar },
   { name: 'Inventory', icon: FaBoxOpen },
-  { name: 'Invoice Errors', icon: BiError },
+  { name: 'Invoice-errors', icon: BiError },
   { name: 'Orders', icon: IoMdBoat },
   { name: 'Log Out', icon: CgLogOut },
   ];
@@ -64,7 +64,7 @@ const SideBar = ({user, focus, setFocus}) => {
           icon={link.icon}
           mt={'4vh'}
         >
-          {link.name}
+          {link.name === 'Invoice-errors' ? 'Invoice Errors' : link.name}
         </NavItem>
         )) : 
         LinkItems.map((link) => (
