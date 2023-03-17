@@ -14,7 +14,6 @@ const LogInForm = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
   let employees = useSelector((state)=>state?.employees)
-  console.log({employees})
   const valEmailEmployee = (inputEmail) => {
       const user = employees?.find( e => e.Username === inputEmail)
       if(user) return true

@@ -106,12 +106,14 @@ const Filters = ({user, seller_invoices, setFocusFilter, seller_values}) => {
     ))
     setFocusFilter('All')
   }
-  const uniqueSellerIDs = seller_invoices?.reduce((acc, cur) => {
+  
+  const uniqueSellerIDs = Object.entries(seller_invoices).length ? seller_invoices.reduce((acc, cur) => {
     if (!acc.includes(cur.SellerID)) {
       acc.push(cur.SellerID);
     }
     return acc;
-  }, []);
+  }, []) : ( [] )
+
   const matchedSellers = seller_values?.filter((seller) => {
     return uniqueSellerIDs.includes(seller.sellerID);
   });
@@ -221,57 +223,58 @@ const Filters = ({user, seller_invoices, setFocusFilter, seller_values}) => {
             </Box>
             </Box>
              {/*Selects */}
-          <HStack w={'30vw'}> 
+          <Box 
+            w={'30vw'} 
+            display={'flex'} 
+            justifyContent={validateSeller() === true ? 'space-between' : 'flex-end'}>  
             <Select
-          onChange={(e)=>handleTimeSelect(e)} 
-          w={'11vw'}
-          variant='outline' 
-          h={'4.4vh'}
-          fontSize={'xs'}            
-          bg={'web.sideBar'}
-          color={'web.text2'}
-          borderColor={'web.border'}
-          cursor={'pointer'}
-          _focus={{
-            borderColor: 'logo.orange',
-            boxShadow: '0 0.5px 0.5px rgba(229, 103, 23, 0.075)inset, 0 0 5px rgba(255,144,0,0.6)'
-          }}>
-          <option value='All' className="options">All time</option>
-          <option value='Lastweek' className="options">Last week</option>
-          <option value='Lastmonth' className="options">Last month</option>
-          {
-          }
+              onChange={(e)=>handleSellerSelect(e)}
+              display={validateSeller() === true ? 'unset' : 'none' }
+              w={'15vw'}
+              variant='outline' 
+              h={'4.4vh'}
+              fontSize={'xs'}            
+              bg={'web.sideBar'}
+              color={'web.text2'}
+              borderColor={'web.border'}
+              cursor={'pointer'}
+              value={inputValues.selectSeller}
+              _focus={{
+                borderColor: 'logo.orange',
+                boxShadow: '0 0.5px 0.5px rgba(229, 103, 23, 0.075)inset, 0 0 5px rgba(255,144,0,0.6)'
+              }}>
+              <option value='' className="options">Select seller</option>
+              {
+                validateSeller() === true ? (
+                  matchedSellers?.map((e, i) => {
+                      return(
+                        <option key={i} className={'options'} value={e.sellerID}>{e.name}</option>
+                  )})
+                      
+                  ): ( null)
+              }
             </Select>
             <Select
-          onChange={(e)=>handleSellerSelect(e)}
-          display={validateSeller() === true ? 'unset' : 'none'}  
-          w={'15vw'}
-          variant='outline' 
-          h={'4.4vh'}
-          fontSize={'xs'}            
-          bg={'web.sideBar'}
-          color={'web.text2'}
-          borderColor={'web.border'}
-          cursor={'pointer'}
-          value={inputValues.selectSeller}
-          _focus={{
-            borderColor: 'logo.orange',
-            boxShadow: '0 0.5px 0.5px rgba(229, 103, 23, 0.075)inset, 0 0 5px rgba(255,144,0,0.6)'
-          }}>
-          <option value='' className="options">Select seller</option>
-          {
-            validateSeller() === true ? (
-              matchedSellers?.map((e, i) => {
-                  return(
-                    <option key={i} className={'options'} value={e.sellerID}>{e.name}</option>
-              )})
-                  
-              ): ( null)
-          }
+              onChange={(e)=>handleTimeSelect(e)} 
+              w={'11vw'}
+              variant='outline' 
+              h={'4.4vh'}
+              fontSize={'xs'}            
+              bg={'web.sideBar'}
+              color={'web.text2'}
+              borderColor={'web.border'}
+              cursor={'pointer'}
+              _focus={{
+                borderColor: 'logo.orange',
+                boxShadow: '0 0.5px 0.5px rgba(229, 103, 23, 0.075)inset, 0 0 5px rgba(255,144,0,0.6)'
+              }}>
+              <option value='All' className="options">All time</option>
+              <option value='Lastweek' className="options">Last week</option>
+              <option value='Lastmonth' className="options">Last month</option>
             </Select>
-            </HStack>
+            </Box>
         <Divider orientation={'vertical'} h={'5vh'}/>
-        <Tooltip label={'Clear all filters'} fontWeight={'hairline'}>      
+        <Tooltip placement={'bottom-start'} label={'Clear all filters'} fontWeight={'hairline'}>      
         <IconButton
             icon={ <AiOutlineClear/>}
             variant={'unstyled'} 
