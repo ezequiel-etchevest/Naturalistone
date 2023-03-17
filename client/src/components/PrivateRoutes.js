@@ -7,14 +7,14 @@ export const PrivateRoute = ({children}) => {
   const userLocal = JSON.parse(localStorage.getItem('user'))
   const user = useSelector(state => state.user)
   
-  let isAuthenticated = (userLocal) => {
+  let isAuthenticated = (user) => {
     let val = () => {
-      if ((userLocal)) return true
+      if ((user)) return true
       else return false
     }
     return val()
     }
-  if (isAuthenticated(user)) {
+  if (isAuthenticated(userLocal)) {
     return children
   }
   return (<Navigate to="/redirect" />)
