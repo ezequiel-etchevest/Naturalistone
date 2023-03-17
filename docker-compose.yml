@@ -1,0 +1,206 @@
+# version: "3.9"
+# services: 
+#     expressapp:
+#         container_name: expressapp
+#         build: ./api
+#         expose: 
+#             - 5000
+#         volumes:
+#             - ./api:/usr/src/app
+#         environment:
+#             - MYSQL_USER=admin
+#             - MYSQL_PASSWORD=Ra7878782
+#             - MYSQL_HOST=naturalistone.cfbecwildn3j.us-east-1.rds.amazonaws.com
+#             - MYSQL_DATABASE=NaturaliStone
+#     reactapp:
+#         container_name: reactapp
+#         build: ./client
+#         expose: 
+#             - 3000
+#         depends_on:
+#             - expressapp
+#         volumes:
+#             - ./client:/usr/src/app
+#     nginx:
+#         build: ./nginx
+#         ports:
+#             - 80:80
+#         depends_on:
+#             - expressapp
+#             - reactapp
+#             - nginx-proxy
+#             - letsencrypt
+#         environment:
+#             - VIRTUAL_HOST=internal-naturalistone.com ,www.internal-naturalistone.com 
+#             - LETSENCRYPT_HOST=internal-naturalistone.com ,www.internal-naturalistone.com   
+#         restart: always
+#     nginx-proxy:
+#         image: jwilder/nginx-proxy
+#         restart: always
+#         ports:
+#             - "80:80"
+#             - "443:443"
+#         volumes:
+#             - /var/run/docker.sock:/tmp/docker.sock:ro
+#             - certs:/etc/nginx/certs:ro
+#             - vhostd:/etc/nginx/vhost.docker
+#             - html:/usr/share/nginx/html
+#         labels:
+#             - com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy
+#     letsencrypt:
+#         image: jrcs/letsencrypt-nginx-proxy-letsencrypt_nginx_proxy_companion
+#         restart: always
+#         environment:
+#         - NGINX_PROXY_CONTAINER=nginx-proxy
+#         volumes:
+#             - certs:/etc/nginx/certs:rw
+#             - /var/run/docker.sock:/var/run/docker.sock:ro
+#             - vhostd:/etc/nginx/vhost.d
+#             - html:/usr/share/nginx/html
+# volumes:
+#     certs:
+#     html:
+#     vhostd:
+
+# version: "3.9"
+# services: 
+#   expressapp:
+#     container_name: expressapp
+#     build: ./api
+#     expose: 
+#       - 5000
+#     volumes:
+#       - ./api:/usr/src/app
+#   reactapp:
+#     container_name: reactapp
+#     build: ./client
+#     expose: 
+#       - 3000
+#     volumes:
+#       - ./client:/usr/src/app
+#     depends_on:
+#       - expressapp
+#     environment:
+#       - REACT_APP_API_URL=http://expressapp:5000
+#   nginx:
+#     build: ./nginx
+#     ports:
+#       - 8080:80
+#     depends_on:
+#       - expressapp
+#       - reactapp
+#       - nginx-proxy
+#       - acme-companion
+#     environment:
+#       - VIRTUAL_HOST=internal-naturalistone.com,www.internal-naturalistone.com
+#       - LETSENCRYPT_HOST=internal-naturalistone.com,www.internal-naturalistone.com
+#     restart: always
+#   nginx-proxy:
+#     image: jwilder/nginx-proxy
+#     restart: always
+#     ports:
+#       - 80:80
+#       - 443:443
+#     volumes:
+#       - certs:/etc/nginx/certs:ro
+#       - /var/www/pedia/.well-known/acme-challenge/test.txt
+#       - vhostd:/etc/nginx/vhost.d
+#       - html:/usr/share/nginx/html
+#       - acme:/etc/nginx/acme
+#       - /var/run/docker.sock:/tmp/docker.sock:ro
+#     labels:
+#       - com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy
+#   acme-companion:
+#     image: nginxproxy/acme-companion
+#     restart: always
+#     environment:
+#       - NGINX_PROXY_CONTAINER=nginx-proxy
+#     volumes:
+#       - /var/run/docker.sock:/var/run/docker.sock:ro
+#       - certs:/etc/nginx/certs:rw
+#       - acme:/etc/acme.sh
+#       - vhostd:/etc/nginx/vhost.d
+#       - html:/usr/share/nginx/html
+#   # db:
+#   #   container_name: mysql
+#   #   image: mysql:8.0
+#   #   command: --default-authentication-plugin=mysql_native_password
+#   #   restart: unless-stopped
+#   #   expose:
+#   #     - "3306"
+#   #   volumes:
+#   #     - dbdata:/var/lib/mysql
+#   #   environment:
+#   #     - MYSQL_USER=admin
+#   #     - MYSQL_PASSWORD=Ra7878782
+#   #     - MYSQL_HOST=naturalistone.cfbecwildn3j.us-east-1.rds.amazonaws.com
+#   #     - MYSQL_DATABASE=NaturaliStone
+# volumes:
+#   certs:
+#   html:
+#   vhostd:
+#   acme:
+version: "3.9"
+services: 
+  expressapp:
+    container_name: expressapp
+    build: ./api
+    expose: 
+      - 5000
+    volumes:
+      - ./api:/usr/src/app
+  reactapp:
+    container_name: reactapp
+    build: ./client
+    expose: 
+      - 3000
+    volumes:
+      - ./client:/usr/src/app
+    depends_on:
+      - expressapp
+    environment:
+      - REACT_APP_API_URL=http://expressapp:5000
+  nginx:
+    build: ./nginx
+    ports:
+      - 8080:80
+    depends_on:
+      - expressapp
+      - reactapp
+      - nginx-proxy
+      - acme-companion
+    environment:
+      - VIRTUAL_HOST=internal-naturalistone.com,www.internal-naturalistone.com
+      - LETSENCRYPT_HOST=internal-naturalistone.com,www.internal-naturalistone.com
+    restart: always
+  nginx-proxy:
+    image: jwilder/nginx-proxy
+    restart: always
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - certs:/etc/nginx/certs:ro
+      - /var/www/pedia/.well-known/acme-challenge/test.txt
+      - vhostd:/etc/nginx/vhost.d
+      - html:/usr/share/nginx/html
+      - acme:/etc/nginx/acme
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+    labels:
+      - com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy
+  acme-companion:
+    image: nginxproxy/acme-companion
+    restart: always
+    environment:
+      - NGINX_PROXY_CONTAINER=nginx-proxy
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - certs:/etc/nginx/certs:rw
+      - acme:/etc/acme.sh
+      - vhostd:/etc/nginx/vhost.d
+      - html:/usr/share/nginx/html
+volumes:
+  certs:
+  html:
+  vhostd:
+  acme:

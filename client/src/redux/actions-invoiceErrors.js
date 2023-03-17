@@ -7,7 +7,7 @@ export function getInvoiceErrors() {
     return async function(dispatch){
         try{
             
-            let {data} = await axios.get('http://localhost:5000/invoiceErrors')
+            let {data} = await axios.get('/invoiceErrors')
             dispatch({
                 type: GET_INVOICE_ERRORS,
                 payload: data
@@ -22,7 +22,7 @@ export function getInvoiceErrorsFiltered(sellerID, type) {
     return async function(dispatch){
         try{
             
-            let {data} = await axios.get(`http://localhost:5000/invoiceErrors/filtered?id=${sellerID}&type=${type}`)
+            let {data} = await axios.get(`/invoiceErrors/filtered?id=${sellerID}&type=${type}`)
             dispatch({
                 type: GET_INVOICE_ERRORS_FILTERED,
                 payload: data

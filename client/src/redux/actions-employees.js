@@ -10,7 +10,7 @@ export function getEmployees() {
     return async function(dispatch){
         try{
             
-            let {data} = await axios.get('http://localhost:5000/login')
+            let {data} = await axios.get('/login')
             dispatch({
                 type: GET_EMPLOYEES,
                 payload: data
@@ -25,7 +25,7 @@ export function getEmployeeById(id){
     return async function(dispatch){
 
         try{
-            let {data} = await axios.get(`http://localhost:5000/seller/${id}`)
+            let {data} = await axios.get(`/seller/${id}`)
             const saveData = localStorage.setItem('user', JSON.stringify(data[0]))
 
             dispatch(
