@@ -32,12 +32,7 @@ const Home = ({focus, setFocus}) => {
             <HomeContainer currentMonth={currentMonth}/>
           </>
         )
-    }else return (
-      <>
-      <Redirect/>
-      </>
-    )
-  }
+  }}
  
 
 export default Home

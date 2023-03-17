@@ -24,9 +24,8 @@ const ProductsFilters = ({allProducts, setFilteredProducts, values}) => {
     thickness:'',
     material: '',
     search:'',
-    price: [values.priceMaxmin.min, values.priceMaxmin.max]
+    price: [values.priceMaxmin.min === null ? 0 : values.priceMaxmin.min, values.priceMaxmin.max]
   })
-
   const [limit, setLimit] = useState([values.priceMaxmin.min, values.priceMaxmin.max])
 
   const handleFinish = (e) => {
