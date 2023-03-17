@@ -58,7 +58,7 @@ const ModelTr = ({e, user}) => {
       <Td onClick={() => handleClickProduct()} fontSize={'1.7vh'} textAlign={'match-parent'}>{e.Size}</Td>
       <Td onClick={() => handleClickProduct()} fontSize={'1.7vh'} textAlign={'center'}> {e.Thickness} </Td>
       <Td onClick={() => handleClickProduct()} fontSize={'1.7vh'} textAlign={'center'}> {e.Finish === null ? '-' : e.Finish} </Td>
-      <Td onClick={() => handleClickProduct()} fontSize={'1.7vh'} isNumeric>${e.Price.toLocaleString('en-US')}</Td>
+      <Td onClick={() => handleClickProduct()} fontSize={'1.7vh'} isNumeric>${e.Price?.toLocaleString('en-US')}</Td>
       <Td onClick={() => handleClickProduct()} fontSize={'1.7vh'} textAlign={'center'}>{e.InStock_Available === null ? 0 : e.InStock_Available}</Td>
       <Td onClick={() => handleClickProduct()} fontSize={'1.7vh'} textAlign={'center'}>{e.Incoming_Available === null ? 0 : e.Incoming_Available}</Td>
       <Td onClick={() => handleClickProduct()} fontSize={'1.7vh'} textAlign={'center'}>{e.NextArrival === undefined ? '-' : e.NextArrival}</Td>
