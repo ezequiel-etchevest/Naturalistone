@@ -1,12 +1,14 @@
 import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
+import { Spinner, Center } from '@chakra-ui/react';
+import { useNavigate } from 'react-router-dom';
 
 export const PrivateRoute = ({children}) => {
 
   const userLocal = JSON.parse(localStorage.getItem('user'))
   const user = useSelector(state => state.user)
-  
+  const navigate = useNavigate()
  
   let isAuthenticated = (user) => {
     let val = (user) => {
