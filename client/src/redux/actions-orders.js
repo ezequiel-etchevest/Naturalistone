@@ -9,7 +9,7 @@ export const CLEAN_ORDERS_PRODUCTS = 'CLEAN_ORDERS_PRODUCTS'
 export function getOrders() {
   return async function(dispatch){
     try{ 
-        let {data} = await axios.get(`http://localhost:5000/orders`)
+        let {data} = await axios.get(`/orders`)
         dispatch(
         {
             type: GET_ORDERS,
@@ -25,7 +25,7 @@ export function getOrders() {
 export function getOrdersByID(id) {
     return async function(dispatch){
       try{ 
-          let {data} = await axios.get(`http://localhost:5000/orders/${id}`)
+          let {data} = await axios.get(`/orders/${id}`)
           dispatch(
           {
               type: GET_ORDERS_BY_ID,
@@ -41,7 +41,7 @@ export function getOrdersByID(id) {
 export function getOrderProducts(id) {
   return async function(dispatch){
     try{ 
-        let {data} = await axios.get(`http://localhost:5000/orders/products/${id}`)
+        let {data} = await axios.get(`/orders/products/${id}`)
         dispatch(
         {
             type: GET_ORDERS_PRODUCTS,
@@ -72,8 +72,8 @@ export function cleanOrderProducts() {
 export function cancelOrderStatus(id) {
   return async function(dispatch){
     try{ 
-        let { response } = await axios.patch(`http://localhost:5000/orders/cancelorder/${id}`)
-        let {data} = await axios.get(`http://localhost:5000/orders/${id}`)
+        let { response } = await axios.patch(`/orders/cancelorder/${id}`)
+        let {data} = await axios.get(`/orders/${id}`)
         dispatch(
         {
             type: PATCH_ORDER_STATUS,

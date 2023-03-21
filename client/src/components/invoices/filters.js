@@ -243,7 +243,7 @@ const Filters = ({user, seller_invoices, setFocusFilter, seller_values}) => {
                 borderColor: 'logo.orange',
                 boxShadow: '0 0.5px 0.5px rgba(229, 103, 23, 0.075)inset, 0 0 5px rgba(255,144,0,0.6)'
               }}>
-              <option value='' className="options">Select seller</option>
+              <option value='' className="options">All seller</option>
               {
                 validateSeller() === true ? (
                   matchedSellers?.map((e, i) => {
@@ -274,7 +274,7 @@ const Filters = ({user, seller_invoices, setFocusFilter, seller_values}) => {
             </Select>
             </Box>
         <Divider orientation={'vertical'} h={'5vh'}/>
-        <Tooltip label={'Clear all filters'} fontWeight={'hairline'}>      
+        <Tooltip placement={'bottom-start'} label={'Clear all filters'} fontWeight={'hairline'}>      
         <IconButton
             icon={ <AiOutlineClear/>}
             variant={'unstyled'} 
