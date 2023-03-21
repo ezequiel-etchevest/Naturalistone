@@ -92,7 +92,7 @@ const List = ({seller_invoices, user}) => {
         justifyContent={'center'}
         ml={'1vh'}
         h={'75vh'}
-        w={'78.8vw'} 
+        w={'82.8vw'} 
         >
           <Box
             maxHeight={'73vh'}
@@ -114,7 +114,7 @@ const List = ({seller_invoices, user}) => {
             border={'1px solid'} 
             rounded={'md'} 
             p={'3vh'}
-            w={'76vw'}
+            w={'80vw'}
             >
               {
                 seller_invoices.length ? (

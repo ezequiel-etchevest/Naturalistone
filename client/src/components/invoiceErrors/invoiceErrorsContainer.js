@@ -16,7 +16,7 @@ const InvoiceErrorsContainer = ({invoice_errors, user, sellers, invoice_errors_b
     return(
       <Box
         userSelect={'none'}
-        ml={'20vw'}
+        ml={'16vw'}
         bg={'web.bg'}> 
         <InvoiceErrorsFilters 
           user={user} 
@@ -24,9 +24,6 @@ const InvoiceErrorsContainer = ({invoice_errors, user, sellers, invoice_errors_b
           invoice_errors_by_filter={invoice_errors_by_filter} 
           invoice_errors={invoice_errors} 
           setFilteredInvoicesErrors={setFilteredInvoicesErrors}/>
-          {
-
-          }
         <InvoiceErrorsTable 
           invoice_errors={invoice_errors} 
           user={user} 
@@ -36,7 +33,7 @@ const InvoiceErrorsContainer = ({invoice_errors, user, sellers, invoice_errors_b
     )
   }else{
     return(
-      <Center ml={'20vw'} w={'80vw'} bg={'web.bg'} h={'92vh'}>
+      <Center ml={'16vw'} w={'84vw'} bg={'web.bg'} h={'92vh'}>
         <Spinner thickness={'4px'} size={'xl'} color={'logo.orange'}/>
       </Center>
     )

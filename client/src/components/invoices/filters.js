@@ -126,7 +126,7 @@ const Filters = ({user, seller_invoices, setFocusFilter, seller_values}) => {
           ml={'2vw'}
           mr={'2vw'} 
           h={'17vh'}
-          w={'76vw'}
+          w={'80vw'}
           justifyContent={'space-between'}
           >
           {/*Inputs and select */}

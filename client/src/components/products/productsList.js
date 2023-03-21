@@ -53,16 +53,16 @@ const ModelTr = ({e, user}) => {
         color: 'logo.orange'
       }} 
       >
-      <Td onClick={() => handleClickProduct()} fontSize={'xs'} textAlign={'match-parent'}>{e.ProductName}</Td>
-      <Td onClick={() => handleClickProduct()} fontSize={'xs'} textAlign={'match-parent'}>{e.Material} - {e.Type}</Td>
-      <Td onClick={() => handleClickProduct()} fontSize={'xs'} textAlign={'match-parent'}>{e.Size}</Td>
-      <Td onClick={() => handleClickProduct()} fontSize={'xs'} textAlign={'center'}> {e.Thickness} </Td>
-      <Td onClick={() => handleClickProduct()} fontSize={'xs'} textAlign={'match-parent'}> {e.Finish === null ? '-' : e.Finish} </Td>
-      <Td onClick={() => handleClickProduct()} fontSize={'xs'} isNumeric>${ e.Price ? e.Price.toLocaleString('en-US') : '.'}</Td>
-      <Td onClick={() => handleClickProduct()} fontSize={'xs'} textAlign={'center'}>{e.InStock_Available === null ? 0 : e.InStock_Available}</Td>
-      <Td onClick={() => handleClickProduct()} fontSize={'xs'} textAlign={'center'}>{e.Incoming_Available === null ? 0 : e.Incoming_Available}</Td>
-      <Td onClick={() => handleClickProduct()} fontSize={'xs'} textAlign={'center'}>{e.NextArrival === undefined ? '-' : e.NextArrival}</Td>
-      <Td pl={'3.5vw'}>{ validateSeller() === false ? (e.Discontinued_Flag === 'True' ? <ImCheckboxChecked color='logo.orange'/> : <ImCheckboxUnchecked color='logo.orange'/> ) : (<Switch  onChange={() => handleClickSwitch()} isChecked={flag} colorScheme={'orange'} size={'sm'}/>) }</Td>
+      <Td maxW={'4vw'} onClick={() => handleClickProduct()} fontSize={'xs'} textAlign={'match-parent'}>{e.ProductName}</Td>
+      <Td maxW={'8vw'} onClick={() => handleClickProduct()} fontSize={'xs'} textAlign={'match-parent'}>{e.Material} - {e.Type}</Td>
+      <Td maxW={'4vw'} onClick={() => handleClickProduct()} fontSize={'xs'} textAlign={'match-parent'}>{e.Size}</Td>
+      <Td maxW={'4vw'} onClick={() => handleClickProduct()} fontSize={'xs'} textAlign={'center'}> {e.Thickness} </Td>
+      <Td maxW={'4vw'} onClick={() => handleClickProduct()} fontSize={'xs'} textAlign={'match-parent'}> {e.Finish === null ? '-' : e.Finish} </Td>
+      <Td maxW={'4vw'} onClick={() => handleClickProduct()} fontSize={'xs'} isNumeric>${ e.Price ? e.Price.toLocaleString('en-US') : '.'}</Td>
+      <Td maxW={'4vw'} onClick={() => handleClickProduct()} fontSize={'xs'} textAlign={'center'}>{e.InStock_Available === null ? 0 : e.InStock_Available}</Td>
+      <Td maxW={'4vw'} onClick={() => handleClickProduct()} fontSize={'xs'} textAlign={'center'}>{e.Incoming_Available === null ? 0 : e.Incoming_Available}</Td>
+      <Td maxW={'4vw'} onClick={() => handleClickProduct()} fontSize={'xs'} textAlign={'center'}>{e.NextArrival === undefined ? '-' : e.NextArrival}</Td>
+      <Td maxW={'4vw'} pl={'3.5vw'}>{ validateSeller() === false ? (e.Discontinued_Flag === 'True' ? <ImCheckboxChecked color='logo.orange'/> : <ImCheckboxUnchecked color='logo.orange'/> ) : (<Switch  onChange={() => handleClickSwitch()} isChecked={flag} colorScheme={'orange'} size={'sm'}/>) }</Td>
       </Tr>
   )
 }
@@ -92,7 +92,7 @@ const ProductList = ({ allProducts, user }) => {
       display={'flex'}
       justifyContent={'center'}
       h={'69vh'}
-      w={'78.8vw'}
+      w={'82.8vw'}
       ml={'1vh'} 
       >
       <Box
@@ -115,14 +115,14 @@ const ProductList = ({ allProducts, user }) => {
         border={'1px solid'} 
         rounded={'md'} 
         p={'3vh'}
-        w={'76vw'}
+        w={'80vw'}
         >
         {allProducts.length && !Object.entries(productErrors).length ? 
-        <TableContainer  mr={'1vw'}>
+        <TableContainer  mr={'1vw'} >
           <Table color={'web.text'} variant={'simple'} size={'sm'}>
             <Thead h={'6vh'}>
               <Tr>
-                <Th color={'web.text2'} >Product Name</Th>
+                <Th color={'web.text2'}>Product Name</Th>
                 <Th color={'web.text2'} textAlign={'center'} >Type</Th>
                 <Th color={'web.text2'} textAlign={'center'}>Size</Th>
                 <Th color={'web.text2'} >Thickness</Th>

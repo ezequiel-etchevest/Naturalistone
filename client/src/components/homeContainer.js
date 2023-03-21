@@ -5,7 +5,7 @@ const HomeContainer = ({currentMonth}) => {
 
   return(
     <>
-      <Box userSelect={'none'} h={'92vh'} ml={'20vw'} bg={'web.bg'} display={'flex'} flexDir={'column'}>
+      <Box userSelect={'none'} h={'92vh'} ml={'16vw'} bg={'web.bg'} display={'flex'} flexDir={'column'}>
         <chakra.h1
           placeContent={'center'}
           textAlign={'center'}

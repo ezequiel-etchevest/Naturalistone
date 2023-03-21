@@ -95,8 +95,8 @@ const ProductsFilters = ({allProducts, setFilteredProducts, values}) => {
           mr={'2vw'}
           mb={'6vh'} 
           h={'17vh'}
-          w={'76vw'}
-        justifyContent={'center'}
+          w={'80vw'}
+          justifyContent={'center'}
         >
           {/* -------------------- SEARCH INPUT ------------------------------ */}
         <Box ml={'2vh'} w={'15vw'} mt={'8vh'} display={'flex'} alignSelf={'flex-start'} >
@@ -133,8 +133,8 @@ const ProductsFilters = ({allProducts, setFilteredProducts, values}) => {
           flexDir={'row'} 
           justifyContent={'space-between'}
           alignItems={'center'} 
-          w={'76vw'}
-          ml={'2vh'}
+          w={'80vw'}
+          ml={'1vw'}
           >
           <Box 
             display={'flex'} 

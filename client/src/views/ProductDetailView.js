@@ -38,7 +38,7 @@ const ProductDetailView = ({focus, setFocus}) => {
 
               <ProductDetail product={product} history_prices={history_prices} user={userLocal}/>
               ) : (
-              <Center ml={'20vh'} bg={'web.bg'} h={'92vh'}>
+              <Center ml={'16vh'} bg={'web.bg'} h={'92vh'}>
                <Spinner thickness={'4px'} size={'xl'} color={'logo.orange'}/>
               </Center>)
             }

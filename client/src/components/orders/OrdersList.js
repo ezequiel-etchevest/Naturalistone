@@ -57,7 +57,7 @@ const OrdersList = ({orders}) => {
         display={'flex'}
         justifyContent={'center'}
         h={'92vh'}
-        w={'80vw'}
+        w={'84vw'}
         >
           <Box
             maxHeight={'80vh'}

@@ -53,7 +53,7 @@ const InvoiceDetail = ({focus, setFocus}) => {
                   deliveries={deliveries}
                   />
                 ):(
-                <Center ml={'20vh'} bg={'web.bg'} h={'92vh'}>
+                <Center ml={'16vh'} bg={'web.bg'} h={'92vh'}>
                   <Spinner thickness={'4px'} size={'xl'} color={'logo.orange'}/>
                 </Center>
                 )

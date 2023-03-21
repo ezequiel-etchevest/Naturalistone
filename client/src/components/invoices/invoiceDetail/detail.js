@@ -12,16 +12,18 @@ const Detail = ({invoice, payments, invoice_products, user, deliveries}) => {
       <Box
         userSelect={'none'}
         bg={'web.bg'}  
-        ml={'20vw'} 
+        ml={'16vw'} 
         h={'92vh'}
         display={'flex'}
         flexDir={'column'}
         >
         {/*Quote Details & Product Details*/}
+        <Box display={'flex'} placeContent={'center'}>
         <Box
           display={'flex'}
           flexDir={'row'}
           >
+
             {
               Object.entries(payments).length ? (
                 <InvoiceDetailList invoice={invoice} payments={payments}/>
@@ -49,18 +51,20 @@ const Detail = ({invoice, payments, invoice_products, user, deliveries}) => {
             )
           }
         </Box>
+        </Box>
        </Box>
         {/*Payment Details & Buttons*/}
+        <Box display={'flex'} placeContent={'center'}>
         <Box
           display={'flex'}
           flexDir={'reverse'}
-          w={'80vw'}
-          justifyContent={'space-between'}
+          w={'84vw'}
+          justifyContent={'center'}
           >
             {/*Payments Box*/}
             <Box
               mt={'3vh'}
-              ml={'2vw'}
+              ml={'2.8vw'}
               mr={'1vw'}
               p={'1vw'} 
               border={'1px solid'} 
@@ -104,6 +108,7 @@ const Detail = ({invoice, payments, invoice_products, user, deliveries}) => {
             </Box>
         </Box>
       </Box>	
+      </Box>
       )
   }
 

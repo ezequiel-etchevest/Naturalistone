@@ -15,14 +15,14 @@ const InfoContainer = ({seller_invoices, user, focusFilter, setFocusFilter, sell
         return(
             <Box
             userSelect={'none'}
-            ml={'20vw'}
+            ml={'16vw'}
             bg={'web.bg'}> 
             <Filters seller_values={seller_values} seller_invoices={seller_invoices} user={user} setFocusFilter={setFocusFilter} focusFilter={focusFilter}/>
             <List seller_invoices={seller_invoices} user={user} />
             </Box>
         )}else{
             return(
-              <Center ml={'20vw'} w={'80vw'} bg={'web.bg'} h={'92vh'}>
+              <Center ml={'16vw'} w={'84vw'} bg={'web.bg'} h={'92vh'}>
                 <Spinner thickness={'4px'} size={'xl'} color={'logo.orange'}/>
               </Center>
             )

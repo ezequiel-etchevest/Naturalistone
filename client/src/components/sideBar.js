@@ -27,9 +27,9 @@ const SideBar = ({user, focus, setFocus}) => {
       top={'0vh'}
 	    pos={'fixed'}
 	    bg={'web.sideBar'}
-      w={'20vw'}
+      w={'16vw'}
       h={'100vh'}
-      pl={'2vw'}
+      pl={'1vw'}
       borderRight={'1px solid'}
       borderColor={'web.border'}
 	    > 
@@ -41,9 +41,8 @@ const SideBar = ({user, focus, setFocus}) => {
       <Text
       color={'web.text'} 
       fontWeight={'normal'} 
-      letterSpacing={'wide'} 
-      fontSize={'2.9vh'} 
-      pl={'1.5vh'}> 
+      fontSize={'sm'} 
+      pl={'1vw'}> 
         {user[0].FirstName} {user[0].LastName}
       </Text>
     </HStack>
@@ -62,7 +61,7 @@ const SideBar = ({user, focus, setFocus}) => {
           link={link}
           key={link.name}
           icon={link.icon}
-          mt={'4vh'}
+          mt={'2vh'}
         >
           {link.name === 'Invoice-errors' ? 'Invoice Errors' : link.name}
         </NavItem>
@@ -75,7 +74,7 @@ const SideBar = ({user, focus, setFocus}) => {
           link={link}
           key={link.name}
           icon={link.icon}
-          mt={'4vh'}
+          mt={'2vh'}
           >
             {link.name}
         </NavItem>
@@ -102,7 +101,7 @@ const SideBar = ({user, focus, setFocus}) => {
       <Box
         color={focus === link.name ? '#E47424' : 'white'}
         bg={'none'}
-        fontSize={'2.3vh'}
+        fontSize={'sm'}
         style={{ textDecoration: 'none' }}
         _focus={{ boxShadow: 'none' }}
         onClick={link.name === 'Log Out' ? ()=> {handleLogOut()} : ()=>{handleClick()}}
@@ -123,7 +122,7 @@ const SideBar = ({user, focus, setFocus}) => {
           {icon && (
             <Icon
               mr={'2vw'}
-              fontSize={'3.5vh'}
+              fontSize={'md'}
               _groupHover={{
                 color: '#E47424',
               }}

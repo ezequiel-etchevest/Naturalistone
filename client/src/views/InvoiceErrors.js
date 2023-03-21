@@ -2,8 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import SideBar from "../components/sideBar";
 import InvoiceErrorsContainer from '../components/invoiceErrors/invoiceErrorsContainer'
-import { Button } from "@chakra-ui/react";
-import { Link } from "react-router-dom";
+import Redirect from "./RedirectPage";
 import { getInvoiceErrors } from "../redux/actions-invoiceErrors";
 import { getSellers } from "../redux/actions-sellers";
 import { getEmployeeById } from '../redux/actions-employees';
@@ -46,10 +45,7 @@ const InvoiceErrors = ({focus, setFocus}) => {
     )
   }else return (
     <>
-    Go to log in
-      <Link to={'/login'}>
-        <Button>Log in</Button>
-      </Link>
+      <Redirect/>
     </>
   )
 }

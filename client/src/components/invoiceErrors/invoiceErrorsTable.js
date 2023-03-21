@@ -86,7 +86,7 @@ const InvoiceErrorsList = ({user, invoice_errors_by_filter, filteredInvoicesErro
         display={'flex'}
         justifyContent={'center'}
         h={'74vh'}
-        w={'80vw'}
+        w={'84vw'}
         >
           <Box
             maxHeight={'70vh'}

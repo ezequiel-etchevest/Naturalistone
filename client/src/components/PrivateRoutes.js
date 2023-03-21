@@ -1,39 +1,22 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
-import { Spinner, Center } from '@chakra-ui/react';
-import { useNavigate } from 'react-router-dom';
 
 export const PrivateRoute = ({children}) => {
 
   const userLocal = JSON.parse(localStorage.getItem('user'))
   const user = useSelector(state => state.user)
-  const navigate = useNavigate()
+  
  
   let isAuthenticated = (user) => {
-    let val = (user) => {
+    let val = () => {
       if ((user)) return true
       else return false
     }
-    return val(user)
+    return val()
     }
-
-    useEffect(()=>{},[user])
-    if(userLocal){
-      console.log('userLocal')
-      if(user.length){
-      console.log('user.length')
-        if(isAuthenticated(user)) return (children)
-        else {
-          console.log('isAuthenticated')
-          return navigate('/redirect')}
-      }
-      return(
-        <Center  bg={'web.bg'} h={'full'} w={'full'}>
-          <Spinner thickness={'4px'} ml={'0.5vw'} size={'xl'} color={'logo.orange'}/>
-        </Center>
-      )}else return <Navigate to='/redirect'/>
-          
-      }
-
-
+  if (isAuthenticated(userLocal)) {
+    return children
+  }
+  return (<Navigate to="/redirect" />)
+}

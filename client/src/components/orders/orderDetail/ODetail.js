@@ -20,7 +20,7 @@ const ODetail = ({order, order_products}) => {
               Object.entries(order).length ? (
                 <OrderDetailList order={order}/>
                 ) : (
-                <Center ml={'20vh'} bg={'web.bg'} h={'92vh'}>
+                <Center ml={'16vh'} bg={'web.bg'} h={'92vh'}>
                   <Spinner thickness={'4px'} size={'xl'} color={'logo.orange'}/>
                 </Center>
                 )

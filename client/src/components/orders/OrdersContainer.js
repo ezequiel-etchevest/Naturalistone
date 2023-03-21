@@ -5,7 +5,7 @@ const OrdersContainer = ({orders}) => {
 
     return(
         <Box
-        ml={'20vw'}
+        ml={'16vw'}
         bg={'web.bg'}
         userSelect={'none'}> 
             <OrdersList orders={orders}/>

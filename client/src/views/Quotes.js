@@ -8,14 +8,13 @@ import Redirect from "./RedirectPage";
 import { Text } from "@chakra-ui/react";
 
 
+
 const Quotes = ({focus, setFocus}) => {
   
   const dispatch = useDispatch()
   const seller_invoices = useSelector(state => state.seller_invoices)
   const user = useSelector(state => state.user)
-
   const [focusFilter, setFocusFilter] = useState('All')
-
   const userLocal = JSON.parse(localStorage.getItem('user'))
   const seller_values = useSelector(state => state.seller_values)
 
