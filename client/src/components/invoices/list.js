@@ -41,19 +41,19 @@ const ModelTr = ({e, validateSeller}) => {
           color: 'logo.orange'
         }}
         >
-        <Td fontSize={'1.7vh'} textAlign={'center'}>{e.Naturali_Invoice}</Td>
+        <Td fontSize={'xs'} textAlign={'center'}>{e.Naturali_Invoice}</Td>
         {
           validateSeller() ? (
-          <Td  fontSize={'1.7vh'}textAlign={'center'}>{e.SellerReference}</Td>
+          <Td  fontSize={'xs'}textAlign={'center'}>{e.SellerReference}</Td>
           ):(null)
         }
-        <Td fontSize={'1.7vh'}>{e.ProjectName}</Td>
-        <Td fontSize={'1.7vh'}>{e.Reference}</Td>
-        <Td fontSize={'1.7vh'} textAlign={'center'}>{e.InvoiceDate.split('T')[0]}</Td>
-        <Td fontSize={'1.7vh'} textAlign={'center'}>{e.Status}</Td>
-        <Td fontSize={'1.7vh'} isNumeric textAlign={'center'}>$ {e.Value.toLocaleString('en-US')} </Td>
-        <Td fontSize={'1.7vh'} textAlign={'center'} >{ e.Percentaje ? Math.round(e.Percentaje) : 0 } % </Td>
-        <Td fontSize={'1.7vh'} textAlign={'center'}>{ e.Payments?.length ? e.Payments[0][2] : '-'}</Td>
+        <Td fontSize={'xs'}>{e.ProjectName}</Td>
+        <Td fontSize={'xs'}>{e.Reference}</Td>
+        <Td fontSize={'xs'} textAlign={'center'}>{e.InvoiceDate.split('T')[0]}</Td>
+        <Td fontSize={'xs'} textAlign={'center'}>{e.Status}</Td>
+        <Td fontSize={'xs'} isNumeric textAlign={'center'}>$ {e.Value.toLocaleString('en-US')} </Td>
+        <Td fontSize={'xs'} textAlign={'center'} >{ e.Percentaje ? Math.round(e.Percentaje) : 0 } % </Td>
+        <Td fontSize={'xs'} textAlign={'center'}>{ e.Payments?.length ? e.Payments[0][2] : '-'}</Td>
       </Tr>
     )
 }

@@ -105,7 +105,7 @@ const ProductsFilters = ({allProducts, setFilteredProducts, values}) => {
             w={'80%'}
             minH={'4.5vh'}
             variant="unstyled"
-            placeholder={'Customer name'}
+            placeholder={'Product name'}
             textColor={'web.text2'}
             _placeholder={{ fontFamily: 'body', fontWeight: 'thin' }}
             size={"sm"}

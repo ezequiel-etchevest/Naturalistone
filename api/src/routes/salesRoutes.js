@@ -31,7 +31,7 @@ salesRouter.get('/:id', async function(req, res){
          LEFT JOIN Payments ON Sales.Naturali_Invoice = Payments.InvoiceID 
          LEFT JOIN Seller ON Sales.SellerID = Seller.SellerID 
          GROUP BY Sales.Naturali_Invoice
-         ORDER BY Sales.Naturali_Invoice DESC` 
+         ORDER BY Sales.InvoiceDate DESC` 
       } else {
         query_ =    `SELECT Sales.*, Projects.*, Customers.*, Payments.idPayments, Seller.FirstName, Seller.LastName, Seller.SellerReference, 
         GROUP_CONCAT(
@@ -42,7 +42,7 @@ salesRouter.get('/:id', async function(req, res){
         LEFT JOIN Seller ON Sales.SellerID = Seller.SellerID  
         WHERE Seller.SellerID = ${id}
         GROUP BY Sales.Naturali_Invoice
-        ORDER BY Sales.Naturali_Invoice DESC`;
+        ORDER BY Sales.InvoiceDate DESC`;
       }
     } else {
       const today = new Date().toISOString().split('T')[0]
@@ -59,7 +59,7 @@ salesRouter.get('/:id', async function(req, res){
         LEFT JOIN Seller ON Sales.SellerID = Seller.SellerID 
         WHERE InvoiceDate BETWEEN "${time === 'LastWeek' ? limitDateWeek : limitDateMonth}" AND "${today}" 
         GROUP BY Sales.Naturali_Invoice
-        ORDER BY Sales.Naturali_Invoice DESC`  
+        ORDER BY Sales.InvoiceDate DESC`  
       } else {
         query_ = `SELECT Sales.*, Projects.*, Customers.*, Payments.idPayments, Seller.FirstName, Seller.LastName, Seller.SellerReference,
         GROUP_CONCAT(
@@ -70,7 +70,7 @@ salesRouter.get('/:id', async function(req, res){
         LEFT JOIN Seller ON Sales.SellerID = Seller.SellerID
         WHERE InvoiceDate BETWEEN "${time === 'LastWeek' ? limitDateWeek : limitDateMonth}" AND "${today}" AND Seller.SellerID = ${id}
         GROUP BY Sales.Naturali_Invoice
-        ORDER BY Sales.Naturali_Invoice DESC`
+        ORDER BY Sales.InvoiceDate DESC`
       }
     }
   try{
@@ -317,7 +317,7 @@ salesRouter.get('/values/seller', async function(req, res){
                 LEFT JOIN Payments ON Sales.Naturali_Invoice = Payments.InvoiceID 
                 LEFT JOIN Seller ON Sales.SellerID = Seller.SellerID 
                 GROUP BY Sales.Naturali_Invoice
-                ORDER BY Sales.Naturali_Invoice DESC` 
+                ORDER BY Sales.InvoiceDate DESC` 
             
     try{
          mysqlConnection.query(query_, function(error, results, fields){
