@@ -28,17 +28,16 @@ function App() {
       <Routes>
         <Route path="/login" element= {<LogIn/>} />
         <Route path="/redirect" element= {<Redirect/>} />
-        <Route path="/home" element={<PrivateRoute><Home focus={focus} setFocus={setFocus}/></PrivateRoute>}/>
-        <Route path="/*" element={<PrivateRoute><Home focus={focus} setFocus={setFocus} /></PrivateRoute>}/>
-        <Route path="/quotes" element={<PrivateRoute><Quotes focus={focus} setFocus={setFocus}/></PrivateRoute>}/>
-        <Route path="/quotes/:id" element={<PrivateRoute><InvoiceDetail focus={focus} setFocus={setFocus}/></PrivateRoute>}/>
-        <Route path="/inventory" element={<PrivateRoute><Products focus={focus} setFocus={setFocus} /></PrivateRoute>}/>
-        <Route path="/products/:id" element={<PrivateRoute><ProductDetailView focus={focus} setFocus={setFocus} /></PrivateRoute>}/>
-        <Route path="/invoiceerrors" element={<PrivateRoute><InvoiceErrors focus={focus} setFocus={setFocus} /></PrivateRoute>}/>
-        <Route path="/orders" element={<PrivateRoute><Orders focus={focus} setFocus={setFocus} /></PrivateRoute>}/>
-        <Route path="/orders/:id" element={<PrivateRoute><OrderDetail focus={focus} setFocus={setFocus} /></PrivateRoute>}/>
-        <Route path="/warehouse" element={<PrivateRoute><Warehouse focus={focus} setFocus={setFocus} /></PrivateRoute>}/>
-        
+        <Route path="/*" element={<Home focus={focus} setFocus={setFocus} />}/>
+        <Route path="/home" element={<Home focus={focus} setFocus={setFocus}/>}/>
+        <Route path="/quotes" element={<Quotes focus={focus} setFocus={setFocus}/>}/>
+        <Route path="/quotes/:id" element={<InvoiceDetail focus={focus} setFocus={setFocus}/>}/>
+        <Route path="/inventory" element={<Products focus={focus} setFocus={setFocus} />}/>
+        <Route path="/products/:id" element={<ProductDetailView focus={focus} setFocus={setFocus} />}/>
+        <Route path="/invoice-errors" element={<InvoiceErrors focus={focus} setFocus={setFocus} />}/>
+        <Route path="/orders" element={<Orders focus={focus} setFocus={setFocus} />}/>
+        <Route path="/orders/:id" element={<OrderDetail focus={focus} setFocus={setFocus} />}/>
+        <Route path="/warehouse" element={<Warehouse focus={focus} setFocus={setFocus} />}/>
       </Routes> 
     </div>
     </BrowserRouter>

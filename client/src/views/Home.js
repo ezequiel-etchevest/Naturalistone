@@ -4,7 +4,6 @@ import HomeContainer from "../components/homeContainer";
 import { useDispatch, useSelector } from "react-redux";
 import { getEmployeeById } from '../redux/actions-employees';
 import { getCurrentMonth } from "../redux/actions-stats";
-import Redirect from "./RedirectPage";
 
 
 
