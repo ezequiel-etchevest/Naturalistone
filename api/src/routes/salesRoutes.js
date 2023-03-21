@@ -23,7 +23,7 @@ salesRouter.get('/:id', async function(req, res){
       } else {
       if(time === 'All' || time === ''){
       if(results[0].Secction7Flag === 1){
-         query_ =    `SELECT Sales.*, Projects.*, Customers.*, Payments.idPayments, Seller.FirstName, Seller.LastName,
+         query_ =    `SELECT Sales.*, Projects.*, Customers.*, Payments.idPayments, Seller.FirstName, Seller.LastName, Seller.SellerReference,
          GROUP_CONCAT(
          CONCAT(Payments.idPayments,';',Payments.Amount,';',Payments.Date))AS Payments FROM Sales 
          LEFT JOIN Projects ON Sales.ProjectID = Projects.idProjects
@@ -33,7 +33,7 @@ salesRouter.get('/:id', async function(req, res){
          GROUP BY Sales.Naturali_Invoice
          ORDER BY Sales.Naturali_Invoice DESC` 
       } else {
-        query_ =    `SELECT Sales.*, Projects.*, Customers.*, Payments.idPayments, Seller.FirstName, Seller.LastName, 
+        query_ =    `SELECT Sales.*, Projects.*, Customers.*, Payments.idPayments, Seller.FirstName, Seller.LastName, Seller.SellerReference, 
         GROUP_CONCAT(
         CONCAT(Payments.idPayments,';',Payments.Amount,';',Payments.Date))AS Payments FROM Sales 
         LEFT JOIN Projects ON Sales.ProjectID = Projects.idProjects
@@ -50,7 +50,7 @@ salesRouter.get('/:id', async function(req, res){
       const limitDateMonth = getLimitDateMonth()
 
       if(results[0].Secction7Flag === 1){
-        query_ = `SELECT Sales.*, Projects.*, Customers.*, Payments.idPayments, Seller.FirstName, Seller.LastName,
+        query_ = `SELECT Sales.*, Projects.*, Customers.*, Payments.idPayments, Seller.FirstName, Seller.LastName, Seller.SellerReference,
         GROUP_CONCAT(
         CONCAT(Payments.idPayments,';',Payments.Amount,';',Payments.Date))AS Payments FROM Sales 
         LEFT JOIN Projects ON Sales.ProjectID = Projects.idProjects
@@ -61,7 +61,7 @@ salesRouter.get('/:id', async function(req, res){
         GROUP BY Sales.Naturali_Invoice
         ORDER BY Sales.Naturali_Invoice DESC`  
       } else {
-        query_ = `SELECT Sales.*, Projects.*, Customers.*, Payments.idPayments, Seller.FirstName, Seller.LastName, 
+        query_ = `SELECT Sales.*, Projects.*, Customers.*, Payments.idPayments, Seller.FirstName, Seller.LastName, Seller.SellerReference,
         GROUP_CONCAT(
         CONCAT(Payments.idPayments,';',Payments.Amount,';',Payments.Date))AS Payments FROM Sales 
         LEFT JOIN Projects ON Sales.ProjectID = Projects.idProjects
@@ -98,7 +98,7 @@ salesRouter.get('/invoice/:id', async function(req, res){
 
 //Replased Seller.* for , Seller.FirstName, Seller.LastName, Seller.SellerID//
 
-    query_ =    `SELECT Sales.*, Projects.*, Customers.*, Seller.FirstName, Seller.LastName, Seller.SellerID FROM Sales
+    query_ =    `SELECT Sales.*, Projects.*, Customers.*, Seller.FirstName, Seller.LastName, Seller.SellerReference, Seller.SellerID FROM Sales
                 LEFT JOIN Seller ON Sales.SellerID = Seller.SellerID 
                 LEFT JOIN Projects ON Sales.ProjectID = Projects.idProjects
                 LEFT JOIN Customers ON Projects.CustomerID = Customers.CustomerID
@@ -309,7 +309,7 @@ salesRouter.patch('/cancelquote/:id', async function(req, res){
 
 salesRouter.get('/values/seller', async function(req, res){
 
-    query_ =   `SELECT Sales.*, Projects.*, Customers.*, Payments.idPayments, Seller.FirstName, Seller.LastName,
+    query_ =   `SELECT Sales.*, Projects.*, Customers.*, Payments.idPayments, Seller.FirstName, Seller.LastName, Seller.SellerReference,
                 GROUP_CONCAT(
                 CONCAT(Payments.idPayments,';',Payments.Amount,';',Payments.Date))AS Payments FROM Sales 
                 LEFT JOIN Projects ON Sales.ProjectID = Projects.idProjects

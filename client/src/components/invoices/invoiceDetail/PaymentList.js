@@ -14,14 +14,14 @@ import AddPayment from './addPayment';
 import {AiOutlineDelete } from 'react-icons/ai'
 import { deletePayment } from '../../../redux/actions-payments';
 import { useDispatch } from 'react-redux';
-
+import PaymentDeleteModal from './PaymentDeleteModal'
 
 const ModelTr = ({p, totalAmount, invoice}) => {
     const dispatch = useDispatch()
     const per = (p.Amount * 100) / totalAmount
-    const handleDelete = ()  => {
-      dispatch(deletePayment(p.InvoiceID, p.idPayments))
-    }
+    // const handleDelete = ()  => {
+    //   dispatch(deletePayment(p.InvoiceID, p.idPayments))
+    // }
 
     return(
       <Tr 
@@ -36,13 +36,13 @@ const ModelTr = ({p, totalAmount, invoice}) => {
         <Td textAlign={'match-parent'} fontSize={'1.6vh'}>${p.Amount.toLocaleString('en-US')} </Td>
         <Td textAlign={'match-parent'} fontSize={'1.6vh'}>{p.Method}</Td>
         <Td textAlign={'center'} fontSize={'1.6vh'} >{Math.round(per.toFixed(2))} %</Td>
-        <Td>
-          <IconButton
+        <Td> <PaymentDeleteModal InvoiceID={p.InvoiceID} idPayments={p.idPayments}/>
+          {/* <IconButton
             disabled={invoice[0].Stamped === 1 ? true : false} 
             size={'xs'}
             fontSize={'2.5vh'} 
             variant={'unstyled'} 
-            icon={<AiOutlineDelete/>} onClick={()=>handleDelete()}/>
+            icon={<AiOutlineDelete/>} onClick={()=>handleDelete()}/> */}
         </Td>
       </Tr>
     )

@@ -30,6 +30,7 @@ const ModelTr = ({e, validateSeller}) => {
       dispatch( cleanStatePayments())
       navigate(`/quotes/${e.Naturali_Invoice}`)
     }
+
     return(
       <Tr 
         onClick={() => handleClick()} 
@@ -40,10 +41,10 @@ const ModelTr = ({e, validateSeller}) => {
           color: 'logo.orange'
         }}
         >
-        <Td fontSize={'xs'} textAlign={'center'}>{e.Naturali_Invoice}</Td>
+        <Td fontSize={'1.7vh'} textAlign={'center'}>{e.Naturali_Invoice}</Td>
         {
           validateSeller() ? (
-          <Td  fontSize={'xs'}textAlign={'center'}>{e.FirstName} {e.LastName}</Td>
+          <Td  fontSize={'1.7vh'}textAlign={'center'}>{e.SellerReference}</Td>
           ):(null)
         }
         <Td fontSize={'1.7vh'}>{e.ProjectName}</Td>
@@ -123,9 +124,9 @@ const List = ({seller_invoices, user}) => {
                           <Tr>
                             <Th color={'web.text2'} textAlign={'center'}>Nº</Th>
                             { validateSeller() ? (
-                                <Th color={'web.text2'} textAlign={'center'}>Seller</Th>
+                                <Th color={'web.text2'} textAlign={'center'} w={'1vw'}>Ref</Th>
                             ):(null) }
-                            <Th color={'web.text2'}  minW={'3vw'}maxW={'3vw'}>Project</Th>
+                            <Th color={'web.text2'}>Project</Th>
                             <Th color={'web.text2'}>Customer</Th>
                             <Th color={'web.text2'} textAlign={'center'}>Date</Th>
                             <Th color={'web.text2'} textAlign={'center'}>Status</Th>

@@ -106,6 +106,7 @@ import {
                   borderColor={'web.border'}
                   cursor={'pointer'}
                   value={filter.sellerID}
+                  display={user[0].Secction7Flag === 1 ? 'unset' : 'none'}
                   _focus={{
                     borderColor: 'logo.orange',
                     boxShadow: '0 0.5px 0.5px rgba(229, 103, 23, 0.075)inset, 0 0 5px rgba(255,144,0,0.6)'
@@ -138,6 +139,7 @@ import {
                   borderColor={'web.border'}
                   cursor={'pointer'}
                   value={filter.type}
+                  display={user[0].Secction7Flag === 1 ? 'unset' : 'none'}
                   _focus={{
                     borderColor: 'logo.orange',
                     boxShadow: '0 0.5px 0.5px rgba(229, 103, 23, 0.075)inset, 0 0 5px rgba(255,144,0,0.6)'
