@@ -40,47 +40,6 @@ const ModelTr = ({e, user}) => {
 
 const InvoiceErrorsList = ({user, invoice_errors_by_filter, filteredInvoicesErrors, invoice_errors}) => {
  
-
-
-  // const result = useSelector(state=> state.validate_result_quotes)
-  // const toast = useToast()
-  // const id = 'test-toast'
-
-//   const validateResults = () => {
-//     if(result === 'no_results'){
-//       if (!toast.isActive(id)) {
-//       toast({
-//         id,
-//         title: 'No results found',
-//         description: 'Reloading all the quotes',
-//         status: 'warning',
-//         duration: 2000,
-//         isClosable: true,
-//       });
-//     }}
-//   }
-
-  // const noneSellerInvoices = () => {
-  //   if(!seller_invoices.length){
-  //     setTimeout(
-  //       toast({
-  //         id,
-  //         title: 'No results found',
-  //         description: 'Thers no invoices for this seller',
-  //         status: 'warning',
-  //         duration: 2000,
-  //         isClosable: true,
-  //       }), 2000
-  //     )
-  //     return ([])
-  //   }
-  //   else return seller_invoices
-  // }
-
-//   useEffect(()=>{
-//     validateResults()
-//   })
-
     return(
         <Box
         display={'flex'}
@@ -108,7 +67,7 @@ const InvoiceErrorsList = ({user, invoice_errors_by_filter, filteredInvoicesErro
             border={'1px solid'} 
             rounded={'md'} 
             p={'3vh'}
-            w={'74vw'}
+            w={'80vw'}
             ml={'3vw'}
             mr={'3vw'}
             >
@@ -118,14 +77,12 @@ const InvoiceErrorsList = ({user, invoice_errors_by_filter, filteredInvoicesErro
                     <Tr>
                       <Th color={'web.text2'} w={'5vw'} textAlign={'center'}>Invoice Nº</Th>
                       {
-                      (user[0].SellerID === 3 || user[0].SellerID === 5 || user[0].SellerID === 15 ) ?
-                      <Th w={'5vw'} color={'web.text2'} textAlign={'center'}>Seller</Th> :
-                      null
+                      (user[0].Secction7Flag === 1 ) ?
+                      <Th w={'5vw'} color={'web.text2'} textAlign={'center'}>Seller</Th> : (null)
                       }
                       {
-                      (user[0].SellerID === 3 || user[0].SellerID === 5 || user[0].SellerID === 15 ) ?
-                      <Th w={'5vw'} color={'web.text2'} textAlign={'center'}>Type</Th> :
-                      null
+                      (user[0].Secction7Flag === 1 ) ?
+                      <Th w={'5vw'} color={'web.text2'} textAlign={'center'}>Type</Th> : (null)
                       }
                       <Th w={'5vw'} color={'web.text2'} textAlign={'center'}>Date</Th>
                       <Th color={'web.text2'} textAlign={'center'}>Error</Th>
