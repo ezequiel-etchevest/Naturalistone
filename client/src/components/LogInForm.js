@@ -14,14 +14,13 @@ const LogInForm = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
   let employees = useSelector((state)=>state?.employees)
-
   const valEmailEmployee = (inputEmail) => {
-      const user = employees.find( e => e.Username === inputEmail)
+      const user = employees?.find( e => e.Username.toLowerCase() === inputEmail.toLowerCase())
       if(user) return true
       else return false
     }
   const valPassword = (inputPass, inputEmail) => {
-    const user = employees.find( e => e.Username === inputEmail)
+    const user = employees?.find( e => e.Username === inputEmail)
     if(user.Password === inputPass) return true
     else return false
   }
@@ -64,12 +63,12 @@ const LogInForm = () => {
           }
           return errores
         }}
-        onSubmit={(values) =>{
+        onSubmit={async (values) =>{
          
           const User = employees.find(e => e.Username === values.email)
 
           if(values.email === User.Username && values.password === User.Password){
-            dispatch(getEmployeeById(User.SellerID))
+            await dispatch(getEmployeeById(User.SellerID))
             navigate('/home')
           }else if(valPassword(values.password, values.email) === false ){
            alert('invalid match')

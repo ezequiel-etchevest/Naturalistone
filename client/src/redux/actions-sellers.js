@@ -5,7 +5,7 @@ export function getSellers() {
     return async function(dispatch){
         try{
             
-            let {data} = await axios.get('http://localhost:5000/seller')
+            let {data} = await axios.get('/seller')
             dispatch({
                 type: GET_ALL_SELLERS,
                 payload: data

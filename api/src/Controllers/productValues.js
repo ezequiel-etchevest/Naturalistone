@@ -41,7 +41,7 @@ function findMaxMinPrice(arr) {
       maxPrice = obj.Price;
     }
   });
-
+  if (minPrice === null ) minPrice = 0
   return { min: minPrice, max: maxPrice };
 }
 module.exports = {prodValues, findMaxMinPrice}
