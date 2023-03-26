@@ -8,6 +8,7 @@ const paymentsRouter = require('./PaymentRoutes')
 const ordersRouter = require('./ordersRoutes')
 const invoiceErrorsRouter = require('./invoiceErrorsRoutes')
 const deliveryRouter = require('./deliveryRoutes')
+const onedriveRouter = require('./msalConfig')
 const mainRouter = Router();
 
 
@@ -20,6 +21,7 @@ mainRouter.use('/api/payments', paymentsRouter);
 mainRouter.use('/api/orders', ordersRouter);
 mainRouter.use('/api/invoiceErrors', invoiceErrorsRouter);
 mainRouter.use('/api/delivery', deliveryRouter);
+mainRouter.use('/api/onedrive', onedriveRouter);
 // mainRouter.use('/customers', customersRouter);
 
 
