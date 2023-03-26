@@ -21,19 +21,15 @@ const ModelTr = ({e, user}) => {
           color: 'logo.orange'
         }}
         >
-        <Td textAlign={'center'}>{e.Invoice}</Td>
+        <Td textAlign={'center'} maxW={'0.5vw'}>{e.Invoice}</Td>
         {
-          (user[0].SellerID === 3 || user[0].SellerID === 5 || user[0].SellerID === 15 ) ?
-          <Td textAlign={'center'}>{e.FirstName} {e.LastName}</Td>
-          : null
+          (user[0].Secction7Flag === 1 ) ? ( e.FirstName && e.LastName ?(<Td textAlign={'center'} maxW={'3vw'}>{e.FirstName[0]}{e.LastName[0]}</Td>):(null)) : (null)
         }
         {
-          (user[0].SellerID === 3 || user[0].SellerID === 5 || user[0].SellerID === 15 ) ?
-          <Td textAlign={'center'}>{e.Type}</Td> 
-          : null
+          (user[0].Secction7Flag === 1) ? (<Td textAlign={'center'} maxW={'3vw'}>{e.Type}</Td> ) : (null)
         }
-        <Td textAlign={'center'}>{e.Date?.split('T')[0]}</Td>
-        <Td maxW={'30vw'}>{e.Error}</Td>
+        <Td textAlign={'center'} maxW={'1vh'} border={'2px solid red'}>{e.Date?.split('T')[0]}</Td>
+        <Td maxw={'12vw'}>{e.Error}</Td>
       </Tr>
     )
 }
@@ -75,17 +71,17 @@ const InvoiceErrorsList = ({user, invoice_errors_by_filter, filteredInvoicesErro
                 <Table color={'web.text'} variant={'simple'} size={'sm'}>
                   <Thead h={'6vh'}>
                     <Tr>
-                      <Th color={'web.text2'} w={'5vw'} textAlign={'center'}>Invoice Nº</Th>
+                      <Th color={'web.text2'}>Invoice Nº</Th>
                       {
                       (user[0].Secction7Flag === 1 ) ?
-                      <Th w={'5vw'} color={'web.text2'} textAlign={'center'}>Seller</Th> : (null)
+                      <Th color={'web.text2'}>Seller</Th> : (null)
                       }
                       {
                       (user[0].Secction7Flag === 1 ) ?
-                      <Th w={'5vw'} color={'web.text2'} textAlign={'center'}>Type</Th> : (null)
+                      <Th color={'web.text2'}>Type</Th> : (null)
                       }
-                      <Th w={'5vw'} color={'web.text2'} textAlign={'center'}>Date</Th>
-                      <Th color={'web.text2'} textAlign={'center'}>Error</Th>
+                      <Th color={'web.text2'}>Date</Th>
+                      <Th color={'web.text2'}>Error</Th>
                     </Tr>
                   </Thead>
                   <Tbody>
