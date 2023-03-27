@@ -7,7 +7,7 @@ const onedriveRouter = express.Router()
 async function downloadPdf(req, res) {
   // Obtener el nombre del archivo de los parámetros de la ruta
   const {filename} = req.params;
-    console.log({filename})
+    console.log('filename',{filename})
   // Obtener el token de acceso a OneDrive
   const accessToken = await getOneDriveAccessToken();
   console.log({accessToken})
