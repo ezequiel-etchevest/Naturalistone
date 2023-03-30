@@ -110,7 +110,7 @@ const PaymentList = ({payments, totalAmount, invoice}) => {
                       <Th color={'web.text2'} fontSize={'1.6vh'}>Payment Date</Th>
                       <Th color={'web.text2'} fontSize={'1.6vh'}>Amount</Th>
                       <Th color={'web.text2'} fontSize={'1.6vh'}>Method</Th>
-                      <Th color={'web.text2'} fontSize={'1.6vh'}>Percentaje</Th>
+                      <Th color={'web.text2'} fontSize={'1.6vh'}>Percentage</Th>
                       <Th color={'web.text2'} fontSize={'1.6vh'}></Th>
                     </Tr>
                   </Thead>

@@ -11,11 +11,11 @@ productsRouter.get('/', async function(req, res){
     
     query_ = `SELECT    
                     ProdNames.Naturali_ProdName AS ProductName,
+                    ProdNames.Material,
                     Dimension.Type,
                     Dimension.Size,
                     Dimension.Thickness,
                     Dimension.Finish,
-                    Dimension.Material,
                     Products.SalePrice AS Price,
                     Products.ProdID,
                     Products.Discontinued_Flag,
@@ -45,11 +45,11 @@ productsRouter.get('/id/:id', async function(req, res){
 
     query_ =    `SELECT
                   ProdNames.Naturali_ProdName AS ProductName,
+                  ProdNames.Material,
                   Dimension.Type,
                   Dimension.Size,
                   Dimension.Finish,
                   Dimension.Thickness,
-                  Dimension.Material,
                   Products.SalePrice AS Price,
                   Products.ProdID,
                   Products.Notes,
@@ -83,11 +83,11 @@ productsRouter.get('/filtered', async function(req, res){
 
     query_ = `SELECT    
                     ProdNames.Naturali_ProdName AS ProductName,
+                    ProdNames.Material,
                     Dimension.Type,
                     Dimension.Size,
                     Dimension.Finish,
                     Dimension.Thickness,
-                    Dimension.Material,
                     Products.SalePrice AS Price,
                     Products.ProdID,
                     Inventory.*

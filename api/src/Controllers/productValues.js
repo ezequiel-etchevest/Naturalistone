@@ -1,9 +1,9 @@
 const prodValues = (arr, search, price) => {
 
-
 function getUniqueFinishes(arr) {
-    let finishes = arr.map(obj => obj.Finish);
-    return [...new Set(finishes)].filter(f => f !== null);
+    let finishes = arr.map(obj => obj.Finish === null ? obj.Finish = 'N/A' : obj.Finish);
+    // return [...new Set(finishes)].filter(f => f !== null);
+    return [...new Set(finishes)];
   }
 
 function getUniqueSizes(arr) {
@@ -11,7 +11,7 @@ function getUniqueSizes(arr) {
     return Array.from(new Set(sizes));
   }
 const thicknessValues = (arr) => {
-    const thicknesses = arr.map(item => item.Thickness);
+    const thicknesses = arr.map(item => item.Thickness === null ? item.Thickness = 'N/A' : item.Thickness);
     return [...new Set(thicknesses)];
   };
 const materialsValues = (arr) => {

@@ -60,7 +60,6 @@ const ModelTr = ({e, validateSeller}) => {
 
 const List = ({seller_invoices, user}) => {
 
-  
   const result = useSelector(state=> state.validate_result_quotes)
   const toast = useToast()
   const id = 'test-toast'
