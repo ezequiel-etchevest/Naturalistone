@@ -40,10 +40,10 @@ const ModelTr = ({e, user}) => {
     }
 
     let validateSeller = () => {
-      if(user[0].SellerID === 6 || user[0].SellerID === 3 || user[0].SellerID === 5 || user[0].SellerID === 15 ) return true
+      if(user[0].Secction7Flag === 1 ) return true
       else return false
     }
-
+    
   return(
     <Tr       
       cursor={'pointer'} 
@@ -56,8 +56,8 @@ const ModelTr = ({e, user}) => {
       <Td maxW={'4vw'} onClick={() => handleClickProduct()} fontSize={'xs'} textAlign={'match-parent'}>{e.ProductName}</Td>
       <Td maxW={'8vw'} onClick={() => handleClickProduct()} fontSize={'xs'} textAlign={'match-parent'}>{e.Material} - {e.Type}</Td>
       <Td maxW={'4vw'} onClick={() => handleClickProduct()} fontSize={'xs'} textAlign={'match-parent'}>{e.Size}</Td>
-      <Td maxW={'4vw'} onClick={() => handleClickProduct()} fontSize={'xs'} textAlign={'center'}> {e.Thickness} </Td>
-      <Td maxW={'4vw'} onClick={() => handleClickProduct()} fontSize={'xs'} textAlign={'match-parent'}> {e.Finish === null ? '-' : e.Finish} </Td>
+      <Td maxW={'4vw'} onClick={() => handleClickProduct()} fontSize={'xs'} textAlign={'center'}> {e.Thickness === null ? 'N/A' : e.Thickness} </Td>
+      <Td maxW={'4vw'} onClick={() => handleClickProduct()} fontSize={'xs'} textAlign={'match-parent'}> {e.Finish === null ? 'N/A' : e.Finish} </Td>
       <Td maxW={'4vw'} onClick={() => handleClickProduct()} fontSize={'xs'} isNumeric>${ e.Price ? e.Price.toLocaleString('en-US') : '.'}</Td>
       <Td maxW={'4vw'} onClick={() => handleClickProduct()} fontSize={'xs'} textAlign={'center'}>{e.InStock_Available === null ? 0 : e.InStock_Available}</Td>
       <Td maxW={'4vw'} onClick={() => handleClickProduct()} fontSize={'xs'} textAlign={'center'}>{e.Incoming_Available === null ? 0 : e.Incoming_Available}</Td>

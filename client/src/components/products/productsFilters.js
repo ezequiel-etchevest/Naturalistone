@@ -209,7 +209,7 @@ const ProductsFilters = ({allProducts, setFilteredProducts, values}) => {
               onChange={(e) => handleThickness(e)}
               >
               <option value='' className="options">Thickness</option>
-              {
+              {   
                   values.thickness.map((v, i) => {
                     return(
                       <option value={`${v}`} key={i} className={'options'}>{`${v}`}</option>

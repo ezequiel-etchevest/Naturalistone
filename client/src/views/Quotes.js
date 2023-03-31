@@ -34,6 +34,14 @@ const Quotes = ({focus, setFocus}) => {
           }))
       }}, [dispatch, user])
 
+      useEffect(() => {
+          dispatch(getInvoicesBySeller(user[0].SellerID, {
+            inputName: '',
+            inputNumber: '',
+            selectSeller: '',
+            timeFilter: 'All'
+          }))
+      }, [])
 
       if(userLocal){
         if(user.length){
