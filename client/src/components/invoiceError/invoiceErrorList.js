@@ -40,7 +40,7 @@ const ModelTr = ({e, user}) => {
        (user[0].Secction7Flag === 1) ? ( <Td fontSize={'xs'} textAlign={'center'}>{e.Type}</Td> ) : (null)
       }
       <Td fontSize={'xs'}>{e.Date?.split('T')[0]}</Td>
-      <Td maxW={'0.5vw'} fontSize={'xs'} >{e.Error}</Td>
+      <Td fontSize={'xs'} >{e.Error}</Td>
       </Tr>
     )}  
     
@@ -92,7 +92,7 @@ const  InvoiceErrorList = ({user, invoice_errors}) => {
                           (user[0].Secction7Flag === 1) ? <Th w={'5vw'} color={'web.text2'} textAlign={'center'}>Type</Th> :  null
                         }
                       <Th w={'5vw'} color={'web.text2'} textAlign={'center'}>Date</Th>
-                      <Th color={'web.text2'} textAlign={'center'}>Error</Th>
+                      <Th color={'web.text2'}>Error</Th>
                     </Tr>
                   </Thead>
                   <Tbody>
