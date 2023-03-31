@@ -3,7 +3,7 @@ import { FaFileInvoiceDollar, FaHome, FaBoxOpen } from 'react-icons/fa'
 import { IoMdBoat } from 'react-icons/io'
 import { CgLogOut } from 'react-icons/cg'
 import { BiError } from 'react-icons/bi'
-import mitu from '../assets/mitutu.jpg';
+import naturalipic from '../assets/naturalistonefav.png'
 import { useNavigate } from 'react-router';
 import { useDispatch } from 'react-redux';
 import { logOut } from '../redux/actions-employees';
@@ -36,7 +36,7 @@ const SideBar = ({user, focus, setFocus}) => {
     <HStack mt={'10vh'} mb={'4vh'}>
       <Avatar
         size={'sm'}
-        src={mitu}
+        src={naturalipic}
         />
       <Text
       color={'web.text'} 
