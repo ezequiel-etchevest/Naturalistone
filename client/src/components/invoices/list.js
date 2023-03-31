@@ -131,7 +131,7 @@ const List = ({seller_invoices, user}) => {
                             <Th color={'web.text2'} textAlign={'center'}>Status</Th>
                             <Th color={'web.text2'} textAlign={'center'} isNumeric>Total</Th>
                             <Th color={'web.text2'} textAlign={'center'}>Paid</Th>
-                            <Th color={'web.text2'} >Last Payment</Th>
+                            <Th color={'web.text2'} textAlign={'center'} >Last Payment</Th>
                           </Tr>
                         </Thead>
                         <Tbody >

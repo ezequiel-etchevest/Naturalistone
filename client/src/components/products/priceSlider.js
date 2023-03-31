@@ -53,7 +53,7 @@ let PriceSlider = ({setFilters, filters, limit, setLimit, values}) =>{
               color="web.text2"
               placement={'left'}
               isOpen
-							fontSize={'1.8vh'}
+							fontSize={'xs'}
               >
               <RangeSliderThumb
 								boxSize={'1.5vh'} 
@@ -72,7 +72,7 @@ let PriceSlider = ({setFilters, filters, limit, setLimit, values}) =>{
               color="web.text2"
               placement={'right'}
               isOpen
-              fontSize={'1.8vh'}
+              fontSize={'xs'}
               >
               <RangeSliderThumb 
                 index={1}
