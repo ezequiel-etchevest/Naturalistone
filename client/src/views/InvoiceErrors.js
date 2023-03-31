@@ -25,7 +25,7 @@ const InvoiceError = ({focus, setFocus}) => {
 
   useEffect(() => {
     if(user.length && !invoice_errors.length){
-      dispatch(getInvoiceErrors(user[0].SellerID))
+      dispatch(getInvoiceErrors(user))
   }}, [dispatch, user])
 
   useEffect(() => {
@@ -39,7 +39,7 @@ const InvoiceError = ({focus, setFocus}) => {
     return(
     <>
       <SideBar user={user} focus={focus} setFocus={setFocus}/>
-      <InvoiceErrorContainer invoice_errors={invoice_errors} user={user} sellers={sellers} invoice_errors_by_filter={invoice_errors_by_filter} />
+      <InvoiceErrorContainer invoice_errors={invoice_errors} user={user} sellers={sellers} />
     </>
     )
   }else return (

@@ -67,7 +67,6 @@ const intialState = {
     order: {},
     order_products: [],
     invoice_errors: [],
-    invoice_errors_by_filter:[],
     invoice_errors_by_filter_errors:[],
     deliveries_notes_by_id:[],
     deliveryID:'',
@@ -144,8 +143,7 @@ function rootReducer (state = intialState, action) {
         case GET_INVOICE_ERRORS_FILTERED:
             return {
               ...state,
-              invoice_errors_by_filter: action.payload.filteredInvoicesErrors,
-              invoice_errors_by_filter_errors: action.payload.errorsSearch
+              invoice_errors: action.payload
             }
 
         case POST_PAYMENT_METHOD:
