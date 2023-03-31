@@ -35,7 +35,6 @@ const Filters = ({user, seller_invoices, setFocusFilter, seller_values}) => {
   const userId  =  user[0].SellerID
 
   const validateSeller = () => {
-    
     if(user[0].Secction7Flag === 1) return true
     else return false
   }
@@ -129,7 +128,7 @@ const Filters = ({user, seller_invoices, setFocusFilter, seller_values}) => {
           w={'80vw'}
           justifyContent={'space-between'}
           >
-          {/*Inputs and select */}
+          {/*Inputs*/}
           <Box
             display={'flex'}
             alignItems={'center'}
@@ -221,8 +220,8 @@ const Filters = ({user, seller_invoices, setFocusFilter, seller_values}) => {
                   _active={{ color: 'gray.800'}}
                 />
             </Box>
-            </Box>
-             {/*Selects */}
+          </Box>
+          {/*Selects */}
           <Box 
             w={'30vw'} 
             display={'flex'} 

@@ -3,11 +3,15 @@ export const GET_INVOICE_ERRORS = 'GET_INVOICE_ERRORS'
 export const GET_INVOICE_ERRORS_FILTERED = 'GET_INVOICE_ERRORS_FILTERED'
 
 
-export function getInvoiceErrors() {
+export function getInvoiceErrors(user) {
+
+    let admin = user[0].Secction7Flag === 1 ? true : false
+    let seller = user[0].SellerID
+
     return async function(dispatch){
         try{
             
-            let {data} = await axios.get('/invoiceErrors')
+            let {data} = await axios.get(`/invoiceErrors?admin=${admin}&seller=${seller}`)
             dispatch({
                 type: GET_INVOICE_ERRORS,
                 payload: data
@@ -18,11 +22,13 @@ export function getInvoiceErrors() {
     }
 }
 
-export function getInvoiceErrorsFiltered(sellerID, type) {
+export function getInvoiceErrorsFiltered(sellerID, type, number, user) {
+    let admin = user[0].Secction7Flag === 1 ? true : false
+    let seller = user[0].SellerID
+
     return async function(dispatch){
         try{
-            
-            let {data} = await axios.get(`/invoiceErrors/filtered?id=${sellerID}&type=${type}`)
+            let {data} = await axios.get(`/invoiceErrors/filtered?sellerID=${sellerID}&type=${type}&number=${number}&admin=${admin}&seller=${seller}`)
             dispatch({
                 type: GET_INVOICE_ERRORS_FILTERED,
                 payload: data
