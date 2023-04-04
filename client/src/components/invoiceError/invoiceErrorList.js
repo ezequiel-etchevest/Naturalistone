@@ -23,6 +23,21 @@ const ModelTr = ({e, user}) => {
         bg: 'web.navBar',
         color: 'logo.orange'
       }}
+      overflowX={'auto'}
+      css={{
+        '&::-webkit-scrollbar': {
+          height: '0.4vw',
+          overflowX: 'scroll'
+        },
+        '&::-webkit-scrollbar-track': {
+          height: '6px',
+          overflowX: 'scroll'
+        },
+        '&::-webkit-scrollbar-thumb': {
+          background: '#E47424',
+          borderRadius: '5px',
+        },        
+      }}
       >
       <Td fontSize={'xs'} textAlign={'center'} maxW={'7vw'}>{e.Invoice}</Td>
       
@@ -68,7 +83,7 @@ const  InvoiceErrorList = ({user, invoice_errors}) => {
           '&::-webkit-scrollbar-thumb': {
             background: '#E47424',
             borderRadius: '5px',
-          },
+          },        
         }}
         borderColor={'web.border'}
         bg={'web.sideBar'} 

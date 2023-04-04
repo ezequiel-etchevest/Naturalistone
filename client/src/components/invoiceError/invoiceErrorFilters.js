@@ -163,6 +163,7 @@ const InvoiceErrorFilters = ({user, sellers}) => {
                   <option value={''} className="options">Select Type</option>
                   <option value={'Order'} className="options">Orders</option>
                   <option value={'Quote'} className="options">Quotes</option>
+                  <option value={'Freight'} className="options">Freight</option>
                 </Select>
                 : 
                 null

@@ -54,11 +54,12 @@ const OrdersList = ({orders}) => {
   
     return(
         <Box
-        display={'flex'}
-        justifyContent={'center'}
-        h={'92vh'}
-        w={'84vw'}
-        >
+          display={'flex'}
+          justifyContent={'center'}
+          ml={'1vh'}
+          h={'92vh'}
+          w={'82.8vw'} 
+          >
           <Box
             maxHeight={'80vh'}
             overflow={'auto'}
@@ -80,9 +81,7 @@ const OrdersList = ({orders}) => {
             border={'1px solid'} 
             rounded={'md'} 
             p={'3vh'}
-            w={'74vw'}
-            ml={'3vw'}
-            mr={'3vw'}
+            w={'80vw'}
             >
             <TableContainer >
                 <Table color={'web.text'} variant={'simple'} size={'sm'}  >

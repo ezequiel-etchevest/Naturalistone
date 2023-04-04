@@ -29,7 +29,7 @@ const ChangeStatus = ({invoice, user}) => {
     dispatch(changeStatus(id))
     onClose()
   }
-
+  console.log({user})
     return(
         <>
           <ButtonGroup
