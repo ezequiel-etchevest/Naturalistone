@@ -31,16 +31,16 @@ const ModelTr = ({p}) => {
         }}
         onClick={() => handleClick()}
         >
-        <Td textAlign={'center'}>{p.ProductName}</Td>
-        <Td textAlign={'center'}>{p.Quantity} </Td>
-        <Td textAlign={'center'} >${p.SalePrice.toLocaleString('en-US')}</Td>
-        <Td textAlign={'center'}>{p.Stock === null ? '0' : p.Stock}</Td>
+        <Td textAlign={'match-parent'}>{p.ProductName}</Td>
+        <Td textAlign={'center'}>{p.Quantity}</Td>
+        <Td textAlign={'center'} >$ {p.SalePrice.toLocaleString('en-US')}</Td>
+        <Td textAlign={'center'}>{p.InStock_Reserved === null ? '0' : p.InStock_Reserved}</Td>
         <Td textAlign={'center'}>{p.NextArrival === null ? '-' : p.NextArrival}</Td>
       </Tr>
     )
 }
 
-const InvoiceProductList = ({invoice_products}) => {
+const InvoiceProductList = ({invoice_products, invoice}) => {
   
     return(
         <Box
@@ -70,17 +70,24 @@ const InvoiceProductList = ({invoice_products}) => {
                   <Thead h={'6vh'}>
                     <Tr>
                       <Th color={'web.text2'}>Product Name</Th>
-                      <Th color={'web.text2'}>Quantity</Th>
-                      <Th color={'web.text2'}>Sale Price</Th>
-                      <Th color={'web.text2'}>Stock</Th>
-                      <Th color={'web.text2'}>Next Arrival</Th>
+                      <Th color={'web.text2'}textAlign={'center'}>Quantity</Th>
+                      <Th color={'web.text2'}textAlign={'center'}>Sale Price</Th>
+                      <Th color={'web.text2'}textAlign={'center'}>In Stock</Th>
+                      <Th color={'web.text2'}textAlign={'center'}>Next Arrival</Th>
                     </Tr>
                   </Thead>
                   <Tbody >
                     { invoice_products.map((p, i) =>{
+                      if(invoice[0].Status === 'Canceled'){
                         return(
                           <ModelTr p={p} key={i}/>
                         )
+                      }else {
+                        if(p.Status !== 'Canceled'){
+                          return(
+                            <ModelTr p={p} key={i}/>
+                          )}
+                      } 
                       })
                     }
                   </Tbody>

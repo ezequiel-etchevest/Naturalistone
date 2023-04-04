@@ -168,7 +168,7 @@ const InvoiceErrorFilters = ({user, sellers}) => {
                 : 
                 null
               }
-            <Divider orientation={'vertical'} h={'5vh'}/>
+            <Divider orientation={'vertical'} h={'5vh'} display={user[0].Secction7Flag === 1 ? 'unset' : 'none'}/>
         <Tooltip placement={'bottom-start'} label={'Clear all filters'} fontWeight={'hairline'}>      
         <IconButton
             icon={ <AiOutlineClear/>}

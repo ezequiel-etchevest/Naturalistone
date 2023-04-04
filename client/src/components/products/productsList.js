@@ -54,11 +54,11 @@ const ModelTr = ({e, user}) => {
       }} 
       >
       <Td maxW={'4vw'} onClick={() => handleClickProduct()} fontSize={'xs'} textAlign={'match-parent'}>{e.ProductName}</Td>
-      <Td maxW={'8vw'} onClick={() => handleClickProduct()} fontSize={'xs'} textAlign={'match-parent'}>{e.Material} - {e.Type}</Td>
-      <Td maxW={'4vw'} onClick={() => handleClickProduct()} fontSize={'xs'} textAlign={'match-parent'}>{e.Size}</Td>
+      <Td maxW={'8vw'} onClick={() => handleClickProduct()} fontSize={'xs'} textAlign={'center'}>{e.Material} - {e.Type}</Td>
+      <Td maxW={'4vw'} onClick={() => handleClickProduct()} fontSize={'xs'} textAlign={'center'}>{e.Size}</Td>
       <Td maxW={'4vw'} onClick={() => handleClickProduct()} fontSize={'xs'} textAlign={'center'}> {e.Thickness === null ? 'N/A' : e.Thickness} </Td>
-      <Td maxW={'4vw'} onClick={() => handleClickProduct()} fontSize={'xs'} textAlign={'match-parent'}> {e.Finish === null ? 'N/A' : e.Finish} </Td>
-      <Td maxW={'4vw'} onClick={() => handleClickProduct()} fontSize={'xs'} isNumeric>${ e.Price ? e.Price.toLocaleString('en-US') : '.'}</Td>
+      <Td maxW={'4vw'} onClick={() => handleClickProduct()} fontSize={'xs'} textAlign={'center'}> {e.Finish === null ? 'N/A' : e.Finish} </Td>
+      <Td maxW={'4vw'} onClick={() => handleClickProduct()} fontSize={'xs'} isNumeric>$ { e.Price ? e.Price.toLocaleString('en-US') : '.'}</Td>
       <Td maxW={'4vw'} onClick={() => handleClickProduct()} fontSize={'xs'} textAlign={'center'}>{e.InStock_Available === null ? 0 : e.InStock_Available}</Td>
       <Td maxW={'4vw'} onClick={() => handleClickProduct()} fontSize={'xs'} textAlign={'center'}>{e.Incoming_Available === null ? 0 : e.Incoming_Available}</Td>
       <Td maxW={'4vw'} onClick={() => handleClickProduct()} fontSize={'xs'} textAlign={'center'}>{e.NextArrival === undefined ? '-' : e.NextArrival}</Td>
@@ -122,24 +122,24 @@ const ProductList = ({ allProducts, user }) => {
             <Thead h={'6vh'}>
               <Tr>
                 <Th color={'web.text2'}>Product Name</Th>
-                <Th color={'web.text2'} textAlign={'center'} >Type</Th>
+                <Th color={'web.text2'} textAlign={'center'}>Type</Th>
                 <Th color={'web.text2'} textAlign={'center'}>Size</Th>
-                <Th color={'web.text2'} >Thickness</Th>
-                <Th color={'web.text2'}>Finish</Th>
+                <Th color={'web.text2'} textAlign={'center'}>Thickness</Th>
+                <Th color={'web.text2'} textAlign={'center'}>Finish</Th>
                 <Th color={'web.text2'} isNumeric>Price</Th>
-                <Th color={'web.text2'} isNumeric>In Stock</Th>
-                <Th color={'web.text2'} isNumeric>Incoming</Th>
-                <Th color={'web.text2'} isNumeric>Next Arrival</Th>
-                <Th color={'web.text2'} >Discontinued</Th>
+                <Th color={'web.text2'} textAlign={'center'}>In Stock</Th>
+                <Th color={'web.text2'} textAlign={'center'}>Incoming</Th>
+                <Th color={'web.text2'} textAlign={'center'}>Next Arrival</Th>
+                <Th color={'web.text2'}>Discontinued</Th>
               </Tr>
             </Thead>
             <Tbody>
-              { 
-                  allProducts.map((e, i) => {
-                    return(
-                      <ModelTr key={i} e={e} user={user}/>
-                    )
-                  })
+              {
+                allProducts.map((e, i) => {
+                  return(
+                    <ModelTr key={i} e={e} user={user}/>
+                  )
+                })
               }
             </Tbody>
           </Table>

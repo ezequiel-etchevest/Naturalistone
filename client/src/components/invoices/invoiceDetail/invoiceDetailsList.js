@@ -85,7 +85,7 @@ const InvoiceDetailList = ({invoice, payments}) => {
                 <Text 
                 fontSize={'2.05vh'}
                 fontWeight={'bold'}>
-                  ${invoice[0].Value.toLocaleString('en-US')}
+                  $ {invoice[0].Value.toLocaleString('en-US')}
                   </Text>
               </Box>
               <Box>
@@ -156,7 +156,7 @@ const InvoiceDetailList = ({invoice, payments}) => {
                 <Text 
                   fontSize={'2.05vh'} 
                   fontWeight={'bold'}>
-                  ${payments.paymentsMath  ? (
+                  $ {payments.paymentsMath  ? (
                    Number(payments.paymentsMath.PendingAmount).toLocaleString('en-US')
                   ):(
                     invoice[0].Value.toLocaleString('en-US')

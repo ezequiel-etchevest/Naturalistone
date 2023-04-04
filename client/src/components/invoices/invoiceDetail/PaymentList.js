@@ -33,7 +33,7 @@ const ModelTr = ({p, totalAmount, invoice}) => {
         }}
         >
         <Td textAlign={'match-parent'} fontSize={'1.6vh'}>{p.Date.split('T')[0]}</Td>
-        <Td textAlign={'match-parent'} fontSize={'1.6vh'}>${p.Amount.toLocaleString('en-US')} </Td>
+        <Td textAlign={'match-parent'} fontSize={'1.6vh'}>$ {p.Amount.toLocaleString('en-US')} </Td>
         <Td textAlign={'match-parent'} fontSize={'1.6vh'}>{p.Method}</Td>
         <Td textAlign={'center'} fontSize={'1.6vh'} >{Math.round(per.toFixed(2))} %</Td>
         <Td> <PaymentDeleteModal InvoiceID={p.InvoiceID} idPayments={p.idPayments}/>
