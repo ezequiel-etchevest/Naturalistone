@@ -54,7 +54,7 @@ const ModelTr = ({e, user}) => {
       }} 
       >
       <Td maxW={'4vw'} onClick={() => handleClickProduct()} fontSize={'xs'} textAlign={'match-parent'}>{e.ProductName}</Td>
-      <Td maxW={'8vw'} onClick={() => handleClickProduct()} fontSize={'xs'} textAlign={'center'}>{e.Material} - {e.Type}</Td>
+      <Td maxW={'8vw'} onClick={() => handleClickProduct()} fontSize={'xs'} textAlign={'center'}>{e.Material}</Td>
       <Td maxW={'4vw'} onClick={() => handleClickProduct()} fontSize={'xs'} textAlign={'center'}>{e.Size}</Td>
       <Td maxW={'4vw'} onClick={() => handleClickProduct()} fontSize={'xs'} textAlign={'center'}> {e.Thickness === null ? 'N/A' : e.Thickness} </Td>
       <Td maxW={'4vw'} onClick={() => handleClickProduct()} fontSize={'xs'} textAlign={'center'}> {e.Finish === null ? 'N/A' : e.Finish} </Td>
