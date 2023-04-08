@@ -14,11 +14,11 @@ import {
     NumberInputField,
     useToast, 
   } from '@chakra-ui/react'
-  import { useState } from 'react'
+  import { useState, useEffect } from 'react'
 
 
-const ModelTr = ({p, setQuantities, quantities, errors, setErrors, setDisabledConfirm}) => {
-  
+const ModelTr = ({p, setQuantities, quantities, errors, setErrors, invoice_products}) => {
+
   const toast = useToast()
 
   const [input, setInput] = useState({
@@ -34,9 +34,8 @@ const ModelTr = ({p, setQuantities, quantities, errors, setErrors, setDisabledCo
       delivered: p.Delivered
     })
 
-
+  
   const handleInput = (e) => {
-
     setInput({
       ...input,
       quantity: parseFloat(e),
@@ -50,7 +49,8 @@ const ModelTr = ({p, setQuantities, quantities, errors, setErrors, setDisabledCo
         if(e >= 0 && e <= p.InStock_Reserved){
           setErrors(errors.filter(error=> error !== input.prodID))
         }
-      }})}  
+      }})
+    }  
 
     if( e > p.InStock_Reserved ){
       setErrors([...errors, p.ProdID])
@@ -63,7 +63,6 @@ const ModelTr = ({p, setQuantities, quantities, errors, setErrors, setDisabledCo
       })
     }
 }
-
 
   const handleOnBlur = () => {
     let updated = false;
@@ -85,6 +84,7 @@ const ModelTr = ({p, setQuantities, quantities, errors, setErrors, setDisabledCo
   }}
   }
 
+ // console.log('quantities products table', quantities)
     return(
       <Tr 
         cursor={'pointer'}
@@ -134,8 +134,11 @@ const ModelTr = ({p, setQuantities, quantities, errors, setErrors, setDisabledCo
     )
 }
 
-const DeliveryProductList = ({invoice_products, setQuantities, quantities, errors, setErrors, setDisabledConfirm}) => {
+const DeliveryProductList = ({invoice_products, setQuantities, quantities, errors, setErrors, deliveryID}) => {
+  useEffect(() =>{
 
+  },[invoice_products])
+  
     return(
         <Box
         display={'flex'}
@@ -178,7 +181,7 @@ const DeliveryProductList = ({invoice_products, setQuantities, quantities, error
                   <Tbody >
                     { invoice_products.map((p, i) =>{
                         return(
-                          <ModelTr p={p} key={i} id={i} setQuantities={setQuantities} quantities={quantities} errors={errors} setErrors={setErrors} setDisabledConfirm={setDisabledConfirm}/>
+                          <ModelTr p={p} key={i} id={i} setQuantities={setQuantities} quantities={quantities} errors={errors} setErrors={setErrors} invoice_products={invoice_products}/>
                         )
                       })
                     }

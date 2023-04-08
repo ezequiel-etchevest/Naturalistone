@@ -7,14 +7,22 @@ import {
 import { BsTruck } from 'react-icons/bs';
 import CreateDeliveryModal from "./CreateDeliveryModal";
 
-const CreateDeliveryButton = ({invoice, user, invoice_products}) => {
+const CreateDeliveryButton = ({invoice, user, invoice_products, payments}) => {
 
   const { isOpen, onOpen, onClose } = useDisclosure()
-  
+
  //tambien tengo que ver el componente de las notas, xq hay un problema en la tabla con un child de tbody
  //falta hacer la logica para remaining pero todavia no estan las tablas
  //tengo que poner condiciones al input para que no supere ciertos valores segun lo que haya disponible
 
+    const handleDisable = () => {
+      if(user.Secction7Flag === 1){
+        return false 
+      } else {
+        if(payments.paymentData.length > 0) return false
+        else return true
+      }
+    }
     return(
         <>
           <ButtonGroup
@@ -28,12 +36,12 @@ const CreateDeliveryButton = ({invoice, user, invoice_products}) => {
             }}
             >
             <IconButton
-              disabled={(user.SellerID === 3 || user.SellerID === 5) ? false : true }
+              disabled={handleDisable()}
               variant={'unstyled'}           
               fontWeight={'normal'}
               icon={<BsTruck/>}/>
             <Button
-              disabled={(user.SellerID === 3 || user.SellerID === 5) ? false : true }
+              disabled={handleDisable()}
               variant={'unstyled'}           
               fontWeight={'normal'}
               >New Delivery Note

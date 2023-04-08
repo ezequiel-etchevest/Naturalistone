@@ -25,12 +25,12 @@ const DeliveryNotesListButton = ({user, invoice, deliveries}) => {
       }}
       >
       <IconButton
-        disabled={(user.SellerID === 3 || user.SellerID === 5) ? false : true }
+        disabled={false}
         variant={'unstyled'}           
         fontWeight={'normal'}
         icon={<BsListUl/>}/>
       <Button
-        disabled={(user.SellerID === 3 || user.SellerID === 5) ? false : true }
+        disabled={false}
         variant={'unstyled'}           
         fontWeight={'normal'}
         >Delivery Notes List

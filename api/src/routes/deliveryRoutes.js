@@ -29,13 +29,13 @@ deliveryRouter.get('/id/:id', async function(req, res){
   
   query_ = `SELECT Deliveries_Products.*, Products.ProdID, Products.ProdNameID, 
   ProdNames.Naturali_ProdName as ProdName,
+  ProdNames.Material,  
   Deliveries.SaleID, 
   Deliveries.Delivery_Date,        
   Dimension.Type,
   Dimension.Size,
   Dimension.Finish,
   Dimension.Thickness,
-  Dimension.Material,  
   ProdSold.* FROM NaturaliStone.Deliveries_Products
   INNER JOIN Products ON Products.ProdID = Deliveries_Products.ProdID
   INNER JOIN Dimension ON Dimension.DimensionID = Products.DimensionID
@@ -74,7 +74,7 @@ deliveryRouter.post('/:id', async function(req, res){
       if (error) throw error;  
       if (payments.length === 0) {
         console.log('Query0 Error at Post /delivery/:id! payments related')
-        res.status(200).json(error);
+        res.status(200).json({msg: `Not money enough`, error: error, val: false});
       } else {
         if (paymentsValidation(quantities, payments)) {
           try {

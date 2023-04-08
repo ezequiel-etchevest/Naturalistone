@@ -25,7 +25,7 @@ const InvoicePanelButtons = ({invoice, payments, user, invoice_products, deliver
             spacing={0}
           	>
               <ChangeStatus invoice={invoice} user={user}/>
-              <CreateDeliveryButton invoice={invoice} user={user} invoice_products={invoice_products}/>
+              <CreateDeliveryButton invoice={invoice} user={user} invoice_products={invoice_products} payments={payments}/>
               <DeliveryNotesListButton user={user} invoice={invoice} deliveries={deliveries}/>
               <ButtonGroup
                 h={'5vh'}

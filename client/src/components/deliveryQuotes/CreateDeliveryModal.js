@@ -10,9 +10,10 @@ import {
     ModalCloseButton,
     useDisclosure,
     Tooltip,
-    Box
+    Box,
+    useToast
     } from "@chakra-ui/react"
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { postDeliveryNote, cleanStateDeliveryNoteFail } from "../../redux/actions-deliveryNotes";
 import CreateDeliveryNotePdf from "./CreateDeliveryNotePdf"
@@ -50,13 +51,31 @@ const CreateDeliveryModal = ({invoice, user, isOpen, onClose, invoice_products})
   const [quantities, setQuantities] = useState(handleQuantities)
   const [disabledConfirm, setDisabledConfirm] = useState(false)
   const [errors, setErrors] = useState([])
-  
+  const toast = useToast()
   const deliveryID = useSelector(state => state.deliveryID)
   let deliveryID_error = useSelector(state => state.deliveryID_error)
+  
+  useEffect(()=> {
+    if(errors.length){
+      setDisabledConfirm(true)
+    } else {
+      setDisabledConfirm(false)
+    }
+    }, [errors])
 
-  const handleSubmit = async () => {
-      await dispatch(postDeliveryNote(id, quantities))
-      dispatch(getInvoiceProducts(id))
+  const handleSubmit = () => {
+    if(!errors.length){
+      dispatch(postDeliveryNote(id, quantities))
+      dispatch(getInvoiceProducts(id))      
+      toast({
+        title: 'Delivery note',
+        description: "Delivery note created successfully",
+        status: 'success',
+        variant:'subtle',
+        duration: 4000,
+        isClosable: true,
+      })
+    }
   }
 
   const handleSecondModalClose = () => {
@@ -117,7 +136,7 @@ const CreateDeliveryModal = ({invoice, user, isOpen, onClose, invoice_products})
         quantities={quantities}
         errors={errors} 
         setErrors={setErrors}
-        setDisabledConfirm={setDisabledConfirm}/>
+        deliveryID={deliveryID}/>
       </ModalBody>
       <ModalFooter mb={'1vh'} mr={'1vw'} ml={'2vw'} display={'flex'} flexDir={'row'} justifyContent={'space-between'}>
         <Text 

@@ -92,7 +92,7 @@ const InvoiceDetailList = ({invoice, payments}) => {
                 <Text 
                   color={'web.text2'} 
                   fontSize={'1.6vh'}>
-                  Payment percentaje
+                  Payment percentage
                 </Text>
                 <Text 
                   fontSize={'2.05vh'} 
