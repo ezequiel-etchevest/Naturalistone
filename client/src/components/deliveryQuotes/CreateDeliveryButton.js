@@ -17,19 +17,23 @@ const CreateDeliveryButton = ({invoice, user, invoice_products, payments, window
  //tengo que poner condiciones al input para que no supere ciertos valores segun lo que haya disponible
 
     const handleDisable = () => {
-      if(user.Secction7Flag === 1){
-        return false 
-      } else {
+      // if(user.Secction7Flag === 1){
+      //   return false 
+      // } else {
         if(payments.paymentData.length > 0) return false
         else return true
-      }
+      // }
     }
     return(
         <>
           <ButtonGroup
             h={'5vh'}
             size={'sm'}
-            onClick={onOpen}
+            onClick={() => {
+              if (!handleDisable()) {
+                onOpen()
+              }
+            }}
             display={'flex'}
             spacing={0}
             _hover={{
@@ -38,9 +42,11 @@ const CreateDeliveryButton = ({invoice, user, invoice_products, payments, window
             >
             <IconButton
               disabled={handleDisable()}
+              fontSize={'1.5vw'}
               variant={'unstyled'}           
               fontWeight={'normal'}
-              icon={<BsTruck/>}/>
+              icon={<BsTruck/>}
+              />
             {
               windowWidth > 1100 ? 
               <Button

@@ -52,6 +52,7 @@ const CreateDeliveryModal = ({invoice, user, isOpen, onClose, invoice_products})
   const [disabledConfirm, setDisabledConfirm] = useState(false)
   const [errors, setErrors] = useState([])
   const toast = useToast()
+
   const deliveryID = useSelector(state => state.deliveryID)
   let deliveryID_error = useSelector(state => state.deliveryID_error)
   
@@ -63,13 +64,14 @@ const CreateDeliveryModal = ({invoice, user, isOpen, onClose, invoice_products})
     }
     }, [errors])
 
+
   const handleSubmit = () => {
     if(!errors.length){
-      dispatch(postDeliveryNote(id, quantities))
-      dispatch(getInvoiceProducts(id))      
+      dispatch(postDeliveryNote(id, quantities))   
+      handleClear()
       toast({
         title: 'Delivery note',
-        description: "Delivery note created successfully",
+        description:`Delivery note N°: ${deliveryID} created successfully`,
         status: 'success',
         variant:'subtle',
         duration: 4000,
@@ -100,7 +102,7 @@ const CreateDeliveryModal = ({invoice, user, isOpen, onClose, invoice_products})
   const handleViewPdf = () => {
     onSecondModalOpen()
   }
-
+console.log('invoices_products', invoice_products)
 
   return(
 <>
@@ -136,7 +138,7 @@ const CreateDeliveryModal = ({invoice, user, isOpen, onClose, invoice_products})
         quantities={quantities}
         errors={errors} 
         setErrors={setErrors}
-        deliveryID={deliveryID}/>
+        />
       </ModalBody>
       <ModalFooter mb={'1vh'} mr={'1vw'} ml={'2vw'} display={'flex'} flexDir={'row'} justifyContent={'space-between'}>
         <Text 

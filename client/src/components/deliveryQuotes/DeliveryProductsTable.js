@@ -135,10 +135,8 @@ const ModelTr = ({p, setQuantities, quantities, errors, setErrors}) => {
 }
 
 const DeliveryProductList = ({invoice_products, setQuantities, quantities, errors, setErrors}) => {
-  useEffect(() =>{
 
-  },[invoice_products])
-  
+  console.log('invoices_products tabla', invoice_products)
     return(
         <Box
         display={'flex'}

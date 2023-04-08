@@ -26,7 +26,7 @@ const DeliveryNotesListButton = ({user, invoice, deliveries, windowWidth}) => {
       >
       <IconButton
         fontSize={'1.5vw'}
-        disabled={(user.Secction7Flag === 0) ? false : true }
+        disabled={false}
         variant={'unstyled'}           
         fontWeight={'normal'}
         icon={<BsListUl/>}/>
@@ -34,7 +34,7 @@ const DeliveryNotesListButton = ({user, invoice, deliveries, windowWidth}) => {
         windowWidth > 1100 ? 
           <Button
             fontSize={'1vw'}
-            disabled={(user.Secction7Flag === 0) ? false : true }
+            disabled={false}
             variant={'unstyled'}           
             fontWeight={'normal'}
             >Delivery Notes List</Button>
