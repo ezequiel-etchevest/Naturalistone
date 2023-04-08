@@ -3,11 +3,12 @@ import {
     ButtonGroup, 
     IconButton,
     useDisclosure,
+    Box
     } from "@chakra-ui/react"
 import { BsTruck } from 'react-icons/bs';
 import CreateDeliveryModal from "./CreateDeliveryModal";
 
-const CreateDeliveryButton = ({invoice, user, invoice_products, payments}) => {
+const CreateDeliveryButton = ({invoice, user, invoice_products, payments, windowWidth}) => {
 
   const { isOpen, onOpen, onClose } = useDisclosure()
 
@@ -40,12 +41,17 @@ const CreateDeliveryButton = ({invoice, user, invoice_products, payments}) => {
               variant={'unstyled'}           
               fontWeight={'normal'}
               icon={<BsTruck/>}/>
-            <Button
+            {
+              windowWidth > 1100 ? 
+              <Button
               disabled={handleDisable()}
               variant={'unstyled'}           
               fontWeight={'normal'}
+              fontSize={'1vw'}
               >New Delivery Note
-            </Button>
+              </Button>
+              : null
+            }
           <CreateDeliveryModal invoice={invoice} user={user} isOpen={isOpen} onClose={onClose} invoice_products={invoice_products}/> 
           </ButtonGroup>
         </>

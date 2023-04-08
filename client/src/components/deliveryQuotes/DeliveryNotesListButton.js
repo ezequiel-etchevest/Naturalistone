@@ -3,15 +3,15 @@ import {
     ButtonGroup, 
     IconButton,
     useDisclosure,
+    Box
     } from "@chakra-ui/react"
 import { BsListUl } from 'react-icons/bs';
 import DeliveryNotesListModal from "./DeliveryNotesListModal";
 
 
-const DeliveryNotesListButton = ({user, invoice, deliveries}) => {
+const DeliveryNotesListButton = ({user, invoice, deliveries, windowWidth}) => {
 
   const { isOpen, onOpen, onClose } = useDisclosure()
-   
   return(
   <>
     <ButtonGroup
@@ -25,17 +25,22 @@ const DeliveryNotesListButton = ({user, invoice, deliveries}) => {
       }}
       >
       <IconButton
-        disabled={false}
+        fontSize={'1.5vw'}
+        disabled={(user.Secction7Flag === 0) ? false : true }
         variant={'unstyled'}           
         fontWeight={'normal'}
         icon={<BsListUl/>}/>
-      <Button
-        disabled={false}
-        variant={'unstyled'}           
-        fontWeight={'normal'}
-        >Delivery Notes List
-      </Button>
-    <DeliveryNotesListModal isOpen={isOpen} onClose={onClose} invoice={invoice} deliveries={deliveries}/> 
+      {
+        windowWidth > 1100 ? 
+          <Button
+            fontSize={'1vw'}
+            disabled={(user.Secction7Flag === 0) ? false : true }
+            variant={'unstyled'}           
+            fontWeight={'normal'}
+            >Delivery Notes List</Button>
+         : null
+      }        
+      <DeliveryNotesListModal isOpen={isOpen} onClose={onClose} invoice={invoice} deliveries={deliveries}/> 
     </ButtonGroup>
   </>
   )

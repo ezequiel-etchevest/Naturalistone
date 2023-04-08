@@ -28,9 +28,10 @@ export default function PaymentDeleteModal({InvoiceID, idPayments}) {
     return (
       <>
       <IconButton
+        w={'2vw'}
         variant={'unstyled'}           
         fontWeight={'normal'}
-        fontSize={'xl'}
+        fontSize={'sm'}
         display={'flex'}
         icon={<AiOutlineDelete/>}           
         onClick={onOpen}

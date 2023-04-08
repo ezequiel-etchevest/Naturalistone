@@ -6,8 +6,8 @@ import ModalPDF from './modalPDF';
 import InvoicePanelButtons from './invoiceButtons';
 
 
-const Detail = ({invoice, payments, invoice_products, user, deliveries}) => {
-  
+const Detail = ({invoice, payments, invoice_products, user, deliveries, windowWidth}) => {
+
     return(
       <Box
         userSelect={'none'}
@@ -18,23 +18,16 @@ const Detail = ({invoice, payments, invoice_products, user, deliveries}) => {
         flexDir={'column'}
         >
         {/*Quote Details & Product Details*/}
-        <Box display={'flex'} placeContent={'center'}>
-        <Box
-          display={'flex'}
-          flexDir={'row'}
-          >
-
-            {
-              Object.entries(payments).length ? (
-                <InvoiceDetailList invoice={invoice} payments={payments}/>
-                ) : (
-                  <Text>Loading</Text>
-                )
-            }
+        <Box mx={'1.5vw'} display={'flex'} justifyContent={'space-between'}>
+          {
+            Object.entries(payments).length ? (
+            <InvoiceDetailList invoice={invoice} payments={payments}/>
+              ):(
+            <Text>Loading</Text>
+              )
+          }
         <Box
           mt={'3vh'}
-          ml={'1vw'}
-          mr={'1vw'}
           pt={'1.5vw'}
           pb={'1.5vw'} 
           border={'1px solid'} 
@@ -42,7 +35,7 @@ const Detail = ({invoice, payments, invoice_products, user, deliveries}) => {
           borderColor={'web.border'} 
           bg={'web.sideBar'}
           h={'44vh'}
-          w={'48vw'}>
+          w={'55vw'}>
           {
             invoice_products.length ? (
               <InvoiceProductList invoice_products={invoice_products} invoice={invoice} />
@@ -51,36 +44,27 @@ const Detail = ({invoice, payments, invoice_products, user, deliveries}) => {
             )
           }
         </Box>
-        </Box>
        </Box>
         {/*Payment Details & Buttons*/}
-        <Box display={'flex'} placeContent={'center'}>
-        <Box
-          display={'flex'}
-          flexDir={'reverse'}
-          w={'84vw'}
-          justifyContent={'center'}
-          >
-            {/*Payments Box*/}
-            <Box
-              mt={'3vh'}
-              ml={'2.8vw'}
-              mr={'1vw'}
-              p={'1vw'} 
-              border={'1px solid'} 
-              rounded={'md'} 
-              borderColor={'web.border'} 
-              bg={'web.sideBar'}
-              h={'39vh'}
-              w={'44vw'}
-              > 
-              {
-               Object.entries(payments).length >= 1 ? (
-                  <PaymentList payments={payments} totalAmount={invoice[0].Value} invoice={invoice} /> 
-                ) : (
-                  <Text>No payments done yet</Text>
-                )
-              }
+        <Box display={'flex'} mx={'1.5vw'} justifyContent={'space-between'} >
+        {/*Payments Box*/}
+          <Box
+            mt={'3vh'}
+            p={'1vw'} 
+            border={'1px solid'} 
+            rounded={'md'} 
+            borderColor={'web.border'} 
+            bg={'web.sideBar'}
+            h={'39vh'}
+            w={ windowWidth > 1100 ? ('54vw') : ('64vw')}
+            > 
+            {
+             Object.entries(payments).length >= 1 ? (
+                <PaymentList payments={payments} totalAmount={invoice[0].Value} invoice={invoice} /> 
+              ) : (
+                <Text>No payments done yet</Text>
+              )
+            }
             </Box>
             <Box
               border={'1px solid'}
@@ -88,9 +72,9 @@ const Detail = ({invoice, payments, invoice_products, user, deliveries}) => {
               borderColor={'web.border'}
               rounded={'md'}
               p={'2.5vh'}
-              mr={'2vw'}
               mt={'3vh'}
-              w={'30vw'} 
+              w={ windowWidth > 1100 ? '30w' : '22vw'}
+              minW={'230px'} 
               h={'39vh'} 
               justifyContent={'space-between'} 
               display={'flex'}
@@ -104,11 +88,16 @@ const Detail = ({invoice, payments, invoice_products, user, deliveries}) => {
                     <Text>Loading</Text>
                   )
                 }
-              <InvoicePanelButtons invoice={invoice} payments={payments} user={user} invoice_products={invoice_products} deliveries={deliveries}/>
+              <InvoicePanelButtons
+                windowWidth={windowWidth} 
+                invoice={invoice} 
+                payments={payments} 
+                user={user} 
+                invoice_products={invoice_products} 
+                deliveries={deliveries}/>
             </Box>
         </Box>
       </Box>	
-      </Box>
       )
   }
 

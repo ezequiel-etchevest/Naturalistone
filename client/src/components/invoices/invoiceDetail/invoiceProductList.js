@@ -31,11 +31,11 @@ const ModelTr = ({p}) => {
         }}
         onClick={() => handleClick()}
         >
-        <Td textAlign={'match-parent'}>{p.ProductName}</Td>
-        <Td textAlign={'center'}>{p.Quantity}</Td>
-        <Td textAlign={'center'} >$ {p.SalePrice.toLocaleString('en-US')}</Td>
-        <Td textAlign={'center'}>{p.InStock_Reserved === null ? '0' : p.InStock_Reserved}</Td>
-        <Td textAlign={'center'}>{p.NextArrival === null ? '-' : p.NextArrival}</Td>
+        <Td fontSize={'1.1vw'} textAlign={'match-parent'}>{p.ProductName}</Td>
+        <Td fontSize={'1.1vw'} textAlign={'center'}>{p.Quantity}</Td>
+        <Td fontSize={'1.1vw'} textAlign={'center'} >$ {p.SalePrice.toLocaleString('en-US')}</Td>
+        <Td fontSize={'1.1vw'} textAlign={'center'}>{p.InStock_Reserved === null ? '0' : p.InStock_Reserved}</Td>
+        <Td fontSize={'1.1vw'} textAlign={'center'}>{p.NextArrival === null ? '-' : p.NextArrival}</Td>
       </Tr>
     )
 }
@@ -64,16 +64,16 @@ const InvoiceProductList = ({invoice_products, invoice}) => {
             }}
             bg={'web.sideBar'}           
             >
-            <Text fontSize={'xl'} color={'web.text2'}>Products Details</Text>
-            <TableContainer w={'44vw'} mr={'1vw'}>
+            <Text fontSize={'1.6vw'} color={'web.text2'}>Products Details</Text>
+            <TableContainer w={'48vw'} mr={'1vw'}>
                 <Table mt={'2vh'} color={'web.text'} variant={'simple'} size={'sm'} >
                   <Thead h={'6vh'}>
                     <Tr>
-                      <Th color={'web.text2'}>Product Name</Th>
-                      <Th color={'web.text2'}textAlign={'center'}>Quantity</Th>
-                      <Th color={'web.text2'}textAlign={'center'}>Sale Price</Th>
-                      <Th color={'web.text2'}textAlign={'center'}>In Stock</Th>
-                      <Th color={'web.text2'}textAlign={'center'}>Next Arrival</Th>
+                      <Th fontSize={'0.8vw'} color={'web.text2'}>Product Name</Th>
+                      <Th fontSize={'0.8vw'} color={'web.text2'}textAlign={'center'}>Quantity</Th>
+                      <Th fontSize={'0.8vw'} color={'web.text2'}textAlign={'center'}>Sale Price</Th>
+                      <Th fontSize={'0.8vw'} color={'web.text2'}textAlign={'center'}>In Stock</Th>
+                      <Th fontSize={'0.8vw'} color={'web.text2'}textAlign={'center'}>Next Arrival</Th>
                     </Tr>
                   </Thead>
                   <Tbody >

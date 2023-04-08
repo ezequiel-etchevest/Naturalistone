@@ -36,7 +36,7 @@ let PriceSlider = ({setFilters, filters, limit, setLimit, values}) =>{
             onChangeEnd={(val) => {
               dispatch(getFiltered(filters.finish, filters.size, filters.thickness,filters.material, filters.search, val))}}
             onChange={(e) => handlePrice(e)}
-            w={'16vw'}
+            w={'15vw'}
             defaultValue={[values.priceMaxmin.min === null ? 0 : values.priceMaxmin.min, values.priceMaxmin.max]}
             min={values.priceMaxmin.min === null ? 0 : values.priceMaxmin.min }
             max={values.priceMaxmin.max}
@@ -53,10 +53,10 @@ let PriceSlider = ({setFilters, filters, limit, setLimit, values}) =>{
               color="web.text2"
               placement={'left'}
               isOpen
-							fontSize={'xs'}
+							fontSize={'0.9vw'}
               >
               <RangeSliderThumb
-								boxSize={'1.5vh'} 
+								boxSize={'1.4vh'} 
                 bg={'logo.orange'} 
                 index={0}           
                 _focus={{
@@ -72,11 +72,11 @@ let PriceSlider = ({setFilters, filters, limit, setLimit, values}) =>{
               color="web.text2"
               placement={'right'}
               isOpen
-              fontSize={'xs'}
+              fontSize={'0.9vw'}
               >
               <RangeSliderThumb 
                 index={1}
-								boxSize={'1.5vh'}  
+								boxSize={'1.4vh'}  
                 bg={'logo.orange'}
                 _focus={{
                   borderColor: 'logo.orange',

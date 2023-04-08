@@ -266,7 +266,7 @@ const ProductsFilters = ({allProducts, setFilteredProducts, values}) => {
         </Tooltip> 
           </Box> 
           </Box>  
-        </Box>
+      </Box>
     </>
   )
 }

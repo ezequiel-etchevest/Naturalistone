@@ -17,7 +17,7 @@ import {
   import { useState, useEffect } from 'react'
 
 
-const ModelTr = ({p, setQuantities, quantities, errors, setErrors, invoice_products}) => {
+const ModelTr = ({p, setQuantities, quantities, errors, setErrors}) => {
 
   const toast = useToast()
 
@@ -134,7 +134,7 @@ const ModelTr = ({p, setQuantities, quantities, errors, setErrors, invoice_produ
     )
 }
 
-const DeliveryProductList = ({invoice_products, setQuantities, quantities, errors, setErrors, deliveryID}) => {
+const DeliveryProductList = ({invoice_products, setQuantities, quantities, errors, setErrors}) => {
   useEffect(() =>{
 
   },[invoice_products])

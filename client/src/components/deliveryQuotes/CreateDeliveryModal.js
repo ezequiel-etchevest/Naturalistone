@@ -32,11 +32,11 @@ const CreateDeliveryModal = ({invoice, user, isOpen, onClose, invoice_products})
   const handleQuantities = () => {
    
     return(
-      invoice_products.map(p => {
+      invoice_products?.map(p => {
         return {      
           quantity: p.InStock_Reserved,
           prodID:p.ProdID,
-          prodName: p.ProductName,
+          prodName: p.ProductName ? p.ProductName : '-' ,
           type: p.Type,
           size:p.Size,
           thickness:p.Thickness,
