@@ -234,6 +234,7 @@ const Filters = ({user, seller_invoices, setFocusFilter, seller_values}) => {
               }}>
               <option value='' className="options">All seller</option>
               {
+                
                 validateSeller() === true ? (
                   matchedSellers?.map((e, i) => {
                       return(

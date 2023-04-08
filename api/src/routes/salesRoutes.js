@@ -127,7 +127,7 @@ salesRouter.get('/currentMonth/:id', async function(req, res){
     const today = new Date().toISOString().split('T')[0]
     const currentMonth = getCurrentMonth()
 
-    if(id == 3 || id == 5 || id == 15){
+    if(id == 3 || id == 4 || id == 17 || id == 6){
 
       query_ = `SELECT ROUND(SUM(Value), 2) As TotalValue FROM Sales WHERE InvoiceDate BETWEEN "${currentMonth}" AND "${today}"`
       query_2 = `SELECT count(*) As InvoicesNumber FROM Sales WHERE InvoiceDate BETWEEN "${currentMonth}" AND "${today}"`
