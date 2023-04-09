@@ -6,10 +6,10 @@ export const POST_DELIVERY_NOTE_FAIL = 'POST_DELIVERY_NOTE_FAIL';
 export const CLEAN_DELIVERY_NOTE_FAIL = 'CLEAN_DELIVERY_NOTE_FAIL';
 
 export function postDeliveryNote(id, quantities){
+
     return async function(dispatch){
         try{
             let { data } = await axios.post(`/delivery/${id}`, quantities)
-
             if(data.val){
                 dispatch(
                 {
@@ -57,6 +57,7 @@ export function getDeliveryNote(id){
     return async function(dispatch){
         try{
             let { data } = await axios.get(`/delivery/id/${id}`)
+            console.log(data)
             return dispatch({
                 type: GET_DELIVERY_BY_ID,
                 payload: data

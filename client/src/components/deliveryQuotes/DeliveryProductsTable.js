@@ -14,7 +14,7 @@ import {
     NumberInputField,
     useToast, 
   } from '@chakra-ui/react'
-  import { useState, useEffect } from 'react'
+  import { useState } from 'react'
 
 
 const ModelTr = ({p, setQuantities, quantities, errors, setErrors}) => {
@@ -36,12 +36,18 @@ const ModelTr = ({p, setQuantities, quantities, errors, setErrors}) => {
 
   
   const handleInput = (e) => {
-    setInput({
-      ...input,
-      quantity: parseFloat(e),
-    })
 
-
+    if(e === ''|| e === null || e === NaN){
+        setInput({
+          ...input,
+          quantity: 0,
+        })
+    } else{
+      setInput({
+        ...input,
+        quantity: parseFloat(e),
+      })
+    }
   
   if (errors.length) {
     errors.forEach(err => {
@@ -52,11 +58,22 @@ const ModelTr = ({p, setQuantities, quantities, errors, setErrors}) => {
       }})
     }  
 
+
     if( e > p.InStock_Reserved ){
       setErrors([...errors, p.ProdID])
       toast({
         title: 'Invalid amount',
         description: `Quantity in ${p.ProductName} must be lower than ${p.InStock_Reserved}`,
+        status: 'error',
+        duration: 2000,
+        isClosable: true,
+      })
+    }
+    if( e < 0 ){
+      setErrors([...errors, p.ProdID])
+      toast({
+        title: 'Invalid amount',
+        description: `Quantity in ${p.ProductName} cant be negative`,
         status: 'error',
         duration: 2000,
         isClosable: true,
@@ -84,7 +101,7 @@ const ModelTr = ({p, setQuantities, quantities, errors, setErrors}) => {
   }}
   }
 
- // console.log('quantities products table', quantities)
+ console.log('quantities products table', quantities)
     return(
       <Tr 
         cursor={'pointer'}
@@ -136,7 +153,7 @@ const ModelTr = ({p, setQuantities, quantities, errors, setErrors}) => {
 
 const DeliveryProductList = ({invoice_products, setQuantities, quantities, errors, setErrors}) => {
 
-  console.log('invoices_products tabla', invoice_products)
+  // console.log('invoices_products tabla', invoice_products)
     return(
         <Box
         display={'flex'}

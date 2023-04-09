@@ -65,14 +65,25 @@ const CreateDeliveryModal = ({invoice, user, isOpen, onClose, invoice_products})
     }, [errors])
 
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
+  if(quantities.length){
     if(!errors.length){
-      dispatch(postDeliveryNote(id, quantities))   
-      handleClear()
+      await dispatch(postDeliveryNote(id, quantities))
+      await dispatch(getInvoiceProducts(id))      
       toast({
         title: 'Delivery note',
-        description:`Delivery note N°: ${deliveryID} created successfully`,
+        description:`Delivery note successfully created`,
         status: 'success',
+        variant:'subtle',
+        duration: 4000,
+        isClosable: true,
+      })
+      onSecondModalOpen()
+    }} else {
+      toast({
+        title: 'Delivery note',
+        description:`No quantities selected for delivery note`,
+        status: 'error',
         variant:'subtle',
         duration: 4000,
         isClosable: true,
@@ -99,10 +110,10 @@ const CreateDeliveryModal = ({invoice, user, isOpen, onClose, invoice_products})
     dispatch(getInvoiceProducts(id))  //get products again in order to update quantities
   }
 
-  const handleViewPdf = () => {
-    onSecondModalOpen()
-  }
-console.log('invoices_products', invoice_products)
+  // const handleViewPdf = () => {
+  //   onSecondModalOpen()
+  // }
+
 
   return(
 <>
@@ -138,7 +149,7 @@ console.log('invoices_products', invoice_products)
         quantities={quantities}
         errors={errors} 
         setErrors={setErrors}
-        />
+        deliveryID={deliveryID}/>
       </ModalBody>
       <ModalFooter mb={'1vh'} mr={'1vw'} ml={'2vw'} display={'flex'} flexDir={'row'} justifyContent={'space-between'}>
         <Text 
@@ -156,23 +167,6 @@ console.log('invoices_products', invoice_products)
           disabled={disabledConfirm}
           >
          Submit
-        </Button>
-        <Button
-          colorScheme={'orange'} 
-          onClick={()=>handleViewPdf()}
-          disabled={deliveryID_error === '' || deliveryID_error === true ? true : false}
-          > 
-            <Tooltip 
-            label="Delivery note not submited yet" 
-            aria-label='A tooltip'
-            fontWeight={'hairline'} 
-            placement='top'
-            mb={'2vh'}
-            mr={'3vw'}
-            isDisabled={deliveryID_error === '' || deliveryID_error === true ? false : true}
-            >
-            View PDF
-          </Tooltip>
         </Button>
         </Box>
       </ModalFooter>
