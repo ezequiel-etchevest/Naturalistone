@@ -1,5 +1,6 @@
 import CurrentMonthStats from './stats/Stats';
-import { Highlight, chakra, Box } from '@chakra-ui/react';
+import { Highlight, chakra, Box, Divider } from '@chakra-ui/react';
+import StatsFilters from './stats/StatsFilters';
 
 const HomeContainer = ({currentMonth}) => {
 
@@ -10,7 +11,7 @@ const HomeContainer = ({currentMonth}) => {
           placeContent={'center'}
           textAlign={'center'}
           fontSize={'4xl'}
-          pt={'4vh'}
+          pt={'10vh'}
           mb={'6vh'}
           color={'web.text2'}
           fontWeight={'normal'}
@@ -23,7 +24,10 @@ const HomeContainer = ({currentMonth}) => {
             CHECK YOUR STATS ON THE GO!
           </Highlight>
         </chakra.h1>
-          <CurrentMonthStats currentMonth={currentMonth}/>
+        <Divider alignSelf={'center'} w={'78vw'}/>
+        <StatsFilters/>
+        <CurrentMonthStats currentMonth={currentMonth}/>
+        <CurrentMonthStats currentMonth={currentMonth}/>
       </Box> 
       </>
     )
