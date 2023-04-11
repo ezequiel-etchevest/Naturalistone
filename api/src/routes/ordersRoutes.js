@@ -6,7 +6,7 @@ const mysqlConnection = require('../db')
 ordersRouter.get('/', async function(req, res){
 
     query_ = `SELECT Orders.*, Factory.Factory_Name as FactoryName FROM Orders
-    LEFT JOIN Factory ON  Factory.FactoryID = Orders.FactoryID`;
+    LEFT JOIN Factory ON  Factory.FactoryID = Orders.FactoryID ORDER BY InvoiceDate DESC`;
     try{
          mysqlConnection.query(query_, function(error, results, fields){
             if(!results.length) {
@@ -27,7 +27,7 @@ ordersRouter.get('/:id', async function(req, res){
     const { id } = req.params
     
     query_ = `SELECT Orders.*, Factory.Factory_Name as FactoryName FROM Orders
-    LEFT JOIN Factory ON  Factory.FactoryID = Orders.FactoryID WHERE OrderID = ${id} ORDER BY InvoiceDate `;
+    LEFT JOIN Factory ON  Factory.FactoryID = Orders.FactoryID WHERE OrderID = ${id} ORDER BY InvoiceDate DESC`;
     try{
          mysqlConnection.query(query_, function(error, results, fields){
             if(!results.length) {
