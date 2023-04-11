@@ -1,6 +1,7 @@
 const { Router } = require('express');
 const loginRouter = require('./loginRoutes')
 const sellerRouter = require('./sellersRoutes')
+const statsRouter = require('./statsRoutes')
 const salesRouter = require('./salesRoutes')
 const productsRouter = require('./productsRoutes')
 const prodSoldRouter = require('./prodSoldRoutes')
@@ -22,7 +23,7 @@ mainRouter.use('/api/orders', ordersRouter);
 mainRouter.use('/api/invoiceErrors', invoiceErrorsRouter);
 mainRouter.use('/api/delivery', deliveryRouter);
 mainRouter.use('/api/onedrive', onedriveRouter);
-// mainRouter.use('/customers', customersRouter);
+mainRouter.use('/api/stats', statsRouter);
 
 
 module.exports = mainRouter

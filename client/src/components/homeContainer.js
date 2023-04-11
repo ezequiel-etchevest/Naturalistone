@@ -1,8 +1,19 @@
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import CurrentMonthStats from './stats/Stats';
-import { Highlight, chakra, Box, Divider } from '@chakra-ui/react';
+import { Highlight, chakra, Box, Divider, HStack } from '@chakra-ui/react';
 import StatsFilters from './stats/StatsFilters';
+import { getCurrentMonth } from "../redux/actions-stats";
 
-const HomeContainer = ({currentMonth}) => {
+
+const HomeContainer = ({user}) => {
+  const dispatch = useDispatch()
+  const currentMonth = useSelector(state => state.current_month)
+
+  useEffect(() => {
+    if(user.length && Object.entries(currentMonth).length === 0){
+      dispatch(getCurrentMonth(user[0].SellerID, user[0].Secction7Flag))
+    }}, [dispatch, user, currentMonth])
 
   return(
     <>
@@ -25,9 +36,22 @@ const HomeContainer = ({currentMonth}) => {
           </Highlight>
         </chakra.h1>
         <Divider alignSelf={'center'} w={'78vw'}/>
-        <StatsFilters/>
-        <CurrentMonthStats currentMonth={currentMonth}/>
-        <CurrentMonthStats currentMonth={currentMonth}/>
+        {
+          user[0].Secction7Flag === 1 ? (
+            <StatsFilters user={user}/>
+          ):(
+            <Box>
+        <HStack
+        ml={'2vw'}
+        mr={'2vw'} 
+        h={'17vh'}
+        w={'80vw'}
+        justifyContent={'space-between'}
+        ></HStack></Box>
+          )
+        }
+        <CurrentMonthStats user={user}/>
+
       </Box> 
       </>
     )

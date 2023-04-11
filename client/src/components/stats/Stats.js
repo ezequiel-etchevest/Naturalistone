@@ -6,9 +6,11 @@ import {
   StatNumber,
   HStack
 } from '@chakra-ui/react';
+import { useEffect } from 'react';
 import { BiDollar } from 'react-icons/bi';
 import { FaSortAmountUpAlt } from 'react-icons/fa';
 import { TbReceiptTax } from 'react-icons/tb';
+import { useSelector } from 'react-redux';
 
 
 function StatsCard(props) {
@@ -49,7 +51,10 @@ function StatsCard(props) {
   );
 }
 
-export default function Stats({currentMonth}) {
+export default function Stats() {
+
+  const currentMonth = useSelector(state => state.current_month)
+  useEffect(()=>{},[currentMonth])
   
   return (
     <Box h={'92vh'} px={'4vw'} bg={'web.bg'} >
