@@ -6,12 +6,11 @@ const HistoricalPrices = ({history_prices}) => {
   return(
     <>
       <Box
-        ml={'1vw'}
         mt={'1.5vh'}
         px={'1.5vw'}
         py={'2vh'}
         maxHeight={'53vh'}
-        w={'18vw'}
+        w={'38vw'}
         display={'flex'}
         flexDir={'column'}
         color={'web.text'}
@@ -19,6 +18,7 @@ const HistoricalPrices = ({history_prices}) => {
         border={'1px solid'} 
         rounded={'md'} 
         borderColor={'web.border'}
+        h={'53vh'}
         >
         <Text color={'web.text2'} fontSize={'2.2vh'} >Historical Prices</Text>
         <Box mt={'1.5vh'} justifyContent={'center'}>

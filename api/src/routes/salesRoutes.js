@@ -92,7 +92,6 @@ salesRouter.get('/:id', async function(req, res){
   }
 })
         
-
 salesRouter.get('/invoice/:id', async function(req, res){
     const { id } = req.params
 
@@ -119,7 +118,6 @@ salesRouter.get('/invoice/:id', async function(req, res){
         res.status(409).send(error);
     }
 });
-
 
 salesRouter.get('/currentMonth/:id', async function(req, res){
     
@@ -203,7 +201,6 @@ salesRouter.get('/currentMonth/:id', async function(req, res){
     }   
 });
 
-
 salesRouter.patch('/quote/:id', async function(req, res){
     
     const {id} = req.params
@@ -278,6 +275,8 @@ salesRouter.get('/values/seller', async function(req, res){
         res.status(409).send(error);
     }
 });
+
+
 
 
 

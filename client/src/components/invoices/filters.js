@@ -26,8 +26,7 @@ const Filters = ({user, seller_invoices, setFocusFilter, seller_values}) => {
       inputNumber: '',
       selectSeller: '',
       timeFilter: 'All'
-    }
-    )
+    })
 
   const userId  =  user[0].SellerID
 

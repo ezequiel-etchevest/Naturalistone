@@ -27,6 +27,7 @@ function App() {
     <NavBar/>
       <Routes>
         <Route path="/login" element= {<LogIn/>} />
+        <Route path="/" element={<PrivateRoute><Home focus={focus} setFocus={setFocus}/></PrivateRoute>} />
         <Route path="/redirect" element= {<Redirect/>} />
         <Route path="/*" element={<PrivateRoute><Home focus={focus} setFocus={setFocus} /></PrivateRoute>}/>
         <Route path="/home" element={<PrivateRoute><Home focus={focus} setFocus={setFocus}/></PrivateRoute>}/>
