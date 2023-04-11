@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { PDFDocument } from 'pdf-lib';
 import { Box } from '@chakra-ui/react';
-
+import axios from 'axios'
 
 const LoadPDF = () => {
 // const LoadPDF = ({idpdf}) => {
