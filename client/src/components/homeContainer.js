@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import CurrentMonthStats from './stats/Stats';
+import CurrentMonthStats from './stats/CurrentMonthStats';
 import { Highlight, chakra, Box, Divider, HStack } from '@chakra-ui/react';
 import StatsFilters from './stats/StatsFilters';
 import { getCurrentMonth } from "../redux/actions-stats";
+import TotalStats from "./stats/TotalStats";
 
 
 const HomeContainer = ({user}) => {
@@ -51,6 +52,7 @@ const HomeContainer = ({user}) => {
           )
         }
         <CurrentMonthStats user={user}/>
+        <TotalStats/>
 
       </Box> 
       </>

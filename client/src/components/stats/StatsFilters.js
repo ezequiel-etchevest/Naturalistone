@@ -13,7 +13,7 @@ import { useEffect } from "react";
 import { getSellers } from "../../redux/actions-sellers";
 import { getCurrentMonth } from "../../redux/actions-stats";
   
-const StatsFilters = ({user}) => {
+const StatsFilters = () => {
     
   const dispatch = useDispatch()
   const sellers = useSelector(state => state.sellers)
@@ -25,6 +25,7 @@ const StatsFilters = ({user}) => {
   useEffect(()=>{
     if(!sellers.length) dispatch(getSellers())
     },[sellers])
+
   return (
     <Box>
       <HStack
@@ -34,14 +35,13 @@ const StatsFilters = ({user}) => {
       w={'80vw'}
       justifyContent={'space-between'}
       >
-      {/*Inputs*/}
         <Box
         display={'flex'}
         alignItems={'center'}
         w={'48vw'}
         >         
         </Box>
-      {/*Selects */}
+      {/*Select */}
         <Box 
         w={'28vw'} 
         display={'flex'}
