@@ -17,21 +17,17 @@ const LoadPDF = () => {
     
     function getpdf(){
       return async function(){
-          try{ 
-             return axios.get(`/one-drive-data/OneDrive/Invoice Naturali/2698.pdf`)
-          }catch(error){
-              console.log({error})
-          }
+        try { 
+          return await axios.get(`/one-drive-data/OneDrive/Invoice Naturali/2698.pdf`, { responseType: 'arraybuffer' });
+        } catch(error) {
+          console.log({error})
+        }
       }
-  }
-  
+    }
+    
     const modifyPdf = async () => {
-
-      const response = await getpdf();
-      // const url = `/InvoiceNaturali/${pdfID}.pdf`
-      // const existingPdfBytes = await fetch(url).then((res) => res.arrayBuffer());
-
-      var bytes = new Uint8Array(response.data);
+      const response = await getpdf()(); // call the returned function to get the response data
+      const bytes = new Uint8Array(response.data);
       const pdfDoc = await PDFDocument.load(bytes);
 
       const pdfBytes = await pdfDoc.save();
@@ -40,6 +36,7 @@ const LoadPDF = () => {
       );
       setPdfInfo(docUrl);
     };
+    
     return (
         <Box h={'85vh'}>
         {<iframe width={'100%'} height={'100%'} title="test-frame" src={pdfInfo} ref={viewer} type="application/pdf" />}

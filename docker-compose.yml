@@ -159,6 +159,7 @@ services:
       - 3000
     volumes:
       - ./client:/usr/src/app
+      - "/root/OneDrive/Demo OneDrive WebApp Etnac/Invoice Naturali:/app/OneDrive/Invoice Naturali"
     depends_on:
       - expressapp
     environment:

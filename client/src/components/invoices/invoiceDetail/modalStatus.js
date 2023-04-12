@@ -36,7 +36,7 @@ const ChangeStatus = ({invoice, user, windowWidth}) => {
           <ButtonGroup
             h={'5vh'}
             size={'sm'}
-            onClick={user.Secction7Flag === 1? onOpen : null}
+            onClick={user.Secction7Flag === 1 ? onOpen : null}  
             display={'flex'}
             spacing={0}
             _hover={{
