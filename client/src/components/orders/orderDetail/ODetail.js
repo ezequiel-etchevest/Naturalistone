@@ -7,7 +7,7 @@ const ODetail = ({order, order_products}) => {
     return(
       <Box
         bg={'web.bg'}  
-        ml={'20vw'} 
+        ml={'16vw'} 
         h={'92vh'}
         display={'flex'}
         flexDir={'column'}

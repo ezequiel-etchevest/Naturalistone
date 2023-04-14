@@ -63,7 +63,7 @@ const List = ({seller_invoices, user}) => {
   const result = useSelector(state=> state.validate_result_quotes)
   const toast = useToast()
   const id = 'test-toast'
-
+  console.log({seller_invoices})
   const validateSeller = () => {
     if(user[0].Secction7Flag === 1) return true
     else return false

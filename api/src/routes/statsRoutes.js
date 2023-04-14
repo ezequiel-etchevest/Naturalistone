@@ -1,18 +1,20 @@
 const express = require('express')
 const statsRouter = express.Router()
 const mysqlConnection = require('../db')
-const {getCurrentMonth} = require('../Controllers/LastMonth')
+const { getLimitDateMonth,getCurrentMonth} = require('../Controllers/LastMonth')
+const invoicesPayments = require('../Controllers/invoicesPayments')
+const paymentStats = require('../Controllers/paymentStats')
 
 
 
-statsRouter.get('/:id', async function(req, res){
+statsRouter.get('/sellers/:id', async function(req, res){
     
-    const {id} = req.params
+    const { id } = req.params
     const { admin } = req.query
     const today = new Date().toISOString().split('T')[0]
     const currentMonth = getCurrentMonth()
-    console.log({id, admin})
-    if(admin === '1'){
+
+    if(id === '3'){
       query_ = `SELECT ROUND(SUM(Value), 2) As TotalValue FROM Sales WHERE InvoiceDate BETWEEN "${currentMonth}" AND "${today}"`
       query_2 = `SELECT count(*) As InvoicesNumber FROM Sales WHERE InvoiceDate BETWEEN "${currentMonth}" AND "${today}"`
       query_3 = `SELECT ROUND(AVG(Value), 2) As AvgValue FROM Sales WHERE InvoiceDate BETWEEN "${currentMonth}" AND "${today}"`
@@ -71,6 +73,45 @@ statsRouter.get('/:id', async function(req, res){
     } catch(error1){
         res.status(409).send(error1);
     }   
+});
+
+statsRouter.get('/payments/:id', async function(req, res){
+    
+    const {id} = req.params
+    const { admin } = req.query
+    const today = new Date().toISOString().split('T')[0]
+    const currentMonth = getCurrentMonth()
+    const limitDateMonth = getLimitDateMonth()
+
+    if(id === '3'){
+      query_ = `SELECT Sales.Naturali_Invoice, Sales.Value, Sales.InvoiceDate, Sales.SellerID, Sales.Payment_Stamp, Payments.idPayments,
+      GROUP_CONCAT(
+      CONCAT(Payments.idPayments,';',Payments.Amount,';',Payments.Date))AS Payments FROM Sales 
+      LEFT JOIN Payments ON Sales.Naturali_Invoice = Payments.InvoiceID 
+      WHERE InvoiceDate BETWEEN "${limitDateMonth}" AND "${today}" 
+      GROUP BY Sales.Naturali_Invoice
+      ORDER BY Sales.InvoiceDate DESC`  
+    } else {
+      query_ = `SELECT Sales.Naturali_Invoice, Sales.Value, Sales.InvoiceDate, Sales.SellerID, Sales.Payment_Stamp, Payments.idPayments,
+      GROUP_CONCAT(
+      CONCAT(Payments.idPayments,';',Payments.Amount,';',Payments.Date))AS Payments FROM Sales 
+      LEFT JOIN Payments ON Sales.Naturali_Invoice = Payments.InvoiceID
+      WHERE InvoiceDate BETWEEN "${limitDateMonth}" AND "${today}" AND Sales.SellerID = ${id}
+      GROUP BY Sales.Naturali_Invoice
+      ORDER BY Sales.InvoiceDate DESC`
+    }
+    try{
+        mysqlConnection.query(query_, function(error, Invoices, fields){
+         if(error) throw error;
+         if(Invoices.length == 0) {
+             console.log('Error en statsRoutes.get /payments')
+             res.status(200).json({});
+         }else{
+            let result = paymentStats(Invoices)
+            res.status(200).json(result);
+         }})}catch(error){
+             res.status(409).send(error);
+      }
 });
 
 module.exports = statsRouter;

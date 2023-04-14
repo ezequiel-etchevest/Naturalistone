@@ -11,21 +11,25 @@ import {AiOutlineClear} from 'react-icons/ai';
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { getSellers } from "../../redux/actions-sellers";
-import { getCurrentMonth } from "../../redux/actions-stats";
+import { getCurrentMonth, getPaymentStats } from "../../redux/actions-stats";
   
-const StatsFilters = () => {
+const StatsFilters = ({user}) => {
     
   const dispatch = useDispatch()
   const sellers = useSelector(state => state.sellers)
   const handleSellerSelect = (e) => {
-    
-    if(e.target.value === 'all') dispatch(getCurrentMonth(3, 1))
-    else dispatch(getCurrentMonth(Number(e.target.value), 0))
+    if(e.target.value === 'all') {
+      dispatch(getCurrentMonth(3, 1))
+      dispatch(getPaymentStats(3, 1))
+    }
+    else {
+      dispatch(getCurrentMonth(Number(e.target.value), 0))
+      dispatch(getPaymentStats(Number(e.target.value), 0))
+    }
     }
   useEffect(()=>{
     if(!sellers.length) dispatch(getSellers())
     },[sellers])
-
   return (
     <Box>
       <HStack
@@ -35,13 +39,14 @@ const StatsFilters = () => {
       w={'80vw'}
       justifyContent={'space-between'}
       >
+      {/*Inputs*/}
         <Box
         display={'flex'}
         alignItems={'center'}
         w={'48vw'}
         >         
         </Box>
-      {/*Select */}
+      {/*Selects */}
         <Box 
         w={'28vw'} 
         display={'flex'}

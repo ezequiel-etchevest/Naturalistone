@@ -1,12 +1,14 @@
 import axios from 'axios';
 
-export const GET_CURRENT_MONTH = 'GET_CURRENT_MONTH'
+export const GET_CURRENT_MONTH = 'GET_CURRENT_MONTH';
+export const GET_PAYMENT_STATS = 'GET_PAYMENT_STATS';
 
 
 export function getCurrentMonth(id, admin){
     return async function(dispatch){
         try{ 
-            let {data} = await axios.get(`/stats/${id}?admin=${admin}`)
+            console.log('month',{id},{admin})
+            let {data} = await axios.get(`/stats/sellers/${id}?admin=${admin}`)
             dispatch(
             {
                 type: GET_CURRENT_MONTH,
@@ -17,3 +19,19 @@ export function getCurrentMonth(id, admin){
         }
     }
 }
+
+export function getPaymentStats(id, admin){
+
+    return async function(dispatch){
+        try{ 
+            let {data} = await axios.get(`/stats/payments/${id}?admin=${admin}`)
+
+            dispatch(
+            {
+                type: GET_PAYMENT_STATS,
+                payload: data
+            })
+        }catch(error){
+            console.log({error})
+        }
+    }}

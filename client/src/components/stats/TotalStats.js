@@ -9,7 +9,8 @@ import {
 import { FaHandsHelping } from 'react-icons/fa';
 import { BsCreditCardFill } from 'react-icons/bs';
 import { HiReceiptPercent } from 'react-icons/hi2';
-  
+import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
   
 function StatsCard(props) {
     
@@ -34,7 +35,7 @@ function StatsCard(props) {
           {title}
         </StatLabel>
         <StatNumber fontSize={'4xl'} fontWeight={'medium'} >
-          {stat?.toLocaleString('en-US')}
+          {stat?.toLocaleString('en-US')} 
         </StatNumber>
       </Box>
       <Box
@@ -50,23 +51,26 @@ function StatsCard(props) {
   }
   
 export default function TotalStats() {
-   
+
+  const paymentStats = useSelector(state => state.payment_stats)
+  useEffect(()=>{},[paymentStats])
+
   return (
     <Box h={'92vh'} px={'4vw'} bg={'web.bg'} >
       <HStack columns={{ base: 1, md: 3 }} spacing={{ base: 5, lg: 8 }}>
         <StatsCard
         title={'Closing Rate'}
-        //stat={}
+        stat={paymentStats.closingRate}
         icon={<FaHandsHelping size={'3em'} />}
         />
         <StatsCard
-        title={'Total Charged'}
-        //stat={}
+        title={'Payments Amount'}
+        stat={paymentStats.totalCharged}
         icon={<BsCreditCardFill size={'3em'} />}
         />
         <StatsCard
         title={'Closing Days (Avg)'}
-        //stat={}
+        stat={paymentStats.closingDaysAvg}
         icon={<HiReceiptPercent size={'3em'} />}
         />
       </HStack>
