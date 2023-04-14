@@ -15,27 +15,30 @@ const LoadPDF = () => {
     }, []);
 
     
-    function getpdf(){
-      return async function(){
-        try { 
-          return await axios.get(`/one-drive-data/OneDrive/Invoice Naturali/2698.pdf`, { responseType: 'arraybuffer' });
-        } catch(error) {
-          console.log({error})
+    function getpdf(filename) {
+      return async function () {
+        try {
+          const response = await axios.get(`/one-drive-data/${filename}`, { responseType: 'arraybuffer' });
+          return response;
+        } catch (error) {
+          console.log({ error });
         }
       }
     }
     
+    
     const modifyPdf = async () => {
-      const response = await getpdf()(); // call the returned function to get the response data
+      const response = await getpdf('2698.pdf')();
       const bytes = new Uint8Array(response.data);
       const pdfDoc = await PDFDocument.load(bytes);
-
+    
       const pdfBytes = await pdfDoc.save();
       const docUrl = URL.createObjectURL(
         new Blob([pdfBytes], { type: "application/pdf" })
       );
       setPdfInfo(docUrl);
     };
+    
     
     return (
         <Box h={'85vh'}>

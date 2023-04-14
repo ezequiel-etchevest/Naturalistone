@@ -3,14 +3,15 @@ const fs = require('fs');
 const path = require('path');
 const onedriveRouter = express.Router()
 
-onedriveRouter.get('/', (req, res) => {
-  const invoicePath = path.join(__dirname, 'OneDrive/Invoice Naturali/2698.pdf');
-  fs.readdir(invoicePath, (err, files) => {
+onedriveRouter.get('/:filename', (req, res) => {
+  const invoicePath = path.join(__dirname, 'OneDrive/Demo OneDrive WebApp Etnac/Invoice Naturali', req.params.filename);
+  fs.readFile(invoicePath, (err, data) => {
     if (err) {
-      return res.status(500).json({ error: 'Unable to read directory' });
+      return res.status(500).json({ error: 'Unable to read file' });
     }
-    return res.json({ files });
+    return res.type('application/pdf').send(data);
   });
 });
+
 
   module.exports = onedriveRouter;
