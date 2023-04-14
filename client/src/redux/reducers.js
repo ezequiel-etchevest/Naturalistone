@@ -30,7 +30,7 @@ import {
     PATCH_PRODUCT_NOTES,
     PATCH_DISCONTINUED
      } from './actions-products';
-import { GET_CURRENT_MONTH, GET_PAYMENT_STATS } from './actions-stats';
+import { GET_CURRENT_MONTH, GET_PAYMENT_STATS, CLEAN_STATS } from './actions-stats';
 import { 
     GET_ORDERS,
     GET_ORDERS_BY_ID,
@@ -169,6 +169,12 @@ function rootReducer (state = intialState, action) {
               ...state,
               payment_stats: action.payload,
           }
+        case CLEAN_STATS:
+          return {
+            ...state,
+            payment_stats: action.payload,
+            current_month: action.payload
+          }
         case GET_INVOICE_PRODUCTS:
             return {
                 ...state,
@@ -275,7 +281,6 @@ function rootReducer (state = intialState, action) {
             ...state,
             delivery_by_id: action.payload
           }
-
         case GET_SELLER_VALUES:
           return{
             ...state,

@@ -81,14 +81,14 @@ statsRouter.get('/payments/:id', async function(req, res){
     const { admin } = req.query
     const today = new Date().toISOString().split('T')[0]
     const currentMonth = getCurrentMonth()
-    const limitDateMonth = getLimitDateMonth()
+
 
     if(id === '3'){
       query_ = `SELECT Sales.Naturali_Invoice, Sales.Value, Sales.InvoiceDate, Sales.SellerID, Sales.Payment_Stamp, Payments.idPayments,
       GROUP_CONCAT(
       CONCAT(Payments.idPayments,';',Payments.Amount,';',Payments.Date))AS Payments FROM Sales 
       LEFT JOIN Payments ON Sales.Naturali_Invoice = Payments.InvoiceID 
-      WHERE InvoiceDate BETWEEN "${limitDateMonth}" AND "${today}" AND Sales.Status != "Canceled"
+      WHERE InvoiceDate BETWEEN "${currentMonth}" AND "${today}" AND Sales.Status != "Canceled"
       GROUP BY Sales.Naturali_Invoice
       ORDER BY Sales.InvoiceDate DESC`  
     } else {
@@ -96,7 +96,7 @@ statsRouter.get('/payments/:id', async function(req, res){
       GROUP_CONCAT(
       CONCAT(Payments.idPayments,';',Payments.Amount,';',Payments.Date))AS Payments FROM Sales 
       LEFT JOIN Payments ON Sales.Naturali_Invoice = Payments.InvoiceID AND Sales.SellerID = ${id} 
-      WHERE InvoiceDate BETWEEN "${limitDateMonth}" AND "${today}" AND Sales.Status != "Canceled"
+      WHERE InvoiceDate BETWEEN "${currentMonth}" AND "${today}" AND Sales.Status != "Canceled" AND Sales.SellerID = ${id} 
       GROUP BY Sales.Naturali_Invoice
       ORDER BY Sales.InvoiceDate DESC`
     }
