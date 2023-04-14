@@ -65,7 +65,7 @@ export default function TotalStats() {
         />
         <StatsCard
         title={'Payments Amount'}
-        stat={paymentStats.totalCharged}
+        stat={Number(paymentStats.totalCharged)}
         icon={<BsCreditCardFill size={'3em'} />}
         />
         <StatsCard

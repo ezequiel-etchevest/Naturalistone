@@ -15,13 +15,13 @@ statsRouter.get('/sellers/:id', async function(req, res){
     const currentMonth = getCurrentMonth()
 
     if(id === '3'){
-      query_ = `SELECT ROUND(SUM(Value), 2) As TotalValue FROM Sales WHERE InvoiceDate BETWEEN "${currentMonth}" AND "${today}"`
-      query_2 = `SELECT count(*) As InvoicesNumber FROM Sales WHERE InvoiceDate BETWEEN "${currentMonth}" AND "${today}"`
-      query_3 = `SELECT ROUND(AVG(Value), 2) As AvgValue FROM Sales WHERE InvoiceDate BETWEEN "${currentMonth}" AND "${today}"`
+      query_ = `SELECT ROUND(SUM(Value), 2) As TotalValue FROM Sales WHERE InvoiceDate BETWEEN "${currentMonth}" AND "${today}"  AND Status != "Canceled"`
+      query_2 = `SELECT count(*) As InvoicesNumber FROM Sales WHERE InvoiceDate BETWEEN "${currentMonth}" AND "${today}" `
+      query_3 = `SELECT ROUND(AVG(Value), 2) As AvgValue FROM Sales WHERE InvoiceDate BETWEEN "${currentMonth}" AND "${today}" AND Status != "Canceled"`
     } else {
-      query_ = `SELECT ROUND(SUM(Value), 2) As TotalValue FROM Sales WHERE SellerID = ${id} AND InvoiceDate BETWEEN "${currentMonth}" AND "${today}"`
-      query_2 = `SELECT count(*) As InvoicesNumber FROM Sales where SellerID = ${id} AND InvoiceDate BETWEEN "${currentMonth}" AND "${today}"`
-      query_3 = `SELECT ROUND(AVG(Value), 2) As AvgValue FROM Sales WHERE SellerID = ${id} AND InvoiceDate BETWEEN "${currentMonth}" AND "${today}"`
+      query_ = `SELECT ROUND(SUM(Value), 2) As TotalValue FROM Sales WHERE SellerID = ${id} AND InvoiceDate BETWEEN "${currentMonth}" AND "${today}" AND Status != "Canceled"`
+      query_2 = `SELECT count(*) As InvoicesNumber FROM Sales where SellerID = ${id} AND InvoiceDate BETWEEN "${currentMonth}" AND "${today}" AND Status != "Canceled"`
+      query_3 = `SELECT ROUND(AVG(Value), 2) As AvgValue FROM Sales WHERE SellerID = ${id} AND InvoiceDate BETWEEN "${currentMonth}" AND "${today}" AND Status != "Canceled"`
     }
     
     try{
@@ -88,15 +88,15 @@ statsRouter.get('/payments/:id', async function(req, res){
       GROUP_CONCAT(
       CONCAT(Payments.idPayments,';',Payments.Amount,';',Payments.Date))AS Payments FROM Sales 
       LEFT JOIN Payments ON Sales.Naturali_Invoice = Payments.InvoiceID 
-      WHERE InvoiceDate BETWEEN "${limitDateMonth}" AND "${today}" 
+      WHERE InvoiceDate BETWEEN "${limitDateMonth}" AND "${today}" AND Sales.Status != "Canceled"
       GROUP BY Sales.Naturali_Invoice
       ORDER BY Sales.InvoiceDate DESC`  
     } else {
       query_ = `SELECT Sales.Naturali_Invoice, Sales.Value, Sales.InvoiceDate, Sales.SellerID, Sales.Payment_Stamp, Payments.idPayments,
       GROUP_CONCAT(
       CONCAT(Payments.idPayments,';',Payments.Amount,';',Payments.Date))AS Payments FROM Sales 
-      LEFT JOIN Payments ON Sales.Naturali_Invoice = Payments.InvoiceID
-      WHERE InvoiceDate BETWEEN "${limitDateMonth}" AND "${today}" AND Sales.SellerID = ${id}
+      LEFT JOIN Payments ON Sales.Naturali_Invoice = Payments.InvoiceID AND Sales.SellerID = ${id} 
+      WHERE InvoiceDate BETWEEN "${limitDateMonth}" AND "${today}" AND Sales.Status != "Canceled"
       GROUP BY Sales.Naturali_Invoice
       ORDER BY Sales.InvoiceDate DESC`
     }
