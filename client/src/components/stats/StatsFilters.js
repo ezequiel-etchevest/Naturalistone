@@ -17,6 +17,7 @@ const StatsFilters = ({user}) => {
     
   const dispatch = useDispatch()
   const sellers = useSelector(state => state.sellers)
+
   const handleSellerSelect = (e) => {
     if(e.target.value === 'all') {
       dispatch(getCurrentMonth(3, 1))
@@ -27,9 +28,11 @@ const StatsFilters = ({user}) => {
       dispatch(getPaymentStats(Number(e.target.value), 0))
     }
     }
+
   useEffect(()=>{
     if(!sellers.length) dispatch(getSellers())
     },[sellers])
+    
   return (
     <Box>
       <HStack

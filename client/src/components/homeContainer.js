@@ -21,6 +21,7 @@ const HomeContainer = ({user}) => {
     }
   }, [dispatch, user, paymentStats, currentMonth])
 
+
   return(
     <>
       <Box userSelect={'none'} h={'92vh'} ml={'16vw'} bg={'web.bg'} display={'flex'} flexDir={'column'}>

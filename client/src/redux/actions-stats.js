@@ -7,7 +7,7 @@ export const GET_PAYMENT_STATS = 'GET_PAYMENT_STATS';
 export function getCurrentMonth(id, admin){
     return async function(dispatch){
         try{ 
-            console.log('month',{id},{admin})
+
             let {data} = await axios.get(`/stats/sellers/${id}?admin=${admin}`)
             dispatch(
             {
