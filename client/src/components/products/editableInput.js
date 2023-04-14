@@ -74,7 +74,7 @@ function EditableInputNotes({product, user}) {
         onSubmit={()=>handleSubmit()}      
       >
         {
-          user.SellerID === 5 || user.SellerID === 3 ?
+          user.Secction7Flag === 1 ?
           <EditableControls /> :
           null
         }
