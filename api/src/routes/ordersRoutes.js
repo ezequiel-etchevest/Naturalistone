@@ -24,8 +24,7 @@ ordersRouter.get('/', async function(req, res){
 
 ordersRouter.get('/:id', async function(req, res){
 
-    const { id } = req.params
-    
+    const { id } = req.params   
     query_ = `SELECT Orders.*, Factory.Factory_Name as FactoryName FROM Orders
     LEFT JOIN Factory ON  Factory.FactoryID = Orders.FactoryID WHERE OrderID = ${id} ORDER BY InvoiceDate DESC`;
     try{
