@@ -53,6 +53,7 @@ const StatsFilters = ({user}) => {
         justifyContent={'flex-end'}
         > 
           <Select
+          defaultValue=""
           onChange={(e)=>handleSellerSelect(e)}
           w={'15vw'}
           variant='outline' 
@@ -66,12 +67,16 @@ const StatsFilters = ({user}) => {
             borderColor: 'logo.orange',
             boxShadow: '0 0.5px 0.5px rgba(229, 103, 23, 0.075)inset, 0 0 5px rgba(255,144,0,0.6)'
           }}>
+            <option value="" disabled hidden>Filter by Seller</option>
             <option value={'all'} className="options">All seller</option>
               {  
                   sellers?.map((e, i) => {
+                    if(e.SellerID != 3){
                       return(
                         <option key={i} className={'options'} value={e.SellerID}>{e.FirstName} {e.LastName}</option>
-                  )})
+                        )
+                    }
+                     })
               }
             </Select>
           </Box>

@@ -35,7 +35,7 @@ function StatsCard(props) {
           {title}
         </StatLabel>
         <StatNumber fontSize={'4xl'} fontWeight={'medium'} >
-          {stat?.toLocaleString('en-US')} 
+          {stat?.toLocaleString('en-US')}
         </StatNumber>
       </Box>
       <Box
