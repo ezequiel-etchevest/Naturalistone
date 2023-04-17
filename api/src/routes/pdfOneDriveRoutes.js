@@ -4,8 +4,8 @@ const path = require('path');
 const onedriveRouter = express.Router()
 
 onedriveRouter.get('/:filename', (req, res) => {
-  const invoicePath = path.join('/app/OneDrive', 'Demo OneDrive WebApp Etnac', 'Invoice Naturali', req.params.filename);
-  console.log('backend filename', req.params.filename)
+  const invoicePath = path.join('/app/OneDrive', 'Naturali', 'InvoicesReceived', 'Parsed Documents', 'Invoice Naturali', req.params.filename);
+
   fs.readFile(invoicePath, (err, data) => {
     if (err) {
       return res.status(500).json({ error: 'Unable to read file' });
