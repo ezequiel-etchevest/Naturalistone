@@ -149,8 +149,7 @@ services:
       - 5000
     volumes:
       - ./api:/usr/src/app
-      - /root/OneDrive/Demo OneDrive WebApp Etnac/Invoice Naturali:/app/OneDrive/Demo OneDrive WebApp Etnac/Invoice Naturali
-
+      - /root/OneDrive:/app/OneDrive
 
     restart: always  
   reactapp:
@@ -160,7 +159,7 @@ services:
       - 3000
     volumes:
       - ./client:/usr/src/app
-      # - "/root/OneDrive/Demo OneDrive WebApp Etnac/Invoice Naturali:/app/OneDrive/Invoice Naturali"
+
     depends_on:
       - expressapp
     environment:

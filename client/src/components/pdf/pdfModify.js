@@ -3,12 +3,12 @@ import { PDFDocument } from 'pdf-lib';
 import { Box } from '@chakra-ui/react';
 import axios from 'axios'
 
-const LoadPDF = () => {
-// const LoadPDF = ({idpdf}) => {
+// const LoadPDF = () => {
+const LoadPDF = ({idpdf}) => {
 
     const [pdfInfo, setPdfInfo] = useState([]);
     const viewer = useRef(null);
-    // const pdfID = idpdf
+    const filename = idpdf
  
     useEffect(() => {
       modifyPdf();
@@ -28,7 +28,7 @@ const LoadPDF = () => {
     
     
     const modifyPdf = async () => {
-      const response = await getpdf('2698.pdf')();
+      const response = await getpdf(filename)();
       const bytes = new Uint8Array(response.data);
       const pdfDoc = await PDFDocument.load(bytes);
     

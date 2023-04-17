@@ -33,11 +33,13 @@ export default function ModalPDF({invoice, payments}) {
             
           <ModalBody w={'100%'} h={'100%'}>
             {
-            invoice[0].Payment_Stamp != 0 ? (
-              <LoadPdfPaid idpdf={id}/>
-              ):(
+            // invoice[0].Payment_Stamp != 0 ? (
+            //   <LoadPdfPaid idpdf={id}/>
+            //   ):(
+            //   <LoadPDF idpdf={id} />
+            //   )
               <LoadPDF idpdf={id} />
-              )
+
             }
           </ModalBody>
         </ModalContent>
