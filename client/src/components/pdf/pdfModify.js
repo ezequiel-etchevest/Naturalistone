@@ -9,7 +9,8 @@ const LoadPDF = ({idpdf}) => {
     const [pdfInfo, setPdfInfo] = useState([]);
     const viewer = useRef(null);
     const filename = idpdf
- 
+    
+ console.log('idpdf front', idpdf)
     useEffect(() => {
       modifyPdf();
     }, []);
@@ -18,7 +19,8 @@ const LoadPDF = ({idpdf}) => {
     function getpdf(filename) {
       return async function () {
         try {
-          const response = await axios.get(`/one-drive-data/${filename}`, { responseType: 'arraybuffer' });
+          const response = await axios.get(`/one-drive-data/${filename}.pdf`, { responseType: 'arraybuffer' });
+          console.log('response frontend', response)
           return response;
         } catch (error) {
           console.log({ error });
@@ -29,6 +31,7 @@ const LoadPDF = ({idpdf}) => {
     
     const modifyPdf = async () => {
       const response = await getpdf(filename)();
+      console.log('filename frontend', filename)
       const bytes = new Uint8Array(response.data);
       const pdfDoc = await PDFDocument.load(bytes);
     
