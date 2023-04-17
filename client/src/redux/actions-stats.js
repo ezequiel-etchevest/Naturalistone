@@ -8,7 +8,7 @@ export const CLEAN_STATS = 'CLEAN_STATS';
 export function getCurrentMonth(id, admin){
     return async function(dispatch){
         try{ 
-            console.log('month',{id},{admin})
+
             let {data} = await axios.get(`/stats/sellers/${id}?admin=${admin}`)
             dispatch(
             {

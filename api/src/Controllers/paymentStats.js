@@ -4,13 +4,14 @@ const invoicesPayments = require('./invoicesPayments')
 let paymentStats = (invoices) => {
 
   let invoicesP= invoicesPayments(invoices)
-	let getClosingRate = () => {
+
+	let getClosingQuotes = () => {
     const invoicesQuantity = invoices.length
     const filteredArray = invoices.filter(obj => obj.Payments !== null);
     const invoicesPaid = filteredArray.reduce((acc) => acc + 1, 0);
-    const closingRate = `${((invoicesPaid / invoicesQuantity) * 100).toFixed(2)} %`;
+    const closingRate = `${((invoicesPaid / invoicesQuantity) * 100).toFixed(1)}%`;
     return closingRate
-  }
+    }  
 	let getTotalCharged = () => {
 		let acc = 0 
     for(i=0;i<invoicesP.length;i++){
@@ -19,7 +20,13 @@ let paymentStats = (invoices) => {
       }
     }
     return acc.toFixed(2)
-	}
+	  }
+  let getTotalQuotesAmount = () => {
+      let accQuotes = invoicesP.reduce(function(total, current){
+        return total + Number(current.Value)
+      }, 0)  
+      return accQuotes
+    }
 	let getClosingDaysAvg = () => {
     let dias = []
     let amount = 0
@@ -48,12 +55,29 @@ let paymentStats = (invoices) => {
     let values = getPaidInvoicesValues()
     if(amount === 0) return 0
     else return values.toFixed(2)
-	}
-	let closingRate = getClosingRate()
+	  }
+
 	let totalCharged = getTotalCharged()
 	let closingDaysAvg = getClosingDaysAvg()
 
-return { closingRate, totalCharged, closingDaysAvg }
+  let getClosingRate = () => {
+    let totalQuotesAmount = getTotalQuotesAmount()
+    let closingRate = (totalCharged * 100) / totalQuotesAmount
+    return `${closingRate.toFixed(2)} %`
+    }
+  
+  let getPaidQuotes = () => {
+    const filteredArray = invoices.filter(obj => obj.Payments !== null);
+    let val = filteredArray.length
+    return val
+
+  }
+
+  let closingRate = getClosingRate()
+  let closingQuotes = getClosingQuotes()
+  let paidQuotes = getPaidQuotes()
+
+return { closingRate, totalCharged, closingDaysAvg, closingQuotes, paidQuotes }
 }
 
 
