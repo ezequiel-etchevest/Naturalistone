@@ -51,7 +51,7 @@ const StatsFilters = ({user}) => {
         </Box>
       {/*Selects */}
         <Box 
-        w={'28vw'} 
+        w={'20vw'} 
         display={'flex'}
         justifyContent={'flex-end'}
         > 
@@ -83,6 +83,39 @@ const StatsFilters = ({user}) => {
               }
             </Select>
           </Box>
+          <Box 
+            w={'18vw'} 
+            display={'flex'}
+            justifyContent={'flex-end'}
+          > 
+          <Select
+          defaultValue=""
+          // onChange={(e)=>handleSellerSelect(e)}
+          w={'15vw'}
+          variant='outline' 
+          h={'4.4vh'}
+          fontSize={'xs'}            
+          bg={'web.sideBar'}
+          color={'web.text2'}
+          borderColor={'web.border'}
+          cursor={'pointer'}
+          _focus={{
+            borderColor: 'logo.orange',
+            boxShadow: '0 0.5px 0.5px rgba(229, 103, 23, 0.075)inset, 0 0 5px rgba(255,144,0,0.6)'
+          }}>
+            <option value="" disabled hidden>Filter by Months</option>
+              {  
+                  sellers?.map((e, i) => {
+                    if(e.SellerID != 3){
+                      return(
+                        <option key={i} className={'options'} value={e.SellerID}>{e.FirstName} {e.LastName}</option>
+                        )
+                    }
+                     })
+              }
+          </Select>
+          </Box>
+
           <Divider orientation={'vertical'} h={'5vh'}/>
           <Tooltip placement={'bottom-start'} label={'Clear all filters'} fontWeight={'hairline'}>      
             <IconButton
