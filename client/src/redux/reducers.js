@@ -56,6 +56,9 @@ import {
   GET_CUSTOMERS_BY_ID,
   POST_CUSTOMER
 } from './actions-customers'
+import {
+  GET_MONTH
+} from './actions-month'
 
 
 const intialState = {
@@ -87,6 +90,7 @@ const intialState = {
     projects_by_customer_id: [],
     customers: [],
     customers_by_id: [],
+    month: ''
 }
 
 function rootReducer (state = intialState, action) {
@@ -335,6 +339,11 @@ function rootReducer (state = intialState, action) {
         case POST_QUOTE:
           return{
             ...state
+          }
+        case GET_MONTH:
+          return {
+            ...state,
+            month: action.payload
           }
         default:
             return {

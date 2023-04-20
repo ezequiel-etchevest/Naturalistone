@@ -9,13 +9,12 @@ statsRouterByMonth.get('/sellers/:id', async function(req, res){
     
     const { id } = req.params;
     const { month } = req.query;
-
-    const today = new Date()
-
-    const year = today.getFullYear()
+    const { year } = req.query;
     
     if (!year || !month) {
       console.log('entro al err')
+      console.log('soy year', year)
+      console.log('soy month', month)
       res.status(400).json({ message: 'Year and month are required parameters.' });
       return;
     }
@@ -87,13 +86,10 @@ statsRouterByMonth.get('/sellers/:id', async function(req, res){
 
 statsRouterByMonth.get('/payments/:id', async function(req, res){
     
-    const {id} = req.params
-    const {month} = req.query
+    const { id } = req.params;
+    const { month } = req.query;
+    const { year } = req.query;
     const { admin } = req.query
-
-    const today = new Date()
-
-    const year = today.getFullYear()
     
     if (!year || !month) {
       console.log('entro al err')

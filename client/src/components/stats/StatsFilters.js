@@ -13,14 +13,18 @@ import { useEffect, useState } from "react";
 import { getSellers } from "../../redux/actions-sellers";
 import { getCurrentMonth, getPaymentStats } from "../../redux/actions-stats";
 import { months } from "../../utils/months";
-import { getMonth, getPaymentStatsByMonth } from "../../redux/actions-statsByMonth";
+import { getMonthAndYear, getPaymentStatsByMonth } from "../../redux/actions-statsByMonth";
 import { years } from "../../utils/years";
+import { getMonth } from "../../redux/actions-month";
   
 const StatsFilters = ({user}) => {
     
   const dispatch = useDispatch()
   const sellers = useSelector(state => state.sellers)
+  const month = useSelector(state => state.month)
+  // const [selectedMonth, setSelectedMonth] = useState('')
   const [selectedSellerId, setSelectedSellerId] = useState('')
+  const [selectedYear, setSelectedYear] = useState('')
 
   const handleSellerSelect = (e) => {
     if(e.target.value === 'all') {
@@ -35,8 +39,18 @@ const StatsFilters = ({user}) => {
     }
 
   const handleSellerByMonth = (e) => {
-    dispatch(getMonth(selectedSellerId, e.target.value))
-    dispatch(getPaymentStatsByMonth(selectedSellerId, e.target.value))
+    // setSelectedMonth(e.target.value)
+    const monthValue = e.target.value
+    const monthName = months[monthValue -1]
+    dispatch(getMonth(monthName))
+    dispatch(getMonthAndYear(selectedSellerId, e.target.value, selectedYear))
+    dispatch(getPaymentStatsByMonth(selectedSellerId, e.target.value, selectedYear))
+  }
+
+  const handleSelectYear = (e) => {
+    setSelectedYear(e.target.value)
+    dispatch(getMonthAndYear(selectedSellerId, month, e.target.value))
+    dispatch(getPaymentStatsByMonth(selectedSellerId, month, e.target.value))
   }
 
   useEffect(()=>{
@@ -120,7 +134,7 @@ const StatsFilters = ({user}) => {
               {  
                   months?.map((e, i) => {
                       return(
-                        <option key={i} className={'options'} value={i+1}>{e}</option>
+                        <option key={i} className={'options'} name={e} value={i+1}>{e}</option>
                         )
                      })
               }
@@ -133,7 +147,7 @@ const StatsFilters = ({user}) => {
           > 
           <Select
           defaultValue=""
-          // onChange={(e)=>handleSellerByMonth(e)}
+          onChange={(e)=>handleSelectYear(e)}
           w={'10vw'}
           variant='outline' 
           h={'4.4vh'}
@@ -149,7 +163,6 @@ const StatsFilters = ({user}) => {
             <option value="" disabled hidden>Filter by Year</option>
               {  
                   year?.map((e, i) => {
-                    console.log('soy years', year)
                       return(
                         <option key={i} className={'options'} value={e}>{e}</option>
                         )

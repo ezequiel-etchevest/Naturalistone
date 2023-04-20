@@ -4,11 +4,13 @@ export const GET_CURRENT_MONTH = 'GET_CURRENT_MONTH';
 export const GET_PAYMENT_STATS = 'GET_PAYMENT_STATS';
 export const CLEAN_STATS = 'CLEAN_STATS';
 
+const currentYear = new Date().getFullYear() 
 
-export function getMonth(id, month){
+
+export function getMonthAndYear(id, month, year){
     return async function(dispatch){
         try{ 
-            let {data} = await axios.get(`/statsByMonth/sellers/${id}?month=${month}`)
+            let {data} = await axios.get(`/statsByMonth/sellers/${id}?month=${month}&year=${year ? year : currentYear}`)
             console.log('soy data', data)
             dispatch(
             {
@@ -21,10 +23,10 @@ export function getMonth(id, month){
     }
 }
 
-export function getPaymentStatsByMonth(id, month){
+export function getPaymentStatsByMonth(id, month, year){
     return async function(dispatch){
         try{ 
-            let {data} = await axios.get(`/statsByMonth/payments/${id}?month=${month}`)
+            let {data} = await axios.get(`/statsByMonth/payments/${id}?month=${month}&year=${year ? year : currentYear}`)
             dispatch(
             {
                 type: GET_PAYMENT_STATS,
