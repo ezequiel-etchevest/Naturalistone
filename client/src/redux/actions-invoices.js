@@ -7,6 +7,7 @@ export const GET_INVOICE_PRODUCTS = 'GET_INVOICE_PRODUCTS';
 export const GET_SELLER_VALUES = 'GET_SELLER_VALUES';
 export const PATCH_STAMP = 'PATCH_STAMP';
 export const PATCH_STATUS = 'PATCH_STATUS';
+export const POST_QUOTE = 'POST_QUOTE';
 
 export function getInvoicesBySeller(id, inputValues){
 
@@ -172,3 +173,20 @@ export function getSellerValues(){
         }
     }
 }
+
+export function createQuote(sellerId, quoteDetails){
+
+  return async function(dispatch){
+      try{
+          let { data } = await axios.post(`/create-quote/${sellerId}`, quoteDetails)
+
+              dispatch(
+              {
+                  type: POST_QUOTE,
+                  payload: data
+              })
+
+      }catch(error){
+          console.log({error})           
+      }}
+    }

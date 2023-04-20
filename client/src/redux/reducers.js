@@ -9,7 +9,8 @@ import {
     GET_INVOICE_PRODUCTS,
     PATCH_STAMP,
     PATCH_STATUS,
-    GET_SELLER_VALUES
+    GET_SELLER_VALUES,
+    POST_QUOTE
 } from './actions-invoices';
 import { 
   GET_INVOICE_ERRORS,
@@ -45,7 +46,16 @@ import {
     POST_DELIVERY_NOTE_FAIL,
     CLEAN_DELIVERY_NOTE_FAIL
 } from './actions-deliveryNotes';
-
+import {
+  GET_PROJECTS,
+  GET_PROJECTS_BY_ID,
+  POST_PROJECT
+} from './actions-projects'
+import {
+  GET_CUSTOMERS,
+  GET_CUSTOMERS_BY_ID,
+  POST_CUSTOMER
+} from './actions-customers'
 
 
 const intialState = {
@@ -72,7 +82,11 @@ const intialState = {
     deliveries_notes_by_id:[],
     deliveryID:'',
     deliveryID_error:'',
-    delivery_by_id:[]
+    delivery_by_id:[],
+    projects: [],
+    projects_by_customer_id: [],
+    customers: [],
+    customers_by_id: [],
 }
 
 function rootReducer (state = intialState, action) {
@@ -112,7 +126,11 @@ function rootReducer (state = intialState, action) {
               deliveryID:'',
               deliveryID_error:'',
               delivery_by_id:[],
-              seller_values:[]
+              seller_values:[],
+              projects: [],
+              projects_by_customer_id: [],
+              customers: [],
+              customers_by_id: [],
             }
         
         case GET_INVOICE_BY_ID:
@@ -285,6 +303,38 @@ function rootReducer (state = intialState, action) {
           return{
             ...state,
             seller_values: action.payload
+          }
+        case GET_CUSTOMERS:
+          return{
+            ...state,
+            customers: action.payload
+          }
+        case GET_CUSTOMERS_BY_ID:
+          return{
+            ...state,
+            customers_by_id: action.payload
+          }
+        case POST_CUSTOMER:
+          return{
+            ...state
+          }
+        case GET_PROJECTS:
+          return{
+            ...state,
+            projects: action.payload
+          }
+        case GET_PROJECTS_BY_ID:
+          return{
+            ...state,
+            projects_by_customer_id: action.payload
+          }
+        case POST_PROJECT:
+          return{
+            ...state
+          }
+        case POST_QUOTE:
+          return{
+            ...state
           }
         default:
             return {

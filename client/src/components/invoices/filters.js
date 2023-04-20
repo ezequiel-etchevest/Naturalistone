@@ -7,6 +7,7 @@ import {
   Select,
   Divider,
   Tooltip,
+  Button,
   } from "@chakra-ui/react";
 import { SearchIcon } from '@chakra-ui/icons';
 import {  getInvoicesBySeller } from "../../redux/actions-invoices";
@@ -14,6 +15,7 @@ import { useDispatch } from 'react-redux'
 import { useState } from "react";
 import '../../assets/styleSheet.css';
 import {AiOutlineClear} from 'react-icons/ai';
+import CreateInvoiceButton from './createInvoice'
 
 const Filters = ({user, seller_invoices, setFocusFilter, seller_values}) => {
 
@@ -124,6 +126,7 @@ const Filters = ({user, seller_invoices, setFocusFilter, seller_values}) => {
           h={'17vh'}
           w={'80vw'}
           justifyContent={'space-between'}
+          spacing={'1vw'}
           >
           {/*Inputs*/}
           <Box
@@ -218,7 +221,7 @@ const Filters = ({user, seller_invoices, setFocusFilter, seller_values}) => {
             <Select
               onChange={(e)=>handleSellerSelect(e)}
               display={validateSeller() === true ? 'unset' : 'none' }
-              w={'15vw'}
+              w={'13vw'}
               variant='outline' 
               h={'4.4vh'}
               fontSize={'xs'}            
@@ -245,7 +248,7 @@ const Filters = ({user, seller_invoices, setFocusFilter, seller_values}) => {
             </Select>
             <Select
               onChange={(e)=>handleTimeSelect(e)} 
-              w={'11vw'}
+              w={'9vw'}
               variant='outline' 
               h={'4.4vh'}
               fontSize={'xs'}            
@@ -262,7 +265,6 @@ const Filters = ({user, seller_invoices, setFocusFilter, seller_values}) => {
               <option value='Lastmonth' className="options">Last month</option>
             </Select>
             </Box>
-        <Divider orientation={'vertical'} h={'5vh'}/>
         <Tooltip placement={'bottom-start'} label={'Clear all filters'} fontWeight={'hairline'}>      
         <IconButton
             icon={ <AiOutlineClear/>}
@@ -280,8 +282,9 @@ const Filters = ({user, seller_invoices, setFocusFilter, seller_values}) => {
             onClick={(e) => handleClear(e)}
             >
             </IconButton>
-          </Tooltip>   
-          
+          </Tooltip>
+        <Divider orientation={'vertical'} h={'5vh'}/>
+        <CreateInvoiceButton userId={userId} />
         </HStack>
 
 

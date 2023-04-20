@@ -278,6 +278,52 @@ salesRouter.get('/values/seller', async function(req, res){
 
 
 
+salesRouter.post('/create-quote/:sellerID', async function(req, res){
+
+  const { sellerID } = req.params
+  const { Value, ProjectID, InvoiceDate, EstDelivery_Date } = req.body
+
+  // Obtener el último Naturali_Invoice de la tabla Sales
+  const query_0 = `SELECT Naturali_Invoice FROM NaturaliStone.Sales ORDER BY Naturali_Invoice DESC LIMIT 1;`
+
+  try {
+    mysqlConnection.query(query_0, function(error, quotesIDs, fields) {
+
+      if (error) {
+        console.log('Error in salesRoutes.get /create-quote/:sellerID: ' + error)
+        res.status(500).json("Can't obtain Naturali_Invoice")
+
+      } else {
+
+        console.log('QuotesIds retrieved successfully')
+        const ids = quotesIDs.map(q => Number(q.Naturali_Invoice))
+        const Naturali_Invoice = Math.max(...ids) + 1
+
+        // Hace el posteo en la tabla de Sales con los valores que llegaron por body y el id del quote creado.
+        const query_ = `INSERT INTO Sales (Naturali_Invoice, Value, ProjectID, InvoiceDate, EstDelivery_Date, SellerID) VALUES ("${Naturali_Invoice}", "${Value}", "${ProjectID}", "${InvoiceDate}", "${EstDelivery_Date}", "${sellerID}")`
+
+        try {
+          mysqlConnection.query(query_, function(error, results, fields) {
+            if (error) {
+              console.log('Error in salesRoutes.get /create-quote/:sellerID: ' + error)
+              res.status(500).json('Failed to create quote')
+            } else {
+              console.log('Quote created successfully')
+              res.status(200).json({ Naturali_Invoice, Value, ProjectID, InvoiceDate, EstDelivery_Date, sellerID })
+            }
+          })
+        } catch (error) {
+          res.status(409).send(error)
+        }
+      }
+    })
+  } catch (error) {
+    res.status(409).send(error)
+  }
+})
+
 
 
 module.exports = salesRouter;
+
+
