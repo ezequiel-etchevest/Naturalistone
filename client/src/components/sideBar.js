@@ -1,5 +1,6 @@
 import {	Box, Icon, Flex, Avatar, HStack, Text   } from '@chakra-ui/react';
-import { FaFileInvoiceDollar, FaHome, FaBoxOpen } from 'react-icons/fa'
+import { FaFileInvoiceDollar, FaHome, FaBoxOpen } from 'react-icons/fa';
+import { HiUsers} from 'react-icons/hi'
 import { IoMdBoat } from 'react-icons/io'
 import { CgLogOut } from 'react-icons/cg'
 import { BiError } from 'react-icons/bi'
@@ -15,7 +16,9 @@ const LinkItems = [
   { name: 'Inventory', icon: FaBoxOpen },
   { name: 'Invoice-errors', icon: BiError },
   { name: 'Orders', icon: IoMdBoat },
+  { name: 'Customers', icon: HiUsers },
   { name: 'Log Out', icon: CgLogOut },
+
   ];
 
 
