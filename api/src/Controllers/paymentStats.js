@@ -37,6 +37,7 @@ let paymentStats = (invoices) => {
     }
     
 	let getClosingDaysAvg = () => {
+
     let dias = []
     let amount = 0
     function calcularDiferenciaDias(invoice, array) {
@@ -61,6 +62,7 @@ let paymentStats = (invoices) => {
       let val = amount / dias.length
       return val
     }
+    
 
     let values = getPaidInvoicesValues()
     if(amount === 0) return 0
@@ -83,7 +85,6 @@ let paymentStats = (invoices) => {
     const filteredArray = invoices.filter(obj => obj.Payments !== null);
     let val = filteredArray.length
     return val
-
   }
 
   let closingRate = getClosingRate()
