@@ -52,9 +52,8 @@ const ModelTr = ({e, validateSeller}) => {
   )
 }
 
-const CustomerList = ({/*seller_invoices,*/ user}) => {
+const CustomerList = ({customers, user}) => {
 
-//const result = useSelector(state=> state.validate_result_quotes)
 const toast = useToast()
 const id = 'test-toast'
 
@@ -110,7 +109,7 @@ useEffect(()=>{
     w={'80vw'}
     >
     {
-      //seller_invoices.length ? (
+      customers.length ? (
         <TableContainer>
           <Table color={'web.text'}variant={'simple'} size={'sm'}>
             <Thead h={'6vh'}>
@@ -125,19 +124,19 @@ useEffect(()=>{
                 </Tr>
               </Thead>
               <Tbody >
-              {/* { 
-                seller_invoices.map((e, i) => (
+              { 
+                customers.map((e, i) => (
                   <ModelTr key={i} e={e} user={user} validateSeller={validateSeller}/> 
                 ))
-              } */}
+              }
               </Tbody>
             </Table>
           </TableContainer> 
-          // ) : (
-          // <Center w={'full'} h={'full'}>
-          //   <Text userSelect={'none'} fontSize={'2vh'}>No quotes found</Text>
-          // </Center>
-          // )
+          ) : (
+          <Center w={'full'} h={'full'}>
+            <Text userSelect={'none'} fontSize={'2vh'}>No quotes found</Text>
+          </Center>
+          )
       }
     </Box> 
   </Box>

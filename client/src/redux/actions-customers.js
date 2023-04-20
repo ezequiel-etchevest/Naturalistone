@@ -11,6 +11,7 @@ export function getCustomers(){
         try{ 
 
             let {data} = await axios.get(`/customers`)
+
             dispatch(
             {
                 type: GET_CUSTOMERS,
@@ -43,7 +44,7 @@ export function createCustomer(customerDetails){
 
   return async function(dispatch){
       try{
-          let { data } = await axios.post(`/customer`, customerDetails)
+          let { data } = await axios.post(`/customers`, customerDetails)
 
               dispatch(
               {
