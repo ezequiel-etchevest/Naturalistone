@@ -2,26 +2,35 @@ import React, { useState, useEffect, useRef } from 'react';
 import { PDFDocument, degrees } from 'pdf-lib';
 import paidPic from '../../assets/paidPic.png'
 import { Box } from '@chakra-ui/react';
+import axios from 'axios'
 
 const LoadPdfPaid = ({idpdf}) => {
 
     const [pdfInfo, setPdfInfo] = useState([]);
     const viewer = useRef(null);
-    const pdfID = idpdf
+    const filename = idpdf
  
     useEffect(() => {
       modifyPdf();
     }, []);
   
+    function getpdf(filename) {
+      return async function () {
+        try {
+          const response = await axios.get(`/one-drive-data/${filename}.pdf`, { responseType: 'arraybuffer' });
+          return response;
+        } catch (error) {
+          console.log({ error });
+        }
+      }
+    }
+
     const modifyPdf = async () => {
 
-      const url = `https://netorg8591642-my.sharepoint.com/:f:/g/personal/irina_naturalistone_com/EuA-Cr0-Z-tJojSeZXDx-MgBQJiFxcQo3ndaFifr11jCLA?e=giHGBa/${pdfID}.pdf`
-      //const url = `https://netorg8591642-my.sharepoint.com/personal/irina_naturalistone_com/_layouts/15/onedrive.aspx?id=%2Fpersonal%2Firina%5Fnaturalistone%5Fcom%2FDocuments%2FNaturali%2FInvoicesReceived%2FParsed%20Documents%2FInvoice%20Naturali%2F${pdfID}%2Epdf&parent=%2Fpersonal%2Firina%5Fnaturalistone%5Fcom%2FDocuments%2FNaturali%2FInvoicesReceived%2FParsed%20Documents%2FInvoice%20Naturali`
-      
-      const existingPdfBytes = await fetch(url).then((res) => res.arrayBuffer());
-      var bytes = new Uint8Array(existingPdfBytes);
+      const response = await getpdf(filename)();
+      const bytes = new Uint8Array(response.data);
       const pdfDoc = await PDFDocument.load(bytes);
-
+    
       
       // Get the width and height of the first page
       const pages = pdfDoc.getPages();
@@ -42,7 +51,7 @@ const LoadPdfPaid = ({idpdf}) => {
       })
       const pdfBytes = await pdfDoc.save();
       const docUrl = URL.createObjectURL(
-        new Blob([pdfBytes], { type: "application/pdf" })
+      new Blob([pdfBytes], { type: "application/pdf" })
       );
       setPdfInfo(docUrl);
     };

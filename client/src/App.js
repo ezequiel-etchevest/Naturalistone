@@ -12,13 +12,19 @@ import Products from './views/Products';
 import { naturali_theme } from './theme';
 import ProductDetailView from './views/ProductDetailView';
 import Warehouse from './views/Warehouse';
-import { useState } from 'react';
+import Customers from './views/Customers';
+import { useState, useEffect } from 'react';
 import {PrivateRoute} from './components/PrivateRoutes';
 import Redirect from './views/RedirectPage';
 
 function App() {
 
   const [focus, setFocus] = useState('Home')
+
+  useEffect(() => {
+    const path = window.location.pathname;
+    setFocus(path.split('/')[1] || 'Home');
+  }, []);
   
   return (
     <ChakraProvider theme={naturali_theme}>
@@ -39,6 +45,7 @@ function App() {
         <Route path="/orders" element={<PrivateRoute><Orders focus={focus} setFocus={setFocus} /></PrivateRoute>}/>
         <Route path="/orders/:id" element={<PrivateRoute><OrderDetail focus={focus} setFocus={setFocus} /></PrivateRoute>}/>
         <Route path="/warehouse" element={<PrivateRoute><Warehouse focus={focus} setFocus={setFocus} /></PrivateRoute>}/>
+        <Route path="/customers" element={<PrivateRoute><Customers focus={focus} setFocus={setFocus} /></PrivateRoute>}/>
         
       </Routes> 
     </div>
