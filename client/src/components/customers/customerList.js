@@ -19,7 +19,7 @@ import { useEffect } from 'react';
 
 
 
-const ModelTr = ({e, validateSeller}) => {
+const ModelTr = ({e}) => {
 
   const navigate = useNavigate()
   const dispatch = useDispatch()
@@ -35,19 +35,18 @@ const ModelTr = ({e, validateSeller}) => {
     <Tr 
     //onClick={() => handleClick()} 
     cursor={'pointer'} 
-    key={e.Naturali_Invoice}
+    key={e.CustomerID}
     _hover={{
       bg: 'web.navBar',
       color: 'logo.orange'
       }}
     >
-      <Td fontSize={'xs'}></Td>
-      <Td fontSize={'xs'}></Td>
-      <Td fontSize={'xs'} textAlign={'center'}></Td>
-      <Td fontSize={'xs'} textAlign={'center'}></Td>
-      <Td fontSize={'xs'} textAlign={'center'}></Td>
-      <Td fontSize={'xs'} textAlign={'center'}></Td>
-      <Td fontSize={'xs'} textAlign={'center'}></Td>
+      <Td fontSize={'xs'} >{e.Reference}</Td>
+      <Td fontSize={'xs'} textAlign={'center'}>{e.LastName ?`${e.Name} ${e.LastName}` : '-'}</Td>
+      <Td fontSize={'xs'} textAlign={'center'}>{e.Company ? e.Company : '-'}</Td>
+      <Td fontSize={'xs'} textAlign={'center'}>{e.Phone ? e.Phone : '-'}</Td>
+      <Td fontSize={'xs'} textAlign={'center'}>{e.Email ? e.Email : '-'}</Td>
+      <Td fontSize={'xs'} textAlign={'center'}>{e.DiscountID ? e.DiscountID :'-'}</Td>
     </Tr>
   )
 }
@@ -56,11 +55,6 @@ const CustomerList = ({customers, user}) => {
 
 const toast = useToast()
 const id = 'test-toast'
-
-const validateSeller = () => {
-  if(user[0].Secction7Flag === 1) return true
-  else return false
-}
 
 const validateResults = () => {
   // if(result === 'no_results'){
@@ -114,19 +108,18 @@ useEffect(()=>{
           <Table color={'web.text'}variant={'simple'} size={'sm'}>
             <Thead h={'6vh'}>
               <Tr>
-                  <Th color={'web.text2'}>Customer</Th>
-                  <Th color={'web.text2'} textAlign={'center'}>First Name</Th>
-                  <Th color={'web.text2'} textAlign={'center'}>Last Name</Th>
+                  <Th color={'web.text2'} textAlign={'center'}>Customer</Th>
+                  <Th color={'web.text2'} textAlign={'center'}>Full Name</Th>
                   <Th color={'web.text2'} textAlign={'center'} isNumeric>Company</Th>
                   <Th color={'web.text2'} textAlign={'center'}>Main Phone</Th>
                   <Th color={'web.text2'} textAlign={'center'}>E-mail</Th>
-                  <Th color={'web.text2'} textAlign={'center'}>Terms</Th>
+                  <Th color={'web.text2'} textAlign={'center'}>Discount</Th>
                 </Tr>
               </Thead>
               <Tbody >
               { 
                 customers.map((e, i) => (
-                  <ModelTr key={i} e={e} user={user} validateSeller={validateSeller}/> 
+                  <ModelTr key={i} e={e} user={user}/> 
                 ))
               }
               </Tbody>
@@ -134,7 +127,7 @@ useEffect(()=>{
           </TableContainer> 
           ) : (
           <Center w={'full'} h={'full'}>
-            <Text userSelect={'none'} fontSize={'2vh'}>No quotes found</Text>
+            <Text userSelect={'none'} fontSize={'2vh'}>No customers found</Text>
           </Center>
           )
       }
