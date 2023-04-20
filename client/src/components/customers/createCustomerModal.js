@@ -9,12 +9,15 @@ import {
     ModalBody,
     ModalCloseButton,
     useDisclosure,
+    IconButton,
+    HStack,
     Tooltip,
     Box,
     useToast
     } from "@chakra-ui/react"
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import {IoPersonAddOutline} from 'react-icons/io5'
 import '../../assets/styleSheet.css'
 
 
@@ -45,34 +48,43 @@ const CreateCustomerModal = ({userId, isOpen, onClose}) => {
       <ModalHeader
       ml={'1vw'}
       mt={'3vh'}
-      color={'web.text'}>
-        Create delivery note for Invoice N°
+      color={'web.text'}
+      display={'flex'}
+      w={'60vw'}
+      >
+        Select customer
+        <IconButton
+          variant='outline'
+          bgColor={'orange.500'}
+          colorScheme={'white'}
+          ml={'3vw'}
+          icon={<IoPersonAddOutline />}
+        />
       </ModalHeader>
       <ModalCloseButton
         color={'web.text2'}
         _hover={{
           color: 'web.text'
         }} />
-      <ModalBody color={'web.text2'} display={'flex'} justifyContent={'center'}>
-        {/* <DeliveryProductList 
-        invoice_products={invoice_products} 
-        setQuantities={setQuantities}
-        quantities={quantities}
-        errors={errors} 
-        setErrors={setErrors}
-        deliveryID={deliveryID}/> */}
+      <ModalBody color={'web.text2'} display={'flex'} justifyContent={'center'} border={'2px solid red'}>
       </ModalBody>
-      <ModalFooter mb={'1vh'} mr={'1vw'} ml={'2vw'} display={'flex'} flexDir={'row'} justifyContent={'space-between'}>
-        <Box display={'flex'} flexDir={'row'}>
+      <ModalFooter mb={'2vh'} display={'flex'} flexDir={'row'} justifyContent={'space-between'} ml={'2vw'} mr={'2vw'}>
         <Button
-          colorScheme={'orange'} 
-          mr={3} 
+          colorScheme={'orange'}
+          size={'sm'}
         //   onClick={()=>handleSubmit()}
         //   disabled={disabledConfirm}
           >
-         Submit
+         Previous
         </Button>
-        </Box>
+        <Button
+          colorScheme={'orange'}
+          size={'sm'} 
+        //   onClick={()=>handleSubmit()}
+        //   disabled={disabledConfirm}
+          >
+         Next
+        </Button>
       </ModalFooter>
     </ModalContent>
   </Modal>
