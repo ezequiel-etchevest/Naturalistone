@@ -30,10 +30,6 @@ const CustomerFilters = ({user, /*seller_invoices,*/ setFocusFilter/*, seller_va
 
   const userId  =  user[0].SellerID
 
-  const validateSeller = () => {
-    if(user[0].Secction7Flag === 1) return true
-    else return false
-  }
   // const handleClickAllInvoices = () => {
   //   setInputValues({...inputValues, timeFilter: 'All'})
   //   dispatch(getInvoicesBySeller(userId, {...inputValues, timeFilter: 'All'}))
@@ -184,9 +180,9 @@ const CustomerFilters = ({user, /*seller_invoices,*/ setFocusFilter/*, seller_va
               borderColor: 'logo.orange',
               boxShadow: '0 0.5px 0.5px rgba(229, 103, 23, 0.075)inset, 0 0 5px rgba(255,144,0,0.6)'
             }}>
-              <option value='All' className="options">All Terms</option>
-              <option value='Lastweek' className="options">Term1</option>
-              <option value='Lastmonth' className="options">Term2</option>
+              <option value='All' className="options">All discounts</option>
+              <option value='Lastweek' className="options">Disc1</option>
+              <option value='Lastmonth' className="options">Disc2</option>
             </Select>
             </Box>
         <Divider orientation={'vertical'} h={'5vh'}/>
