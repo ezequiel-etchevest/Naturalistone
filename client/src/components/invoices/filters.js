@@ -17,7 +17,7 @@ import '../../assets/styleSheet.css';
 import {AiOutlineClear} from 'react-icons/ai';
 import CreateInvoiceButton from './createInvoice'
 
-const Filters = ({user, seller_invoices, setFocusFilter, seller_values}) => {
+const Filters = ({user, seller_invoices, setFocusFilter, seller_values, customers}) => {
 
   const dispatch = useDispatch()
   const [ disabled, setDisabled ] = useState(false)
@@ -215,7 +215,7 @@ const Filters = ({user, seller_invoices, setFocusFilter, seller_values}) => {
           </Box>
           {/*Selects */}
           <Box 
-            w={'28vw'} 
+            w={'24vw'} 
             display={'flex'} 
             justifyContent={validateSeller() === true ? 'space-between' : 'flex-end'}>  
             <Select
@@ -265,6 +265,7 @@ const Filters = ({user, seller_invoices, setFocusFilter, seller_values}) => {
               <option value='Lastmonth' className="options">Last month</option>
             </Select>
             </Box>
+        <Divider orientation={'vertical'} h={'5vh'}/>
         <Tooltip placement={'bottom-start'} label={'Clear all filters'} fontWeight={'hairline'}>      
         <IconButton
             icon={ <AiOutlineClear/>}
@@ -283,8 +284,7 @@ const Filters = ({user, seller_invoices, setFocusFilter, seller_values}) => {
             >
             </IconButton>
           </Tooltip>
-        <Divider orientation={'vertical'} h={'5vh'}/>
-        <CreateInvoiceButton userId={userId} />
+        {/* <CreateInvoiceButton userId={userId} customers={customers}/> */}
         </HStack>
 
 
