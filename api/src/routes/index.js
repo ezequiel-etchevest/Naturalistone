@@ -10,8 +10,9 @@ const ordersRouter = require('./ordersRoutes')
 const invoiceErrorsRouter = require('./invoiceErrorsRoutes')
 const deliveryRouter = require('./deliveryRoutes')
 const mainRouter = Router();
-// const onedriveRouter = require('./oneDrive.js')
-const onedriveRouter = require('./pdfOneDriveRoutes.js')
+const projectsRouter = require('./projectsRoutes')
+const customersRouter = require('./customersRoutes')
+const onedriveRouter  = require('./pdfOneDriveRoutes.js')
 
 
 mainRouter.use('/api/login', loginRouter);
@@ -23,8 +24,9 @@ mainRouter.use('/api/payments', paymentsRouter);
 mainRouter.use('/api/orders', ordersRouter);
 mainRouter.use('/api/invoiceErrors', invoiceErrorsRouter);
 mainRouter.use('/api/delivery', deliveryRouter);
-// mainRouter.use('/api/onedrive', onedriveRouter);
 mainRouter.use('/api/one-drive-data', onedriveRouter);
+mainRouter.use('/api/project', projectsRouter);
+mainRouter.use('/api/customer', customersRouter);
 mainRouter.use('/api/stats', statsRouter);
 
 
