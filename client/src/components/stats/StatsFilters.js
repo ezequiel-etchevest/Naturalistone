@@ -1,5 +1,5 @@
 import { 
-    Box, 
+  Box, 
     HStack, 
     IconButton,
     Select,
@@ -9,14 +9,18 @@ import {
 import '../../assets/styleSheet.css';
 import {AiOutlineClear} from 'react-icons/ai';
 import { useSelector, useDispatch } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { getSellers } from "../../redux/actions-sellers";
 import { getCurrentMonth, getPaymentStats } from "../../redux/actions-stats";
+import { months } from "../../utils/months";
+import { getMonth, getPaymentStatsByMonth } from "../../redux/actions-statsByMonth";
+import { years } from "../../utils/years";
   
 const StatsFilters = ({user}) => {
     
   const dispatch = useDispatch()
   const sellers = useSelector(state => state.sellers)
+  const [selectedSellerId, setSelectedSellerId] = useState('')
 
   const handleSellerSelect = (e) => {
     if(e.target.value === 'all') {
@@ -24,14 +28,23 @@ const StatsFilters = ({user}) => {
       dispatch(getPaymentStats(3, 1))
     }
     else {
+      setSelectedSellerId(e.target.value)
       dispatch(getCurrentMonth(Number(e.target.value), 0))
       dispatch(getPaymentStats(Number(e.target.value), 0))
     }
     }
 
+  const handleSellerByMonth = (e) => {
+    dispatch(getMonth(selectedSellerId, e.target.value))
+    dispatch(getPaymentStatsByMonth(selectedSellerId, e.target.value))
+  }
+
   useEffect(()=>{
     if(!sellers.length) dispatch(getSellers())
     },[sellers])
+
+  const year = years();
+
     
   return (
     <Box>
@@ -90,7 +103,7 @@ const StatsFilters = ({user}) => {
           > 
           <Select
           defaultValue=""
-          // onChange={(e)=>handleSellerSelect(e)}
+          onChange={(e)=>handleSellerByMonth(e)}
           w={'15vw'}
           variant='outline' 
           h={'4.4vh'}
@@ -105,17 +118,45 @@ const StatsFilters = ({user}) => {
           }}>
             <option value="" disabled hidden>Filter by Months</option>
               {  
-                  sellers?.map((e, i) => {
-                    if(e.SellerID != 3){
+                  months?.map((e, i) => {
                       return(
-                        <option key={i} className={'options'} value={e.SellerID}>{e.FirstName} {e.LastName}</option>
+                        <option key={i} className={'options'} value={i+1}>{e}</option>
                         )
-                    }
                      })
               }
           </Select>
           </Box>
-
+          <Box 
+            w={'10vw'} 
+            display={'flex'}
+            justifyContent={'flex-end'}
+          > 
+          <Select
+          defaultValue=""
+          // onChange={(e)=>handleSellerByMonth(e)}
+          w={'10vw'}
+          variant='outline' 
+          h={'4.4vh'}
+          fontSize={'xs'}            
+          bg={'web.sideBar'}
+          color={'web.text2'}
+          borderColor={'web.border'}
+          cursor={'pointer'}
+          _focus={{
+            borderColor: 'logo.orange',
+            boxShadow: '0 0.5px 0.5px rgba(229, 103, 23, 0.075)inset, 0 0 5px rgba(255,144,0,0.6)'
+          }}>
+            <option value="" disabled hidden>Filter by Year</option>
+              {  
+                  year?.map((e, i) => {
+                    console.log('soy years', year)
+                      return(
+                        <option key={i} className={'options'} value={e}>{e}</option>
+                        )
+                     })
+              }
+          </Select>
+          </Box>
           <Divider orientation={'vertical'} h={'5vh'}/>
           <Tooltip placement={'bottom-start'} label={'Clear all filters'} fontWeight={'hairline'}>      
             <IconButton

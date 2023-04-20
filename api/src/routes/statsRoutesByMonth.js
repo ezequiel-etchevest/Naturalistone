@@ -85,43 +85,56 @@ statsRouterByMonth.get('/sellers/:id', async function(req, res){
     }   
 });
 
-// statsRouter.get('/payments/:id', async function(req, res){
+statsRouterByMonth.get('/payments/:id', async function(req, res){
     
-//     const {id} = req.params
-//     const { admin } = req.query
-//     const today = new Date().toISOString().split('T')[0]
-//     const currentMonth = getCurrentMonth()
+    const {id} = req.params
+    const {month} = req.query
+    const { admin } = req.query
+
+    const today = new Date()
+
+    const year = today.getFullYear()
+    
+    if (!year || !month) {
+      console.log('entro al err')
+      res.status(400).json({ message: 'Year and month are required parameters.' });
+      return;
+    }
+    
+    const startDate = `${year}-${month}-01`;
+    const endDate = new Date(year, month, 0).toISOString().split('T')[0];
 
 
-//     if(id === '3'){
-//       query_ = `SELECT Sales.Naturali_Invoice, Sales.Value, Sales.InvoiceDate, Sales.SellerID, Sales.Payment_Stamp, Payments.idPayments,
-//       GROUP_CONCAT(
-//       CONCAT(Payments.idPayments,';',Payments.Amount,';',Payments.Date))AS Payments FROM Sales 
-//       LEFT JOIN Payments ON Sales.Naturali_Invoice = Payments.InvoiceID 
-//       WHERE InvoiceDate BETWEEN "${currentMonth}" AND "${today}" AND Sales.Status != "Canceled"
-//       GROUP BY Sales.Naturali_Invoice
-//       ORDER BY Sales.InvoiceDate DESC`  
-//     } else {
-//       query_ = `SELECT Sales.Naturali_Invoice, Sales.Value, Sales.InvoiceDate, Sales.SellerID, Sales.Payment_Stamp, Payments.idPayments,
-//       GROUP_CONCAT(
-//       CONCAT(Payments.idPayments,';',Payments.Amount,';',Payments.Date))AS Payments FROM Sales 
-//       LEFT JOIN Payments ON Sales.Naturali_Invoice = Payments.InvoiceID AND Sales.SellerID = ${id} 
-//       WHERE InvoiceDate BETWEEN "${currentMonth}" AND "${today}" AND Sales.Status != "Canceled" AND Sales.SellerID = ${id} 
-//       GROUP BY Sales.Naturali_Invoice
-//       ORDER BY Sales.InvoiceDate DESC`
-//     }
-//     try{
-//         mysqlConnection.query(query_, function(error, Invoices, fields){
-//          if(error) throw error;
-//          if(Invoices.length == 0) {
-//              console.log('Error en statsRoutes.get /payments')
-//              res.status(200).json({});
-//          }else{
-//             let result = paymentStats(Invoices)
-//             res.status(200).json(result);
-//          }})}catch(error){
-//              res.status(409).send(error);
-//       }
-// });
+    if(id === '3'){
+      query_ = `SELECT Sales.Naturali_Invoice, Sales.Value, Sales.InvoiceDate, Sales.SellerID, Sales.Payment_Stamp, Payments.idPayments,
+      GROUP_CONCAT(
+      CONCAT(Payments.idPayments,';',Payments.Amount,';',Payments.Date))AS Payments FROM Sales 
+      LEFT JOIN Payments ON Sales.Naturali_Invoice = Payments.InvoiceID 
+      WHERE InvoiceDate BETWEEN "${startDate}" AND "${endDate}" AND Sales.Status != "Canceled"
+      GROUP BY Sales.Naturali_Invoice
+      ORDER BY Sales.InvoiceDate DESC`  
+    } else {
+      query_ = `SELECT Sales.Naturali_Invoice, Sales.Value, Sales.InvoiceDate, Sales.SellerID, Sales.Payment_Stamp, Payments.idPayments,
+      GROUP_CONCAT(
+      CONCAT(Payments.idPayments,';',Payments.Amount,';',Payments.Date))AS Payments FROM Sales 
+      LEFT JOIN Payments ON Sales.Naturali_Invoice = Payments.InvoiceID AND Sales.SellerID = ${id} 
+      WHERE InvoiceDate BETWEEN "${startDate}" AND "${endDate}" AND Sales.Status != "Canceled" AND Sales.SellerID = ${id} 
+      GROUP BY Sales.Naturali_Invoice
+      ORDER BY Sales.InvoiceDate DESC`
+    }
+    try{
+        mysqlConnection.query(query_, function(error, Invoices, fields){
+         if(error) throw error;
+         if(Invoices.length == 0) {
+            console.log('Error en statsRoutesByMonth.get /payments')
+            let result = paymentStats(Invoices)
+            res.status(200).json(result);
+         }else{
+            let result = paymentStats(Invoices)
+            res.status(200).json(result);
+         }})}catch(error){
+             res.status(409).send(error);
+      }
+});
 
 module.exports = statsRouterByMonth;
