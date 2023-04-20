@@ -40,7 +40,7 @@ const OrderDetailList = ({order}) => {
             <Text 
             color={'logo.orange'} 
             fontSize={'3.2vh'}>
-              {order[0].OrderID}
+              {order[0].OrderID.includes('.') ? order[0].OrderID.split('.')[0] +'/'+ order[0].OrderID.split('.')[1] : order[0].OrderID}
             </Text>
             <Text
               fontSize={'2.3vh'} 
@@ -105,7 +105,7 @@ const OrderDetailList = ({order}) => {
               <Text 
                 fontSize={'2.05vh'} 
                 fontWeight={'bold'}>
-                  ${order[0].Value}
+                  $ {order[0].Value.toLocaleString('en-US')}
               </Text>
           </Box>
         </Box>

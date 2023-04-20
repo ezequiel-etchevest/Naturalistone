@@ -23,7 +23,7 @@ salesRouter.get('/:id', async function(req, res){
       } else {
       if(time === 'All' || time === ''){
       if(results[0].Secction7Flag === 1){
-         query_ =    `SELECT Sales.*, Projects.*, Customers.*, Payments.idPayments, Seller.FirstName, Seller.LastName,
+         query_ =    `SELECT Sales.*, Projects.*, Customers.*, Payments.idPayments, Seller.FirstName, Seller.LastName, Seller.SellerReference,
          GROUP_CONCAT(
          CONCAT(Payments.idPayments,';',Payments.Amount,';',Payments.Date))AS Payments FROM Sales 
          LEFT JOIN Projects ON Sales.ProjectID = Projects.idProjects
@@ -31,9 +31,9 @@ salesRouter.get('/:id', async function(req, res){
          LEFT JOIN Payments ON Sales.Naturali_Invoice = Payments.InvoiceID 
          LEFT JOIN Seller ON Sales.SellerID = Seller.SellerID 
          GROUP BY Sales.Naturali_Invoice
-         ORDER BY Sales.Naturali_Invoice DESC` 
+         ORDER BY Sales.InvoiceDate DESC` 
       } else {
-        query_ =    `SELECT Sales.*, Projects.*, Customers.*, Payments.idPayments, Seller.FirstName, Seller.LastName, 
+        query_ =    `SELECT Sales.*, Projects.*, Customers.*, Payments.idPayments, Seller.FirstName, Seller.LastName, Seller.SellerReference, 
         GROUP_CONCAT(
         CONCAT(Payments.idPayments,';',Payments.Amount,';',Payments.Date))AS Payments FROM Sales 
         LEFT JOIN Projects ON Sales.ProjectID = Projects.idProjects
@@ -42,7 +42,7 @@ salesRouter.get('/:id', async function(req, res){
         LEFT JOIN Seller ON Sales.SellerID = Seller.SellerID  
         WHERE Seller.SellerID = ${id}
         GROUP BY Sales.Naturali_Invoice
-        ORDER BY Sales.Naturali_Invoice DESC`;
+        ORDER BY Sales.InvoiceDate DESC`;
       }
     } else {
       const today = new Date().toISOString().split('T')[0]
@@ -50,7 +50,7 @@ salesRouter.get('/:id', async function(req, res){
       const limitDateMonth = getLimitDateMonth()
 
       if(results[0].Secction7Flag === 1){
-        query_ = `SELECT Sales.*, Projects.*, Customers.*, Payments.idPayments, Seller.FirstName, Seller.LastName,
+        query_ = `SELECT Sales.*, Projects.*, Customers.*, Payments.idPayments, Seller.FirstName, Seller.LastName, Seller.SellerReference,
         GROUP_CONCAT(
         CONCAT(Payments.idPayments,';',Payments.Amount,';',Payments.Date))AS Payments FROM Sales 
         LEFT JOIN Projects ON Sales.ProjectID = Projects.idProjects
@@ -59,9 +59,9 @@ salesRouter.get('/:id', async function(req, res){
         LEFT JOIN Seller ON Sales.SellerID = Seller.SellerID 
         WHERE InvoiceDate BETWEEN "${time === 'LastWeek' ? limitDateWeek : limitDateMonth}" AND "${today}" 
         GROUP BY Sales.Naturali_Invoice
-        ORDER BY Sales.Naturali_Invoice DESC`  
+        ORDER BY Sales.InvoiceDate DESC`  
       } else {
-        query_ = `SELECT Sales.*, Projects.*, Customers.*, Payments.idPayments, Seller.FirstName, Seller.LastName, 
+        query_ = `SELECT Sales.*, Projects.*, Customers.*, Payments.idPayments, Seller.FirstName, Seller.LastName, Seller.SellerReference,
         GROUP_CONCAT(
         CONCAT(Payments.idPayments,';',Payments.Amount,';',Payments.Date))AS Payments FROM Sales 
         LEFT JOIN Projects ON Sales.ProjectID = Projects.idProjects
@@ -70,7 +70,7 @@ salesRouter.get('/:id', async function(req, res){
         LEFT JOIN Seller ON Sales.SellerID = Seller.SellerID
         WHERE InvoiceDate BETWEEN "${time === 'LastWeek' ? limitDateWeek : limitDateMonth}" AND "${today}" AND Seller.SellerID = ${id}
         GROUP BY Sales.Naturali_Invoice
-        ORDER BY Sales.Naturali_Invoice DESC`
+        ORDER BY Sales.InvoiceDate DESC`
       }
     }
   try{
@@ -92,13 +92,12 @@ salesRouter.get('/:id', async function(req, res){
   }
 })
         
-
 salesRouter.get('/invoice/:id', async function(req, res){
     const { id } = req.params
 
 //Replased Seller.* for , Seller.FirstName, Seller.LastName, Seller.SellerID//
 
-    query_ =    `SELECT Sales.*, Projects.*, Customers.*, Seller.FirstName, Seller.LastName, Seller.SellerID FROM Sales
+    query_ =    `SELECT Sales.*, Projects.*, Customers.*, Seller.FirstName, Seller.LastName, Seller.SellerReference, Seller.SellerID FROM Sales
                 LEFT JOIN Seller ON Sales.SellerID = Seller.SellerID 
                 LEFT JOIN Projects ON Sales.ProjectID = Projects.idProjects
                 LEFT JOIN Customers ON Projects.CustomerID = Customers.CustomerID
@@ -120,146 +119,87 @@ salesRouter.get('/invoice/:id', async function(req, res){
     }
 });
 
-// salesRouter.get('/lastWeek/:id', async function(req, res){
-    
-//     const {id} = req.params
-//     const today = new Date().toISOString().split('T')[0]
-//     const limitDateWeek = getLimitDate()
-
-//     if(id == 3 || id == 5 || id == 15){
-
-//       query_ = `SELECT Sales.*, Customers.*, Projects.* FROM Sales 
-//       LEFT JOIN Projects ON Sales.ProjectID = Projects.idProjects
-//       LEFT JOIN Customers ON Projects.CustomerID = Customers.CustomerID 
-//       WHERE InvoiceDate BETWEEN "${limitDateWeek}" AND "${today}" ORDER BY InvoiceDate DESC`
-
-//     } else {
-//       query_ = `SELECT Sales.*, Customers.*, Projects.* FROM Sales 
-//                 LEFT JOIN Projects ON Sales.ProjectID = Projects.idProjects
-//                 LEFT JOIN Customers ON Projects.CustomerID = Customers.CustomerID 
-//                 WHERE SellerID = ${id} AND InvoiceDate BETWEEN "${limitDateWeek}" AND "${today}" ORDER BY InvoiceDate DESC`
-//   }
-// //    query_ = `SELECT * FROM Sales WHERE SellerID = ${id} AND InvoiceDate BETWEEN "${limitDateWeek}" AND "${today}"`
-//     try{
-//        mysqlConnection.query(query_, function(error, results, fields){
-
-//             if(error) throw error;
-//             if(results.length == 0) {
-//                 console.log('No invoices matched')
-//                 res.status(200).json([]);
-//             } else {
-//                 console.log('Data OK')
-//                 res.status(200).json(results);
-//             }
-//         });
-//     } catch(error){
-//         res.status(409).send(error);
-//     }
-// });
-
-// salesRouter.get('/lastMonth/:id', async function(req, res){
-    
-//     const {id} = req.params
-//     const today = new Date().toISOString().split('T')[0]
-//     const limitDateMonth = getLimitDateMonth()
-
-//     if(id == 3 || id == 5 || id == 15){
-//       query_ =   `SELECT Sales.*, Customers.*, Projects.* FROM Sales 
-//       LEFT JOIN Projects ON Sales.ProjectID = Projects.idProjects
-//       LEFT JOIN Customers ON Projects.CustomerID = Customers.CustomerID 
-//       WHERE InvoiceDate BETWEEN "${limitDateMonth}" AND "${today}" ORDER BY InvoiceDate DESC`
-//     } else{
-//       query_ =   `SELECT Sales.*, Customers.*, Projects.* FROM Sales 
-//                 LEFT JOIN Projects ON Sales.ProjectID = Projects.idProjects
-//                 LEFT JOIN Customers ON Projects.CustomerID = Customers.CustomerID 
-//                 WHERE SellerID = ${id} AND InvoiceDate BETWEEN "${limitDateMonth}" AND "${today}" ORDER BY InvoiceDate DESC`
-//     }
-//     try{
-//        mysqlConnection.query(query_, function(error, results, fields){
-
-//             if(error) throw error;
-//             if(results.length == 0) {
-//                 console.log('No invoices matched')
-//                 res.status(200).json([]);
-//             } else {
-//                 console.log('Data OK')
-//                 res.status(200).json(results);
-//             }
-//         });
-//     } catch(error){
-//         res.status(409).send(error);
-//     }
-// });
-
 salesRouter.get('/currentMonth/:id', async function(req, res){
     
     const {id} = req.params
     const today = new Date().toISOString().split('T')[0]
     const currentMonth = getCurrentMonth()
 
-    if(id == 3 || id == 5 || id == 15){
-
-      query_ = `SELECT ROUND(SUM(Value), 2) As TotalValue FROM Sales WHERE InvoiceDate BETWEEN "${currentMonth}" AND "${today}"`
-      query_2 = `SELECT count(*) As InvoicesNumber FROM Sales WHERE InvoiceDate BETWEEN "${currentMonth}" AND "${today}"`
-      query_3 = `SELECT ROUND(AVG(Value), 2) As AvgValue FROM Sales WHERE InvoiceDate BETWEEN "${currentMonth}" AND "${today}"`
-    
-    } else {
-      query_ = `SELECT ROUND(SUM(Value), 2) As TotalValue FROM Sales WHERE SellerID = ${id} AND InvoiceDate BETWEEN "${currentMonth}" AND "${today}"`
-      query_2 = `SELECT count(*) As InvoicesNumber FROM Sales where SellerID = ${id} AND InvoiceDate BETWEEN "${currentMonth}" AND "${today}"`
-      query_3 = `SELECT ROUND(AVG(Value), 2) As AvgValue FROM Sales WHERE SellerID = ${id} AND InvoiceDate BETWEEN "${currentMonth}" AND "${today}"`
-    }
-    
+    query_0 = `SELECT Secction7Flag From Logins Where SellerID = ${id}` 
     try{
-        mysqlConnection.query(query_, function(error1, results, fields){
-           if(error1) throw error1;
-           if(results.length == 0) {
+      mysqlConnection.query(query_0, function(error, results, fields){
+      
+        if(error) throw error;
+        if(results.length === 0) {
+            console.log('Error en salesRoutes/:id Logins')
+            res.status(200).json({});
+          } else {
+        if(results[0].Secction7Flag === 1){
+        
+          query_ = `SELECT ROUND(SUM(Value), 2) As TotalValue FROM Sales WHERE InvoiceDate BETWEEN "${currentMonth}" AND "${today}"`
+          query_2 = `SELECT count(*) As InvoicesNumber FROM Sales WHERE InvoiceDate BETWEEN "${currentMonth}" AND "${today}"`
+          query_3 = `SELECT ROUND(AVG(Value), 2) As AvgValue FROM Sales WHERE InvoiceDate BETWEEN "${currentMonth}" AND "${today}"`
+        
+        } else {
+          query_ = `SELECT ROUND(SUM(Value), 2) As TotalValue FROM Sales WHERE SellerID = ${id} AND InvoiceDate BETWEEN "${currentMonth}" AND "${today}"`
+          query_2 = `SELECT count(*) As InvoicesNumber FROM Sales where SellerID = ${id} AND InvoiceDate BETWEEN "${currentMonth}" AND "${today}"`
+          query_3 = `SELECT ROUND(AVG(Value), 2) As AvgValue FROM Sales WHERE SellerID = ${id} AND InvoiceDate BETWEEN "${currentMonth}" AND "${today}"`
+        }
 
-               res.status(400).send('Error obtaining data in CurrentMonth Value!', error1);
-            } else {
-               try{
-                   mysqlConnection.query(query_2, function(error2, results2, fields){
-                       if(error2) throw error2;
-                       if(results2.length == 0) {
-
-                           res.status(400).json('Error obtaining data in Invoice number Count!', error2);
-                        } else {
-                            try{
-                                mysqlConnection.query(query_3, function(error3, results3, fields){
-                                    if(error3) throw error3;
-                                    if(results3.length == 0) {
-
-                                        res.status(400).json('Error obtaining data in Average Value!');
-                                    }else {
-                                        console.log('Data CurrentMonth Value OK')
-                                        console.log('Data Invoice number Count OK')
-                                        console.log('Data Average Value OK')
-
-                                        if(results[0].TotalValue === null) results[0].TotalValue = 0;
-                                        if(results2[0].InvoicesNumber === null) results2[0].InvoicesNumber = 0;
-                                        if(results3[0].AvgValue === null) results3[0].AvgValue = 0;
-                                        const totalResults = {
-                                            TotalValue: results[0].TotalValue, 
-                                            InvoicesNumber: results2[0].InvoicesNumber,
-                                            AverageAmount: results3[0].AvgValue
-                                         }
-                                        res.status(200).json(totalResults);
-                                    }
-                                })
-                                } catch(error3) {
-                                    res.status(400).send(error3)
-                                }  
-                        } 
-                    })
-                } catch(error2){
-                    res.status(409).send(error2);
+        try{
+            mysqlConnection.query(query_, function(error1, results, fields){
+               if(error1) throw error1;
+               if(results.length == 0) {
+              
+                   res.status(400).send('Error obtaining data in CurrentMonth Value!', error1);
+                } else {
+                   try{
+                       mysqlConnection.query(query_2, function(error2, results2, fields){
+                           if(error2) throw error2;
+                           if(results2.length == 0) {
+                          
+                               res.status(400).json('Error obtaining data in Invoice number Count!', error2);
+                            } else {
+                                try{
+                                    mysqlConnection.query(query_3, function(error3, results3, fields){
+                                        if(error3) throw error3;
+                                        if(results3.length == 0) {
+                                        
+                                            res.status(400).json('Error obtaining data in Average Value!');
+                                        }else {
+                                            console.log('Data CurrentMonth Value OK')
+                                            console.log('Data Invoice number Count OK')
+                                            console.log('Data Average Value OK')
+                                        
+                                            if(results[0].TotalValue === null) results[0].TotalValue = 0;
+                                            if(results2[0].InvoicesNumber === null) results2[0].InvoicesNumber = 0;
+                                            if(results3[0].AvgValue === null) results3[0].AvgValue = 0;
+                                            const totalResults = {
+                                                TotalValue: results[0].TotalValue, 
+                                                InvoicesNumber: results2[0].InvoicesNumber,
+                                                AverageAmount: results3[0].AvgValue
+                                             }
+                                            res.status(200).json(totalResults);
+                                        }
+                                    })
+                                    } catch(error3) {
+                                        res.status(400).send(error3)
+                                    }  
+                            } 
+                        })
+                    } catch(error2){
+                        res.status(409).send(error2);
+                    }
                 }
-            }
-        })
-    } catch(error1){
-        res.status(409).send(error1);
+            })
+        } catch(error1){
+            res.status(409).send(error1);
+        }}
+      })
+    } catch(error){
+          res.status(409).send(error);
     }   
 });
-
 
 salesRouter.patch('/quote/:id', async function(req, res){
     
@@ -309,7 +249,7 @@ salesRouter.patch('/cancelquote/:id', async function(req, res){
 
 salesRouter.get('/values/seller', async function(req, res){
 
-    query_ =   `SELECT Sales.*, Projects.*, Customers.*, Payments.idPayments, Seller.FirstName, Seller.LastName,
+    query_ =   `SELECT Sales.*, Projects.*, Customers.*, Payments.idPayments, Seller.FirstName, Seller.LastName, Seller.SellerReference,
                 GROUP_CONCAT(
                 CONCAT(Payments.idPayments,';',Payments.Amount,';',Payments.Date))AS Payments FROM Sales 
                 LEFT JOIN Projects ON Sales.ProjectID = Projects.idProjects
@@ -317,7 +257,7 @@ salesRouter.get('/values/seller', async function(req, res){
                 LEFT JOIN Payments ON Sales.Naturali_Invoice = Payments.InvoiceID 
                 LEFT JOIN Seller ON Sales.SellerID = Seller.SellerID 
                 GROUP BY Sales.Naturali_Invoice
-                ORDER BY Sales.Naturali_Invoice DESC` 
+                ORDER BY Sales.InvoiceDate DESC` 
             
     try{
          mysqlConnection.query(query_, function(error, results, fields){
@@ -335,6 +275,8 @@ salesRouter.get('/values/seller', async function(req, res){
         res.status(409).send(error);
     }
 });
+
+
 
 
 

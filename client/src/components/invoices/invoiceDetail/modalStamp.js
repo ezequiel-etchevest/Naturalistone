@@ -11,13 +11,14 @@ import {
     ModalFooter,
     ModalHeader,
     ModalCloseButton,
-    Tooltip
+    Tooltip,
+    Box
   } from '@chakra-ui/react'
 import { TfiStamp } from 'react-icons/tfi';
 import { useDispatch } from 'react-redux';
 import { stampInvoice } from '../../../redux/actions-invoices';
   
-  export default function ModalStamp({invoice, payments}) {
+  export default function ModalStamp({invoice, payments, windowWidth}) {
     
   const { isOpen, onOpen, onClose } = useDisclosure()
   const id = invoice[0].Naturali_Invoice
@@ -42,17 +43,24 @@ import { stampInvoice } from '../../../redux/actions-invoices';
             color: 'logo.orange'
           }}>
           <IconButton
+            fontSize={'1.5vw'}
             disabled={payments.paymentsMath.PendingAmount === '0.00' ? false : true}  
             variant={'unstyled'}           
             fontWeight={'normal'}
             icon={<TfiStamp/>}/>
-          <Button
-            disabled={payments.paymentsMath.PendingAmount === '0.00' ? false : true}  
-            variant={'unstyled'}              
-            fontWeight={'normal'}
-            onClick={onOpen}
-            >Stamp PDF
-          </Button>
+          {
+            windowWidth > 1100 ? 
+              <Button
+                disabled={payments.paymentsMath.PendingAmount === '0.00' ? false : true}  
+                variant={'unstyled'}              
+                fontWeight={'normal'}
+                onClick={onOpen}
+                fontSize={'1vw'}
+                  >Stamp PDF
+              </Button>
+            : null
+          }        
+          
         </ButtonGroup>
         </Tooltip>
         <Modal isOpen={isOpen} onClose={onClose} size={'xl'} >
@@ -103,22 +111,34 @@ import { stampInvoice } from '../../../redux/actions-invoices';
     <>
       <Tooltip label={'Stamped quote'}>
       <ButtonGroup
-        display={'flex'}
-        spacing={0}
-          _hover={{
-          color: 'logo.orange'
-        }}>
+         h={'5vh'}
+         size={'sm'}
+         display={'flex'}
+         spacing={0}
+         _hover={{
+         color: 'logo.orange'
+         }}
+         >
         <IconButton
+          fontSize={'1.5vw'}
           disabled={true}  
           variant={'unstyled'}           
           fontWeight={'normal'}
           icon={<TfiStamp/>}/>
-        <Button
-          disabled={true}  
-          variant={'unstyled'}              
-          fontWeight={'normal'}
-          >Stamp PDF
-        </Button>
+          <Box display={{ base: "none", lg: "block"}}>
+          {
+            windowWidth > 1100 ? 
+              <Button
+                disabled={true}  
+                variant={'unstyled'}              
+                fontWeight={'normal'}
+                onClick={onOpen}
+                fontSize={'1vw'}
+                  >Stamp PDF
+              </Button>
+            : null
+          }        
+        </Box>
       </ButtonGroup>
       </Tooltip>
     </>)

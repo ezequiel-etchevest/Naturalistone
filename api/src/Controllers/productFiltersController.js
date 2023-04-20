@@ -5,7 +5,12 @@ const filterProducts = (finish, size, thickness, material, search, price1, price
   let errorsSearch = {}
 
     if(finish !== ''){
-      let filteredFinish = filteredProds.filter((e) => e.Finish === finish)
+      let filteredFinish
+      if(finish === 'N/A'){
+       filteredFinish = filteredProds.filter((e) => e.Finish === null)
+      } else{
+        filteredFinish = filteredProds.filter((e) => e.Finish === finish)
+      }
       if(!filteredFinish.length) errorsSearch.error = `No match for Finish: ${finish}`
        else filteredProds = filteredFinish
   }  
@@ -15,7 +20,12 @@ const filterProducts = (finish, size, thickness, material, search, price1, price
       else filteredProds = filteredSize
     } 
     if(thickness !== ''){
-      let filteredThik = filteredProds.filter((e) => e.Thickness === thickness)
+      let filteredThik
+      if(thickness === 'N/A'){
+        filteredThik = filteredProds.filter((e) => e.Thickness === null)
+      } else {
+        filteredThik = filteredProds.filter((e) => e.Thickness === thickness)
+      }
       if(!filteredThik.length) errorsSearch.error = `No match for Thickness: ${thickness}`
       else filteredProds = filteredThik
     }
@@ -25,7 +35,7 @@ const filterProducts = (finish, size, thickness, material, search, price1, price
       else filteredProds = filteredMat
     }
     if(search !== ''){
-      let filteredSearch= filteredProds.filter(e => e.ProductName?.toLowerCase().includes(search))
+      let filteredSearch= filteredProds.filter(e => e.ProductName?.toLowerCase().includes(search.toLowerCase()))
       if(!filteredSearch.length) errorsSearch.error = `No match for Search: ${search}`
       else filteredProds = filteredSearch
     }

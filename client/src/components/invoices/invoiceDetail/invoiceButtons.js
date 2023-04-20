@@ -2,7 +2,8 @@ import{
 	ButtonGroup,
 	Button,
 	IconButton,
-  VStack
+  VStack,
+  Box
 } from '@chakra-ui/react';
 import {AiOutlineMail, AiOutlineInfoCircle} from 'react-icons/ai';
 import ModalStamp from './modalStamp';
@@ -10,7 +11,7 @@ import ChangeStatus from './modalStatus';
 import CreateDeliveryButton from '../../deliveryQuotes/CreateDeliveryButton';
 import DeliveryNotesListButton from '../../deliveryQuotes/DeliveryNotesListButton';
 
-const InvoicePanelButtons = ({invoice, payments, user, invoice_products, deliveries}) => {
+const InvoicePanelButtons = ({invoice, payments, user, invoice_products, deliveries, windowWidth}) => {
      
     return(
         <>
@@ -24,9 +25,9 @@ const InvoicePanelButtons = ({invoice, payments, user, invoice_products, deliver
           	justifyContent={'space-between'}
             spacing={0}
           	>
-              <ChangeStatus invoice={invoice} user={user}/>
-              <CreateDeliveryButton invoice={invoice} user={user} invoice_products={invoice_products}/>
-              <DeliveryNotesListButton user={user} invoice={invoice} deliveries={deliveries}/>
+              <ChangeStatus invoice={invoice} user={user} windowWidth={windowWidth}/>
+              <CreateDeliveryButton invoice={invoice} user={user} invoice_products={invoice_products} windowWidth={windowWidth}payments={payments}/>
+              <DeliveryNotesListButton user={user} invoice={invoice} deliveries={deliveries} windowWidth={windowWidth}/>
               <ButtonGroup
                 h={'5vh'}
                 size={'sm'}
@@ -38,14 +39,19 @@ const InvoicePanelButtons = ({invoice, payments, user, invoice_products, deliver
                 >
               <IconButton
                 variant={'unstyled'}           
-                fontWeight={'normal'}
+                fontSize={'1.5vw'}
                 disabled={true}
                 icon={<AiOutlineInfoCircle/>}/>
-              <Button
+                {
+                windowWidth > 1100 ? 
+                <Button
+                fontSize={'1vw'}
                 variant={'unstyled'}           
                 fontWeight={'normal'}
                 disabled={true}
                 >Customer Details</Button>
+                 : null
+                }        
               </ButtonGroup>
               <ButtonGroup
                 h={'5vh'}
@@ -58,9 +64,13 @@ const InvoicePanelButtons = ({invoice, payments, user, invoice_products, deliver
               <IconButton
                 variant={'unstyled'}           
                 fontWeight={'normal'}
+                fontSize={'1.5vw'}
                 disabled={true}
                 icon={<AiOutlineMail/>}/>
-              <Button
+              {
+                windowWidth > 1100 ? 
+                <Button
+                fontSize={'1vw'}
                 display={'flex'}
                 alignSelf={'flex-start'}
                 variant={'unstyled'}           
@@ -68,8 +78,10 @@ const InvoicePanelButtons = ({invoice, payments, user, invoice_products, deliver
                 disabled={true}
                 >Contact Customer
               </Button>
+                 : null
+              }             
               </ButtonGroup>
-            <ModalStamp invoice={invoice} payments={payments}/>
+            <ModalStamp invoice={invoice} payments={payments} windowWidth={windowWidth}/>
           </VStack>   
         </>
     )

@@ -92,7 +92,7 @@ return(
           ml={'1vh'}
           >
           <Text fontSize={'1.6vh'} color={'web.text'} fontWeight={'semi-bold'}> Back Order Pending Payment </Text>
-          <Text fontSize={'1.6vh'} fontWeight={'semi-bold'}> </Text>
+          <Text fontSize={'1.6vh'} fontWeight={'semi-bold'}>{product.Order_PendingPayment} </Text>
         </Box>
         <Divider borderColor={'web.text2'}/>
         <Box
@@ -102,7 +102,7 @@ return(
           ml={'1vh'}
           >
           <Text fontSize={'1.6vh'} color={'web.text'} fontWeight={'semi-bold'}> Back Order Paid </Text>
-          <Text fontSize={'1.6vh'} fontWeight={'semi-bold'}></Text>
+          <Text fontSize={'1.6vh'} fontWeight={'semi-bold'}>{product.Order_PaymentCompleted}</Text>
         </Box>
         <Divider borderColor={'web.text2'}/>
       </Box>

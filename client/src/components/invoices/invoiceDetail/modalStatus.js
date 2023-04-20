@@ -11,6 +11,7 @@ import {
     ModalCloseButton,
     useDisclosure,
     Text,
+    Box
     } from "@chakra-ui/react"
 import { useParams } from 'react-router-dom';
 import { useDispatch } from "react-redux";
@@ -20,7 +21,7 @@ import '../../../assets/styleSheet.css';
 
 
 
-const ChangeStatus = ({invoice, user}) => {
+const ChangeStatus = ({invoice, user, windowWidth}) => {
 
   const dispatch = useDispatch()
   const {id} = useParams()
@@ -35,29 +36,40 @@ const ChangeStatus = ({invoice, user}) => {
           <ButtonGroup
             h={'5vh'}
             size={'sm'}
-            onClick={onOpen}
+            onClick={user.Secction7Flag === 1 ? onOpen : null}  
             display={'flex'}
             spacing={0}
             _hover={{
             color: 'logo.orange'
             }}
+            disabled={
+              user.Secction7Flag === 1 ? false :
+              invoice[0].Payment_Stamp === 0 ? false : true 
+            }
             >
           <IconButton
+            fontSize={'1.5vw'}
             disabled={
-              user.SellerID === 3 ? false :
+              user.Secction7Flag === 1 ? false :
               invoice[0].Payment_Stamp === 0 ? false : true 
             }
             variant={'unstyled'}           
             fontWeight={'normal'}
             icon={<MdOutlineCancel/>}/>
-          <Button
-            disabled={
-              user.SellerID === 3 ? false :
-              invoice[0].Payment_Stamp === 0 ? false : true 
-            }
-            variant={'unstyled'}           
-            fontWeight={'normal'}
-            >Cancel Quote</Button>
+          
+          {
+            windowWidth > 1100 ? 
+              <Button
+                disabled={
+                  user.Secction7Flag === 1 ? false :
+                  invoice[0].Payment_Stamp === 0 ? false : true }
+                variant={'unstyled'}           
+                fontWeight={'normal'}
+                fontSize={'1vw'}
+                >Cancel Quote</Button>
+            : null
+          }    
+          
           </ButtonGroup>
           <Modal 
             isOpen={isOpen} 

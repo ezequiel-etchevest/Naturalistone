@@ -10,7 +10,7 @@ const ProductsContainer = ({ allProducts, user, values }) => {
     if(Object.entries(values).length && allProducts.length){
         return(
             <Box
-            ml={'20vw'}
+            ml={'16vw'}
             bg={'web.bg'}
             > 
             <Box>
@@ -22,7 +22,7 @@ const ProductsContainer = ({ allProducts, user, values }) => {
     }else{
         return(
             <>
-                <Center ml={'20vh'} bg={'web.bg'} h={'92vh'}>
+                <Center ml={'16vh'} bg={'web.bg'} h={'92vh'}>
                     <Spinner thickness={'4px'} size={'xl'} color={'logo.orange'}/>
                 </Center>
             

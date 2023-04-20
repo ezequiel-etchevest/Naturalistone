@@ -33,11 +33,11 @@ const ModelTr = ({p}) => {
         <Td textAlign={'-moz-initial'}>{p.ProductName}</Td>
         <Td textAlign={'center'} w={'6vw'} fontSize={'1.6vh'}>{p.Type}</Td>
         <Td textAlign={'center'} w={'6vw'} fontSize={'1.6vh'}>{p.Size}</Td>
-        <Td textAlign={'center'} w={'6vw'} ontSize={'1.6vh'}>{p.Thickness}</Td>
+        <Td textAlign={'center'} w={'6vw'} fontSize={'1.6vh'}>{p.Thickness}</Td>
         <Td textAlign={'center'} w={'6vw'} fontSize={'1.6vh'}>{p.Finish}</Td>
         <Td textAlign={'center'} w={'6vw'} fontSize={'1.6vh'}>{p.FactoryProductName}</Td>
         <Td textAlign={'center'} w={'6vw'}> {p.Quantity} </Td>
-        <Td textAlign={'center'} w={'6vw'}>${p.SalePrice}</Td>
+        <Td textAlign={'center'} w={'6vw'}> ${p.SalePrice}</Td>
         {/* <IconButton 
             display={'flex'}
             variant={'unstyled'}

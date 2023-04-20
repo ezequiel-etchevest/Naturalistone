@@ -25,8 +25,8 @@ const ModelTr = ({e, user}) => {
   const a = e.Discontinued_Flag === 'True' ? true : false 
   const [flag, setFlag] = useState(a)
 
-    const navigate = useNavigate()
-    const dispatch = useDispatch()
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
 
 
     const handleClickProduct = () => {
@@ -40,10 +40,10 @@ const ModelTr = ({e, user}) => {
     }
 
     let validateSeller = () => {
-      if(user[0].SellerID === 6 || user[0].SellerID === 3 || user[0].SellerID === 5 || user[0].SellerID === 15 ) return true
+      if(user[0].Secction7Flag === 1 ) return true
       else return false
     }
-
+    
   return(
     <Tr       
       cursor={'pointer'} 
@@ -53,16 +53,16 @@ const ModelTr = ({e, user}) => {
         color: 'logo.orange'
       }} 
       >
-      <Td onClick={() => handleClickProduct()} fontSize={'1.7vh'} textAlign={'match-parent'}>{e.ProductName}</Td>
-      <Td onClick={() => handleClickProduct()} fontSize={'1.7vh'} textAlign={'match-parent'}>{e.Material} - {e.Type}</Td>
-      <Td onClick={() => handleClickProduct()} fontSize={'1.7vh'} textAlign={'match-parent'}>{e.Size}</Td>
-      <Td onClick={() => handleClickProduct()} fontSize={'1.7vh'} textAlign={'center'}> {e.Thickness} </Td>
-      <Td onClick={() => handleClickProduct()} fontSize={'1.7vh'} textAlign={'center'}> {e.Finish === null ? '-' : e.Finish} </Td>
-      <Td onClick={() => handleClickProduct()} fontSize={'1.7vh'} isNumeric>${e.Price.toLocaleString('en-US')}</Td>
-      <Td onClick={() => handleClickProduct()} fontSize={'1.7vh'} textAlign={'center'}>{e.InStock_Available === null ? 0 : e.InStock_Available}</Td>
-      <Td onClick={() => handleClickProduct()} fontSize={'1.7vh'} textAlign={'center'}>{e.Incoming_Available === null ? 0 : e.Incoming_Available}</Td>
-      <Td onClick={() => handleClickProduct()} fontSize={'1.7vh'} textAlign={'center'}>{e.NextArrival === undefined ? '-' : e.NextArrival}</Td>
-      <Td pl={'3.5vw'}>{ validateSeller() === false ? (e.Discontinued_Flag === 'True' ? <ImCheckboxChecked color='logo.orange'/> : <ImCheckboxUnchecked color='logo.orange'/> ) : (<Switch  onChange={() => handleClickSwitch()} isChecked={flag} colorScheme={'orange'} size={'sm'}/>) }</Td>
+      <Td maxW={'3vw'} onClick={() => handleClickProduct()} fontSize={'xs'} textAlign={'match-parent'}>{e.ProductName}</Td>
+      <Td maxW={'6vw'} onClick={() => handleClickProduct()} fontSize={'xs'} textAlign={'center'}>{e.Material}</Td>
+      <Td maxW={'3vw'} onClick={() => handleClickProduct()} fontSize={'xs'} textAlign={'center'}>{e.Size}</Td>
+      <Td maxW={'2vw'} onClick={() => handleClickProduct()} fontSize={'xs'} textAlign={'center'}> {e.Thickness === null ? 'N/A' : e.Thickness} </Td>
+      <Td maxW={'3vw'} onClick={() => handleClickProduct()} fontSize={'xs'} textAlign={'center'}> {e.Finish === null ? 'N/A' : e.Finish} </Td>
+      <Td maxW={'3vw'} onClick={() => handleClickProduct()} fontSize={'xs'} isNumeric>$ { e.Price ? e.Price.toLocaleString('en-US') : '-'}</Td>
+      <Td maxW={'2vw'} onClick={() => handleClickProduct()} fontSize={'xs'} textAlign={'center'}>{e.InStock_Available === null ? 'N/A' : e.InStock_Available}</Td>
+      <Td maxW={'2vw'} onClick={() => handleClickProduct()} fontSize={'xs'} textAlign={'center'}>{e.Incoming_Available === null ? 0 : e.Incoming_Available}</Td>
+      <Td maxW={'3vw'} onClick={() => handleClickProduct()} fontSize={'xs'} textAlign={'center'}>{e.NextArrival === undefined ? '-' : e.NextArrival}</Td>
+      <Td maxW={'3vw'} pl={'3.5vw'}>{ validateSeller() === false ? (e.Discontinued_Flag === 'True' ? <ImCheckboxChecked color='logo.orange'/> : <ImCheckboxUnchecked color='logo.orange'/> ) : (<Switch  onChange={() => handleClickSwitch()} isChecked={flag} colorScheme={'orange'} size={'sm'}/>) }</Td>
       </Tr>
   )
 }
@@ -76,7 +76,6 @@ const ProductList = ({ allProducts, user }) => {
     if(Object.entries(productErrors).length){
       toast({        
         title: `${productErrors.error}`,
-        description: 'Displaying previous results',
         status: 'warning',
         duration: 1500,
         isClosable: true,})
@@ -89,10 +88,11 @@ const ProductList = ({ allProducts, user }) => {
 
   return(
     <Box
+      userSelect={'none'}
       display={'flex'}
       justifyContent={'center'}
       h={'69vh'}
-      w={'78.8vw'}
+      w={'82.8vw'}
       ml={'1vh'} 
       >
       <Box
@@ -115,32 +115,32 @@ const ProductList = ({ allProducts, user }) => {
         border={'1px solid'} 
         rounded={'md'} 
         p={'3vh'}
-        w={'76vw'}
+        w={'80vw'}
         >
         {allProducts.length && !Object.entries(productErrors).length ? 
-        <TableContainer  mr={'1vw'}>
+        <TableContainer  mr={'1vw'} >
           <Table color={'web.text'} variant={'simple'} size={'sm'}>
             <Thead h={'6vh'}>
               <Tr>
-                <Th color={'web.text2'} >Product Name</Th>
-                <Th color={'web.text2'} textAlign={'center'} >Type</Th>
-                <Th color={'web.text2'} textAlign={'center'}>Size</Th>
-                <Th color={'web.text2'} >Thickness</Th>
-                <Th color={'web.text2'}>Finish</Th>
-                <Th color={'web.text2'} isNumeric>Price</Th>
-                <Th color={'web.text2'} isNumeric>In Stock</Th>
-                <Th color={'web.text2'} isNumeric>Incoming</Th>
-                <Th color={'web.text2'} isNumeric>Next Arrival</Th>
-                <Th color={'web.text2'} >Discontinued</Th>
+                <Th fontSize={'0.8vw'} color={'web.text2'}>Product Name</Th>
+                <Th fontSize={'0.8vw'} color={'web.text2'} textAlign={'center'}>Type</Th>
+                <Th fontSize={'0.8vw'} color={'web.text2'} textAlign={'center'}>Size</Th>
+                <Th fontSize={'0.8vw'} color={'web.text2'} textAlign={'center'}>Thickness</Th>
+                <Th fontSize={'0.8vw'} color={'web.text2'} textAlign={'center'}>Finish</Th>
+                <Th fontSize={'0.8vw'} color={'web.text2'} isNumeric>Price</Th>
+                <Th fontSize={'0.8vw'} color={'web.text2'} textAlign={'center'}>In Stock</Th>
+                <Th fontSize={'0.8vw'} color={'web.text2'} textAlign={'center'}>Incoming</Th>
+                <Th fontSize={'0.8vw'} color={'web.text2'} textAlign={'center'}>Next Arrival</Th>
+                <Th fontSize={'0.8vw'} color={'web.text2'}>Discontinued</Th>
               </Tr>
             </Thead>
             <Tbody>
-              { 
-                  allProducts.map((e, i) => {
-                    return(
-                      <ModelTr key={i} e={e} user={user}/>
-                    )
-                  })
+              {
+                allProducts.map((e, i) => {
+                  return(
+                    <ModelTr key={i} e={e} user={user}/>
+                  )
+                })
               }
             </Tbody>
           </Table>

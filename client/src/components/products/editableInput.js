@@ -36,7 +36,7 @@ function EditableInputNotes({product, user}) {
       } = useEditableControls()
   
       return isEditing ? (
-        <ButtonGroup  position={'fixed'} top={'35.5vh'} left={'53vw'} justifyContent='flex-end' size={'xs'}>
+        <ButtonGroup  position={'fixed'} top={'35.5vh'} left={'49vw'} justifyContent='flex-end' size={'xs'}>
           <IconButton
             
             variant={'ghost'}
@@ -52,7 +52,7 @@ function EditableInputNotes({product, user}) {
             icon={<CloseIcon />} {...getCancelButtonProps()} />
         </ButtonGroup>
       ) : (
-        <Flex justifyContent='flex-end' position={'fixed'} top={'12.8vh'} left={'56vw'}>
+        <Flex justifyContent='flex-end' position={'fixed'} top={'12.8vh'} left={'52vw'}>
           <IconButton 
             size='sm' 
             variant={'ghost'}
@@ -74,7 +74,7 @@ function EditableInputNotes({product, user}) {
         onSubmit={()=>handleSubmit()}      
       >
         {
-          user.SellerID === 5 || user.SellerID === 3 ?
+          user.Secction7Flag === 1 ?
           <EditableControls /> :
           null
         }
@@ -90,7 +90,7 @@ function EditableInputNotes({product, user}) {
         <Input
           position={'fixed'}
           top={'19.2vh'}
-          left={'42.5vw'}  
+          left={'38.5vw'}  
           h={'15vh'}
           w={'15vw'}
           as={EditableInput}

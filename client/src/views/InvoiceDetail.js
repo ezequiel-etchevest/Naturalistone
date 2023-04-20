@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import SideBar from "../components/sideBar";
 import { Center, Spinner } from "@chakra-ui/react";
 import { useSelector, useDispatch } from "react-redux";
@@ -8,8 +8,7 @@ import { getPayments } from "../redux/actions-payments";
 import { getDeliveriesNotes } from "../redux/actions-deliveryNotes";
 import { useParams } from "react-router-dom";
 import Detail from '../components/invoices/invoiceDetail/detail';
-
-
+import Redirect from "./RedirectPage";
 
 const InvoiceDetail = ({focus, setFocus}) => {
 
@@ -21,21 +20,30 @@ const InvoiceDetail = ({focus, setFocus}) => {
   const payments = useSelector(state => state.payments_by_id)
   const userLocal = JSON.parse(localStorage.getItem('user'))
   const { id } = useParams()
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    function handleResize() {
+      setWindowWidth(window.innerWidth);
+    }
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   useEffect(()=>{
       dispatch(getInvoiceById(id))
       dispatch(getPayments(id))
       dispatch(getInvoiceProducts(id))
       dispatch(getDeliveriesNotes(id))
-    } 
-      ,[])
+    },[])
       
-
   useEffect(()=>{
       if(userLocal && !user.length){
       dispatch(getEmployeeById(userLocal.SellerID))}
     },[user])
 
+  if(userLocal){
     if(user) {
       if(user.length){
         return(
@@ -43,7 +51,8 @@ const InvoiceDetail = ({focus, setFocus}) => {
             <SideBar user={user} focus={focus} setFocus={setFocus}/>
             {
               invoice.length && Object.entries(payments).length && invoice_products && deliveries ? (
-                <Detail 
+                <Detail
+                  windowWidth={windowWidth} 
                   invoice={invoice} 
                   invoice_products={invoice_products}
                   payments={payments}
@@ -51,18 +60,28 @@ const InvoiceDetail = ({focus, setFocus}) => {
                   deliveries={deliveries}
                   />
                 ):(
-                <Center ml={'20vh'} bg={'web.bg'} h={'92vh'}>
+                <Center ml={'16vh'} bg={'web.bg'} h={'92vh'}>
                   <Spinner thickness={'4px'} size={'xl'} color={'logo.orange'}/>
                 </Center>
                 )
             }
           </>
         )
-    } else return (     
+    } else{
+     return (     
         <Center bg={'web.bg'} h={'92'}>
           <Spinner thickness={'4px'} size={'xl'} color={'logo.orange'}/>
         </Center>)
-  }}
+        }  
+      }
+    }else{
+      return(
+        <>
+        <Redirect/>
+        </>
+      )
+    }
+    }
  
 
 

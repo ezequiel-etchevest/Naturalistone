@@ -20,10 +20,10 @@ const ModelTr = ({o}) => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
 
-    const handleClick = () => {
-      dispatch(getOrdersByID(o.OrderID))
+    const handleClick = async () => {
+      await dispatch(getOrdersByID(o.OrderID))
       dispatch(cleanOrderProducts())
-      dispatch(getOrderProducts(o.OrderID))
+      await dispatch(getOrderProducts(o.OrderID))
       navigate(`/orders/${o.OrderID}`)
     }
     
@@ -38,9 +38,9 @@ const ModelTr = ({o}) => {
           color: 'logo.orange'
         }}
         >
-        <Td textAlign={'center'}>{o.OrderID}</Td>
+        <Td textAlign={'center'}>{o.OrderID.includes('.') ? (o.OrderID.split('.')[0]) + '/' + (o.OrderID.split('.')[1]) : o.OrderID}</Td>
         <Td textAlign={'-moz-initial'}>{o.FactoryName}</Td>
-        <Td textAlign={'center'}>{o.Value.toLocaleString('en-US')}</Td>
+        <Td textAlign={'center'}>$ {o.Value.toLocaleString('en-US')}</Td>
         <Td textAlign={'center'}>{o.InvoiceDate !== null ? o.InvoiceDate.split('T')[0] :  '-'}</Td>
         <Td isNumeric textAlign={'center'}>{o.idFreightInvoice} </Td>
         <Td textAlign={'center'}>{o.Order_By !== null ? o.Order_By.split('@')[0] : '-'}</Td>
@@ -54,11 +54,12 @@ const OrdersList = ({orders}) => {
   
     return(
         <Box
-        display={'flex'}
-        justifyContent={'center'}
-        h={'92vh'}
-        w={'80vw'}
-        >
+          display={'flex'}
+          justifyContent={'center'}
+          ml={'1vh'}
+          h={'92vh'}
+          w={'82.8vw'} 
+          >
           <Box
             maxHeight={'80vh'}
             overflow={'auto'}
@@ -80,9 +81,7 @@ const OrdersList = ({orders}) => {
             border={'1px solid'} 
             rounded={'md'} 
             p={'3vh'}
-            w={'74vw'}
-            ml={'3vw'}
-            mr={'3vw'}
+            w={'80vw'}
             >
             <TableContainer >
                 <Table color={'web.text'} variant={'simple'} size={'sm'}  >

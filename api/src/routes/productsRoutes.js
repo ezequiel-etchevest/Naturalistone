@@ -3,6 +3,7 @@ const productsRouter = express.Router()
 const mysqlConnection = require('../db')
 const filterProducts = require('../Controllers/productFiltersController')
 const { prodValues, findMaxMinPrice } = require('../Controllers/productValues')
+const objetosFiltrados = require('../Controllers/inventoryController')
 
 productsRouter.get('/', async function(req, res){
 
@@ -11,11 +12,11 @@ productsRouter.get('/', async function(req, res){
     
     query_ = `SELECT    
                     ProdNames.Naturali_ProdName AS ProductName,
+                    ProdNames.Material,
                     Dimension.Type,
                     Dimension.Size,
                     Dimension.Thickness,
                     Dimension.Finish,
-                    Dimension.Material,
                     Products.SalePrice AS Price,
                     Products.ProdID,
                     Products.Discontinued_Flag,
@@ -29,10 +30,11 @@ productsRouter.get('/', async function(req, res){
 
             if(error) throw error;
             if(results.length == 0) {
-                console.log('Error en productRoutes.get /:id')
+                console.log('Error en productRoutes.get /')
                 res.status(200).json({});
             } else {
-                res.status(200).json(results);
+                let instock = objetosFiltrados(results)
+                res.status(200).json(instock);
             }
         });
     } catch(error){
@@ -45,11 +47,11 @@ productsRouter.get('/id/:id', async function(req, res){
 
     query_ =    `SELECT
                   ProdNames.Naturali_ProdName AS ProductName,
+                  ProdNames.Material,
                   Dimension.Type,
                   Dimension.Size,
                   Dimension.Finish,
                   Dimension.Thickness,
-                  Dimension.Material,
                   Products.SalePrice AS Price,
                   Products.ProdID,
                   Products.Notes,
@@ -83,11 +85,11 @@ productsRouter.get('/filtered', async function(req, res){
 
     query_ = `SELECT    
                     ProdNames.Naturali_ProdName AS ProductName,
+                    ProdNames.Material,
                     Dimension.Type,
                     Dimension.Size,
                     Dimension.Finish,
                     Dimension.Thickness,
-                    Dimension.Material,
                     Products.SalePrice AS Price,
                     Products.ProdID,
                     Inventory.*
@@ -104,8 +106,10 @@ productsRouter.get('/filtered', async function(req, res){
                 console.log('Error en productsRoutes.get /filtered')
                 res.status(200).json({});
             } else {
-                const filter = filterProducts(finish, size, thickness, material, search, price1, price2, results)
-                let price = findMaxMinPrice(results)
+                let instock = objetosFiltrados(results)
+                const filter = filterProducts(finish, size, thickness, material, search, price1, price2, instock)
+                
+                let price = findMaxMinPrice(instock)
                 let filteredValues = prodValues(filter.filteredProds, search, price)
                 res.status(200).json({filter, filteredValues});
             }

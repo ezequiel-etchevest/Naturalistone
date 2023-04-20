@@ -35,7 +35,7 @@ export function getPayments(id){
 }
 
 export function deletePayment(invoiceID, paymentID){
-    console.log({paymentID})
+
     return async function(dispatch){
         try{
             let { response } = await axios.delete(`/payments/invoice/${paymentID}`)

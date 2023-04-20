@@ -30,6 +30,7 @@ const ModelTr = ({e, validateSeller}) => {
       dispatch( cleanStatePayments())
       navigate(`/quotes/${e.Naturali_Invoice}`)
     }
+
     return(
       <Tr 
         onClick={() => handleClick()} 
@@ -43,27 +44,26 @@ const ModelTr = ({e, validateSeller}) => {
         <Td fontSize={'xs'} textAlign={'center'}>{e.Naturali_Invoice}</Td>
         {
           validateSeller() ? (
-          <Td  fontSize={'xs'}textAlign={'center'}>{e.FirstName} {e.LastName}</Td>
+          <Td  fontSize={'xs'}textAlign={'center'}>{e.SellerReference}</Td>
           ):(null)
         }
-        <Td fontSize={'1.7vh'}>{e.ProjectName}</Td>
-        <Td fontSize={'1.7vh'}>{e.Reference}</Td>
-        <Td fontSize={'1.7vh'} textAlign={'center'}>{e.InvoiceDate.split('T')[0]}</Td>
-        <Td fontSize={'1.7vh'} textAlign={'center'}>{e.Status}</Td>
-        <Td fontSize={'1.7vh'} isNumeric textAlign={'center'}>$ {e.Value.toLocaleString('en-US')} </Td>
-        <Td fontSize={'1.7vh'} textAlign={'center'} >{ e.Percentaje ? Math.round(e.Percentaje) : 0 } % </Td>
-        <Td fontSize={'1.7vh'} textAlign={'center'}>{ e.Payments?.length ? e.Payments[0][2] : '-'}</Td>
+        <Td fontSize={'xs'}>{e.ProjectName}</Td>
+        <Td fontSize={'xs'}>{e.Reference}</Td>
+        <Td fontSize={'xs'} textAlign={'center'}>{e.InvoiceDate.split('T')[0]}</Td>
+        <Td fontSize={'xs'} textAlign={'center'}>{e.Status}</Td>
+        <Td fontSize={'xs'} isNumeric textAlign={'center'}>$ {e.Value.toLocaleString('en-US')} </Td>
+        <Td fontSize={'xs'} textAlign={'center'} >{ e.Percentaje ? Math.round(e.Percentaje) : 0 } % </Td>
+        <Td fontSize={'xs'} textAlign={'center'}>{ e.Payments?.length ? e.Payments[0][2] : '-'}</Td>
       </Tr>
     )
 }
 
 const List = ({seller_invoices, user}) => {
 
-  
   const result = useSelector(state=> state.validate_result_quotes)
   const toast = useToast()
   const id = 'test-toast'
-
+ 
   const validateSeller = () => {
     if(user[0].Secction7Flag === 1) return true
     else return false
@@ -91,7 +91,7 @@ const List = ({seller_invoices, user}) => {
         justifyContent={'center'}
         ml={'1vh'}
         h={'75vh'}
-        w={'78.8vw'} 
+        w={'82.8vw'} 
         >
           <Box
             maxHeight={'73vh'}
@@ -113,7 +113,7 @@ const List = ({seller_invoices, user}) => {
             border={'1px solid'} 
             rounded={'md'} 
             p={'3vh'}
-            w={'76vw'}
+            w={'80vw'}
             >
               {
                 seller_invoices.length ? (
@@ -123,15 +123,15 @@ const List = ({seller_invoices, user}) => {
                           <Tr>
                             <Th color={'web.text2'} textAlign={'center'}>Nº</Th>
                             { validateSeller() ? (
-                                <Th color={'web.text2'} textAlign={'center'}>Seller</Th>
+                                <Th color={'web.text2'} textAlign={'center'} w={'1vw'}>Ref</Th>
                             ):(null) }
-                            <Th color={'web.text2'}  minW={'3vw'}maxW={'3vw'}>Project</Th>
+                            <Th color={'web.text2'}>Project</Th>
                             <Th color={'web.text2'}>Customer</Th>
                             <Th color={'web.text2'} textAlign={'center'}>Date</Th>
                             <Th color={'web.text2'} textAlign={'center'}>Status</Th>
                             <Th color={'web.text2'} textAlign={'center'} isNumeric>Total</Th>
                             <Th color={'web.text2'} textAlign={'center'}>Paid</Th>
-                            <Th color={'web.text2'} >Last Payment</Th>
+                            <Th color={'web.text2'} textAlign={'center'} >Last Payment</Th>
                           </Tr>
                         </Thead>
                         <Tbody >

@@ -3,7 +3,7 @@ import { FaFileInvoiceDollar, FaHome, FaBoxOpen } from 'react-icons/fa'
 import { IoMdBoat } from 'react-icons/io'
 import { CgLogOut } from 'react-icons/cg'
 import { BiError } from 'react-icons/bi'
-import mitu from '../assets/mitutu.jpg';
+import naturalipic from '../assets/naturalistonefav.png'
 import { useNavigate } from 'react-router';
 import { useDispatch } from 'react-redux';
 import { logOut } from '../redux/actions-employees';
@@ -13,7 +13,7 @@ const LinkItems = [
   { name: 'Home', icon: FaHome },
   { name: 'Quotes', icon: FaFileInvoiceDollar },
   { name: 'Inventory', icon: FaBoxOpen },
-  { name: 'Invoice Errors', icon: BiError },
+  { name: 'Invoice-errors', icon: BiError },
   { name: 'Orders', icon: IoMdBoat },
   { name: 'Log Out', icon: CgLogOut },
   ];
@@ -21,33 +21,30 @@ const LinkItems = [
 
 const SideBar = ({user, focus, setFocus}) => {
 	return (
-
 	  <Box
       userSelect={'none'}
       top={'0vh'}
 	    pos={'fixed'}
 	    bg={'web.sideBar'}
-      w={'20vw'}
+      w={'16vw'}
       h={'100vh'}
-      pl={'2vw'}
-      borderRight={'1px solid'}
+      pl={'1vw'}
+      borderRightWidth={'0.2vh'}
       borderColor={'web.border'}
 	    > 
-    <HStack mt={'10vh'} mb={'4vh'}>
+    <Box w={'13vw'} display={'flex'} alignItems={'center'} justifyContent={'space-evenly'} mt={'10vh'} mb={'4vh'}>
       <Avatar
-        size={'sm'}
-        src={mitu}
+        boxSize={'2vw'}
+        src={naturalipic}
         />
       <Text
       color={'web.text'} 
-      fontWeight={'normal'} 
-      letterSpacing={'wide'} 
-      fontSize={'2.9vh'} 
-      pl={'1.5vh'}> 
+      fontSize={'1.1vw'} 
+      pl={'1vw'}> 
         {user[0].FirstName} {user[0].LastName}
       </Text>
-    </HStack>
-    <Box  pr={'2vw'} pt={'9vh'}>
+    </Box>
+    <Box pr={'2vw'} pt={'9vh'}>
       
       {/* In here we need to add other SellerIDs whom will access to Orders View */}
       {
@@ -62,9 +59,9 @@ const SideBar = ({user, focus, setFocus}) => {
           link={link}
           key={link.name}
           icon={link.icon}
-          mt={'4vh'}
+          mt={'2vh'}
         >
-          {link.name}
+          {link.name === 'Invoice-errors' ? 'Invoice Errors' : link.name}
         </NavItem>
         )) : 
         LinkItems.map((link) => (
@@ -75,7 +72,7 @@ const SideBar = ({user, focus, setFocus}) => {
           link={link}
           key={link.name}
           icon={link.icon}
-          mt={'4vh'}
+          mt={'2vh'}
           >
             {link.name}
         </NavItem>
@@ -102,7 +99,7 @@ const SideBar = ({user, focus, setFocus}) => {
       <Box
         color={focus === link.name ? '#E47424' : 'white'}
         bg={'none'}
-        fontSize={'2.3vh'}
+        fontSize={'1.05vw'}
         style={{ textDecoration: 'none' }}
         _focus={{ boxShadow: 'none' }}
         onClick={link.name === 'Log Out' ? ()=> {handleLogOut()} : ()=>{handleClick()}}
@@ -111,7 +108,7 @@ const SideBar = ({user, focus, setFocus}) => {
           align="center"
           p={'1vh'}
           mx={'2vh'}
-          borderRadius={"md"}
+          
           role={"group"}
           cursor={"pointer"}
           _hover={{
@@ -123,7 +120,7 @@ const SideBar = ({user, focus, setFocus}) => {
           {icon && (
             <Icon
               mr={'2vw'}
-              fontSize={'3.5vh'}
+              fontSize={'1.6vw'}
               _groupHover={{
                 color: '#E47424',
               }}

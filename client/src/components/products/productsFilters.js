@@ -24,9 +24,8 @@ const ProductsFilters = ({allProducts, setFilteredProducts, values}) => {
     thickness:'',
     material: '',
     search:'',
-    price: [values.priceMaxmin.min, values.priceMaxmin.max]
+    price: [values.priceMaxmin.min === null ? 0 : values.priceMaxmin.min, values.priceMaxmin.max]
   })
-
   const [limit, setLimit] = useState([values.priceMaxmin.min, values.priceMaxmin.max])
 
   const handleFinish = (e) => {
@@ -96,8 +95,8 @@ const ProductsFilters = ({allProducts, setFilteredProducts, values}) => {
           mr={'2vw'}
           mb={'6vh'} 
           h={'17vh'}
-          w={'76vw'}
-        justifyContent={'center'}
+          w={'80vw'}
+          justifyContent={'center'}
         >
           {/* -------------------- SEARCH INPUT ------------------------------ */}
         <Box ml={'2vh'} w={'15vw'} mt={'8vh'} display={'flex'} alignSelf={'flex-start'} >
@@ -106,7 +105,7 @@ const ProductsFilters = ({allProducts, setFilteredProducts, values}) => {
             w={'80%'}
             minH={'4.5vh'}
             variant="unstyled"
-            placeholder={'Customer name'}
+            placeholder={'Product name'}
             textColor={'web.text2'}
             _placeholder={{ fontFamily: 'body', fontWeight: 'thin' }}
             size={"sm"}
@@ -134,8 +133,8 @@ const ProductsFilters = ({allProducts, setFilteredProducts, values}) => {
           flexDir={'row'} 
           justifyContent={'space-between'}
           alignItems={'center'} 
-          w={'76vw'}
-          ml={'2vh'}
+          w={'80vw'}
+          ml={'1vw'}
           >
           <Box 
             display={'flex'} 
@@ -210,7 +209,7 @@ const ProductsFilters = ({allProducts, setFilteredProducts, values}) => {
               onChange={(e) => handleThickness(e)}
               >
               <option value='' className="options">Thickness</option>
-              {
+              {   
                   values.thickness.map((v, i) => {
                     return(
                       <option value={`${v}`} key={i} className={'options'}>{`${v}`}</option>
@@ -247,7 +246,7 @@ const ProductsFilters = ({allProducts, setFilteredProducts, values}) => {
           <Box display={'flex'} alignItems={'center'} flexDir={'row'} h={'4.2vh'}>
             <PriceSlider  setFilters={setFilters} filters={filters} limit={limit} setLimit={setLimit} values={values}/>
             <Divider orientation={'vertical'} h={'5vh'} ml={'2vw'}/>
-            <Tooltip label={'Clear all filters'} fontWeight={'hairline'}>      
+            <Tooltip placement={'bottom-start'} label={'Clear all filters'} fontWeight={'hairline'}>      
             <IconButton
               icon={ <AiOutlineClear/>}
               variant={'unstyled'} 
@@ -267,7 +266,7 @@ const ProductsFilters = ({allProducts, setFilteredProducts, values}) => {
         </Tooltip> 
           </Box> 
           </Box>  
-        </Box>
+      </Box>
     </>
   )
 }

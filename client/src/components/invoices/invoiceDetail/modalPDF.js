@@ -17,7 +17,7 @@ export default function ModalPDF({invoice, payments}) {
 
   return (
     <>
-      <Image onClick={onOpen} src={miniPDF} cursor={'pointer'} />
+      <Image m={'0.5vh'} onClick={onOpen} src={miniPDF} cursor={'pointer'} />
       <Modal isOpen={isOpen} onClose={onClose} size={'6xl'}>
         <ModalOverlay />
         <ModalContent 

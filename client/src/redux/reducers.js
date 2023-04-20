@@ -30,7 +30,7 @@ import {
     PATCH_PRODUCT_NOTES,
     PATCH_DISCONTINUED
      } from './actions-products';
-import { GET_CURRENT_MONTH } from './actions-stats';
+import { GET_CURRENT_MONTH, GET_PAYMENT_STATS, CLEAN_STATS } from './actions-stats';
 import { 
     GET_ORDERS,
     GET_ORDERS_BY_ID,
@@ -57,6 +57,7 @@ const intialState = {
     seller_invoices: [],
     all_products: [],
     current_month: {},
+    payment_stats: {},
     invoice_products: [],
     payments_by_id: {},
     products_errors:{},
@@ -67,7 +68,6 @@ const intialState = {
     order: {},
     order_products: [],
     invoice_errors: [],
-    invoice_errors_by_filter:[],
     invoice_errors_by_filter_errors:[],
     deliveries_notes_by_id:[],
     deliveryID:'',
@@ -96,9 +96,8 @@ function rootReducer (state = intialState, action) {
               employees: [],
               invoice: {},
               seller_invoices: [],
-              // filtered_invoices:[],
-              // seller_invoices_all: [],
               current_month:{},
+              payment_stats: {},
               products_errors:{},
               product_values: {},
               invoice_pdf: '',
@@ -120,150 +119,142 @@ function rootReducer (state = intialState, action) {
             return {
               ...state,
               invoice: action.payload
-            }
+          }
         case GET_INVOICES_BY_SELLER:
             return {
               ...state,
               seller_invoices: action.payload.data,
               validate_result_quotes: action.payload.result
-            }
- 
-        // case GET_INVOICES_BY_SELLER_ALL:
-        //     return {
-        //       ...state,
-        //       seller_invoices_all: action.payload.data,
-        //       filtered_invoices: action.payload.data,
-        //       seller_invoices: action.payload.data,
-        //     }
-            
+          }
         case GET_INVOICE_ERRORS:
             return {
               ...state,
               invoice_errors: action.payload
-            }
+          }
         case GET_INVOICE_ERRORS_FILTERED:
             return {
               ...state,
-              invoice_errors_by_filter: action.payload.filteredInvoicesErrors,
-              invoice_errors_by_filter_errors: action.payload.errorsSearch
-            }
-
+              invoice_errors: action.payload
+          }
         case POST_PAYMENT_METHOD:
             return {
               ...state,
               payments_by_id: action.payload
-            }
+          }
         case DELETE_PAYMENT_METHOD:
             return {
               ...state,
               payments_by_id: action.payload
-            }
-
-        // case GET_FILTERED_INVOICES:
-        //     return {
-        //       ...state,
-        //       filtered_invoices: action.payload
-        //     }
-
+          }
         case GET_ALL_PRODUCTS:
             return {
               ...state,
               all_products: action.payload,
               products_errors: {}
-            }
-
+          }
         case GET_FILTERED_PRODUCTS:
             return {
               ...state,
               all_products: action.payload.filter.filteredProds,
               products_errors: action.payload.filter.errorsSearch,
               product_values: action.payload.filteredValues
-            }
+          }
         case GET_CURRENT_MONTH:
             return {
               ...state,
               current_month: action.payload,
-            }
+          }
+        case GET_PAYMENT_STATS:
+            return {
+              ...state,
+              payment_stats: action.payload,
+          }
+        case CLEAN_STATS:
+          return {
+            ...state,
+            payment_stats: action.payload,
+            current_month: action.payload
+          }
         case GET_INVOICE_PRODUCTS:
             return {
                 ...state,
                 invoice_products: action.payload
-            }
+          }
         case GET_PAYMENTS_BY_ID:
             return {
               ...state,
               payments_by_id: action.payload
-            }
+          }
         case CLEAN_PAYMENTS_BY_ID:
             return {
               ...state,
               payments_by_id: action.payload
-            }
+          }
         case GET_PRODUCT_BY_ID :
             return {
               ...state,
               product_by_id: action.payload
-            }
+          }
         case CLEAN_PRODUCT_BY_ID:
             return {
               ...state,
               product_by_id: action.payload
-            }
+          }
         case PATCH_STAMP :
             return {
               ...state,
               invoice: action.payload
-            }
+          }
         case PATCH_STATUS :
               return {
                 ...state,
                 invoice: action.payload
-              }
+          }
         case GET_HISTORY_PRICES :
               return {
                 ...state,
                 history_prices: action.payload
-              }
+          }
         case GET_ORDERS:
               return {
                 ...state,
                 orders: action.payload
-              }
+          }
         case GET_ORDERS_BY_ID:
               return {
                 ...state,
                 order: action.payload
-              }
+          }
         case PATCH_PRODUCT_NOTES: 
               return {
                 ...state,
                 product_by_id: action.payload
-              }
+          }
         case PATCH_DISCONTINUED: 
               return {
                 ...state,
                 productS: action.payload
-              }
+          }
         case GET_ORDERS_PRODUCTS:
               return {
                 ...state,
                 order_products: action.payload
-              }
+          }
         case PATCH_ORDER_STATUS:
               return {
                 ...state,
                 order: action.payload
-              }
+          }
         case CLEAN_ORDERS_PRODUCTS:
               return {
                 ...state,
                 order_products: []
-              }
+          }
         case GET_ALL_SELLERS:
               return {
                 ...state,
                 sellers: action.payload
-              }
+          }
         case POST_DELIVERY_NOTE:
           return {
             ...state,
@@ -290,7 +281,6 @@ function rootReducer (state = intialState, action) {
             ...state,
             delivery_by_id: action.payload
           }
-
         case GET_SELLER_VALUES:
           return{
             ...state,

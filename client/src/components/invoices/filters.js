@@ -3,10 +3,7 @@ import {
   HStack, 
   Text, 
   Input, 
-  IconButton, 
-  FormControl, 
-  NumberInput,
-  NumberInputField, 
+  IconButton,
   Select,
   Divider,
   Tooltip,
@@ -29,13 +26,11 @@ const Filters = ({user, seller_invoices, setFocusFilter, seller_values}) => {
       inputNumber: '',
       selectSeller: '',
       timeFilter: 'All'
-    }
-    )
+    })
 
   const userId  =  user[0].SellerID
 
   const validateSeller = () => {
-    
     if(user[0].Secction7Flag === 1) return true
     else return false
   }
@@ -75,6 +70,7 @@ const Filters = ({user, seller_invoices, setFocusFilter, seller_values}) => {
       }
     } else {
       setInputValues({...inputValues, inputNumber: ''})
+      setErrores('')
       dispatch(getInvoicesBySeller(userId, {...inputValues, inputNumber: ''}))
     }
   }
@@ -106,12 +102,14 @@ const Filters = ({user, seller_invoices, setFocusFilter, seller_values}) => {
     ))
     setFocusFilter('All')
   }
-  const uniqueSellerIDs = seller_invoices?.reduce((acc, cur) => {
+  
+  const uniqueSellerIDs = Object.entries(seller_invoices).length ? seller_invoices.reduce((acc, cur) => {
     if (!acc.includes(cur.SellerID)) {
       acc.push(cur.SellerID);
     }
     return acc;
-  }, []);
+  }, []) : ( [] )
+
   const matchedSellers = seller_values?.filter((seller) => {
     return uniqueSellerIDs.includes(seller.sellerID);
   });
@@ -124,154 +122,148 @@ const Filters = ({user, seller_invoices, setFocusFilter, seller_values}) => {
           ml={'2vw'}
           mr={'2vw'} 
           h={'17vh'}
-          w={'76vw'}
+          w={'80vw'}
           justifyContent={'space-between'}
           >
-          {/*Inputs and select */}
+          {/*Inputs*/}
           <Box
             display={'flex'}
             alignItems={'center'}
             w={'48vw'}
+            >         
+            <Box
+            display={'flex'}
+            alignItems={'center'} 
+            w={'15vw'}
+            h={'10vh'}
             >
+            <Input
+              mb={'0.5vh'}
+              w={'80%'}
+              minH={'4.5vh'}
+              variant="unstyled"
+              type={'number'}
+              placeholder={'Quote number'}
+              textColor={'web.text2'}
+              _placeholder={{ fontFamily: 'body', fontWeight: 'thin' }}
+              size={"sm"}
+              borderBottomWidth={"2px"}
+              borderBottomColor={'web.text2'}
+              name={'invoiceNumber'}
+              value={inputValues.inputNumber}
+              onChange={(e) => handleChangeInvoiceNumber(e)}
+            />
+            <IconButton
+              color={'web.text2'}
+              borderRadius={2}
+              aria-label="Search database"
+              bgColor={'web.bg'}
+              ml={1}
+              icon={<SearchIcon />}
+              _hover={{
+                color: 'orange',
+              }}
+              _active={{ color: 'gray.800'}}
+            /> 
+            {
+              errores.length >= 1 && (
+                <Box display={'flex'} mt={'8vh'} 
+                position={'fixed'}>
+                  <Text color={'web.error'} fontSize={'xs'} display={'flex'}>
+                    {errores}
+                  </Text>
+                </Box>
+            )}
+            </Box>
             <Box
-              ml={'2vh'}
               display={'flex'}
-              flexDir={'row'}
-              alignItems={'flex-start'}
-              justifyItems={'flex-end'}
-              pt={'1vh'}
+              alignItems={'center'} 
               w={'15vw'}
-              h={'6vh'}
+              h={'10vh'}
+              ml={'1vw'}
               >
-              <FormControl 
-              display={'flex'}
-              flexDir={'row'}>
-                 <NumberInput 
-                  variant={"unstyled"}
-                  borderBottomWidth={"2px"}
-                  textColor={'web.text2'}
-                  borderBottomColor={'web.text2'}
-                  w={'80%'}
-                  size={"sm"}
-                  h={'4vh'}
-                  value={inputValues.inputNumber}
-                  >
-                  <NumberInputField
-                    placeholder={'Quote number'}
-                    _placeholder={{ fontFamily: 'body', fontWeight: 'thin' }}
-                    name={'invoiceNumber'}
-                    onChange={(e) => handleChangeInvoiceNumber(e)}
-                    />
-                </NumberInput>
-                  <IconButton
-                    pb={'2vh'}
-                    color={'web.text2'}
-                    aria-label={"Search database"}
-                    bgColor={'web.bg'}
-                    icon={<SearchIcon />}
-                    _hover={{
-                      color: 'logo.orange',
-                    }}
-                    _active={{ color: 'logo.orange'}}
-                  />
+              <Input
+                mb={'0.5vh'}
+                w={'80%'}
+                minH={'4.5vh'}
+                variant="unstyled"
+                placeholder={'Customer name'}
+                textColor={'web.text2'}
+                _placeholder={{ fontFamily: 'body', fontWeight: 'thin' }}
+                size={"sm"}
+                borderBottomWidth={"2px"}
+                borderBottomColor={'web.text2'}
+                value={inputValues.inputName}
+                onChange={(e)=> handleChangeCustomerName(e)}
+              />
+              <IconButton
+                color={'web.text2'}
+                borderRadius={2}
+                aria-label="Search database"
+                bgColor={'web.bg'}
+                ml={1}
+                icon={<SearchIcon />}
+                _hover={{
+                  color: 'orange',
+                }}
+                _active={{ color: 'gray.800'}}
+              />
+            </Box>
+          </Box>
+          {/*Selects */}
+          <Box 
+            w={'28vw'} 
+            display={'flex'} 
+            justifyContent={validateSeller() === true ? 'space-between' : 'flex-end'}>  
+            <Select
+              onChange={(e)=>handleSellerSelect(e)}
+              display={validateSeller() === true ? 'unset' : 'none' }
+              w={'15vw'}
+              variant='outline' 
+              h={'4.4vh'}
+              fontSize={'xs'}            
+              bg={'web.sideBar'}
+              color={'web.text2'}
+              borderColor={'web.border'}
+              cursor={'pointer'}
+              value={inputValues.selectSeller}
+              _focus={{
+                borderColor: 'logo.orange',
+                boxShadow: '0 0.5px 0.5px rgba(229, 103, 23, 0.075)inset, 0 0 5px rgba(255,144,0,0.6)'
+              }}>
+              <option value='' className="options">All seller</option>
+              {
+                
+                validateSeller() === true ? (
+                  matchedSellers?.map((e, i) => {
+                      return(
+                        <option key={i} className={'options'} value={e.sellerID}>{e.name}</option>
+                  )})
                       
-                  {
-                    errores.length >= 1 && (
-                      <Box position={'absolute'} display={'flex'}>
-                        <Text color={'web.error'} fontSize={'12px'} display={'flex'}>
-                          {errores}
-                        </Text>
-                      </Box>
-                    )}
-              </FormControl>
-            </Box>
-            <Box
-                display={'flex'}
-                alignItems={'center'} 
-                w={'15vw'}
-                h={'10vh'}
-                >
-                <Input
-                  mb={'0.5vh'}
-                  w={'80%'}
-                  minH={'4.5vh'}
-                  variant="unstyled"
-                  placeholder={'Customer name'}
-                  textColor={'web.text'}
-                  _placeholder={{ fontFamily: 'body', fontWeight: 'thin' }}
-                  size={"sm"}
-                  borderBottomWidth={"2px"}
-                  borderBottomColor={'web.text2'}
-                  value={inputValues.inputName}
-                  onChange={(e)=> handleChangeCustomerName(e)}
-                  
-                />
-                <IconButton
-                  color={'web.text2'}
-                  borderRadius={2}
-                  aria-label="Search database"
-                  bgColor={'web.bg'}
-                  ml={1}
-                  icon={<SearchIcon />}
-                  _hover={{
-                    color: 'orange',
-                  }}
-                  _active={{ color: 'gray.800'}}
-                />
-            </Box>
-            </Box>
-             {/*Selects */}
-          <HStack w={'30vw'}> 
-            <Select
-          onChange={(e)=>handleTimeSelect(e)} 
-          w={'11vw'}
-          variant='outline' 
-          h={'4.4vh'}
-          fontSize={'xs'}            
-          bg={'web.sideBar'}
-          color={'web.text2'}
-          borderColor={'web.border'}
-          cursor={'pointer'}
-          _focus={{
-            borderColor: 'logo.orange',
-            boxShadow: '0 0.5px 0.5px rgba(229, 103, 23, 0.075)inset, 0 0 5px rgba(255,144,0,0.6)'
-          }}>
-          <option value='All' className="options">All time</option>
-          <option value='Lastweek' className="options">Last week</option>
-          <option value='Lastmonth' className="options">Last month</option>
-          {
-          }
+                  ): ( null)
+              }
             </Select>
             <Select
-          onChange={(e)=>handleSellerSelect(e)}
-          display={validateSeller() === true ? 'unset' : 'none'}  
-          w={'15vw'}
-          variant='outline' 
-          h={'4.4vh'}
-          fontSize={'xs'}            
-          bg={'web.sideBar'}
-          color={'web.text2'}
-          borderColor={'web.border'}
-          cursor={'pointer'}
-          value={inputValues.selectSeller}
-          _focus={{
-            borderColor: 'logo.orange',
-            boxShadow: '0 0.5px 0.5px rgba(229, 103, 23, 0.075)inset, 0 0 5px rgba(255,144,0,0.6)'
-          }}>
-          <option value='' className="options">Select seller</option>
-          {
-            validateSeller() === true ? (
-              matchedSellers?.map((e, i) => {
-                  return(
-                    <option key={i} className={'options'} value={e.sellerID}>{e.name}</option>
-              )})
-                  
-              ): ( null)
-          }
+              onChange={(e)=>handleTimeSelect(e)} 
+              w={'11vw'}
+              variant='outline' 
+              h={'4.4vh'}
+              fontSize={'xs'}            
+              bg={'web.sideBar'}
+              color={'web.text2'}
+              borderColor={'web.border'}
+              cursor={'pointer'}
+              _focus={{
+                borderColor: 'logo.orange',
+                boxShadow: '0 0.5px 0.5px rgba(229, 103, 23, 0.075)inset, 0 0 5px rgba(255,144,0,0.6)'
+              }}>
+              <option value='All' className="options">All time</option>
+              <option value='Lastweek' className="options">Last week</option>
+              <option value='Lastmonth' className="options">Last month</option>
             </Select>
-            </HStack>
+            </Box>
         <Divider orientation={'vertical'} h={'5vh'}/>
-        <Tooltip label={'Clear all filters'} fontWeight={'hairline'}>      
+        <Tooltip placement={'bottom-start'} label={'Clear all filters'} fontWeight={'hairline'}>      
         <IconButton
             icon={ <AiOutlineClear/>}
             variant={'unstyled'} 

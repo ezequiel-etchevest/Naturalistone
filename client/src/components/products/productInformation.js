@@ -46,7 +46,7 @@ const ProductInformation = ({product}) => {
               justifyContent={'space-around'}
               alignContent={'center'}>
                 <Text fontSize={'1.6vh'} color={'web.text2'}> Type </Text>
-                <Text fontSize={'2.2vh'} fontWeight={'bold'}>{product.Material} {product.Type}</Text>
+                <Text fontSize={'2.2vh'} fontWeight={'bold'}>{product.Material}</Text>
             </Box>
             <Box 
               h={'8vh'}
@@ -56,7 +56,7 @@ const ProductInformation = ({product}) => {
               flexDir={'column'}
               justifyContent={'space-around'}>
                 <Text fontSize={'1.6vh'}color={'web.text2'}>Price</Text>
-                <Text fontSize={'2.05vh'}fontWeight={'bold'} fon>$ {product.Price.toLocaleString('en-US')}</Text>
+                <Text fontSize={'2.05vh'}fontWeight={'bold'} >$ {product.Price === null ? '-' : product.Price.toLocaleString('en-US')}</Text>
             </Box>
           </Box>
           <Box
@@ -67,7 +67,7 @@ const ProductInformation = ({product}) => {
             mt={'1.5vh'}>
               <Text fontSize={'1.6vh'} color={'web.text2'}> Dimentions</Text>
               <HStack >
-                <Text fontSize={'2.05vh'} fontWeight={'bold'}>{product.Size}{' - '}{product.Thickness}{' - '}{product.Finish ? product.Finish : '-'}</Text>
+                <Text fontSize={'2.05vh'} fontWeight={'bold'}>{product.Size ? product.Size : 'N/A' }{' - '}{product.Thickness ? product.Thickness : 'N/A' }{' - '}{product.Finish ? product.Finish : 'N/A'}</Text>
               </HStack>
           </Box>
         </Box>

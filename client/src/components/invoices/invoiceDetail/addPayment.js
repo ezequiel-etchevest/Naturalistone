@@ -40,14 +40,11 @@ const AddPayment = ({pendingAmount}) => {
     const [input, setInput] = useState({
       Method : '',
       Amount: ''})
-
     const [error, setError] = useState('')
-
     const handleCancel = () =>{
       setDisabled(true)
       onClose()
     }
-    
     const handleSelect = (e) =>{
          setInput({
           ...input,
@@ -101,99 +98,96 @@ const AddPayment = ({pendingAmount}) => {
       }
     }
   }
-    return(
-        <>
-          <Tooltip label={'Add payment'} fontWeight={'hairline'}>
-          <IconButton
-            display={'flex'}
-            alignItems={'center'}
-            variant={'unstyled'} 
+  return(
+    <>
+      <Tooltip label={'Add payment'} fontWeight={'hairline'}>
+        <IconButton
+        display={'flex'}
+        alignItems={'center'}
+        variant={'unstyled'} 
+        color={'web.text2'}
+        onClick={onOpen}
+        _hover={{
+          color: 'logo.orange'
+        }}
+        icon={<SiAddthis/>} 
+        size={'md'}
+        />
+      </Tooltip>
+      <Modal 
+        isOpen={isOpen} 
+        onClose={onClose}
+        >
+        <ModalOverlay/>
+        <ModalContent 
+          bg={'web.sideBar'}
+          border={'1px solid'}
+          borderColor={'web.border'}
+          >
+          <ModalHeader
+          color={'web.text'}>
+            Add payment
+          </ModalHeader>
+          <ModalCloseButton
             color={'web.text2'}
-            onClick={onOpen}
             _hover={{
-              color: 'logo.orange'
-            }}
-            icon={<SiAddthis/>} 
-            size={'md'}
-            />
-            </Tooltip>
-          <Modal 
-            isOpen={isOpen} 
-            onClose={onClose}
-            >
-            <ModalOverlay/>
-            <ModalContent 
-              bg={'web.sideBar'}
-              border={'1px solid'}
-              borderColor={'web.border'}
-              >
-              <ModalHeader
-              color={'web.text'}>
-                Add payment
-              </ModalHeader>
-              <ModalCloseButton
-                color={'web.text2'}
-                _hover={{
-                  color: 'web.text'
-                }} />
-              <ModalBody>
-              <FormControl  isRequired>
-                <FormLabel color={'web.text'}>
-                  Select payment method
-                </FormLabel>
-                <Select
-                  _focus={{
-                    borderColor: 'logo.orange',
-                    boxShadow: '0 0.5px 0.5px rgba(229, 103, 23, 0.075)inset, 0 0 5px rgba(255,144,0,0.6)'
-                  }}
-                  bg={'web.sideBar'}
-                  borderColor={'web.border'} 
-                  color={'web.text2'} 
-                  onChange={(e)=>handleSelect(e)}>
-                  <option value='' className="options" >Select Option</option>
-                  <option value='Check' className="options" >Check</option>
-                  <option value='Card' className="options" >Card</option>
-                  <option value='Cash' className="options" >Cash</option>
-                  <option value='Wire transfer' className="options" >Wire Transfer</option>
-                </Select>
-                </FormControl>
-                <FormControl mt={'2vh'}  isRequired>
-                  <FormLabel color={'web.text'}>Amount</FormLabel>
-                  <NumberInput
-                    clampValueOnBlur={true}
-                    borderColor={'web.border'} 
-                    color={'web.text2'}
-                    onChange={(e)=>handleInput(e)} 
-                    step={1} 
-                    defaultValue={0} 
-                    min={0} 
-                    precision={2}>
-                    <NumberInputField                    
-                    _focus={{
-                      borderColor: 'logo.orange',
-                      boxShadow: '0 0.5px 0.5px rgba(229, 103, 23, 0.075)inset, 0 0 5px rgba(255,144,0,0.6)'
-                            }} />
-                    <NumberInputStepper>
-                      <NumberIncrementStepper />
-                      <NumberDecrementStepper />
-                    </NumberInputStepper>
-                  </NumberInput>
-                </FormControl>
-                { error ? (
-                  <FormErrorMessage>{error}</FormErrorMessage>
-                  ):(
-                    null
-                  )}
-              </ModalBody>
-              <ModalFooter>
-                <Button
-                  colorScheme={'orange'} 
-                  mr={3} 
-                  onClick={()=>handleSubmit()}>
-                  Submit
-                </Button>
-                <Button variant='ghost' onClick={()=> handleCancel()}>Cancel</Button>
-              </ModalFooter>
+              color: 'web.text'
+            }} />
+          <ModalBody>
+          <FormControl  isRequired>
+            <FormLabel color={'web.text'}>
+              Select payment method
+            </FormLabel>
+          <Select
+            _focus={{
+              borderColor: 'logo.orange',
+              boxShadow: '0 0.5px 0.5px rgba(229, 103, 23, 0.075)inset, 0 0 5px rgba(255,144,0,0.6)'
+              }}
+            bg={'web.sideBar'}
+            borderColor={'web.border'} 
+            color={'web.text2'} 
+            onChange={(e)=>handleSelect(e)}>
+              <option value='' className="options" >Select Option</option>
+              <option value='Check' className="options" >Check</option>
+              <option value='Card' className="options" >Card</option>
+              <option value='Cash' className="options" >Cash</option>
+              <option value='Wire transfer' className="options" >Wire Transfer</option>
+          </Select>
+          </FormControl>
+          <FormControl mt={'2vh'}  isRequired>
+            <FormLabel color={'web.text'}>Amount</FormLabel>
+            <NumberInput
+            clampValueOnBlur={true}
+            borderColor={'web.border'} 
+            color={'web.text2'}
+            onChange={(e)=>handleInput(e)} 
+            
+            min={0} 
+            precision={2}>
+              <NumberInputField
+              placeholder={'0.00'}                    
+              _focus={{
+              borderColor: 'logo.orange',
+              boxShadow: '0 0.5px 0.5px rgba(229, 103, 23, 0.075)inset, 0 0 5px rgba(255,144,0,0.6)'
+              }} />
+
+              </NumberInput>
+            </FormControl>
+            { error ? (
+              <FormErrorMessage>{error}</FormErrorMessage>
+              ):(
+                null
+              )}
+          </ModalBody>
+          <ModalFooter>
+            <Button
+              colorScheme={'orange'} 
+              mr={3} 
+              onClick={()=>handleSubmit()}>
+              Submit
+            </Button>
+            <Button variant='ghost' onClick={()=> handleCancel()}>Cancel</Button>
+          </ModalFooter>
             </ModalContent>
           </Modal>
         </>

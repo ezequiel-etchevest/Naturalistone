@@ -1,10 +1,10 @@
 import LogInForm from "../components/LogInForm";
 
-const LogIn = () => {
+const LogIn = ({setUser}) => {
 
     return(
         <>
-        <LogInForm/>
+        <LogInForm setUSer={setUser}/>
         </>
     )
     

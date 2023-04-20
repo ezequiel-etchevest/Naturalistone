@@ -27,23 +27,17 @@ deliveryRouter.get('/id/:id', async function(req, res){
  
   const { id } = req.params
   
-  query_ = `SELECT Deliveries_Products.*, Products.ProdID, Products.ProdNameID, 
-  ProdNames.Naturali_ProdName as ProdName,
-  Deliveries.SaleID, 
-  Deliveries.Delivery_Date,        
+  query_=`SELECT Deliveries_Products.*, Products.ProdID, Products.ProdNameID, ProdNames.Naturali_ProdName as ProdName, ProdNames.Material, Deliveries.SaleID, 
+  Deliveries.Delivery_Date,
   Dimension.Type,
   Dimension.Size,
   Dimension.Finish,
-  Dimension.Thickness,
-  Dimension.Material,  
-  ProdSold.* FROM NaturaliStone.Deliveries_Products
+  Dimension.Thickness FROM NaturaliStone.Deliveries_Products 
   INNER JOIN Products ON Products.ProdID = Deliveries_Products.ProdID
   INNER JOIN Dimension ON Dimension.DimensionID = Products.DimensionID
-  INNER JOIN ProdNames ON ProdNames.ProdNameID = Products.ProdNameID
   INNER JOIN Deliveries ON Deliveries.DeliveryNumber = Deliveries_Products.DeliveryNumber
-  INNER JOIN ProdSold ON ProdSold.ProdID = Products.ProdID
-  WHERE Deliveries_Products.DeliveryNumber = ${id}`;
-  
+  INNER JOIN ProdNames ON ProdNames.ProdNameID = Products.ProdNameID WHERE Deliveries_Products.DeliveryNumber = ${id}`
+
   try{
        mysqlConnection.query(query_, function(error, results, fields){
           if(!results.length) {
@@ -74,7 +68,7 @@ deliveryRouter.post('/:id', async function(req, res){
       if (error) throw error;  
       if (payments.length === 0) {
         console.log('Query0 Error at Post /delivery/:id! payments related')
-        res.status(200).json(error);
+        res.status(200).json({msg: `Not money enough`, error: error, val: false});
       } else {
         if (paymentsValidation(quantities, payments)) {
           try {
@@ -86,6 +80,7 @@ deliveryRouter.post('/:id', async function(req, res){
                 res.status(200).json(error);
               } else {
                 quantities.forEach(element => {
+
                   query_2 = `INSERT INTO Deliveries_Products (DeliveryNumber, ProdID, Quantity) VALUES (${deliveryID}, ${element.prodID}, ${element.quantity});`
                   try {
                     mysqlConnection.query(query_2, function(error2, results2, fields){

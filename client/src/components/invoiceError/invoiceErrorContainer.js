@@ -1,9 +1,9 @@
 import {Box, Spinner, Center} from '@chakra-ui/react';
-import InvoiceErrorsTable from './invoiceErrorsTable';
-import InvoiceErrorsFilters from './invoiceErrorsFilters';
+import InvoiceErrorList from './invoiceErrorList';
+import InvoiceErrorsFilters from './invoiceErrorFilters'
 import { useState, useEffect } from "react";
 
-const InvoiceErrorsContainer = ({invoice_errors, user, sellers, invoice_errors_by_filter}) => {
+const InvoiceErrorContainer = ({invoice_errors, user, sellers, invoice_errors_by_filter}) => {
    const [filteredInvoicesErrors, setFilteredInvoicesErrors] = useState([])
    const [ spinner, setSpinner ] = useState(false)
    const handleSpinner = () => {
@@ -16,18 +16,16 @@ const InvoiceErrorsContainer = ({invoice_errors, user, sellers, invoice_errors_b
     return(
       <Box
         userSelect={'none'}
-        ml={'20vw'}
-        bg={'web.bg'}> 
+        ml={'16vw'}
+        bg={'web.bg'}
+        > 
         <InvoiceErrorsFilters 
           user={user} 
           sellers={sellers} 
           invoice_errors_by_filter={invoice_errors_by_filter} 
           invoice_errors={invoice_errors} 
           setFilteredInvoicesErrors={setFilteredInvoicesErrors}/>
-          {
-
-          }
-        <InvoiceErrorsTable 
+        <InvoiceErrorList 
           invoice_errors={invoice_errors} 
           user={user} 
           invoice_errors_by_filter={invoice_errors_by_filter} 
@@ -36,10 +34,10 @@ const InvoiceErrorsContainer = ({invoice_errors, user, sellers, invoice_errors_b
     )
   }else{
     return(
-      <Center ml={'20vw'} w={'80vw'} bg={'web.bg'} h={'92vh'}>
+      <Center ml={'16vw'} w={'84vw'} bg={'web.bg'} h={'92vh'}>
         <Spinner thickness={'4px'} size={'xl'} color={'logo.orange'}/>
       </Center>
     )
   }
 }
-export default InvoiceErrorsContainer;
+export default InvoiceErrorContainer;

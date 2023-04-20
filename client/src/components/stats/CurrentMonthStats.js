@@ -6,9 +6,11 @@ import {
   StatNumber,
   HStack
 } from '@chakra-ui/react';
+import { useEffect } from 'react';
 import { BiDollar } from 'react-icons/bi';
 import { FaSortAmountUpAlt } from 'react-icons/fa';
 import { TbReceiptTax } from 'react-icons/tb';
+import { useSelector } from 'react-redux';
 
 
 function StatsCard(props) {
@@ -20,7 +22,6 @@ function StatsCard(props) {
       w={'10vw'}
       px={{ base: 2, md: 4 }}
       py={'5'}
-      shadow={'lg'}
       border={'1px solid'}
       borderColor={'web.border'}
       rounded={'md'}
@@ -50,19 +51,25 @@ function StatsCard(props) {
   );
 }
 
-export default function Stats({currentMonth}) {
-  
+export default function Stats() {
+
+  const currentMonth = useSelector(state => state.current_month)
+  const paymentStats = useSelector(state => state.payment_stats)
+  console.log(paymentStats)
+  useEffect(()=>{},[currentMonth, paymentStats])
+
+  let InvoicesNumber = `${currentMonth.InvoicesNumber} / ${paymentStats.paidQuotes}`
   return (
-    <Box h={'92vh'}  p={'4vw'} bg={'web.bg'} >
-      <HStack mt={'5vh'} columns={{ base: 1, md: 3 }} spacing={{ base: 5, lg: 8 }}>
+    <Box h={'92vh'} px={'4vw'} bg={'web.bg'} >
+      <HStack columns={{ base: 1, md: 3 }} spacing={{ base: 5, lg: 8 }}>
         <StatsCard
           title={'Current Month Sales'}
           stat={currentMonth.TotalValue}
           icon={<BiDollar size={'3em'} />}
         />
         <StatsCard
-          title={'Current Month Quotes'}
-          stat={currentMonth.InvoicesNumber}
+          title={'Current Month Quotes / Paid'}
+          stat={InvoicesNumber}
           icon={<FaSortAmountUpAlt size={'3em'} />}
         />
         <StatsCard

@@ -8,7 +8,6 @@ const InvoiceDetailList = ({invoice, payments}) => {
           userSelect={'none'}
           className={'invoice-details'}
           mt={'3vh'}
-          ml={'2vw'}
           mr={'1vw'}
           pl={'2vw'}
           pt={'1.5vw'}
@@ -31,7 +30,7 @@ const InvoiceDetailList = ({invoice, payments}) => {
           >
             <Text 
             color={'logo.orange'} 
-            fontSize={'xl'}>
+            fontSize={'1.8vw'}>
               {invoice[0].Naturali_Invoice}
              </Text>
             <Text 
@@ -85,14 +84,14 @@ const InvoiceDetailList = ({invoice, payments}) => {
                 <Text 
                 fontSize={'2.05vh'}
                 fontWeight={'bold'}>
-                  ${invoice[0].Value.toLocaleString('en-US')}
+                  $ {invoice[0].Value.toLocaleString('en-US')}
                   </Text>
               </Box>
               <Box>
                 <Text 
                   color={'web.text2'} 
                   fontSize={'1.6vh'}>
-                  Payment percentaje
+                  Payment percentage
                 </Text>
                 <Text 
                   fontSize={'2.05vh'} 
@@ -156,7 +155,7 @@ const InvoiceDetailList = ({invoice, payments}) => {
                 <Text 
                   fontSize={'2.05vh'} 
                   fontWeight={'bold'}>
-                  ${payments.paymentsMath  ? (
+                  $ {payments.paymentsMath  ? (
                    Number(payments.paymentsMath.PendingAmount).toLocaleString('en-US')
                   ):(
                     invoice[0].Value.toLocaleString('en-US')

@@ -3,16 +3,9 @@ import ReactDOM from 'react-dom/client';
 import App from './App';
 import { Provider } from 'react-redux';
 import { store } from './redux/store'
-import axios from 'axios'
+import axios from 'axios';
 
-import { Amplify } from 'aws-amplify';
-import awsExports from '../../src/aws-exports';
-Amplify.configure(awsExports);
-
-
-//axios.defaults.baseURL = process.env.REACT_APP_API;
-axios.defaults.baseURL = 'https://main.d2z2dpapj7iyfx.amplifyapp.com/'
-//axios.defaults.baseURL = "http://localhost:5000";
+axios.defaults.baseURL = process.env.REACT_APP_REST
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

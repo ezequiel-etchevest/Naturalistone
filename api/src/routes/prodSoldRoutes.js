@@ -41,9 +41,10 @@ prodSoldRouter.get('/historyprice/:id', async function(req, res){
     
     const {id} = req.params
 
-    query_ =   `SELECT ProdSold.SalePrice, Sales.InvoiceDate FROM ProdSold
+    query_ =   `SELECT ProdSold.SalePrice, Sales.InvoiceDate, Sales.Naturali_Invoice, Sales.SellerID, Seller.SellerID, Seller.  FirstName, Seller.LastName FROM ProdSold
                 INNER JOIN Sales ON ProdSold.SaleID = Sales.Naturali_Invoice
-                WHERE ProdID = ${id} `;
+                INNER JOIN Seller ON Sales.SellerID = Seller.SellerID
+                WHERE ProdID = ${id} ORDER BY InvoiceDate DESC`;
                
     try{
         mysqlConnection.query(query_, function(error, results, fields){
@@ -54,8 +55,7 @@ prodSoldRouter.get('/historyprice/:id', async function(req, res){
             } else {
 
                 console.log('data ok')
-                let filtered = historyPrice(results)
-                res.status(200).json(filtered);
+                res.status(200).json(results);
             }
         });
     } catch(error){

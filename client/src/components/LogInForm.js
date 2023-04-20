@@ -1,4 +1,4 @@
-import { Box, Input, FormControl, FormLabel, Center, Button, InputGroup, InputRightElement, Text, IconButton } from "@chakra-ui/react";
+import { Box, Input, FormControl, FormLabel, Center, Button, InputGroup, InputRightElement, Text, IconButton, useToast } from "@chakra-ui/react";
 import { Formik } from "formik";
 import { useState,  useEffect} from "react";
 import { useNavigate } from 'react-router-dom';
@@ -13,17 +13,56 @@ const LogInForm = () => {
   const handleShowClick = () => setShow(!show);
   const navigate = useNavigate()
   const dispatch = useDispatch()
+  const toast = useToast()
   let employees = useSelector((state)=>state?.employees)
 
-  const valEmailEmployee = (inputEmail) => {
-      const user = employees.find( e => e.Username === inputEmail)
-      if(user) return true
+  
+  const valEmailEmployee = async (inputEmail) => {
+      const user = await employees?.find( e => e.Username.toLowerCase() === inputEmail.toLowerCase())
+      if(user) return user
       else return false
     }
-  const valPassword = (inputPass, inputEmail) => {
-    const user = employees.find( e => e.Username === inputEmail)
-    if(user.Password === inputPass) return true
-    else return false
+
+  // const valPassword = (inputPass, inputEmail) => {
+  //   const user = employees?.find( e => e.Username.toLowerCase() === inputEmail.toLowerCase())
+  //   if(user.Password === inputPass) return true
+  //   else return false
+  // }
+
+  const validateUser = (inputPass, inputEmail) => {
+    if(inputEmail){
+      const user = employees?.find(e => e.Username.toLowerCase() === inputEmail.toLowerCase())
+      if(user && inputPass){
+        if(user.Password === inputPass) return true 
+        else return false
+      } else return false
+    } else return false
+  }
+
+  const handleSubmit = async (values) => {
+    const User = employees?.find(e => e.Username.toLowerCase() === values.email.toLowerCase())
+    // if(values.email.toLocaleLowerCase() === User.Username.toLocaleLowerCase() && values.password === User.Password){
+    //   await dispatch(getEmployeeById(User.SellerID))
+    //   navigate('/home')
+    // }else if(valPassword(values.password, values.email) === false ){
+    //  alert('invalid match')
+    // }
+  //  console.log('valEmailEmployee',valEmailEmployee(values.email))
+  //   console.log('valPassword',valPassword(values.password))
+
+    if(validateUser(values.password, values.email)){
+      await dispatch(getEmployeeById(User.SellerID))
+      navigate('/home')
+    } else {
+      toast({
+        title: 'Login',
+        description: "Incorrect username or password.",
+        status: 'warning',
+        variant:'subtle',
+        duration: 4000,
+        isClosable: true,
+      })
+    }
   }
 
     useEffect(() =>{
@@ -64,17 +103,7 @@ const LogInForm = () => {
           }
           return errores
         }}
-        onSubmit={(values) =>{
-         
-          const User = employees.find(e => e.Username === values.email)
-
-          if(values.email === User.Username && values.password === User.Password){
-            dispatch(getEmployeeById(User.SellerID))
-            navigate('/home')
-          }else if(valPassword(values.password, values.email) === false ){
-           alert('invalid match')
-          }
-        }}>
+        onSubmit={handleSubmit}>
           {({
             handleBlur,
             handleChange,

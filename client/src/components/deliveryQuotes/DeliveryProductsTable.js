@@ -17,8 +17,8 @@ import {
   import { useState } from 'react'
 
 
-const ModelTr = ({p, setQuantities, quantities, errors, setErrors, setDisabledConfirm}) => {
-  
+const ModelTr = ({p, setQuantities, quantities, errors, setErrors}) => {
+
   const toast = useToast()
 
   const [input, setInput] = useState({
@@ -34,15 +34,20 @@ const ModelTr = ({p, setQuantities, quantities, errors, setErrors, setDisabledCo
       delivered: p.Delivered
     })
 
-
+  
   const handleInput = (e) => {
 
-    setInput({
-      ...input,
-      quantity: parseFloat(e),
-    })
-
-
+    if(e === ''|| e === null || e === NaN){
+        setInput({
+          ...input,
+          quantity: 0,
+        })
+    } else{
+      setInput({
+        ...input,
+        quantity: parseFloat(e),
+      })
+    }
   
   if (errors.length) {
     errors.forEach(err => {
@@ -50,7 +55,9 @@ const ModelTr = ({p, setQuantities, quantities, errors, setErrors, setDisabledCo
         if(e >= 0 && e <= p.InStock_Reserved){
           setErrors(errors.filter(error=> error !== input.prodID))
         }
-      }})}  
+      }})
+    }  
+
 
     if( e > p.InStock_Reserved ){
       setErrors([...errors, p.ProdID])
@@ -62,8 +69,17 @@ const ModelTr = ({p, setQuantities, quantities, errors, setErrors, setDisabledCo
         isClosable: true,
       })
     }
+    if( e < 0 ){
+      setErrors([...errors, p.ProdID])
+      toast({
+        title: 'Invalid amount',
+        description: `Quantity in ${p.ProductName} cant be negative`,
+        status: 'error',
+        duration: 2000,
+        isClosable: true,
+      })
+    }
 }
-
 
   const handleOnBlur = () => {
     let updated = false;
@@ -85,6 +101,7 @@ const ModelTr = ({p, setQuantities, quantities, errors, setErrors, setDisabledCo
   }}
   }
 
+ console.log('quantities products table', quantities)
     return(
       <Tr 
         cursor={'pointer'}
@@ -134,8 +151,9 @@ const ModelTr = ({p, setQuantities, quantities, errors, setErrors, setDisabledCo
     )
 }
 
-const DeliveryProductList = ({invoice_products, setQuantities, quantities, errors, setErrors, setDisabledConfirm}) => {
+const DeliveryProductList = ({invoice_products, setQuantities, quantities, errors, setErrors}) => {
 
+  // console.log('invoices_products tabla', invoice_products)
     return(
         <Box
         display={'flex'}
@@ -178,7 +196,7 @@ const DeliveryProductList = ({invoice_products, setQuantities, quantities, error
                   <Tbody >
                     { invoice_products.map((p, i) =>{
                         return(
-                          <ModelTr p={p} key={i} id={i} setQuantities={setQuantities} quantities={quantities} errors={errors} setErrors={setErrors} setDisabledConfirm={setDisabledConfirm}/>
+                          <ModelTr p={p} key={i} id={i} setQuantities={setQuantities} quantities={quantities} errors={errors} setErrors={setErrors} invoice_products={invoice_products}/>
                         )
                       })
                     }
