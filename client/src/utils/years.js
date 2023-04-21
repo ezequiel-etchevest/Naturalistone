@@ -6,7 +6,5 @@ export const years = () => {
         yearArr.push(i)
     }
 
-    console.log('soy arr year', yearArr)
-
     return yearArr
 }

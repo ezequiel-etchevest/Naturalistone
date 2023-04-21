@@ -21,8 +21,7 @@ const StatsFilters = ({user}) => {
     
   const dispatch = useDispatch()
   const sellers = useSelector(state => state.sellers)
-  const month = useSelector(state => state.month)
-  // const [selectedMonth, setSelectedMonth] = useState('')
+  const [selectedMonth, setSelectedMonth] = useState('')
   const [selectedSellerId, setSelectedSellerId] = useState('')
   const [selectedYear, setSelectedYear] = useState('')
 
@@ -39,7 +38,7 @@ const StatsFilters = ({user}) => {
     }
 
   const handleSellerByMonth = (e) => {
-    // setSelectedMonth(e.target.value)
+    setSelectedMonth(e.target.value)
     const monthValue = e.target.value
     const monthName = months[monthValue -1]
     dispatch(getMonth(monthName))
@@ -49,8 +48,8 @@ const StatsFilters = ({user}) => {
 
   const handleSelectYear = (e) => {
     setSelectedYear(e.target.value)
-    dispatch(getMonthAndYear(selectedSellerId, month, e.target.value))
-    dispatch(getPaymentStatsByMonth(selectedSellerId, month, e.target.value))
+    dispatch(getMonthAndYear(selectedSellerId, selectedMonth, e.target.value))
+    dispatch(getPaymentStatsByMonth(selectedSellerId, selectedMonth, e.target.value))
   }
 
   useEffect(()=>{
@@ -134,7 +133,7 @@ const StatsFilters = ({user}) => {
               {  
                   months?.map((e, i) => {
                       return(
-                        <option key={i} className={'options'} name={e} value={i+1}>{e}</option>
+                        <option key={i} className={'options'} value={i+1}>{e}</option>
                         )
                      })
               }

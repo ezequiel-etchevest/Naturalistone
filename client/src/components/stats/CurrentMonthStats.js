@@ -57,7 +57,6 @@ export default function Stats() {
   const paymentStats = useSelector(state => state.payment_stats)
   const month = useSelector(state => state.month)
   
-  console.log(paymentStats)
   useEffect(()=>{},[currentMonth, paymentStats])
 
   let InvoicesNumber = `${currentMonth.InvoicesNumber} / ${paymentStats.paidQuotes}`
@@ -65,7 +64,7 @@ export default function Stats() {
     <Box h={'92vh'} px={'4vw'} bg={'web.bg'} >
       <HStack columns={{ base: 1, md: 3 }} spacing={{ base: 5, lg: 8 }}>
         <StatsCard
-          title={month}
+          title={`${month ? month : 'Current Month'} `}
           stat={currentMonth.TotalValue}
           icon={<BiDollar size={'3em'} />}
         />

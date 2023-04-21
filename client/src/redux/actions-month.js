@@ -1,8 +1,6 @@
 import axios from 'axios';
 
 export const GET_MONTH = 'GET_MONTH';
-export const GET_PAYMENT_STATS = 'GET_PAYMENT_STATS';
-export const CLEAN_STATS = 'CLEAN_STATS';
 
 export function getMonth(data){
     return async function(dispatch){
@@ -17,30 +15,3 @@ export function getMonth(data){
         }
 }
 }
-
-// export function getPaymentStatsByMonth(id, month, year){
-//     return async function(dispatch){
-//         try{ 
-//             let {data} = await axios.get(`/statsByMonth/payments/${id}?month=${month}&year=${year ? year : currentYear}`)
-//             dispatch(
-//             {
-//                 type: GET_PAYMENT_STATS,
-//                 payload: data
-//             })
-//         }catch(error){
-//             console.log({error})
-//         }
-//     }}
-
-// export function cleanStats(){
-//     return async function(dispatch){
-//         try{
-//             dispatch({
-//                 type: CLEAN_STATS,
-//                 payload: {}
-//             })
-//         }catch(error){
-
-//         }
-//     }
-// }
