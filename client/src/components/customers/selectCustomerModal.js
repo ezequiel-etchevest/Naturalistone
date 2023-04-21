@@ -37,7 +37,7 @@ const SelectCustomerModal = ({userId, isOpen, onClose, customers}) => {
       selectSeller: '',
       timeFilter: 'All'
     })
-
+console.log(customers)
   return(
 <>
 {/* Start Create delivery modal */}

@@ -51,7 +51,7 @@ const Quotes = ({focus, setFocus}) => {
 
     useEffect(() => {
       if(user.length && !customers.length){
-        dispatch(getCustomers())
+        dispatch(getCustomers("", ""))
       }}, [dispatch, user])
 
       if(userLocal){
