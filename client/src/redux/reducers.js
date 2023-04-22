@@ -31,7 +31,11 @@ import {
     PATCH_PRODUCT_NOTES,
     PATCH_DISCONTINUED
      } from './actions-products';
-import { GET_CURRENT_MONTH, GET_PAYMENT_STATS, CLEAN_STATS } from './actions-stats';
+import { 
+  GET_CURRENT_MONTH,
+  GET_PAYMENT_STATS,
+  CLEAN_STATS 
+} from './actions-statsByMonth';
 import { 
     GET_ORDERS,
     GET_ORDERS_BY_ID,
@@ -59,6 +63,9 @@ import {
 import {
   GET_MONTH
 } from './actions-month'
+import {
+  GET_SELLER_ID
+} from './actions-sellerId'
 
 
 const intialState = {
@@ -90,7 +97,8 @@ const intialState = {
     projects_by_customer_id: [],
     customers: [],
     customers_by_id: [],
-    month: ''
+    month: '',
+    sellerId: ''
 }
 
 function rootReducer (state = intialState, action) {
@@ -344,6 +352,11 @@ function rootReducer (state = intialState, action) {
           return {
             ...state,
             month: action.payload
+          }
+        case GET_SELLER_ID:
+          return {
+            ...state,
+            sellerId: action.payload
           }
         default:
             return {
