@@ -4,6 +4,7 @@ const mysqlConnection = require('../db')
 const { getLimitDateMonth,getCurrentMonth} = require('../Controllers/LastMonth')
 const invoicesPayments = require('../Controllers/invoicesPayments')
 const paymentStats = require('../Controllers/paymentStats')
+const uniqueYears = require('../Controllers/uniqueYear')
 
 statsRouterByMonth.get('/sellers/:id', async function(req, res){
     
@@ -23,10 +24,12 @@ statsRouterByMonth.get('/sellers/:id', async function(req, res){
       query_ = `SELECT ROUND(SUM(Value), 2) AS TotalValue FROM Sales WHERE InvoiceDate BETWEEN "${startDate}" AND "${endDate}" AND Status != "Canceled"`;
       query_2 = `SELECT COUNT(*) AS InvoicesNumber FROM Sales WHERE InvoiceDate BETWEEN "${startDate}" AND "${endDate}" AND Status != "Canceled"`;
       query_3 = `SELECT ROUND(AVG(Value), 2) AS AvgValue FROM Sales WHERE InvoiceDate BETWEEN "${startDate}" AND "${endDate}" AND Status != "Canceled"`;
+      query_4 = `SELECT InvoiceDate AS dates from Sales`;
     } else {
       query_ = `SELECT ROUND(SUM(Value), 2) AS TotalValue FROM Sales WHERE SellerID = ${id} AND InvoiceDate BETWEEN "${startDate}" AND "${endDate}" AND Status != "Canceled"`;
       query_2 = `SELECT COUNT(*) AS InvoicesNumber FROM Sales WHERE SellerID = ${id} AND InvoiceDate BETWEEN "${startDate}" AND "${endDate}" AND Status != "Canceled"`;
       query_3 = `SELECT ROUND(AVG(Value), 2) AS AvgValue FROM Sales WHERE SellerID = ${id} AND InvoiceDate BETWEEN "${startDate}" AND "${endDate}" AND Status != "Canceled"`;
+      query_4 = `SELECT InvoiceDate AS dates from Sales`;
     }
     
     
@@ -51,20 +54,37 @@ statsRouterByMonth.get('/sellers/:id', async function(req, res){
 
                                         res.status(400).json('Error obtaining data in Average Value!');
                                     }else {
-                                        console.log('Data CurrentMonth Value OK')
-                                        console.log('Data Invoice number Count OK')
-                                        console.log('Data Average Value OK')
+                                        try {
+                                            mysqlConnection.query(query_4, function(error4, results4, fields){
+                                                if(error4) throw error4;
+                                                if(results4.length == 0){
+                                                    res.status(400).json('Error obtaining data in dates')
+                                                }
+                                                else{
 
+                                                    console.log('Data CurrentMonth Value OK')
+                                                    console.log('Data Invoice number Count OK')
+                                            console.log('Data Average Value OK')
+                                            console.log('Data dates OK')
                                         if(results[0].TotalValue === null) results[0].TotalValue = 0;
                                         if(results2[0].InvoicesNumber === null) results2[0].InvoicesNumber = 0;
                                         if(results3[0].AvgValue === null) results3[0].AvgValue = 0;
+                                        if(results4[0].dates === null) results4[0].dates = 0;
+                                        console.log(results4)
+                                        const years = uniqueYears(results4)
                                         const totalResults = {
                                             TotalValue: results[0].TotalValue, 
                                             InvoicesNumber: results2[0].InvoicesNumber,
-                                            AverageAmount: results3[0].AvgValue
-                                         }
+                                            AverageAmount: results3[0].AvgValue,
+                                            invoiceDates: years
+                                        }
                                         res.status(200).json(totalResults);
                                     }
+                                })
+                                    } catch (error4) {
+                                        res.status(400).send(error4)
+                                    }
+                                }
                                 })
                                 } catch(error3) {
                                     res.status(400).send(error3)
