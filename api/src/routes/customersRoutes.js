@@ -8,7 +8,7 @@ const CustomerFilters = require('../Controllers/customerController');
 customersRouter.get('/', async function(req, res){
 
     const { name, Company } = req.query
-    console.log(req.query)
+
     query_ = `SELECT * FROM  Customers`;
     try{
         mysqlConnection.query(query_, function(error, results, fields){
@@ -48,9 +48,9 @@ customersRouter.get('/:id', async function(req, res){
 
 customersRouter.post('/', async function(req, res){
     
-    const {Reference, Phone, Email, DiscountID, Name, LastName, Adress, ZipCode, State} = req.body
+    const {Reference, Phone, Email, DiscountID, Name, LastName, Address, ZipCode, State} = req.body
 
-    query_ = `INSERT INTO Customers (Reference, Phone, Email, DiscountID, Name, LastName, Adress, ZipCode, State) VALUES ("${Reference}", "${Phone}", "${Email}", "${DiscountID}", "${Name}", "${LastName}", "${Adress}", "${ZipCode}", "${State}")`
+    query_ = `INSERT INTO Customers (Reference, Phone, Email, DiscountID, Name, LastName, Address, ZipCode, State) VALUES ("${Reference}", "${Phone}", "${Email}", "${DiscountID}", "${Name}", "${LastName}", "${Address}", "${ZipCode}", "${State}")`
             
     try{
          mysqlConnection.query(query_, function(error, results, fields){

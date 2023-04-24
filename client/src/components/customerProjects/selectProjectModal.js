@@ -8,53 +8,41 @@ import {
     Text,
     ModalBody,
     ModalCloseButton,
-    useDisclosure,
-    IconButton,
-    Input,
-    Divider,
-    HStack,
-    Tooltip,
     Box,
-    useToast
+    useDisclosure,
+    HStack,
+    Input,
+    IconButton,
+    Tooltip,
+    Divider,
     } from "@chakra-ui/react"
-import { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import '../../assets/styleSheet.css'
-import {FiUserPlus} from 'react-icons/fi'
+import { TbPlaylistAdd } from 'react-icons/tb'
 import {BiSearch} from 'react-icons/bi'
-import SelectCustomerModalList from './selectCustomerModalList'
-import { getCustomers } from "../../redux/actions-customers";
+import SelectProjectModalList from "./selectProjectModalList";
 
-const SelectCustomerModal = ({userId, isOpen, onClose, customers}) => {
+
+const SelectProjectModal = ({customer, isThirthModalOpen, onThirthModalClose, isOpen, onClose}) => {
  
-  const { isOpen: isSecondModalOpen, onOpen: onSecondModalOpen, onClose: onSecondModalClose } = useDisclosure()
+  const { isOpen: isQuotesModalOpen, onOpen: onQuotesModalOpen, onClose: onQuotesModalClose } = useDisclosure()
 
-  const dispatch = useDispatch()
-  const id = userId
-  const [inputValue, setInputValue] = useState('')
+  const projects = useSelector(state => state.projects_by_customer_id)
 
-  useEffect(()=>{
-    if(userLocal && !user.length){
-    dispatch(getEmployeeById(userLocal.SellerID))}
-  },[user])
-  
-  const handleInput = (e) =>  {
-    if(e.target.value.length) {
-      setInputValue(e.target.value)
-      dispatch(getCustomers(e.target.value, e.target.value))
-
-    } else {
-      setInputValue('')
-      dispatch(getCustomers('', ''))
-    }
+  const handlePrevious = () => {
+    onThirthModalClose()
   }
-//tengo que limpiar de alguna manera el estado de inputvalue, o poner un useeffect para uqe se actualize el componente.
+  
+  // const handleNext = () => {
+  //   onQuotesModalOpen()
+  // }
+
   return(
 
 <>
   <Modal 
-    isOpen={isOpen} 
-    onClose={onClose}
+    isOpen={isThirthModalOpen} 
+    onClose={onThirthModalClose}
     size={'3xl'}
     >
     <ModalOverlay />
@@ -71,7 +59,7 @@ const SelectCustomerModal = ({userId, isOpen, onClose, customers}) => {
         }}
         onClick={onClose} />
       <Box color={'white'}>
-      <Text ml={'3vw'} fontSize={'lg'}>Select customer</Text>
+      <Text ml={'3vw'} fontSize={'lg'}>Select project</Text>
       <ModalBody color={'web.text2'} display={'flex'} justifyContent={'center'} flexDir={'column'} h={'58vh'}>
       <HStack
         display={'flex'}
@@ -87,14 +75,14 @@ const SelectCustomerModal = ({userId, isOpen, onClose, customers}) => {
               w={'10vw'}
               minH={'4.5vh'}
               variant="unstyled"
-              placeholder={'Customer name'}
+              placeholder={'Project name'}
               textColor={'web.text2'}
               _placeholder={{ fontFamily: 'body', fontWeight: 'thin' }}
               size={"sm"}
               borderBottomWidth={"2px"}
               borderBottomColor={'web.text2'}
-              value={inputValue}
-              onChange={(e)=> handleInput(e)}
+              // value={inputValue}
+              // onChange={(e)=> handleInput(e)}
               />
             <IconButton
               color={'web.text2'}
@@ -111,7 +99,7 @@ const SelectCustomerModal = ({userId, isOpen, onClose, customers}) => {
             />
           </Box>
           <Divider orientation={'vertical'} h={'5vh'}/>
-          <Tooltip label={'Add customer'} fontWeight={'hairline'}>
+          <Tooltip label={'Add project'} fontWeight={'hairline'}>
             <IconButton
             display={'flex'}
             alignItems={'center'}
@@ -120,30 +108,25 @@ const SelectCustomerModal = ({userId, isOpen, onClose, customers}) => {
             _hover={{
               color: 'logo.orange'
             }}
-            icon={<FiUserPlus/>} 
+            icon={<TbPlaylistAdd/>} 
             size={'lg'}
             />
           </Tooltip>
         </HStack>
-        <SelectCustomerModalList customers={customers} isSecondModalOpen={isSecondModalOpen}onSecondModalOpen={onSecondModalOpen} onSecondModalClose={onSecondModalClose} />
+        <SelectProjectModalList customer={customer} projects={projects}/>
       </ModalBody>
       </Box>
       <ModalFooter mb={'2vh'} display={'flex'} flexDir={'row'} justifyContent={'space-between'} ml={'2vw'} mr={'2vw'}>
         <Button
           colorScheme={'orange'}
           size={'sm'}
-          visibility={'hidden'}
-        //   onClick={()=>handleSubmit()}
-        //   disabled={disabledConfirm}
+          onClick={()=>handlePrevious()}
           >
          Previous
         </Button>
         <Button
           colorScheme={'orange'}
-          size={'sm'}
-          visibility={'hidden'} 
-        //   onClick={()=>handleSubmit()}
-        //   disabled={disabledConfirm}
+          size={'sm'} 
           >
          Next
         </Button>
@@ -153,4 +136,4 @@ const SelectCustomerModal = ({userId, isOpen, onClose, customers}) => {
 </>
 )}
 
-export default SelectCustomerModal
+export default SelectProjectModal
