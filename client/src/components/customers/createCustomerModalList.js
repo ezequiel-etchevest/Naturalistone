@@ -56,6 +56,7 @@ import {
     >
       <Box
       maxHeight={'50vh'}
+      minHeight={'50vh'}
       overflow={'auto'}
       css={{
         '&::-webkit-scrollbar': {

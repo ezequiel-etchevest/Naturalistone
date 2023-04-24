@@ -44,9 +44,6 @@ const SelectCustomerModal = ({userId, isOpen, onClose, customers}) => {
 
   }
 
-
-
-
   return(
 
 <>
@@ -70,7 +67,7 @@ const SelectCustomerModal = ({userId, isOpen, onClose, customers}) => {
         onClick={onClose} />
       <Box color={'white'}>
       <Text ml={'3vw'} fontSize={'lg'}>Select customer</Text>
-      <ModalBody color={'web.text2'} display={'flex'} justifyContent={'center'} flexDir={'column'}>
+      <ModalBody color={'web.text2'} display={'flex'} justifyContent={'center'} flexDir={'column'} h={'58vh'}>
       <HStack
         display={'flex'}
         justifyContent={'flex-end'}
