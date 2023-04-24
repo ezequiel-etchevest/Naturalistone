@@ -5,12 +5,12 @@ export const GET_CUSTOMERS_BY_ID = 'GET_CUSTOMERS_BY_ID';
 export const POST_CUSTOMER = 'POST_CUSTOMER';
 
 
-export function getCustomers(Name,Company){
+export function getCustomers(Name, Company){
     
     return async function(dispatch){
         try{ 
             let {data} = await axios.get(`/customers?name=${Name}&Company=${Company}`)
-            console.log({data})
+ 
             dispatch(
             {
                 type: GET_CUSTOMERS,

@@ -24,23 +24,32 @@ import '../../assets/styleSheet.css'
 import {FiUserPlus} from 'react-icons/fi'
 import {BiSearch} from 'react-icons/bi'
 import CreateCustomerModalList from './createCustomerModalList'
+import { getCustomers } from "../../redux/actions-customers";
 
 const SelectCustomerModal = ({userId, isOpen, onClose, customers}) => {
  
-  const { isOpen: isSecondModalOpen, onOpen: onSecondModalOpen, onClose: onSecondModalClose } = useDisclosure()
-  // const dispatch = useDispatch()
+  // const { isOpen: isSecondModalOpen, onOpen: onSecondModalOpen, onClose: onSecondModalClose } = useDisclosure()
+  const dispatch = useDispatch()
   const id = userId
-  const [inputValues, setInputValues] = useState(
-    {
-      inputName: '',
-      inputNumber: '',
-      selectSeller: '',
-      timeFilter: 'All'
-    })
+  const [inputValue, setInputValue] = useState('')
+
+  const handleInput = (e) =>  {
+    if(e.target.value.length) {
+      setInputValue(e.target.value)
+      dispatch(getCustomers(e.target.value, e.target.value))
+    } else {
+      setInputValue('')
+      dispatch(getCustomers('', ''))
+    }
+
+  }
+
+
+
 
   return(
+
 <>
-{/* Start Create delivery modal */}
   <Modal 
     isOpen={isOpen} 
      onClose={onClose}
@@ -82,8 +91,8 @@ const SelectCustomerModal = ({userId, isOpen, onClose, customers}) => {
               size={"sm"}
               borderBottomWidth={"2px"}
               borderBottomColor={'web.text2'}
-              // value={inputValues.inputName}
-              //onChange={(e)=> handleChangeCustomerName(e)}
+              value={inputValue}
+              onChange={(e)=> handleInput(e)}
               />
             <IconButton
               color={'web.text2'}
@@ -138,31 +147,6 @@ const SelectCustomerModal = ({userId, isOpen, onClose, customers}) => {
       </ModalFooter>
     </ModalContent>
   </Modal>
-{/* Finish Create delivery modal */}
-
-{/* Start Render created delivery modal */}
-  {/* <Modal 
-        // isOpen={isSecondModalOpen} 
-    // onClose={handleSecondModalClose}
-    size={'4xl'}
-    >
-    <ModalOverlay />
-    <ModalContent 
-      rounded={'md'} 
-      mt={'2vh'} 
-      mb={'2vh'} 
-      w={'64vw'} 
-      bg={'web.sideBar'} 
-      border={'1px solid'} 
-      borderColor={'web.border'}
-      >
-      <ModalHeader/>
-      <ModalBody color={'web.text2'} w={'100%'} h={'100%'}>
-      </ModalBody>
-      <ModalFooter/>
-    </ModalContent>
-  </Modal> */}
-{/* Finish Render created delivery modal */}
 </>
 )}
 

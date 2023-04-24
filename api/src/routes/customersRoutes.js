@@ -7,17 +7,17 @@ const CustomerFilters = require('../Controllers/customerController');
 
 customersRouter.get('/', async function(req, res){
 
-    const { Name, Company } = req.query
-
+    const { name, Company } = req.query
+    console.log(req.query)
     query_ = `SELECT * FROM  Customers`;
     try{
-         mysqlConnection.query(query_, function(error, results, fields){
+        mysqlConnection.query(query_, function(error, results, fields){
             if(!results.length) {
                 console.log('Error al obtener data!')
                 res.status(400).json(error);
             } else {
                 console.log('Data OK')
-                let filtered = CustomerFilters(results, Name, Company)
+                let filtered = CustomerFilters(results, name, Company)
                 res.status(200).json(filtered);
             }
         });
