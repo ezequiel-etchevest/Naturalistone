@@ -71,7 +71,6 @@ export default function Stats() {
   
   useEffect(()=>{},[currentMonth, paymentStats])
 
-  console.log('soy invoices', invoicesNumber)
   return (
     <Box h={'92vh'} px={'4vw'} bg={'web.bg'} >
       <HStack columns={{ base: 1, md: 3 }} spacing={{ base: 5, lg: 8 }}>
