@@ -3,8 +3,9 @@ import { useDispatch, useSelector } from "react-redux";
 import CurrentMonthStats from './stats/CurrentMonthStats';
 import { Highlight, chakra, Box, Divider, HStack } from '@chakra-ui/react';
 import StatsFilters from './stats/StatsFilters';
-import { getCurrentMonth, getPaymentStats } from "../redux/actions-stats";
+import { getMonthAndYear, getPaymentStatsByMonth } from "../redux/actions-statsByMonth";
 import TotalStats from "./stats/TotalStats";
+import StatsFilterByMonthAndYear from "./stats/statsMonthAndYear";
 
 
 const HomeContainer = ({user}) => {
@@ -14,10 +15,10 @@ const HomeContainer = ({user}) => {
 
   useEffect(() => {
     if(user.length && Object.entries(currentMonth).length === 0){
-      dispatch(getCurrentMonth(user[0].SellerID, user[0].Secction7Flag))
+      dispatch(getMonthAndYear(user[0].SellerID))
     }
     if(user.length && Object.entries(paymentStats).length === 0){
-      dispatch(getPaymentStats(user[0].SellerID, user[0].Secction7Flag))
+      dispatch(getPaymentStatsByMonth(user[0].SellerID))
     }
   }, [dispatch, user, paymentStats, currentMonth])
 
@@ -45,16 +46,21 @@ const HomeContainer = ({user}) => {
         <Divider alignSelf={'center'} w={'78vw'}/>
         {
           user[0].Secction7Flag === 1 ? (
-            <StatsFilters user={user}/>
+            <Box 
+            display={'flex'}
+            flexDirection={'row'}
+            justifyContent={'flex-end'}
+            h={'20vh'}
+            >
+              <StatsFilters user={user}/>
+              <StatsFilterByMonthAndYear user={user}/>
+            </Box>
           ):(
-            <Box>
-            <HStack
-            ml={'2vw'}
-            mr={'2vw'} 
-            h={'17vh'}
-            w={'80vw'}
-            justifyContent={'space-between'}
-            ></HStack></Box>
+            <Box
+            display={'flex'}
+            justifyContent={'flex-end'}>
+              <StatsFilterByMonthAndYear />
+            </Box>
             )
         }
         <CurrentMonthStats user={user}/>

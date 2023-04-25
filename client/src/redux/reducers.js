@@ -31,7 +31,11 @@ import {
     PATCH_PRODUCT_NOTES,
     PATCH_DISCONTINUED
      } from './actions-products';
-import { GET_CURRENT_MONTH, GET_PAYMENT_STATS, CLEAN_STATS } from './actions-stats';
+import { 
+  GET_CURRENT_MONTH,
+  GET_PAYMENT_STATS,
+  CLEAN_STATS 
+} from './actions-statsByMonth';
 import { 
     GET_ORDERS,
     GET_ORDERS_BY_ID,
@@ -56,6 +60,18 @@ import {
   GET_CUSTOMERS_BY_ID,
   POST_CUSTOMER
 } from './actions-customers'
+import {
+  GET_MONTH
+} from './actions-month'
+import {
+  GET_SELLER_ID
+} from './actions-sellerId'
+import {
+  GET_MONTH_FILTER
+} from './actions-monthFilter'
+import {
+  GET_YEAR_FILTER
+} from './actions-yearFilter'
 
 
 const intialState = {
@@ -87,6 +103,10 @@ const intialState = {
     projects_by_customer_id: [],
     customers: [],
     customers_by_id: [],
+    month: '',
+    sellerId: '',
+    monthFilter: '',
+    yearFilter: '',
 }
 
 function rootReducer (state = intialState, action) {
@@ -335,6 +355,26 @@ function rootReducer (state = intialState, action) {
         case POST_QUOTE:
           return{
             ...state
+          }
+        case GET_MONTH:
+          return {
+            ...state,
+            month: action.payload
+          }
+        case GET_SELLER_ID:
+          return {
+            ...state,
+            sellerId: action.payload
+          }
+        case GET_MONTH_FILTER:
+          return {
+            ...state,
+           monthFilter: action.payload
+          }
+        case GET_YEAR_FILTER:
+          return {
+            ...state,
+            yearFilter: action.payload
           }
         default:
             return {
