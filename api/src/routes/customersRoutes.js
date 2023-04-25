@@ -1,10 +1,13 @@
 const express = require('express')
 const customersRouter = express.Router()
-const mysqlConnection = require('../db')
+const mysqlConnection = require('../db');
+const CustomerFilters = require('../Controllers/customerController');
 
 
 
 customersRouter.get('/', async function(req, res){
+
+    const { Name, Company } = req.query
 
     query_ = `SELECT * FROM  Customers`;
     try{
@@ -14,7 +17,8 @@ customersRouter.get('/', async function(req, res){
                 res.status(400).json(error);
             } else {
                 console.log('Data OK')
-                res.status(200).json(results);
+                let filtered = CustomerFilters(results, Name, Company)
+                res.status(200).json(filtered);
             }
         });
     } catch(error){
