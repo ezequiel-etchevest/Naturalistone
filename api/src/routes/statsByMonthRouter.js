@@ -19,10 +19,6 @@ statsByMonthRouter.get('/sellers/:id', async function(req, res){
 
     const startDate = `${year}-${month}-01`;
     const endDate = new Date(year, month, 0).toISOString().split('T')[0];
-
-    console.log('soy mes', month)
-    console.log('soy year', year)
-    console.log('soy id', id)
     
     if (id === '3') {
       query_ = `SELECT ROUND(SUM(Value), 2) AS TotalValue FROM Sales WHERE InvoiceDate BETWEEN "${startDate}" AND "${endDate}" AND Status != "Canceled"`;
