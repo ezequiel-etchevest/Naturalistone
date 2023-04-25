@@ -7,10 +7,10 @@ import {
     Tooltip
     } from "@chakra-ui/react"
 import {AiOutlineFileAdd} from 'react-icons/ai';
-import CreateCustomerModal from "../customers/createCustomerModal";
+import SelectCustomerModal from "../customers/selectCustomerModal";
 
 
-const CreateInvoiceButton = ({userId}) => {
+const CreateInvoiceButton = ({userId, customers}) => {
 
   const { isOpen, onOpen, onClose } = useDisclosure()
 
@@ -22,7 +22,7 @@ const CreateInvoiceButton = ({userId}) => {
             display={'flex'}
             spacing={0}
             >
-        <Tooltip placement={'bottom-start'} label={'Clear all filters'} fontWeight={'hairline'}>      
+        <Tooltip placement={'bottom-start'} label={'Create new quote'} fontWeight={'hairline'}>      
         <IconButton
             icon={ <AiOutlineFileAdd/>}
             variant={'unstyled'} 
@@ -40,7 +40,7 @@ const CreateInvoiceButton = ({userId}) => {
             >
             </IconButton>
           </Tooltip>
-          <CreateCustomerModal userId={userId} isOpen={isOpen} onClose={onClose}/> 
+          <SelectCustomerModal userId={userId} isOpen={isOpen} onClose={onClose} customers={customers}/> 
           </ButtonGroup>
         </>
     )
