@@ -23,7 +23,7 @@ function StatsCard(props) {
   useEffect(()=> {
     setTimeout(()=> {
       setLoading(false)
-    },1000)
+    },500)
   })
 
   return (
@@ -75,12 +75,12 @@ export default function Stats() {
     <Box h={'92vh'} px={'4vw'} bg={'web.bg'} >
       <HStack columns={{ base: 1, md: 3 }} spacing={{ base: 5, lg: 8 }}>
           <StatsCard
-          title={`${month ? month : 'Current Month Sales'} `}
+          title={month ? `${month} Sales` : `Current Month Sales`}
           stat={currentMonth.TotalValue}
           icon={<BiDollar size={'3em'} />}
           /> 
         <StatsCard
-          title={'Current Month Quotes / Paid'}
+          title={month ? `${month} Quotes / Paid` : 'Current Month Quotes / Paid'}
           stat={invoicesNumber}
           icon={<FaSortAmountUpAlt size={'3em'} />}
         />
