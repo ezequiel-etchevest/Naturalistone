@@ -19,22 +19,26 @@ const StatsFilters = ({user}) => {
   const sellers = useSelector(state => state.sellers)
   const selectedMonth = useSelector(state => state.monthFilter)
   const selectedYear = useSelector(state => state.yearFilter)
+  const sellerId = useSelector(state => state.sellerId)
 
   const handleSellerSelect = (e) => {
     if(e.target.value === 'all') {
+      dispatch(getSellerId(3))
       dispatch(getMonthAndYear(3, selectedMonth, selectedYear))
       dispatch(getPaymentStatsByMonth(3, selectedMonth, selectedYear))
     }
     else {
       dispatch(getSellerId(e.target.value))
-      dispatch(getMonthAndYear(Number(e.target.value), selectedMonth, selectedYear))
-      dispatch(getPaymentStatsByMonth(Number(e.target.value), selectedMonth, selectedYear))
     }
     }
 
   useEffect(()=>{
+    if(sellerId !== 0){
+      dispatch(getMonthAndYear(sellerId, selectedMonth, selectedYear))
+      dispatch(getPaymentStatsByMonth(sellerId, selectedMonth, selectedYear))
+    }
     if(!sellers.length) dispatch(getSellers())
-    },[sellers])
+    },[sellers, sellerId])
 
     
   return (

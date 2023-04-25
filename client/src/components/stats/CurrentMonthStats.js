@@ -4,9 +4,10 @@ import {
   Stat,
   StatLabel,
   StatNumber,
-  HStack
+  HStack,
+  Spinner
 } from '@chakra-ui/react';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { BiDollar } from 'react-icons/bi';
 import { FaSortAmountUpAlt } from 'react-icons/fa';
 import { TbReceiptTax } from 'react-icons/tb';
@@ -16,10 +17,19 @@ import { useSelector } from 'react-redux';
 function StatsCard(props) {
   
   const { title, stat, icon } = props;
+  const [loading, setLoading] = useState(true)
+  
+
+  useEffect(()=> {
+    setTimeout(()=> {
+      setLoading(false)
+    },1000)
+  })
 
   return (
     <Stat
       w={'10vw'}
+      h={'16vh'}
       px={{ base: 2, md: 4 }}
       py={'5'}
       border={'1px solid'}
@@ -36,7 +46,7 @@ function StatsCard(props) {
             {title}
           </StatLabel>
           <StatNumber fontSize={'4xl'} fontWeight={'medium'} >
-            {stat?.toLocaleString('en-US')}
+            {loading ? <Spinner thickness={'4px'} size={'lg'} color={'logo.orange'}/> : stat?.toLocaleString('en-US')}
           </StatNumber>
         </Box>
         <Box
@@ -56,21 +66,23 @@ export default function Stats() {
   const currentMonth = useSelector(state => state.current_month)
   const paymentStats = useSelector(state => state.payment_stats)
   const month = useSelector(state => state.month)
+
+  let invoicesNumber = `${currentMonth.InvoicesNumber} / ${paymentStats.paidQuotes}`
   
   useEffect(()=>{},[currentMonth, paymentStats])
 
-  let InvoicesNumber = `${currentMonth.InvoicesNumber} / ${paymentStats.paidQuotes}`
+  console.log('soy invoices', invoicesNumber)
   return (
     <Box h={'92vh'} px={'4vw'} bg={'web.bg'} >
       <HStack columns={{ base: 1, md: 3 }} spacing={{ base: 5, lg: 8 }}>
-        <StatsCard
-          title={`${month ? month : 'Current Month'} `}
+          <StatsCard
+          title={`${month ? month : 'Current Month Sales'} `}
           stat={currentMonth.TotalValue}
           icon={<BiDollar size={'3em'} />}
-        />
+          /> 
         <StatsCard
           title={'Current Month Quotes / Paid'}
-          stat={InvoicesNumber}
+          stat={invoicesNumber}
           icon={<FaSortAmountUpAlt size={'3em'} />}
         />
         <StatsCard

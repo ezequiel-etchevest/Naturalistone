@@ -12,6 +12,7 @@ const currentMonth = new Date().getMonth() + 1
 export function getMonthAndYear(id, month, year){
     return async function(dispatch){
         try{
+            console.log('soy idd', id)
             let {data} = await axios.get(
                 `/statsByMonth/sellers/${id}?month=${month ? month : currentMonth}&year=${year ? year : currentYear}`
                 )
