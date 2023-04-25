@@ -66,6 +66,12 @@ import {
 import {
   GET_SELLER_ID
 } from './actions-sellerId'
+import {
+  GET_MONTH_FILTER
+} from './actions-monthFilter'
+import {
+  GET_YEAR_FILTER
+} from './actions-yearFilter'
 
 
 const intialState = {
@@ -98,7 +104,9 @@ const intialState = {
     customers: [],
     customers_by_id: [],
     month: '',
-    sellerId: ''
+    sellerId: '',
+    monthFilter: '',
+    yearFilter: '',
 }
 
 function rootReducer (state = intialState, action) {
@@ -357,6 +365,16 @@ function rootReducer (state = intialState, action) {
           return {
             ...state,
             sellerId: action.payload
+          }
+        case GET_MONTH_FILTER:
+          return {
+            ...state,
+           monthFilter: action.payload
+          }
+        case GET_YEAR_FILTER:
+          return {
+            ...state,
+            yearFilter: action.payload
           }
         default:
             return {

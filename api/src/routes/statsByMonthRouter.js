@@ -1,12 +1,12 @@
 const express = require('express')
-const statsRouterByMonth = express.Router()
+const statsByMonthRouter = express.Router()
 const mysqlConnection = require('../db')
 const { getLimitDateMonth,getCurrentMonth} = require('../Controllers/LastMonth')
 const invoicesPayments = require('../Controllers/invoicesPayments')
 const paymentStats = require('../Controllers/paymentStats')
 const uniqueYears = require('../Controllers/uniqueYear')
 
-statsRouterByMonth.get('/sellers/:id', async function(req, res){
+statsByMonthRouter.get('/sellers/:id', async function(req, res){
     
     const { id } = req.params;
     const { month } = req.query;
@@ -19,17 +19,21 @@ statsRouterByMonth.get('/sellers/:id', async function(req, res){
 
     const startDate = `${year}-${month}-01`;
     const endDate = new Date(year, month, 0).toISOString().split('T')[0];
+
+    console.log('soy mes', month)
+    console.log('soy year', year)
+    console.log('soy id', id)
     
     if (id === '3') {
       query_ = `SELECT ROUND(SUM(Value), 2) AS TotalValue FROM Sales WHERE InvoiceDate BETWEEN "${startDate}" AND "${endDate}" AND Status != "Canceled"`;
       query_2 = `SELECT COUNT(*) AS InvoicesNumber FROM Sales WHERE InvoiceDate BETWEEN "${startDate}" AND "${endDate}" AND Status != "Canceled"`;
       query_3 = `SELECT ROUND(AVG(Value), 2) AS AvgValue FROM Sales WHERE InvoiceDate BETWEEN "${startDate}" AND "${endDate}" AND Status != "Canceled"`;
-      query_4 = `SELECT InvoiceDate AS dates from Sales`;
+      query_4 = `SELECT DISTINCT YEAR(InvoiceDate) AS dates FROM Sales ORDER BY InvoiceDate DESC`;
     } else {
       query_ = `SELECT ROUND(SUM(Value), 2) AS TotalValue FROM Sales WHERE SellerID = ${id} AND InvoiceDate BETWEEN "${startDate}" AND "${endDate}" AND Status != "Canceled"`;
       query_2 = `SELECT COUNT(*) AS InvoicesNumber FROM Sales WHERE SellerID = ${id} AND InvoiceDate BETWEEN "${startDate}" AND "${endDate}" AND Status != "Canceled"`;
       query_3 = `SELECT ROUND(AVG(Value), 2) AS AvgValue FROM Sales WHERE SellerID = ${id} AND InvoiceDate BETWEEN "${startDate}" AND "${endDate}" AND Status != "Canceled"`;
-      query_4 = `SELECT InvoiceDate AS dates from Sales`;
+      query_4 = `SELECT DISTINCT YEAR(InvoiceDate) AS dates FROM Sales WHERE SellerID = ${id} ORDER BY InvoiceDate DESC`;
     }
     
     
@@ -62,21 +66,19 @@ statsRouterByMonth.get('/sellers/:id', async function(req, res){
                                                 }
                                                 else{
 
-                                                    console.log('Data CurrentMonth Value OK')
-                                                    console.log('Data Invoice number Count OK')
+                                            console.log('Data CurrentMonth Value OK')
+                                            console.log('Data Invoice number Count OK')
                                             console.log('Data Average Value OK')
                                             console.log('Data dates OK')
                                         if(results[0].TotalValue === null) results[0].TotalValue = 0;
                                         if(results2[0].InvoicesNumber === null) results2[0].InvoicesNumber = 0;
                                         if(results3[0].AvgValue === null) results3[0].AvgValue = 0;
                                         if(results4[0].dates === null) results4[0].dates = 0;
-                                        console.log(results4)
-                                        const years = uniqueYears(results4)
                                         const totalResults = {
                                             TotalValue: results[0].TotalValue, 
                                             InvoicesNumber: results2[0].InvoicesNumber,
                                             AverageAmount: results3[0].AvgValue,
-                                            invoiceDates: years
+                                            invoiceDates: results4
                                         }
                                         res.status(200).json(totalResults);
                                     }
@@ -101,7 +103,7 @@ statsRouterByMonth.get('/sellers/:id', async function(req, res){
     }   
 });
 
-statsRouterByMonth.get('/payments/:id', async function(req, res){
+statsByMonthRouter.get('/payments/:id', async function(req, res){
     
     const { id } = req.params;
     const { month } = req.query;
@@ -149,4 +151,4 @@ statsRouterByMonth.get('/payments/:id', async function(req, res){
       }
 });
 
-module.exports = statsRouterByMonth;
+module.exports = statsByMonthRouter;

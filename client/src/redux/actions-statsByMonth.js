@@ -4,6 +4,7 @@ export const GET_CURRENT_MONTH = 'GET_CURRENT_MONTH';
 export const GET_PAYMENT_STATS = 'GET_PAYMENT_STATS';
 export const CLEAN_STATS = 'CLEAN_STATS';
 
+
 const currentYear = new Date().getFullYear() 
 const currentMonth = new Date().getMonth() + 1
 
@@ -11,7 +12,6 @@ const currentMonth = new Date().getMonth() + 1
 export function getMonthAndYear(id, month, year){
     return async function(dispatch){
         try{
-            console.log('entre', id)
             let {data} = await axios.get(
                 `/statsByMonth/sellers/${id}?month=${month ? month : currentMonth}&year=${year ? year : currentYear}`
                 )

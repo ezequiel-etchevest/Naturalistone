@@ -13,41 +13,41 @@ import { useEffect, useState } from "react";
 import { getSellers } from "../../redux/actions-sellers";
 import { months } from "../../utils/months";
 import { getMonthAndYear, getPaymentStatsByMonth } from "../../redux/actions-statsByMonth";
-import { years } from "../../utils/years";
 import { getMonth } from "../../redux/actions-month";
+import { getMonthFilter } from "../../redux/actions-monthFilter";
+import { getYearFilter } from "../../redux/actions-yearFilter";
   
 const StatsFilterByMonthAndYear = ({user}) => {
     
   const dispatch = useDispatch()
   const sellers = useSelector(state => state.sellers)
   const sellerFilterId = useSelector(state => state.sellerId)
-  const [selectedMonth, setSelectedMonth] = useState('')
-  const [selectedYear, setSelectedYear] = useState('')
+  const selectedMonth = useSelector(state => state.monthFilter)
+  const selectedYear = useSelector(state => state.yearFilter)
   const seller = useSelector(state => state.user)
   const sellerId = seller[0].SellerID
+  const years = useSelector(state => state.current_month)
 
   const handleSellerByMonth = (e) => {
-    setSelectedMonth(e.target.value)
     const monthValue = e.target.value
     const monthName = months[monthValue -1]
     dispatch(getMonth(monthName))
-    dispatch(getMonthAndYear(sellerFilterId ? sellerFilterId : sellerId, e.target.value, selectedYear))
-    dispatch(getPaymentStatsByMonth(sellerFilterId ? sellerFilterId : sellerId, e.target.value, selectedYear))
+    dispatch(getMonthFilter(e.target.value))
   }
 
   const handleSelectYear = (e) => {
-    setSelectedYear(e.target.value)
-    dispatch(getMonthAndYear(sellerFilterId ? sellerFilterId : sellerId, selectedMonth, e.target.value))
-    dispatch(getPaymentStatsByMonth(sellerFilterId ? sellerFilterId : sellerId, selectedMonth, e.target.value))
+    dispatch(getYearFilter(e.target.value))
   }
 
   useEffect(()=>{
     if(!sellers.length) dispatch(getSellers())
-    },[sellers])
+    if(selectedMonth !== 0) {
+      dispatch(getMonthAndYear(sellerFilterId ? sellerFilterId : sellerId, selectedMonth, selectedYear))
+      dispatch(getPaymentStatsByMonth(sellerFilterId ? sellerFilterId : sellerId, selectedMonth, selectedYear))
+    }
+    },[sellers, selectedMonth, selectedYear])
 
-  const year = years();
-
-    
+ 
   return (
     <Box>
       <HStack
@@ -117,9 +117,9 @@ const StatsFilterByMonthAndYear = ({user}) => {
           }}>
             <option value="" disabled hidden>Filter by Year</option>
               {  
-                  year?.map((e, i) => {
+                  years.invoiceDates?.map((e, i) => {
                       return(
-                        <option key={i} className={'options'} value={e}>{e}</option>
+                        <option key={i} className={'options'} value={e.dates}>{e.dates}</option>
                         )
                      })
               }
