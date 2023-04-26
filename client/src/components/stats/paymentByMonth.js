@@ -12,6 +12,7 @@ import { BsCreditCardFill } from 'react-icons/bs';
 import { HiReceiptPercent } from 'react-icons/hi2';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
+import { MdOutlinePayments } from 'react-icons/md';
   
 function StatsCard(props) {
     
@@ -81,7 +82,7 @@ export default function PaymentsByMonth() {
         <StatsCard
         title={'Payments'}
         stat={paymentStats?.data?.total_amount}
-        icon={<FaHandsHelping size={'3em'} />}
+        icon={<MdOutlinePayments size={'3em'} />}
         />
         <StatsCard
         visibility='hidden'
