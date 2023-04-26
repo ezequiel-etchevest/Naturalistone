@@ -135,8 +135,8 @@ const ModelTr = ({p, setQuantities, quantities, errors, setErrors}) => {
                     }} 
               h={'4vh'}/>
             <NumberInputStepper>
-              <NumberIncrementStepper />
-              <NumberDecrementStepper />
+              <NumberIncrementStepper fontSize={'2xs'}/>
+              <NumberDecrementStepper fontSize={'2xs'}/>
             </NumberInputStepper>
           </NumberInput>
         </Td>

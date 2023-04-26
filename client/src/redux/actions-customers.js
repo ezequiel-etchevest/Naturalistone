@@ -1,16 +1,16 @@
 import axios from 'axios';
 
 export const GET_CUSTOMERS = 'GET_CUSTOMERS';
-export const GET_CUSTOMERS_BY_ID = 'GET_CUSTOMERS_BY_ID';
+export const GET_CUSTOMER_BY_ID = 'GET_CUSTOMER_BY_ID';
 export const POST_CUSTOMER = 'POST_CUSTOMER';
 
 
-export function getCustomers(Name,Company){
+export function getCustomers(Name, Company){
     
     return async function(dispatch){
         try{ 
             let {data} = await axios.get(`/customers?name=${Name}&Company=${Company}`)
-            console.log({data})
+ 
             dispatch(
             {
                 type: GET_CUSTOMERS,
@@ -22,7 +22,7 @@ export function getCustomers(Name,Company){
     }
 }
 
-export function getCustomersById(customerId){
+export function getCustomerById(customerId){
 
     return async function(dispatch){
         try{ 
@@ -30,7 +30,7 @@ export function getCustomersById(customerId){
             let {data} = await axios.get(`/customers/${customerId}`)
             dispatch(
             {
-                type: GET_CUSTOMERS_BY_ID,
+                type: GET_CUSTOMER_BY_ID,
                 payload: data
             })
         }catch(error){

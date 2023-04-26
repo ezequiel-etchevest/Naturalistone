@@ -11,51 +11,45 @@ import {
     Text,
     Center,
     } from '@chakra-ui/react'
-  import { useNavigate } from 'react-router-dom'
-  import { useDispatch, useSelector } from 'react-redux'
-  import { useEffect } from 'react';
+    import { useState } from 'react';
+  import CreateInvoiceModal from '../invoices/createInvoiceModal';
   
+  const ModelTr = ({e, setProject}) => {
   
-  
-  const ModelTr = ({e}) => {
-  
-    const navigate = useNavigate()
-    const dispatch = useDispatch()
-  
-    // const handleClick = () => {
-    //   dispatch(getInvoiceById(e.Naturali_Invoice))
-    //   dispatch(getInvoiceProducts(e.Naturali_Invoice))
-    //   dispatch( cleanStatePayments())
-    //   navigate(`/quotes/${e.Naturali_Invoice}`)
-    // }
-  
+
+    const handleClick = (e) => {
+      setProject(e)
+    }
+
     return(
       <Tr 
-      //onClick={() => handleClick()} 
       cursor={'pointer'} 
-      key={e.CustomerID}
+      key={e.idProjects}
       _hover={{
         bg: 'web.navBar',
         color: 'logo.orange'
         }}
+        onClick={() => handleClick(e)}
       >
-        <Td fontSize={'xs'}  w={'4vw'}>{e.CustomerID}</Td>
-        <Td fontSize={'xs'} textAlign={'center'}>{e.LastName ?`${e.Name} ${e.LastName}` : '-'}</Td>
-        <Td fontSize={'xs'}  w={'24vw'}>{e.Reference}</Td>
-
+        <Td fontSize={'xs'} textAlign={'center'} w={'4vw'}>{e.idProjects}</Td>
+        <Td fontSize={'xs'} textAlign={'center'} w={'14vw'}>{e.ProjectName}</Td>
       </Tr>
     )
   }
   
-  const CreateCustomerModalList = ({customers, user}) => {
-  
+  const SelectProjectModalList = ({customer, projects, onQuotesModalClose, isQuotesModalOpen}) => {
+    
+    const [project, setProject] = useState('')
+
     return(
-    <Box
+<>
+  <Box
     display={'flex'}
     justifyContent={'center'}
     >
       <Box
       maxHeight={'50vh'}
+      minHeight={'50vh'}
       overflow={'auto'}
       css={{
         '&::-webkit-scrollbar': {
@@ -76,20 +70,19 @@ import {
       p={'3vh'}
       >
       {
-        customers.length ? (
+        projects.length ? (
           <TableContainer w={'46vw'}>
             <Table color={'web.text'}variant={'simple'} size={'sm'}>
               <Thead h={'3vh'}>
                 <Tr>
                     <Th color={'web.text2'} textAlign={'center'} w={'4vw'} fontSize={'x-small'}>IDs</Th>
-                    <Th color={'web.text2'} textAlign={'center'} fontSize={'x-small'}>Full Name</Th>
-                    <Th color={'web.text2'} textAlign={'center'} fontSize={'x-small'} w={'24vw'}>Company</Th>
+                    <Th color={'web.text2'} textAlign={'center'} w={'14vw'}fontSize={'x-small'}>Project Name</Th>
                   </Tr>
                 </Thead>
                 <Tbody >
                 { 
-                  customers.map((e, i) => (
-                    <ModelTr key={i} e={e} user={user}/> 
+                  projects.map((e, i) => (
+                    <ModelTr key={i} e={e} setProject={setProject}/> 
                   ))
                 }
                 </Tbody>
@@ -97,13 +90,15 @@ import {
             </TableContainer> 
             ) : (
             <Center w={'full'} h={'full'}>
-              <Text userSelect={'none'} fontSize={'2vh'}>No customers found</Text>
+              <Text userSelect={'none'} fontSize={'2vh'}>No projects register </Text>
             </Center>
             )
         }
       </Box> 
     </Box>
-      )
-  }
-  export default CreateCustomerModalList;
+    <CreateInvoiceModal isQuotesModalOpen={isQuotesModalOpen} onQuotesModalClose={onQuotesModalClose} customer={customer} project={project}/>
+  </>
+  )
+}
+  export default SelectProjectModalList;
   

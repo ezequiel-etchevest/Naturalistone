@@ -1,14 +1,19 @@
-const CustomerFilters = (invoices, name, company) => {
+const CustomerFilters = (invoices, name) => {
 
-    let filtered = invoices
-   
-    // if(name !== ''){
-    //   filtered = filtered.filter(inv => inv.Name.toLowerCase().includes(name.toLowerCase()) || inv.LastName.toLowerCase().includes(name.toLowerCase()))
-    // }
-    if(company !== ''){
-      filtered = filtered.filter(d => d.Reference.toLowerCase().includes(company.toLowerCase()))
-    }
-    return filtered
+  let filtered = invoices;
+
+  if (name !== '') {
+    filtered = filtered.filter((inv) => {
+        return (
+          inv.Name && inv.Name.toLowerCase().includes(name.toLowerCase()) ||
+          inv.LastName && inv.LastName.toLowerCase().includes(name.toLowerCase()) || 
+          inv.Reference && inv.Reference.toLowerCase().includes(name.toLowerCase())
+        );
+    });
   }
 
-  module.exports = CustomerFilters
+  return filtered;
+};
+
+
+module.exports = CustomerFilters
