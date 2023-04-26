@@ -17,14 +17,22 @@ import { useSelector } from 'react-redux';
 function StatsCard(props) {
   
   const { title, stat, icon } = props;
-  const [loading, setLoading] = useState(true)
-  
+  const [loading, setLoading] = useState(false)
+  const month = useSelector(state => state.monthFilter)
+  const year = useSelector(state => state.yearFilter)
+  const sellerId = useSelector(state => state.sellerId)
+
+  useEffect(() => {
+    setTimeout(()=> {
+      setLoading(false)
+    }, 50)
+  },[month, year, sellerId])
 
   useEffect(()=> {
     setTimeout(()=> {
-      setLoading(false)
-    },1000)
-  })
+      setLoading(true)
+    }, 1000)
+  }, [loading])
 
   return (
     <Stat
@@ -46,7 +54,7 @@ function StatsCard(props) {
             {title}
           </StatLabel>
           <StatNumber fontSize={'4xl'} fontWeight={'medium'} >
-            {loading ? <Spinner thickness={'4px'} size={'lg'} color={'logo.orange'}/> : stat?.toLocaleString('en-US')}
+            {loading ? stat?.toLocaleString('en-US') : <Spinner thickness={'4px'} size={'lg'} color={'logo.orange'}/>}
           </StatNumber>
         </Box>
         <Box

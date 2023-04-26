@@ -20,7 +20,7 @@ const HomeContainer = ({user}) => {
     if(user.length && Object.entries(paymentStats).length === 0){
       dispatch(getPaymentStatsByMonth(user[0].SellerID))
     }
-  }, [dispatch, user, paymentStats, currentMonth])
+  }, [])
 
 
   return(
