@@ -32,23 +32,19 @@ const SelectCustomerModal = ({userId, isOpen, onClose, customers}) => {
   const dispatch = useDispatch()
   const id = userId
   const [inputValue, setInputValue] = useState('')
-
-  useEffect(()=>{
-    if(userLocal && !user.length){
-    dispatch(getEmployeeById(userLocal.SellerID))}
-  },[user])
   
   const handleInput = (e) =>  {
     if(e.target.value.length) {
       setInputValue(e.target.value)
       dispatch(getCustomers(e.target.value, e.target.value))
-
+      
     } else {
       setInputValue('')
       dispatch(getCustomers('', ''))
     }
   }
 //tengo que limpiar de alguna manera el estado de inputvalue, o poner un useeffect para uqe se actualize el componente.
+
   return(
 
 <>

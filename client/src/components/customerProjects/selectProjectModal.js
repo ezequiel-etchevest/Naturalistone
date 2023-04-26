@@ -33,9 +33,9 @@ const SelectProjectModal = ({customer, isThirthModalOpen, onThirthModalClose, is
     onThirthModalClose()
   }
   
-  // const handleNext = () => {
-  //   onQuotesModalOpen()
-  // }
+  const handleNext = () => {
+    onQuotesModalOpen()
+  }
 
   return(
 
@@ -113,7 +113,7 @@ const SelectProjectModal = ({customer, isThirthModalOpen, onThirthModalClose, is
             />
           </Tooltip>
         </HStack>
-        <SelectProjectModalList customer={customer} projects={projects}/>
+        <SelectProjectModalList customer={customer} projects={projects} isQuotesModalOpen={isQuotesModalOpen} onQuotesModalClose={onQuotesModalClose} />
       </ModalBody>
       </Box>
       <ModalFooter mb={'2vh'} display={'flex'} flexDir={'row'} justifyContent={'space-between'} ml={'2vw'} mr={'2vw'}>
@@ -126,7 +126,8 @@ const SelectProjectModal = ({customer, isThirthModalOpen, onThirthModalClose, is
         </Button>
         <Button
           colorScheme={'orange'}
-          size={'sm'} 
+          size={'sm'}
+          onClick={()=>handleNext()} 
           >
          Next
         </Button>

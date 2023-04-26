@@ -12,7 +12,7 @@ import {
     Center,
     } from '@chakra-ui/react'
     import { useState } from 'react';
-  
+  import CreateInvoiceModal from '../invoices/createInvoiceModal';
   
   const ModelTr = ({e, setProject}) => {
   
@@ -37,11 +37,11 @@ import {
     )
   }
   
-  const SelectProjectModalList = ({customer, projects}) => {
+  const SelectProjectModalList = ({customer, projects, onQuotesModalClose, isQuotesModalOpen}) => {
     
     const [project, setProject] = useState('')
-    console.log(project)
-  return(
+
+    return(
 <>
   <Box
     display={'flex'}
@@ -96,7 +96,7 @@ import {
         }
       </Box> 
     </Box>
-    {/* <SelectedCustomerModal onSecondModalClose={onSecondModalClose} isSecondModalOpen={isSecondModalOpen} customer={customer} setCustomer={setCustomer}/> */}
+    <CreateInvoiceModal isQuotesModalOpen={isQuotesModalOpen} onQuotesModalClose={onQuotesModalClose} customer={customer} project={project}/>
   </>
   )
 }
