@@ -5,7 +5,7 @@ import {
     StatLabel,
     StatNumber,
     HStack,
-    Spinner
+    Spinner,
   } from '@chakra-ui/react';
 import { FaHandsHelping } from 'react-icons/fa';
 import { BsCreditCardFill } from 'react-icons/bs';
@@ -15,7 +15,7 @@ import { useSelector } from 'react-redux';
   
 function StatsCard(props) {
     
-  const { title, stat, icon } = props;
+  const { title, stat, icon, visibility } = props;
   const [loading, setLoading] = useState(false)
   const month = useSelector(state => state.monthFilter)
   const year = useSelector(state => state.yearFilter)
@@ -35,6 +35,7 @@ function StatsCard(props) {
   
   return (
     <Stat
+    visibility={visibility}
     w={'10vw'}
     h={'16vh'}
     px={{ base: 2, md: 4 }}
@@ -71,23 +72,26 @@ function StatsCard(props) {
 export default function PaymentsByMonth() {
 
   const paymentStats = useSelector(state => state.payments_by_month)
-  console.log('soy payments stats', paymentStats.data.total_amount)
+  console.log('soy payments stats', paymentStats?.data?.total_amount)
   useEffect(()=>{},[paymentStats])
 
   return (
     <Box h={'92vh'} px={'4vw'} bg={'web.bg'} >
       <HStack columns={{ base: 1, md: 3 }} spacing={{ base: 5, lg: 8 }}>
         <StatsCard
-        title={'Closing Rate'}
-        stat={paymentStats.data.total_amount}
+        title={'Payments'}
+        stat={paymentStats?.data?.total_amount}
         icon={<FaHandsHelping size={'3em'} />}
         />
         <StatsCard
+        visibility='hidden'
+        display='none'
         title={'Payments Amount'}
         // stat={Number(paymentStats.totalCharged)}
         icon={<BsCreditCardFill size={'3em'} />}
         />
         <StatsCard
+        visibility= 'hidden'
         title={'Closing Days (Avg)'}
         // stat={paymentStats.closingDaysAvg}
         icon={<HiReceiptPercent size={'3em'} />}
