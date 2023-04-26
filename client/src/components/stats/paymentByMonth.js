@@ -5,7 +5,9 @@ import {
     StatLabel,
     StatNumber,
     HStack,
-    Spinner
+    Spinner,
+    Show,
+    Hide,
   } from '@chakra-ui/react';
 import { FaHandsHelping } from 'react-icons/fa';
 import { BsCreditCardFill } from 'react-icons/bs';
@@ -71,17 +73,18 @@ function StatsCard(props) {
 export default function PaymentsByMonth() {
 
   const paymentStats = useSelector(state => state.payments_by_month)
-  console.log('soy payments stats', paymentStats.data.total_amount)
+  console.log('soy payments stats', paymentStats?.data?.total_amount)
   useEffect(()=>{},[paymentStats])
 
   return (
     <Box h={'92vh'} px={'4vw'} bg={'web.bg'} >
       <HStack columns={{ base: 1, md: 3 }} spacing={{ base: 5, lg: 8 }}>
         <StatsCard
-        title={'Closing Rate'}
-        stat={paymentStats.data.total_amount}
+        title={'Payments'}
+        stat={paymentStats?.data?.total_amount}
         icon={<FaHandsHelping size={'3em'} />}
         />
+        <Hide>
         <StatsCard
         title={'Payments Amount'}
         // stat={Number(paymentStats.totalCharged)}
@@ -92,6 +95,7 @@ export default function PaymentsByMonth() {
         // stat={paymentStats.closingDaysAvg}
         icon={<HiReceiptPercent size={'3em'} />}
         />
+        </Hide>
       </HStack>
     </Box>
     );
