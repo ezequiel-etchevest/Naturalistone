@@ -72,6 +72,9 @@ import {
 import {
   GET_YEAR_FILTER
 } from './actions-yearFilter'
+import {
+  GET_PAYMENTS_BY_MONTH
+} from './actions.paymentsByMonth';
 
 
 const intialState = {
@@ -107,6 +110,7 @@ const intialState = {
     sellerId: '',
     monthFilter: '',
     yearFilter: '',
+    payments_by_month: [],
 }
 
 function rootReducer (state = intialState, action) {
@@ -375,6 +379,11 @@ function rootReducer (state = intialState, action) {
           return {
             ...state,
             yearFilter: action.payload
+          }
+        case GET_PAYMENTS_BY_MONTH:
+          return {
+            ...state,
+            payments_by_month: action.payload
           }
         default:
             return {

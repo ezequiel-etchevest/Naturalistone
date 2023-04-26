@@ -13,7 +13,7 @@ const projectsRouter = require('./projectsRoutes')
 const customersRouter = require('./customersRoutes')
 const onedriveRouter  = require('./pdfOneDriveRoutes.js')
 const statsByMonthRouter = require('./statsByMonthRouter')
-
+const paymentsByMonthRouter = require('./paymentsByMonthRoutes')
 
 mainRouter.use('/api/login', loginRouter);
 mainRouter.use('/api/seller', sellerRouter);
@@ -28,6 +28,7 @@ mainRouter.use('/api/one-drive-data', onedriveRouter);
 mainRouter.use('/api/project', projectsRouter);
 mainRouter.use('/api/customers', customersRouter);
 mainRouter.use('/api/statsByMonth', statsByMonthRouter);
+mainRouter.use('/api/paymentByMonth', paymentsByMonthRouter);
 
 
 

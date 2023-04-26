@@ -16,6 +16,7 @@ import { getMonthAndYear, getPaymentStatsByMonth } from "../../redux/actions-sta
 import { getMonth } from "../../redux/actions-month";
 import { getMonthFilter } from "../../redux/actions-monthFilter";
 import { getYearFilter } from "../../redux/actions-yearFilter";
+import { getPaymentByMonth } from "../../redux/actions.paymentsByMonth";
   
 const StatsFilterByMonthAndYear = ({user}) => {
     
@@ -44,6 +45,7 @@ const StatsFilterByMonthAndYear = ({user}) => {
     if(selectedMonth !== 0) {
       dispatch(getMonthAndYear(sellerFilterId ? sellerFilterId : sellerId, selectedMonth, selectedYear))
       dispatch(getPaymentStatsByMonth(sellerFilterId ? sellerFilterId : sellerId, selectedMonth, selectedYear))
+      dispatch(getPaymentByMonth(sellerFilterId ? sellerFilterId : sellerId, selectedMonth, selectedYear))
     }
     },[sellers, selectedMonth, selectedYear])
 

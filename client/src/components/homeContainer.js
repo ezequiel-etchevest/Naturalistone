@@ -6,6 +6,7 @@ import StatsFilters from './stats/StatsFilters';
 import { getMonthAndYear, getPaymentStatsByMonth } from "../redux/actions-statsByMonth";
 import TotalStats from "./stats/TotalStats";
 import StatsFilterByMonthAndYear from "./stats/statsMonthAndYear";
+import PaymentsByMonth from "./stats/paymentByMonth";
 
 
 
@@ -27,9 +28,6 @@ const HomeContainer = ({user}) => {
     if(user.length && Object.entries(paymentStats).length === 0){
       dispatch(getPaymentStatsByMonth(user[0].SellerID))
     }
-      //   const handleSpinner = () => {
-      //   setTimeout(()=>{ setSpinner(true)}, 700)
-      // }
       handleSpinner()
 
   }, [dispatch, user, paymentStats, currentMonth])
@@ -77,6 +75,7 @@ const HomeContainer = ({user}) => {
         }
         <CurrentMonthStats user={user}/>
         <TotalStats user={user}/>
+        <PaymentsByMonth user={user}/>
       </Box> 
       </>
     )

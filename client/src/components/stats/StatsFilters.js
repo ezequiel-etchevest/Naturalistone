@@ -12,6 +12,7 @@ import { useEffect, useState } from "react";
 import { getSellers } from "../../redux/actions-sellers";
 import { getMonthAndYear, getPaymentStatsByMonth } from "../../redux/actions-statsByMonth";
 import { getSellerId } from "../../redux/actions-sellerId";
+import { getPaymentByMonth } from "../../redux/actions.paymentsByMonth";
   
 const StatsFilters = ({user}) => {
     
@@ -25,11 +26,13 @@ const StatsFilters = ({user}) => {
       dispatch(getSellerId(3))
       dispatch(getMonthAndYear(3, selectedMonth, selectedYear))
       dispatch(getPaymentStatsByMonth(3, selectedMonth, selectedYear))
+      dispatch(getPaymentByMonth(3, selectedMonth, selectedYear))
     }
     else {
       dispatch(getSellerId(e.target.value))
       dispatch(getMonthAndYear(e.target.value, selectedMonth, selectedYear))
       dispatch(getPaymentStatsByMonth(e.target.value, selectedMonth, selectedYear))
+      dispatch(getPaymentByMonth(e.target.value, selectedMonth, selectedYear))
     }
     }
 

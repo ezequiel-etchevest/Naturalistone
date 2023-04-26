@@ -1,10 +1,7 @@
 const express = require('express')
 const statsByMonthRouter = express.Router()
 const mysqlConnection = require('../db')
-const { getLimitDateMonth,getCurrentMonth} = require('../Controllers/LastMonth')
-const invoicesPayments = require('../Controllers/invoicesPayments')
 const paymentStats = require('../Controllers/paymentStats')
-const uniqueYears = require('../Controllers/uniqueYear')
 
 statsByMonthRouter.get('/sellers/:id', async function(req, res){
     
