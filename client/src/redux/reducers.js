@@ -31,7 +31,11 @@ import {
     PATCH_PRODUCT_NOTES,
     PATCH_DISCONTINUED
      } from './actions-products';
-import { GET_CURRENT_MONTH, GET_PAYMENT_STATS, CLEAN_STATS } from './actions-stats';
+import { 
+  GET_CURRENT_MONTH,
+  GET_PAYMENT_STATS,
+  CLEAN_STATS 
+} from './actions-statsByMonth';
 import { 
     GET_ORDERS,
     GET_ORDERS_BY_ID,
@@ -53,9 +57,24 @@ import {
 } from './actions-projects'
 import {
   GET_CUSTOMERS,
-  GET_CUSTOMERS_BY_ID,
+  GET_CUSTOMER_BY_ID,
   POST_CUSTOMER
 } from './actions-customers'
+import {
+  GET_MONTH
+} from './actions-month'
+import {
+  GET_SELLER_ID
+} from './actions-sellerId'
+import {
+  GET_MONTH_FILTER
+} from './actions-monthFilter'
+import {
+  GET_YEAR_FILTER
+} from './actions-yearFilter'
+import {
+  GET_PAYMENTS_BY_MONTH
+} from './actions.paymentsByMonth';
 
 
 const intialState = {
@@ -87,6 +106,11 @@ const intialState = {
     projects_by_customer_id: [],
     customers: [],
     customers_by_id: [],
+    month: '',
+    sellerId: '',
+    monthFilter: '',
+    yearFilter: '',
+    payments_by_month: [],
 }
 
 function rootReducer (state = intialState, action) {
@@ -130,7 +154,7 @@ function rootReducer (state = intialState, action) {
               projects: [],
               projects_by_customer_id: [],
               customers: [],
-              customers_by_id: [],
+              customer_by_id: [],
             }
         
         case GET_INVOICE_BY_ID:
@@ -309,10 +333,10 @@ function rootReducer (state = intialState, action) {
             ...state,
             customers: action.payload
           }
-        case GET_CUSTOMERS_BY_ID:
+        case GET_CUSTOMER_BY_ID:
           return{
             ...state,
-            customers_by_id: action.payload
+            customer_by_id: action.payload
           }
         case POST_CUSTOMER:
           return{
@@ -335,6 +359,31 @@ function rootReducer (state = intialState, action) {
         case POST_QUOTE:
           return{
             ...state
+          }
+        case GET_MONTH:
+          return {
+            ...state,
+            month: action.payload
+          }
+        case GET_SELLER_ID:
+          return {
+            ...state,
+            sellerId: action.payload
+          }
+        case GET_MONTH_FILTER:
+          return {
+            ...state,
+           monthFilter: action.payload
+          }
+        case GET_YEAR_FILTER:
+          return {
+            ...state,
+            yearFilter: action.payload
+          }
+        case GET_PAYMENTS_BY_MONTH:
+          return {
+            ...state,
+            payments_by_month: action.payload
           }
         default:
             return {

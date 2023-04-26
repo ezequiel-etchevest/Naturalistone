@@ -16,99 +16,71 @@ import {
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import '../../assets/styleSheet.css'
+import { getFiltered } from "../../redux/actions-products";
+import CreateInvoiceProductsList from "./createInvoiceProductsList";
 
 
-const CreateInvoiceModal = ({userId, isOpen, onClose}) => {
+const CreateInvoiceModal = ({ isOpen, onClose, customer, project, onQuotesModalClose, isQuotesModalOpen}) => {
  
-  const { isOpen: isSecondModalOpen, onOpen: onSecondModalOpen, onClose: onSecondModalClose } = useDisclosure()
+  // const { isOpen: isSecondModalOpen, onOpen: onSecondModalOpen, onClose: onSecondModalClose } = useDisclosure()
 
-//   const dispatch = useDispatch()
-  const id = userId
+const dispatch = useDispatch()
+const allProducts = useSelector(state => state.all_products)
 
+useEffect(()=>{
+  if(!allProducts?.length ) dispatch(getFiltered('','','','','','',''))
+  },[allProducts])
+
+
+  const handlePrevious = () => {
+    onQuotesModalClose()
+  }
 
   return(
 <>
-{/* Start Create delivery modal */}
   <Modal 
-    isOpen={isOpen} 
-    // onClose={handleFirstModalClose}
-    size={'6xl'}
+    isOpen={isQuotesModalOpen} 
+    onClose={onQuotesModalClose}
+    size={'5xl'}
     >
     <ModalOverlay />
     <ModalContent 
       bg={'web.sideBar'}
       border={'1px solid'}
       borderColor={'web.border'}
-      height={'80vh'}
-      w={'66vw'}
       >
-      <ModalHeader
-      ml={'1vw'}
-      mt={'3vh'}
-      color={'web.text'}>
-        Create delivery note for Invoice N°
-      </ModalHeader>
+      <ModalHeader></ModalHeader>
       <ModalCloseButton
         color={'web.text2'}
         _hover={{
           color: 'web.text'
-        }} />
-      <ModalBody color={'web.text2'} display={'flex'} justifyContent={'center'}>
-        {/* <DeliveryProductList 
-        invoice_products={invoice_products} 
-        setQuantities={setQuantities}
-        quantities={quantities}
-        errors={errors} 
-        setErrors={setErrors}
-        deliveryID={deliveryID}/> */}
-      </ModalBody>
-      <ModalFooter mb={'1vh'} mr={'1vw'} ml={'2vw'} display={'flex'} flexDir={'row'} justifyContent={'space-between'}>
-        <Text 
-          color={'red.500'}
-          fontSize={'2vh'} 
-          fontWeight={'semibold'}
-        //   visibility={deliveryID_error ? 'visible' : 'hidden'}
-          >
-            *  Registered payments not enough to cover this delivery note </Text>
-        <Box display={'flex'} flexDir={'row'}>
+        }}
+        onClick={onClose} 
+      />
+      <Box color={'white'}>
+        <Text ml={'3vw'} fontSize={'lg'}>Create quote</Text>
+        <ModalBody color={'web.text2'} display={'flex'} justifyContent={'center'} flexDir={'column'} h={'58vh'}>
+          <CreateInvoiceProductsList allProducts={allProducts}/>
+        </ModalBody>
+      </Box>  
+        <ModalFooter mb={'2vh'} display={'flex'} flexDir={'row'} justifyContent={'space-between'} ml={'2vw'} mr={'2vw'}>
         <Button
-          colorScheme={'orange'} 
-          mr={3} 
-        //   onClick={()=>handleSubmit()}
-        //   disabled={disabledConfirm}
+          colorScheme={'orange'}
+          size={'sm'}
+          onClick={()=>handlePrevious()}
           >
-         Submit
+         Previous
         </Button>
-        </Box>
+        <Button
+          colorScheme={'orange'}
+          size={'sm'}
+          // onClick={()=>handleNext()} 
+          >
+         Next
+        </Button>
       </ModalFooter>
     </ModalContent>
   </Modal>
-{/* Finish Create delivery modal */}
-
-{/* Start Render created delivery modal */}
-  <Modal 
-        // isOpen={isSecondModalOpen} 
-    // onClose={handleSecondModalClose}
-    size={'4xl'}
-    >
-    <ModalOverlay />
-    <ModalContent 
-      rounded={'md'} 
-      mt={'2vh'} 
-      mb={'2vh'} 
-      w={'64vw'} 
-      bg={'web.sideBar'} 
-      border={'1px solid'} 
-      borderColor={'web.border'}
-      >
-      <ModalHeader/>
-      <ModalBody color={'web.text2'} w={'100%'} h={'100%'}>
-        {/* <CreateDeliveryNotePdf quantities={quantities} deliveryID={deliveryID} id={id}/> */}
-      </ModalBody>
-      <ModalFooter/>
-    </ModalContent>
-  </Modal>
-{/* Finish Render created delivery modal */}
 </>
 )}
 

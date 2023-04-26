@@ -1,28 +1,39 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import CurrentMonthStats from './stats/CurrentMonthStats';
-import { Highlight, chakra, Box, Divider, HStack } from '@chakra-ui/react';
+import { Highlight, chakra, Box, Divider, Spinner, Center } from '@chakra-ui/react';
 import StatsFilters from './stats/StatsFilters';
-import { getCurrentMonth, getPaymentStats } from "../redux/actions-stats";
+import { getMonthAndYear, getPaymentStatsByMonth } from "../redux/actions-statsByMonth";
 import TotalStats from "./stats/TotalStats";
+import StatsFilterByMonthAndYear from "./stats/statsMonthAndYear";
+import PaymentsByMonth from "./stats/paymentByMonth";
+
 
 
 const HomeContainer = ({user}) => {
+
   const dispatch = useDispatch()
   const currentMonth = useSelector(state => state.current_month)
   const paymentStats = useSelector(state => state.payment_stats)
+  const [ spinner, setSpinner ] = useState(false)
+
+  const handleSpinner = () => {
+    setTimeout(()=>{ setSpinner(true)}, 500)
+  }
 
   useEffect(() => {
     if(user.length && Object.entries(currentMonth).length === 0){
-      dispatch(getCurrentMonth(user[0].SellerID, user[0].Secction7Flag))
+      dispatch(getMonthAndYear(user[0].SellerID))
     }
     if(user.length && Object.entries(paymentStats).length === 0){
-      dispatch(getPaymentStats(user[0].SellerID, user[0].Secction7Flag))
+      dispatch(getPaymentStatsByMonth(user[0].SellerID))
     }
+      handleSpinner()
+
   }, [dispatch, user, paymentStats, currentMonth])
 
-
-  return(
+  if(spinner === true){
+    return(
     <>
       <Box userSelect={'none'} h={'92vh'} ml={'16vw'} bg={'web.bg'} display={'flex'} flexDir={'column'}>
         <chakra.h1
@@ -45,22 +56,34 @@ const HomeContainer = ({user}) => {
         <Divider alignSelf={'center'} w={'78vw'}/>
         {
           user[0].Secction7Flag === 1 ? (
-            <StatsFilters user={user}/>
+            <Box 
+            display={'flex'}
+            flexDirection={'row'}
+            justifyContent={'flex-end'}
+            h={'20vh'}
+            >
+              <StatsFilters user={user}/>
+              <StatsFilterByMonthAndYear user={user}/>
+            </Box>
           ):(
-            <Box>
-            <HStack
-            ml={'2vw'}
-            mr={'2vw'} 
-            h={'17vh'}
-            w={'80vw'}
-            justifyContent={'space-between'}
-            ></HStack></Box>
+            <Box
+            display={'flex'}
+            justifyContent={'flex-end'}>
+              <StatsFilterByMonthAndYear />
+            </Box>
             )
         }
         <CurrentMonthStats user={user}/>
         <TotalStats user={user}/>
+        <PaymentsByMonth user={user}/>
       </Box> 
       </>
     )
-}
+  }else{
+  return(
+    <Center ml={'16vw'} w={'84vw'} bg={'web.bg'} h={'92vh'}>
+      <Spinner thickness={'4px'} size={'xl'} color={'logo.orange'}/>
+    </Center>
+  )
+  }}
 export default HomeContainer;
