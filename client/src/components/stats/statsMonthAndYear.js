@@ -87,7 +87,7 @@ const StatsFilterByMonthAndYear = ({user}) => {
             borderColor: 'logo.orange',
             boxShadow: '0 0.5px 0.5px rgba(229, 103, 23, 0.075)inset, 0 0 5px rgba(255,144,0,0.6)'
           }}>
-            <option value="" disabled hidden>Filter by Months</option>
+            <option value={''} disabled hidden>Filter by Month</option>
               {  
                   months?.map((e, i) => {
                       return(
