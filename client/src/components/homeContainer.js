@@ -1,17 +1,24 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import CurrentMonthStats from './stats/CurrentMonthStats';
-import { Highlight, chakra, Box, Divider, HStack } from '@chakra-ui/react';
+import { Highlight, chakra, Box, Divider, Spinner, Center } from '@chakra-ui/react';
 import StatsFilters from './stats/StatsFilters';
 import { getMonthAndYear, getPaymentStatsByMonth } from "../redux/actions-statsByMonth";
 import TotalStats from "./stats/TotalStats";
 import StatsFilterByMonthAndYear from "./stats/statsMonthAndYear";
 
 
+
 const HomeContainer = ({user}) => {
+
   const dispatch = useDispatch()
   const currentMonth = useSelector(state => state.current_month)
   const paymentStats = useSelector(state => state.payment_stats)
+  const [ spinner, setSpinner ] = useState(false)
+
+  const handleSpinner = () => {
+    setTimeout(()=>{ setSpinner(true)}, 500)
+  }
 
   useEffect(() => {
     if(user.length && Object.entries(currentMonth).length === 0){
@@ -20,10 +27,15 @@ const HomeContainer = ({user}) => {
     if(user.length && Object.entries(paymentStats).length === 0){
       dispatch(getPaymentStatsByMonth(user[0].SellerID))
     }
-  }, [])
+      //   const handleSpinner = () => {
+      //   setTimeout(()=>{ setSpinner(true)}, 700)
+      // }
+      handleSpinner()
 
+  }, [dispatch, user, paymentStats, currentMonth])
 
-  return(
+  if(spinner === true){
+    return(
     <>
       <Box userSelect={'none'} h={'92vh'} ml={'16vw'} bg={'web.bg'} display={'flex'} flexDir={'column'}>
         <chakra.h1
@@ -68,5 +80,11 @@ const HomeContainer = ({user}) => {
       </Box> 
       </>
     )
-}
+  }else{
+  return(
+    <Center ml={'16vw'} w={'84vw'} bg={'web.bg'} h={'92vh'}>
+      <Spinner thickness={'4px'} size={'xl'} color={'logo.orange'}/>
+    </Center>
+  )
+  }}
 export default HomeContainer;

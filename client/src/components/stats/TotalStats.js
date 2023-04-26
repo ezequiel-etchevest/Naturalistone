@@ -24,13 +24,13 @@ function StatsCard(props) {
   useEffect(() => {
     setTimeout(()=> {
       setLoading(false)
-    }, 50)
+    }, 100)
   },[month, year, sellerId])
   
   useEffect(()=> {
     setTimeout(()=> {
       setLoading(true)
-    },1000)
+    }, 500)
   })
   
   return (
