@@ -17,13 +17,21 @@ import { useSelector } from 'react-redux';
 function StatsCard(props) {
   
   const { title, stat, icon } = props;
-  const [loading, setLoading] = useState(true)
-  
+  const [loading, setLoading] = useState(false)
+  const month = useSelector(state => state.monthFilter)
+  const year = useSelector(state => state.yearFilter)
+  const sellerId = useSelector(state => state.sellerId)
+
+  useEffect(() => {
+    setTimeout(()=> {
+      setLoading(false)
+    }, 100)
+  },[month, year, sellerId])
 
   useEffect(()=> {
     setTimeout(()=> {
-      setLoading(false)
-    },1000)
+      setLoading(true)
+    },500)
   })
 
   return (
@@ -46,7 +54,7 @@ function StatsCard(props) {
             {title}
           </StatLabel>
           <StatNumber fontSize={'4xl'} fontWeight={'medium'} >
-            {loading ? <Spinner thickness={'4px'} size={'lg'} color={'logo.orange'}/> : stat?.toLocaleString('en-US')}
+            {loading ? stat?.toLocaleString('en-US') : <Spinner thickness={'4px'} size={'lg'} color={'logo.orange'}/>}
           </StatNumber>
         </Box>
         <Box
@@ -71,17 +79,16 @@ export default function Stats() {
   
   useEffect(()=>{},[currentMonth, paymentStats])
 
-  console.log('soy invoices', invoicesNumber)
   return (
     <Box h={'92vh'} px={'4vw'} bg={'web.bg'} >
       <HStack columns={{ base: 1, md: 3 }} spacing={{ base: 5, lg: 8 }}>
           <StatsCard
-          title={`${month ? month : 'Current Month Sales'} `}
+          title={month ? `${month} Sales` : `Current Month Sales`}
           stat={currentMonth.TotalValue}
           icon={<BiDollar size={'3em'} />}
           /> 
         <StatsCard
-          title={'Current Month Quotes / Paid'}
+          title={month ? `${month} Quotes / Paid` : 'Current Month Quotes / Paid'}
           stat={invoicesNumber}
           icon={<FaSortAmountUpAlt size={'3em'} />}
         />

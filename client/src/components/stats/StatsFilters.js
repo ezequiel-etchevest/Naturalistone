@@ -12,6 +12,7 @@ import { useEffect, useState } from "react";
 import { getSellers } from "../../redux/actions-sellers";
 import { getMonthAndYear, getPaymentStatsByMonth } from "../../redux/actions-statsByMonth";
 import { getSellerId } from "../../redux/actions-sellerId";
+import { getPaymentByMonth } from "../../redux/actions.paymentsByMonth";
   
 const StatsFilters = ({user}) => {
     
@@ -19,27 +20,25 @@ const StatsFilters = ({user}) => {
   const sellers = useSelector(state => state.sellers)
   const selectedMonth = useSelector(state => state.monthFilter)
   const selectedYear = useSelector(state => state.yearFilter)
-  const sellerId = useSelector(state => state.sellerId)
 
   const handleSellerSelect = (e) => {
     if(e.target.value === 'all') {
       dispatch(getSellerId(3))
       dispatch(getMonthAndYear(3, selectedMonth, selectedYear))
       dispatch(getPaymentStatsByMonth(3, selectedMonth, selectedYear))
+      dispatch(getPaymentByMonth(3, selectedMonth, selectedYear))
     }
     else {
       dispatch(getSellerId(e.target.value))
+      dispatch(getMonthAndYear(e.target.value, selectedMonth, selectedYear))
+      dispatch(getPaymentStatsByMonth(e.target.value, selectedMonth, selectedYear))
+      dispatch(getPaymentByMonth(e.target.value, selectedMonth, selectedYear))
     }
     }
 
   useEffect(()=>{
-    if(sellerId !== 0){
-      dispatch(getMonthAndYear(sellerId, selectedMonth, selectedYear))
-      dispatch(getPaymentStatsByMonth(sellerId, selectedMonth, selectedYear))
-    }
     if(!sellers.length) dispatch(getSellers())
-    },[sellers, sellerId])
-
+    },[sellers])
     
   return (
     <Box>
