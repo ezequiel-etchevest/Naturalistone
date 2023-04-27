@@ -121,8 +121,6 @@ const AddPayment = ({pendingAmount}) => {
     setIs100Active(true);
   };
 
-  const [value, setValue] = useState("0")
-
   const invoice = useSelector(state => state.invoice)
   const payments = useSelector(state => state.payment_stats)
 
