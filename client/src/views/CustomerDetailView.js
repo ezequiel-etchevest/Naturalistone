@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import SideBar from "../components/sideBar";
-import { Text, Center, Spinner} from "@chakra-ui/react";
+import { Center, Spinner} from "@chakra-ui/react";
 import { useSelector, useDispatch } from "react-redux";
 import {getEmployeeById } from "../redux/actions-employees";
 import { getCustomerById } from '../redux/actions-customers';

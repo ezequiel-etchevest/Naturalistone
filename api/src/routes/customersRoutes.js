@@ -48,9 +48,9 @@ customersRouter.get('/:id', async function(req, res){
 
 customersRouter.post('/', async function(req, res){
     
-    const {Reference, Phone, Email, DiscountID, Name, LastName, Adress, ZipCode, State} = req.body
+    const {Reference, Phone, Email, DiscountID, Name, LastName, Address, ZipCode, State} = req.body
 
-    query_ = `INSERT INTO Customers (Reference, Phone, Email, DiscountID, Name, LastName, Adress, ZipCode, State) VALUES ("${Reference}", "${Phone}", "${Email}", "${DiscountID}", "${Name}", "${LastName}", "${Adress}", "${ZipCode}", "${State}")`
+    query_ = `INSERT INTO Customers (Reference, Phone, Email, DiscountID, Name, LastName, Address, ZipCode, State) VALUES ("${Reference}", "${Phone}", "${Email}", "${DiscountID}", "${Name}", "${LastName}", "${Address}", "${ZipCode}", "${State}")`
             
     try{
          mysqlConnection.query(query_, function(error, results, fields){

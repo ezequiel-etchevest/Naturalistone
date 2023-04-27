@@ -7,34 +7,33 @@ export const POST_CUSTOMER = 'POST_CUSTOMER';
 
 export function getCustomers(Name,Company){
     
-    return async function(dispatch){
-        try{ 
-            let {data} = await axios.get(`/customers?name=${Name}&Company=${Company}`)
-            dispatch(
-            {
-                type: GET_CUSTOMERS,
-                payload: data
-            })
-        }catch(error){
-            console.log({error})
-        }
+  return async function(dispatch){
+    try{ 
+      let {data} = await axios.get(`/customers?name=${Name}&Company=${Company}`)
+        dispatch(
+          {
+            type: GET_CUSTOMERS,
+            payload: data
+          })
+      }catch(error){
+        console.log({error})
+      }
     }
 }
 
 export function getCustomerById(customerId){
 
-    return async function(dispatch){
-        try{ 
-
-            let {data} = await axios.get(`/customers/${customerId}`)
-            dispatch(
-            {
-                type: GET_CUSTOMER_BY_ID,
-                payload: data
-            })
-        }catch(error){
-            console.log({error})
-        }
+  return async function(dispatch){
+    try{ 
+      let {data} = await axios.get(`/customers/${customerId}`)
+        dispatch(
+          {
+            type: GET_CUSTOMER_BY_ID,
+            payload: data
+          })
+      }catch(error){
+        console.log({error})
+      }
     }
 }
 
@@ -42,7 +41,8 @@ export function createCustomer(customerDetails){
 
   return async function(dispatch){
       try{
-          let { data } = await axios.post(`/customers`, customerDetails)
+          let { response } = await axios.post(`/customers`, customerDetails)
+          let {data} = await axios.get(`/customers?name=${''}&Company=${''}`)
 
               dispatch(
               {

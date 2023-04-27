@@ -12,6 +12,7 @@ import { useState } from "react";
 import '../../assets/styleSheet.css';
 import {AiOutlineClear} from 'react-icons/ai';
 import { getCustomers } from "../../redux/actions-customers";
+import { CreateNewCustomer } from "./createCustomer";
 
 const CustomerFilters = () => {
 
@@ -135,6 +136,7 @@ const CustomerFilters = () => {
         justifyContent={'flex-end'}>  
             
         </Box>
+        <CreateNewCustomer/>
         <Divider orientation={'vertical'} h={'5vh'}/>
         <Tooltip placement={'bottom-start'} label={'Clear all filters'} fontWeight={'hairline'}>      
           <IconButton

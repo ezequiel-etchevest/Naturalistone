@@ -336,7 +336,8 @@ function rootReducer (state = intialState, action) {
           }
         case POST_CUSTOMER:
           return{
-            ...state
+            ...state,
+            customers: action.payload
           }
         case GET_PROJECTS:
           return{
