@@ -12,9 +12,8 @@ import {
   Center,
   } from '@chakra-ui/react'
 import { useNavigate } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux'
-//import { getInvoiceById, getInvoiceProducts } from '../../redux/actions-invoices';
-//import { cleanStatePayments } from '../../redux/actions-payments';
+import { useDispatch } from 'react-redux'
+import { getCustomerById } from '../../redux/actions-customers';
 import { useEffect } from 'react';
 
 
@@ -24,16 +23,14 @@ const ModelTr = ({e}) => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
-  // const handleClick = () => {
-  //   dispatch(getInvoiceById(e.Naturali_Invoice))
-  //   dispatch(getInvoiceProducts(e.Naturali_Invoice))
-  //   dispatch( cleanStatePayments())
-  //   navigate(`/quotes/${e.Naturali_Invoice}`)
-  // }
+  const handleClick = () => {
+    dispatch(getCustomerById(e.CustomerID))
+    navigate(`/customers/${e.CustomerID}`)
+  }
 
   return(
     <Tr 
-    //onClick={() => handleClick()} 
+    onClick={() => handleClick()} 
     cursor={'pointer'} 
     key={e.CustomerID}
     _hover={{

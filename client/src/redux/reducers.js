@@ -57,7 +57,7 @@ import {
 } from './actions-projects'
 import {
   GET_CUSTOMERS,
-  GET_CUSTOMERS_BY_ID,
+  GET_CUSTOMER_BY_ID,
   POST_CUSTOMER
 } from './actions-customers'
 import {
@@ -100,9 +100,9 @@ const intialState = {
     deliveryID_error:'',
     delivery_by_id:[],
     projects: [],
-    projects_by_customer_id: [],
+    projects_by_customer_id: {},
     customers: [],
-    customers_by_id: [],
+    customer_by_id: {},
     month: '',
     sellerId: '',
     monthFilter: '',
@@ -148,9 +148,9 @@ function rootReducer (state = intialState, action) {
               delivery_by_id:[],
               seller_values:[],
               projects: [],
-              projects_by_customer_id: [],
+              projects_by_customer_id: {},
               customers: [],
-              customers_by_id: [],
+              customer_by_id: {},
             }
         
         case GET_INVOICE_BY_ID:
@@ -329,10 +329,10 @@ function rootReducer (state = intialState, action) {
             ...state,
             customers: action.payload
           }
-        case GET_CUSTOMERS_BY_ID:
+        case GET_CUSTOMER_BY_ID:
           return{
             ...state,
-            customers_by_id: action.payload
+            customer_by_id: action.payload
           }
         case POST_CUSTOMER:
           return{

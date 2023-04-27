@@ -38,7 +38,7 @@ customersRouter.get('/:id', async function(req, res){
                 res.status(400).json(error);
             } else {
                 console.log('Data OK')
-                res.status(200).json(results);
+                res.status(200).json(results[0]);
             }
         });
     } catch(error){
