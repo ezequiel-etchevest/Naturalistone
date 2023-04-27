@@ -28,8 +28,8 @@ import { stampInvoice } from '../../../redux/actions-invoices';
     dispatch(stampInvoice(id))
     onClose()
   }
-  
-  if(invoice[0].Payment_Stamp === 0){
+  console.log(invoice[0].Payment_Stamp)
+  if(invoice[0].Payment_Stamp === "0"){
 
     return (
       <>

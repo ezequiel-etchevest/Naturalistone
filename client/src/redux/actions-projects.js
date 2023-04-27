@@ -24,7 +24,7 @@ export function getProjects(){
 export function getCustomerProjects(idCustomer){
     return async function(dispatch){
         try{ 
-
+          
             let {data} = await axios.get(`/projects/${idCustomer}`)
             dispatch(
             {

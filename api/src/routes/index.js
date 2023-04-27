@@ -25,7 +25,7 @@ mainRouter.use('/api/orders', ordersRouter);
 mainRouter.use('/api/invoiceErrors', invoiceErrorsRouter);
 mainRouter.use('/api/delivery', deliveryRouter);
 mainRouter.use('/api/one-drive-data', onedriveRouter);
-mainRouter.use('/api/project', projectsRouter);
+mainRouter.use('/api/projects', projectsRouter);
 mainRouter.use('/api/customers', customersRouter);
 mainRouter.use('/api/statsByMonth', statsByMonthRouter);
 mainRouter.use('/api/paymentByMonth', paymentsByMonthRouter);
