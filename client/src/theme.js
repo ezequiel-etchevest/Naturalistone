@@ -16,6 +16,9 @@ export const naturali_theme = extendTheme({
             text: '#F0F6FC',
             text2: '#8B949E',
             error: "#F56565",
+        },
+        gray: {
+            gray1: '#4A5568',
         }
     },
     fonts: {

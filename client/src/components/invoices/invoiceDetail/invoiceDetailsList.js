@@ -1,4 +1,5 @@
 import { Box, Text } from "@chakra-ui/react"
+import { useSelector } from "react-redux"
 
 const InvoiceDetailList = ({invoice, payments}) => {
   
@@ -156,7 +157,7 @@ const InvoiceDetailList = ({invoice, payments}) => {
                   fontSize={'2.05vh'} 
                   fontWeight={'bold'}>
                   $ {payments.paymentsMath  ? (
-                   Number(payments.paymentsMath.PendingAmount).toLocaleString('en-US')
+                   Number(payments?.paymentsMath?.PendingAmount).toLocaleString('en-US')
                   ):(
                     invoice[0].Value.toLocaleString('en-US')
                     )
