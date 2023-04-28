@@ -145,6 +145,8 @@ const AddPayment = ({pendingAmount}) => {
     return
   }
 
+  const value = payments?.paymentsMath?.PendingAmount ?? invoice[0].Value
+
   return(
     <>
       <Tooltip label={'Add payment'} fontWeight={'hairline'}>
@@ -241,6 +243,7 @@ const AddPayment = ({pendingAmount}) => {
             color={'web.text2'}
             onChange={(e)=>handleInput(e)} 
             min={0} 
+            max={value}
             precision={2}>
               <NumberInputField
               placeholder={'0.00'}
