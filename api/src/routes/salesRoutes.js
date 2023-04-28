@@ -249,16 +249,17 @@ salesRouter.patch('/cancelquote/:id', async function(req, res){
 
 salesRouter.get('/values/seller', async function(req, res){
 
-    query_ =   `SELECT Sales.*, Projects.*, Customers.*, Payments.idPayments, Seller.FirstName, Seller.LastName, Seller.SellerReference,
+    query_ =   `SELECT Sales.*, Projects.*, Customers.*, Payments.idPayments, Seller.FirstName, Seller.LastName, Seller.SellerID, Seller.SellerReference,
                 GROUP_CONCAT(
                 CONCAT(Payments.idPayments,';',Payments.Amount,';',Payments.Date))AS Payments FROM Sales 
                 LEFT JOIN Projects ON Sales.ProjectID = Projects.idProjects
                 LEFT JOIN Customers ON Projects.CustomerID = Customers.CustomerID
                 LEFT JOIN Payments ON Sales.Naturali_Invoice = Payments.InvoiceID 
-                LEFT JOIN Seller ON Sales.SellerID = Seller.SellerID 
+                LEFT JOIN Seller ON Sales.SellerID = Seller.SellerID
+                WHERE Sales.SellerID IS NOT NULL
                 GROUP BY Sales.Naturali_Invoice
-                ORDER BY Sales.InvoiceDate DESC` 
-            
+                ORDER BY Sales.InvoiceDate DESC`
+
     try{
          mysqlConnection.query(query_, function(error, results, fields){
             if(error) throw error;
@@ -266,7 +267,6 @@ salesRouter.get('/values/seller', async function(req, res){
                 console.log('Error en salesRoutes.get /values')
                 res.status(200).json({ estado: false, data: {}});
             } else {
-                console.log('Data OK')
                 let values = uniqueFormatNames(results)
                 res.status(200).json(values);
             }

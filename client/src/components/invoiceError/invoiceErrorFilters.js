@@ -112,22 +112,22 @@ const InvoiceErrorFilters = ({user, sellers}) => {
             </Box>
             {
               (user[0].Secction7Flag === 1) ?
-              <Select
-                onChange={(e)=>handleClickSeller(e)}
-                variant='outline' 
-                w={'12vw'}
-                h={'4.4vh'}
-                fontSize={'xs'}            
-                bg={'web.sideBar'}
-                color={'web.text2'}
-                borderColor={'web.border'}
-                cursor={'pointer'}
-                value={filter.sellerID}
-                display={user[0].Secction7Flag === 1 ? 'unset' : 'none'}
-                _focus={{
-                  borderColor: 'logo.orange',
-                  boxShadow: '0 0.5px 0.5px rgba(229, 103, 23, 0.075)inset, 0 0 5px rgba(255,144,0,0.6)'
-                }}>              
+                <Select
+                  onChange={(e)=>handleClickSeller(e)}
+                  mb={'0.5vh'}
+                  w={'12vw'}
+                  minH={'4.5vh'}
+                  variant="unstyled"
+                  textColor={'web.text2'}
+                  _placeholder={{ fontFamily: 'body', fontWeight: 'inherit', textColor: 'inherit' }}
+                  size={"sm"}
+                  borderBottomWidth={"2px"}
+                  borderBottomColor={'web.text2'}
+                  _hover={{borderColor: 'web.border'}}
+                  cursor={'pointer'}
+                  value={filter.sellerID}
+                  display={user[0].Secction7Flag === 1 ? 'unset' : 'none'}
+                >
                 <option value='' className="options"> Select Seller</option>
                {
                   sellers.length ?
@@ -144,22 +144,22 @@ const InvoiceErrorFilters = ({user, sellers}) => {
               }
               {
               (user[0].Secction7Flag === 1) ?
-              <Select
-                onChange={(e)=>handleClickType(e)}
-                variant='outline' 
-                w={'12vw'}
-                h={'4.4vh'}
-                fontSize={'xs'}            
-                bg={'web.sideBar'}
-                color={'web.text2'}
-                borderColor={'web.border'}
-                cursor={'pointer'}
-                value={filter.type}
-                display={user[0].Secction7Flag === 1 ? 'unset' : 'none'}
-                _focus={{
-                  borderColor: 'logo.orange',
-                  boxShadow: '0 0.5px 0.5px rgba(229, 103, 23, 0.075)inset, 0 0 5px rgba(255,144,0,0.6)'
-                }}>  
+                <Select
+                  onChange={(e)=>handleClickType(e)}
+                  mb={'0.5vh'}
+                  w={'12vw'}
+                  minH={'4.5vh'}
+                  variant="unstyled"
+                  textColor={'web.text2'}
+                  _placeholder={{ fontFamily: 'body', fontWeight: 'inherit', textColor: 'inherit' }}
+                  size={"sm"}
+                  borderBottomWidth={"2px"}
+                  borderBottomColor={'web.text2'}
+                  _hover={{borderColor: 'web.border'}}
+                  cursor={'pointer'}
+                  value={filter.type}
+                  display={user[0].Secction7Flag === 1 ? 'unset' : 'none'}
+                >
                   <option value={''} className="options">Select Type</option>
                   <option value={'Order'} className="options">Orders</option>
                   <option value={'Quote'} className="options">Quotes</option>

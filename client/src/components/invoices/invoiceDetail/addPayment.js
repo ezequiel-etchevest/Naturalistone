@@ -204,37 +204,12 @@ const AddPayment = ({pendingAmount}) => {
           </Select>
           </FormControl>
           <FormControl mt={'2vh'}  isRequired>
-            <Box 
+            <Box
+              mt={8}
               display={'flex'} 
               flexDirection={'row'}
             >
               <FormLabel color={'web.text'}>Amount</FormLabel>
-              <Box 
-                display={'flex'} 
-                justifyContent={'flex-end'} 
-                width={'100%'}
-              >
-                <Button
-                onClick={()=>handle50Toggle()}
-                  colorScheme={is50Active ? 'orange' : ''} 
-                  color={'web.text'}
-                  mr={3}
-                  h={6}
-                  p={2}
-                  >
-                  50%
-                </Button>
-                <Button
-                  onClick={()=>handle100Toggle()}
-                  colorScheme={is100Active ? 'orange' : ''} 
-                  color={'web.text'}
-                  h={6}
-                  p={2}
-                  mr={3} 
-                >
-                  100%
-                </Button>
-              </Box>
             </Box>
             <NumberInput
             clampValueOnBlur={true}
@@ -258,6 +233,33 @@ const AddPayment = ({pendingAmount}) => {
               ):(
                 null
               )}
+              <Box 
+                display={'flex'} 
+                justifyContent={'flex-start'} 
+                width={'100%'}
+                mt={2}
+              >
+                <Button
+                onClick={()=>handle50Toggle()}
+                  colorScheme={is50Active ? 'orange' : ''} 
+                  color={'web.text'}
+                  mr={3}
+                  h={6}
+                  p={2}
+                  >
+                  50%
+                </Button>
+                <Button
+                  onClick={()=>handle100Toggle()}
+                  colorScheme={is100Active ? 'orange' : ''} 
+                  color={'web.text'}
+                  h={6}
+                  p={2}
+                  mr={3} 
+                >
+                  100%
+                </Button>
+              </Box>
           </ModalBody>
           <ModalFooter>
             <Button

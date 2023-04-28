@@ -72,21 +72,21 @@ const StatsFilterByMonthAndYear = ({user}) => {
             display={'flex'}
             justifyContent={'flex-end'}
           > 
-          <Select
-          defaultValue=""
-          onChange={(e)=>handleSellerByMonth(e)}
-          w={'15vw'}
-          variant='outline' 
-          h={'4.4vh'}
-          fontSize={'xs'}            
-          bg={'web.sideBar'}
-          color={'web.text2'}
-          borderColor={'web.border'}
-          cursor={'pointer'}
-          _focus={{
-            borderColor: 'logo.orange',
-            boxShadow: '0 0.5px 0.5px rgba(229, 103, 23, 0.075)inset, 0 0 5px rgba(255,144,0,0.6)'
-          }}>
+            <Select
+              defaultValue=""
+              onChange={(e)=>handleSellerByMonth(e)}
+              mb={'0.5vh'}
+              w={'13vw'}
+              minH={'4.5vh'}
+              variant="unstyled"
+              textColor={'web.text2'}
+              _placeholder={{ fontFamily: 'body', fontWeight: 'inherit', textColor: 'inherit' }}
+              size={"sm"}
+              borderBottomWidth={"2px"}
+              borderBottomColor={'web.text2'}
+              cursor={'pointer'}
+              _hover={{borderColor: 'web.border'}}
+            >
             <option value={''} disabled hidden>Filter by Month</option>
               {  
                   months?.map((e, i) => {
@@ -98,25 +98,25 @@ const StatsFilterByMonthAndYear = ({user}) => {
           </Select>
           </Box>
           <Box 
-            w={'10vw'} 
+            w={'12vw'} 
             display={'flex'}
             justifyContent={'flex-end'}
           > 
           <Select
-          defaultValue=""
-          onChange={(e)=>handleSelectYear(e)}
-          w={'10vw'}
-          variant='outline' 
-          h={'4.4vh'}
-          fontSize={'xs'}            
-          bg={'web.sideBar'}
-          color={'web.text2'}
-          borderColor={'web.border'}
-          cursor={'pointer'}
-          _focus={{
-            borderColor: 'logo.orange',
-            boxShadow: '0 0.5px 0.5px rgba(229, 103, 23, 0.075)inset, 0 0 5px rgba(255,144,0,0.6)'
-          }}>
+            defaultValue=""
+            onChange={(e)=>handleSelectYear(e)}
+            mb={'0.5vh'}
+            w={'12vw'}
+            minH={'4.5vh'}
+            variant="unstyled"
+            textColor={'web.text2'}
+            _placeholder={{ fontFamily: 'body', fontWeight: 'inherit', textColor: 'inherit' }}
+            size={"sm"}
+            borderBottomWidth={"2px"}
+            borderBottomColor={'web.text2'}
+            cursor={'pointer'}
+            _hover={{borderColor: 'web.border'}}
+            > 
             <option value="" disabled hidden>Filter by Year</option>
               {  
                   years.invoiceDates?.map((e, i) => {
