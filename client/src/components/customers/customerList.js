@@ -38,12 +38,18 @@ const ModelTr = ({e}) => {
       color: 'logo.orange'
       }}
     >
-      <Td fontSize={'xs'} textAlign={'match-parent'}>{e.Contact_Name}</Td>
-      <Td fontSize={'xs'} textAlign={'match-parent'}>{e.Company ? e.Company : '-'}</Td>
-      <Td fontSize={'xs'} textAlign={'match-parent'}>{e.State ? e.State : '-'}</Td>
-      <Td fontSize={'xs'} textAlign={'center'}>{e.Phone ? e.Phone : '-'}</Td>
-      <Td fontSize={'xs'} textAlign={'center'}>{e.Email ? e.Email : '-'}</Td>
-      <Td fontSize={'xs'} textAlign={'center'}>{e.DiscountID ? e.DiscountID :'-'}</Td>
+      <Td fontSize={'xs'} maxW={'6vw'} textAlign={'match-parent'}>{e.Contact_Name}</Td>
+      <Td fontSize={'xs'} maxW={'10vw'} textAlign={'match-parent'}>{e.Company ? e.Company : '-'}</Td>
+      <Td fontSize={'xs'} maxW={'6vw'} textAlign={'match-parent'}>{e.Email ? e.Email.toLowerCase() : '-'}</Td>
+      {
+        e.Phone ? (
+          <Td fontSize={'xs'} maxW={'6vw'} textAlign={'end'}>{ e.Phone}</Td>
+        ):(
+          <Td fontSize={'xs'} maxW={'6vw'} textAlign={'center'}>{'-'}</Td>
+        )
+      }
+      
+      <Td fontSize={'xs'} maxW={'3vw'} textAlign={'center'}>{e.DiscountID ? e.DiscountID :'-'}</Td>
     </Tr>
   )
 }
@@ -101,16 +107,15 @@ useEffect(()=>{
     >
     {
       customers.length ? (
-        <TableContainer>
+        <TableContainer  maxW={'80vw'}>
           <Table color={'web.text'}variant={'simple'} size={'sm'}>
             <Thead h={'6vh'}>
               <Tr>
-                  <Th color={'web.text2'} textAlign={'start'}>Full Name</Th>
-                  <Th color={'web.text2'} textAlign={'start'}>Company</Th>
-                  <Th color={'web.text2'} textAlign={'start'}>State</Th>
-                  <Th color={'web.text2'} textAlign={'center'}>Main Phone</Th>
-                  <Th color={'web.text2'} textAlign={'center'}>E-mail</Th>
-                  <Th color={'web.text2'} textAlign={'center'}>Discount</Th>
+                  <Th color={'web.text2'} maxW={'6vw'} textAlign={'center'}>Full Name</Th>
+                  <Th color={'web.text2'} maxW={'10vw'} textAlign={'center'}>Company</Th>
+                  <Th color={'web.text2'} maxW={'6vw'} textAlign={'center'}>E-mail</Th>
+                  <Th color={'web.text2'} maxW={'6vw'} textAlign={'center'}>Main Phone</Th>
+                  <Th color={'web.text2'} maxW={'3vw'} textAlign={'center'}>Discount</Th>
                 </Tr>
               </Thead>
               <Tbody >
