@@ -5,11 +5,11 @@ export const GET_CUSTOMER_BY_ID = 'GET_CUSTOMERS_BY_ID';
 export const POST_CUSTOMER = 'POST_CUSTOMER';
 
 
-export function getCustomers(Name,Company){
+export function getCustomers(search){
     
   return async function(dispatch){
     try{ 
-      let {data} = await axios.get(`/customers?name=${Name}&Company=${Company}`)
+      let {data} = await axios.get(`/customers?search=${search}`)
         dispatch(
           {
             type: GET_CUSTOMERS,
@@ -41,7 +41,7 @@ export function createCustomer(customerDetails){
 
   return async function(dispatch){
       try{
-          let { response } = await axios.post(`/customers`, customerDetails)
+          let { } = await axios.post(`/customers`, customerDetails)
           let {data} = await axios.get(`/customers?name=${''}&Company=${''}`)
 
               dispatch(

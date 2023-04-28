@@ -38,8 +38,9 @@ const ModelTr = ({e}) => {
       color: 'logo.orange'
       }}
     >
-      <Td fontSize={'xs'} textAlign={'match-parent'}>{e.LastName ?`${e.Name} ${e.LastName}` : '-'}</Td>
-      <Td fontSize={'xs'} textAlign={'match-parent'}>{e.Reference ? e.Reference : '-'}</Td>
+      <Td fontSize={'xs'} textAlign={'match-parent'}>{e.Contact_Name}</Td>
+      <Td fontSize={'xs'} textAlign={'match-parent'}>{e.Company ? e.Company : '-'}</Td>
+      <Td fontSize={'xs'} textAlign={'match-parent'}>{e.State ? e.State : '-'}</Td>
       <Td fontSize={'xs'} textAlign={'center'}>{e.Phone ? e.Phone : '-'}</Td>
       <Td fontSize={'xs'} textAlign={'center'}>{e.Email ? e.Email : '-'}</Td>
       <Td fontSize={'xs'} textAlign={'center'}>{e.DiscountID ? e.DiscountID :'-'}</Td>
@@ -105,7 +106,8 @@ useEffect(()=>{
             <Thead h={'6vh'}>
               <Tr>
                   <Th color={'web.text2'} textAlign={'start'}>Full Name</Th>
-                  <Th color={'web.text2'} textAlign={'start'} >Company</Th>
+                  <Th color={'web.text2'} textAlign={'start'}>Company</Th>
+                  <Th color={'web.text2'} textAlign={'start'}>State</Th>
                   <Th color={'web.text2'} textAlign={'center'}>Main Phone</Th>
                   <Th color={'web.text2'} textAlign={'center'}>E-mail</Th>
                   <Th color={'web.text2'} textAlign={'center'}>Discount</Th>
