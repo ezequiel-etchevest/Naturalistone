@@ -50,7 +50,7 @@ customersRouter.post('/', async function(req, res){
     
     const {Reference, Phone, Email, DiscountID, Name, LastName, Address, ZipCode, State} = req.body
 
-    query_ = `INSERT INTO Customers (Reference, Phone, Email, DiscountID, Name, LastName, Address, ZipCode, State) VALUES ("${Reference}", "${Phone}", "${Email}", "${DiscountID}", "${Name}", "${LastName}", "${Address}", "${ZipCode}", "${State}")`
+    query_ = `INSERT INTO Customers (Reference, Phone, Email, DiscountID, Name, LastName, Address, ZipCode, State) VALUES ("${Reference}", "${Phone}", "${Email}", "${DiscountID}", "${Name}",y "${Address}", "${ZipCode}", "${State}")`
             
     try{
          mysqlConnection.query(query_, function(error, results, fields){
