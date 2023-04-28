@@ -103,9 +103,9 @@ const intialState = {
     deliveryID_error:'',
     delivery_by_id:[],
     projects: [],
-    projects_by_customer_id: [],
+    projects_by_customer_id: {},
     customers: [],
-    customers_by_id: [],
+    customer_by_id: {},
     month: '',
     sellerId: '',
     monthFilter: '',
@@ -152,9 +152,9 @@ function rootReducer (state = intialState, action) {
               delivery_by_id:[],
               seller_values:[],
               projects: [],
-              projects_by_customer_id: [],
+              projects_by_customer_id: {},
               customers: [],
-              customer_by_id: [],
+              customer_by_id: {},
             }
         
         case GET_INVOICE_BY_ID:
@@ -340,7 +340,8 @@ function rootReducer (state = intialState, action) {
           }
         case POST_CUSTOMER:
           return{
-            ...state
+            ...state,
+            customers: action.payload
           }
         case GET_PROJECTS:
           return{
