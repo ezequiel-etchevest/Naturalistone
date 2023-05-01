@@ -18,7 +18,7 @@ const HomeContainer = ({user}) => {
   const [ spinner, setSpinner ] = useState(false)
 
   const handleSpinner = () => {
-    setTimeout(()=>{ setSpinner(true)}, 500)
+    setTimeout(()=>{ setSpinner(true)}, 800)
   }
 
   useEffect(() => {

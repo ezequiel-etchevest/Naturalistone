@@ -31,7 +31,7 @@ function StatsCard(props) {
   useEffect(()=> {
     setTimeout(()=> {
       setLoading(true)
-    }, 700)
+    }, 800)
   })
   
   return (
