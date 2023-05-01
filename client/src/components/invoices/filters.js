@@ -227,22 +227,6 @@ const Filters = ({user, seller_invoices, setFocusFilter, seller_values, customer
             w={'24vw'} 
             display={'flex'} 
             justifyContent={validateSeller() === true ? 'space-between' : 'flex-end'}>  
-            {/* <Select
-              onChange={(e)=>handleSellerSelect(e)}
-              display={validateSeller() === true ? 'unset' : 'none' }
-              w={'13vw'}
-              variant='outline' 
-              h={'4.4vh'}
-              fontSize={'xs'}            
-              bg={'web.sideBar'}
-              color={'web.text2'}
-              borderColor={'web.border'}
-              cursor={'pointer'}
-              value={inputValues.selectSeller}
-              _focus={{
-                borderColor: 'logo.orange',
-                boxShadow: '0 0.5px 0.5px rgba(229, 103, 23, 0.075)inset, 0 0 5px rgba(255,144,0,0.6)'
-              }}> */}
             <Select
               defaultValue=""
               onChange={(e)=>handleSellerSelect(e)}
@@ -265,7 +249,6 @@ const Filters = ({user, seller_invoices, setFocusFilter, seller_values, customer
                 
                 validateSeller() === true ? (
                   matchedSellers?.map((e, i) => {
-                    console.log('soy e en map', e)
                       return(
                         <option key={i} className={'options'} value={e.sellerID}>{e.name}</option>
                   )})
@@ -273,20 +256,6 @@ const Filters = ({user, seller_invoices, setFocusFilter, seller_values, customer
                   ): ( null)
               }
             </Select>
-            {/* <Select
-              onChange={(e)=>handleTimeSelect(e)} 
-              w={'9vw'}
-              variant='outline' 
-              h={'4.4vh'}
-              fontSize={'xs'}            
-              bg={'web.sideBar'}
-              color={'web.text2'}
-              borderColor={'web.border'}
-              cursor={'pointer'}
-              _focus={{
-                borderColor: 'logo.orange',
-                boxShadow: '0 0.5px 0.5px rgba(229, 103, 23, 0.075)inset, 0 0 5px rgba(255,144,0,0.6)'
-              }}> */}
               <Select
                 defaultValue=""
                 onChange={(e)=>handleTimeSelect(e)}
