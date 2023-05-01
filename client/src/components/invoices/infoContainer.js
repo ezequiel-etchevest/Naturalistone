@@ -7,7 +7,7 @@ const InfoContainer = ({seller_invoices, user, focusFilter, setFocusFilter, sell
     const [ spinner, setSpinner ] = useState(false)
 
     const handleSpinner = () => {
-        setTimeout(()=>{ setSpinner(true)}, 500)
+        setTimeout(()=>{ setSpinner(true)}, 700)
       }
 
     useEffect(()=>{

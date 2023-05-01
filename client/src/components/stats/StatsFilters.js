@@ -1,5 +1,5 @@
 import { 
-    Box, 
+  Box, 
     HStack, 
     IconButton,
     Select,
@@ -7,25 +7,32 @@ import {
     Tooltip,
     } from "@chakra-ui/react";
 import '../../assets/styleSheet.css';
-import {AiOutlineClear} from 'react-icons/ai';
 import { useSelector, useDispatch } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { getSellers } from "../../redux/actions-sellers";
-import { getCurrentMonth, getPaymentStats } from "../../redux/actions-stats";
+import { getMonthAndYear, getPaymentStatsByMonth } from "../../redux/actions-statsByMonth";
+import { getSellerId } from "../../redux/actions-sellerId";
+import { getPaymentByMonth } from "../../redux/actions.paymentsByMonth";
   
 const StatsFilters = ({user}) => {
     
   const dispatch = useDispatch()
   const sellers = useSelector(state => state.sellers)
+  const selectedMonth = useSelector(state => state.monthFilter)
+  const selectedYear = useSelector(state => state.yearFilter)
 
   const handleSellerSelect = (e) => {
     if(e.target.value === 'all') {
-      dispatch(getCurrentMonth(3, 1))
-      dispatch(getPaymentStats(3, 1))
+      dispatch(getSellerId(3))
+      dispatch(getMonthAndYear(3, selectedMonth, selectedYear))
+      dispatch(getPaymentStatsByMonth(3, selectedMonth, selectedYear))
+      dispatch(getPaymentByMonth(3, selectedMonth, selectedYear))
     }
     else {
-      dispatch(getCurrentMonth(Number(e.target.value), 0))
-      dispatch(getPaymentStats(Number(e.target.value), 0))
+      dispatch(getSellerId(e.target.value))
+      dispatch(getMonthAndYear(e.target.value, selectedMonth, selectedYear))
+      dispatch(getPaymentStatsByMonth(e.target.value, selectedMonth, selectedYear))
+      dispatch(getPaymentByMonth(e.target.value, selectedMonth, selectedYear))
     }
     }
 
@@ -39,7 +46,7 @@ const StatsFilters = ({user}) => {
       ml={'2vw'}
       mr={'2vw'} 
       h={'17vh'}
-      w={'80vw'}
+      w={'12vw'}
       justifyContent={'space-between'}
       >
       {/*Inputs*/}
@@ -51,7 +58,7 @@ const StatsFilters = ({user}) => {
         </Box>
       {/*Selects */}
         <Box 
-        w={'28vw'} 
+        w={'20vw'} 
         display={'flex'}
         justifyContent={'flex-end'}
         > 
@@ -83,25 +90,6 @@ const StatsFilters = ({user}) => {
               }
             </Select>
           </Box>
-          <Divider orientation={'vertical'} h={'5vh'}/>
-          <Tooltip placement={'bottom-start'} label={'Clear all filters'} fontWeight={'hairline'}>      
-            <IconButton
-            disabled={true}
-            icon={ <AiOutlineClear/>}
-            variant={'unstyled'} 
-            display={'flex'} 
-            borderRadius={'sm'} 
-            placeContent={'center'}
-            alignItems={'center'}
-            color={'web.text2'} 
-            _hover={{
-               color: 'logo.orange'
-               }}
-            _active={{
-            }}
-            >
-            </IconButton>
-          </Tooltip>   
       </HStack>
     </Box>
       )

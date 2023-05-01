@@ -4,21 +4,39 @@ import {
     Stat,
     StatLabel,
     StatNumber,
-    HStack
+    HStack,
+    Spinner
   } from '@chakra-ui/react';
 import { FaHandsHelping } from 'react-icons/fa';
 import { BsCreditCardFill } from 'react-icons/bs';
 import { HiReceiptPercent } from 'react-icons/hi2';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
   
 function StatsCard(props) {
     
   const { title, stat, icon } = props;
+  const [loading, setLoading] = useState(false)
+  const month = useSelector(state => state.monthFilter)
+  const year = useSelector(state => state.yearFilter)
+  const sellerId = useSelector(state => state.sellerId)
+
+  useEffect(() => {
+    setTimeout(()=> {
+      setLoading(false)
+    }, 100)
+  },[month, year, sellerId])
+  
+  useEffect(()=> {
+    setTimeout(()=> {
+      setLoading(true)
+    }, 500)
+  })
   
   return (
     <Stat
     w={'10vw'}
+    h={'16vh'}
     px={{ base: 2, md: 4 }}
     py={'5'}
     border={'1px solid'}
@@ -35,7 +53,7 @@ function StatsCard(props) {
           {title}
         </StatLabel>
         <StatNumber fontSize={'4xl'} fontWeight={'medium'} >
-          {stat?.toLocaleString('en-US')}
+          {loading ? stat?.toLocaleString('en-US') : <Spinner thickness={'4px'} size={'lg'} color={'logo.orange'}/>}
         </StatNumber>
       </Box>
       <Box

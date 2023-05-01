@@ -1,7 +1,6 @@
 const { Router } = require('express');
 const loginRouter = require('./loginRoutes')
 const sellerRouter = require('./sellersRoutes')
-const statsRouter = require('./statsRoutes')
 const salesRouter = require('./salesRoutes')
 const productsRouter = require('./productsRoutes')
 const prodSoldRouter = require('./prodSoldRoutes')
@@ -13,7 +12,8 @@ const mainRouter = Router();
 const projectsRouter = require('./projectsRoutes')
 const customersRouter = require('./customersRoutes')
 const onedriveRouter  = require('./pdfOneDriveRoutes.js')
-
+const statsByMonthRouter = require('./statsByMonthRouter')
+const paymentsByMonthRouter = require('./paymentsByMonthRoutes')
 
 mainRouter.use('/api/login', loginRouter);
 mainRouter.use('/api/seller', sellerRouter);
@@ -27,7 +27,8 @@ mainRouter.use('/api/delivery', deliveryRouter);
 mainRouter.use('/api/one-drive-data', onedriveRouter);
 mainRouter.use('/api/projects', projectsRouter);
 mainRouter.use('/api/customers', customersRouter);
-mainRouter.use('/api/stats', statsRouter);
+mainRouter.use('/api/statsByMonth', statsByMonthRouter);
+mainRouter.use('/api/paymentByMonth', paymentsByMonthRouter);
 
 
 
