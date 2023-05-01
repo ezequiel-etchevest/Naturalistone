@@ -249,7 +249,7 @@ salesRouter.patch('/cancelquote/:id', async function(req, res){
 
 salesRouter.get('/values/seller', async function(req, res){
 
-    query_ =   `SELECT Sales.*, Projects.*, Customers.*, Payments.idPayments, Seller.FirstName, Seller.LastName, Seller.SellerReference,
+    query_ =   `SELECT Sales.*, Projects.*, Customers.*, Payments.idPayments, Seller.FirstName, Seller.LastName, Seller.SellerID, Seller.SellerReference,
                 GROUP_CONCAT(
                 CONCAT(Payments.idPayments,';',Payments.Amount,';',Payments.Date))AS Payments FROM Sales 
                 LEFT JOIN Projects ON Sales.ProjectID = Projects.idProjects

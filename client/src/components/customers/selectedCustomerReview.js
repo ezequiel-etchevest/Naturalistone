@@ -92,26 +92,3 @@ const handleNext = () => {
 
 export default SelectedCustomerModal
 
-{/* <Modal 
-// isOpen={isSecondModalOpen} 
-// onClose={handleSecondModalClose}
-size={'4xl'}
->
-<ModalOverlay />
-<ModalContent 
-rounded={'md'} 
-mt={'2vh'} 
-mb={'2vh'} 
-w={'64vw'} 
-bg={'web.sideBar'} 
-border={'1px solid'} 
-borderColor={'web.border'}
->
-<ModalHeader/>
-<ModalBody color={'web.text2'} w={'100%'} h={'100%'}>
-{/* <CreateDeliveryNotePdf quantities={quantities} deliveryID={deliveryID} id={id}/> */}
-// </ModalBody>
-// <ModalFooter/>
-// </ModalContent>
-// </Modal>
-// Finish Render created delivery modal */}

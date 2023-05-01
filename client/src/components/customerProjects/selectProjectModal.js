@@ -113,7 +113,7 @@ const SelectProjectModal = ({customer, isThirthModalOpen, onThirthModalClose, is
             />
           </Tooltip>
         </HStack>
-        <SelectProjectModalList customer={customer} projects={projects} isQuotesModalOpen={isQuotesModalOpen} onQuotesModalClose={onQuotesModalClose} />
+        <SelectProjectModalList customer={customer} projects={projects} isQuotesModalOpen={isQuotesModalOpen} onQuotesModalClose={onQuotesModalClose} onQuotesModalOpen={onQuotesModalOpen}/>
       </ModalBody>
       </Box>
       <ModalFooter mb={'2vh'} display={'flex'} flexDir={'row'} justifyContent={'space-between'} ml={'2vw'} mr={'2vw'}>

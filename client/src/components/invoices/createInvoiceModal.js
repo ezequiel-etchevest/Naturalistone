@@ -8,31 +8,58 @@ import {
     Text,
     ModalBody,
     ModalCloseButton,
-    useDisclosure,
-    Tooltip,
     Box,
-    useToast
+    Input,
+    IconButton,
+    useToast,
+    useDisclosure
     } from "@chakra-ui/react"
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import '../../assets/styleSheet.css'
 import { getFiltered } from "../../redux/actions-products";
 import CreateInvoiceProductsList from "./createInvoiceProductsList";
+import {BiSearch} from 'react-icons/bi'
+import ReviewProductsModal from "./createInvoiceProductsReview";
 
-
-const CreateInvoiceModal = ({ isOpen, onClose, customer, project, onQuotesModalClose, isQuotesModalOpen}) => {
+const CreateInvoiceModal = ({ isOpen, onClose, customer, project, onQuotesModalClose, isQuotesModalOpen, onQuotesModalOpen}) => {
  
-  // const { isOpen: isSecondModalOpen, onOpen: onSecondModalOpen, onClose: onSecondModalClose } = useDisclosure()
-
 const dispatch = useDispatch()
+const toast = useToast()
 const allProducts = useSelector(state => state.all_products)
+const productErrors = useSelector((state) => state.products_errors)
+
+const { isOpen: isReviewModalOpen, onOpen: onReviewModalOpen, onClose: onReviewModalClose } = useDisclosure()
+
+const [products, setProducts] = useState([])
+
+const validateToast = () => {
+  if(Object.entries(productErrors).length){
+    toast({        
+      title: `${productErrors.error}`,
+      status: 'warning',
+      duration: 1500,
+      isClosable: true,})
+  }
+}
 
 useEffect(()=>{
   if(!allProducts?.length ) dispatch(getFiltered('','','','','','',''))
+  validateToast()
   },[allProducts])
 
+  // const handleChangeProductName = (e) => {
+  //   dispatch(getFiltered('', '', '', '', e.target.value, '',''))
+  // }
 
   const handlePrevious = () => {
+    onQuotesModalClose()
+    dispatch(getFiltered('','','','','','',''))
+    setProducts([])
+  }
+
+  const handleNext = () => {
+    onReviewModalOpen()
     onQuotesModalClose()
   }
 
@@ -41,7 +68,7 @@ useEffect(()=>{
   <Modal 
     isOpen={isQuotesModalOpen} 
     onClose={onQuotesModalClose}
-    size={'5xl'}
+    size={'4xl'}
     >
     <ModalOverlay />
     <ModalContent 
@@ -60,7 +87,41 @@ useEffect(()=>{
       <Box color={'white'}>
         <Text ml={'3vw'} fontSize={'lg'}>Create quote</Text>
         <ModalBody color={'web.text2'} display={'flex'} justifyContent={'center'} flexDir={'column'} h={'58vh'}>
-          <CreateInvoiceProductsList allProducts={allProducts}/>
+          {/* <Box
+            display={'flex'}
+            justifyContent={'flex-end'}
+            h={'6vh'}
+            mb={'2vh'}
+            mr={'1.2vw'}
+            spacing={'0.5vw'}>
+            <Input
+              mb={'0.5vh'}
+              w={'10vw'}
+              minH={'4.5vh'}
+              variant="unstyled"
+              placeholder={'Product name'}
+              textColor={'web.text2'}
+              _placeholder={{ fontFamily: 'body', fontWeight: 'thin' }}
+              size={"sm"}
+              borderBottomWidth={"2px"}
+              borderBottomColor={'web.text2'}
+              onChange={(e) => handleChangeProductName(e)}
+              />
+            <IconButton
+              color={'web.text2'}
+              borderRadius={2}
+              aria-label="Search database"
+              bgColor={'web.sideBar'}
+              ml={'-0.5vw'}
+              icon={<BiSearch />}
+              size={'lg'}
+              _hover={{
+                color: 'orange.500',
+              }}
+              _active={{ color: 'gray.800'}}
+            />
+          </Box> */}
+          <CreateInvoiceProductsList allProducts={allProducts} products={products} setProducts={setProducts}/>
         </ModalBody>
       </Box>  
         <ModalFooter mb={'2vh'} display={'flex'} flexDir={'row'} justifyContent={'space-between'} ml={'2vw'} mr={'2vw'}>
@@ -74,13 +135,14 @@ useEffect(()=>{
         <Button
           colorScheme={'orange'}
           size={'sm'}
-          // onClick={()=>handleNext()} 
+          onClick={()=>handleNext()} 
           >
          Next
         </Button>
       </ModalFooter>
     </ModalContent>
   </Modal>
+  <ReviewProductsModal isReviewModalOpen={isReviewModalOpen} onQuotesModalOpen={onQuotesModalOpen} onReviewModalClose={onReviewModalClose} products={products} setProducts={setProducts} customer={customer} project={project}/>
 </>
 )}
 
