@@ -7,6 +7,7 @@ import { getCustomerById } from '../redux/actions-customers';
 import { useParams } from "react-router-dom";
 import CustomerDetail from "../components/customers/customerDetail/customerDetail";
 import { getCustomerProjects } from "../redux/actions-projects";
+import { getCustomerInvoices } from "../redux/actions-customers";
 
 
 const CustomerDetailView = ({focus, setFocus}) => {
@@ -15,6 +16,7 @@ const CustomerDetailView = ({focus, setFocus}) => {
   const user = useSelector(state => state.user)
   const customer = useSelector(state => state.customer_by_id)
   const projects_by_customer_id = useSelector(state => state.projects_by_customer_id)
+  const project_invoices = useSelector(state => state.project_invoices)
   const userLocal = JSON.parse(localStorage.getItem('user'))
 
   const { id } = useParams()
@@ -24,7 +26,8 @@ const CustomerDetailView = ({focus, setFocus}) => {
       dispatch(getEmployeeById(userLocal.SellerID))
     }
     if(!Object.entries(customer).length) dispatch(getCustomerById(id))
-    if(!Object.entries(projects_by_customer_id).length) dispatch(getCustomerProjects(id))},
+    if(!Object.entries(projects_by_customer_id).length) dispatch(getCustomerProjects(id))
+    if(project_invoices.length === 0) dispatch(getCustomerInvoices(id))},
     [user, projects_by_customer_id, customer])
 
 

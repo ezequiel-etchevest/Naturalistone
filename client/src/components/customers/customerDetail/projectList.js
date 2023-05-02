@@ -10,21 +10,29 @@ import {
     Text,
   } from '@chakra-ui/react';
 import { useDispatch } from 'react-redux';
+import { getProjectInvoices } from '../../../redux/actions-projects';
+import { useState } from 'react';
 
 const ModelTr = ({project}) => {
-    
+
+
+  const dispatch = useDispatch()
+
+  const handleClickProject = () => {
+    dispatch(getProjectInvoices(project.idProjects))
+  }
 
   return(
     <Tr
-    h={'5vh'} 
+      h={'5vh'} 
       cursor={'pointer'}
       _hover={{
         bg: 'web.navBar',
         color: 'logo.orange'
       }}
+      onClick={handleClickProject}
       >
-      <Td textAlign={'match-parent'} fontSize={'1.6vh'}>{project.ProjectName}</Td>
-      <Td textAlign={'match-parent'} fontSize={'1.6vh'}></Td>
+      <Td textAlign={'center'} fontSize={'1.6vh'}>{project.ProjectName}</Td>
     </Tr>
   )
 }
@@ -33,7 +41,7 @@ const ProjectList = ({projects_by_customer_id}) => {
 
   return(
   <>
-    <Box w={'20vw'}>
+    <Box w={'15vw'}>
         <Box 
         display={'flex'} 
         justifyContent={'space-between'}
@@ -67,8 +75,7 @@ const ProjectList = ({projects_by_customer_id}) => {
             <Table color={'web.text'} variant={'simple'} size={'sm'} >
               <Thead h={'4vh'}>
                 <Tr>
-                  <Th h={'4vh'} color={'web.text2'} fontSize={'1.6vh'}>Project Name</Th>
-                  <Th h={'4vh'} color={'web.text2'} fontSize={'1.6vh'}>Invoices</Th>
+                  <Th h={'4vh'} color={'web.text2'} textAlign={'center'} fontSize={'1.6vh'}>Project Name</Th>
                 </Tr>
               </Thead>
               <Tbody >
