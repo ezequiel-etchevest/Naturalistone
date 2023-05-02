@@ -31,7 +31,7 @@ function StatsCard(props) {
   useEffect(()=> {
     setTimeout(()=> {
       setLoading(true)
-    }, 700)
+    }, 800)
   })
   
   return (
@@ -73,7 +73,6 @@ function StatsCard(props) {
 export default function PaymentsByMonth() {
 
   const paymentStats = useSelector(state => state.payments_by_month)
-  console.log('soy payments stats', paymentStats?.data?.total_amount)
   useEffect(()=>{},[paymentStats])
 
   return (

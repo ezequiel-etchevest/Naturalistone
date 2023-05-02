@@ -55,6 +55,7 @@ const LoadPdfPaid = ({idpdf}) => {
       );
       setPdfInfo(docUrl);
     };
+  
     return (
       <Box h={'85vh'} >
         {<iframe width={'100%'} height={'100%'} title="test-frame" src={pdfInfo} ref={viewer} type="application/pdf" />}

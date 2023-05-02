@@ -8,6 +8,8 @@ import {
     Td,
     TableContainer,
     Text,
+    Center,
+    Spinner
   } from '@chakra-ui/react'
   import { useNavigate } from 'react-router-dom'
 
@@ -41,7 +43,6 @@ const ModelTr = ({p}) => {
 }
 
 const InvoiceProductList = ({invoice_products, invoice}) => {
-  
     return(
         <Box
         display={'flex'}
@@ -77,18 +78,24 @@ const InvoiceProductList = ({invoice_products, invoice}) => {
                     </Tr>
                   </Thead>
                   <Tbody >
-                    { invoice_products.map((p, i) =>{
-                      if(invoice[0].Status === 'Canceled'){
-                        return(
-                          <ModelTr p={p} key={i}/>
-                        )
-                      }else {
-                        if(p.Status !== 'Canceled'){
+                    { 
+                    invoice_products.length ?
+                      invoice_products?.map((p, i) =>{
+                        if(invoice[0].Status === 'Canceled'){
                           return(
                             <ModelTr p={p} key={i}/>
-                          )}
-                      } 
-                      })
+                          )
+                        }else {
+                          if(p.Status !== 'Canceled'){
+                            return(
+                              <ModelTr p={p} key={i}/>
+                            )}
+                        } 
+                        }) :
+                      <Center ml={'16vw'} w={'84vw'} bg={'web.bg'} h={'92vh'}>
+                        <Spinner thickness={'4px'} size={'xl'} color={'logo.orange'}/>
+                      </Center>
+
                     }
                   </Tbody>
                 </Table>

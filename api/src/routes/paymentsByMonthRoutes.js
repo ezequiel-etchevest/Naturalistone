@@ -29,8 +29,6 @@ paymentsByMonthRouter.get('/:id', async function(req, res) {
 
       try {
           mysqlConnection.query(query_, function(error1, results, fields) {
-            console.log('soy error1', error1)
-            console.log('soy results', results[0])
             try {
                 if (results.length === 0) {
                     return res.status(400).json({success: false, msg:'Error obtaining data in CurrentMonth Value!', error1})

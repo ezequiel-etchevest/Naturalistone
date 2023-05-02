@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import {getEmployeeById } from "../redux/actions-employees";
 import { getCustomerById } from '../redux/actions-customers';
 import { useParams } from "react-router-dom";
-import CustomerDetail from "../components/customers/customerDetail";
+import CustomerDetail from "../components/customers/customerDetail/customerDetail";
 
 
 const CustomerDetailView = ({focus, setFocus}) => {

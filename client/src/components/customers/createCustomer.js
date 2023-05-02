@@ -20,7 +20,7 @@ export function CreateNewCustomer() {
     Email: '',
     DiscountID: 1
   });
-  console.log({formData})
+
   const dispatch = useDispatch();
 
   const handleSubmit = (event) => {
@@ -63,6 +63,7 @@ export function CreateNewCustomer() {
       <Modal size={'2xl'} isOpen={isOpen} onClose={()=>handleClose()}>
         <ModalOverlay/>
         <ModalContent
+        minW={'50vw'}
         bg={'web.sideBar'}
         border={'1px solid'}
         borderColor={'web.border'}>

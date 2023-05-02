@@ -1,10 +1,7 @@
 import { 
   Box, 
     HStack, 
-    IconButton,
     Select,
-    Divider,
-    Tooltip,
     } from "@chakra-ui/react";
 import '../../assets/styleSheet.css';
 import { useSelector, useDispatch } from "react-redux";
@@ -63,20 +60,20 @@ const StatsFilters = ({user}) => {
         justifyContent={'flex-end'}
         > 
           <Select
-          defaultValue=""
-          onChange={(e)=>handleSellerSelect(e)}
-          w={'15vw'}
-          variant='outline' 
-          h={'4.4vh'}
-          fontSize={'xs'}            
-          bg={'web.sideBar'}
-          color={'web.text2'}
-          borderColor={'web.border'}
-          cursor={'pointer'}
-          _focus={{
-            borderColor: 'logo.orange',
-            boxShadow: '0 0.5px 0.5px rgba(229, 103, 23, 0.075)inset, 0 0 5px rgba(255,144,0,0.6)'
-          }}>
+            defaultValue=""
+            onChange={(e)=>handleSellerSelect(e)}
+            mb={'0.5vh'}
+            w={'15vw'}
+            minH={'4.5vh'}
+            variant="unstyled"
+            textColor={'web.text2'}
+            _placeholder={{ fontFamily: 'body', fontWeight: 'inherit', textColor: 'inherit' }}
+            size={"sm"}
+            borderBottomWidth={"2px"}
+            borderBottomColor={'web.text2'}
+            _hover={{borderColor: 'web.border'}}
+            cursor={'pointer'}
+          >
             <option value="" disabled hidden>Filter by Seller</option>
             <option value={'all'} className="options">All seller</option>
               {  
