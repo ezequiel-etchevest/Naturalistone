@@ -23,7 +23,7 @@ salesRouter.get('/:id', async function(req, res){
       } else {
       if(time === 'All' || time === ''){
       if(results[0].Secction7Flag === 1){
-         query_ =    `SELECT Sales.*, Projects.*, Customers.*, Payments.idPayments, Seller.FirstName, Seller.LastName, Seller.SellerReference,
+         query_ =    `SELECT Sales.*, Projects.*, Customers.*, Payments.idPayments, Seller.FirstName, Seller.LastName, Seller.SellerReference, Seller.SellerID,
          GROUP_CONCAT(
          CONCAT(Payments.idPayments,';',Payments.Amount,';',Payments.Date))AS Payments FROM Sales 
          LEFT JOIN Projects ON Sales.ProjectID = Projects.idProjects
@@ -33,7 +33,7 @@ salesRouter.get('/:id', async function(req, res){
          GROUP BY Sales.Naturali_Invoice
          ORDER BY Sales.InvoiceDate DESC` 
       } else {
-        query_ =    `SELECT Sales.*, Projects.*, Customers.*, Payments.idPayments, Seller.FirstName, Seller.LastName, Seller.SellerReference, 
+        query_ =    `SELECT Sales.*, Projects.*, Customers.*, Payments.idPayments, Seller.FirstName, Seller.LastName, Seller.SellerReference, Seller.SellerID,
         GROUP_CONCAT(
         CONCAT(Payments.idPayments,';',Payments.Amount,';',Payments.Date))AS Payments FROM Sales 
         LEFT JOIN Projects ON Sales.ProjectID = Projects.idProjects
@@ -50,7 +50,7 @@ salesRouter.get('/:id', async function(req, res){
       const limitDateMonth = getLimitDateMonth()
 
       if(results[0].Secction7Flag === 1){
-        query_ = `SELECT Sales.*, Projects.*, Customers.*, Payments.idPayments, Seller.FirstName, Seller.LastName, Seller.SellerReference,
+        query_ = `SELECT Sales.*, Projects.*, Customers.*, Payments.idPayments, Seller.FirstName, Seller.LastName, Seller.SellerReference, Seller.SellerID,
         GROUP_CONCAT(
         CONCAT(Payments.idPayments,';',Payments.Amount,';',Payments.Date))AS Payments FROM Sales 
         LEFT JOIN Projects ON Sales.ProjectID = Projects.idProjects
@@ -61,7 +61,7 @@ salesRouter.get('/:id', async function(req, res){
         GROUP BY Sales.Naturali_Invoice
         ORDER BY Sales.InvoiceDate DESC`  
       } else {
-        query_ = `SELECT Sales.*, Projects.*, Customers.*, Payments.idPayments, Seller.FirstName, Seller.LastName, Seller.SellerReference,
+        query_ = `SELECT Sales.*, Projects.*, Customers.*, Payments.idPayments, Seller.FirstName, Seller.LastName, Seller.SellerReference, Seller.SellerID,
         GROUP_CONCAT(
         CONCAT(Payments.idPayments,';',Payments.Amount,';',Payments.Date))AS Payments FROM Sales 
         LEFT JOIN Projects ON Sales.ProjectID = Projects.idProjects
