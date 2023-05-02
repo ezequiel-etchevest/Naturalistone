@@ -1,7 +1,8 @@
-import { Box, HStack } from "@chakra-ui/react";
+import { Box, HStack, Text } from "@chakra-ui/react";
 import CustomerInformation from './customerInformation';
+import ProjectList from "./projectList";
 
-const CustomerDetail = ({user, customer}) => {
+const CustomerDetail = ({user, customer, projects_by_customer_id}) => {
 
 return(
   <>     
@@ -13,8 +14,8 @@ return(
     >
       <Box 
       display={'flex'} 
-      flexDir={'column'}
-      mt={'3vh'}
+      flexDir={'row'}
+      my={'3vh'}
       ml={'2vw'}
       >
       {/*Customer info & notes */}
@@ -22,14 +23,32 @@ return(
         display={'flex'} 
         flexDir={'row'}>
           <CustomerInformation customer={customer}/>
-          {/* <ProductNotes product={product} user={user}/> */}
         </Box>
       {/*Boxes */}
         <Box
-        display={'flex'} 
-        flexDir={'row'}>          
-        </Box>
-      </Box>
+          mx={'1vw'}
+          h={'41.5vh'}
+          display={'flex'}
+          userSelect={'none'}
+          px={'1.5vw'}
+          py={'3vh'}
+          w={'60vw'}
+          flexDir={'column'}
+          color={'web.text'}
+          bg={'web.sideBar'}
+          border={'1px solid'} 
+          rounded={'md'} 
+          borderColor={'web.border'}
+          >
+            <Text
+              alignItems={'baseline'}
+              justifySelf={'flex-start'}
+              mb={'1vh'} 
+              fontSize={'2.6vh'} 
+              color={'web.text2'}
+                >Projects & Invoices</Text> 
+          <ProjectList projects_by_customer_id={projects_by_customer_id}/>
+        </Box>     
       {/*Boxes*/}
       <Box 
       ml={'1vw'} 
@@ -37,6 +56,7 @@ return(
       display={'flex'} 
       flexDir={'column'} >
       </Box>          
+    </Box>        
     </Box>        
   </>
 )

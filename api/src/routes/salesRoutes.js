@@ -276,8 +276,6 @@ salesRouter.get('/values/seller', async function(req, res){
     }
 });
 
-
-
 salesRouter.post('/create-quote/:sellerID', async function(req, res){
 
   const { sellerID } = req.params
@@ -321,6 +319,29 @@ salesRouter.post('/create-quote/:sellerID', async function(req, res){
     res.status(409).send(error)
   }
 })
+
+salesRouter.get('/project-invoices/:id', async function(req, res){
+  const { id } = req.params
+
+  query_ =    `SELECT * FROM NaturaliStone.Sales
+                WHERE Sales.ProjectID = ${id}`;
+
+  try{
+       mysqlConnection.query(query_, function(error, results, fields){
+          if(error) throw error;
+          if(results.length == 0) {
+              console.log('Error en salesRoutes.get /invoice/:id')
+              res.status(400).json({ estado: false, data: {}});
+          } else {
+              console.log('Data OK')
+              res.status(200).json(results);
+          }
+      });
+  } catch(error){
+      res.status(409).send(error);
+  }
+});
+
 
 
 
