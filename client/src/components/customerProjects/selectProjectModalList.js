@@ -14,13 +14,14 @@ import {
     import { useState } from 'react';
   import CreateInvoiceModal from '../invoices/createInvoiceModal';
   
-  const ModelTr = ({e, setProject}) => {
+  const ModelTr = ({e, setProject, setFocus, focus}) => {
   
 
     const handleClick = (e) => {
       setProject(e)
+      setFocus(`${e.idProjects}`)
     }
-
+    
     return(
       <Tr 
       cursor={'pointer'} 
@@ -29,6 +30,9 @@ import {
         bg: 'web.navBar',
         color: 'logo.orange'
         }}
+        color={focus === `${e.idProjects}` ? '#E47424' : 'white'}
+        background={focus === `${e.idProjects}` ? 'web.navBar' : 'none'}
+        focus={focus}
         onClick={() => handleClick(e)}
       >
         <Td fontSize={'xs'} textAlign={'center'} w={'4vw'}>{e.idProjects}</Td>
@@ -40,6 +44,7 @@ import {
   const SelectProjectModalList = ({customer, projects, onQuotesModalClose, isQuotesModalOpen, onQuotesModalOpen}) => {
     
     const [project, setProject] = useState('')
+    const [focus, setFocus] = useState('')
 
     return(
 <>
@@ -82,7 +87,7 @@ import {
                 <Tbody >
                 { 
                   projects.map((e, i) => (
-                    <ModelTr key={i} e={e} setProject={setProject}/> 
+                    <ModelTr key={i} e={e} setProject={setProject} setFocus={setFocus} focus={focus}/> 
                   ))
                 }
                 </Tbody>

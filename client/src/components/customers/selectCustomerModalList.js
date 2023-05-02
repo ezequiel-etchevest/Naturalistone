@@ -36,15 +36,15 @@ import {
         onClick={() => handleClick(e)}
       >
         <Td fontSize={'xs'}  w={'4vw'}>{e.CustomerID}</Td>
-        <Td fontSize={'xs'} textAlign={'center'}>{e.LastName ?`${e.Name} ${e.LastName}` : '-'}</Td>
-        <Td fontSize={'xs'}  w={'24vw'}>{e.Reference}</Td>
+        <Td fontSize={'xs'} textAlign={'center'}>{e.Contact_Name ? e.Contact_Name : '-'}</Td>
+        <Td fontSize={'xs'}  w={'24vw'}>{e.Company}</Td>
 
       </Tr>
     )
   }
   
   const SelectCustomerModalList = ({customers, onSecondModalOpen, onSecondModalClose, isSecondModalOpen}) => {
-    
+    console.log(customers)
     const [customer, setCustomer] = useState('')
   
   return(

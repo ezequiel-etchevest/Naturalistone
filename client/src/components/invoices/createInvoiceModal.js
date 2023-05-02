@@ -87,7 +87,7 @@ useEffect(()=>{
       <Box color={'white'}>
         <Text ml={'3vw'} fontSize={'lg'}>Create quote</Text>
         <ModalBody color={'web.text2'} display={'flex'} justifyContent={'center'} flexDir={'column'} h={'58vh'}>
-          {/* <Box
+          <Box
             display={'flex'}
             justifyContent={'flex-end'}
             h={'6vh'}
@@ -105,7 +105,7 @@ useEffect(()=>{
               size={"sm"}
               borderBottomWidth={"2px"}
               borderBottomColor={'web.text2'}
-              onChange={(e) => handleChangeProductName(e)}
+              // onChange={(e) => handleChangeProductName(e)}
               />
             <IconButton
               color={'web.text2'}
@@ -120,7 +120,7 @@ useEffect(()=>{
               }}
               _active={{ color: 'gray.800'}}
             />
-          </Box> */}
+          </Box>
           <CreateInvoiceProductsList allProducts={allProducts} products={products} setProducts={setProducts}/>
         </ModalBody>
       </Box>  

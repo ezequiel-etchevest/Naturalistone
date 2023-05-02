@@ -58,10 +58,10 @@ const handleNext = () => {
       <ModalBody 
         color={'web.text2'} display={'flex'} justifyContent={'center'} flexDir={'column'} h={'58vh'} alignItems={'center'}>
           <Text border={'1px'} borderRadius={'md'} w={'25vw'} mb={'1.5vh'}> ID: {customer.CustomerID}</Text>
-          <Text border={'1px'} borderRadius={'md'} w={'25vw'} mb={'1.5vh'}> Full Name: {customer.Name ? customer.Name : "-"} {customer.LastName ? customer.LastName : "-"}</Text>
+          <Text border={'1px'} borderRadius={'md'} w={'25vw'} mb={'1.5vh'}> Full Name: {customer.Contact_Name ? customer.Contact_Name : "-"}</Text>
           <Text border={'1px'} borderRadius={'md'} w={'25vw'} mb={'1.5vh'}> Email: {customer.Email ? customer.Email : "-"}</Text>
           <Text border={'1px'} borderRadius={'md'} w={'25vw'} mb={'1.5vh'}> Phone: {customer.Phone ? customer.Phone : "-"}</Text>
-          <Text border={'1px'} borderRadius={'md'} w={'25vw'} mb={'1.5vh'}> Reference: {customer.Reference ? customer.Reference : "-"}</Text>
+          <Text border={'1px'} borderRadius={'md'} w={'25vw'} mb={'1.5vh'}> Company: {customer.Company ? customer.Company : "-"}</Text>
           <Text border={'1px'} borderRadius={'md'} w={'25vw'} mb={'1.5vh'}> Discount %: {customer.DiscountID ? customer.DiscountID : "-"}</Text>
           <Text border={'1px'} borderRadius={'md'} w={'25vw'} mb={'1.5vh'}> Address: {customer.Address ? customer.Address : "-"}</Text>
           <Text border={'1px'} borderRadius={'md'} w={'25vw'} mb={'1.5vh'}> Zip Code: {customer.ZipCode ? customer.ZipCode : "-"}</Text>
