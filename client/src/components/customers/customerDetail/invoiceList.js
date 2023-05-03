@@ -62,7 +62,7 @@ const InvoiceList = () => {
                 </Table>
               </TableContainer>
             ):(
-              <Center w={'40vw'} h={'22vh'} >
+              <Center w={'30vw'} h={'22vh'} >
                 <Text userSelect={'none'} fontSize={'1.5vh'}>To view the invoices, please choose a project.</Text>
               </Center>
             )}
