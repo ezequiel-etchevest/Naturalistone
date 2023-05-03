@@ -47,7 +47,7 @@ customersRouter.get('/:id', async function(req, res){
 });
 
 customersRouter.post('/', async function(req, res){
-    
+    //hay que agregar el sellerID, el vendedor encargado de cargar al cliente.
     const {Company, Phone, Email, DiscountID, Contact_Name, Billing_Address, ZipCode, State} = req.body
 
     query_ = `INSERT INTO Customers (Company, Phone, Email, DiscountID, Contact_Name, LastName, Billing_Address, ZipCode, State) VALUES ("${Company}", "${Phone}", "${Email}", "${DiscountID}", "${Contact_Name}", "${Billing_Address}", "${ZipCode}", "${State}")`
