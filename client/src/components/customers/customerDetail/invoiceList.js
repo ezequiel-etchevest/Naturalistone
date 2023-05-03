@@ -1,4 +1,4 @@
-import { Text, Box, TableContainer, Table, Thead, Tr, Th, Tbody, Td } from "@chakra-ui/react";
+import { Text, Box, TableContainer, Table, Thead, Tr, Th, Tbody, Td, Center, border } from "@chakra-ui/react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
@@ -24,7 +24,6 @@ const ModelTr = ({invoice}) => {
 const InvoiceList = () => {
 
   const project_invoices = useSelector(state => state.project_invoices)
-  console.log({project_invoices})
 
     return(
       <>
@@ -43,32 +42,32 @@ const InvoiceList = () => {
               borderRadius: '5px',
             },
           }}> 
-          <TableContainer  w={'48vw'} >
-            <Table color={'web.text'} variant={'simple'} size={'sm'} >
-              <Thead h={'4vh'}>
-                <Tr>
-                  <Th h={'4vh'} color={'web.text2'} textAlign={'center'} fontSize={'1.6vh'}>Invoice Number</Th>
-                  <Th h={'4vh'} color={'web.text2'} textAlign={'center'} fontSize={'1.6vh'}>Amount</Th>
-                </Tr>
-              </Thead>
-              <Tbody >
-              { 
-                project_invoices?.map((invoice, i) =>{
-                  return(
+          { project_invoices.length ? (
+              <TableContainer  w={'48vw'} >
+                <Table color={'web.text'} variant={'simple'} size={'sm'} >
+                  <Thead h={'4vh'}>
+                    <Tr>
+                      <Th h={'4vh'} color={'web.text2'} textAlign={'center'} fontSize={'1.6vh'}>Invoice Number</Th>
+                      <Th h={'4vh'} color={'web.text2'} textAlign={'center'} fontSize={'1.6vh'}>Amount</Th>
+                    </Tr>
+                  </Thead>
+                  <Tbody>
+                  {
+                    project_invoices?.map((invoice, i) => {
+                    return(
                     <ModelTr key={i} invoice={invoice}/>
-                    )})                   
-                  }
-              </Tbody>
-            </Table>
-          </TableContainer>
-          
-      {/* ):(
-        <Text mt={'3vh'} color={'web.text'}>No payments entered yet</Text>          
-      )
-
-    } */}
-    </Box> 
-    </>
+                    )})   
+                  }                
+                  </Tbody>
+                </Table>
+              </TableContainer>
+            ):(
+              <Center w={'40vw'} h={'22vh'} >
+                <Text userSelect={'none'} fontSize={'1.5vh'}>To view the invoices, please choose a project.</Text>
+              </Center>
+            )}
+        </Box> 
+      </>
     )}
 
 

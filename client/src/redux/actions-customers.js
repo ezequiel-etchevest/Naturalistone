@@ -4,6 +4,7 @@ export const GET_CUSTOMERS = 'GET_CUSTOMERS';
 export const GET_CUSTOMER_BY_ID = 'GET_CUSTOMERS_BY_ID';
 export const POST_CUSTOMER = 'POST_CUSTOMER';
 export const GET_CUSTOMER_INVOICES = 'GET_CUSTOMER_INVOICES';
+export const CLEAN_CUSTOMER_DETAIL = 'CLEAN_CUSTOMER_DETAIL'
 
 
 
@@ -71,4 +72,13 @@ export function getCustomerInvoices(id){
         console.log({error})
       }
     }
+}
+
+export function cleanCustomerDetail(){
+  return async function(dispatch){
+    dispatch({
+      type: CLEAN_CUSTOMER_DETAIL,
+      payload: []
+    })
+  }
 }

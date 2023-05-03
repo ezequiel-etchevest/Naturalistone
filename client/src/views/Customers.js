@@ -27,6 +27,14 @@ const Customers = ({focus, setFocus}) => {
       dispatch(getCustomers(''))
     }}, [dispatch, user])
 
+  useEffect(() => {
+    return () => {
+      dispatch(getCustomers(''))
+    }
+    },[])
+  
+  
+
   if(userLocal){
     if(user.length){
       return(

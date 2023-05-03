@@ -3,7 +3,7 @@ import SideBar from "../components/sideBar";
 import { Center, Spinner} from "@chakra-ui/react";
 import { useSelector, useDispatch } from "react-redux";
 import {getEmployeeById } from "../redux/actions-employees";
-import { getCustomerById } from '../redux/actions-customers';
+import { cleanCustomerDetail, getCustomerById } from '../redux/actions-customers';
 import { useParams } from "react-router-dom";
 import CustomerDetail from "../components/customers/customerDetail/customerDetail";
 import { getCustomerProjects } from "../redux/actions-projects";
@@ -27,10 +27,11 @@ const CustomerDetailView = ({focus, setFocus}) => {
     }
     if(!Object.entries(customer).length) dispatch(getCustomerById(id))
     if(!Object.entries(projects_by_customer_id).length) dispatch(getCustomerProjects(id))
-    if(project_invoices.length === 0) dispatch(getCustomerInvoices(id))},
-    [user, projects_by_customer_id, customer])
-
-
+    if(!project_invoices) dispatch(getCustomerInvoices(id))},
+    [dispatch, user, projects_by_customer_id, customer])
+  useEffect(()=> {
+    return()=>dispatch(cleanCustomerDetail())
+  },[])
   
   if(userLocal) {
     if(user.length){

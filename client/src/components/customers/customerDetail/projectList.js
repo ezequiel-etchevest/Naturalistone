@@ -19,7 +19,8 @@ const ModelTr = ({project}) => {
   const dispatch = useDispatch()
 
   const handleClickProject = () => {
-    dispatch(getProjectInvoices(project.idProjects))
+    if(project.ProjectName !== 'No projects related'){
+    dispatch(getProjectInvoices(project.idProjects))}
   }
 
   return(
