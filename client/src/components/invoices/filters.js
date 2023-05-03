@@ -15,7 +15,7 @@ import { useDispatch } from 'react-redux'
 import { useState } from "react";
 import '../../assets/styleSheet.css';
 import {AiOutlineClear} from 'react-icons/ai';
-import CreateInvoiceButton from './createInvoice'
+import CreateInvoiceButton from './createQuote/createInvoice'
 
 const Filters = ({user, seller_invoices, setFocusFilter, seller_values, customers}) => {
 

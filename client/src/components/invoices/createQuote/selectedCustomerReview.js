@@ -1,0 +1,94 @@
+import { 
+    Button,
+    Modal,
+    ModalOverlay,
+    ModalContent,
+    ModalHeader,
+    ModalFooter,
+    Text,
+    ModalBody,
+    ModalCloseButton,
+    Box,
+    useDisclosure
+    } from "@chakra-ui/react"
+import { useDispatch } from 'react-redux'
+import { getCustomerProjects } from "../../../redux/actions-projects"
+import SelectProjectModal from "../../invoices/createQuote/customerProjects/selectProjectModal"
+import '../../../assets/styleSheet.css'
+
+const SelectedCustomerModal = ({customer, isSecondModalOpen, onSecondModalClose, setCustomer,  isOpen, onClose}) => {
+
+const dispatch = useDispatch()
+const { isOpen: isThirthModalOpen, onOpen: onThirthModalOpen, onClose: onThirthModalClose } = useDisclosure()
+
+const handlePrevious = () => {
+  setCustomer('')
+  onSecondModalClose()
+}
+
+const handleNext = () => {
+  dispatch(getCustomerProjects(customer.CustomerID))
+  onThirthModalOpen()
+}
+
+  return(
+
+<>
+  <Modal 
+    isOpen={isSecondModalOpen} 
+    onClose={onSecondModalClose}
+    size={'3xl'}
+    >
+    <ModalOverlay />
+    <ModalContent 
+      bg={'web.sideBar'}
+      border={'1px solid'}
+      borderColor={'web.border'}
+      >
+      <ModalHeader></ModalHeader>
+      <ModalCloseButton
+        color={'web.text2'}
+        _hover={{
+          color: 'web.text'
+        }}
+        onClick={onClose} 
+        />
+      <Box color={'white'}>
+      <Text ml={'3vw'} fontSize={'lg'}>Selected customer</Text>
+      <ModalBody 
+        color={'web.text2'} display={'flex'} justifyContent={'center'} flexDir={'column'} h={'58vh'} alignItems={'center'}>
+          <Text border={'1px'} borderRadius={'md'} w={'25vw'} mb={'1.5vh'}> ID: {customer.CustomerID}</Text>
+          <Text border={'1px'} borderRadius={'md'} w={'25vw'} mb={'1.5vh'}> Full Name: {customer.Contact_Name ? customer.Contact_Name : "-"}</Text>
+          <Text border={'1px'} borderRadius={'md'} w={'25vw'} mb={'1.5vh'}> Email: {customer.Email ? customer.Email : "-"}</Text>
+          <Text border={'1px'} borderRadius={'md'} w={'25vw'} mb={'1.5vh'}> Phone: {customer.Phone ? customer.Phone : "-"}</Text>
+          <Text border={'1px'} borderRadius={'md'} w={'25vw'} mb={'1.5vh'}> Company: {customer.Company ? customer.Company : "-"}</Text>
+          <Text border={'1px'} borderRadius={'md'} w={'25vw'} mb={'1.5vh'}> Discount %: {customer.DiscountID ? customer.DiscountID : "-"}</Text>
+          <Text border={'1px'} borderRadius={'md'} w={'25vw'} mb={'1.5vh'}> Address: {customer.Address ? customer.Address : "-"}</Text>
+          <Text border={'1px'} borderRadius={'md'} w={'25vw'} mb={'1.5vh'}> Zip Code: {customer.ZipCode ? customer.ZipCode : "-"}</Text>
+          <Text border={'1px'} borderRadius={'md'} w={'25vw'} mb={'1.5vh'}> State: {customer.State ? customer.State : "-"}</Text>
+      </ModalBody>
+      </Box>
+      <ModalFooter mb={'2vh'} display={'flex'} flexDir={'row'} justifyContent={'space-between'} ml={'2vw'} mr={'2vw'}>
+        <Button
+          colorScheme={'orange'}
+          size={'sm'}
+          onClick={()=>handlePrevious()}
+          >
+         Previous
+        </Button>
+        <Button
+          colorScheme={'orange'}
+          size={'sm'} 
+          onClick={()=>handleNext()}
+          >
+         Next
+        </Button>
+      </ModalFooter>
+    </ModalContent>
+  </Modal>
+  <SelectProjectModal isThirthModalOpen={isThirthModalOpen} onThirthModalClose={onThirthModalClose} customer={customer}/>
+</>
+)}
+
+export default SelectedCustomerModal
+

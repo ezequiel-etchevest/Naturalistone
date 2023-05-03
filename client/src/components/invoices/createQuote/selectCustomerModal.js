@@ -15,15 +15,14 @@ import {
     HStack,
     Tooltip,
     Box,
-    useToast
     } from "@chakra-ui/react"
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useDispatch } from "react-redux";
-import '../../assets/styleSheet.css'
-import {FiUserPlus} from 'react-icons/fi'
-import {BiSearch} from 'react-icons/bi'
 import SelectCustomerModalList from './selectCustomerModalList'
-import { getCustomers } from "../../redux/actions-customers";
+import { getCustomers } from "../../../redux/actions-customers";
+import {BiSearch} from 'react-icons/bi'
+import {FiUserPlus} from 'react-icons/fi'
+import '../../../assets/styleSheet.css'
 
 const SelectCustomerModal = ({userId, isOpen, onClose, customers}) => {
  
