@@ -53,11 +53,12 @@ const StatsFilterByMonthAndYear = ({user}) => {
   return (
     <Box>
       <HStack
-      ml={'2vw'}
+      ml={'1.75vw'}
       mr={'2vw'} 
       h={'17vh'}
-      w={'29vw'}
+      w={'35vw'}
       justifyContent={'space-between'}
+      spacing={'2vw'}
       >
       {/*Inputs*/}
         <Box
