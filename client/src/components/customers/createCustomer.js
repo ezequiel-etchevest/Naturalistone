@@ -10,12 +10,11 @@ export function CreateNewCustomer() {
   const { isOpen, onOpen, onClose } = useDisclosure()
 
   const [formData, setFormData] = useState({
-    Name: '',
-    LastName: '',
+    Contact_Name: '',
     Address: '',
     State: '',
     ZipCode: '',
-    Reference: '',
+    Company: '',
     Phone: '',
     Email: '',
     DiscountID: 1
@@ -30,12 +29,11 @@ export function CreateNewCustomer() {
   };
   const handleClose = () => {
     setFormData({
-      Name: '',
-      LastName: '',
+      Contact_Name: '',
       Address: '',
       State: '',
       ZipCode: '',
-      Reference: '',
+      Company: '',
       Phone: '',
       Email: '',
       DiscountID: 1

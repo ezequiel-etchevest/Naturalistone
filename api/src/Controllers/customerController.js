@@ -2,7 +2,7 @@ const CustomerFilters = (invoices, name) => {
 
   let filtered = invoices;
 
-  if (name !== '') {
+  if (name !== '' && name !== undefined) {
     filtered = filtered.filter((inv) => {
         return (
           inv.Contact_Name && inv.Contact_Name.toLowerCase().includes(name.toLowerCase()) ||
