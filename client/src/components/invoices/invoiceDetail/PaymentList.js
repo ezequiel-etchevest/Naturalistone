@@ -103,12 +103,12 @@ const PaymentList = ({payments, totalAmount, invoice}) => {
                 </Tr>
               </Thead>
               <Tbody >
-                { 
+                {/* { 
                   payments.paymentData.map((p, i) =>{
                     return(
                       <ModelTr p={p} key={i} totalAmount={totalAmount} invoice={invoice}/>
                       )})                   
-                    }
+                    } */}
                   </Tbody>
                 </Table>
             </TableContainer>

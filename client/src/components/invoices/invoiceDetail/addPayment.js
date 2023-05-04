@@ -44,6 +44,9 @@ const AddPayment = ({pendingAmount}) => {
       Method : '',
       Amount: ''})
     const [error, setError] = useState('')
+    const invoice = useSelector(state => state.invoice)
+    const payments = useSelector(state => state.payment_stats)
+    const value = payments?.paymentsMath?.PendingAmount ?? invoice[0].Value
     
     const handleCancel = () =>{
       setDisabled(true)
@@ -81,6 +84,16 @@ const AddPayment = ({pendingAmount}) => {
     }
 
     const handleSubmit = () => {
+      const halfValue = value / 2
+      if(input.Method === 'Card' && parseFloat(input.Amount) > halfValue){
+        return toast({
+          title: 'Invalid amount',
+          description: `cannot exceed ${halfValue} of the card payment`,
+          status: 'error',
+          duration: 2000,
+          isClosable: true,
+        });
+      }
       if(parseFloat(input.Amount) > parseFloat(pendingAmount)){
         toast({
           title: 'Invalid amount',
@@ -121,9 +134,6 @@ const AddPayment = ({pendingAmount}) => {
     setIs100Active(true);
   };
 
-  const invoice = useSelector(state => state.invoice)
-  const payments = useSelector(state => state.payment_stats)
-
   const valueInput = () => {
     if(is50Active){
       const value = Number(invoice[0].Value / 2)
@@ -144,8 +154,14 @@ const AddPayment = ({pendingAmount}) => {
     }
     return
   }
+  
+  function calculateMaxInputValueAndIsCardMaxPayment(amount, paymentMethod) {
+    const maxInputValue = (amount > 5000 && paymentMethod === 'Card') ? amount / 2 : amount;
+    const isCardMaxPayment = (amount > 5000 && paymentMethod === 'Card');
+    return { maxInputValue, isCardMaxPayment };
+  }
 
-  const value = payments?.paymentsMath?.PendingAmount ?? invoice[0].Value
+  const { maxInputValue, isCardMaxPayment } = calculateMaxInputValueAndIsCardMaxPayment(value, input.Method)
 
   return(
     <>
@@ -218,7 +234,7 @@ const AddPayment = ({pendingAmount}) => {
             color={'web.text2'}
             onChange={(e)=>handleInput(e)} 
             min={0} 
-            max={value}
+            max={maxInputValue}
             precision={2}>
               <NumberInputField
               placeholder={'0.00'}
@@ -255,7 +271,8 @@ const AddPayment = ({pendingAmount}) => {
                   color={'web.text'}
                   h={6}
                   p={2}
-                  mr={3} 
+                  mr={3}
+                  disabled={isCardMaxPayment}
                 >
                   100%
                 </Button>
