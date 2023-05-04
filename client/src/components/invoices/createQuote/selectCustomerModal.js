@@ -18,6 +18,7 @@ import {
     } from "@chakra-ui/react"
 import { useState } from "react";
 import { useDispatch } from "react-redux";
+import { CreateNewCustomer } from "../../customers/createCustomer";
 import SelectCustomerModalList from './selectCustomerModalList'
 import { getCustomers } from "../../../redux/actions-customers";
 import {BiSearch} from 'react-icons/bi'
@@ -107,7 +108,7 @@ const SelectCustomerModal = ({userId, isOpen, onClose, customers}) => {
           </Box>
           <Divider orientation={'vertical'} h={'5vh'}/>
           <Tooltip label={'Add customer'} fontWeight={'hairline'}>
-            <IconButton
+            {/* <IconButton
             display={'flex'}
             alignItems={'center'}
             variant={'unstyled'} 
@@ -117,7 +118,8 @@ const SelectCustomerModal = ({userId, isOpen, onClose, customers}) => {
             }}
             icon={<FiUserPlus/>} 
             size={'lg'}
-            />
+            /> */}
+            <CreateNewCustomer/>
           </Tooltip>
         </HStack>
         <SelectCustomerModalList customers={customers} isSecondModalOpen={isSecondModalOpen}onSecondModalOpen={onSecondModalOpen} onSecondModalClose={onSecondModalClose} />
