@@ -32,7 +32,9 @@ const SelectCustomerModal = ({userId, isOpen, onClose, customers}) => {
   const dispatch = useDispatch()
   const id = userId
   const [inputValue, setInputValue] = useState('')
+  const [customer, setCustomer] = useState('')
   
+
   const handleInput = (e) =>  {
     if(e.target.value.length) {
       setInputValue(e.target.value)
@@ -108,10 +110,10 @@ const SelectCustomerModal = ({userId, isOpen, onClose, customers}) => {
           </Box>
           <Divider orientation={'vertical'} h={'5vh'}/>
           <Tooltip label={'Add customer'} fontWeight={'hairline'}>
-          <CreateCustomerModal/>
+          <CreateCustomerModal customer={customer} setCustomer={setCustomer} onSecondModalOpen={onSecondModalOpen}/>
           </Tooltip>
         </HStack>
-        <SelectCustomerModalList customers={customers} isSecondModalOpen={isSecondModalOpen}onSecondModalOpen={onSecondModalOpen} onSecondModalClose={onSecondModalClose} />
+        <SelectCustomerModalList customers={customers} customer={customer} setCustomer={setCustomer} isSecondModalOpen={isSecondModalOpen}onSecondModalOpen={onSecondModalOpen} onSecondModalClose={onSecondModalClose} />
       </ModalBody>
       </Box>
       <ModalFooter mb={'2vh'} display={'flex'} flexDir={'row'} justifyContent={'space-between'} ml={'2vw'} mr={'2vw'}>

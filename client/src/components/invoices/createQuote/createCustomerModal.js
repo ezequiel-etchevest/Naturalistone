@@ -5,7 +5,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { createCustomer } from '../../../redux/actions-customers'
 
-export function CreateCustomerModal() {
+export function CreateCustomerModal({customer, setCustomer, onSecondModalOpen}) {
 
   const { isOpen, onOpen, onClose } = useDisclosure()
 
@@ -26,7 +26,9 @@ export function CreateCustomerModal() {
   const handleSubmit = (event) => {
     event.preventDefault();
       dispatch(createCustomer(formData));
+      setCustomer(formData)
       handleClose()
+      onSecondModalOpen()
   };
   const handleClose = () => {
     setFormData({
@@ -42,7 +44,7 @@ export function CreateCustomerModal() {
     })
     onClose()
   }
-
+  console.log(customer)
   return (
     <>
       <IconButton
