@@ -7,6 +7,7 @@ import { getMonthAndYear, getPaymentStatsByMonth } from "../redux/actions-statsB
 import TotalStats from "./stats/TotalStats";
 import StatsFilterByMonthAndYear from "./stats/statsMonthAndYear";
 import PaymentsByMonth from "./stats/paymentByMonth";
+import FilterStats from "./stats/filterStats";
 
 
 
@@ -16,6 +17,13 @@ const HomeContainer = ({user}) => {
   const currentMonth = useSelector(state => state.current_month)
   const paymentStats = useSelector(state => state.payment_stats)
   const [ spinner, setSpinner ] = useState(false)
+
+  const [filters, setFilters] = useState({
+    SellerID: user[0].SellerID,
+    Month: new Date().getMonth() + 1,
+    Year: new Date().getFullYear(),
+  });
+  
 
   const handleSpinner = () => {
     setTimeout(()=>{ setSpinner(true)}, 800)
@@ -53,26 +61,16 @@ const HomeContainer = ({user}) => {
             CHECK YOUR STATS ON THE GO!
           </Highlight>
         </chakra.h1>
-        <Divider alignSelf={'center'} w={'78vw'}/>
-        {
-          user[0].Secction7Flag === 1 ? (
-            <Box 
-            display={'flex'}
-            flexDirection={'row'}
-            justifyContent={'flex-end'}
-            h={'20vh'}
-            >
-              <StatsFilters user={user}/>
-              <StatsFilterByMonthAndYear user={user}/>
-            </Box>
-          ):(
-            <Box
-            display={'flex'}
-            justifyContent={'flex-end'}>
-              <StatsFilterByMonthAndYear />
-            </Box>
-            )
-        }
+        <Box 
+          display={'flex'}
+          flexDirection={'row'}
+          justifyContent={'flex-end'}
+          h={'20vh'}
+          mb={'1vw'}
+          mr={'1.5vw'}
+          >
+          <FilterStats user={user} filters={filters} setFilters={filters}/>
+        </Box>
         <CurrentMonthStats user={user}/>
         <TotalStats user={user}/>
         <PaymentsByMonth user={user}/>
