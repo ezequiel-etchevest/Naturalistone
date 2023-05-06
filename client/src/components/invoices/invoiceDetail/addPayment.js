@@ -51,10 +51,10 @@ const AddPayment = ({pendingAmount}) => {
     const halfValue = Number(value / 2)
     const paymentsInvoices = useSelector(state => state.payments_by_id)
     const [isOptionDisabled, setIsOptionDisabled] = useState(false)
+    const CARD = 'Card'
 
-    
   const paymentsCard = paymentsInvoices.paymentData.filter((el) => {
-    const element = el.Method === 'Card'
+    const element = el.Method === CARD
     if(!element) {
       return
     }
@@ -71,8 +71,6 @@ const AddPayment = ({pendingAmount}) => {
 
   const restOfPaymentCard = halfValue - allPaymentsCard.Amount
 
-  console.log('soyresttt', restOfPaymentCard)
-
     useEffect(() => {
       maxPaymentCard()
     },[paymentsInvoices, isOptionDisabled, setIsOptionDisabled])
@@ -83,7 +81,7 @@ const AddPayment = ({pendingAmount}) => {
     }
 
     const handleSelect = (e) =>{
-      if(e.target.value === 'Card' && input.Amount > restOfPaymentCard) {
+      if(e.target.value === CARD && input.Amount > restOfPaymentCard) {
         setIs50Active(false);
         setIs100Active(false);
       }
@@ -118,7 +116,7 @@ const AddPayment = ({pendingAmount}) => {
 
     const handleSubmit = () => {
       if(!isToastShowing) {
-        if(input.Method === 'Card' && parseFloat(input.Amount) > restOfPaymentCard){
+        if(input.Method === CARD && parseFloat(input.Amount) > restOfPaymentCard){
         setIsToastShowing(true)
         return toast({
           title: 'Invalid amount',
@@ -149,7 +147,7 @@ const AddPayment = ({pendingAmount}) => {
       } else{
         setIsToastShowing(true)
         toast({
-          title: 'Inconpleted fields',
+          title: 'Incompleted fields',
           description: `Both fields must be completed`,
           status: 'error',
           duration: 4000,
@@ -186,11 +184,11 @@ const AddPayment = ({pendingAmount}) => {
 
   const valueInput = () => {
     if (value > 5000) {
-      if (input.Method === 'Card' && input.Amount > restOfPaymentCard) {
+      if (input.Method === CARD && input.Amount > restOfPaymentCard) {
         if(!isToastShowing) {
-          setIsToastShowing(true)
+            setIsToastShowing(true)
             toast({
-             title: 'You cannot make the invoice payment of more than 50% if the amount exceeds 5000',
+              title: 'You cannot make the invoice payment of more than 50% with card if the amount exceeds 5000',
               description: `cannot exceed ${restOfPaymentCard} of the card payment`,
               status: 'error',
               duration: 4000,
@@ -223,7 +221,7 @@ const AddPayment = ({pendingAmount}) => {
       });
       return formattedNumber
     }
-    return
+    return 
   }
 
   const maxPaymentCard = () => {
@@ -231,13 +229,13 @@ const AddPayment = ({pendingAmount}) => {
       setIsOptionDisabled(true)
       return;
     } 
-
+    setIsOptionDisabled(false);
     return restOfPaymentCard
   }
   
   function calculateMaxInputValueAndIsCardMaxPayment(amount, paymentMethod) {
-    const maxInputValue = (amount > 5000 && paymentMethod === 'Card') ? amount / 2 : amount;
-    const isCardMaxPayment = (amount > 5000 && paymentMethod === 'Card');
+    const maxInputValue = (amount > 5000 && paymentMethod === CARD) ? amount / 2 : amount;
+    const isCardMaxPayment = (amount > 5000 && paymentMethod === CARD);
     return { maxInputValue, isCardMaxPayment };
   }
 
@@ -308,14 +306,15 @@ const AddPayment = ({pendingAmount}) => {
               <FormLabel color={'web.text'}>Amount</FormLabel>
             </Box>
             <NumberInput
-            clampValueOnBlur={true}
+            clampValueOnBlur={true} 
             value={valueInput()}
             borderColor={'web.border'} 
             color={'web.text2'}
             onChange={(e)=>handleInput(e)} 
             min={0} 
             max={maxInputValue}
-            precision={2}>
+            precision={2}
+            >
               <NumberInputField
               placeholder={'0.00'}
               _focus={{
