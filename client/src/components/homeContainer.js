@@ -1,46 +1,33 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import CurrentMonthStats from './stats/CurrentMonthStats';
-import { Highlight, chakra, Box, Divider, Spinner, Center } from '@chakra-ui/react';
-import StatsFilters from './stats/StatsFilters';
-import { getMonthAndYear, getPaymentStatsByMonth } from "../redux/actions-statsByMonth";
+import { Highlight, chakra, Box, Spinner, Center } from '@chakra-ui/react';
 import TotalStats from "./stats/TotalStats";
-import StatsFilterByMonthAndYear from "./stats/statsMonthAndYear";
-import PaymentsByMonth from "./stats/paymentByMonth";
+import PaymentsStats from "./stats/PaymentsStats";
 import FilterStats from "./stats/filterStats";
+import { getStats } from "../redux/actions-stats";
+import { cleanStats } from "../redux/actions-statsByMonth";
 
 
 
 const HomeContainer = ({user}) => {
 
   const dispatch = useDispatch()
-  const currentMonth = useSelector(state => state.current_month)
-  const paymentStats = useSelector(state => state.payment_stats)
-  const [ spinner, setSpinner ] = useState(false)
-
+  const stats = useSelector(state => state.stats)
   const [filters, setFilters] = useState({
     SellerID: user[0].SellerID,
     Month: new Date().getMonth() + 1,
     Year: new Date().getFullYear(),
   });
   
-
-  const handleSpinner = () => {
-    setTimeout(()=>{ setSpinner(true)}, 800)
-  }
-
   useEffect(() => {
-    if(user.length && Object.entries(currentMonth).length === 0){
-      dispatch(getMonthAndYear(user[0].SellerID))
+    if(user.length && Object.entries(stats).length === 0){
+      dispatch(getStats(filters))
     }
-    if(user.length && Object.entries(paymentStats).length === 0){
-      dispatch(getPaymentStatsByMonth(user[0].SellerID))
-    }
-      handleSpinner()
+    return ()=>{cleanStats()}
+  }, [user, stats])
 
-  }, [dispatch, user, paymentStats, currentMonth])
-
-  if(spinner === true){
+  if(Object.entries(stats).length !== 0){
     return(
     <>
       <Box userSelect={'none'} h={'92vh'} ml={'16vw'} bg={'web.bg'} display={'flex'} flexDir={'column'}>
@@ -69,11 +56,11 @@ const HomeContainer = ({user}) => {
           mb={'1vw'}
           mr={'1.5vw'}
           >
-          <FilterStats user={user} filters={filters} setFilters={filters}/>
+          <FilterStats user={user} years={stats.YearsInvoices} filters={filters} setFilters={setFilters}/>
         </Box>
-        <CurrentMonthStats user={user}/>
-        <TotalStats user={user}/>
-        <PaymentsByMonth user={user}/>
+          <CurrentMonthStats user={user} stats={stats}/>
+          <TotalStats user={user} stats={stats}/>
+          <PaymentsStats user={user} stats={stats}/>
       </Box> 
       </>
     )

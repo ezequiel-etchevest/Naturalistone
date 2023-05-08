@@ -9,28 +9,32 @@ import {
 import {AiOutlineClear} from 'react-icons/ai';
 import '../../assets/styleSheet.css';
 import { useSelector, useDispatch } from "react-redux";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { getSellers } from "../../redux/actions-sellers";
 import { months } from "../../utils/months";
+import { getStats } from "../../redux/actions-stats";
+import { cleanStats } from "../../redux/actions-statsByMonth";
   
-const FilterStats = ({user, setFilters, filters}) => {
+const FilterStats = ({user, setFilters, filters, years}) => {
     
   const dispatch = useDispatch()
   const sellers = useSelector(state => state.sellers)
-  // const selectedMonth = useSelector(state => state.monthFilter)
-  // const selectedYear = useSelector(state => state.yearFilter)
 
   const handleSelectMoth = (e) =>{
     setFilters({
       ...filters,
       Month: e.target.value
     })
+    dispatch(cleanStats())
+    dispatch(getStats({...filters, Month: e.target.value}))
   }
   const handleSelectYear = (e) => {
     setFilters({
       ...filters,
       Year: e.target.value
     })
+    dispatch(cleanStats())
+    dispatch(getStats({...filters, Year: e.target.value}))
   }
 
 
@@ -38,14 +42,18 @@ const FilterStats = ({user, setFilters, filters}) => {
     if(e.target.value === 'all') {
       setFilters({
         ...filters,
-        SellerID: ''
+        SellerID: 3
       })
+      dispatch(cleanStats())
+      dispatch(getStats({...filters, SellerID: 3 }))
     }
     else {
       setFilters({
         ...filters,
         SellerID: e.target.value
       })
+      dispatch(cleanStats())
+      dispatch(getStats({...filters, SellerID: e.target.value}))
     }
     }
 
@@ -63,14 +71,14 @@ const FilterStats = ({user, setFilters, filters}) => {
       >
       {/*Selects */}
         <Box 
-        w={user[0].Secction7Flag == 1 ? '30vw':'15vw'} 
+        w={user[0].Secction7Flag === 1 ? '30vw':'15vw'} 
         display={'flex'}
-        justifyContent={user[0].Secction7Flag == 1 ? 'space-between' : 'flex-end'}
+        justifyContent={user[0].Secction7Flag === 1 ? 'space-between' : 'flex-end'}
         mr={'1vw'} 
         >
         {/*Filter by seller */}
         {
-          user[0].Secction7Flag == 1 ? (
+          user[0].Secction7Flag === 1 ? (
             <Select
             defaultValue=""
             onChange={(e)=>handleSelectSeller(e)}
@@ -90,7 +98,7 @@ const FilterStats = ({user, setFilters, filters}) => {
             <option value={'all'} className="options">All seller</option>
               {  
                   sellers?.map((e, i) => {
-                    if(e.SellerID != 3){
+                    if(e.SellerID !== 3){
                       return(
                         <option key={i} className={'options'} value={e.SellerID}>{e.FirstName} {e.LastName}</option>
                         )
@@ -105,7 +113,7 @@ const FilterStats = ({user, setFilters, filters}) => {
           defaultValue=""
           onChange={(e)=>handleSelectMoth(e)}
           mb={'0.5vh'}
-          w={'7vw'}
+          w={'9vw'}
           minH={'4.5vh'}
           variant="unstyled"
           textColor={'web.text2'}
@@ -130,7 +138,7 @@ const FilterStats = ({user, setFilters, filters}) => {
           defaultValue=""
           onChange={(e)=>handleSelectYear(e)}
           mb={'0.5vh'}
-          w={'7vw'}
+          w={'9w'}
           minH={'4.5vh'}
           variant="unstyled"
           textColor={'web.text2'}
@@ -142,13 +150,13 @@ const FilterStats = ({user, setFilters, filters}) => {
           _hover={{borderColor: 'web.border'}}
           > 
           <option value="" disabled hidden>Filter by Year</option>
-            {/* {  
-              years.invoiceDates?.map((e, i) => {
+            {  
+              years?.map((e, i) => {
                 return(
-                  <option key={i} className={'options'} value={e.dates}>{e.dates}</option>
+                  <option key={i} className={'options'} value={e.dates}>{e}</option>
                   )
                 })
-            } */}
+            }
           </Select>
         </Box>
         <Divider orientation={'vertical'} h={'5vh'}/>

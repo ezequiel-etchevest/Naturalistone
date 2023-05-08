@@ -78,7 +78,9 @@ import {
 import {
   GET_PAYMENTS_BY_MONTH
 } from './actions.paymentsByMonth';
-
+import {
+  GET_STATS
+} from './actions-stats'
 
 const intialState = {
     employees: [],
@@ -89,7 +91,7 @@ const intialState = {
     seller_invoices: [],
     all_products: [],
     current_month: {},
-    payment_stats: {},
+    // payment_stats: {},
     invoice_products: [],
     payments_by_id: {},
     products_errors:{},
@@ -109,12 +111,13 @@ const intialState = {
     projects_by_customer_id: [],
     customers: [],
     customer_by_id: {},
-    month: '',
-    sellerId: '',
-    monthFilter: '',
-    yearFilter: '',
+    // month: '',
+    // sellerId: '',
+    // monthFilter: '',
+    // yearFilter: '',
     payments_by_month: [],
-    project_invoices: []
+    project_invoices: [],
+    stats: {}
 }
 
 function rootReducer (state = intialState, action) {
@@ -209,16 +212,15 @@ function rootReducer (state = intialState, action) {
               ...state,
               current_month: action.payload,
           }
-        case GET_PAYMENT_STATS:
-            return {
-              ...state,
-              payment_stats: action.payload,
+        case GET_STATS:
+          return {
+            ...state,
+            stats: action.payload
           }
         case CLEAN_STATS:
           return {
             ...state,
-            payment_stats: action.payload,
-            current_month: action.payload
+            stats: action.payload
           }
         case GET_INVOICE_PRODUCTS:
             return {

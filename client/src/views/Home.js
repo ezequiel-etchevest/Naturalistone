@@ -16,9 +16,7 @@ const Home = ({focus, setFocus}) => {
         if(userLocal && !user.length){
           dispatch(getEmployeeById(userLocal.SellerID))
         }
-        return ()=>{
-          dispatch(cleanStats())
-        }},[dispatch, userLocal, user])
+        },[dispatch, userLocal, user])
 
       if(user.length){
         return(
