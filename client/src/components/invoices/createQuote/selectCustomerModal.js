@@ -113,7 +113,13 @@ const SelectCustomerModal = ({userId, isOpen, onClose, customers}) => {
           <CreateCustomerModal customer={customer} setCustomer={setCustomer} onSecondModalOpen={onSecondModalOpen}/>
           </Tooltip>
         </HStack>
-        <SelectCustomerModalList customers={customers} customer={customer} setCustomer={setCustomer} isSecondModalOpen={isSecondModalOpen}onSecondModalOpen={onSecondModalOpen} onSecondModalClose={onSecondModalClose} />
+        <SelectCustomerModalList 
+          customers={customers} 
+          customer={customer} 
+          setCustomer={setCustomer} 
+          isSecondModalOpen={isSecondModalOpen}
+          onSecondModalOpen={onSecondModalOpen} 
+          onSecondModalClose={onSecondModalClose}/>
       </ModalBody>
       </Box>
       <ModalFooter mb={'2vh'} display={'flex'} flexDir={'row'} justifyContent={'space-between'} ml={'2vw'} mr={'2vw'}>

@@ -22,7 +22,7 @@ import { getFiltered } from "../../../redux/actions-products";
 import {BiSearch} from 'react-icons/bi'
 import '../../../assets/styleSheet.css'
 
-const CreateInvoiceModal = ({ isOpen, onClose, customer, project, onQuotesModalClose, isQuotesModalOpen, onQuotesModalOpen}) => {
+const CreateInvoiceModal = ({ isOpen, onClose, customer, project, onQuotesModalClose, isQuotesModalOpen, onQuotesModalOpen, onProjectModalClose}) => {
  
 const dispatch = useDispatch()
 const toast = useToast()
@@ -142,7 +142,7 @@ useEffect(()=>{
       </ModalFooter>
     </ModalContent>
   </Modal>
-  <ReviewProductsModal isReviewModalOpen={isReviewModalOpen} onQuotesModalOpen={onQuotesModalOpen} onReviewModalClose={onReviewModalClose} products={products} setProducts={setProducts} customer={customer} project={project}/>
+  <ReviewProductsModal isReviewModalOpen={isReviewModalOpen} onQuotesModalOpen={onQuotesModalOpen} onReviewModalClose={onReviewModalClose} products={products} setProducts={setProducts} customer={customer} project={project} onProjectModalClose={onProjectModalClose}/>
 </>
 )}
 

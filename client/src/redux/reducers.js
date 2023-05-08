@@ -10,7 +10,8 @@ import {
     PATCH_STAMP,
     PATCH_STATUS,
     GET_SELLER_VALUES,
-    POST_QUOTE
+    POST_QUOTE,
+    CLEAN_POST_QUOTE
 } from './actions-invoices';
 import { 
   GET_INVOICE_ERRORS,
@@ -114,7 +115,8 @@ const intialState = {
     monthFilter: '',
     yearFilter: '',
     payments_by_month: [],
-    project_invoices: []
+    project_invoices: [],
+    posted_quote:{}
 }
 
 function rootReducer (state = intialState, action) {
@@ -159,6 +161,7 @@ function rootReducer (state = intialState, action) {
               projects_by_customer_id: {},
               customers: [],
               customer_by_id: {},
+              posted_quote: {}
             }  
         case GET_INVOICE_BY_ID:
             return {
@@ -379,7 +382,13 @@ function rootReducer (state = intialState, action) {
           }
         case POST_QUOTE:
           return{
-            ...state
+            ...state,
+            posted_quote: action.payload
+          }
+        case CLEAN_POST_QUOTE:
+          return{
+            ...state,
+            posted_quote: {}
           }
         case GET_MONTH:
           return {

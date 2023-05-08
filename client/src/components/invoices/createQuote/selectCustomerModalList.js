@@ -101,7 +101,11 @@ import {
         }
       </Box> 
     </Box>
-    <SelectedCustomerModal onSecondModalClose={onSecondModalClose} isSecondModalOpen={isSecondModalOpen} customer={customer} setCustomer={setCustomer}/>
+    <SelectedCustomerModal 
+    onSecondModalClose={onSecondModalClose}
+    isSecondModalOpen={isSecondModalOpen} 
+    customer={customer}
+    setCustomer={setCustomer}/>
   </>
   )
 }

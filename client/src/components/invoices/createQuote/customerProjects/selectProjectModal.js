@@ -23,14 +23,14 @@ import {BiSearch} from 'react-icons/bi'
 import '../../../../assets/styleSheet.css'
 
 
-const SelectProjectModal = ({customer, isThirthModalOpen, onThirthModalClose, isOpen, onClose}) => {
+const SelectProjectModal = ({customer, isProjectModalOpen, onProjectModalClose, isOpen, onClose}) => {
  
   const { isOpen: isQuotesModalOpen, onOpen: onQuotesModalOpen, onClose: onQuotesModalClose } = useDisclosure()
 
   const projects = useSelector(state => state.projects_by_customer_id)
 
   const handlePrevious = () => {
-    onThirthModalClose()
+    onProjectModalClose()
   }
   
   const handleNext = () => {
@@ -41,8 +41,8 @@ const SelectProjectModal = ({customer, isThirthModalOpen, onThirthModalClose, is
 
 <>
   <Modal 
-    isOpen={isThirthModalOpen} 
-    onClose={onThirthModalClose}
+    isOpen={isProjectModalOpen} 
+    onClose={onProjectModalClose}
     size={'3xl'}
     >
     <ModalOverlay />
@@ -113,7 +113,7 @@ const SelectProjectModal = ({customer, isThirthModalOpen, onThirthModalClose, is
             />
           </Tooltip>
         </HStack>
-        <SelectProjectModalList customer={customer} projects={projects} isQuotesModalOpen={isQuotesModalOpen} onQuotesModalClose={onQuotesModalClose} onQuotesModalOpen={onQuotesModalOpen}/>
+        <SelectProjectModalList customer={customer} projects={projects} isQuotesModalOpen={isQuotesModalOpen} onQuotesModalClose={onQuotesModalClose} onQuotesModalOpen={onQuotesModalOpen} onProjectModalClose={onProjectModalClose}/>
       </ModalBody>
       </Box>
       <ModalFooter mb={'2vh'} display={'flex'} flexDir={'row'} justifyContent={'space-between'} ml={'2vw'} mr={'2vw'}>

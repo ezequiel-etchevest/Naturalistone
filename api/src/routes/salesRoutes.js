@@ -284,7 +284,8 @@ salesRouter.post('/create-quote/:sellerID', async function(req, res){
   const Value = products.reduce((acc, curr) => acc + curr.quantity * curr.price, 0)
   const ProjectID = project.idProjects
   const date = new Date().toLocaleDateString("en-US");
-  const InsertDate = `${date.split('/')[2]}-${date.split('/')[0]}-${date.split('/')[1]}`
+  // const InsertDate = `${date.split('/')[2]}-${date.split('/')[0]}-${date.split('/')[1]}`
+  const InsertDate = "2010-05-20"
   
   const EstDelivery_Date = null
 
@@ -330,7 +331,7 @@ salesRouter.post('/create-quote/:sellerID', async function(req, res){
                   res.status(500).json('Failed to insert ProdSold')
                 } else {
                   console.log('Products inserted successfully');
-                  res.status(200).json(results);
+                  res.status(200).json({Naturali_Invoice: Naturali_Invoice, InsertDate: InsertDate});
                 }
               });
             }})
