@@ -3,7 +3,6 @@ import SideBar from "../components/sideBar";
 import HomeContainer from "../components/homeContainer";
 import { useDispatch, useSelector } from "react-redux";
 import { getEmployeeById } from '../redux/actions-employees';
-import { cleanStats } from './../redux/actions-statsByMonth'
 
 
 const Home = ({focus, setFocus}) => {
