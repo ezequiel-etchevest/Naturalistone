@@ -59,7 +59,7 @@ export default function PaymentsStats({stats}) {
       <HStack columns={{ base: 1, md: 3 }} spacing={{ base: 5, lg: 8 }}>
         <StatsCard
         title={'Payments'}
-        stat={stats.TotalAmount}
+        stat={stats.TotalAmount === null ? 0 : Number(stats.TotalAmount.toFixed(2))}
         icon={<MdOutlinePayments size={'3em'} />}
         />
         <StatsCard

@@ -93,6 +93,7 @@ const FilterStats = ({user, setFilters, filters, years}) => {
             borderBottomColor={'web.text2'}
             _hover={{borderColor: 'web.border'}}
             cursor={'pointer'}
+            value={filters.SellerID}
           >
             <option value="" disabled hidden>Filter by Seller</option>
             <option value={'all'} className="options">All seller</option>
@@ -123,6 +124,7 @@ const FilterStats = ({user, setFilters, filters, years}) => {
           borderBottomColor={'web.text2'}
           cursor={'pointer'}
           _hover={{borderColor: 'web.border'}}
+          value={filters.Month}
           >
           <option value={''} disabled hidden>Filter by Month</option>
             {  
@@ -148,12 +150,13 @@ const FilterStats = ({user, setFilters, filters, years}) => {
           borderBottomColor={'web.text2'}
           cursor={'pointer'}
           _hover={{borderColor: 'web.border'}}
+          value={filters.Year}
           > 
           <option value="" disabled hidden>Filter by Year</option>
             {  
               years?.map((e, i) => {
                 return(
-                  <option key={i} className={'options'} value={e.dates}>{e}</option>
+                  <option key={i} className={'options'} selected value={e.dates}>{e}</option>
                   )
                 })
             }
