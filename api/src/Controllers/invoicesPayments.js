@@ -4,7 +4,7 @@
 const invoicesPayments = (array) => {
 
     array.forEach(invoices => {
-        if( invoices.Payments){
+        if( invoices.Payments && invoices.Payments !== undefined){
             invoices.Payments = invoices.Payments.split(',')
             invoices.Payments = invoices.Payments.map(e => {
                 e = e.split(';')

@@ -16,11 +16,11 @@ import {
     } from "@chakra-ui/react"
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import '../../assets/styleSheet.css'
-import { getFiltered } from "../../redux/actions-products";
 import CreateInvoiceProductsList from "./createInvoiceProductsList";
-import {BiSearch} from 'react-icons/bi'
 import ReviewProductsModal from "./createInvoiceProductsReview";
+import { getFiltered } from "../../../redux/actions-products";
+import {BiSearch} from 'react-icons/bi'
+import '../../../assets/styleSheet.css'
 
 const CreateInvoiceModal = ({ isOpen, onClose, customer, project, onQuotesModalClose, isQuotesModalOpen, onQuotesModalOpen}) => {
  

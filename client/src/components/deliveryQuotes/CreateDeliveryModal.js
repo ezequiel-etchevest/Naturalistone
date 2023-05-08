@@ -32,7 +32,8 @@ const CreateDeliveryModal = ({invoice, user, isOpen, onClose, invoice_products})
   const handleQuantities = () => {
    
     return(
-      invoice_products?.map(p => {
+      invoice_products.length ?
+        invoice_products?.map(p => {
         return {      
           quantity: p.InStock_Reserved,
           prodID:p.ProdID,
@@ -45,7 +46,8 @@ const CreateDeliveryModal = ({invoice, user, isOpen, onClose, invoice_products})
           SalePrice: p.SalePrice,
           delivered: p.Delivered 
         }
-      }))
+      }):
+      null) // esta condicion es porque el invoice no tiene productos cargados, por ende rompe.
     }
 
   const [quantities, setQuantities] = useState(handleQuantities)

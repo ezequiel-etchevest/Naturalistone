@@ -1,13 +1,11 @@
 import { 
-    Button, 
     ButtonGroup, 
     IconButton,
     useDisclosure,
-    Box,
     Tooltip
     } from "@chakra-ui/react"
-import {AiOutlineFileAdd} from 'react-icons/ai';
-import SelectCustomerModal from "../customers/selectCustomerModal";
+    import SelectCustomerModal from "../createQuote/selectCustomerModal";
+    import {AiOutlineFileAdd} from 'react-icons/ai';
 
 
 const CreateInvoiceButton = ({userId, customers}) => {

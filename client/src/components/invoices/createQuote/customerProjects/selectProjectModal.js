@@ -17,10 +17,10 @@ import {
     Divider,
     } from "@chakra-ui/react"
 import { useDispatch, useSelector } from "react-redux";
-import '../../assets/styleSheet.css'
+import SelectProjectModalList from "./selectProjectModalList";
 import { TbPlaylistAdd } from 'react-icons/tb'
 import {BiSearch} from 'react-icons/bi'
-import SelectProjectModalList from "./selectProjectModalList";
+import '../../../../assets/styleSheet.css'
 
 
 const SelectProjectModal = ({customer, isThirthModalOpen, onThirthModalClose, isOpen, onClose}) => {

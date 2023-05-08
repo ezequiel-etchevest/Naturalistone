@@ -23,7 +23,7 @@ salesRouter.get('/:id', async function(req, res){
       } else {
       if(time === 'All' || time === ''){
       if(results[0].Secction7Flag === 1){
-         query_ =    `SELECT Sales.*, Projects.*, Customers.*, Payments.idPayments, Seller.FirstName, Seller.LastName, Seller.SellerReference,
+         query_ =    `SELECT Sales.*, Projects.*, Customers.*, Payments.idPayments, Seller.FirstName, Seller.LastName, Seller.SellerReference, Seller.SellerID,
          GROUP_CONCAT(
          CONCAT(Payments.idPayments,';',Payments.Amount,';',Payments.Date))AS Payments FROM Sales 
          LEFT JOIN Projects ON Sales.ProjectID = Projects.idProjects
@@ -33,7 +33,7 @@ salesRouter.get('/:id', async function(req, res){
          GROUP BY Sales.Naturali_Invoice
          ORDER BY Sales.InvoiceDate DESC` 
       } else {
-        query_ =    `SELECT Sales.*, Projects.*, Customers.*, Payments.idPayments, Seller.FirstName, Seller.LastName, Seller.SellerReference, 
+        query_ =    `SELECT Sales.*, Projects.*, Customers.*, Payments.idPayments, Seller.FirstName, Seller.LastName, Seller.SellerReference, Seller.SellerID,
         GROUP_CONCAT(
         CONCAT(Payments.idPayments,';',Payments.Amount,';',Payments.Date))AS Payments FROM Sales 
         LEFT JOIN Projects ON Sales.ProjectID = Projects.idProjects
@@ -50,7 +50,7 @@ salesRouter.get('/:id', async function(req, res){
       const limitDateMonth = getLimitDateMonth()
 
       if(results[0].Secction7Flag === 1){
-        query_ = `SELECT Sales.*, Projects.*, Customers.*, Payments.idPayments, Seller.FirstName, Seller.LastName, Seller.SellerReference,
+        query_ = `SELECT Sales.*, Projects.*, Customers.*, Payments.idPayments, Seller.FirstName, Seller.LastName, Seller.SellerReference, Seller.SellerID,
         GROUP_CONCAT(
         CONCAT(Payments.idPayments,';',Payments.Amount,';',Payments.Date))AS Payments FROM Sales 
         LEFT JOIN Projects ON Sales.ProjectID = Projects.idProjects
@@ -61,7 +61,7 @@ salesRouter.get('/:id', async function(req, res){
         GROUP BY Sales.Naturali_Invoice
         ORDER BY Sales.InvoiceDate DESC`  
       } else {
-        query_ = `SELECT Sales.*, Projects.*, Customers.*, Payments.idPayments, Seller.FirstName, Seller.LastName, Seller.SellerReference,
+        query_ = `SELECT Sales.*, Projects.*, Customers.*, Payments.idPayments, Seller.FirstName, Seller.LastName, Seller.SellerReference, Seller.SellerID,
         GROUP_CONCAT(
         CONCAT(Payments.idPayments,';',Payments.Amount,';',Payments.Date))AS Payments FROM Sales 
         LEFT JOIN Projects ON Sales.ProjectID = Projects.idProjects
@@ -276,32 +276,36 @@ salesRouter.get('/values/seller', async function(req, res){
     }
 });
 
-
-
 salesRouter.post('/create-quote/:sellerID', async function(req, res){
 
   const { sellerID } = req.params
-  const { Value, ProjectID, InvoiceDate, EstDelivery_Date } = req.body
+  const { customer, project, products } = req.body
+  
+  const Value = products.reduce((acc, curr) => acc + curr.quantity * curr.price, 0)
+  const ProjectID = project.idProjects
+  const date = new Date().toLocaleDateString("en-US");
+  const InsertDate = `${date.split('/')[2]}-${date.split('/')[0]}-${date.split('/')[1]}`
+  
+  const EstDelivery_Date = null
 
   // Obtener el último Naturali_Invoice de la tabla Sales
   const query_0 = `SELECT Naturali_Invoice FROM NaturaliStone.Sales ORDER BY Naturali_Invoice DESC LIMIT 1;`
-
+  
   try {
     mysqlConnection.query(query_0, function(error, quotesIDs, fields) {
 
       if (error) {
         console.log('Error in salesRoutes.get /create-quote/:sellerID: ' + error)
         res.status(500).json("Can't obtain Naturali_Invoice")
-
       } else {
 
         console.log('QuotesIds retrieved successfully')
-        const ids = quotesIDs.map(q => Number(q.Naturali_Invoice))
+
+        const ids = quotesIDs.map(q => Number(q.Naturali_Invoice)) // crea un quoteID agregando +1 al ultimo registrado en la db
         const Naturali_Invoice = Math.max(...ids) + 1
 
         // Hace el posteo en la tabla de Sales con los valores que llegaron por body y el id del quote creado.
-        const query_ = `INSERT INTO Sales (Naturali_Invoice, Value, ProjectID, InvoiceDate, EstDelivery_Date, SellerID) VALUES ("${Naturali_Invoice}", "${Value}", "${ProjectID}", "${InvoiceDate}", "${EstDelivery_Date}", "${sellerID}")`
-
+        const query_ = `INSERT INTO Sales (Naturali_Invoice, Value, ProjectID, InvoiceDate, EstDelivery_Date, SellerID) VALUES ("${Naturali_Invoice}", "${Value}", "${ProjectID}", "${InsertDate}", "${EstDelivery_Date}", "${sellerID}")`
         try {
           mysqlConnection.query(query_, function(error, results, fields) {
             if (error) {
@@ -309,21 +313,151 @@ salesRouter.post('/create-quote/:sellerID', async function(req, res){
               res.status(500).json('Failed to create quote')
             } else {
               console.log('Quote created successfully')
-              res.status(200).json({ Naturali_Invoice, Value, ProjectID, InvoiceDate, EstDelivery_Date, sellerID })
-            }
-          })
+              // Construye la consulta SQL de inserción múltiple
+              let query = "INSERT INTO ProdSold (SaleID, ProdID, Quantity, SalePrice, Delivered, InsertDate, Status) VALUES ";
+              const values = [];
+
+              for (const product of products) {
+                const { prodID, quantity, price } = product;
+                values.push(`("${Naturali_Invoice}", "${prodID}", "${quantity}", "${price}", 0, "${InsertDate}", "Pending")`);
+              }
+
+              query += values.join(", ");
+
+              mysqlConnection.query(query, function(error, results, fields) {
+                if (error) {
+                  console.log('Error in salesRoutes.get Insert INTO ProdSold ' + error)
+                  res.status(500).json('Failed to insert ProdSold')
+                } else {
+                  console.log('Products inserted successfully');
+                  res.status(200).json(results);
+                }
+              });
+            }})
         } catch (error) {
           res.status(409).send(error)
-        }
-      }
-    })
+        }}})
   } catch (error) {
     res.status(409).send(error)
   }
 })
+
+salesRouter.get('/project-invoices/:id', async function(req, res){
+  const { id } = req.params
+
+  query_ =    `SELECT * FROM NaturaliStone.Sales
+                WHERE Sales.ProjectID = ${id}`;
+
+  try{
+       mysqlConnection.query(query_, function(error, results, fields){
+          if(error) throw error;
+          if(results.length == 0) {
+              console.log('Error en salesRoutes.get /invoice/:id')
+              res.status(400).json({ estado: false, data: {}});
+          } else {
+              console.log('Data OK')
+              res.status(200).json(results);
+          }
+      });
+  } catch(error){
+      res.status(409).send(error);
+  }
+});
+salesRouter.get('/customer/:id', async function(req, res){
+  const { id } = req.params
+
+  query_ =    `SELECT Sales.* FROM NaturaliStone.Sales
+              LEFT JOIN NaturaliStone.Projects ON Sales.ProjectID = Projects.idProjects
+              LEFT JOIN NaturaliStone.Customers ON Projects.CustomerID = Customers.CustomerID
+              WHERE Customers.CustomerID = ${id};`
+
+  try{
+       mysqlConnection.query(query_, function(error, results, fields){
+          if(error) throw error;
+          if(results.length == 0) {
+              console.log('Error en salesRoutes.get /invoice/:id')
+              res.status(400).json({ estado: false, data: {}});
+          } else {
+              console.log('Data OK')
+              res.status(200).json(results);
+          }
+      });
+  } catch(error){
+      res.status(409).send(error);
+  }
+});
+
 
 
 
 module.exports = salesRouter;
 
 
+
+// salesRouter.post('/create-quote/:sellerID', async function(req, res){
+
+//   const { sellerID } = req.params
+//   // const { Value, ProjectID, InvoiceDate, EstDelivery_Date } = req.body
+//   const { customer, project, products } = req.body
+  
+//   const Value = products.reduce((acc, curr) => acc + curr.quantity * curr.price, 0)
+//   const ProjectID = project.idProjects
+//   const InvoiceDate = new Date().toLocaleDateString("en-US");
+//   const EstDelivery_Date = ''
+//   console.log(products)
+//   // Obtener el último Naturali_Invoice de la tabla Sales
+//   const query_0 = `SELECT Naturali_Invoice FROM NaturaliStone.Sales ORDER BY Naturali_Invoice DESC LIMIT 1;`
+  
+//   try {
+//     mysqlConnection.query(query_0, function(error, quotesIDs, fields) {
+
+//       if (error) {
+//         console.log('Error in salesRoutes.get /create-quote/:sellerID: ' + error)
+//         res.status(500).json("Can't obtain Naturali_Invoice")
+//       } else {
+
+//         console.log('QuotesIds retrieved successfully')
+//         const ids = quotesIDs.map(q => Number(q.Naturali_Invoice))
+//         const Naturali_Invoice = Math.max(...ids) + 1
+
+//         // Hace el posteo en la tabla de Sales con los valores que llegaron por body y el id del quote creado.
+//         const query_ = `INSERT INTO Sales (Naturali_Invoice, Value, ProjectID, InvoiceDate, EstDelivery_Date, SellerID) VALUES ("${Naturali_Invoice}", "${Value}", "${ProjectID}", "${InvoiceDate}", "${EstDelivery_Date}", "${sellerID}")`
+
+//         try {
+//           mysqlConnection.query(query_, function(error, results, fields) {
+//             if (error) {
+//               console.log('Error in salesRoutes.get /create-quote/:sellerID: ' + error)
+//               res.status(500).json('Failed to create quote')
+//             } else {
+//               console.log('Quote created successfully')
+              
+//               for (const product of products) {
+//                 const { prodID, quantity, price } = product;
+//                 const InsertDate = new Date().toLocaleDateString("en-US");
+//                  const query__ = `INSERT INTO ProdSold (SaleID, ProdID, Quantity, SalePrice, Delivered, InsertDate, Status) VALUES ("${Naturali_Invoice}", "${prodID}", "${quantity}", "${price}", 0, "${InsertDate}", "Pending")`
+
+//               try{
+//                 mysqlConnection.query(query__, function(error, results, fields) {
+//                   if (error) {
+//                     console.log('Error in salesRoutes.get Insert INTO ProdSold ' + error)
+//                     res.status(500).json('Failed to insert ProdSold')
+//                   } else {
+//                     console.log('Product Inserted successfully')
+//                     res.status(200).json({ Naturali_Invoice, Value, ProjectID, InvoiceDate, EstDelivery_Date, sellerID })
+//                   }
+//                 })
+//               } catch{
+//                 res.status(409).send(error)
+//               }
+//             }
+//             }
+//           })
+//         } catch (error) {
+//           res.status(409).send(error)
+//         }
+//       }
+//     })
+//   } catch (error) {
+//     res.status(409).send(error)
+//   }
+// })

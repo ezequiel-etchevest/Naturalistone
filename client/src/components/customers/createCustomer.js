@@ -10,17 +10,16 @@ export function CreateNewCustomer() {
   const { isOpen, onOpen, onClose } = useDisclosure()
 
   const [formData, setFormData] = useState({
-    Name: '',
-    LastName: '',
+    Contact_Name: '',
     Address: '',
     State: '',
     ZipCode: '',
-    Reference: '',
+    Company: '',
     Phone: '',
     Email: '',
     DiscountID: 1
   });
-  console.log({formData})
+
   const dispatch = useDispatch();
 
   const handleSubmit = (event) => {
@@ -30,12 +29,11 @@ export function CreateNewCustomer() {
   };
   const handleClose = () => {
     setFormData({
-      Name: '',
-      LastName: '',
+      Contact_Name: '',
       Address: '',
       State: '',
       ZipCode: '',
-      Reference: '',
+      Company: '',
       Phone: '',
       Email: '',
       DiscountID: 1
@@ -63,6 +61,7 @@ export function CreateNewCustomer() {
       <Modal size={'2xl'} isOpen={isOpen} onClose={()=>handleClose()}>
         <ModalOverlay/>
         <ModalContent
+        minW={'50vw'}
         bg={'web.sideBar'}
         border={'1px solid'}
         borderColor={'web.border'}>

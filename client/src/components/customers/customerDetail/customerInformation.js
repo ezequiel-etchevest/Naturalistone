@@ -1,7 +1,7 @@
 import { Box, Text, HStack } from "@chakra-ui/react"
 
 const CustomerInformation = ({customer}) => {
-  console.log({customer})
+  
   return(
     <>
       <Box

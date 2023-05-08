@@ -15,15 +15,15 @@ import {
     HStack,
     Tooltip,
     Box,
-    useToast
     } from "@chakra-ui/react"
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useDispatch } from "react-redux";
-import '../../assets/styleSheet.css'
-import {FiUserPlus} from 'react-icons/fi'
-import {BiSearch} from 'react-icons/bi'
+import { CreateNewCustomer } from "../../customers/createCustomer";
 import SelectCustomerModalList from './selectCustomerModalList'
-import { getCustomers } from "../../redux/actions-customers";
+import { getCustomers } from "../../../redux/actions-customers";
+import {BiSearch} from 'react-icons/bi'
+import {FiUserPlus} from 'react-icons/fi'
+import '../../../assets/styleSheet.css'
 
 const SelectCustomerModal = ({userId, isOpen, onClose, customers}) => {
  
@@ -108,7 +108,7 @@ const SelectCustomerModal = ({userId, isOpen, onClose, customers}) => {
           </Box>
           <Divider orientation={'vertical'} h={'5vh'}/>
           <Tooltip label={'Add customer'} fontWeight={'hairline'}>
-            <IconButton
+            {/* <IconButton
             display={'flex'}
             alignItems={'center'}
             variant={'unstyled'} 
@@ -118,7 +118,8 @@ const SelectCustomerModal = ({userId, isOpen, onClose, customers}) => {
             }}
             icon={<FiUserPlus/>} 
             size={'lg'}
-            />
+            /> */}
+            <CreateNewCustomer/>
           </Tooltip>
         </HStack>
         <SelectCustomerModalList customers={customers} isSecondModalOpen={isSecondModalOpen}onSecondModalOpen={onSecondModalOpen} onSecondModalClose={onSecondModalClose} />

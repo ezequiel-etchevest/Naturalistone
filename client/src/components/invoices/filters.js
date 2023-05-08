@@ -15,7 +15,7 @@ import { useDispatch } from 'react-redux'
 import { useState } from "react";
 import '../../assets/styleSheet.css';
 import {AiOutlineClear} from 'react-icons/ai';
-import CreateInvoiceButton from './createInvoice'
+import CreateInvoiceButton from './createQuote/createInvoice'
 
 const Filters = ({user, seller_invoices, setFocusFilter, seller_values, customers}) => {
 
@@ -228,7 +228,6 @@ const Filters = ({user, seller_invoices, setFocusFilter, seller_values, customer
             display={'flex'} 
             justifyContent={validateSeller() === true ? 'space-between' : 'flex-end'}>  
             <Select
-              defaultValue=""
               onChange={(e)=>handleSellerSelect(e)}
               display={validateSeller() === true ? 'unset' : 'none' }
               mb={'0.5vh'}
@@ -257,7 +256,6 @@ const Filters = ({user, seller_invoices, setFocusFilter, seller_values, customer
               }
             </Select>
               <Select
-                defaultValue=""
                 onChange={(e)=>handleTimeSelect(e)}
                 mb={'0.5vh'}
                 w={'9vw'}

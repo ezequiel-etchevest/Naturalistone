@@ -7,9 +7,6 @@ import {
     Th,
     Td,
     TableContainer,
-    Tooltip,
-    useToast,
-    Switch,
     Text,
     Center,
     NumberInput,
@@ -18,12 +15,8 @@ import {
     NumberDecrementStepper,
     NumberInputStepper
   } from '@chakra-ui/react';
-import { useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { getProductById } from '../../redux/actions-products';
 import { useEffect, useState } from 'react';
-import{ ImCheckboxChecked, ImCheckboxUnchecked } from 'react-icons/im';
-import { patchDiscontinued } from '../../redux/actions-products';
+
 
 
 const ModelTr = ({e, setProducts, products}) => {
@@ -36,6 +29,7 @@ const [input, setInput] = useState({
   size:e.Size,
   thickness:e.Thickness,
   finish:e.Finish,
+  price: e.Price
 })
 
 

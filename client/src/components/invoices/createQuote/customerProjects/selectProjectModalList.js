@@ -12,7 +12,7 @@ import {
     Center,
     } from '@chakra-ui/react'
     import { useState } from 'react';
-  import CreateInvoiceModal from '../invoices/createInvoiceModal';
+  import CreateInvoiceModal from '../createInvoiceModal';
   
   const ModelTr = ({e, setProject, setFocus, focus}) => {
   

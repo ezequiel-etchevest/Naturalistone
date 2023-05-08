@@ -31,10 +31,10 @@ export default function CreationCustomerForm({formData, setFormData}) {
     <form>
       <VStack spacing={4}>
         <Box display={'flex'} flexDir={'row'} justifyContent={'space-between'} w={'45vw'}>
-          <FormControl w={'20vw'} >
+          <FormControl w={'45vw'} >
             <Input
               mb={'0.5vh'}
-              w={'20vw'}
+              w={'45vw'}
               minH={'4.5vh'}
               variant="unstyled"
               textColor={'web.text2'}
@@ -42,28 +42,10 @@ export default function CreationCustomerForm({formData, setFormData}) {
               size={"sm"}
               borderBottomWidth={"2px"}
               borderBottomColor={'web.text2'}
-              placeholder={'First Name'}
+              placeholder={'Full Name'}
               type={"text"}
-              name={"Name"}
-              value={formData.Name}
-              onChange={handleChange}
-            />
-          </FormControl>
-          <FormControl w={'20vw'}>
-            <Input
-              mb={'0.5vh'}
-              w={'20vw'}
-              minH={'4.5vh'}
-              variant="unstyled"
-              textColor={'web.text2'}
-              _placeholder={{ fontFamily: 'body', fontWeight: 'inherit' }}
-              size={"sm"}
-              borderBottomWidth={"2px"}
-              borderBottomColor={'web.text2'}
-              placeholder={'Last Name'}
-              type={"text"}
-              name={"LastName"}
-              value={formData.LastName}
+              name={"Contact_Name"}
+              value={formData.Contact_Name}
               onChange={handleChange}
             />
           </FormControl>
@@ -125,8 +107,8 @@ export default function CreationCustomerForm({formData, setFormData}) {
             borderBottomColor={'web.text2'}
             placeholder={'Company'}
             type={"text"}
-            name={"Reference"}
-            value={formData.Reference}
+            name={"Company"}
+            value={formData.Company}
             onChange={handleChange}
           />
         </FormControl>

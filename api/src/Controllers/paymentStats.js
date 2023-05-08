@@ -69,16 +69,16 @@ let paymentStats = (invoices) => {
     else return values.toFixed(2)
 	  }
 
-	let totalCharged = getTotalCharged()
-	let closingDaysAvg = getClosingDaysAvg()
+	let TotalCharged = getTotalCharged()
+	let ClosingDaysAvg = getClosingDaysAvg()
 
   let getClosingRate = () => {
     let totalQuotesAmount = getTotalQuotesAmount()
     if(!totalQuotesAmount || totalQuotesAmount === 0) {
       return 0
     }
-    let closingRate = (totalCharged * 100) / totalQuotesAmount
-    return `${closingRate.toFixed(2)} %`
+    let ClosingRate = (TotalCharged * 100) / totalQuotesAmount
+    return `${ClosingRate.toFixed(2)} %`
     }
   
   let getPaidQuotes = () => {
@@ -87,11 +87,11 @@ let paymentStats = (invoices) => {
     return val
   }
 
-  let closingRate = getClosingRate()
-  let closingQuotes = getClosingQuotes()
-  let paidQuotes = getPaidQuotes()
+  let ClosingRate = getClosingRate()
+  let ClosingQuotes = getClosingQuotes()
+  let PaidQuotes = getPaidQuotes()
 
-return { closingRate, totalCharged, closingDaysAvg, closingQuotes, paidQuotes }
+return { ClosingRate, TotalCharged, ClosingDaysAvg, ClosingQuotes, PaidQuotes }
 }
 
 

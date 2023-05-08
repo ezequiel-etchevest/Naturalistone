@@ -12,9 +12,9 @@ import {
     useDisclosure
     } from "@chakra-ui/react"
 import { useDispatch } from 'react-redux'
-import '../../assets/styleSheet.css'
-import { getCustomerProjects } from "../../redux/actions-projects"
-import SelectProjectModal from "../customerProjects/selectProjectModal"
+import { getCustomerProjects } from "../../../redux/actions-projects"
+import SelectProjectModal from "../../invoices/createQuote/customerProjects/selectProjectModal"
+import '../../../assets/styleSheet.css'
 
 const SelectedCustomerModal = ({customer, isSecondModalOpen, onSecondModalClose, setCustomer,  isOpen, onClose}) => {
 

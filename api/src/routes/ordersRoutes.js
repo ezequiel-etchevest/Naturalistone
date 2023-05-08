@@ -50,7 +50,8 @@ ordersRouter.get('/products/:id', async function(req, res){
     INNER JOIN Products ON  ProdOrdered.ProdID = Products.ProdID 
     INNER JOIN ProdNames ON  ProdNames.ProdNameID = Products.ProdNameID
     INNER JOIN Dimension ON Dimension.DimensionID = Products.DimensionID
-    WHERE OrderID = ${id} ORDER BY Quantity DESC`;
+    WHERE OrderID = ${id} AND Status != 'Canceled'
+    ORDER BY Quantity DESC`;
     
     try{
          mysqlConnection.query(query_, function(error, results, fields){

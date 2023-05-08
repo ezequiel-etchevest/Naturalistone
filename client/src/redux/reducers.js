@@ -53,12 +53,15 @@ import {
 import {
   GET_PROJECTS,
   GET_PROJECTS_BY_ID,
-  POST_PROJECT
+  POST_PROJECT,
+  GET_PROJECT_INVOICES
 } from './actions-projects'
 import {
   GET_CUSTOMERS,
   GET_CUSTOMER_BY_ID,
-  POST_CUSTOMER
+  POST_CUSTOMER,
+  GET_CUSTOMER_INVOICES,
+  CLEAN_CUSTOMER_DETAIL
 } from './actions-customers'
 import {
   GET_MONTH
@@ -75,7 +78,9 @@ import {
 import {
   GET_PAYMENTS_BY_MONTH
 } from './actions.paymentsByMonth';
-
+import {
+  GET_STATS
+} from './actions-stats'
 
 const intialState = {
     employees: [],
@@ -86,7 +91,7 @@ const intialState = {
     seller_invoices: [],
     all_products: [],
     current_month: {},
-    payment_stats: {},
+    // payment_stats: {},
     invoice_products: [],
     payments_by_id: {},
     products_errors:{},
@@ -103,14 +108,16 @@ const intialState = {
     deliveryID_error:'',
     delivery_by_id:[],
     projects: [],
-    projects_by_customer_id: {},
+    projects_by_customer_id: [],
     customers: [],
     customer_by_id: {},
-    month: '',
-    sellerId: '',
-    monthFilter: '',
-    yearFilter: '',
+    // month: '',
+    // sellerId: '',
+    // monthFilter: '',
+    // yearFilter: '',
     payments_by_month: [],
+    project_invoices: [],
+    stats: {}
 }
 
 function rootReducer (state = intialState, action) {
@@ -155,8 +162,7 @@ function rootReducer (state = intialState, action) {
               projects_by_customer_id: {},
               customers: [],
               customer_by_id: {},
-            }
-        
+            }  
         case GET_INVOICE_BY_ID:
             return {
               ...state,
@@ -206,16 +212,15 @@ function rootReducer (state = intialState, action) {
               ...state,
               current_month: action.payload,
           }
-        case GET_PAYMENT_STATS:
-            return {
-              ...state,
-              payment_stats: action.payload,
+        case GET_STATS:
+          return {
+            ...state,
+            stats: action.payload
           }
         case CLEAN_STATS:
           return {
             ...state,
-            payment_stats: action.payload,
-            current_month: action.payload
+            stats: action.payload
           }
         case GET_INVOICE_PRODUCTS:
             return {
@@ -333,6 +338,13 @@ function rootReducer (state = intialState, action) {
             ...state,
             customers: action.payload
           }
+        case CLEAN_CUSTOMER_DETAIL:
+          return{
+            ...state,
+            project_invoices: [],
+            projects_by_customer_id: [],
+            customer_by_id: {},
+          }
         case GET_CUSTOMER_BY_ID:
           return{
             ...state,
@@ -349,9 +361,19 @@ function rootReducer (state = intialState, action) {
             projects: action.payload
           }
         case GET_PROJECTS_BY_ID:
-          return{
-            ...state,
-            projects_by_customer_id: action.payload
+            return{
+              ...state,
+              projects_by_customer_id: action.payload
+          }
+        case GET_PROJECT_INVOICES:
+            return{
+              ...state,
+              project_invoices: action.payload
+          }
+        case GET_CUSTOMER_INVOICES:
+            return{
+              ...state,
+              project_invoices: action.payload
           }
         case POST_PROJECT:
           return{
