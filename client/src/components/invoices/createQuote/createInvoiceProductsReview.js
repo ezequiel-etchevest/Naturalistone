@@ -40,7 +40,7 @@ const handleConfirm = () => {
   dispatch(createQuote(user[0].SellerID, {customer, project, products}))
   // dispatch(getCustomerProjects(customer.CustomerID))
   onReviewModalClose()
-  onProjectModalClose()
+  // onProjectModalClose()
   onPdfModalOpen()
 }
 

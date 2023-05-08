@@ -37,6 +37,8 @@ const CreatedQuotePdf = ({user, customer, project, products}) => {
 
   const invoiceID = posted_quote.Naturali_Invoice
   const date = posted_quote.InsertDate
+
+  var subtotal = 0
 //   const no = deliveryID
 //   const date = new Date().toLocaleDateString('en-US', {
 //     day: '2-digit',
@@ -55,6 +57,7 @@ const CreatedQuotePdf = ({user, customer, project, products}) => {
   const company = customer.Company
   const PO = 'reference'
   const ref = 'TEST'
+  const tax = 7
   const estDate = '2023-5-4'
   const deliveryMethod = 'TEST'
   const paymentTerms = 'TEST'
@@ -62,16 +65,16 @@ const CreatedQuotePdf = ({user, customer, project, products}) => {
   
 
 //   page.drawText(`${no}`, { x: 472, y: 666, size: 16, color: rgb(1, 0.3, 0) })
-  page.drawText(`${date}`, { x: 450, y: 688, size: 10 })
+  page.drawText(`${date}`, { x: 448, y: 688, size: 10 })
   page.drawText(`${invoiceID}`, { x: 514, y: 687, size: 12, color: rgb(1, 0.3, 0)})
 
-  page.drawText(`name ${name}`, { x: 42, y: 626, size: 10 })
-  page.drawText(`Phone ${phone}`, { x: 42, y: 612, size: 10 })
-  page.drawText(`email ${email}`, { x: 42, y: 598, size: 10 })
+  page.drawText(`${name}`, { x: 42, y: 626, size: 10 })
+  page.drawText(`${phone}`, { x: 42, y: 612, size: 10 })
+  page.drawText(`${email}`, { x: 42, y: 598, size: 10 })
 
-  page.drawText(`street ${street}`, { x: 336, y: 626, size: 10 })
-  page.drawText(`City, State ${state}`, { x: 336, y: 612, size: 10 })
-  page.drawText(`zipcode ${zipCode}`, { x: 336, y: 598, size: 10 })
+  page.drawText(`${street}`, { x: 336, y: 626, size: 10 })
+  page.drawText(`City, ${state}`, { x: 336, y: 612, size: 10 })
+  page.drawText(`${zipCode}`, { x: 336, y: 598, size: 10 })
 
   page.drawText(`${company}`, { x: 40, y: 508, size: 10 })
   page.drawText(`${PO}`, { x: 156, y: 508, size: 10 })
@@ -87,6 +90,9 @@ const CreatedQuotePdf = ({user, customer, project, products}) => {
 
 mappedProducts.forEach((product, index) => {
   const { variableName } = product;
+
+  subtotal = subtotal + product.price * product.quantity
+
   page.drawText(`${product.quantity}`, { x: 46, y, size: 10 });
   page.drawText(`Units`, { x: 76, y, size: 10 });
   page.drawText(`${product.prodID}`, { x: 134, y, size: 10 });
@@ -96,10 +102,10 @@ mappedProducts.forEach((product, index) => {
   y -= 14;
 });
 
-  page.drawText(`${ref}`, { x: 528, y: 272, size: 10 });
-  page.drawText(`${ref}`, { x: 454, y: 247, size: 10 });
-  page.drawText(`${ref}`, { x: 528, y: 247, size: 10 });
-  page.drawText(`${ref}`, { x: 528, y: 222, size: 10 });
+  page.drawText(`${subtotal}`, { x: 528, y: 272, size: 10 });
+  page.drawText(`(${tax} %)`, { x: 454, y: 249, size: 12 });
+  page.drawText(`${(subtotal * tax / 100).toFixed(2)}`, { x: 528, y: 247, size: 10 });
+  page.drawText(`$ ${(subtotal + (subtotal * tax / 100)).toFixed(2)}`, { x: 516, y: 222, size: 12 });
 
 
   const pdfBytes = await pdfDoc.save();
