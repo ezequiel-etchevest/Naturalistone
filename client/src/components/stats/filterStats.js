@@ -80,7 +80,6 @@ const FilterStats = ({user, setFilters, filters, years}) => {
         {
           user[0].Secction7Flag === 1 ? (
             <Select
-            defaultValue=""
             onChange={(e)=>handleSelectSeller(e)}
             mb={'0.5vh'}
             w={'12vw'}
@@ -111,7 +110,6 @@ const FilterStats = ({user, setFilters, filters, years}) => {
         }
         {/*Filter by month */} 
         <Select
-          defaultValue=""
           onChange={(e)=>handleSelectMoth(e)}
           mb={'0.5vh'}
           w={'9vw'}
@@ -137,7 +135,6 @@ const FilterStats = ({user, setFilters, filters, years}) => {
         </Select>
         {/*Filter by year */} 
         <Select
-          defaultValue=""
           onChange={(e)=>handleSelectYear(e)}
           mb={'0.5vh'}
           w={'9w'}
@@ -156,7 +153,7 @@ const FilterStats = ({user, setFilters, filters, years}) => {
             {  
               years?.map((e, i) => {
                 return(
-                  <option key={i} className={'options'} selected value={e.dates}>{e}</option>
+                  <option key={i} className={'options'} value={e.dates}>{e}</option>
                   )
                 })
             }

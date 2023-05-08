@@ -60,7 +60,6 @@ const StatsFilters = ({user}) => {
         justifyContent={'flex-end'}
         > 
           <Select
-            defaultValue=""
             onChange={(e)=>handleSellerSelect(e)}
             mb={'0.5vh'}
             w={'15vw'}
