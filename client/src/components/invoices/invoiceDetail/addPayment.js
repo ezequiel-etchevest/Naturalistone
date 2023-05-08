@@ -47,6 +47,7 @@ const AddPayment = ({pendingAmount}) => {
     const [error, setError] = useState('')
     const invoice = useSelector(state => state.invoice)
     const payments = useSelector(state => state.payment_stats)
+    const totalValueInvoice = invoice[0].Value
     const value = payments?.paymentsMath?.PendingAmount ?? invoice[0].Value
     const halfValue = Number(value / 2)
     const paymentsInvoices = useSelector(state => state.payments_by_id)
@@ -116,16 +117,18 @@ const AddPayment = ({pendingAmount}) => {
 
     const handleSubmit = () => {
       if(!isToastShowing) {
-        if(input.Method === CARD && parseFloat(input.Amount) > restOfPaymentCard){
-        setIsToastShowing(true)
-        return toast({
-          title: 'Invalid amount',
-          description: `cannot exceed ${restOfPaymentCard} of the card payment`,
-          status: 'error',
-          duration: 4000,
-          isClosable: true,
-          onCloseComplete: () => setIsToastShowing(false),
-        });
+        if (totalValueInvoice > 5000){
+          if(input.Method === CARD && parseFloat(input.Amount) > restOfPaymentCard){
+            setIsToastShowing(true)
+            return toast({
+              title: 'Invalid amount',
+              description: `cannot exceed ${restOfPaymentCard} of the card payment`,
+              status: 'error',
+              duration: 4000,
+              isClosable: true,
+              onCloseComplete: () => setIsToastShowing(false),
+            });
+          }
       }
       if(parseFloat(input.Amount) > parseFloat(pendingAmount)){
         setIsToastShowing(true)
@@ -143,6 +146,8 @@ const AddPayment = ({pendingAmount}) => {
           setInput({
             Method : '',
             Amount: '' })
+          setIs50Active(false);
+          setIs50Active(false);
           onClose(setError(''))
       } else{
         setIsToastShowing(true)
@@ -175,7 +180,7 @@ const AddPayment = ({pendingAmount}) => {
   const handle100Toggle = () => {
     setIs50Active(false);
     setIs100Active(true);
-    const valueAmount = payments?.paymentsMath?.PendingAmount ?? invoice[0].Value
+    const valueAmount = invoice[0].Value
     setInput({
       ...input,
       Amount: valueAmount
@@ -183,7 +188,7 @@ const AddPayment = ({pendingAmount}) => {
   };
 
   const valueInput = () => {
-    if (value > 5000) {
+    if (totalValueInvoice > 5000) {
       if (input.Method === CARD && input.Amount > restOfPaymentCard) {
         if(!isToastShowing) {
             setIsToastShowing(true)
@@ -212,9 +217,7 @@ const AddPayment = ({pendingAmount}) => {
       return formattedNumber
     }
     if(is100Active){
-      const value = Number(payments?.paymentsMath?.PendingAmount)
-      ? Number(payments?.paymentsMath?.PendingAmount)
-      : Number(invoice[0].Value)
+      const value = Number(invoice[0].Value)
       const formattedNumber = value.toLocaleString('en-US', {
         minimumFractionDigits: 2,
         maximumFractionDigits: 2,
@@ -225,10 +228,12 @@ const AddPayment = ({pendingAmount}) => {
   }
 
   const maxPaymentCard = () => {
-    if(restOfPaymentCard === 0) {
-      setIsOptionDisabled(true)
-      return;
-    } 
+    if(value > 5000){
+      if(restOfPaymentCard === 0) {
+        setIsOptionDisabled(true)
+        return;
+      } 
+    }
     setIsOptionDisabled(false);
     return restOfPaymentCard
   }
@@ -239,7 +244,7 @@ const AddPayment = ({pendingAmount}) => {
     return { maxInputValue, isCardMaxPayment };
   }
 
-  const { maxInputValue, isCardMaxPayment } = calculateMaxInputValueAndIsCardMaxPayment(value, input.Method)
+  const { maxInputValue, isCardMaxPayment } = calculateMaxInputValueAndIsCardMaxPayment(totalValueInvoice, input.Method)
 
   return(
     <>
