@@ -31,6 +31,7 @@ import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from "react-redux";
 import { patchPaymentMethod } from "../../../redux/actions-payments";
 import '../../../assets/styleSheet.css'
+import { motionValue } from "framer-motion";
 
 
 
@@ -46,11 +47,10 @@ const AddPayment = ({pendingAmount}) => {
       Amount: ''})
     const [error, setError] = useState('')
     const invoice = useSelector(state => state.invoice)
-    const payments = useSelector(state => state.payment_stats)
     const totalValueInvoice = invoice[0].Value
-    const value = payments?.paymentsMath?.PendingAmount ?? invoice[0].Value
-    const halfValue = Number(value / 2)
     const paymentsInvoices = useSelector(state => state.payments_by_id)
+    const value = paymentsInvoices?.paymentsMath?.PendingAmount ?? invoice[0].Value
+    const halfValue = Number(totalValueInvoice / 2)
     const [isOptionDisabled, setIsOptionDisabled] = useState(false)
     const CARD = 'Card'
 
@@ -71,6 +71,8 @@ const AddPayment = ({pendingAmount}) => {
   }, { Amount: 0 })
 
   const restOfPaymentCard = halfValue - allPaymentsCard.Amount
+
+  console.log('soyrest', restOfPaymentCard)
 
     useEffect(() => {
       maxPaymentCard()
@@ -170,7 +172,7 @@ const AddPayment = ({pendingAmount}) => {
   const handle50Toggle = () => {
     setIs50Active(true);
     setIs100Active(false);
-      const valueAmount = invoice[0].Value / 2
+      const valueAmount = value / 2
       setInput({
         ...input,
         Amount: valueAmount
@@ -180,7 +182,7 @@ const AddPayment = ({pendingAmount}) => {
   const handle100Toggle = () => {
     setIs50Active(false);
     setIs100Active(true);
-    const valueAmount = invoice[0].Value
+    const valueAmount = value
     setInput({
       ...input,
       Amount: valueAmount
@@ -209,16 +211,16 @@ const AddPayment = ({pendingAmount}) => {
       }
     }
       if(is50Active){
-      const value = Number(invoice[0].Value / 2)
-      const formattedNumber = value.toLocaleString('en-US', {
+      const totalValue = Number(value / 2)
+      const formattedNumber = totalValue.toLocaleString('en-US', {
         minimumFractionDigits: 2,
         maximumFractionDigits: 2,
       });
       return formattedNumber
     }
     if(is100Active){
-      const value = Number(invoice[0].Value)
-      const formattedNumber = value.toLocaleString('en-US', {
+      const totalValue = Number(value)
+      const formattedNumber = totalValue.toLocaleString('en-US', {
         minimumFractionDigits: 2,
         maximumFractionDigits: 2,
       });
@@ -228,7 +230,7 @@ const AddPayment = ({pendingAmount}) => {
   }
 
   const maxPaymentCard = () => {
-    if(value > 5000){
+    if(totalValueInvoice > 5000){
       if(restOfPaymentCard === 0) {
         setIsOptionDisabled(true)
         return;
@@ -244,7 +246,7 @@ const AddPayment = ({pendingAmount}) => {
     return { maxInputValue, isCardMaxPayment };
   }
 
-  const { maxInputValue, isCardMaxPayment } = calculateMaxInputValueAndIsCardMaxPayment(totalValueInvoice, input.Method)
+  const { maxInputValue, isCardMaxPayment } = calculateMaxInputValueAndIsCardMaxPayment(value, input.Method)
 
   return(
     <>
