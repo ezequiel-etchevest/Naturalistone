@@ -33,7 +33,6 @@ import {
      } from './actions-products';
 import { 
   GET_CURRENT_MONTH,
-  GET_PAYMENT_STATS,
   CLEAN_STATS 
 } from './actions-statsByMonth';
 import { 
@@ -377,7 +376,8 @@ function rootReducer (state = intialState, action) {
           }
         case POST_PROJECT:
           return{
-            ...state
+            ...state,
+            projects_by_customer_id: action.payload
           }
         case POST_QUOTE:
           return{

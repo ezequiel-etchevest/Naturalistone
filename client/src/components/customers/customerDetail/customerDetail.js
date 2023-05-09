@@ -51,7 +51,7 @@ const CustomerDetail = ({user, customer, projects_by_customer_id}) => {
                 color={'web.text2'}
                   >Projects & Invoices</Text> 
               <Box display={'flex'} flexDir={'row'}>
-                <ProjectList projects_by_customer_id={projects_by_customer_id}/>
+                <ProjectList projects_by_customer_id={projects_by_customer_id} customer={customer}/>
                 <InvoiceList/> 
 
               </Box>
