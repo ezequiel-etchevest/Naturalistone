@@ -7,6 +7,7 @@ import { Box, Center, Spinner } from '@chakra-ui/react';
 const CreatedQuotePdf = ({user, customer, project, products}) => {
 // console.log('customer',customer)
 // console.log('products',products)
+// console.log(user)
 
     const posted_quote = useSelector(state => state.posted_quote)
  
@@ -17,7 +18,6 @@ const CreatedQuotePdf = ({user, customer, project, products}) => {
         CreateForm();
     }, [posted_quote]);
     
-    // const filteredQuantities = quantities.filter(prod => prod.quantity !== 0)
 
     const mappedProducts = products.map((product, index) => ({
       variableName: `${index + 1}`,
@@ -39,12 +39,7 @@ const CreatedQuotePdf = ({user, customer, project, products}) => {
   const date = posted_quote.InsertDate
 
   var subtotal = 0
-//   const no = deliveryID
-//   const date = new Date().toLocaleDateString('en-US', {
-//     day: '2-digit',
-//     month: '2-digit',
-//     year: 'numeric'
-//   });
+
   let y = 460.8;
 
   const name = customer.Contact_Name
@@ -56,7 +51,7 @@ const CreatedQuotePdf = ({user, customer, project, products}) => {
   const zipCode = customer.ZipCode
   const company = customer.Company
   const PO = 'reference'
-  const ref = 'TEST'
+  const ref = user[0].SellerReference
   const tax = 7
   const estDate = '2023-5-4'
   const deliveryMethod = 'TEST'

@@ -15,6 +15,7 @@ import {
     IconButton,
     Tooltip,
     Divider,
+    Select
     } from "@chakra-ui/react"
 import { useDispatch, useSelector } from "react-redux";
 import SelectProjectModalList from "./selectProjectModalList";
@@ -69,8 +70,8 @@ const SelectProjectModal = ({customer, isProjectModalOpen, onProjectModalClose, 
         mr={'1.2vw'}
         spacing={'0.5vw'}
         >
-          <Box>
-            <Input
+          <HStack>
+            {/* <Input
               mb={'0.5vh'}
               w={'10vw'}
               minH={'4.5vh'}
@@ -96,8 +97,44 @@ const SelectProjectModal = ({customer, isProjectModalOpen, onProjectModalClose, 
                 color: 'orange.500',
               }}
               _active={{ color: 'gray.800'}}
-            />
-          </Box>
+            /> */}
+            <Select
+                // onChange={(e)=>handleTimeSelect(e)}
+                mb={'0.5vh'}
+                w={'9vw'}
+                minH={'4.5vh'}
+                variant="unstyled"
+                textColor={'web.text2'}
+                _placeholder={{ fontFamily: 'body', fontWeight: 'inherit', textColor: 'inherit' }}
+                size={"sm"}
+                borderBottomWidth={"2px"}
+                borderBottomColor={'web.text2'}
+                _hover={{borderColor: 'web.border'}}
+                cursor={'pointer'}
+              >
+              <option value='All' className="options">All time</option>
+              <option value='Lastweek' className="options">Last week</option>
+              <option value='Lastmonth' className="options">Last month</option>
+            </Select>
+            <Select
+                // onChange={(e)=>handleTimeSelect(e)}
+                mb={'0.5vh'}
+                w={'9vw'}
+                minH={'4.5vh'}
+                variant="unstyled"
+                textColor={'web.text2'}
+                _placeholder={{ fontFamily: 'body', fontWeight: 'inherit', textColor: 'inherit' }}
+                size={"sm"}
+                borderBottomWidth={"2px"}
+                borderBottomColor={'web.text2'}
+                _hover={{borderColor: 'web.border'}}
+                cursor={'pointer'}
+              >
+              <option value='All' className="options">All time</option>
+              <option value='Lastweek' className="options">Last week</option>
+              <option value='Lastmonth' className="options">Last month</option>
+            </Select>
+          </HStack>
           <Divider orientation={'vertical'} h={'5vh'}/>
           <Tooltip label={'Add project'} fontWeight={'hairline'}>
             <IconButton
