@@ -41,7 +41,7 @@ import {
     )
   }
   
-  const SelectProjectModalList = ({customer, projects, onQuotesModalClose, isQuotesModalOpen, onQuotesModalOpen, onProjectModalClose}) => {
+  const SelectProjectModalList = ({variables, customer, projects, onQuotesModalClose, isQuotesModalOpen, onQuotesModalOpen, onProjectModalClose}) => {
     
     const [project, setProject] = useState('')
     const [focus, setFocus] = useState('')
@@ -101,7 +101,7 @@ import {
         }
       </Box> 
     </Box>
-    <CreateInvoiceModal isQuotesModalOpen={isQuotesModalOpen} onQuotesModalClose={onQuotesModalClose} customer={customer} project={project} onQuotesModalOpen={onQuotesModalOpen} onProjectModalClose={onProjectModalClose}/>
+    <CreateInvoiceModal variables={variables} isQuotesModalOpen={isQuotesModalOpen} onQuotesModalClose={onQuotesModalClose} customer={customer} project={project} onQuotesModalOpen={onQuotesModalOpen} onProjectModalClose={onProjectModalClose}/>
   </>
   )
 }

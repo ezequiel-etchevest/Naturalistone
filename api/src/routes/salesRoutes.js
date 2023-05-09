@@ -279,7 +279,8 @@ salesRouter.get('/values/seller', async function(req, res){
 salesRouter.post('/create-quote/:sellerID', async function(req, res){
 
   const { sellerID } = req.params
-  const { customer, project, products } = req.body
+  const { customer, project, products, variables } = req.body
+  console.log(variables)
   
   const Value = products.reduce((acc, curr) => acc + curr.quantity * curr.price, 0)
   const ProjectID = project.idProjects

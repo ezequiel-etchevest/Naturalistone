@@ -23,7 +23,7 @@ import QuotePdfModal from "./quotePdfModal"
 import { createQuote } from "../../../redux/actions-invoices"
 import '../../../assets/styleSheet.css'
 
-const ReviewProductsModal = ({ isReviewModalOpen, onReviewModalClose, onQuotesModalOpen, setCustomer, customer, project, products, setProducts, isOpen, onClose, onProjectModalClose}) => {
+const ReviewProductsModal = ({variables, isReviewModalOpen, onReviewModalClose, onQuotesModalOpen, setCustomer, customer, project, products, setProducts, isOpen, onClose, onProjectModalClose}) => {
 
 const dispatch = useDispatch()
 const user = useSelector(state => state.user)
@@ -37,7 +37,7 @@ const handlePrevious = () => {
 }
 
 const handleConfirm = () => {
-  dispatch(createQuote(user[0].SellerID, {customer, project, products}))
+  dispatch(createQuote(user[0].SellerID, {customer, project, products, variables}))
   // dispatch(getCustomerProjects(customer.CustomerID))
   onReviewModalClose()
   // onProjectModalClose()
@@ -130,7 +130,7 @@ const handleConfirm = () => {
       </ModalFooter>
     </ModalContent>
   </Modal>
-  <QuotePdfModal user={user} onPdfModalOpen={onPdfModalOpen} isPdfModalOpen={isPdfModalOpen} onPdfModalClose={onPdfModalClose} customer={customer} project={project} products={products}/>
+  <QuotePdfModal variables={variables} user={user} onPdfModalOpen={onPdfModalOpen} isPdfModalOpen={isPdfModalOpen} onPdfModalClose={onPdfModalClose} customer={customer} project={project} products={products}/>
 </>
 )}
 

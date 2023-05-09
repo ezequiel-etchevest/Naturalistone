@@ -1,4 +1,4 @@
-import { 
+import {
     Button,
     Modal,
     ModalOverlay,
@@ -18,6 +18,7 @@ import {
     Select
     } from "@chakra-ui/react"
 import { useDispatch, useSelector } from "react-redux";
+import { useState } from "react";
 import SelectProjectModalList from "./selectProjectModalList";
 import { TbPlaylistAdd } from 'react-icons/tb'
 import {BiSearch} from 'react-icons/bi'
@@ -25,29 +26,45 @@ import '../../../../assets/styleSheet.css'
 
 
 const SelectProjectModal = ({customer, isProjectModalOpen, onProjectModalClose, isOpen, onClose}) => {
- 
+
   const { isOpen: isQuotesModalOpen, onOpen: onQuotesModalOpen, onClose: onQuotesModalClose } = useDisclosure()
 
   const projects = useSelector(state => state.projects_by_customer_id)
+  const [variables, setVariables] = useState(
+    {
+      shipVia: '',
+      method: '',
+      paymentTerms:''
+    })
 
   const handlePrevious = () => {
     onProjectModalClose()
   }
-  
+
   const handleNext = () => {
     onQuotesModalOpen()
   }
 
+  const handleShipVia = (e) => {
+    setVariables({...variables, shipVia: e.target.value})
+  }  
+  const handleMethod = (e) => {
+    setVariables({...variables, method: e.target.value})
+  }  
+  const handlePaymentTerms = (e) => {
+    setVariables({...variables, paymentTerms: e.target.value})
+  }  
+  console.log(variables)
   return(
 
 <>
-  <Modal 
-    isOpen={isProjectModalOpen} 
+  <Modal
+    isOpen={isProjectModalOpen}
     onClose={onProjectModalClose}
     size={'3xl'}
     >
     <ModalOverlay />
-    <ModalContent 
+    <ModalContent
       bg={'web.sideBar'}
       border={'1px solid'}
       borderColor={'web.border'}
@@ -68,39 +85,58 @@ const SelectProjectModal = ({customer, isProjectModalOpen, onProjectModalClose, 
         h={'6vh'}
         mb={'2vh'}
         mr={'1.2vw'}
-        spacing={'0.5vw'}
+        spacing={'2vw'}
         >
-          <HStack>
-            {/* 
-            <Input
+        <Input
+          mb={'0.5vh'}
+          w={'15vw'}
+          minH={'4.5vh'}
+          variant="unstyled"
+          textColor={'web.text2'}
+          _placeholder={{ fontFamily: 'body', fontWeight: 'inherit' }}
+          size={"sm"}
+          borderBottomWidth={"2px"}
+          borderBottomColor={'web.text2'}
+          placeholder={'P.O. No.'}
+          type={"text"}
+          name={"method"}
+          onChange={(e)=>handleMethod(e)}
+          />  
+        <Input
+          mb={'0.5vh'}
+          w={'15vw'}
+          minH={'4.5vh'}
+          variant="unstyled"
+          textColor={'web.text2'}
+          _placeholder={{ fontFamily: 'body', fontWeight: 'inherit' }}
+          size={"sm"}
+          borderBottomWidth={"2px"}
+          borderBottomColor={'web.text2'}
+          placeholder={'Payment Terms'}
+          type={"text"}
+          name={"paymentTerms"}onChange={(e)=>handlePaymentTerms(e)}
+          />  
+          <Select
+              onChange={(e)=>handleShipVia(e)}
               mb={'0.5vh'}
-              w={'10vw'}
+              w={'9vw'}
               minH={'4.5vh'}
               variant="unstyled"
-              placeholder={'Project name'}
               textColor={'web.text2'}
-              _placeholder={{ fontFamily: 'body', fontWeight: 'thin' }}
+              _placeholder={{ fontFamily: 'body', fontWeight: 'inherit', textColor: 'inherit' }}
               size={"sm"}
               borderBottomWidth={"2px"}
               borderBottomColor={'web.text2'}
-              // value={inputValue}
-              // onChange={(e)=> handleInput(e)}
-              />
-            <IconButton
-              color={'web.text2'}
-              borderRadius={2}
-              aria-label="Search database"
-              bgColor={'web.sideBar'}
-              ml={'-0.5vw'}
-              icon={<BiSearch />}
-              size={'lg'}
-              _hover={{
-                color: 'orange.500',
-              }}
-              _active={{ color: 'gray.800'}}
-            /> */}
-            <Select
-                // onChange={(e)=>handleTimeSelect(e)}
+              _hover={{borderColor: 'web.border'}}
+              cursor={'pointer'}
+            >
+            <option value='' className="options">Ship Via</option>
+            <option value='Curbside' className="options">Curbside</option>
+            <option value='3rd Party' className="options">3rd Party</option>
+            <option value='Pick up' className="options">Pick up</option>
+          </Select>
+            {/* <Select
+                onChange={(e)=>handleMethod(e)}
                 mb={'0.5vh'}
                 w={'9vw'}
                 minH={'4.5vh'}
@@ -113,45 +149,26 @@ const SelectProjectModal = ({customer, isProjectModalOpen, onProjectModalClose, 
                 _hover={{borderColor: 'web.border'}}
                 cursor={'pointer'}
               >
-              <option value='All' className="options">All time</option>
-              <option value='Lastweek' className="options">Last week</option>
-              <option value='Lastmonth' className="options">Last month</option>
-            </Select>
-            <Select
-                // onChange={(e)=>handleTimeSelect(e)}
-                mb={'0.5vh'}
-                w={'9vw'}
-                minH={'4.5vh'}
-                variant="unstyled"
-                textColor={'web.text2'}
-                _placeholder={{ fontFamily: 'body', fontWeight: 'inherit', textColor: 'inherit' }}
-                size={"sm"}
-                borderBottomWidth={"2px"}
-                borderBottomColor={'web.text2'}
-                _hover={{borderColor: 'web.border'}}
-                cursor={'pointer'}
-              >
-              <option value='All' className="options">All time</option>
-              <option value='Lastweek' className="options">Last week</option>
-              <option value='Lastmonth' className="options">Last month</option>
-            </Select>
-          </HStack>
+              <option value='' className="options">P.O. No.</option>
+              <option value='Email' className="options">Email</option>
+              <option value='Showroom' className="options">Showroom</option>
+            </Select> */}
           <Divider orientation={'vertical'} h={'5vh'}/>
           <Tooltip label={'Add project'} fontWeight={'hairline'}>
             <IconButton
             display={'flex'}
             alignItems={'center'}
-            variant={'unstyled'} 
+            variant={'unstyled'}
             color={'web.text2'}
             _hover={{
               color: 'logo.orange'
             }}
-            icon={<TbPlaylistAdd/>} 
+            icon={<TbPlaylistAdd/>}
             size={'lg'}
             />
           </Tooltip>
         </HStack>
-        <SelectProjectModalList customer={customer} projects={projects} isQuotesModalOpen={isQuotesModalOpen} onQuotesModalClose={onQuotesModalClose} onQuotesModalOpen={onQuotesModalOpen} onProjectModalClose={onProjectModalClose}/>
+        <SelectProjectModalList variables={variables} customer={customer} projects={projects} isQuotesModalOpen={isQuotesModalOpen} onQuotesModalClose={onQuotesModalClose} onQuotesModalOpen={onQuotesModalOpen} onProjectModalClose={onProjectModalClose}/>
       </ModalBody>
       </Box>
       <ModalFooter mb={'2vh'} display={'flex'} flexDir={'row'} justifyContent={'space-between'} ml={'2vw'} mr={'2vw'}>
@@ -165,7 +182,7 @@ const SelectProjectModal = ({customer, isProjectModalOpen, onProjectModalClose, 
         <Button
           colorScheme={'orange'}
           size={'sm'}
-          onClick={()=>handleNext()} 
+          onClick={()=>handleNext()}
           >
          Next
         </Button>

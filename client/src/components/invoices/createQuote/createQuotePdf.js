@@ -4,7 +4,7 @@ import { PDFDocument, rgb } from 'pdf-lib';
 import { Box, Center, Spinner } from '@chakra-ui/react';
 
 
-const CreatedQuotePdf = ({user, customer, project, products}) => {
+const CreatedQuotePdf = ({variables, user, customer, project, products}) => {
 // console.log('customer',customer)
 // console.log('products',products)
 // console.log(user)
@@ -50,12 +50,12 @@ const CreatedQuotePdf = ({user, customer, project, products}) => {
   const state = customer.State
   const zipCode = customer.ZipCode
   const company = customer.Company
-  const PO = 'reference'
+  const PO = variables.method
   const ref = user[0].SellerReference
   const tax = 7
   const estDate = '2023-5-4'
-  const deliveryMethod = 'TEST'
-  const paymentTerms = 'TEST'
+  const deliveryMethod = variables.shipVia
+  const paymentTerms = variables.paymentTerms
 
   
 
@@ -72,10 +72,10 @@ const CreatedQuotePdf = ({user, customer, project, products}) => {
   page.drawText(`${zipCode}`, { x: 336, y: 598, size: 10 })
 
   page.drawText(`${company}`, { x: 40, y: 508, size: 10 })
-  page.drawText(`${PO}`, { x: 156, y: 508, size: 10 })
-  page.drawText(`${ref}`, { x: 270, y: 508, size: 10 })
+  page.drawText(`${PO}`, { x: 162, y: 508, size: 10 })
+  page.drawText(`${ref}`, { x: 272, y: 508, size: 10 })
   page.drawText(`${estDate}`, { x: 354, y: 508, size: 10 }) 
-  page.drawText(`${deliveryMethod}`, { x: 445, y: 508, size: 10 }) 
+  page.drawText(`${deliveryMethod}`, { x: 439, y: 508, size: 10 }) 
   page.drawText(`${paymentTerms}`, { x: 524, y: 508, size: 10 }) 
 
 
