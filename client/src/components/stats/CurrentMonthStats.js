@@ -4,35 +4,17 @@ import {
   Stat,
   StatLabel,
   StatNumber,
-  HStack,
-  Spinner
+  HStack
 } from '@chakra-ui/react';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { BiDollar } from 'react-icons/bi';
 import { FaSortAmountUpAlt } from 'react-icons/fa';
 import { TbReceiptTax } from 'react-icons/tb';
-import { useSelector } from 'react-redux';
 
 
 function StatsCard(props) {
   
   const { title, stat, icon } = props;
-  const [loading, setLoading] = useState(false)
-  const month = useSelector(state => state.monthFilter)
-  const year = useSelector(state => state.yearFilter)
-  const sellerId = useSelector(state => state.sellerId)
-
-  useEffect(() => {
-    setTimeout(()=> {
-      setLoading(false)
-    }, 100)
-  },[month, year, sellerId])
-
-  useEffect(()=> {
-    setTimeout(()=> {
-      setLoading(true)
-    }, 800)
-  })
 
   return (
     <Stat
@@ -53,8 +35,7 @@ function StatsCard(props) {
           <StatLabel fontWeight={'medium'} >
             {title}
           </StatLabel>
-          <StatNumber fontSize={'4xl'} fontWeight={'medium'} >
-            {loading ? stat?.toLocaleString('en-US') : <Spinner thickness={'4px'} size={'lg'} color={'logo.orange'}/>}
+          <StatNumber fontSize={'4xl'} fontWeight={'medium'} > {stat?.toLocaleString('en-US')}
           </StatNumber>
         </Box>
         <Box
@@ -69,32 +50,26 @@ function StatsCard(props) {
   );
 }
 
-export default function Stats() {
+export default function Stats({stats}) {
 
-  const currentMonth = useSelector(state => state.current_month)
-  const paymentStats = useSelector(state => state.payment_stats)
-  const month = useSelector(state => state.month)
-
-  let invoicesNumber = `${currentMonth.InvoicesNumber} / ${paymentStats.paidQuotes}`
-  
-  useEffect(()=>{},[currentMonth, paymentStats])
+  let invoicesNumber = `${stats.InvoicesNumber} / ${stats.PaidQuotes === undefined? '-' : stats.PaidQuotes }`
 
   return (
     <Box h={'92vh'} px={'4vw'} bg={'web.bg'} >
       <HStack columns={{ base: 1, md: 3 }} spacing={{ base: 5, lg: 8 }}>
           <StatsCard
-          title={month ? `${month} Sales` : `Current Month Sales`}
-          stat={currentMonth.TotalValue}
+          title={ ` XX Sales`}
+          stat={stats.TotalValue}
           icon={<BiDollar size={'3em'} />}
           /> 
         <StatsCard
-          title={month ? `${month} Quotes / Paid` : 'Current Month Quotes / Paid'}
+          title={`Quotes / Paid`}
           stat={invoicesNumber}
           icon={<FaSortAmountUpAlt size={'3em'} />}
         />
         <StatsCard
           title={'Monthly Sales (Avg)'}
-          stat={currentMonth.AverageAmount}
+          stat={stats.AverageAmount}
           icon={<TbReceiptTax size={'3em'} />}
         />
       </HStack>

@@ -39,12 +39,12 @@ export function getCustomerProjects(idCustomer){
     }
 }
 
-export function createProject(customerId, projectDetails){
-
+export function createProject(project){
+    console.log({project})
     return async function(dispatch){
         try{
-            let { data } = await axios.post(`/project/${customerId}`, projectDetails)
-  
+            let { } = await axios.post(`/projects/${project.CustomerID}`, project)
+            let {data} = await axios.get(`/projects/${project.CustomerID}`)
                 dispatch(
                 {
                     type: POST_PROJECT,

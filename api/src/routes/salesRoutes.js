@@ -107,8 +107,8 @@ salesRouter.get('/invoice/:id', async function(req, res){
          mysqlConnection.query(query_, function(error, results, fields){
             if(error) throw error;
             if(results.length == 0) {
-                console.log('Error en salesRoutes.get /invoice/:id')
-                res.status(400).json({ estado: false, data: {}});
+                console.log('No invoices linked')
+                res.status(200).json({ estado: false, data: []});
             } else {
                 console.log('Data OK')
                 res.status(200).json(results);
@@ -353,8 +353,8 @@ salesRouter.get('/project-invoices/:id', async function(req, res){
        mysqlConnection.query(query_, function(error, results, fields){
           if(error) throw error;
           if(results.length == 0) {
-              console.log('Error en salesRoutes.get /invoice/:id')
-              res.status(400).json({ estado: false, data: {}});
+              console.log('No invoices linked to this project')
+              res.status(200).json({ estado: false, data: []});
           } else {
               console.log('Data OK')
               res.status(200).json(results);

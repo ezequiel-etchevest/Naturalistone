@@ -26,6 +26,7 @@ projectsRouter.get('/', async function(req, res){
 projectsRouter.get('/:idCustomer', async function(req, res){
 
   const {idCustomer} = req.params 
+
   query_ = `SELECT * FROM  Projects WHERE CustomerID = ${idCustomer}`;
 
   try{
@@ -46,9 +47,9 @@ projectsRouter.get('/:idCustomer', async function(req, res){
 projectsRouter.post('/:customerID', async function(req, res){
 
     const { customerID } = req.params
-    const {ProjectName} = req.body
+    const { ProjectName, CustomerID, State, ZipCode, City, Shipping_Address } = req.body
    
-    query_ = `INSERT INTO Projects (ProjectName, CustomerID) VALUES ("${ProjectName}", "${customerID}")`
+    query_ = `INSERT INTO Projects (ProjectName, CustomerID, State, ZipCode, City, Shipping_Address ) VALUES ("${ProjectName}", "${CustomerID}", "${State}", "${ZipCode}", "${City}", "${Shipping_Address}")`
             
     try{
          mysqlConnection.query(query_, function(error, results, fields){

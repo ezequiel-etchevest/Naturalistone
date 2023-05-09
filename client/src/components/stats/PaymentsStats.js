@@ -7,33 +7,14 @@ import {
     HStack,
     Spinner,
   } from '@chakra-ui/react';
-import { FaHandsHelping } from 'react-icons/fa';
 import { BsCreditCardFill } from 'react-icons/bs';
 import { HiReceiptPercent } from 'react-icons/hi2';
-import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
 import { MdOutlinePayments } from 'react-icons/md';
   
 function StatsCard(props) {
     
   const { title, stat, icon, visibility } = props;
-  const [loading, setLoading] = useState(false)
-  const month = useSelector(state => state.monthFilter)
-  const year = useSelector(state => state.yearFilter)
-  const sellerId = useSelector(state => state.sellerId)
 
-  useEffect(() => {
-    setTimeout(()=> {
-      setLoading(false)
-    }, 100)
-  },[month, year, sellerId])
-  
-  useEffect(()=> {
-    setTimeout(()=> {
-      setLoading(true)
-    }, 800)
-  })
-  
   return (
     <Stat
     visibility={visibility}
@@ -55,7 +36,7 @@ function StatsCard(props) {
           {title}
         </StatLabel>
         <StatNumber fontSize={'4xl'} fontWeight={'medium'}>
-          {loading ? stat?.toLocaleString('en-US') : <Spinner thickness={'4px'} size={'lg'} color={'logo.orange'}/>}
+          {stat?.toLocaleString('en-US')}
         </StatNumber>
       </Box>
       <Box
@@ -70,17 +51,15 @@ function StatsCard(props) {
     );
   }
   
-export default function PaymentsByMonth() {
+export default function PaymentsStats({stats}) {
 
-  const paymentStats = useSelector(state => state.payments_by_month)
-  useEffect(()=>{},[paymentStats])
 
   return (
     <Box h={'92vh'} px={'4vw'} bg={'web.bg'} >
       <HStack columns={{ base: 1, md: 3 }} spacing={{ base: 5, lg: 8 }}>
         <StatsCard
         title={'Payments'}
-        stat={paymentStats?.data?.total_amount}
+        stat={stats.TotalAmount === null ? 0 : Number(stats.TotalAmount.toFixed(2))}
         icon={<MdOutlinePayments size={'3em'} />}
         />
         <StatsCard
