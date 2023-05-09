@@ -71,7 +71,8 @@ const SelectProjectModal = ({customer, isProjectModalOpen, onProjectModalClose, 
         spacing={'0.5vw'}
         >
           <HStack>
-            {/* <Input
+            {/* 
+            <Input
               mb={'0.5vh'}
               w={'10vw'}
               minH={'4.5vh'}
