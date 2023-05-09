@@ -4,12 +4,16 @@ import {
   Input,
   VStack,
   Box,
-  Select
+  Select,
+  Text
 } from '@chakra-ui/react';
 import AutocompleteState from './AutocompleteState';
 import '../../assets/styleSheet.css'
+import { formatNumber } from '../../utils/formattedNumber';
 
-export default function CreationCustomerForm({formData, setFormData}) {
+export default function CreationCustomerForm({formData, setFormData, validate, errors, setErrors}) {
+
+  // const [errors, setErrors] = useState({})
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -18,6 +22,12 @@ export default function CreationCustomerForm({formData, setFormData}) {
       ...prevFormData,
       [name]: value,
     }));
+    setErrors(
+      validate({
+        ...formData,
+        [name]: value,
+      })
+    );
   };
 
   const handleDiscountSelect = (e) => {
@@ -47,7 +57,12 @@ export default function CreationCustomerForm({formData, setFormData}) {
               name={"Contact_Name"}
               value={formData.Contact_Name}
               onChange={handleChange}
-            />
+              />
+              { errors.Contact_Name && (
+                <Text position={'absolute'} color={'web.error'} fontSize={'xs'}>
+                  {errors.Contact_Name}
+                </Text>
+              )}
           </FormControl>
         </Box>
         <Box display={'flex'} flexDir={'row'} justifyContent={'space-between'} w={'45vw'}>
@@ -65,14 +80,25 @@ export default function CreationCustomerForm({formData, setFormData}) {
               placeholder={'Address'}
               type={"text"}
               name={"Address"}
-              value={formData.address}
+              value={formData.Address}
               onChange={handleChange}
             />
+            { errors.Address && (
+              <Text position={'absolute'} color={'web.error'} fontSize={'xs'}>
+                {errors.Address}
+              </Text>
+            )}
           </FormControl>
         </Box>
         <Box display={'flex'} flexDir={'row'} justifyContent={'space-between'} w={'45vw'}>
           <FormControl  w={'45vw'}>
-            <AutocompleteState formData={formData} setFormData={setFormData}/>
+            <AutocompleteState 
+              formData={formData}
+              setFormData={setFormData}
+              errors={errors}
+              validate={validate}
+              setErrors={setErrors}
+            />
           </FormControl>
           <FormControl  w={'20vw'}>
             <Input
@@ -91,6 +117,11 @@ export default function CreationCustomerForm({formData, setFormData}) {
               value={formData.ZipCode}
               onChange={handleChange}
             />
+            { errors.ZipCode && (
+              <Text position={'absolute'} color={'web.error'} fontSize={'xs'}>
+                {errors.ZipCode}
+              </Text>
+            )}
           </FormControl>
         </Box>
         <Box display={'flex'} flexDir={'row'} justifyContent={'space-between'} w={'45vw'}>
@@ -111,6 +142,11 @@ export default function CreationCustomerForm({formData, setFormData}) {
             value={formData.Company}
             onChange={handleChange}
           />
+          { errors.Company && (
+            <Text position={'absolute'} color={'web.error'} fontSize={'xs'}>
+              {errors.Company}
+            </Text>
+           )}
         </FormControl>
         <FormControl w={'20vw'}>
           <Select
@@ -149,9 +185,14 @@ export default function CreationCustomerForm({formData, setFormData}) {
               placeholder={'Phone'}
               type={"text"}
               name={"Phone"}
-              value={formData.Phone}
+              value={formatNumber(formData.Phone)}
               onChange={handleChange}
             />
+            { errors.Phone && (
+              <Text position={'absolute'} color={'web.error'} fontSize={'xs'}>
+                {errors.Phone}
+              </Text>
+              )}
           </FormControl>
           <FormControl  w={'20vw'}>
             <Input
@@ -170,6 +211,11 @@ export default function CreationCustomerForm({formData, setFormData}) {
               value={formData.Email}
               onChange={handleChange}
             />
+            { errors.Email && (
+              <Text position={'absolute'} color={'web.error'} fontSize={'xs'}>
+                {errors.Email}
+              </Text>
+              )}
           </FormControl>
         </Box>
       </VStack>

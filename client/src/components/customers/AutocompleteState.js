@@ -1,7 +1,7 @@
-import { useState } from 'react';
-import { FormControl, FormLabel, Input, VStack } from '@chakra-ui/react';
+import { useEffect, useState } from 'react';
+import { FormControl, FormLabel, Input, Text, VStack } from '@chakra-ui/react';
 
-const USStates = [
+export const USStates = [
   "Alabama", "Alaska", "Arizona", "Arkansas", "California",
   "Colorado", "Connecticut", "Delaware", "Florida", "Georgia",
   "Hawaii", "Idaho", "Illinois", "Indiana", "Iowa",
@@ -14,16 +14,23 @@ const USStates = [
   "Virginia", "Washington", "West Virginia", "Wisconsin", "Wyoming", "Non-US locations"
     ];
 
-export default function AutocompleteState({formData, setFormData}) {
+export default function AutocompleteState({formData, setFormData, errors, validate, setErrors}) {
   
   const [filteredStates, setFilteredStates] = useState(USStates);
 
   const handleInputChange = (event) => {
+    const name = event.target.name
     const value = event.target.value;
     setFormData((prevFormData) => ({
       ...prevFormData,
       State : value,
     }))
+    setErrors(
+      validate({
+        ...formData,
+        [name]: [value]
+      })
+    )
 
     // Filtrar los estados que incluyen el valor ingresado
     const filtered = USStates.filter((state) =>
@@ -47,14 +54,20 @@ export default function AutocompleteState({formData, setFormData}) {
           borderBottomColor={'web.text2'}
           placeholder={'State'}
           type="text"
+          name={'State'}
           value={formData.State}
           onChange={handleInputChange}
           list="stateOptions"
         />
+          { errors.State && (
+            <Text position={'absolute'} color={'web.error'} fontSize={'xs'}>
+              {errors.State}
+            </Text>
+              )}
         <datalist id="stateOptions">
           {filteredStates.map((state) => (
             <option key={state} value={state} />
-          ))}
+            ))}
         </datalist>
       </FormControl>
     </VStack>
