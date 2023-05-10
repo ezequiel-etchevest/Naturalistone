@@ -6,11 +6,10 @@ import {
   StatNumber,
   HStack
 } from '@chakra-ui/react';
-import { useEffect } from 'react';
 import { BiDollar } from 'react-icons/bi';
 import { FaSortAmountUpAlt } from 'react-icons/fa';
 import { TbReceiptTax } from 'react-icons/tb';
-
+import { months } from "../../utils/months";
 
 function StatsCard(props) {
   
@@ -50,7 +49,7 @@ function StatsCard(props) {
   );
 }
 
-export default function Stats({stats}) {
+export default function Stats({stats, currentMonth}) {
 
   let invoicesNumber = `${stats.InvoicesNumber} / ${stats.PaidQuotes === undefined? '-' : stats.PaidQuotes }`
 
@@ -58,7 +57,7 @@ export default function Stats({stats}) {
     <Box h={'92vh'} px={'4vw'} bg={'web.bg'} >
       <HStack columns={{ base: 1, md: 3 }} spacing={{ base: 5, lg: 8 }}>
           <StatsCard
-          title={ ` XX Sales`}
+          title={ ` ${months[currentMonth - 1]} Sales`}
           stat={stats.TotalValue}
           icon={<BiDollar size={'3em'} />}
           /> 

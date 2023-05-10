@@ -1,6 +1,6 @@
 import React from "react";
 import { Box } from "@chakra-ui/react";
-import CarouselProduct from "./carousel";
+import CarouselProduct from "./miniCarousel";
 
 const ProductPicture = () => {
     return (
