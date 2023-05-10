@@ -53,7 +53,7 @@ const CreatedQuotePdf = ({variables, user, customer, project, products}) => {
   const PO = variables.method
   const ref = user[0].SellerReference
   const tax = 7
-  const estDate = '2023-5-4'
+  const estDate = variables.estDelivDate
   const deliveryMethod = variables.shipVia
   const paymentTerms = variables.paymentTerms
 

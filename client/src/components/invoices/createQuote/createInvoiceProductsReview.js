@@ -23,7 +23,7 @@ import QuotePdfModal from "./quotePdfModal"
 import { createQuote } from "../../../redux/actions-invoices"
 import '../../../assets/styleSheet.css'
 
-const ReviewProductsModal = ({variables, isReviewModalOpen, onReviewModalClose, onQuotesModalOpen, setCustomer, customer, project, products, setProducts, isOpen, onClose, onProjectModalClose}) => {
+const ReviewProductsModal = ({variables, setVariables, isReviewModalOpen, onReviewModalClose, onQuotesModalOpen, setCustomer, customer, project, products, setProducts, isOpen, onClose, onProjectModalClose}) => {
 
 const dispatch = useDispatch()
 const user = useSelector(state => state.user)
@@ -42,6 +42,12 @@ const handleConfirm = () => {
   onReviewModalClose()
   // onProjectModalClose()
   onPdfModalOpen()
+  setVariables({
+    shipVia: '',
+    method: '',
+    paymentTerms:'',
+    estDelivDate:''
+  })
 }
 
   return(

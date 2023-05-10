@@ -19,9 +19,8 @@ import {
     } from "@chakra-ui/react"
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
+import { CreateNewProject } from "../../../customers/customerDetail/createProject";
 import SelectProjectModalList from "./selectProjectModalList";
-import { TbPlaylistAdd } from 'react-icons/tb'
-import {BiSearch} from 'react-icons/bi'
 import '../../../../assets/styleSheet.css'
 
 
@@ -34,7 +33,8 @@ const SelectProjectModal = ({customer, isProjectModalOpen, onProjectModalClose, 
     {
       shipVia: '',
       method: '',
-      paymentTerms:''
+      paymentTerms:'',
+      estDelivDate:''
     })
 
   const handlePrevious = () => {
@@ -42,7 +42,9 @@ const SelectProjectModal = ({customer, isProjectModalOpen, onProjectModalClose, 
   }
 
   const handleNext = () => {
-    onQuotesModalOpen()
+    if(variables.shipVia && variables.method && variables.paymentTerms){
+      onQuotesModalOpen()
+    }
   }
 
   const handleShipVia = (e) => {
@@ -53,6 +55,9 @@ const SelectProjectModal = ({customer, isProjectModalOpen, onProjectModalClose, 
   }  
   const handlePaymentTerms = (e) => {
     setVariables({...variables, paymentTerms: e.target.value})
+  }  
+  const handleEstDelivDate = (e) => {
+    setVariables({...variables, estDelivDate: e.target.value})
   }  
 
   return(
@@ -83,13 +88,14 @@ const SelectProjectModal = ({customer, isProjectModalOpen, onProjectModalClose, 
         display={'flex'}
         justifyContent={'flex-end'}
         h={'6vh'}
-        mb={'2vh'}
+        mb={'4vh'}
         mr={'1.2vw'}
-        spacing={'2vw'}
+        ml={'1.4vw'}
+        spacing={'1.5vw'}
         >
         <Input
           mb={'0.5vh'}
-          w={'12vw'}
+          w={'10vw'}
           minH={'4.5vh'}
           variant="unstyled"
           textColor={'web.text2'}
@@ -104,7 +110,7 @@ const SelectProjectModal = ({customer, isProjectModalOpen, onProjectModalClose, 
           />  
         <Input
           mb={'0.5vh'}
-          w={'12vw'}
+          w={'10vw'}
           minH={'4.5vh'}
           variant="unstyled"
           textColor={'web.text2'}
@@ -114,11 +120,12 @@ const SelectProjectModal = ({customer, isProjectModalOpen, onProjectModalClose, 
           borderBottomColor={'web.text2'}
           placeholder={'Payment Terms'}
           type={"text"}
-          name={"paymentTerms"}onChange={(e)=>handlePaymentTerms(e)}
+          name={"paymentTerms"}
+          onChange={(e)=>handlePaymentTerms(e)}
           />
           <Input
             mb={'0.5vh'}
-            w={'12vw'}
+            w={'10vw'}
             minH={'4.5vh'}
             variant="unstyled"
             textColor={'web.text2'}
@@ -128,6 +135,8 @@ const SelectProjectModal = ({customer, isProjectModalOpen, onProjectModalClose, 
             borderBottomColor={'web.text2'}
             type={"date"}
             pattern="\d{4}-\d{2}-\d{2}"
+            name={"EstDelivDate"}
+            onChange={(e)=>handleEstDelivDate(e)}
           />  
           <Select
               onChange={(e)=>handleShipVia(e)}
@@ -148,40 +157,20 @@ const SelectProjectModal = ({customer, isProjectModalOpen, onProjectModalClose, 
             <option value='3rd Party' className="options">3rd Party</option>
             <option value='Pick up' className="options">Pick up</option>
           </Select>
-            {/* <Select
-                onChange={(e)=>handleMethod(e)}
-                mb={'0.5vh'}
-                w={'9vw'}
-                minH={'4.5vh'}
-                variant="unstyled"
-                textColor={'web.text2'}
-                _placeholder={{ fontFamily: 'body', fontWeight: 'inherit', textColor: 'inherit' }}
-                size={"sm"}
-                borderBottomWidth={"2px"}
-                borderBottomColor={'web.text2'}
-                _hover={{borderColor: 'web.border'}}
-                cursor={'pointer'}
-              >
-              <option value='' className="options">P.O. No.</option>
-              <option value='Email' className="options">Email</option>
-              <option value='Showroom' className="options">Showroom</option>
-            </Select> */}
           <Divider orientation={'vertical'} h={'5vh'}/>
           <Tooltip label={'Add project'} fontWeight={'hairline'}>
-            <IconButton
-            display={'flex'}
-            alignItems={'center'}
-            variant={'unstyled'}
-            color={'web.text2'}
-            _hover={{
-              color: 'logo.orange'
-            }}
-            icon={<TbPlaylistAdd/>}
-            size={'lg'}
-            />
+            <CreateNewProject customer={customer} />
           </Tooltip>
         </HStack>
-        <SelectProjectModalList variables={variables} customer={customer} projects={projects} isQuotesModalOpen={isQuotesModalOpen} onQuotesModalClose={onQuotesModalClose} onQuotesModalOpen={onQuotesModalOpen} onProjectModalClose={onProjectModalClose}/>
+        <SelectProjectModalList 
+          variables={variables} 
+          setVariables={setVariables} 
+          customer={customer} 
+          projects={projects} 
+          isQuotesModalOpen={isQuotesModalOpen} 
+          onQuotesModalClose={onQuotesModalClose} 
+          onQuotesModalOpen={onQuotesModalOpen} 
+          onProjectModalClose={onProjectModalClose}/>
       </ModalBody>
       </Box>
       <ModalFooter mb={'2vh'} display={'flex'} flexDir={'row'} justifyContent={'space-between'} ml={'2vw'} mr={'2vw'}>
@@ -192,13 +181,16 @@ const SelectProjectModal = ({customer, isProjectModalOpen, onProjectModalClose, 
           >
          Previous
         </Button>
+        <Tooltip label={'Currently disabled'} bg={'red'} fontWeight={'bold'}>
         <Button
           colorScheme={'orange'}
           size={'sm'}
+          disabled={'true'}
           onClick={()=>handleNext()}
           >
          Next
         </Button>
+        </Tooltip>
       </ModalFooter>
     </ModalContent>
   </Modal>

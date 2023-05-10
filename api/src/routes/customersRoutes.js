@@ -9,7 +9,7 @@ customersRouter.get('/', async function(req, res){
 
     const { search } = req.query
 
-    query_ = `SELECT * FROM  Customers WHERE CustomerID=1938`;
+    query_ = `SELECT * FROM  Customers`;
     try{
         mysqlConnection.query(query_, function(error, results, fields){
             if(!results.length) {

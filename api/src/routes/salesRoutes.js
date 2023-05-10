@@ -280,15 +280,13 @@ salesRouter.post('/create-quote/:sellerID', async function(req, res){
 
   const { sellerID } = req.params
   const { customer, project, products, variables } = req.body
-  console.log(variables)
   
   const Value = products.reduce((acc, curr) => acc + curr.quantity * curr.price, 0)
   const ProjectID = project.idProjects
   const date = new Date().toLocaleDateString("en-US");
-  // const InsertDate = `${date.split('/')[2]}-${date.split('/')[0]}-${date.split('/')[1]}`
-  const InsertDate = "2010-05-20"
+  const InsertDate = `${date.split('/')[2]}-${date.split('/')[0]}-${date.split('/')[1]}`
   
-  const EstDelivery_Date = null
+  const EstDelivery_Date = variables.estDelivDate
 
   // Obtener el último Naturali_Invoice de la tabla Sales
   const query_0 = `SELECT Naturali_Invoice FROM NaturaliStone.Sales ORDER BY Naturali_Invoice DESC LIMIT 1;`
