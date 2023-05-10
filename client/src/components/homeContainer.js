@@ -27,7 +27,7 @@ const HomeContainer = ({user}) => {
     return ()=>{cleanStats()}
   }, [user, stats])
 
-  if(Object.entries(stats).length !== 0){
+  
     return(
     <>
       <Box userSelect={'none'} h={'92vh'} ml={'16vw'} bg={'web.bg'} display={'flex'} flexDir={'column'}>
@@ -58,17 +58,25 @@ const HomeContainer = ({user}) => {
           >
           <FilterStats user={user} years={stats.YearsInvoices} filters={filters} setFilters={setFilters}/>
         </Box>
-          <CurrentMonthStats user={user} stats={stats}/>
-          <TotalStats user={user} stats={stats}/>
-          <PaymentsStats user={user} stats={stats}/>
+        {
+          Object.entries(stats).length !== 0 ? (
+           <>
+            <CurrentMonthStats currentMonth={filters.Month} user={user} stats={stats}/>
+            <TotalStats user={user} stats={stats}/>
+            <PaymentsStats user={user} stats={stats}/>
+           </> 
+
+          ):(
+            <Center w={'84vw'} bg={'web.bg'} h={'40vh'}>
+            <Spinner thickness={'4px'} size={'xl'} color={'logo.orange'}/>
+          </Center>
+          )
+        }
+
+
       </Box> 
       </>
     )
-  }else{
-  return(
-    <Center ml={'16vw'} w={'84vw'} bg={'web.bg'} h={'92vh'}>
-      <Spinner thickness={'4px'} size={'xl'} color={'logo.orange'}/>
-    </Center>
-  )
-  }}
+
+  }
 export default HomeContainer;
