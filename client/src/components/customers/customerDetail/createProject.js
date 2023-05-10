@@ -1,5 +1,5 @@
 import { useDisclosure, Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, ModalFooter, Button } from "@chakra-ui/react"
-import { BsBuildingAdd } from "react-icons/bs";
+import { TbBuildingCommunity } from "react-icons/tb";
 import CreateProjectForm from "./createProjectForm";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
@@ -45,7 +45,7 @@ export function CreateNewProject({customer}) {
         h={'4vh'}
         fontWeight={'normal'}
         size={'lg'}
-        rightIcon={<BsBuildingAdd/>}
+        rightIcon={<TbBuildingCommunity/>}
         variant={'unstyled'} 
         display={'flex'} 
         placeContent={'center'}
