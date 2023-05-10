@@ -307,7 +307,7 @@ salesRouter.post('/create-quote/:sellerID', async function(req, res){
         const Naturali_Invoice = Math.max(...ids) + 1
 
         // Hace el posteo en la tabla de Sales con los valores que llegaron por body y el id del quote creado.
-        const query_ = `INSERT INTO Sales (Naturali_Invoice, Value, ProjectID, InvoiceDate, EstDelivery_Date, SellerID) VALUES ("${Naturali_Invoice}", "${Value}", "${ProjectID}", "${InsertDate}", "${EstDelivery_Date}", "${sellerID}")`
+        const query_ = `INSERT INTO Sales (Naturali_Invoice, Value, ProjectID, InvoiceDate, EstDelivery_Date, SellerID, ShippingMethod, PaymentTerms, P_O_No) VALUES ("${Naturali_Invoice}", "${Value}", "${ProjectID}", "${InsertDate}", "${EstDelivery_Date}", "${sellerID}", "${variables.shipVia}", "${variables.paymentTerms}", "${variables.method}")`
         try {
           mysqlConnection.query(query_, function(error, results, fields) {
             if (error) {

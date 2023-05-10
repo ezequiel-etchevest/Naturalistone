@@ -54,7 +54,7 @@ const SelectProjectModal = ({customer, isProjectModalOpen, onProjectModalClose, 
   const handlePaymentTerms = (e) => {
     setVariables({...variables, paymentTerms: e.target.value})
   }  
-  console.log(variables)
+
   return(
 
 <>
@@ -89,7 +89,7 @@ const SelectProjectModal = ({customer, isProjectModalOpen, onProjectModalClose, 
         >
         <Input
           mb={'0.5vh'}
-          w={'15vw'}
+          w={'12vw'}
           minH={'4.5vh'}
           variant="unstyled"
           textColor={'web.text2'}
@@ -104,7 +104,7 @@ const SelectProjectModal = ({customer, isProjectModalOpen, onProjectModalClose, 
           />  
         <Input
           mb={'0.5vh'}
-          w={'15vw'}
+          w={'12vw'}
           minH={'4.5vh'}
           variant="unstyled"
           textColor={'web.text2'}
@@ -115,6 +115,19 @@ const SelectProjectModal = ({customer, isProjectModalOpen, onProjectModalClose, 
           placeholder={'Payment Terms'}
           type={"text"}
           name={"paymentTerms"}onChange={(e)=>handlePaymentTerms(e)}
+          />
+          <Input
+            mb={'0.5vh'}
+            w={'12vw'}
+            minH={'4.5vh'}
+            variant="unstyled"
+            textColor={'web.text2'}
+            _placeholder={{ fontFamily: 'body', fontWeight: 'inherit' }}
+            size={"sm"}
+            borderBottomWidth={"2px"}
+            borderBottomColor={'web.text2'}
+            type={"date"}
+            pattern="\d{4}-\d{2}-\d{2}"
           />  
           <Select
               onChange={(e)=>handleShipVia(e)}
