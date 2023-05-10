@@ -8,39 +8,38 @@ import {
     import {AiOutlineFileAdd} from 'react-icons/ai';
 
 
-const CreateInvoiceButton = ({userId, customers}) => {
-
+const CreateInvoiceButton = ({customers}) => {
+  
   const { isOpen, onOpen, onClose } = useDisclosure()
 
     return(
-        <>
-          <ButtonGroup
-            onClick={() => {onOpen()
+      <>
+        <ButtonGroup
+            onClick={() => {
+              onOpen()
             }}
             display={'flex'}
             spacing={0}
             >
-        <Tooltip placement={'bottom-start'} label={'Create new quote'} fontWeight={'hairline'}>      
-        <IconButton
-            icon={ <AiOutlineFileAdd/>}
-            variant={'unstyled'} 
-            display={'flex'} 
-            borderRadius={'sm'} 
-            placeContent={'center'}
-            alignItems={'center'}
-            fontSize={'xl'}
-            color={'web.text2'} 
-            _hover={{
-               color: 'logo.orange'
-               }}
-            _active={{
-            }}
-            >
-            </IconButton>
+          <Tooltip placement={'bottom-start'} label={'Create new quote'} fontWeight={'hairline'}>      
+            <IconButton
+              icon={ <AiOutlineFileAdd/>}
+              variant={'unstyled'} 
+              display={'flex'} 
+              borderRadius={'sm'} 
+              placeContent={'center'}
+              alignItems={'center'}
+              fontSize={'xl'}
+              color={'web.text2'} 
+              _hover={{
+                 color: 'logo.orange'
+                 }}
+              _active={{
+              }}/>
           </Tooltip>
-          <SelectCustomerModal userId={userId} isOpen={isOpen} onClose={onClose} customers={customers}/> 
-          </ButtonGroup>
-        </>
+          <SelectCustomerModal isOpen={isOpen} onClose={onClose} customers={customers}/> 
+        </ButtonGroup>
+      </>
     )
 }
 

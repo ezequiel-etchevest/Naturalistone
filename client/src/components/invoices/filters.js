@@ -293,7 +293,7 @@ const Filters = ({user, seller_invoices, setFocusFilter, seller_values, customer
             >
             </IconButton>
           </Tooltip>
-        <CreateInvoiceButton userId={userId} customers={customers}/>
+        <CreateInvoiceButton user={user} customers={customers}/>
         </HStack>
 
 

@@ -101,7 +101,6 @@ const ModelTr = ({p, setQuantities, quantities, errors, setErrors}) => {
   }}
   }
 
- console.log('quantities products table', quantities)
     return(
       <Tr 
         cursor={'pointer'}

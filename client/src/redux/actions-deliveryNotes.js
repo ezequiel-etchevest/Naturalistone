@@ -57,7 +57,7 @@ export function getDeliveryNote(id){
     return async function(dispatch){
         try{
             let { data } = await axios.get(`/delivery/id/${id}`)
-            console.log(data)
+
             return dispatch({
                 type: GET_DELIVERY_BY_ID,
                 payload: data
