@@ -20,6 +20,7 @@ onedriveRouter.get('/images', (req, res) => {
   const invoicePath = path.join('/app/OneDrive', 'Naturali', 'PHOTOS', `Porcelain`, `Bianco`);
 
   fs.readdir(invoicePath, (err, files) => {
+    console.log(files,invoicePath)
     if (err) {
       return res.status(500).json({ error: 'Unable to read directory' });
     }
