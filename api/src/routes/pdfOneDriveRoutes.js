@@ -14,5 +14,23 @@ onedriveRouter.get('/:filename', (req, res) => {
   });
 });
 
+onedriveRouter.get('/images', (req, res) => {
+  // const { type, prodName } = req.query
+  
+  const invoicePath = path.join('/app/OneDrive', 'Naturali', 'PHOTOS', `Porcelain`, `Bianco`);
+
+  fs.readdir(invoicePath, (err, files) => {
+    if (err) {
+      return res.status(500).json({ error: 'Unable to read directory' });
+    }
+    const imagePaths = files.map(file => path.join(invoicePath, file));
+    const imagesToSend = imagePaths.filter(path => fs.statSync(path).isFile());
+    res.send(imagesToSend);
+  });
+});
+
+
+
+
 
   module.exports = onedriveRouter;

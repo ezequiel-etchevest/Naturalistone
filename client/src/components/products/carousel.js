@@ -1,12 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { capsFirst } from "./utils";
-import "fontsource-inter/500.css";
-import ReactDOM from "react-dom";
-import theme from "./theme";
-
 import {
-  ChakraProvider,
-  extendTheme,
   Container,
   Heading,
   Button,
@@ -29,7 +22,6 @@ export default function Carousel() {
   }, []);
 
   return (
-    <ChakraProvider theme={extendTheme(theme)}>
       <Container
         py={8}
         px={0}
@@ -63,9 +55,9 @@ export default function Carousel() {
                   w="full"
                   mb={2}
                 >
-                  {capsFirst(post.title)}
+                  {post.title}
                 </Heading>
-                <Text w="full">{capsFirst(post.body)}</Text>
+                <Text w="full">{post.body}</Text>
               </VStack>
 
               <Flex justifyContent="space-between">
@@ -91,6 +83,5 @@ export default function Carousel() {
           ))}
         </ChakraCarousel>
       </Container>
-    </ChakraProvider>
   );
 }
