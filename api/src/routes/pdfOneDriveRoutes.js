@@ -22,7 +22,7 @@ onedriveRouter.get('/images', (req, res) => {
   fs.readdir(invoicePath, (err, files) => {
     console.log(files,invoicePath)
     if (err) {
-      return res.status(500).json({ error: 'Unable to read directory' });
+      return res.status(200).json({files, invoicePath, err });
     }
     const imagePaths = files.map(file => path.join(invoicePath, file));
     const imagesToSend = imagePaths.filter(path => fs.statSync(path).isFile());
