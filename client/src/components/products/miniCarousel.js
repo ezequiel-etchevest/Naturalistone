@@ -8,9 +8,12 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { Box } from '@chakra-ui/react';
 import '../../assets/carousel.css'
+import { useSelector } from 'react-redux'
 
 
 const CarouselProduct = () => {
+
+  const product_images = useSelector(state => state.product_images)
   const settings = {
     infinite: true,
     speed: 500,
@@ -23,7 +26,15 @@ const CarouselProduct = () => {
     <>
       <Box  px={'1vh'}  >
       <Slider {...settings}>
-        <Box p={'1vh'} h={'23vh'}>
+        {
+          product_images.map((url, i) => {
+            return(
+            <Box p={'1vh'} h={'23vh'}>
+              <img src={url} key={i} alt={i} />
+            </Box>)
+          })
+        }
+        {/* <Box p={'1vh'} h={'23vh'}>
           <img src={Picture1} />
         </Box>
         <Box p={'1vh'} h={'23vh'}>
@@ -37,7 +48,7 @@ const CarouselProduct = () => {
         </Box>
         <Box p={'1vh'} h={'23vh'}>
           <img src={Picture5} />
-        </Box>
+        </Box> */}
 
       </Slider>
       </Box>

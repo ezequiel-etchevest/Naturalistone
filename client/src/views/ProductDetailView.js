@@ -3,7 +3,7 @@ import SideBar from "../components/sideBar";
 import { Text, Center, Spinner} from "@chakra-ui/react";
 import { useSelector, useDispatch } from "react-redux";
 import {getEmployeeById } from "../redux/actions-employees";
-import { cleanProductById, getProductById, getHistoryPrices } from '../redux/actions-products';
+import { cleanProductById, getProductById, getHistoryPrices, getProductImages } from '../redux/actions-products';
 import { useParams } from "react-router-dom";
 import ProductDetail from "../components/products/prodDetail";
 
@@ -21,6 +21,7 @@ const ProductDetailView = ({focus, setFocus}) => {
       dispatch(getProductById(id))
       dispatch(cleanProductById())
       dispatch(getHistoryPrices(id))
+      dispatch(getProductImages())
       },[])
 
   useEffect(() => {
