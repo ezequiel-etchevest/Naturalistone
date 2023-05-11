@@ -15,7 +15,7 @@ onedriveRouter.get('/:filename', (req, res) => {
 });
 
 onedriveRouter.get('/images/img', (req, res) => {
-  const invoicePath = path.join('/app/OneDrive', 'Naturali', 'PHOTOS', `Porcelain`, `Bianco`);
+  const invoicePath = path.join('/app/OneDrive', 'Naturali', 'PHOTOS', `Terrazo`, `Abetone`);
 
   if (!fs.existsSync(invoicePath)) {
     return res.status(404).json({ error: 'Directory not found' });
