@@ -10,7 +10,7 @@ import AutocompleteState from './AutocompleteState';
 import '../../assets/styleSheet.css'
 import { formatNumber } from '../../utils/formattedNumber';
 
-export default function CreationCustomerForm({formData, setFormData, validate, errors, setErrors}) {
+export default function CreationCustomerForm({formData, setFormData, validate, errors, setErrors, setChangeInput}) {
 
   // const [errors, setErrors] = useState({})
 
@@ -27,6 +27,7 @@ export default function CreationCustomerForm({formData, setFormData, validate, e
         [name]: value,
       })
     );
+    setChangeInput(true)
   };
 
   const handleDiscountSelect = (e) => {

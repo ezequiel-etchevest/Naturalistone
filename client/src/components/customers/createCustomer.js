@@ -5,59 +5,15 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { createCustomer } from '../../redux/actions-customers'
 import { USStates } from "./AutocompleteState";
-
-  
-const validate = (formData) =>{
-  let errors = {}
-  const regexNoNumber = /^[a-zA-Z\s!"#$%&'()*+,\-./:;<=>?@\[\\\]^_`{|}~]*$/;
-  const regexNumberAndPlus = /^[\d+()\[\]-\s]*$/;
-  const regexNumber = /^[0-9]+$/;
-  const discount = ['0%', '5%', '10%', '15%']
-  const regexEmail = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
-    if(!formData.Contact_Name){
-      errors.Contact_Name = 'Please enter your email'
-    } else if(!regexNoNumber.test(formData.Contact_Name)) {
-      errors.Contact_Name = 'must be a valid name'
-    } 
-    if(!formData.Address){
-      errors.Address = 'Please enter your address'
-    }
-    if(!formData.ZipCode){
-      errors.ZipCode = 'Please enter your zip code'
-    } else if(!regexNumber.test(formData.ZipCode)) {
-      errors.ZipCode = 'Please enter a valid zip code'
-    }
-    if(!formData.Company){
-      errors.Company = 'Please enter your company'
-    }
-    if(!formData.DiscountID){
-      errors.DiscountID = 'Please enter a discountID'
-    }
-    if(!formData.Phone){
-      errors.Phone = 'Please enter your phone'
-    } else if(!regexNumberAndPlus.test(formData.Phone)) {
-      errors.Phone = 'Please enter a valid Phone'
-    }
-    if(!formData.Email){
-      errors.Email = 'Please enter your email'
-    } else if(!regexEmail.test(formData.Email)){
-      errors.Email = 'Please enter a valid email'
-    }
-    if(!formData.State) {
-      errors.State = 'Please enter a state'
-    } else if(!USStates.includes(formData.State)) {
-      errors.State = 'Please enter a valid state'
-    }
-     return errors
-}
+import { validate } from "../../utils/validateForm";
 
 export function CreateNewCustomer() {
 
   const [errors, setErrors] = useState({})
-
   const toast = useToast()
   const [isToastShowing, setIsToastShowing] = useState(false);
   const { isOpen, onOpen, onClose } = useDisclosure()
+  const [changeInput, setChangeInput] = useState(false)
   const [formData, setFormData] = useState({
     Contact_Name: '',
     Address: '',
@@ -72,12 +28,23 @@ export function CreateNewCustomer() {
 
   const handleSubmit = (event) => {
     if(!isToastShowing){
+      if(!changeInput){
+      setIsToastShowing(true)
+      return toast({
+        title: 'Please complete de Info',
+        description: `Need Complete the info to create a customer`,
+        status: 'error',
+        duration: 4000,
+        isClosable: true,
+        onCloseComplete: () => setIsToastShowing(false),
+      });
+    }
       event.preventDefault();
       if (Object.keys(errors).length > 0) {
       setIsToastShowing(true)
       return toast({
         title: 'Please complete de Info',
-        description: `need Complete the info to create a customer`,
+        description: `Need Complete the info to create a customer`,
         status: 'error',
         duration: 4000,
         isClosable: true,
@@ -99,6 +66,7 @@ export function CreateNewCustomer() {
       Email: '',
       DiscountID: 1
     })
+    setChangeInput(false)
     onClose()
   }
 
@@ -135,6 +103,7 @@ export function CreateNewCustomer() {
               validate={validate}
               errors={errors}
               setErrors={setErrors}
+              setChangeInput={setChangeInput}
               />
             </ModalBody>
             <ModalFooter>

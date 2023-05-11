@@ -3,12 +3,13 @@ import {
     Input,
     VStack,
     Box,
-    Select
+    Select,
+    Text
   } from '@chakra-ui/react';
   import AutocompleteState from '../AutocompleteState';
   import '../../../assets/styleSheet.css'
   
-  export default function CreateProjectForm({formData, setFormData}) {
+  export default function CreateProjectForm({formData, setFormData, validateProject, errors, setErrors, setChangeInput}) {
   
     const handleChange = (event) => {
       const { name, value } = event.target;
@@ -17,6 +18,13 @@ import {
         ...prevFormData,
         [name]: value,
       }));
+      setErrors(
+        validateProject({
+          ...formData,
+          [name]: value,
+        })
+      )
+      setChangeInput(true)
     };
   
     return (
@@ -40,6 +48,11 @@ import {
                 value={formData.ProjectName}
                 onChange={handleChange}
               />
+              { errors.ProjectName && (
+                <Text position={'absolute'} color={'web.error'} fontSize={'xs'}>
+                  {errors.ProjectName}
+                </Text>
+              )}
             </FormControl>
           </Box>
           <Box display={'flex'} flexDir={'row'} justifyContent={'space-between'} w={'45vw'}>
@@ -60,6 +73,11 @@ import {
                 value={formData.Shipping_Address}
                 onChange={handleChange}
               />
+              { errors.Shipping_Address && (
+                <Text position={'absolute'} color={'web.error'} fontSize={'xs'}>
+                  {errors.Shipping_Address}
+                </Text>
+              )}
             </FormControl>
             <FormControl w={'20vw'}>
               <Input
@@ -78,11 +96,22 @@ import {
                 value={formData.City}
                 onChange={handleChange}
               />
+              { errors.City && (
+                <Text position={'absolute'} color={'web.error'} fontSize={'xs'}>
+                  {errors.City}
+                </Text>
+              )}
             </FormControl>
           </Box>
           <Box display={'flex'} flexDir={'row'} justifyContent={'space-between'} w={'45vw'}>
             <FormControl  w={'45vw'}>
-              <AutocompleteState formData={formData} setFormData={setFormData}/>
+            <AutocompleteState 
+              formData={formData}
+              setFormData={setFormData}
+              errors={errors}
+              validate={validateProject}
+              setErrors={setErrors}
+            />
             </FormControl>
             <FormControl  w={'20vw'}>
               <Input
@@ -101,6 +130,11 @@ import {
                 value={formData.ZipCode}
                 onChange={handleChange}
               />
+              { errors.ZipCode && (
+                <Text position={'absolute'} color={'web.error'} fontSize={'xs'}>
+                  {errors.ZipCode}
+                </Text>
+              )}
             </FormControl>
           </Box>
         </VStack>
