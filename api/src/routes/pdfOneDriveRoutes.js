@@ -14,21 +14,24 @@ onedriveRouter.get('/:filename', (req, res) => {
   });
 });
 
-onedriveRouter.get('/images/:img', (req, res) => {
-  // const { type, prodName } = req.query
-  
+onedriveRouter.get('/images/img', (req, res) => {
   const invoicePath = path.join('/app/OneDrive', 'Naturali', 'PHOTOS', `Porcelain`, `Bianco`);
 
+  if (!fs.existsSync(invoicePath)) {
+    return res.status(404).json({ error: 'Directory not found' });
+  }
+
   fs.readdir(invoicePath, (err, files) => {
-    console.log(files,invoicePath)
     if (err) {
-      return res.status(200).json({files, invoicePath, err });
+      return res.status(500).json({ error: 'Unable to read directory' });
     }
+
     const imagePaths = files.map(file => path.join(invoicePath, file));
     const imagesToSend = imagePaths.filter(path => fs.statSync(path).isFile());
     res.send(imagesToSend);
   });
 });
+
 
 
 
