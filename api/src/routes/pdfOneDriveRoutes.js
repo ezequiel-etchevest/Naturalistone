@@ -14,7 +14,7 @@ onedriveRouter.get('/:filename', (req, res) => {
   });
 });
 
-onedriveRouter.get('/images', (req, res) => {
+onedriveRouter.get('/images/img', (req, res) => {
   // const { type, prodName } = req.query
   
   const invoicePath = path.join('/app/OneDrive', 'Naturali', 'PHOTOS', `Porcelain`, `Bianco`);

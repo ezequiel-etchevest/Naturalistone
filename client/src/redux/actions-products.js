@@ -131,7 +131,7 @@ export function getProductImages(){
 
         return async function(dispatch){
             try{
-                let {data} = await axios.get(`/one-drive-data/images`)
+                let {data} = await axios.get(`/one-drive-data/images/img`)
                 dispatch(
                     {
                         type: GET_PRODUCT_IMAGES,
