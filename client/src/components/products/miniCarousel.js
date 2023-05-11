@@ -14,6 +14,7 @@ import { useSelector } from 'react-redux'
 const CarouselProduct = () => {
 
   const product_images = useSelector(state => state.product_images)
+  console.log(product_images)
   const settings = {
     infinite: true,
     speed: 500,
@@ -26,15 +27,15 @@ const CarouselProduct = () => {
     <>
       <Box  px={'1vh'}  >
       <Slider {...settings}>
-        {/* {
+        {
           product_images?.map((url, i) => {
             return(
             <Box p={'1vh'} h={'23vh'}>
               <img src={url} key={i} alt={i} />
             </Box>)
           })
-        } */}
-        <Box p={'1vh'} h={'23vh'}>
+        }
+        {/* <Box p={'1vh'} h={'23vh'}>
           <img src={Picture1} />
         </Box>
         <Box p={'1vh'} h={'23vh'}>
@@ -48,7 +49,7 @@ const CarouselProduct = () => {
         </Box>
         <Box p={'1vh'} h={'23vh'}>
           <img src={Picture5} />
-        </Box>
+        </Box> */}
 
       </Slider>
       </Box>
