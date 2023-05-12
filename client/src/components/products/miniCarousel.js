@@ -4,7 +4,6 @@ import "slick-carousel/slick/slick-theme.css";
 import { Box } from '@chakra-ui/react';
 import '../../assets/carousel.css'
 import { useSelector } from 'react-redux';
-import img from "/app/OneDrive/Naturali/PHOTOS/Terrazzo/Abetone/Abetone_0.jpg";
 
 
 const CarouselProduct = () => {
@@ -23,14 +22,11 @@ const CarouselProduct = () => {
     <>
       <Box  px={'1vh'}  >
       <Slider {...settings}>
-        <Box p={'1vh'} h={'23vh'}>
-          <img src={`file://${url}`} key={i} alt={i} />
-        </Box>
         {
           product_images?.map((url, i) => {
             return(
               <Box p={'1vh'} h={'23vh'}>
-                <img src={`file://${url}`} key={i} alt={i} />
+                <img src={`https://${url}`} key={i} alt={i} />
               </Box>
             )
           })
