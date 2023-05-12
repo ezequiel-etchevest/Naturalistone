@@ -23,38 +23,30 @@ import QuotePdfModal from "./quotePdfModal"
 import { createQuote } from "../../../redux/actions-invoices"
 import '../../../assets/styleSheet.css'
 
-const ReviewProductsModal = ({variables, setVariables, isReviewModalOpen, onReviewModalClose, onQuotesModalOpen, setCustomer, customer, project, products, setProducts, isOpen, onClose, onProjectModalClose}) => {
+const ReviewProductsModal = ({variables, setVariables, setCustomer, customer,  isOpen5, onClose5, onOpen4, project, products, setProducts, isOpen, onClose, onClose4, onClose3, onClose2, onClose1}) => {
 
 const dispatch = useDispatch()
 const user = useSelector(state => state.user)
 const posted_quote = useSelector(state => state.posted_quote)
-const { isOpen: isPdfModalOpen, onOpen: onPdfModalOpen, onClose: onPdfModalClose } = useDisclosure()
+const { isOpen: isOpen6, onOpen: onOpen6, onClose: onClose6 } = useDisclosure()
 
 const handlePrevious = () => {
   setProducts([])
-  onReviewModalClose()
-  onQuotesModalOpen()
+  onClose5()
+  onOpen4()
 }
 
 const handleConfirm = () => {
   dispatch(createQuote(user[0].SellerID, {customer, project, products, variables}))
   // dispatch(getCustomerProjects(customer.CustomerID))
-  onReviewModalClose()
-  // onProjectModalClose()
-  onPdfModalOpen()
-  setVariables({
-    shipVia: '',
-    method: '',
-    paymentTerms:'',
-    estDelivDate:''
-  })
+  onOpen6()
 }
 
   return(
 <>
   <Modal 
-    isOpen={isReviewModalOpen} 
-    onClose={onReviewModalClose}
+    isOpen={isOpen5} 
+    onClose={onClose5}
     size={'3xl'}
     >
     <ModalOverlay />
@@ -69,7 +61,7 @@ const handleConfirm = () => {
         _hover={{
           color: 'web.text'
         }}
-        onClick={onClose} 
+        onClick={onClose5} 
         />
       <Box color={'white'}
       >
@@ -136,7 +128,21 @@ const handleConfirm = () => {
       </ModalFooter>
     </ModalContent>
   </Modal>
-  <QuotePdfModal variables={variables} user={user} onPdfModalOpen={onPdfModalOpen} isPdfModalOpen={isPdfModalOpen} onPdfModalClose={onPdfModalClose} customer={customer} project={project} products={products}/>
+  <QuotePdfModal 
+  variables={variables} 
+  user={user} 
+  customer={customer} 
+  project={project} 
+  products={products}
+  onOpen6={onOpen6} 
+  isOpen6={isOpen6} 
+  onClose6={onClose6}
+  onClose5={onClose5} 
+  onClose4={onClose4}
+  onClose3={onClose3}
+  onClose2={onClose2}
+  onClose1={onClose1} 
+  />
 </>
 )}
 

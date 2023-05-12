@@ -18,17 +18,20 @@ import {
     Select
     } from "@chakra-ui/react"
 import { useDispatch, useSelector } from "react-redux";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { CreateNewProject } from "../../../customers/customerDetail/createProject";
 import SelectProjectModalList from "./selectProjectModalList";
 import '../../../../assets/styleSheet.css'
 
 
-const SelectProjectModal = ({customer, isProjectModalOpen, onProjectModalClose, isOpen, onClose}) => {
+const SelectProjectModal = ({customer, isOpen3, onClose3, onClose2, onClose1, isOpen, onClose}) => {
 
-  const { isOpen: isQuotesModalOpen, onOpen: onQuotesModalOpen, onClose: onQuotesModalClose } = useDisclosure()
+  const { isOpen: isOpen4, onOpen: onOpen4, onClose: onClose4 } = useDisclosure()
 
   const projects = useSelector(state => state.projects_by_customer_id)
+  const [disable, setDisable] = useState(true)
+  const [project, setProject] = useState('')
+
   const [variables, setVariables] = useState(
     {
       shipVia: '',
@@ -37,13 +40,20 @@ const SelectProjectModal = ({customer, isProjectModalOpen, onProjectModalClose, 
       estDelivDate:''
     })
 
+    useEffect(() => {
+      if(variables.shipVia && variables.method && variables.paymentTerms && variables.estDelivDate && project){
+        setDisable(false)
+      } else { 
+        setDisable(true)}
+  }, [variables, project]);
+
   const handlePrevious = () => {
-    onProjectModalClose()
+    onClose3()
   }
 
   const handleNext = () => {
-    if(variables.shipVia && variables.method && variables.paymentTerms){
-      onQuotesModalOpen()
+    if (!disable) {
+      onOpen4()
     }
   }
 
@@ -64,8 +74,8 @@ const SelectProjectModal = ({customer, isProjectModalOpen, onProjectModalClose, 
 
 <>
   <Modal
-    isOpen={isProjectModalOpen}
-    onClose={onProjectModalClose}
+    isOpen={isOpen3}
+    onClose={onClose3}
     size={'3xl'}
     >
     <ModalOverlay />
@@ -80,7 +90,7 @@ const SelectProjectModal = ({customer, isProjectModalOpen, onProjectModalClose, 
         _hover={{
           color: 'web.text'
         }}
-        onClick={onClose} />
+        onClick={onClose3} />
       <Box color={'white'}>
       <Text ml={'3vw'} fontSize={'lg'}>Select project</Text>
       <ModalBody color={'web.text2'} display={'flex'} justifyContent={'center'} flexDir={'column'} h={'58vh'}>
@@ -123,21 +133,23 @@ const SelectProjectModal = ({customer, isProjectModalOpen, onProjectModalClose, 
           name={"paymentTerms"}
           onChange={(e)=>handlePaymentTerms(e)}
           />
-          <Input
-            mb={'0.5vh'}
-            w={'10vw'}
-            minH={'4.5vh'}
-            variant="unstyled"
-            textColor={'web.text2'}
-            _placeholder={{ fontFamily: 'body', fontWeight: 'inherit' }}
-            size={"sm"}
-            borderBottomWidth={"2px"}
-            borderBottomColor={'web.text2'}
-            type={"date"}
-            pattern="\d{4}-\d{2}-\d{2}"
-            name={"EstDelivDate"}
-            onChange={(e)=>handleEstDelivDate(e)}
-          />  
+          <Tooltip  label="Estimated delivery date" fontWeight={'hairline'} placement='top-start'>
+            <Input
+              mb={'0.5vh'}
+              w={'10vw'}
+              minH={'4.5vh'}
+              variant="unstyled"
+              textColor={'web.text2'}
+              _placeholder={{ fontFamily: 'body', fontWeight: 'inherit' }}
+              size={"sm"}
+              borderBottomWidth={"2px"}
+              borderBottomColor={'web.text2'}
+              type={"date"}
+              pattern="\d{4}-\d{2}-\d{2}"
+              name={"EstDelivDate"}
+              onChange={(e)=>handleEstDelivDate(e)}
+            />
+          </Tooltip>
           <Select
               onChange={(e)=>handleShipVia(e)}
               mb={'0.5vh'}
@@ -167,10 +179,15 @@ const SelectProjectModal = ({customer, isProjectModalOpen, onProjectModalClose, 
           setVariables={setVariables} 
           customer={customer} 
           projects={projects} 
-          isQuotesModalOpen={isQuotesModalOpen} 
-          onQuotesModalClose={onQuotesModalClose} 
-          onQuotesModalOpen={onQuotesModalOpen} 
-          onProjectModalClose={onProjectModalClose}/>
+          project={project} 
+          setProject={setProject} 
+          isOpen4={isOpen4} 
+          onClose4={onClose4} 
+          onOpen4={onOpen4} 
+          onClose3={onClose3}
+          onClose2={onClose2}
+          onClose1={onClose1}
+          />
       </ModalBody>
       </Box>
       <ModalFooter mb={'2vh'} display={'flex'} flexDir={'row'} justifyContent={'space-between'} ml={'2vw'} mr={'2vw'}>
@@ -181,16 +198,14 @@ const SelectProjectModal = ({customer, isProjectModalOpen, onProjectModalClose, 
           >
          Previous
         </Button>
-        <Tooltip label={'Currently disabled'} bg={'red'} fontWeight={'bold'}>
         <Button
           colorScheme={'orange'}
           size={'sm'}
-          disabled={'true'}
+          disabled={disable}
           onClick={()=>handleNext()}
           >
          Next
         </Button>
-        </Tooltip>
       </ModalFooter>
     </ModalContent>
   </Modal>

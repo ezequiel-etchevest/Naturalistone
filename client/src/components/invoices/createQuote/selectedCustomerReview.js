@@ -16,20 +16,20 @@ import { getCustomerProjects } from "../../../redux/actions-projects"
 import SelectProjectModal from "../../invoices/createQuote/customerProjects/selectProjectModal"
 import '../../../assets/styleSheet.css'
 
-const SelectedCustomerModal = ({customer, isSecondModalOpen, onSecondModalClose, setCustomer,  isOpen, onClose}) => {
+const SelectedCustomerModal = ({customer, isOpen2, onClose2, onClose1, setCustomer,  isOpen, onClose}) => {
 
 const dispatch = useDispatch()
-const { isOpen: isProjectModalOpen, onOpen: onProjectModalOpen, onClose: onProjectModalClose } = useDisclosure()
+const { isOpen: isOpen3, onOpen: onOpen3, onClose: onClose3 } = useDisclosure()
 
 const handlePrevious = () => {
   setCustomer('')
-  onSecondModalClose()
+  onClose2()
 }
 
 const handleNext = () => {
   dispatch(getCustomerProjects(customer.CustomerID))
-  onProjectModalOpen()
-  onSecondModalClose()
+  onOpen3()
+  onClose2()
 
 }
 
@@ -37,8 +37,8 @@ const handleNext = () => {
 
 <>
   <Modal 
-    isOpen={isSecondModalOpen} 
-    onClose={onSecondModalClose}
+    isOpen={isOpen2} 
+    onClose={onClose2}
     size={'3xl'}
     >
     <ModalOverlay />
@@ -53,7 +53,7 @@ const handleNext = () => {
         _hover={{
           color: 'web.text'
         }}
-        onClick={onClose} 
+        onClick={onClose2} 
         />
       <Box color={'white'}>
       <Text ml={'3vw'} fontSize={'lg'}>Selected customer</Text>
@@ -99,7 +99,7 @@ const handleNext = () => {
       </ModalFooter>
     </ModalContent>
   </Modal>
-  <SelectProjectModal isProjectModalOpen={isProjectModalOpen} onProjectModalClose={onProjectModalClose} customer={customer}/>
+  <SelectProjectModal isOpen3={isOpen3} onClose3={onClose3} onClose2={onClose2} onClose1={onClose1} customer={customer}/>
 </>
 )}
 

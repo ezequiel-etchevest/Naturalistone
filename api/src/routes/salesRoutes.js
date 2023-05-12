@@ -314,16 +314,16 @@ salesRouter.post('/create-quote/:sellerID', async function(req, res){
             } else {
               console.log('Quote created successfully')
               // Construye la consulta SQL de inserción múltiple
-              let query = "INSERT INTO ProdSold (SaleID, ProdID, Quantity, SalePrice, Delivered, InsertDate, Status) VALUES ";
+              let query = `INSERT INTO ProdSold (SaleID, ProdID, Quantity, SalePrice, Delivered, InsertDate) VALUES `;
               const values = [];
 
               for (const product of products) {
                 const { prodID, quantity, price } = product;
-                values.push(`("${Naturali_Invoice}", "${prodID}", "${quantity}", "${price}", 0, "${InsertDate}", "Pending")`);
+                values.push(`("${Naturali_Invoice}", "${prodID}", "${quantity}", "${price}", 0, "${InsertDate}")`);
               }
 
               query += values.join(", ");
-
+              console.log('query salesRoutes',query)
               mysqlConnection.query(query, function(error, results, fields) {
                 if (error) {
                   console.log('Error in salesRoutes.get Insert INTO ProdSold ' + error)
@@ -341,6 +341,64 @@ salesRouter.post('/create-quote/:sellerID', async function(req, res){
     res.status(409).send(error)
   }
 })
+// salesRouter.post('/create-quote/:sellerID', async function(req, res) {
+//   const { sellerID } = req.params;
+//   const { customer, project, products, variables } = req.body;
+
+//   const Value = products.reduce((acc, curr) => acc + curr.quantity * curr.price, 0);
+//   const ProjectID = project.idProjects;
+//   const date = new Date().toLocaleDateString("en-US");
+//   const InsertDate = `${date.split('/')[2]}-${date.split('/')[0]}-${date.split('/')[1]}`;
+
+//   const EstDelivery_Date = variables.estDelivDate;
+
+//   const query_0 = `SELECT Naturali_Invoice FROM NaturaliStone.Sales ORDER BY Naturali_Invoice DESC LIMIT 1;`;
+
+//   try {
+//     mysqlConnection.query(query_0, function(error, quotesIDs, fields) {
+//       if (error) {
+//         console.log('Error in salesRoutes.get /create-quote/:sellerID: ' + error);
+//         return res.status(500).json("Can't obtain Naturali_Invoice");
+//       }
+
+//       console.log('QuotesIds retrieved successfully');
+
+//       const ids = quotesIDs.map(q => Number(q.Naturali_Invoice));
+//       const Naturali_Invoice = Math.max(...ids) + 1;
+
+//       const query_ = `INSERT INTO Sales (Naturali_Invoice, Value, ProjectID, InvoiceDate, EstDelivery_Date, SellerID, ShippingMethod, PaymentTerms, P_O_No) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+//       const salesValues = [Naturali_Invoice, Value, ProjectID, InsertDate, EstDelivery_Date, sellerID, variables.shipVia, variables.paymentTerms, variables.method];
+
+//       try {
+//         mysqlConnection.query(query_, salesValues, function(error, results, fields) {
+//           if (error) {
+//             console.log('Error in salesRoutes.get /create-quote/:sellerID: ' + error);
+//             return res.status(500).json('Failed to create quote');
+//           }
+
+//           console.log('Quote created successfully');
+
+//           const values = products.map(product => [Naturali_Invoice, product.prodID, product.quantity, product.price, 0, InsertDate, "Pending"]);
+//           const query = "INSERT INTO ProdSold (SaleID, ProdID, Quantity, SalePrice, Delivered, InsertDate, Status) VALUES ?";
+          
+//           mysqlConnection.query(query, [values], function(error, results, fields) {
+//             if (error) {
+//               console.log('Error in salesRoutes.get Insert INTO ProdSold ' + error);
+//               return res.status(500).json('Failed to insert ProdSold');
+//             }
+
+//             console.log('Products inserted successfully');
+//           });
+//           return res.status(200).json({ Naturali_Invoice, InsertDate });
+//         });
+//       } catch (error) {
+//         return res.status(409).json(error);
+//       }
+//     });
+//   } catch (error) {
+//     return res.status(409).json(error);
+//   }
+// });
 
 salesRouter.get('/project-invoices/:id', async function(req, res){
   const { id } = req.params

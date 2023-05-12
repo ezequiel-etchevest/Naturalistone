@@ -42,9 +42,8 @@ import {
     )
   }
   
-  const SelectProjectModalList = ({variables, setVariables, customer, projects, onQuotesModalClose, isQuotesModalOpen, onQuotesModalOpen, onProjectModalClose}) => {
+  const SelectProjectModalList = ({variables, setVariables, setProject, project, customer, projects, onClose4, isOpen4, onOpen4, onClose3, onClose2, onClose1}) => {
     
-    const [project, setProject] = useState('')
     const [focus, setFocus] = useState('')
 
     return(
@@ -106,12 +105,14 @@ import {
     <CreateInvoiceModal 
       variables={variables} 
       setVariables={setVariables} 
-      isQuotesModalOpen={isQuotesModalOpen} 
-      onQuotesModalClose={onQuotesModalClose} 
       customer={customer} 
       project={project} 
-      onQuotesModalOpen={onQuotesModalOpen} 
-      onProjectModalClose={onProjectModalClose}
+      isOpen4={isOpen4} 
+      onOpen4={onOpen4} 
+      onClose4={onClose4} 
+      onClose3={onClose3}
+      onClose2={onClose2}
+      onClose1={onClose1}
     />
   </>
   )
