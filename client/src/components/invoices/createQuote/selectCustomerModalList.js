@@ -11,7 +11,6 @@ import {
     Text,
     Center,
     } from '@chakra-ui/react'
-  import { useState } from 'react';
   import SelectedCustomerModal from './selectedCustomerReview';
   
   
@@ -43,9 +42,8 @@ import {
     )
   }
   
-  const SelectCustomerModalList = ({customers, onSecondModalOpen, onSecondModalClose, isSecondModalOpen}) => {
-    console.log(customers)
-    const [customer, setCustomer] = useState('')
+  const SelectCustomerModalList = ({customers, customer, setCustomer, onSecondModalOpen, onSecondModalClose, isSecondModalOpen}) => {
+
   
   return(
 <>
@@ -103,7 +101,11 @@ import {
         }
       </Box> 
     </Box>
-    <SelectedCustomerModal onSecondModalClose={onSecondModalClose} isSecondModalOpen={isSecondModalOpen} customer={customer} setCustomer={setCustomer}/>
+    <SelectedCustomerModal 
+    onSecondModalClose={onSecondModalClose}
+    isSecondModalOpen={isSecondModalOpen} 
+    customer={customer}
+    setCustomer={setCustomer}/>
   </>
   )
 }

@@ -279,12 +279,14 @@ salesRouter.get('/values/seller', async function(req, res){
 salesRouter.post('/create-quote/:sellerID', async function(req, res){
 
   const { sellerID } = req.params
-  const { customer, project, products } = req.body
+  const { customer, project, products, variables } = req.body
+  console.log(variables)
   
   const Value = products.reduce((acc, curr) => acc + curr.quantity * curr.price, 0)
   const ProjectID = project.idProjects
   const date = new Date().toLocaleDateString("en-US");
-  const InsertDate = `${date.split('/')[2]}-${date.split('/')[0]}-${date.split('/')[1]}`
+  // const InsertDate = `${date.split('/')[2]}-${date.split('/')[0]}-${date.split('/')[1]}`
+  const InsertDate = "2010-05-20"
   
   const EstDelivery_Date = null
 
@@ -305,7 +307,7 @@ salesRouter.post('/create-quote/:sellerID', async function(req, res){
         const Naturali_Invoice = Math.max(...ids) + 1
 
         // Hace el posteo en la tabla de Sales con los valores que llegaron por body y el id del quote creado.
-        const query_ = `INSERT INTO Sales (Naturali_Invoice, Value, ProjectID, InvoiceDate, EstDelivery_Date, SellerID) VALUES ("${Naturali_Invoice}", "${Value}", "${ProjectID}", "${InsertDate}", "${EstDelivery_Date}", "${sellerID}")`
+        const query_ = `INSERT INTO Sales (Naturali_Invoice, Value, ProjectID, InvoiceDate, EstDelivery_Date, SellerID, ShippingMethod, PaymentTerms, P_O_No) VALUES ("${Naturali_Invoice}", "${Value}", "${ProjectID}", "${InsertDate}", "${EstDelivery_Date}", "${sellerID}", "${variables.shipVia}", "${variables.paymentTerms}", "${variables.method}")`
         try {
           mysqlConnection.query(query_, function(error, results, fields) {
             if (error) {
@@ -330,7 +332,7 @@ salesRouter.post('/create-quote/:sellerID', async function(req, res){
                   res.status(500).json('Failed to insert ProdSold')
                 } else {
                   console.log('Products inserted successfully');
-                  res.status(200).json(results);
+                  res.status(200).json({Naturali_Invoice: Naturali_Invoice, InsertDate: InsertDate});
                 }
               });
             }})

@@ -16,16 +16,19 @@ import {
     Th,
     Td,
     TableContainer,
+    useDisclosure
     } from "@chakra-ui/react"
 import { useDispatch, useSelector } from 'react-redux'
-import { getCustomerProjects } from "../../../redux/actions-projects"
+import QuotePdfModal from "./quotePdfModal"
 import { createQuote } from "../../../redux/actions-invoices"
 import '../../../assets/styleSheet.css'
 
-const ReviewProductsModal = ({ isReviewModalOpen, onReviewModalClose, onQuotesModalOpen, setCustomer, customer, project, products, setProducts, isOpen, onClose}) => {
+const ReviewProductsModal = ({variables, isReviewModalOpen, onReviewModalClose, onQuotesModalOpen, setCustomer, customer, project, products, setProducts, isOpen, onClose, onProjectModalClose}) => {
 
 const dispatch = useDispatch()
 const user = useSelector(state => state.user)
+const posted_quote = useSelector(state => state.posted_quote)
+const { isOpen: isPdfModalOpen, onOpen: onPdfModalOpen, onClose: onPdfModalClose } = useDisclosure()
 
 const handlePrevious = () => {
   setProducts([])
@@ -33,10 +36,12 @@ const handlePrevious = () => {
   onQuotesModalOpen()
 }
 
-const handleNext = () => {
-  dispatch(createQuote(user[0].SellerID, {customer, project, products}))
+const handleConfirm = () => {
+  dispatch(createQuote(user[0].SellerID, {customer, project, products, variables}))
   // dispatch(getCustomerProjects(customer.CustomerID))
-  // onThirthModalOpen()
+  onReviewModalClose()
+  // onProjectModalClose()
+  onPdfModalOpen()
 }
 
   return(
@@ -118,14 +123,14 @@ const handleNext = () => {
         <Button
           colorScheme={'orange'}
           size={'sm'} 
-          onClick={()=>handleNext()}
+          onClick={()=>handleConfirm()}
           >
          Confirm
         </Button>
       </ModalFooter>
     </ModalContent>
   </Modal>
-  {/* <SelectProjectModal isThirthModalOpen={isThirthModalOpen} onThirthModalClose={onThirthModalClose} customer={customer}/> */}
+  <QuotePdfModal variables={variables} user={user} onPdfModalOpen={onPdfModalOpen} isPdfModalOpen={isPdfModalOpen} onPdfModalClose={onPdfModalClose} customer={customer} project={project} products={products}/>
 </>
 )}
 
