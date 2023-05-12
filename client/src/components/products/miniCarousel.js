@@ -23,13 +23,13 @@ const CarouselProduct = () => {
       <Box  px={'1vh'}  >
       <Slider {...settings}>
         {/* {
-          product_images?.map((url, i) => { */}
-            return(
+          product_images?.map((url, i) => { 
+            return(*/}
               <Box p={'1vh'} h={'23vh'}>
-                <img src={`file://${url}`} key={i} alt={i} />
+                <img src={`file://${product_images}`} key={i} alt={i} />
               </Box>
-            )
-          {/* })
+            {/*)
+           })
         } */}
       </Slider>
       </Box>
