@@ -26,7 +26,7 @@ const CarouselProduct = () => {
           product_images?.map((url, i) => {
             return(
               <Box p={'1vh'} h={'23vh'}>
-                <img src={`https://${url}`} key={i} alt={i} />
+                <img src={`file://${url}`} key={i} alt={i} />
               </Box>
             )
           })
