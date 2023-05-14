@@ -14,23 +14,32 @@ onedriveRouter.get('/:filename', (req, res) => {
   });
 });
 
-onedriveRouter.get('/images/img', (req, res) => {
-  const invoicePath = path.join('/app/OneDrive', 'Naturali', 'PHOTOS', `Terrazzo`, `Abetone`);
+// onedriveRouter.get('/images/img', (req, res) => {
+//   const invoicePath = path.join('/app/OneDrive', 'Naturali', 'PHOTOS', `Terrazzo`, `Abetone`);
+
+//   if (!fs.existsSync(invoicePath)) {
+//     return res.status(404).json({ error: 'Directory not found' });
+//   }
+
+//   fs.readdir(invoicePath, (err, files) => {
+//     if (err) {
+//       return res.status(500).json({ error: 'Unable to read directory' });
+//     }
+
+//     const imagePaths = files.map(file => path.join(invoicePath, file));
+//     const imagesToSend = imagePaths.filter(path => fs.statSync(path).isFile());
+//     return res.type('image/jpeg').send(imagesToSend);})
+// });
+
+onedriveRouter.get('/images/img/:filename', (req, res) => {
+  const invoicePath = path.join('/app/OneDrive', 'Naturali', 'PHOTOS', `Terrazzo`, `Abetone`, req.params.filename);
 
   if (!fs.existsSync(invoicePath)) {
-    return res.status(404).json({ error: 'Directory not found' });
+    return res.status(404).json({ error: 'Image not found' });
   }
 
-  fs.readdir(invoicePath, (err, files) => {
-    if (err) {
-      return res.status(500).json({ error: 'Unable to read directory' });
-    }
-
-    const imagePaths = files.map(file => path.join(invoicePath, file));
-    const imagesToSend = imagePaths.filter(path => fs.statSync(path).isFile());
-    return res.type('image/jpeg').send(imagesToSend[0]);})
+  return res.type('image/jpeg').sendFile(invoicePath);
 });
-
 
 
 
