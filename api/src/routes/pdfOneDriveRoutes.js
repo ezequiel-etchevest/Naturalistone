@@ -28,20 +28,33 @@ onedriveRouter.get('/images/img', (req, res) => {
 
     const imagePaths = files.map(file => path.join(invoicePath, file));
     const imagesToSend = imagePaths.filter(path => fs.statSync(path).isFile());
-    const res = []
-    imagesToSend.forEach((file => {
+
+    const imageData = [];
+    let imagesRead = 0;
+
+    imagesToSend.forEach(file => {
       fs.readFile(file, (err, data) => {
         if (err) {
           console.error(err);
         } else {
-          res.push(data)
-        }})}))
-    
-    console.log('res',{res})
+          imageData.push(data);
+        }
 
-    return res.send(res);})
+        imagesRead++;
+
+        if (imagesRead === imagesToSend.length) {
+          // Send the response once all images have been read
+          res.set('Content-Type', 'image/jpeg');
+          imageData.forEach(image => {
+            res.write(image);
+          });
+          res.end();
+        }
+      });
+    });
+  });
 });
-
+ s
 
 
   module.exports = onedriveRouter;
