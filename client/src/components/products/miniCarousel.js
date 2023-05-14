@@ -15,7 +15,7 @@ const CarouselProduct = () => {
   useEffect(() => {
     const fetchImages = async () => {
       const imageResponses = await Promise.all(
-        product_images.map(url => axios.get(`/images/img/${url}`, { responseType: 'blob' }))
+        product_images.map(url => axios.get(`/images/img${url}`, { responseType: 'blob' }))
       );
       const imageBlobs = imageResponses.map(response => response.data);
       const imageUrls = imageBlobs.map(blob => URL.createObjectURL(blob));
