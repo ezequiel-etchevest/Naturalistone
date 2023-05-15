@@ -2,16 +2,12 @@ import Slider from 'react-slick';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { Box } from '@chakra-ui/react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
-import Picture1 from '../../assets/ProductPicture/354-1.jpg'
-import Picture2 from '../../assets/ProductPicture/354-2.jpg'
-import Picture3 from '../../assets/ProductPicture/354-3.jpg'
-import Picture4 from '../../assets/ProductPicture/354-4.jpg'
-import Picture5 from '../../assets/ProductPicture/354-5.jpg'
+
 
 const CarouselProduct = () => {
-  const dispatch = useDispatch();
+
   const productImages = useSelector(state => state.product_images);
   const [images, setImages] = useState([]);
 

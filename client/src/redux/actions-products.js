@@ -127,11 +127,11 @@ export function patchDiscontinued(idProduct, flag){
         }
     }
 
-export function getProductImages(){
+export function getProductImages(prodName, material){
 
         return async function(dispatch){
             try{
-                let {data} = await axios.get(`/one-drive-data/images/img`)
+                let {data} = await axios.get(`/one-drive-data/images/img?prodName=${prodName}&material=${material}`)
                 dispatch(
                     {
                         type: GET_PRODUCT_IMAGES,
