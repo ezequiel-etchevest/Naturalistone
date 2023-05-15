@@ -47,8 +47,8 @@ const ModelTr = ({e, validateSeller}) => {
           <Td  fontSize={'xs'}textAlign={'center'}>{e.SellerReference}</Td>
           ):(null)
         }
-        <Td fontSize={'xs'}>{e.ProjectName}</Td>
-        <Td fontSize={'xs'}>{e.Reference}</Td>
+        <Td fontSize={'xs'}>{e.ProjectName ? e.ProjectName : '-'}</Td>
+        <Td fontSize={'xs'}>{e.Company ? e.Company : e.Contact_Name}</Td>
         <Td fontSize={'xs'} textAlign={'center'}>{e.InvoiceDate.split('T')[0]}</Td>
         <Td fontSize={'xs'} textAlign={'center'}>{e.Status}</Td>
         <Td fontSize={'xs'} isNumeric textAlign={'center'}>$ {e.Value.toLocaleString('en-US')} </Td>
@@ -126,7 +126,7 @@ const List = ({seller_invoices, user}) => {
                                 <Th color={'web.text2'} textAlign={'center'} w={'1vw'}>Ref</Th>
                             ):(null) }
                             <Th color={'web.text2'}>Project</Th>
-                            <Th color={'web.text2'}>Customer</Th>
+                            <Th color={'web.text2'}>Company or Customer</Th>
                             <Th color={'web.text2'} textAlign={'center'}>Date</Th>
                             <Th color={'web.text2'} textAlign={'center'}>Status</Th>
                             <Th color={'web.text2'} textAlign={'center'} isNumeric>Total</Th>

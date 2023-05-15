@@ -170,9 +170,7 @@ const SelectProjectModal = ({customer, isOpen3, onClose3, onClose2, onClose1, is
             <option value='Pick up' className="options">Pick up</option>
           </Select>
           <Divider orientation={'vertical'} h={'5vh'}/>
-          <Tooltip label={'Add project'} fontWeight={'hairline'}>
             <CreateNewProject customer={customer} />
-          </Tooltip>
         </HStack>
         <SelectProjectModalList 
           variables={variables} 
