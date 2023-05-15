@@ -15,8 +15,8 @@ onedriveRouter.get('/:filename', (req, res) => {
 });
 
 onedriveRouter.get('/images/img', (req, res) => {
+  
   const { material, prodName } = req.query
-
   const invoicePath = path.join('/app/OneDrive', 'Naturali', 'PHOTOS', `${material}`, `${prodName}`);
 
   if (!fs.existsSync(invoicePath)) {
