@@ -77,9 +77,6 @@ import {
   GET_YEAR_FILTER
 } from './actions-yearFilter'
 import {
-  GET_PAYMENTS_BY_MONTH
-} from './actions.paymentsByMonth';
-import {
   GET_STATS
 } from './actions-stats'
 
@@ -408,11 +405,6 @@ function rootReducer (state = intialState, action) {
           return {
             ...state,
             yearFilter: action.payload
-          }
-        case GET_PAYMENTS_BY_MONTH:
-          return {
-            ...state,
-            payments_by_month: action.payload
           }
         case GET_PRODUCT_IMAGES: 
           return {

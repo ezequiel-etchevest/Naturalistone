@@ -11,10 +11,6 @@ const CarouselProduct = () => {
   const [images, setImages] = useState([]);
 
   useEffect(() => {
-    dispatch(getProductImages());
-  }, [dispatch]);
-
-  useEffect(() => {
     const fetchImages = async () => {
       const imageUrls = await Promise.all(
         productImages.map(data => `data:image/jpeg;base64,${data}`)
