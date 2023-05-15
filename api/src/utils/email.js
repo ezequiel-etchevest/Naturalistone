@@ -4,7 +4,7 @@ require('dotenv').config()
 const postmark = require("postmark");
 
 // Send an email:
-const client = new postmark.ServerClient('043e1617-818c-4162-894d-f10450b7fa63' );
+const client = new postmark.ServerClient(process.env.POSTMARK_API_KEY);
 
 const fromEmail = "eduardo@avilatek.dev"
 
@@ -17,12 +17,10 @@ function sendEmailUser() {
     "TextBody": "Hello from Postmark!",
     "MessageStream": "outbound"
   }
-
-  console.log('emal2', optionsEmail)
-  console.log('soy client', client)
+  
   client.sendEmail(optionsEmail);
 
-  return 'prueba'
+  return true
 }
 
 module.exports = sendEmailUser
