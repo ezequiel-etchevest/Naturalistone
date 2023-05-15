@@ -129,19 +129,19 @@ const handleConfirm = () => {
     </ModalContent>
   </Modal>
   <QuotePdfModal 
-  variables={variables} 
-  user={user} 
-  customer={customer} 
-  project={project} 
-  products={products}
-  onOpen6={onOpen6} 
-  isOpen6={isOpen6} 
-  onClose6={onClose6}
-  onClose5={onClose5} 
-  onClose4={onClose4}
-  onClose3={onClose3}
-  onClose2={onClose2}
-  onClose1={onClose1} 
+    variables={variables} 
+    user={user} 
+    customer={customer} 
+    project={project} 
+    products={products}
+    onOpen6={onOpen6} 
+    isOpen6={isOpen6} 
+    onClose6={onClose6}
+    onClose5={onClose5} 
+    onClose4={onClose4}
+    onClose3={onClose3}
+    onClose2={onClose2}
+    onClose1={onClose1} 
   />
 </>
 )}

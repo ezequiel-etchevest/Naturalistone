@@ -30,7 +30,7 @@ const CreatedQuotePdf = ({variables, user, customer, project, products}) => {
 // idProjects
 // : 
 // 490
-    console.log('pdf project',project)
+
     const posted_quote = useSelector(state => state.posted_quote)
  
     const [pdfInfo, setPdfInfo] = useState([]);
