@@ -31,7 +31,8 @@ import {
     GET_HISTORY_PRICES,
     PATCH_PRODUCT_NOTES,
     PATCH_DISCONTINUED,
-    GET_PRODUCT_IMAGES
+    GET_PRODUCT_IMAGES,
+    CLEAN_PRODUCT_DETAIL
      } from './actions-products';
 import { 
   GET_CURRENT_MONTH,
@@ -410,6 +411,13 @@ function rootReducer (state = intialState, action) {
           return {
             ...state,
             product_images: action.payload
+          }
+        case CLEAN_PRODUCT_DETAIL:
+          return {
+            ...state,
+            product_images: [],
+            product_by_id: [],
+            history_prices: []
           }
         default:
             return {
