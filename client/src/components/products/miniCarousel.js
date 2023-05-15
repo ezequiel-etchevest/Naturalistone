@@ -36,7 +36,7 @@ const CarouselProduct = () => {
   return (
     <Box px="1vh">
       <Slider {...settings}>
-        { images.length ? (
+        {
            images.map((url, i) => (
             <Box key={i} p="1vh" h="23vh">
               <img
@@ -45,30 +45,6 @@ const CarouselProduct = () => {
                 style={{ height: '100%', objectFit: 'cover' }} />
             </Box>
           ))
-        ) : (
-          <>
-            <Box  px={'1vh'}  >
-            <Slider {...settings}>
-              <Box p={'1vh'} h={'23vh'}>
-                <img src={Picture1} />
-              </Box>
-              <Box p={'1vh'} h={'23vh'}>
-                <img src={Picture2} />
-              </Box >
-              <Box p={'1vh'} h={'23vh'}>
-                <img src={Picture3} />
-              </Box>
-              <Box p={'1vh'} h={'23vh'}>
-                <img src={Picture4} />
-              </Box>
-              <Box p={'1vh'} h={'23vh'}>
-                <img src={Picture5} />
-              </Box>
-      
-            </Slider>
-            </Box>
-          </>
-          )
        }
       </Slider>
     </Box>
