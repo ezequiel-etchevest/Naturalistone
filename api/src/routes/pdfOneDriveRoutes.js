@@ -33,7 +33,7 @@ onedriveRouter.get('/images/img', (req, res) => {
     let imagesRead = 0;
 
     imagesToSend.forEach(file => {
-      fs.readFile(file, (err, data) => {
+      fs.readFile(file, { encoding: 'base64' }, (err, data) => {
         if (err) {
           console.error(err);
         } else {
@@ -44,16 +44,13 @@ onedriveRouter.get('/images/img', (req, res) => {
 
         if (imagesRead === imagesToSend.length) {
           // Send the response once all images have been read
-          res.set('Content-Type', 'image/jpeg');
-          imageData.forEach(image => {
-            res.write(image);
-          });
-          res.end();
+          res.json(imageData);
         }
       });
     });
   });
 });
+
 
 
 
