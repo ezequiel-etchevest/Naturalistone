@@ -9,6 +9,28 @@ const CreatedQuotePdf = ({variables, user, customer, project, products}) => {
 // console.log('products',products)
 // console.log(user)
 
+// City
+// : 
+// "Mar del Plata"
+// CustomerID
+// : 
+// 1938
+// ProjectName
+// : 
+// "Bahia Pinga"
+// Shipping_Address
+// : 
+// "Ayacucho 3285"
+// State
+// : 
+// "BUENOS AIRES"
+// ZipCode
+// : 
+// "B7600"
+// idProjects
+// : 
+// 490
+
     const posted_quote = useSelector(state => state.posted_quote)
  
     const [pdfInfo, setPdfInfo] = useState([]);
@@ -46,14 +68,14 @@ const CreatedQuotePdf = ({variables, user, customer, project, products}) => {
   const phone = customer.Phone
   const email = customer.Email
   const street = customer.Address
-  // const city = customer.City
-  const state = customer.State
-  const zipCode = customer.ZipCode
-  const company = customer.Company
+   const city = project.City
+  const state = project.State
+  const zipCode = project.ZipCode
+  const company = project.Company
   const PO = variables.method
   const ref = user[0].SellerReference
   const tax = 7
-  const estDate = '2023-5-4'
+  const estDate = variables.estDelivDate
   const deliveryMethod = variables.shipVia
   const paymentTerms = variables.paymentTerms
 
@@ -68,7 +90,7 @@ const CreatedQuotePdf = ({variables, user, customer, project, products}) => {
   page.drawText(`${email}`, { x: 42, y: 598, size: 10 })
 
   page.drawText(`${street}`, { x: 336, y: 626, size: 10 })
-  page.drawText(`City, ${state}`, { x: 336, y: 612, size: 10 })
+  page.drawText(`${city}, ${state}`, { x: 336, y: 612, size: 10 })
   page.drawText(`${zipCode}`, { x: 336, y: 598, size: 10 })
 
   page.drawText(`${company}`, { x: 40, y: 508, size: 10 })
@@ -100,7 +122,7 @@ mappedProducts.forEach((product, index) => {
   page.drawText(`${subtotal}`, { x: 528, y: 272, size: 10 });
   page.drawText(`(${tax} %)`, { x: 454, y: 249, size: 12 });
   page.drawText(`${(subtotal * tax / 100).toFixed(2)}`, { x: 528, y: 247, size: 10 });
-  page.drawText(`$ ${(subtotal + (subtotal * tax / 100)).toFixed(2)}`, { x: 516, y: 222, size: 12 });
+  page.drawText(`$ ${(subtotal + (subtotal * tax / 100)).toFixed(2)}`, { x: 510, y: 222, size: 12 });
 
 
   const pdfBytes = await pdfDoc.save();

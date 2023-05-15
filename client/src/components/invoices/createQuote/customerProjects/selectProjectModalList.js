@@ -37,13 +37,13 @@ import {
       >
         <Td fontSize={'xs'} textAlign={'center'} w={'4vw'}>{e.idProjects}</Td>
         <Td fontSize={'xs'} textAlign={'center'} w={'14vw'}>{e.ProjectName}</Td>
+        <Td fontSize={'xs'} textAlign={'center'} w={'14vw'}>{e.Shipping_Address}</Td>
       </Tr>
     )
   }
   
-  const SelectProjectModalList = ({variables, customer, projects, onQuotesModalClose, isQuotesModalOpen, onQuotesModalOpen, onProjectModalClose}) => {
+  const SelectProjectModalList = ({variables, setVariables, setProject, project, customer, projects, onClose4, isOpen4, onOpen4, onClose3, onClose2, onClose1}) => {
     
-    const [project, setProject] = useState('')
     const [focus, setFocus] = useState('')
 
     return(
@@ -53,8 +53,8 @@ import {
     justifyContent={'center'}
     >
       <Box
-      maxHeight={'50vh'}
-      minHeight={'50vh'}
+      maxHeight={'40vh'}
+      minHeight={'40vh'}
       overflow={'auto'}
       css={{
         '&::-webkit-scrollbar': {
@@ -82,6 +82,7 @@ import {
                 <Tr>
                     <Th color={'web.text2'} textAlign={'center'} w={'4vw'} fontSize={'x-small'}>IDs</Th>
                     <Th color={'web.text2'} textAlign={'center'} w={'14vw'}fontSize={'x-small'}>Project Name</Th>
+                    <Th color={'web.text2'} textAlign={'center'} w={'14vw'}fontSize={'x-small'}>Shipping Address</Th>
                   </Tr>
                 </Thead>
                 <Tbody >
@@ -101,7 +102,18 @@ import {
         }
       </Box> 
     </Box>
-    <CreateInvoiceModal variables={variables} isQuotesModalOpen={isQuotesModalOpen} onQuotesModalClose={onQuotesModalClose} customer={customer} project={project} onQuotesModalOpen={onQuotesModalOpen} onProjectModalClose={onProjectModalClose}/>
+    <CreateInvoiceModal 
+      variables={variables} 
+      setVariables={setVariables} 
+      customer={customer} 
+      project={project} 
+      isOpen4={isOpen4} 
+      onOpen4={onOpen4} 
+      onClose4={onClose4} 
+      onClose3={onClose3}
+      onClose2={onClose2}
+      onClose1={onClose1}
+    />
   </>
   )
 }

@@ -22,14 +22,14 @@ import { getFiltered } from "../../../redux/actions-products";
 import {BiSearch} from 'react-icons/bi'
 import '../../../assets/styleSheet.css'
 
-const CreateInvoiceModal = ({variables, isOpen, onClose, customer, project, onQuotesModalClose, isQuotesModalOpen, onQuotesModalOpen, onProjectModalClose}) => {
+const CreateInvoiceModal = ({variables, setVariables, isOpen, onClose, customer, project, onClose4, onClose3, onClose2, onClose1, isOpen4, onOpen4}) => {
  
 const dispatch = useDispatch()
 const toast = useToast()
 const allProducts = useSelector(state => state.all_products)
 const productErrors = useSelector((state) => state.products_errors)
 
-const { isOpen: isReviewModalOpen, onOpen: onReviewModalOpen, onClose: onReviewModalClose } = useDisclosure()
+const { isOpen: isOpen5, onOpen: onOpen5, onClose: onClose5 } = useDisclosure()
 
 const [products, setProducts] = useState([])
 
@@ -53,21 +53,21 @@ useEffect(()=>{
   // }
 
   const handlePrevious = () => {
-    onQuotesModalClose()
+    onClose4()
     dispatch(getFiltered('','','','','','',''))
     setProducts([])
   }
 
   const handleNext = () => {
-    onReviewModalOpen()
-    onQuotesModalClose()
+    onOpen5()
+    onClose4()
   }
 
   return(
 <>
   <Modal 
-    isOpen={isQuotesModalOpen} 
-    onClose={onQuotesModalClose}
+    isOpen={isOpen4} 
+    onClose={onClose4}
     size={'4xl'}
     >
     <ModalOverlay />
@@ -82,7 +82,7 @@ useEffect(()=>{
         _hover={{
           color: 'web.text'
         }}
-        onClick={onClose} 
+        onClick={onClose4} 
       />
       <Box color={'white'}>
         <Text ml={'3vw'} fontSize={'lg'}>Create quote</Text>
@@ -142,7 +142,21 @@ useEffect(()=>{
       </ModalFooter>
     </ModalContent>
   </Modal>
-  <ReviewProductsModal variables={variables} isReviewModalOpen={isReviewModalOpen} onQuotesModalOpen={onQuotesModalOpen} onReviewModalClose={onReviewModalClose} products={products} setProducts={setProducts} customer={customer} project={project} onProjectModalClose={onProjectModalClose}/>
+  <ReviewProductsModal 
+    variables={variables} 
+    setVariables={setVariables} 
+    products={products} 
+    setProducts={setProducts} 
+    customer={customer} 
+    project={project} 
+    isOpen5={isOpen5} 
+    onClose5={onClose5} 
+    onOpen4={onOpen4} 
+    onClose4={onClose4}
+    onClose3={onClose3}
+    onClose2={onClose2}
+    onClose1={onClose1}
+  />
 </>
 )}
 

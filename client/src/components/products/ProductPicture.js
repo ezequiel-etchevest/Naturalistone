@@ -1,8 +1,11 @@
 import React from "react";
 import { Box } from "@chakra-ui/react";
 import CarouselProduct from "./miniCarousel";
+import Carousel from "./carousel";
 
 const ProductPicture = () => {
+
+
     return (
         <>
         <Box
@@ -19,6 +22,7 @@ const ProductPicture = () => {
           borderColor={'web.border'}
           >
             <CarouselProduct/>
+            {/* <Carousel/> */}
         </Box>
       </>
     )

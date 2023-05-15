@@ -30,7 +30,8 @@ import {
     CLEAN_PRODUCT_BY_ID,
     GET_HISTORY_PRICES,
     PATCH_PRODUCT_NOTES,
-    PATCH_DISCONTINUED
+    PATCH_DISCONTINUED,
+    GET_PRODUCT_IMAGES
      } from './actions-products';
 import { 
   GET_CURRENT_MONTH,
@@ -76,9 +77,6 @@ import {
   GET_YEAR_FILTER
 } from './actions-yearFilter'
 import {
-  GET_PAYMENTS_BY_MONTH
-} from './actions.paymentsByMonth';
-import {
   GET_STATS
 } from './actions-stats'
 
@@ -91,7 +89,6 @@ const intialState = {
     seller_invoices: [],
     all_products: [],
     current_month: {},
-    // payment_stats: {},
     invoice_products: [],
     payments_by_id: {},
     products_errors:{},
@@ -111,14 +108,11 @@ const intialState = {
     projects_by_customer_id: [],
     customers: [],
     customer_by_id: {},
-    // month: '',
-    // sellerId: '',
-    // monthFilter: '',
-    // yearFilter: '',
     payments_by_month: [],
     project_invoices: [],
     stats: {},
-    posted_quote:{}
+    posted_quote:{},
+    product_images:[]
 }
 
 function rootReducer (state = intialState, action) {
@@ -412,10 +406,10 @@ function rootReducer (state = intialState, action) {
             ...state,
             yearFilter: action.payload
           }
-        case GET_PAYMENTS_BY_MONTH:
+        case GET_PRODUCT_IMAGES: 
           return {
             ...state,
-            payments_by_month: action.payload
+            product_images: action.payload
           }
         default:
             return {

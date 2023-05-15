@@ -15,13 +15,13 @@ import {
   
   
   
-  const ModelTr = ({e, onSecondModalOpen, setCustomer}) => {
+  const ModelTr = ({e, onOpen2, setCustomer}) => {
   
 
 
     const handleClick = (e) => {
       setCustomer(e)
-      onSecondModalOpen()
+      onOpen2()
     }
 
     return(
@@ -42,7 +42,7 @@ import {
     )
   }
   
-  const SelectCustomerModalList = ({customers, customer, setCustomer, onSecondModalOpen, onSecondModalClose, isSecondModalOpen}) => {
+  const SelectCustomerModalList = ({customers, customer, setCustomer, onOpen2, onClose2, isOpen2, onClose1}) => {
 
   
   return(
@@ -87,7 +87,7 @@ import {
                 <Tbody >
                 { 
                   customers.map((e, i) => (
-                    <ModelTr key={i} e={e}  onSecondModalOpen={onSecondModalOpen} setCustomer={setCustomer} /> 
+                    <ModelTr key={i} e={e}  onOpen2={onOpen2} setCustomer={setCustomer} /> 
                   ))
                 }
                 </Tbody>
@@ -102,8 +102,9 @@ import {
       </Box> 
     </Box>
     <SelectedCustomerModal 
-    onSecondModalClose={onSecondModalClose}
-    isSecondModalOpen={isSecondModalOpen} 
+    onClose2={onClose2}
+    onClose1={onClose1}
+    isOpen2={isOpen2} 
     customer={customer}
     setCustomer={setCustomer}/>
   </>

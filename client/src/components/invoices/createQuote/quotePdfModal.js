@@ -9,23 +9,26 @@ import CreatedQuotePdf from './createQuotePdf'
 import { cleanCreatedQuote } from '../../../redux/actions-invoices'
 import { useDispatch } from 'react-redux'
   
-  export default function QuotePdfModal({variables, isPdfModalOpen, onPdfModalClose, customer, project, products, user}) {
-    
-    const { isOpen, onOpen, onClose } = useDisclosure()
+  export default function QuotePdfModal({variables, isOpen6, onClose6, customer, project, products, user, onClose5, onClose4, onClose3, onClose2, onClose1}) {
     
   const dispatch = useDispatch()
 
   
-  const handleCloseModal = () => {
-    onPdfModalClose()
+  const handleCloseAllModal = () => {
+    onClose6()
+    onClose5()
+    onClose4()
+    onClose3()
+    onClose2()
+    onClose1()
     dispatch(cleanCreatedQuote())
   }
 
     return (
       <>
         <Modal 
-        isOpen={isPdfModalOpen} 
-        onClose={handleCloseModal} 
+        isOpen={isOpen6} 
+        onClose={handleCloseAllModal} 
         size={'6xl'}>
           <ModalOverlay />
           <ModalContent 

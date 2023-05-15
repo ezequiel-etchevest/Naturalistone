@@ -13,7 +13,6 @@ import {
     Input,
     Divider,
     HStack,
-    Tooltip,
     Box,
     } from "@chakra-ui/react"
 import { useState } from "react";
@@ -22,12 +21,11 @@ import SelectCustomerModalList from './selectCustomerModalList'
 import { CreateCustomerModal } from "./createCustomerModal";
 import { getCustomers } from "../../../redux/actions-customers";
 import {BiSearch} from 'react-icons/bi'
-import {HiUserAdd} from 'react-icons/hi'
 import '../../../assets/styleSheet.css'
 
-const SelectCustomerModal = ({userId, isOpen, onClose, customers}) => {
+const SelectCustomerModal = ({userId, isOpen1, onClose1, customers}) => {
  
-  const { isOpen: isSecondModalOpen, onOpen: onSecondModalOpen, onClose: onSecondModalClose } = useDisclosure()
+  const { isOpen: isOpen2, onOpen: onOpen2, onClose: onClose2 } = useDisclosure()
 
   const dispatch = useDispatch()
   const id = userId
@@ -51,8 +49,8 @@ const SelectCustomerModal = ({userId, isOpen, onClose, customers}) => {
 
 <>
   <Modal 
-    isOpen={isOpen} 
-    onClose={onClose}
+    isOpen={isOpen1} 
+    onClose={onClose1}
     size={'3xl'}
     >
     <ModalOverlay />
@@ -67,7 +65,7 @@ const SelectCustomerModal = ({userId, isOpen, onClose, customers}) => {
         _hover={{
           color: 'web.text'
         }}
-        onClick={onClose} />
+        onClick={onClose1} />
       <Box color={'white'}>
       <Text ml={'3vw'} fontSize={'lg'}>Select customer</Text>
       <ModalBody color={'web.text2'} display={'flex'} justifyContent={'center'} flexDir={'column'} h={'58vh'}>
@@ -109,17 +107,17 @@ const SelectCustomerModal = ({userId, isOpen, onClose, customers}) => {
             />
           </Box>
           <Divider orientation={'vertical'} h={'5vh'}/>
-          <Tooltip label={'Add customer'} fontWeight={'hairline'}>
-          <CreateCustomerModal customer={customer} setCustomer={setCustomer} onSecondModalOpen={onSecondModalOpen}/>
-          </Tooltip>
+          <CreateCustomerModal customer={customer} setCustomer={setCustomer} onOpen2={onOpen2}/>
         </HStack>
         <SelectCustomerModalList 
           customers={customers} 
           customer={customer} 
           setCustomer={setCustomer} 
-          isSecondModalOpen={isSecondModalOpen}
-          onSecondModalOpen={onSecondModalOpen} 
-          onSecondModalClose={onSecondModalClose}/>
+          isOpen2={isOpen2}
+          onOpen2={onOpen2} 
+          onClose2={onClose2}
+          onClose1={onClose1}
+          />
       </ModalBody>
       </Box>
       <ModalFooter mb={'2vh'} display={'flex'} flexDir={'row'} justifyContent={'space-between'} ml={'2vw'} mr={'2vw'}>

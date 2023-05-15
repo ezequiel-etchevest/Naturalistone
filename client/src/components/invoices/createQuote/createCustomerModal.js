@@ -1,11 +1,24 @@
-import { IconButton, useDisclosure, Modal, ModalOverlay, ModalContent, ModalHeader, Box, Text, ModalCloseButton, ModalBody, ModalFooter, Button } from "@chakra-ui/react"
+import { 
+  IconButton, 
+  useDisclosure, 
+  Modal, 
+  ModalOverlay, 
+  ModalContent, 
+  ModalHeader, 
+  Box, 
+  Text, 
+  ModalCloseButton,
+  ModalBody, 
+  ModalFooter, 
+  Button,
+  Tooltip } from "@chakra-ui/react"
 import { HiUserAdd } from "react-icons/hi";
 import CreationCustomerForm from "../../customers/createCustomerForm";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { createCustomer } from '../../../redux/actions-customers'
 
-export function CreateCustomerModal({customer, user, setCustomer, onSecondModalOpen}) {
+export function CreateCustomerModal({customer, user, setCustomer, onOpen2}) {
 
   const { isOpen, onOpen, onClose } = useDisclosure()
 
@@ -28,7 +41,7 @@ export function CreateCustomerModal({customer, user, setCustomer, onSecondModalO
       dispatch(createCustomer(formData));
       setCustomer(formData)
       handleClose()
-      onSecondModalOpen()
+      onOpen2()
   };
   const handleClose = () => {
     setFormData({
@@ -47,6 +60,7 @@ export function CreateCustomerModal({customer, user, setCustomer, onSecondModalO
 
   return (
     <>
+     <Tooltip label={'Add customer'} fontWeight={'hairline'}>
       <IconButton
       size={'lg'}
       icon={ <HiUserAdd/>}
@@ -62,6 +76,7 @@ export function CreateCustomerModal({customer, user, setCustomer, onSecondModalO
         }}
       onClick={onOpen}
       />
+      </Tooltip>
       <Modal size={'3xl'} isOpen={isOpen} onClose={()=>handleClose()}>
         <ModalOverlay/>
         <ModalContent

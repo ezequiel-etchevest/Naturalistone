@@ -10,13 +10,13 @@ import {
 
 const CreateInvoiceButton = ({customers}) => {
   
-  const { isOpen, onOpen, onClose } = useDisclosure()
+  const { isOpen: isOpen1, onOpen: onOpen1, onClose: onClose1 } = useDisclosure()
 
     return(
       <>
         <ButtonGroup
             onClick={() => {
-              onOpen()
+              onOpen1()
             }}
             display={'flex'}
             spacing={0}
@@ -37,7 +37,7 @@ const CreateInvoiceButton = ({customers}) => {
               _active={{
               }}/>
           </Tooltip>
-          <SelectCustomerModal isOpen={isOpen} onClose={onClose} customers={customers}/> 
+          <SelectCustomerModal isOpen1={isOpen1} onClose1={onClose1} customers={customers}/> 
         </ButtonGroup>
       </>
     )
