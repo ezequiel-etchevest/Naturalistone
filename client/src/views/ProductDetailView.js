@@ -22,7 +22,7 @@ const ProductDetailView = ({focus, setFocus}) => {
       dispatch(cleanProductById())
       dispatch(getHistoryPrices(id))
       dispatch(getProductImages(product.ProductName, product.Material))
-      return(()=>{cleanProductDetail()})
+      return(()=>{dispatch(cleanProductDetail())})
       },[])
 
   useEffect(() => {
