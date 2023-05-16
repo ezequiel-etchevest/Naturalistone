@@ -58,6 +58,7 @@ const CarouselProduct = () => {
            images.map((url, i) => (
             <Box key={i} p="1vh" h="23vh">
               <img
+                onClick={onOpen}
                 src={url}
                 alt={`Image ${i}`}
                 style={{ height: '100%', objectFit: 'cover', margin: '0 auto' }} 
