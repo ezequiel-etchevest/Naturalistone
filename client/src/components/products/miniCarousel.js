@@ -25,10 +25,11 @@ const CarouselProduct = () => {
   const settings = {
     infinite: true,
     speed: 500,
-    slidesToShow: 2,
+    slidesToShow: images.length === 1 ? 1 : 2,
     slidesToScroll: 1,
     adaptiveHeight: false,
   };
+  
   console.log(images)
   return (
     <Box px="1vh">
