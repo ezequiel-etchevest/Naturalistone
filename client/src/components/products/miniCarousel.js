@@ -38,7 +38,7 @@ const CarouselProduct = () => {
     <>
     <Box px="1vh">
       <Slider {...settings}>
-        <Box p="1vh" h="23vh">
+        {/* <Box p="1vh" h="23vh">
           <img
           onClick={onOpen}
           src={img1}
@@ -53,18 +53,18 @@ const CarouselProduct = () => {
           alt={`Image `}
           style={{ height: '100%', objectFit: 'cover', margin: '0 auto' }}
           />
-        </Box>
-        {/* {
+        </Box> */}
+        {
            images.map((url, i) => (
             <Box key={i} p="1vh" h="23vh">
               <img
                 src={url}
                 alt={`Image ${i}`}
-                style={{ height: '100%', objectFit: 'cover' }} 
+                style={{ height: '100%', objectFit: 'cover', margin: '0 auto' }} 
                 />
             </Box>
           ))
-       } */}
+       }
       </Slider>
 
     </Box>
@@ -111,7 +111,7 @@ const CarouselProduct = () => {
                         <img
                           src={url}
                           alt={`Image ${i}`}
-                          style={{ height: '100%', objectFit: 'cover' }} 
+                          style={{ height: '100%', objectFit: 'cover', margin: '0 auto' }} 
                           />
                       </Box>
                       ))
