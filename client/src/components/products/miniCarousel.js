@@ -10,7 +10,7 @@ const CarouselProduct = () => {
 
   const productImages = useSelector(state => state.product_images);
   const [images, setImages] = useState([]);
-
+  
   useEffect(() => {
     const fetchImages = async () => {
       const imageUrls = await Promise.all(
@@ -28,7 +28,7 @@ const CarouselProduct = () => {
     slidesToScroll: 1,
     adaptiveHeight: false,
   };
-
+  console.log(images)
   return (
     <Box px="1vh">
       <Slider {...settings}>
@@ -38,7 +38,8 @@ const CarouselProduct = () => {
               <img
                 src={url}
                 alt={`Image ${i}`}
-                style={{ height: '100%', objectFit: 'cover' }} />
+                // style={{ height: '100%', objectFit: 'cover' }} 
+                />
             </Box>
           ))
        }

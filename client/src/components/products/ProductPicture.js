@@ -33,7 +33,6 @@ const ProductPicture = ({product}) => {
           borderColor={'web.border'}
           >
             <CarouselProduct/>
-            {/* <Carousel/> */}
         </Box>
       </>
     )
