@@ -9,7 +9,7 @@ import { useDispatch } from "react-redux";
 const ProductPicture = ({product}) => {
 
   const dispatch = useDispatch()
-  console.log(product)
+
   useEffect(() => {
     if (Object.entries(product).length) {
       dispatch(getProductImages(product.ProductName, product.Material));

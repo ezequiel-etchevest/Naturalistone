@@ -12,6 +12,7 @@ const CarouselProduct = () => {
   const [images, setImages] = useState([]);
   
   useEffect(() => {
+    setImages([])
     const fetchImages = async () => {
       const imageUrls = await Promise.all(
         productImages.map(data => `data:image/jpeg;base64,${data}`)
@@ -38,7 +39,7 @@ const CarouselProduct = () => {
               <img
                 src={url}
                 alt={`Image ${i}`}
-                // style={{ height: '100%', objectFit: 'cover' }} 
+                style={{ height: '100%', objectFit: 'cover' }} 
                 />
             </Box>
           ))
