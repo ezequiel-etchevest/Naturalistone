@@ -18,17 +18,19 @@ const ProductDetailView = ({focus, setFocus}) => {
   const { id } = useParams()
 
   useEffect(() => {
-      dispatch(getProductById(id))
-      dispatch(cleanProductById())
-      dispatch(getHistoryPrices(id))
-      dispatch(getProductImages(product.ProductName, product.Material))
-      return(()=>{dispatch(cleanProductDetail())})
-      },[])
+    if (!product) dispatch(getProductById(id));
+    if (!history_prices) dispatch(getHistoryPrices(id));
+    return () => {
+      dispatch(cleanProductDetail());
+    };
+  }, []);
+  
 
   useEffect(() => {
-      if(!user.length){
-      dispatch(getEmployeeById(userLocal.SellerID))}
-    },[user])
+    if (userLocal && !user.length) {
+      dispatch(getEmployeeById(userLocal.SellerID));
+    }
+  }, [userLocal, user]);
 
     if(user) {
       if(Object.entries(userLocal).length){

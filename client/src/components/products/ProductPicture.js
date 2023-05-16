@@ -2,13 +2,24 @@ import React from "react";
 import { Box } from "@chakra-ui/react";
 import CarouselProduct from "./miniCarousel";
 import Carousel from "./carousel";
+import { useEffect } from "react";
+import { getProductImages } from "../../redux/actions-products";
+import { useDispatch } from "react-redux";
 
-const ProductPicture = () => {
+const ProductPicture = ({product}) => {
 
+  const dispatch = useDispatch()
+  console.log(product)
+  useEffect(() => {
+    if (Object.entries(product).length) {
+      dispatch(getProductImages(product.ProductName, product.Material));
+    }
+  }, [product.ProductName, product.Material, dispatch]);
+  
 
-    return (
-        <>
-        <Box
+  return (
+    <>
+      <Box
           px={'1.5vw'}
           py={'2vh'}
           h={'30vh'}
