@@ -111,28 +111,29 @@ productsRouter.get('/filtered', async function(req, res){
           const filter = filterProducts(finish, size, thickness, material, search, price1, price2, instock);
   
           let price = findMaxMinPrice(instock);
-          
+          let filteredValues = prodValues(updatedFilter.filteredProds, search, price)
+          res.status(200).json({filter, filteredValues});
           // Aquí llamamos a la función `getImage` para obtener los datos de las imágenes
-          getImage(filter.filteredProds)
-            .then(updatedProds => {
-              // Aquí actualizamos la propiedad `img` en cada objeto del `filter`
-              const updatedFilter = {
-                ...filter,
-                filteredProds: updatedProds.map((obj, index) => ({
-                  ...obj,
-                  img: updatedProds[index].img
-                }))
-              };
+        //   getImage(filter.filteredProds)
+        //     .then(updatedProds => {
+        //       // Aquí actualizamos la propiedad `img` en cada objeto del `filter`
+        //       const updatedFilter = {
+        //         ...filter,
+        //         filteredProds: updatedProds.map((obj, index) => ({
+        //           ...obj,
+        //           img: updatedProds[index].img
+        //         }))
+        //       };
   
-              res.status(200).json({
-                filter: updatedFilter,
-                filteredValues: prodValues(updatedFilter.filteredProds, search, price)
-              });
-            })
-            .catch(error => {
-              console.log('Error al obtener las imágenes', error);
-              res.status(500).send(error);
-            });
+        //       res.status(200).json({
+        //         filter: updatedFilter,
+        //         filteredValues: prodValues(updatedFilter.filteredProds, search, price)
+        //       });
+        //     })
+        //     .catch(error => {
+        //       console.log('Error al obtener las imágenes', error);
+        //       res.status(500).send(error);
+        //     });
         }
       });            
     } catch(error) {
