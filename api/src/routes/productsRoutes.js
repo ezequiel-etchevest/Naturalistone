@@ -4,11 +4,9 @@ const mysqlConnection = require('../db')
 const filterProducts = require('../Controllers/productFiltersController')
 const { prodValues, findMaxMinPrice } = require('../Controllers/productValues')
 const objetosFiltrados = require('../Controllers/inventoryController')
+const fetchImages = require('../Controllers/oneDriveProductImages')
 
 productsRouter.get('/', async function(req, res){
-
-    // query_ =    `SELECT ProdNames.*, Inventory.* FROM ProdNames 
-    //             LEFT JOIN Inventory ON ProdNames.ProdNameID = Inventory.ProdID ORDER BY ProdNames.Naturali_ProdName ASC`;   
     
     query_ = `SELECT    
                     ProdNames.Naturali_ProdName AS ProductName,
@@ -34,7 +32,15 @@ productsRouter.get('/', async function(req, res){
                 res.status(200).json({});
             } else {
                 let instock = objetosFiltrados(results)
-                res.status(200).json(instock);
+                fetchImages(instock, (error, updatedData) => {
+                    if (error) {
+                      console.error(error);
+                    } else {
+                        res.status(200).json(updatedData);
+                    }
+                  });
+                //res.status(200).json(instock);
+               
             }
         });
     } catch(error){

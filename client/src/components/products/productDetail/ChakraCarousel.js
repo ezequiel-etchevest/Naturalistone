@@ -19,7 +19,7 @@ import React, {
   
   import { ChevronRightIcon, ChevronLeftIcon } from "@chakra-ui/icons";
   import { motion, useAnimation, useMotionValue } from "framer-motion";
-  import { useBoundingRect } from "../../hooks";
+  import { useBoundingRect } from "../../../hooks";
   //import { percentage } from "./utils";
   
   const MotionFlex = motion(Flex);

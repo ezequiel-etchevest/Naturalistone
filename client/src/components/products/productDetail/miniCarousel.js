@@ -4,7 +4,7 @@ import "slick-carousel/slick/slick-theme.css";
 import { Box, useDisclosure, Modal, ModalOverlay, ModalContent, ModalCloseButton, ModalBody } from '@chakra-ui/react';
 import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
-import img1 from '../../assets/ProductPicture/354-1.jpg'
+import img1 from '../../../assets/ProductPicture/354-1.jpg'
 
 
 const CarouselProduct = () => {
