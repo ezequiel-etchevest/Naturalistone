@@ -27,11 +27,11 @@ const ReviewProductsModal = ({variables, setVariables, setCustomer, customer,  i
 
 const dispatch = useDispatch()
 const user = useSelector(state => state.user)
-const posted_quote = useSelector(state => state.posted_quote)
+
 const { isOpen: isOpen6, onOpen: onOpen6, onClose: onClose6 } = useDisclosure()
 
 const handlePrevious = () => {
-  setProducts([])
+  setProducts({})
   onClose5()
   onOpen4()
 }
@@ -72,7 +72,22 @@ const handleConfirm = () => {
           borderColor={'web.border'}
           bg={'web.sideBar'} 
           border={'1px solid'} 
-          rounded={'md'} 
+          rounded={'md'}
+          maxHeight={'45vh'}
+          minHeight={'45vh'}
+          overflow={'auto'}
+          css={{
+            '&::-webkit-scrollbar': {
+              width: '0.4vw',
+            },
+            '&::-webkit-scrollbar-track': {
+              width: '6px',
+            },
+            '&::-webkit-scrollbar-thumb': {
+              background: '#E47424',
+              borderRadius: '5px',
+            },
+          }} 
           p={'3vh'}>
           <Table color={'web.text'} variant={'simple'} size={'sm'}>
             <Thead h={'6vh'}>
@@ -82,12 +97,13 @@ const handleConfirm = () => {
                 <Th color={'web.text2'} fontSize={'2xs'} textAlign={'center'}>Type</Th>
                 <Th color={'web.text2'} fontSize={'2xs'} textAlign={'center'}>Size</Th>
                 <Th color={'web.text2'} fontSize={'2xs'} textAlign={'center'}>Thickness</Th>
+                <Th color={'web.text2'} fontSize={'2xs'} textAlign={'center'}>Price</Th>
                 <Th color={'web.text2'} fontSize={'2xs'} w={'10vw'} textAlign={'center'}>Finish</Th>
               </Tr>
             </Thead>
             <Tbody>
             {
-              products.map((e, i) => (
+              Object.entries(products).map((e, i) => (
                 <Tr
                 cursor={'pointer'} 
                 key={i}
@@ -95,12 +111,13 @@ const handleConfirm = () => {
                   bg: 'web.navBar',
                   color: 'logo.orange'
                 }}>
-                  <Td maxW={'2vw'} fontSize={'2xs'} textAlign={'center'}>{e.quantity}</Td>
-                  <Td maxW={'2vw'} fontSize={'2xs'} textAlign={'center'}>{e.prodName}</Td>
-                  <Td maxW={'2vw'} fontSize={'2xs'} textAlign={'center'}>{e.type}</Td>
-                  <Td maxW={'2vw'} fontSize={'2xs'} textAlign={'center'}>{e.size}</Td>
-                  <Td maxW={'2vw'} fontSize={'2xs'} textAlign={'center'}>{e.thickness}</Td>
-                  <Td maxW={'2vw'} fontSize={'2xs'} textAlign={'center'}>{e.finish}</Td>
+                  <Td maxW={'2vw'} fontSize={'2xs'} textAlign={'center'}>{e[1].quantity}</Td>
+                  <Td maxW={'2vw'} fontSize={'2xs'} textAlign={'center'}>{e[1].prodName}</Td>
+                  <Td maxW={'2vw'} fontSize={'2xs'} textAlign={'center'}>{e[1].type}</Td>
+                  <Td maxW={'2vw'} fontSize={'2xs'} textAlign={'center'}>{e[1].size}</Td>
+                  <Td maxW={'2vw'} fontSize={'2xs'} textAlign={'center'}>{e[1].thickness}</Td>
+                  <Td maxW={'2vw'} fontSize={'2xs'} textAlign={'center'}>{e[1].price}</Td>
+                  <Td maxW={'2vw'} fontSize={'2xs'} textAlign={'center'}>{e[1].finish}</Td>
                 </Tr>
               ))
             }

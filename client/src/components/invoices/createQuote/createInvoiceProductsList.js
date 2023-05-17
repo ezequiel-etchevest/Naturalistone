@@ -15,67 +15,39 @@ import {
     NumberDecrementStepper,
     NumberInputStepper
   } from '@chakra-ui/react';
-import { useEffect, useState } from 'react';
 
 
 
 const ModelTr = ({e, setProducts, products}) => {
-
-const [input, setInput] = useState({   
-  quantity: 0,
-  prodID: e.ProdID,
-  prodName: e.ProductName,
-  type: e.Type,
-  size:e.Size,
-  thickness:e.Thickness,
-  finish:e.Finish,
-  price: e.Price
-})
-
+  let id = e.ProdID
 
 const handleInput = (event) => {
-
-  if(event === ''|| event === null || event === NaN ){
-    setInput({
-      ...input,
-      quantity: 0,
-    })
-} else{
-  setInput({
-    ...input,
-    quantity: parseFloat(event),
-  })
-}
-};
-
-const handleOnBlur = () => {
-  let updated = false;
   
-  if (products.length) {
-    products.forEach(e => {
-      if (e.prodID === input.prodID) {
-        e.quantity = input.quantity;
-        if(e.quantity === 0){
-          setProducts(products.filter(q => q.prodID !== input.prodID))
-        }
-        updated = true;
-  }});  
+  // Actualizas solo la propiedad que cambió en el objeto de formData
+  if(event != 0){
+      setProducts((prevFormData) => ({
+        ...prevFormData,
+        [id]: {
+          ...prevFormData[id],
+          quantity: event,
+          prodID: e.ProdID,
+          prodName: e.ProductName,
+          type: e.Type,
+          size:e.Size,
+          thickness:e.Thickness,
+          finish:e.Finish,
+          price: e.Price
+        },
+      }));
+    
+  }else {
+    setProducts((prevFormData) => {
+      const { [id]: value, ...updatedFormData } = prevFormData;   //Se elimina la clave [id] y su valor del objeto products, actualizando así el 
+      return updatedFormData;                                     //estado products sin el elemento correspondiente a [id].
+    })
   }
-
-  if (!updated){
-    if(input.quantity > 0){
-    setProducts([...products, input])
-}}
 }
 
-// const handleValue = () => {
-//   products.map(q => {
-//     if(q.prodID === input.prodID){
-//       console.log(q)
-//       return input.quantity
-//     }
-//   })
-// }
   return(
     <Tr       
       cursor={'pointer'} 
@@ -85,26 +57,27 @@ const handleOnBlur = () => {
         color: 'logo.orange'
       }} 
       >
-        <Td w={'8vw'} onBlur={() => handleOnBlur()}>
+        <Td w={'8vw'}>
           <NumberInput
-            // clampValueOnBlur={true}
             borderColor={'web.border'} 
             color={'web.text2'}
             w={'6vw'}
             ml={'1vw'}
             h={'4vh'}
-            onChange={(event)=>handleInput(event)} 
+            onChange={handleInput} 
             step={1} 
-            defaultValue={0} 
             min={0} 
             precision={0}
+            key={e.ProdID}
+            value={ products[id] ? products[id].quantity : 0} 
             >
             <NumberInputField 
             fontSize={'2xs'}                   
             _focus={{
               borderColor: 'logo.orange',
               boxShadow: '0 0.5px 0.5px rgba(229, 103, 23, 0.075)inset, 0 0 5px rgba(255,144,0,0.6)'
-                    }} 
+                    }}
+
               h={'4vh'}/>
             <NumberInputStepper>
               <NumberIncrementStepper fontSize={'3xs'}/>
@@ -125,7 +98,7 @@ const handleOnBlur = () => {
 }
 
 const CreateInvoiceProductsList = ({ allProducts, setProducts, products }) => {
-
+  
 
   return(
     <Box
