@@ -2,10 +2,10 @@ import React, { useEffect } from "react";
 import SideBar from "../components/sideBar";
 import { Text, Center, Spinner} from "@chakra-ui/react";
 import { useSelector, useDispatch } from "react-redux";
-import {getEmployeeById } from "../redux/actions-employees";
-import { cleanProductById, getProductById, getHistoryPrices, getProductImages } from '../redux/actions-products';
+import { getEmployeeById } from "../redux/actions-employees";
+import { cleanProductById, getProductById, getHistoryPrices, getProductImages, cleanProductDetail } from '../redux/actions-products';
 import { useParams } from "react-router-dom";
-import ProductDetail from "../components/products/prodDetail";
+import ProductDetail from '../components/products/productDetail/prodDetail';
 
 
 const ProductDetailView = ({focus, setFocus}) => {
@@ -18,25 +18,27 @@ const ProductDetailView = ({focus, setFocus}) => {
   const { id } = useParams()
 
   useEffect(() => {
-      dispatch(getProductById(id))
-      dispatch(cleanProductById())
-      dispatch(getHistoryPrices(id))
-      dispatch(getProductImages())
-      },[])
+    if (!Object.entries(product).length) dispatch(getProductById(id));
+    if (!history_prices) dispatch(getHistoryPrices(id));
+    return () => {
+      dispatch(cleanProductDetail());
+    };
+  }, []);
+  
 
   useEffect(() => {
-      if(!user.length){
-      dispatch(getEmployeeById(userLocal.SellerID))}
-    },[user])
+    if (userLocal && !user.length) {
+      dispatch(getEmployeeById(userLocal.SellerID));
+    }
+  }, [user]);
 
-    if(user) {
-      if(Object.entries(userLocal).length){
+    if(userLocal) {
+      if(user.length){
         return(
           <>
             <SideBar user={user} focus={focus} setFocus={setFocus}/>
             {
               Object.entries(product).length ? (
-
               <ProductDetail product={product} history_prices={history_prices} user={userLocal}/>
               ) : (
               <Center ml={'16vh'} bg={'web.bg'} h={'92vh'}>
@@ -44,9 +46,14 @@ const ProductDetailView = ({focus, setFocus}) => {
               </Center>)
             }
           </>
-        )
-    }else return (<Text>Loading </Text>)
-  }}
+        ) 
+    }else return (     
+      <Center bg={'web.bg'} h={'92vh'}>
+        <Spinner thickness={'4px'} size={'xl'} color={'logo.orange'}/>
+      </Center>)
+      }  
+    }
+  
  
 
 
