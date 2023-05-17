@@ -82,6 +82,6 @@ const getImage = (array) => {
 })}
 
 module.exports = {
-fetchImages: fetchImages
+getImage: getImage
  };
   

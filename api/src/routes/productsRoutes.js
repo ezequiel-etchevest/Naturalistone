@@ -4,7 +4,7 @@ const mysqlConnection = require('../db')
 const filterProducts = require('../Controllers/productFiltersController')
 const { prodValues, findMaxMinPrice } = require('../Controllers/productValues')
 const objetosFiltrados = require('../Controllers/inventoryController')
-const {fetchImages} = require('../Controllers/oneDriveProductImages')
+const {getImage} = require('../Controllers/oneDriveProductImages')
 
 productsRouter.get('/', async function(req, res){
     
