@@ -57,31 +57,23 @@ const path = require('path');
 //         callback(error);
 //       });
 //   };
+const fs = require('fs');
 
-
-
-
-const getImage = (array) => {
-  const newArray = array.map(obj => {
-    const imagePath = `/app/OneDrive/Naturali/PHOTOS/${obj.material}/${obj.prodName}/${obj.prodName}_0.jpg`;
-    if (!fs.existsSync(imagePath)) {
-      return res.status(404).json({ error: 'Image not found' });
-    }
+const getImage = (obj) => {
+  const imagePath = `/app/OneDrive/Naturali/PHOTOS/${obj.material}/${obj.prodName}/${obj.prodName}_0.jpg`;
+  
+  return new Promise((resolve, reject) => {
     fs.readFile(imagePath, { encoding: 'base64' }, (err, data) => {
       if (err) {
         console.error(err);
-        return res.status(500).json({ error: 'Unable to read image' });
+        reject({ error: 'Unable to read image' });
+      } else {
+        resolve({ ...obj, img: data });
       }
-      
-    return {
-      ...obj,
-      img: data
-    }
-  })
-  
-})}
+    });
+  });
+};
 
 module.exports = {
-getImage: getImage
- };
-  
+  getImage: getImage
+};
