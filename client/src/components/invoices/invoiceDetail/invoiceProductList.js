@@ -21,7 +21,7 @@ const ModelTr = ({p}) => {
   const handleClick = () => {
     navigate(`/products/${p.ProdID}`)
   }
-
+  console.log(p)
     return(
       <Tr 
         cursor={'pointer'}
@@ -38,8 +38,9 @@ const ModelTr = ({p}) => {
         <Td fontSize={'1.5vh'} textAlign={'center'}>{p.Thickness}</Td>
         <Td fontSize={'1.5vh'} textAlign={'center'}>{p.Finish}</Td>
         <Td fontSize={'1.5vh'} textAlign={'center'} >$ {p.SalePrice.toLocaleString('en-US')}</Td>
-        <Td fontSize={'1.5vh'} textAlign={'center'}>{p.InStock_Reserved === null ? '0' : p.InStock_Reserved}</Td>
-        <Td fontSize={'1.5vh'} textAlign={'center'}>{p.Incoming_Reserved === null ? '-' : p.Incoming_Reserved}</Td>
+        <Td fontSize={'1.5vh'} textAlign={'center'}>{(p.InStock_Reserved + p.InStock_PendingPayment) === null ? '0' : (p.InStock_Reserved + p.InStock_PendingPayment)}</Td>
+        <Td fontSize={'1.5vh'} textAlign={'center'}>{(p.Incoming_Reserved + p.Incoming_PendingPayment) === null ? '0' : (p.Incoming_Reserved + p.Incoming_PendingPayment)}</Td>
+        <Td fontSize={'1.5vh'} textAlign={'center'}>{(p.Order_PendingPayment + p.Order_PaymentCompleted) === null ? '0' : (p.Order_PendingPayment + p.Order_PaymentCompleted)}</Td>
         <Td fontSize={'1.5vh'} textAlign={'center'}>{p.Delivered}</Td>
       </Tr>
     )
@@ -73,7 +74,7 @@ const InvoiceProductList = ({invoice_products, invoice}) => {
                 <Table mt={'2vh'} color={'web.text'} variant={'simple'} size={'sm'} >
                   <Thead h={'6vh'}>
                     <Tr>
-                      <Th fontSize={'1.3vh'} color={'web.text2'}>Product Name</Th>
+                      <Th fontSize={'1.3vh'} color={'web.text2'}textAlign={'center'}>Product <br/> Name</Th>
                       <Th fontSize={'1.3vh'} color={'web.text2'}textAlign={'center'}>Quantity</Th>
                       <Th fontSize={'1.3vh'} color={'web.text2'}textAlign={'center'}>Size</Th>
                       <Th fontSize={'1.3vh'} color={'web.text2'}textAlign={'center'}>Thickness</Th>
@@ -81,6 +82,7 @@ const InvoiceProductList = ({invoice_products, invoice}) => {
                       <Th fontSize={'1.3vh'} color={'web.text2'}textAlign={'center'}>Price</Th>
                       <Th fontSize={'1.3vh'} color={'web.text2'}textAlign={'center'}>Reserved <br/> Stock</Th>
                       <Th fontSize={'1.3vh'} color={'web.text2'}textAlign={'center'}>Incoming <br/> Reserved</Th>
+                      <Th fontSize={'1.3vh'} color={'web.text2'}textAlign={'center'}>Back <br/> Order</Th>
                       <Th fontSize={'1.3vh'} color={'web.text2'}textAlign={'center'}>Delivered</Th>
                     </Tr>
                   </Thead>

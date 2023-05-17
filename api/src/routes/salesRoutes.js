@@ -452,7 +452,8 @@ salesRouter.post('/create-quote/:sellerID', async function(req, res) {
 
   const ProjectID = project.idProjects;
   const date = new Date().toLocaleDateString("en-US");
-  const InsertDate = `${date.split('/')[2]}-${date.split('/')[0]}-${date.split('/')[1]}`;
+  // const InsertDate = `${date.split('/')[2]}-${date.split('/')[0]}-${date.split('/')[1]}`;
+  const InsertDate = '2019-05-21'
   const EstDelivery_Date = variables.estDelivDate;
 
   // Obtener el último Naturali_Invoice de la tabla Sales
@@ -482,7 +483,7 @@ salesRouter.post('/create-quote/:sellerID', async function(req, res) {
 
         const query_ = `INSERT INTO Sales (Naturali_Invoice, Value, ProjectID, InvoiceDate, EstDelivery_Date, SellerID, ShippingMethod, PaymentTerms, P_O_No) VALUES ("${Naturali_Invoice}", "${Value}", "${ProjectID}", "${InsertDate}", "${EstDelivery_Date}", "${sellerID}", "${variables.shipVia}", "${variables.paymentTerms}", "${variables.method}")`;
 
-        mysqlConnection.query(query_, function(error, results, fields) {
+        mysqlConnection.query(query_, async function(error, results, fields) {
           if (error) {
             console.log('Error in salesRoutes.post /create-quote/:sellerID: ' + error);
             res.status(500).json('Failed to create quote');
@@ -503,7 +504,7 @@ salesRouter.post('/create-quote/:sellerID', async function(req, res) {
 
           query += values.join(", ");
 
-          mysqlConnection.query(query, function(error, results, fields) {
+        await  mysqlConnection.query(query, async function(error, results, fields) {
             if (error) {
               console.log('Error in salesRoutes.post /create-quote/:sellerID: ' + error);
               res.status(500).json('Failed to insert ProdSold');
@@ -512,7 +513,7 @@ salesRouter.post('/create-quote/:sellerID', async function(req, res) {
               });
             }
 
-            mysqlConnection.commit(function(err) {
+        await  mysqlConnection.commit(function(err) {
               if (err) {
                 console.log('Error in salesRoutes.post /create-quote/:sellerID: ' + err);
                 res.status(500).json('Failed to create quote');

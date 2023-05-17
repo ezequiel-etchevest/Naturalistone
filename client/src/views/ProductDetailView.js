@@ -16,10 +16,11 @@ const ProductDetailView = ({focus, setFocus}) => {
   const history_prices = useSelector(state => state.history_prices)
   const userLocal = JSON.parse(localStorage.getItem('user'))
   const { id } = useParams()
-
+  
   useEffect(() => {
     if (!Object.entries(product).length) dispatch(getProductById(id));
-    if (!history_prices) dispatch(getHistoryPrices(id));
+    if (!history_prices.length) dispatch(getHistoryPrices(id));
+    
     return () => {
       dispatch(cleanProductDetail());
     };

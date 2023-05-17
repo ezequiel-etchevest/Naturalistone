@@ -72,7 +72,6 @@ const AddPayment = ({pendingAmount}) => {
 
   const restOfPaymentCard = halfValue - allPaymentsCard.Amount
 
-  console.log('soyrest', restOfPaymentCard)
 
     useEffect(() => {
       maxPaymentCard()

@@ -32,7 +32,7 @@ const ModelTr = ({e}) => {
 
 
 const HistoricalProductList = ({history_prices}) => {
-
+  
   return(
     <Box
     display={'flex'}

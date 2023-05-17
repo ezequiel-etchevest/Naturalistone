@@ -100,7 +100,7 @@ const ProductList = ({ allProducts, user }) => {
   useEffect(() => {
     validateToast()
   },[allProducts])
-  console.log(allProducts)
+
   return(
     <Box
       userSelect={'none'}
