@@ -1,7 +1,6 @@
 const express = require('express');
 const fs = require('fs');
 const path = require('path');
-const onedriveRouter = express.Router()
  
 //  const fetchImages = (data, callback) => {
 //     const imagePromises = data.map(obj => {
@@ -60,9 +59,7 @@ const onedriveRouter = express.Router()
 //   };
 
 
-//   module.exports = {
-//     fetchImages: fetchImages
-//   };
+
 
 const getImage = (array) => {
   const newArray = array.map(obj => {
@@ -83,5 +80,8 @@ const getImage = (array) => {
   })
   
 })}
-  
+
+module.exports = {
+fetchImages: fetchImages
+ };
   
