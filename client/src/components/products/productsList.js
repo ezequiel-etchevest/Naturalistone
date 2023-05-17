@@ -27,19 +27,20 @@ const ModelTr = ({e, user}) => {
   
   const a = e.Discontinued_Flag === 'True' ? true : false 
   const [flag, setFlag] = useState(a)
-  const [productImages, setProductImages ] = useState(e.images)
+  const [productImage, setProductImage ] = useState(e.img)
   const navigate = useNavigate()
   const dispatch = useDispatch()
   
   useEffect(() => {
-    const fetchImages = async () => {
-      const imageUrls = await Promise.all(
-        productImages.map(data => `data:image/jpeg;base64,${data}`)
-      );
-      setProductImages(imageUrls);
+    const fetchImage = async () => {
+      if (productImage.length > 0) {
+        const imageUrl = `data:image/jpeg;base64,${productImage}`;
+        setProductImage(imageUrl);
+      }
     };
-    fetchImages();
-  }, [productImages]);
+    fetchImage();
+  }, [productImage]);
+  
 
 
     const handleClickProduct = () => {
@@ -64,7 +65,7 @@ const ModelTr = ({e, user}) => {
     >
       <Td maxH={'6vh'} maxW={'3vw'} onClick={() => handleClickProduct()} fontSize={'xs'} textAlign={'match-parent'}>
         <div maxH={'5vh'} className="image-container">
-          <img src={productImages[0]} className="enlarge-image" alt="Product Image" />
+          <img src={productImage} className="enlarge-image" alt="Product Image" />
         </div>
       </Td>
       <Td maxH={'6vh'} maxW={'3vw'} onClick={() => handleClickProduct()} fontSize={'xs'} textAlign={'match-parent'}>{e.ProductName}</Td>
