@@ -4,7 +4,7 @@ const mysqlConnection = require('../db')
 const filterProducts = require('../Controllers/productFiltersController')
 const { prodValues, findMaxMinPrice } = require('../Controllers/productValues')
 const objetosFiltrados = require('../Controllers/inventoryController')
-const fetchImages = require('../Controllers/oneDriveProductImages')
+const {fetchImages} = require('../Controllers/oneDriveProductImages')
 
 productsRouter.get('/', async function(req, res){
     
@@ -34,7 +34,8 @@ productsRouter.get('/', async function(req, res){
                 let instock = objetosFiltrados(results)
                 fetchImages(instock, (error, updatedData) => {
                     if (error) {
-                      console.error(error);
+                        console.error(error);
+                        res.status(200).json({ error: 'Error fetching images' });
                     } else {
                         res.status(200).json(updatedData);
                     }
@@ -119,12 +120,18 @@ productsRouter.get('/filtered', async function(req, res){
                 let filteredValues = prodValues(filter.filteredProds, search, price)
                 fetchImages(filter, (error, updatedData) => {
                     if (error) {
-                      console.error(error);
+                        console.error(error);
+                        res.status(200).json({ error: 'Error fetching images' });
                     } else {
-                        res.status(200).json(updatedData);
+                        updatedData ? (
+                            es.status(200).json({updatedData, filteredValues})
+                        ):(
+                            res.status(200).json({filter, filteredValues})
+                        )
+                        
                     }
                   });
-                res.status(200).json({updatedData, filteredValues});
+                
             }
         });
     } catch(error){

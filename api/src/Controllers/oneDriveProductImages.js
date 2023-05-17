@@ -1,3 +1,7 @@
+const express = require('express');
+const fs = require('fs');
+const path = require('path'); 
+ 
  const fetchImages = (data, callback) => {
     const imagePromises = data.map(obj => {
       const { Material, ProductName } = obj;
@@ -55,5 +59,8 @@
   };
 
 
-  module.exports = fetchImages
+  module.exports = {
+    fetchImages: fetchImages
+  };
+  
   
