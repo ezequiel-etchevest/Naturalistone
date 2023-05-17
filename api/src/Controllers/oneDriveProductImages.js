@@ -57,7 +57,6 @@ const path = require('path');
 //         callback(error);
 //       });
 //   };
-const fs = require('fs');
 
 const getImage = (obj) => {
   const imagePath = `/app/OneDrive/Naturali/PHOTOS/${obj.material}/${obj.prodName}/${obj.prodName}_0.jpg`;
