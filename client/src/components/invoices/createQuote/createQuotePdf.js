@@ -22,8 +22,8 @@ const CreatedQuotePdf = ({variables, user, customer, project }) => {
         CreateForm();
     }, [posted_quote]);
 
-    async function waitUntilMappedProductsExists() {
-      return new Promise((resolve) => {
+    async function waitUntilMappedProductsExists() { //esta promesa espera que se llene el estado de 
+      return new Promise((resolve) => {              //posted_quote para poder captar los productos correctamente
         const checkMappedProducts = () => {
           if (Array.isArray(mappedProducts)) {
             resolve();
