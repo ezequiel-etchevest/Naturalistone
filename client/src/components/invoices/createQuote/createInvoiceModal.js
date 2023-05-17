@@ -31,7 +31,8 @@ const productErrors = useSelector((state) => state.products_errors)
 
 const { isOpen: isOpen5, onOpen: onOpen5, onClose: onClose5 } = useDisclosure()
 
-const [products, setProducts] = useState([])
+const [products, setProducts] = useState({})
+const [disable, setDisable] = useState(true)
 
 const validateToast = () => {
   if(Object.entries(productErrors).length){
@@ -48,19 +49,25 @@ useEffect(()=>{
   validateToast()
   },[allProducts])
 
-  // const handleChangeProductName = (e) => {
-  //   dispatch(getFiltered('', '', '', '', e.target.value, '',''))
-  // }
+useEffect(()=>{
+  if(Object.keys(products).length) setDisable(false)
+  else setDisable(true)
+}, [products])
+
+  const handleChangeProductName = (e) => {
+    dispatch(getFiltered('', '', '', '', e.target.value, '',''))
+  }
 
   const handlePrevious = () => {
     onClose4()
     dispatch(getFiltered('','','','','','',''))
-    setProducts([])
+    setProducts({})
   }
 
   const handleNext = () => {
-    onOpen5()
-    onClose4()
+      onOpen5()
+      onClose4()
+      dispatch(getFiltered('','','','','','',''))
   }
 
   return(
@@ -105,7 +112,7 @@ useEffect(()=>{
               size={"sm"}
               borderBottomWidth={"2px"}
               borderBottomColor={'web.text2'}
-              // onChange={(e) => handleChangeProductName(e)}
+              onChange={(e) => handleChangeProductName(e)}
               />
             <IconButton
               color={'web.text2'}
@@ -135,6 +142,7 @@ useEffect(()=>{
         <Button
           colorScheme={'orange'}
           size={'sm'}
+          disabled={disable}
           onClick={()=>handleNext()} 
           >
          Next

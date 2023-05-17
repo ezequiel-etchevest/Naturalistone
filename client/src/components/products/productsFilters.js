@@ -142,7 +142,6 @@ const ProductsFilters = ({allProducts, setFilteredProducts, values}) => {
             w={'39vw'}
             justifyContent={'space-between'}>
                 <Select
-                  defaultValue=""
                   onChange={(e)=>handleMaterial(e)}
                   mb={'0.5vh'}
                   w={'9vw'}
@@ -167,7 +166,6 @@ const ProductsFilters = ({allProducts, setFilteredProducts, values}) => {
                 }
                 </Select>
                 <Select
-                  defaultValue=""
                   onChange={(e)=>handleSize(e)}
                   mb={'0.5vh'}
                   w={'9vw'}
@@ -193,7 +191,6 @@ const ProductsFilters = ({allProducts, setFilteredProducts, values}) => {
               }
                </Select>
                 <Select
-                  defaultValue=""
                   onChange={(e)=>handleThickness(e)}
                   mb={'0.5vh'}
                   w={'9vw'}
@@ -218,7 +215,6 @@ const ProductsFilters = ({allProducts, setFilteredProducts, values}) => {
               }
                 </Select>
                 <Select
-                  defaultValue=""
                   onChange={(e)=>handleFinish(e)}
                   mb={'0.5vh'}
                   w={'9vw'}

@@ -42,7 +42,7 @@ return(
       mt={'3vh'} 
       display={'flex'} 
       flexDir={'column'} >
-        <ProductPicture/>
+        <ProductPicture product={product}/>
         <HistoricalPrices history_prices={history_prices}/>
       </Box>          
     </Box>        
