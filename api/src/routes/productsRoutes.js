@@ -117,7 +117,14 @@ productsRouter.get('/filtered', async function(req, res){
                 
                 let price = findMaxMinPrice(instock)
                 let filteredValues = prodValues(filter.filteredProds, search, price)
-                res.status(200).json({filter, filteredValues});
+                fetchImages(filter, (error, updatedData) => {
+                    if (error) {
+                      console.error(error);
+                    } else {
+                        res.status(200).json(updatedData);
+                    }
+                  });
+                res.status(200).json({updatedData, filteredValues});
             }
         });
     } catch(error){
