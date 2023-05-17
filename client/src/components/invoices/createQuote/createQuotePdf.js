@@ -4,49 +4,38 @@ import { PDFDocument, rgb } from 'pdf-lib';
 import { Box, Center, Spinner } from '@chakra-ui/react';
 
 
-const CreatedQuotePdf = ({variables, user, customer, project, products}) => {
+
+
+const CreatedQuotePdf = ({variables, user, customer, project }) => {
 // console.log('customer',customer)
 // console.log('products',products)
 // console.log(user)
 
-// City
-// : 
-// "Mar del Plata"
-// CustomerID
-// : 
-// 1938
-// ProjectName
-// : 
-// "Bahia Pinga"
-// Shipping_Address
-// : 
-// "Ayacucho 3285"
-// State
-// : 
-// "BUENOS AIRES"
-// ZipCode
-// : 
-// "B7600"
-// idProjects
-// : 
-// 490
 
     const posted_quote = useSelector(state => state.posted_quote)
  
     const [pdfInfo, setPdfInfo] = useState([]);
     const viewer = useRef(null);
+    const mappedProducts =  posted_quote.parsedProducts
 
     useEffect(() => {
         CreateForm();
     }, [posted_quote]);
+
+    async function waitUntilMappedProductsExists() { //esta promesa espera que se llene el estado de 
+      return new Promise((resolve) => {              //posted_quote para poder captar los productos correctamente
+        const checkMappedProducts = () => {
+          if (Array.isArray(mappedProducts)) {
+            resolve();
+          } else {
+            setTimeout(checkMappedProducts, 100); // Esperar 100ms antes de volver a verificar
+          }
+        };
     
+        checkMappedProducts();
+      });
+    }
 
-    const mappedProducts = products.map((product, index) => ({
-      variableName: `${index + 1}`,
-      ...product,
-    }));
-
-   
  async function CreateForm() {
 
   const url = `/Quote/quote-blank.pdf`
@@ -59,7 +48,7 @@ const CreatedQuotePdf = ({variables, user, customer, project, products}) => {
 
   const invoiceID = posted_quote.Naturali_Invoice
   const date = posted_quote.InsertDate
-
+  
   var subtotal = 0
 
   let y = 460.8;
@@ -67,11 +56,11 @@ const CreatedQuotePdf = ({variables, user, customer, project, products}) => {
   const name = customer.Contact_Name
   const phone = customer.Phone
   const email = customer.Email
-  const street = customer.Address
-   const city = project.City
+  const street = project.Shipping_Address
+  const city = project.City
   const state = project.State
   const zipCode = project.ZipCode
-  const company = project.Company
+  const company = customer.Company
   const PO = variables.method
   const ref = user[0].SellerReference
   const tax = 7
@@ -79,7 +68,10 @@ const CreatedQuotePdf = ({variables, user, customer, project, products}) => {
   const deliveryMethod = variables.shipVia
   const paymentTerms = variables.paymentTerms
 
-  
+  const streetCustomer = customer.Address
+  const cityCustomer = customer.City
+  const stateCustomer = customer.State
+  const zipCodeCustomer = customer.ZipCode
 
 //   page.drawText(`${no}`, { x: 472, y: 666, size: 16, color: rgb(1, 0.3, 0) })
   page.drawText(`${date}`, { x: 448, y: 688, size: 10 })
@@ -89,9 +81,9 @@ const CreatedQuotePdf = ({variables, user, customer, project, products}) => {
   page.drawText(`${phone}`, { x: 42, y: 612, size: 10 })
   page.drawText(`${email}`, { x: 42, y: 598, size: 10 })
 
-  page.drawText(`${street}`, { x: 336, y: 626, size: 10 })
-  page.drawText(`${city}, ${state}`, { x: 336, y: 612, size: 10 })
-  page.drawText(`${zipCode}`, { x: 336, y: 598, size: 10 })
+  page.drawText(street, { x: 336, y: 626, size: 10 })
+  page.drawText(`${city }, ${state}`, { x: 336, y: 612, size: 10 })
+  page.drawText(zipCode, { x: 336, y: 598, size: 10 })
 
   page.drawText(`${company}`, { x: 40, y: 508, size: 10 })
   page.drawText(`${PO}`, { x: 162, y: 508, size: 10 })
@@ -104,6 +96,8 @@ const CreatedQuotePdf = ({variables, user, customer, project, products}) => {
 // //This line uses the forEach method to iterate over each key-value pair in the array created by Object.
 // //entries. For each iteration, the key (variableName) and value (element) are destructured from the pair and
 // //passed as arguments to the callback function.
+
+await waitUntilMappedProductsExists();
 
 mappedProducts.forEach((product, index) => {
   const { variableName } = product;
@@ -130,12 +124,7 @@ mappedProducts.forEach((product, index) => {
   
   setPdfInfo(URL.createObjectURL(blob));
 
-  // const fileName = `${no}.pdf`;
-  // const filePath = `C:\Users\Keki\Desktop\Naturalistone\Naturalistone\client\public\DeliveryNote/`;
-  // const fullFilePath = filePath + fileName;
-  
-  // saveAs(blob, fullFilePath);
-  
+
   };
   return (
   <>
