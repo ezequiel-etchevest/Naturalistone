@@ -32,15 +32,7 @@ productsRouter.get('/', async function(req, res){
                 res.status(200).json({});
             } else {
                 let instock = objetosFiltrados(results)
-                fetchImages(instock, (error, updatedData) => {
-                    if (error) {
-                        console.error(error);
-                        res.status(200).json({ error: 'Error fetching images' });
-                    } else {
-                        res.status(200).json(updatedData);
-                    }
-                  });
-                //res.status(200).json(instock);
+                res.status(200).json(instock);
                
             }
         });
