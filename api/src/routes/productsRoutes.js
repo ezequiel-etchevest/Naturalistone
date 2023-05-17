@@ -111,7 +111,7 @@ productsRouter.get('/filtered', async function(req, res){
           const filter = filterProducts(finish, size, thickness, material, search, price1, price2, instock);
   
           let price = findMaxMinPrice(instock);
-          let filteredValues = prodValues(updatedFilter.filteredProds, search, price)
+          let filteredValues = prodValues(instock, search, price)
           res.status(200).json({filter, filteredValues});
           // Aquí llamamos a la función `getImage` para obtener los datos de las imágenes
         //   getImage(filter.filteredProds)

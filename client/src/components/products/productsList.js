@@ -18,7 +18,7 @@ import { getProductById } from '../../redux/actions-products';
 import { useEffect, useState } from 'react';
 import{ ImCheckboxChecked, ImCheckboxUnchecked } from 'react-icons/im';
 import { patchDiscontinued } from '../../redux/actions-products';
-//import img from '../../assets/ProductPicture/354-1.jpg'
+import img from '../../assets/ProductPicture/354-1.jpg'
 import '../../assets/styleImgs.css';
 
 
@@ -27,19 +27,19 @@ const ModelTr = ({e, user}) => {
   
   const a = e.Discontinued_Flag === 'True' ? true : false 
   const [flag, setFlag] = useState(a)
-  const [productImage, setProductImage ] = useState(e.img)
+  //const [productImage, setProductImage ] = useState(e.img)
   const navigate = useNavigate()
   const dispatch = useDispatch()
   
-  useEffect(() => {
-    const fetchImage = async () => {
-      if (productImage.length > 0) {
-        const imageUrl = `data:image/jpeg;base64,${productImage}`;
-        setProductImage(imageUrl);
-      }
-    };
-    fetchImage();
-  }, [productImage]);
+  // useEffect(() => {
+  //   const fetchImage = async () => {
+  //     if (productImage.length > 0) {
+  //       const imageUrl = `data:image/jpeg;base64,${productImage}`;
+  //       setProductImage(imageUrl);
+  //     }
+  //   };
+  //   fetchImage();
+  // }, [productImage]);
   
 
 
@@ -65,7 +65,7 @@ const ModelTr = ({e, user}) => {
     >
       <Td maxH={'6vh'} maxW={'3vw'} onClick={() => handleClickProduct()} fontSize={'xs'} textAlign={'match-parent'}>
         <div maxH={'5vh'} className="image-container">
-          <img src={productImage} className="enlarge-image" alt="Product Image" />
+          <img src={img} className="enlarge-image" alt="Product Image" />
         </div>
       </Td>
       <Td maxH={'6vh'} maxW={'3vw'} onClick={() => handleClickProduct()} fontSize={'xs'} textAlign={'match-parent'}>{e.ProductName}</Td>
