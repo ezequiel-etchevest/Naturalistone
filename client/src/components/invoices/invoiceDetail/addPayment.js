@@ -26,11 +26,12 @@ import {
     background
     } from "@chakra-ui/react"
 import { SiAddthis } from 'react-icons/si';
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from "react-redux";
 import { patchPaymentMethod } from "../../../redux/actions-payments";
 import '../../../assets/styleSheet.css'
+import { motionValue } from "framer-motion";
 
 
 
@@ -38,20 +39,55 @@ const AddPayment = ({pendingAmount}) => {
     const dispatch = useDispatch()
     const {id} = useParams()
     const toast = useToast()
+    const [isToastShowing, setIsToastShowing] = useState(false);
     const { isOpen, onOpen, onClose } = useDisclosure()
     const [ disabled, setDisabled ] = useState(true)
     const [input, setInput] = useState({
       Method : '',
       Amount: ''})
     const [error, setError] = useState('')
-    
+    const invoice = useSelector(state => state.invoice)
+    const totalValueInvoice = invoice[0].Value
+    const paymentsInvoices = useSelector(state => state.payments_by_id)
+    const value = paymentsInvoices?.paymentsMath?.PendingAmount ?? invoice[0].Value
+    const halfValue = Number(totalValueInvoice / 2)
+    const [isOptionDisabled, setIsOptionDisabled] = useState(false)
+    const CARD = 'Card'
+
+  const paymentsCard = paymentsInvoices.paymentData.filter((el) => {
+    const element = el.Method === CARD
+    if(!element) {
+      return
+    }
+    return element
+  })
+
+  const allPaymentsCard = paymentsCard?.reduce((acumulador, element) => {
+    const sumOfAmounts = acumulador.Amount + element.Amount
+    if(!sumOfAmounts) {
+      return
+    }
+    return { Amount: sumOfAmounts }
+  }, { Amount: 0 })
+
+  const restOfPaymentCard = halfValue - allPaymentsCard.Amount
+
+
+    useEffect(() => {
+      maxPaymentCard()
+    },[paymentsInvoices, isOptionDisabled, setIsOptionDisabled])
+
     const handleCancel = () =>{
       setDisabled(true)
       onClose()
     }
 
     const handleSelect = (e) =>{
-         setInput({
+      if(e.target.value === CARD && input.Amount > restOfPaymentCard) {
+        setIs50Active(false);
+        setIs100Active(false);
+      }
+      setInput({
           ...input,
           Method : e.target.value
          })
@@ -68,7 +104,7 @@ const AddPayment = ({pendingAmount}) => {
       setInput({
         ...input,
         Amount : e
-       })
+      })
        if(input.Method !== '' && input.Amount !== '' ){
         setDisabled(false)
       }
@@ -81,13 +117,29 @@ const AddPayment = ({pendingAmount}) => {
     }
 
     const handleSubmit = () => {
+      if(!isToastShowing) {
+        if (totalValueInvoice > 5000){
+          if(input.Method === CARD && parseFloat(input.Amount) > restOfPaymentCard){
+            setIsToastShowing(true)
+            return toast({
+              title: 'Invalid amount',
+              description: `cannot exceed ${restOfPaymentCard} of the card payment`,
+              status: 'error',
+              duration: 4000,
+              isClosable: true,
+              onCloseComplete: () => setIsToastShowing(false),
+            });
+          }
+      }
       if(parseFloat(input.Amount) > parseFloat(pendingAmount)){
+        setIsToastShowing(true)
         toast({
           title: 'Invalid amount',
           description: `Pending amount equals to $${pendingAmount}`,
           status: 'error',
-          duration: 2000,
+          duration: 4000,
           isClosable: true,
+          onCloseComplete: () => setIsToastShowing(false),
         });
       } else{
         if(input.Method !== '' && input.Amount > 0){ 
@@ -95,17 +147,22 @@ const AddPayment = ({pendingAmount}) => {
           setInput({
             Method : '',
             Amount: '' })
+          setIs50Active(false);
+          setIs50Active(false);
           onClose(setError(''))
       } else{
+        setIsToastShowing(true)
         toast({
-          title: 'Inconpleted fields',
+          title: 'Incompleted fields',
           description: `Both fields must be completed`,
           status: 'error',
-          duration: 2000,
+          duration: 4000,
           isClosable: true,
+          onCloseComplete: () => setIsToastShowing(false),
         });
       }
     }
+  }
   }
 
   const [is50Active, setIs50Active] = useState(false);
@@ -114,38 +171,81 @@ const AddPayment = ({pendingAmount}) => {
   const handle50Toggle = () => {
     setIs50Active(true);
     setIs100Active(false);
+      const valueAmount = value / 2
+      setInput({
+        ...input,
+        Amount: valueAmount
+      })
   };
 
   const handle100Toggle = () => {
     setIs50Active(false);
     setIs100Active(true);
+    const valueAmount = value
+    setInput({
+      ...input,
+      Amount: valueAmount
+    })
   };
 
-  const invoice = useSelector(state => state.invoice)
-  const payments = useSelector(state => state.payment_stats)
-
   const valueInput = () => {
-    if(is50Active){
-      const value = Number(invoice[0].Value / 2)
-      const formattedNumber = value.toLocaleString('en-US', {
+    if (totalValueInvoice > 5000) {
+      if (input.Method === CARD && input.Amount > restOfPaymentCard) {
+        if(!isToastShowing) {
+            setIsToastShowing(true)
+            toast({
+              title: 'You cannot make the invoice payment of more than 50% with card if the amount exceeds 5000',
+              description: `cannot exceed ${restOfPaymentCard} of the card payment`,
+              status: 'error',
+              duration: 4000,
+              isClosable: true,
+              onCloseComplete: () => setIsToastShowing(false),
+            });
+        }
+        setInput({
+          ...input,
+          Amount: 0
+        })
+        return 0.00
+      }
+    }
+      if(is50Active){
+      const totalValue = Number(value / 2)
+      const formattedNumber = totalValue.toLocaleString('en-US', {
         minimumFractionDigits: 2,
         maximumFractionDigits: 2,
       });
-      
       return formattedNumber
     }
     if(is100Active){
-      const value = payments?.paymentsMath?.PendingAmount ?? invoice[0].Value.toLocaleString('en-US')
-      const formattedNumber = value.toLocaleString('en-US', {
+      const totalValue = Number(value)
+      const formattedNumber = totalValue.toLocaleString('en-US', {
         minimumFractionDigits: 2,
         maximumFractionDigits: 2,
       });
       return formattedNumber
     }
-    return
+    return 
   }
 
-  const value = payments?.paymentsMath?.PendingAmount ?? invoice[0].Value
+  const maxPaymentCard = () => {
+    if(totalValueInvoice > 5000){
+      if(restOfPaymentCard === 0) {
+        setIsOptionDisabled(true)
+        return;
+      } 
+    }
+    setIsOptionDisabled(false);
+    return restOfPaymentCard
+  }
+  
+  function calculateMaxInputValueAndIsCardMaxPayment(amount, paymentMethod) {
+    const maxInputValue = (amount > 5000 && paymentMethod === CARD) ? amount / 2 : amount;
+    const isCardMaxPayment = (amount > 5000 && paymentMethod === CARD);
+    return { maxInputValue, isCardMaxPayment };
+  }
+
+  const { maxInputValue, isCardMaxPayment } = calculateMaxInputValueAndIsCardMaxPayment(value, input.Method)
 
   return(
     <>
@@ -194,11 +294,11 @@ const AddPayment = ({pendingAmount}) => {
               }}
             bg={'web.sideBar'}
             borderColor={'web.border'} 
-            color={'web.text2'} 
+            color={'web.text2'}
             onChange={(e)=>handleSelect(e)}>
               <option value='' className="options" >Select Option</option>
               <option value='Check' className="options" >Check</option>
-              <option value='Card' className="options" >Card</option>
+              <option value='Card' className="options" id="cardId" disabled={isOptionDisabled}>Card</option>
               <option value='Cash' className="options" >Cash</option>
               <option value='Wire transfer' className="options" >Wire Transfer</option>
           </Select>
@@ -212,14 +312,15 @@ const AddPayment = ({pendingAmount}) => {
               <FormLabel color={'web.text'}>Amount</FormLabel>
             </Box>
             <NumberInput
-            clampValueOnBlur={true}
+            clampValueOnBlur={true} 
             value={valueInput()}
             borderColor={'web.border'} 
             color={'web.text2'}
             onChange={(e)=>handleInput(e)} 
             min={0} 
-            max={value}
-            precision={2}>
+            max={maxInputValue}
+            precision={2}
+            >
               <NumberInputField
               placeholder={'0.00'}
               _focus={{
@@ -255,7 +356,8 @@ const AddPayment = ({pendingAmount}) => {
                   color={'web.text'}
                   h={6}
                   p={2}
-                  mr={3} 
+                  mr={3}
+                  disabled={isCardMaxPayment}
                 >
                   100%
                 </Button>
