@@ -11,7 +11,7 @@ import {
 
 
 const ModelTr = ({e}) => {
-  console.log({e})
+
   return(
     <Tr 
       cursor={'pointer'} 
@@ -40,7 +40,7 @@ const HistoricalProductList = ({history_prices}) => {
     >
       <Box
       overflow={'auto'}
-      maxH={'50vh'}
+      maxH={'45vh'}
       css={{
         '&::-webkit-scrollbar': {
           width: '0.4vw',
