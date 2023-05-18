@@ -453,10 +453,9 @@ salesRouter.post('/create-quote/:sellerID', async function(req, res) {
   const ProjectID = project.idProjects;
   const date = new Date().toLocaleDateString("en-US");
   // const InsertDate = `${date.split('/')[2]}-${date.split('/')[0]}-${date.split('/')[1]}`;
-  // console.log(InsertDate)
-  // const InsertDate = '2019-05-21'
+  const InsertDate = '2023-05-18'
   const EstDelivery_Date = variables.estDelivDate;
-
+console.log(InsertDate)
   // Obtener el último Naturali_Invoice de la tabla Sales
   const query_0 = `SELECT Naturali_Invoice FROM NaturaliStone.Sales ORDER BY Naturali_Invoice DESC LIMIT 1;`;
 
@@ -482,7 +481,7 @@ salesRouter.post('/create-quote/:sellerID', async function(req, res) {
         const ids = quotesIDs.map(q => Number(q.Naturali_Invoice));
         const Naturali_Invoice = Math.max(...ids) + 1;
 
-        const query_ = `INSERT INTO Sales (Naturali_Invoice, Value, ProjectID, EstDelivery_Date, SellerID, ShippingMethod, PaymentTerms, P_O_No) VALUES ("${Naturali_Invoice}", "${Value}", "${ProjectID}", "${EstDelivery_Date}", "${sellerID}", "${variables.shipVia}", "${variables.paymentTerms}", "${variables.method}")`;
+        const query_ = `INSERT INTO Sales (Naturali_Invoice, Value, ProjectID, InvoiceDate, EstDelivery_Date, SellerID, ShippingMethod, PaymentTerms, P_O_No) VALUES ("${Naturali_Invoice}", "${Value}", "${ProjectID}", "${InsertDate}", "${EstDelivery_Date}", "${sellerID}", "${variables.shipVia}", "${variables.paymentTerms}", "${variables.method}")`;
 
         mysqlConnection.query(query_, async function(error, results, fields) {
           if (error) {

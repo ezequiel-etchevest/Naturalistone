@@ -4,8 +4,6 @@ import { PDFDocument, rgb } from 'pdf-lib';
 import { Box, Center, Spinner } from '@chakra-ui/react';
 
 
-
-
 const CreatedQuotePdf = ({variables, user, customer, project }) => {
 // console.log('customer',customer)
 // console.log('products',products)
@@ -48,7 +46,7 @@ const CreatedQuotePdf = ({variables, user, customer, project }) => {
 
   const invoiceID = posted_quote.Naturali_Invoice
   const date = posted_quote.InsertDate
-  
+  console.log(date)
   var subtotal = 0
 
   let y = 460.8;
