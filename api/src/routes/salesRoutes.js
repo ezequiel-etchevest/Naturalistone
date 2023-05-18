@@ -453,7 +453,7 @@ salesRouter.post('/create-quote/:sellerID', async function(req, res) {
   const ProjectID = project.idProjects;
   const date = new Date().toLocaleDateString("en-US");
   // const InsertDate = `${date.split('/')[2]}-${date.split('/')[0]}-${date.split('/')[1]}`;
-  const InsertDate = '2023-05-18'
+  const InsertDate = '2019-05-18'
   const EstDelivery_Date = variables.estDelivDate;
 console.log(InsertDate)
   // Obtener el último Naturali_Invoice de la tabla Sales
