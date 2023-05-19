@@ -7,6 +7,7 @@ import PaymentsStats from "./stats/PaymentsStats";
 import FilterStats from "./stats/filterStats";
 import { getStats } from "../redux/actions-stats";
 import { cleanStats } from "../redux/actions-statsByMonth";
+import { useLocation } from "react-router-dom";
 
 
 
@@ -14,19 +15,27 @@ const HomeContainer = ({user}) => {
 
   const dispatch = useDispatch()
   const stats = useSelector(state => state.stats)
+  const location = useLocation();
+  const queryString = location.search;
+  const searchParams = new URLSearchParams(queryString);
+  const getParamsSellerID = searchParams.get('SellerID')
+  const getParamsMonth = searchParams.get('Month')
+  const getParamsYear = searchParams.get('Year')
+  const currentMonth = new Date().getMonth() + 1
+  const currentYear = new Date().getFullYear();
+
   const [filters, setFilters] = useState({
-    SellerID: user[0].SellerID,
-    Month: new Date().getMonth() + 1,
-    Year: new Date().getFullYear(),
+    SellerID: getParamsSellerID ? getParamsSellerID : user[0].SellerID,
+    Month: getParamsMonth ? getParamsMonth : currentMonth,
+    Year: getParamsYear ? getParamsYear : currentYear,
   });
-  
+
   useEffect(() => {
     if(user.length && Object.entries(stats).length === 0){
       dispatch(getStats(filters))
     }
     return ()=>{cleanStats()}
   }, [user, stats])
-
   
     return(
     <>

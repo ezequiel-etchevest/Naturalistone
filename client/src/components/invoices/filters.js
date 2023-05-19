@@ -16,18 +16,28 @@ import { useState } from "react";
 import '../../assets/styleSheet.css';
 import {AiOutlineClear} from 'react-icons/ai';
 import CreateInvoiceButton from './createQuote/createInvoice'
+import { useLocation, useNavigate } from "react-router-dom";
 
 const Filters = ({user, seller_invoices, setFocusFilter, seller_values, customers}) => {
 
   const dispatch = useDispatch()
   const [ disabled, setDisabled ] = useState(false)
   const [errores, setErrores] = useState('')
+  const searchParams = new URLSearchParams();
+  const navigate = useNavigate()
+  const location = useLocation()
+  const lastWeek = 'LastWeek'
+  const lastMonth = 'LastMonth'
+  const queryString = location.search;
+  const url = new URLSearchParams(queryString)
+  const getParamsTimeFilter = url.get('timeFilter')
+  const getParamsSeller = url.get('seller')
   const [inputValues, setInputValues] = useState(
     {
       inputName: '',
       inputNumber: '',
-      selectSeller: '',
-      timeFilter: 'All'
+      selectSeller: getParamsSeller ? getParamsSeller : '',
+      timeFilter: getParamsTimeFilter ? getParamsTimeFilter : 'All'
     })
 
   const userId  =  user[0].SellerID
@@ -40,17 +50,22 @@ const Filters = ({user, seller_invoices, setFocusFilter, seller_values, customer
   const handleClickAllInvoices = () => {
     setInputValues({...inputValues, timeFilter: 'All'})
     dispatch(getInvoicesBySeller(userId, {...inputValues, timeFilter: 'All'}))
-
   }
 
   const handleClickLastWeek = () => {
-    setInputValues({...inputValues, timeFilter: 'LastWeek'})
-    dispatch(getInvoicesBySeller(userId, {...inputValues, timeFilter: 'LastWeek'}))
+    setInputValues({...inputValues, timeFilter: lastWeek})
+    searchParams.set('timeFilter', lastWeek)
+    searchParams.set('seller', inputValues.selectSeller)
+    navigate(`?${searchParams.toString()}`)
+    dispatch(getInvoicesBySeller(userId, {...inputValues, timeFilter: lastWeek}))
   }
 
   const handleClickLastMonth = () => {
-    setInputValues({...inputValues, timeFilter: 'LastMonth'})
-    dispatch(getInvoicesBySeller(userId, {...inputValues, timeFilter: 'LastMonth'}))
+    setInputValues({...inputValues, timeFilter: lastMonth})
+    searchParams.set('timeFilter', lastMonth)
+    searchParams.set('seller', inputValues.selectSeller)
+    navigate(`?${searchParams.toString()}`)
+    dispatch(getInvoicesBySeller(userId, {...inputValues, timeFilter: lastMonth}))
   }
 
   const handleTimeSelect = (e) => {
@@ -94,8 +109,12 @@ const Filters = ({user, seller_invoices, setFocusFilter, seller_values, customer
   }
 
   const handleSellerSelect = (e) => {
-    setInputValues({...inputValues, selectSeller: e.target.value})
-    dispatch(getInvoicesBySeller(userId, {...inputValues, selectSeller: e.target.value}))
+    const selectSeller = e.target.value
+    setInputValues({...inputValues, selectSeller: selectSeller})
+    searchParams.set('timeFilter', inputValues.timeFilter)
+    searchParams.set('seller', selectSeller)
+    navigate(`?${searchParams.toString()}`)
+    dispatch(getInvoicesBySeller(userId, {...inputValues, selectSeller: selectSeller}))
   }
 
   const handleClear = () => {
