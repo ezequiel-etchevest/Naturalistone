@@ -21,6 +21,7 @@ import ReviewProductsModal from "./createInvoiceProductsReview";
 import { getFiltered } from "../../../redux/actions-products";
 import {BiSearch} from 'react-icons/bi'
 import '../../../assets/styleSheet.css'
+import { useLocation } from "react-router-dom";
 
 const CreateInvoiceModal = ({variables, setVariables, isOpen, onClose, customer, project, onClose4, onClose3, onClose2, onClose1, isOpen4, onOpen4}) => {
  
@@ -28,6 +29,23 @@ const dispatch = useDispatch()
 const toast = useToast()
 const allProducts = useSelector(state => state.all_products)
 const productErrors = useSelector((state) => state.products_errors)
+const location = useLocation();
+const values = useSelector(state => state.product_values)
+const queryString = location.search;
+const searchParams = new URLSearchParams(queryString);
+const getParamsFinish = searchParams.get('finish')
+const getParamsSize = searchParams.get('size')
+const getParamsThickness = searchParams.get('thickness')
+const getParamsMaterial = searchParams.get('material')
+const getParamsSearch = searchParams.get('search')
+const [filters, setFilters] = useState({
+  finish: getParamsFinish ? getParamsFinish : '',
+  size: getParamsSize ? getParamsSize : '',
+  thickness: getParamsThickness ? getParamsThickness : '',
+  material: getParamsMaterial ? getParamsMaterial: '',
+  search: getParamsSearch ? getParamsSearch : '',
+  price: [values?.priceMaxmin?.min === null ? 0 : values?.priceMaxmin?.min, values?.priceMaxmin?.max]
+})
 
 const { isOpen: isOpen5, onOpen: onOpen5, onClose: onClose5 } = useDisclosure()
 
@@ -45,9 +63,18 @@ const validateToast = () => {
 }
 
 useEffect(()=>{
-  if(!allProducts?.length ) dispatch(getFiltered('','','','','','',''))
+  if(!allProducts?.length ) dispatch(
+    getFiltered(
+      filters.finish,
+      filters.size,
+      filters.thickness,
+      filters.material,
+      filters.search,
+      filters.price,
+      filters.price
+      ))
   validateToast()
-  },[allProducts])
+  },[allProducts, filters])
 
 useEffect(()=>{
   if(Object.keys(products).length) setDisable(false)
@@ -55,19 +82,46 @@ useEffect(()=>{
 }, [products])
 
   const handleChangeProductName = (e) => {
-    dispatch(getFiltered('', '', '', '', e.target.value, '',''))
+    dispatch(
+      getFiltered(
+        filters.finish,
+        filters.size,
+        filters.thickness,
+        filters.material,
+        e.target.value,
+        filters.price,
+        filters.price
+        ))
   }
 
   const handlePrevious = () => {
     onClose4()
-    dispatch(getFiltered('','','','','','',''))
+    dispatch(
+      getFiltered(
+        filters.finish,
+        filters.size,
+        filters.thickness,
+        filters.material,
+        filters.search,
+        filters.price,
+        filters.price
+        ))
     setProducts({})
   }
 
   const handleNext = () => {
       onOpen5()
       onClose4()
-      dispatch(getFiltered('','','','','','',''))
+      dispatch(
+        getFiltered(
+          filters.finish,
+          filters.size,
+          filters.thickness,
+          filters.material,
+          filters.search,
+          filters.price,
+          filters.price
+          ))
   }
 
   return(
