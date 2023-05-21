@@ -7,7 +7,7 @@ const postmark = require("postmark");
 // Send an email:
 const date = dayjs()
 const formatDay = date.format('YYYY-MM-DD')
-const imgg = 'https://drive.google.com/uc?id=1wuc3b9aU2nGN2ZK7uSOFSxIfPQn5JhCL'
+const imageNaturaliStone = 'https://drive.google.com/uc?id=1wuc3b9aU2nGN2ZK7uSOFSxIfPQn5JhCL'
 const client = new postmark.ServerClient(process.env.POSTMARK_API_KEY);
 const companyName = 'NaturaliStone';
 const companyAddress = '261 NW 71st St, Miami, FL 33150, United States';
@@ -44,7 +44,7 @@ function sendInvoiceEmail(
     TemplateModel: {
       product_name: companyName,
       name: "name_value", // "name_value"
-      image: imgg,
+      image: imageNaturaliStone,
       invoice_id: invoiceId,
       date: formatDay,
       invoice_details: [ //array for products
