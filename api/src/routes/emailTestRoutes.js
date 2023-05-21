@@ -1,10 +1,10 @@
 const express = require('express');
-const sendEmailUser = require('../utils/email');
+const sendInvoiceEmail = require('../utils/email');
 const emailRouter = express.Router();
 
-emailRouter.post('/email', function(req, res) {
+emailRouter.post('/email', async function(req, res) {
     try {
-        const email = sendEmailUser()
+        const email = await sendInvoiceEmail('ariadnaruvini@hotmail.com.ar', 123456)
         return res.status(200).json({success: true, msg:'Email enviado'})
     } catch (error) {
         console.log(error)
