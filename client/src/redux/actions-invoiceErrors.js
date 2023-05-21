@@ -22,10 +22,10 @@ export function getInvoiceErrors(user) {
     }
 }
 
-export function getInvoiceErrorsFiltered(sellerID, type, number, user) {
+export function getInvoiceErrorsFiltered(filter) {
+    const { user, sellerID, type, number } = filter
     let admin = user[0].Secction7Flag === 1 ? true : false
     let seller = user[0].SellerID
-
     return async function(dispatch){
         try{
             let {data} = await axios.get(`/invoiceErrors/filtered?sellerID=${sellerID}&type=${type}&number=${number}&admin=${admin}&seller=${seller}`)
