@@ -82,7 +82,12 @@ salesRouter.get('/:id', async function(req, res){
      }else{
         let invoicesFiltered = invoicesFilters(Invoices, name, number, seller)
         let result = invoicesPayments(invoicesFiltered)
-        res.status(200).json(result);
+        if(result.length === 0){
+          res.status(200).json(['No results']);
+        }else{
+          res.status(200).json(result);
+        }
+        
      }})}catch(error){
          res.status(409).send(error);
         }

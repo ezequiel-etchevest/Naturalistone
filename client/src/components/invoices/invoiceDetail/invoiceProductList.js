@@ -21,7 +21,6 @@ const ModelTr = ({p}) => {
   const handleClick = () => {
     navigate(`/products/${p.ProdID}`)
   }
-  console.log(p)
     return(
       <Tr 
         cursor={'pointer'}
