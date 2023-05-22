@@ -20,6 +20,8 @@ import{ ImCheckboxChecked, ImCheckboxUnchecked } from 'react-icons/im';
 import { patchDiscontinued } from '../../redux/actions-products';
 import img from '../../assets/ProductPicture/354-1.jpg'
 import '../../assets/styleImgs.css';
+import { getProductImage } from '../../redux/actions-products';
+
 
 
 const ModelTr = ({e, user}) => {
@@ -27,32 +29,40 @@ const ModelTr = ({e, user}) => {
   
   const a = e.Discontinued_Flag === 'True' ? true : false 
   const [flag, setFlag] = useState(a)
-  //const [productImage, setProductImage ] = useState(e.img)
+  const productImage = useSelector(state => state.product_image);
+  const [images, setImages] = useState([]);
   const navigate = useNavigate()
   const dispatch = useDispatch()
-  
-  // useEffect(() => {
-  //   const fetchImage = async () => {
-  //     if (productImage.length > 0) {
-  //       const imageUrl = `data:image/jpeg;base64,${productImage}`;
-  //       setProductImage(imageUrl);
-  //     }
-  //   };
-  //   fetchImage();
-  // }, [productImage]);
-  
+  const id = e.ProdID
 
-
-    const handleClickProduct = () => {
-      dispatch(getProductById(e.ProdID))
-      if(e.ProdID !== undefined)
-      navigate(`/products/${e.ProdID}`)
+  
+  const handleClickProduct = () => {
+    dispatch(getProductById(e.ProdID))
+    if(e.ProdID !== undefined)
+    navigate(`/products/${e.ProdID}`)
     }
-    const handleClickSwitch = () => {
-      setFlag(flag === true ? false : true)
-      dispatch(patchDiscontinued(e.ProdID, flag))
+  const handleClickSwitch = () => {
+    setFlag(flag === true ? false : true)
+    dispatch(patchDiscontinued(e.ProdID, flag))
     }
 
+  useEffect(()=>{
+    dispatch(getProductImage(e.ProductName, e.Material, e.ProdID));
+  }, [])
+
+  useEffect(() => {
+    setImages([]);
+    const fetchImages = async () => {
+      if (productImage[id] && productImage[id].length > 0) {
+        const imageUrls = await Promise.all(
+          productImage[id].map((data) => `data:image/jpeg;base64,${data}`)
+        );
+        setImages(imageUrls);
+      }
+    };
+    fetchImages();
+  }, [productImage, id]);
+  
     
   return(
     <Tr       
@@ -64,8 +74,8 @@ const ModelTr = ({e, user}) => {
     }} 
     >
       <Td maxH={'6vh'} maxW={'3vw'} onClick={() => handleClickProduct()} fontSize={'xs'} textAlign={'match-parent'}>
-        <div maxH={'5vh'} className="image-container">
-          <img src={img} className="enlarge-image" alt="Product Image" />
+        <div maxh={'5vh'} className="image-container">
+          <img src={images[0]} className="enlarge-image" alt="Product Image" />
         </div>
       </Td>
       <Td maxH={'6vh'} maxW={'3vw'} onClick={() => handleClickProduct()} fontSize={'xs'} textAlign={'match-parent'}>{e.ProductName}</Td>

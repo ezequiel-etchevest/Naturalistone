@@ -32,6 +32,7 @@ import {
     PATCH_PRODUCT_NOTES,
     PATCH_DISCONTINUED,
     GET_PRODUCT_IMAGES,
+    GET_PRODUCT_IMAGE,
     CLEAN_PRODUCT_DETAIL
      } from './actions-products';
 import { 
@@ -113,7 +114,8 @@ const intialState = {
     project_invoices: [],
     stats: {},
     posted_quote:{},
-    product_images:[]
+    product_images:[],
+    product_image: {}
 }
 
 function rootReducer (state = intialState, action) {
@@ -411,6 +413,14 @@ function rootReducer (state = intialState, action) {
           return {
             ...state,
             product_images: action.payload
+          }
+        case GET_PRODUCT_IMAGE:
+          return{
+            ...state,
+            product_image: {
+              ...product_image,
+              [action.payload.prodID]: action.payload.data
+            }
           }
         case CLEAN_PRODUCT_DETAIL:
           return {
