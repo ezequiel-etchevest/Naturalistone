@@ -4,10 +4,21 @@ import InvoiceDetailList from './invoiceDetailsList';
 import PaymentList from './PaymentList';
 import ModalPDF from './modalPDF';
 import InvoicePanelButtons from './invoiceButtons';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { getPayments  } from '../../../redux/actions-payments';
+import { useParams } from "react-router-dom";
+
 
 
 const Detail = ({invoice, payments, invoice_products, user, deliveries, windowWidth}) => {
-
+  
+  const { id } = useParams()
+  const dispatch = useDispatch()
+    useEffect(()=>{
+      dispatch(getPayments(id))
+    },[payments])
+    
     return(
       <Box
         userSelect={'none'}
@@ -60,7 +71,7 @@ const Detail = ({invoice, payments, invoice_products, user, deliveries, windowWi
             > 
             {
              Object.entries(payments).length >= 1 ? (
-                <PaymentList payments={payments} totalAmount={invoice[0].Value} invoice={invoice} /> 
+                <PaymentList payments={payments} totalAmount={invoice[0].Value}/> 
               ) : (
                 <Text>No payments done yet</Text>
               )

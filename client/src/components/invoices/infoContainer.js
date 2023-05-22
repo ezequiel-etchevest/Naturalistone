@@ -1,20 +1,11 @@
 import {Box, Spinner, Center} from '@chakra-ui/react';
 import List from './list';
 import Filters from './filters';
-import { useState, useEffect } from 'react';
 
 const InfoContainer = ({seller_invoices, user, focusFilter, setFocusFilter, seller_values, customers}) => {
-    const [ spinner, setSpinner ] = useState(false)
 
-    const handleSpinner = () => {
-        setTimeout(()=>{ setSpinner(true)}, 700)
-      }
 
-    useEffect(()=>{
-        handleSpinner()
-      })
-
-    if(spinner === true){
+    if(seller_invoices.length){
         return(
             <Box
             userSelect={'none'}

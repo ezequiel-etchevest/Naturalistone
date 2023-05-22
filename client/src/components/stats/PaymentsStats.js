@@ -73,7 +73,7 @@ export default function PaymentsStats({stats}) {
         visibility= 'hidden'
         title={'Closing Days (Avg)'}
         // stat={paymentStats.closingDaysAvg}
-        icon={<HiReceiptPercent size={'3em'} />}
+        //icon={<HiReceiptPercent size={'3em'} />}
         />
       </HStack>
     </Box>

@@ -17,6 +17,7 @@ import Customers from './views/Customers';
 import { useState, useEffect } from 'react';
 import {PrivateRoute} from './components/PrivateRoutes';
 import Redirect from './views/RedirectPage';
+import { Box } from '@chakra-ui/react';
 
 function App() {
 
@@ -30,7 +31,7 @@ function App() {
   return (
     <ChakraProvider theme={naturali_theme}>
     <BrowserRouter>
-    <div className="App">
+    <Box className="App" minH={'100vh'} bg={'web.bg'}>
     <NavBar/>
       <Routes>
         <Route path="/login" element= {<LogIn/>} />
@@ -50,7 +51,7 @@ function App() {
         <Route path="/customers/:id" element={<PrivateRoute><CustomerDetailView focus={focus} setFocus={setFocus} /></PrivateRoute>}/>
         
       </Routes> 
-    </div>
+    </Box>
     </BrowserRouter>
     </ChakraProvider>
   );
