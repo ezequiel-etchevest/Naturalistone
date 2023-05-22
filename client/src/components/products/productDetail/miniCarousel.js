@@ -29,7 +29,6 @@ const CarouselProduct = () => {
     infinite: true,
     speed: 500,
     slidesToShow: images.length === 1 ? 1 : 2,
-    //slidesToShow: 2,
     slidesToScroll: 1,
     adaptiveHeight: false,
   };
