@@ -17,6 +17,7 @@
     "@testing-library/user-event": "^13.1.1",
     "aws-amplify": "^5.0.19",
     "axios": "^0.27.2",
+    "chakra-ui-steps": "^2.1.0",
     "chart.js": "^4.0.1",
     "file-saver": "^2.0.5",
     "formik": "^2.2.9",
