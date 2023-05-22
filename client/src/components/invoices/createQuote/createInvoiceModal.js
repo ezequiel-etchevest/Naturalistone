@@ -12,7 +12,10 @@ import {
     Input,
     IconButton,
     useToast,
-    useDisclosure
+    Select,
+    useDisclosure,
+    Divider,
+    Tooltip
     } from "@chakra-ui/react"
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -20,6 +23,7 @@ import CreateInvoiceProductsList from "./createInvoiceProductsList";
 import ReviewProductsModal from "./createInvoiceProductsReview";
 import { getFiltered } from "../../../redux/actions-products";
 import {BiSearch} from 'react-icons/bi'
+import {AiOutlineClear} from 'react-icons/ai';
 import '../../../assets/styleSheet.css'
 
 const CreateInvoiceModal = ({variables, setVariables, isOpen, onClose, customer, project, onClose4, onClose3, onClose2, onClose1, isOpen4, onOpen4}) => {
@@ -28,11 +32,19 @@ const dispatch = useDispatch()
 const toast = useToast()
 const allProducts = useSelector(state => state.all_products)
 const productErrors = useSelector((state) => state.products_errors)
+const values = useSelector(state => state.product_values)
 
 const { isOpen: isOpen5, onOpen: onOpen5, onClose: onClose5 } = useDisclosure()
 
 const [products, setProducts] = useState({})
 const [disable, setDisable] = useState(true)
+
+const [filters, setFilters] = useState({
+  finish:'',
+  material: '',
+  search:'',
+})
+
 
 const validateToast = () => {
   if(Object.entries(productErrors).length){
@@ -52,24 +64,62 @@ useEffect(()=>{
 useEffect(()=>{
   if(Object.keys(products).length) setDisable(false)
   else setDisable(true)
-}, [products])
+}, [products, filters])
 
-  const handleChangeProductName = (e) => {
-    dispatch(getFiltered('', '', '', '', e.target.value, '',''))
-  }
+
+const handleFinish = (e) => {
+  setFilters({
+    ...filters,
+    finish: e.target.value
+  })
+  dispatch(getFiltered(e.target.value, '', '', filters.material, filters.search, '', ''))
+}
+
+
+const handleMaterial = (e) => {
+  setFilters({
+    ...filters,
+    material: e.target.value
+  })
+  dispatch(getFiltered(filters.finish, '', '', e.target.value, filters.search, '', ''))
+}
+
+const handleChangeProductName = (e) => {
+  setFilters({
+    ...filters,
+    search: e.target.value
+  })
+  dispatch(getFiltered(filters.finish, '', '', filters.material, e.target.value, '', ''))
+}
+
+const handleClear = () => {
+  setFilters({
+    finish:'',
+    material:'',
+    search:''
+    }) 
+    dispatch(getFiltered('','','','', '','',''))
+}
+
 
   const handlePrevious = () => {
+    handleClear()
     onClose4()
-    dispatch(getFiltered('','','','','','',''))
     setProducts({})
   }
 
   const handleNext = () => {
       onOpen5()
       onClose4()
+      setFilters({
+        finish:'',
+        material:'',
+        search:'',
+        })
       dispatch(getFiltered('','','','','','',''))
   }
-
+console.log(filters)
+console.log(values)
   return(
 <>
   <Modal 
@@ -100,16 +150,67 @@ useEffect(()=>{
             h={'6vh'}
             mb={'2vh'}
             mr={'1.2vw'}
-            spacing={'0.5vw'}>
+            >
+            <Select
+              onChange={(e)=>handleMaterial(e)}
+              mb={'0.5vh'}
+              mr={'2vw'}
+              w={'9vw'}             
+              minH={'5.5vh'}
+              variant="unstyled"
+              textColor={'web.text2'}
+              _placeholder={{ fontFamily: 'body', fontWeight: 'inherit', textColor: 'inherit' }}
+              size={"sm"}
+              borderBottomWidth={"2px"}
+              borderBottomColor={'web.text2'}
+              _hover={{borderColor: 'web.border'}}
+              cursor={'pointer'}
+              value={filters.material}
+            >
+            <option value='' className="options">Type</option>
+            {
+              values?.materials.map((v, i) => {
+                  return(
+                    <option value={`${v}`} key={i} className={'options'}>{`${v}`}</option>
+                  )
+                })
+            }
+            </Select>
+            <Select
+              onChange={(e)=>handleFinish(e)}
+              mb={'0.5vh'}
+              w={'9vw'}
+              minH={'5.5vh'}
+              mr={'2vw'}
+              variant="unstyled"
+              textColor={'web.text2'}
+              _placeholder={{ fontFamily: 'body', fontWeight: 'inherit', textColor: 'inherit' }}
+              size={"sm"}
+              borderBottomWidth={"2px"}
+              borderBottomColor={'web.text2'}
+              _hover={{borderColor: 'web.border'}}
+              cursor={'pointer'}
+              value={filters.finish}
+            >
+            <option value='' className="options">Finish</option>
+            {
+              values?.finishValues.map((v, i )=> {
+                return(
+                  <option value={`${v}`} key={i} className={'options'}>{`${v}`}</option>
+                )
+              })
+            }                     
+            </Select>
             <Input
               mb={'0.5vh'}
-              w={'10vw'}
+              w={'9vw'}
               minH={'4.5vh'}
               variant="unstyled"
               placeholder={'Product name'}
               textColor={'web.text2'}
               _placeholder={{ fontFamily: 'body', fontWeight: 'thin' }}
               size={"sm"}
+              value={filters.search}
               borderBottomWidth={"2px"}
               borderBottomColor={'web.text2'}
               onChange={(e) => handleChangeProductName(e)}
@@ -127,7 +228,26 @@ useEffect(()=>{
               }}
               _active={{ color: 'gray.800'}}
             />
-          </Box>
+            <Divider orientation={'vertical'} h={'5vh'} ml={'1vw'}mr={'1vw'}/>
+            <Tooltip placement={'bottom-start'} label={'Clear all filters'} fontWeight={'hairline'}>      
+            <IconButton
+              icon={ <AiOutlineClear/>}
+              variant={'unstyled'} 
+              display={'flex'} 
+              borderRadius={'sm'} 
+              placeContent={'center'}
+              alignItems={'center'}
+              color={'web.text2'} 
+              _hover={{
+                 color: 'logo.orange'
+                 }}
+              _active={{
+              }}
+              onClick={(e) => handleClear(e)}
+              >
+            </IconButton>
+        </Tooltip> 
+          </Box>          
           <CreateInvoiceProductsList allProducts={allProducts} products={products} setProducts={setProducts}/>
         </ModalBody>
       </Box>  

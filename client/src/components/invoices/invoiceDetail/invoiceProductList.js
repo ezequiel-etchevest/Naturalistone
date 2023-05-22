@@ -32,16 +32,16 @@ const ModelTr = ({p}) => {
         }}
         onClick={() => handleClick()}
         >
-        <Td fontSize={'1.5vh'} textAlign={'match-parent'}>{p.ProductName}</Td>
-        <Td fontSize={'1.5vh'} textAlign={'center'}>{p.Quantity}</Td>
-        <Td fontSize={'1.5vh'} textAlign={'center'}>{p.Size}</Td>
-        <Td fontSize={'1.5vh'} textAlign={'center'}>{p.Thickness}</Td>
-        <Td fontSize={'1.5vh'} textAlign={'center'}>{p.Finish}</Td>
-        <Td fontSize={'1.5vh'} textAlign={'center'} >$ {p.SalePrice.toLocaleString('en-US')}</Td>
-        <Td fontSize={'1.5vh'} textAlign={'center'}>{(p.InStock_Reserved + p.InStock_PendingPayment) === null ? '0' : (p.InStock_Reserved + p.InStock_PendingPayment)}</Td>
-        <Td fontSize={'1.5vh'} textAlign={'center'}>{(p.Incoming_Reserved + p.Incoming_PendingPayment) === null ? '0' : (p.Incoming_Reserved + p.Incoming_PendingPayment)}</Td>
-        <Td fontSize={'1.5vh'} textAlign={'center'}>{(p.Order_PendingPayment + p.Order_PaymentCompleted) === null ? '0' : (p.Order_PendingPayment + p.Order_PaymentCompleted)}</Td>
-        <Td fontSize={'1.5vh'} textAlign={'center'}>{p.Delivered}</Td>
+        <Td fontSize={'1.3vh'} textAlign={'match-parent'}>{p.ProductName}</Td>
+        <Td fontSize={'1.3vh'} textAlign={'center'}>{p.Quantity}</Td>
+        <Td fontSize={'1.3vh'} textAlign={'center'}>{p.Size}</Td>
+        <Td fontSize={'1.3vh'} textAlign={'center'}>{p.Thickness}</Td>
+        <Td fontSize={'1.3vh'} textAlign={'center'}>{p.Finish}</Td>
+        <Td fontSize={'1.3vh'} textAlign={'center'} >$ {p.SalePrice.toLocaleString('en-US')}</Td>
+        <Td fontSize={'1.3vh'} textAlign={'center'}>{(p.InStock_Reserved + p.InStock_PendingPayment) === null ? '0' : (p.InStock_Reserved + p.InStock_PendingPayment)}</Td>
+        <Td fontSize={'1.3vh'} textAlign={'center'}>{(p.Incoming_Reserved + p.Incoming_PendingPayment) === null ? '0' : (p.Incoming_Reserved + p.Incoming_PendingPayment)}</Td>
+        <Td fontSize={'1.3vh'} textAlign={'center'}>{(p.Order_PendingPayment + p.Order_PaymentCompleted) === null ? '0' : (p.Order_PendingPayment + p.Order_PaymentCompleted)}</Td>
+        <Td fontSize={'1.3vh'} textAlign={'center'}>{p.Delivered}</Td>
       </Tr>
     )
 }
@@ -70,7 +70,7 @@ const InvoiceProductList = ({invoice_products, invoice}) => {
             bg={'web.sideBar'}           
             >
             <Text fontSize={'1.6vw'} color={'web.text2'}>Products Details</Text>
-            <TableContainer w={'52vw'} >
+            <TableContainer w={'53vw'} >
                 <Table mt={'2vh'} color={'web.text'} variant={'simple'} size={'sm'} >
                   <Thead h={'6vh'}>
                     <Tr>

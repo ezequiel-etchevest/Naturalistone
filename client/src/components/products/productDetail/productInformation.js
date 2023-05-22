@@ -31,7 +31,7 @@ const ProductInformation = ({product}) => {
             w={'15vw'}
             >
             <Text 
-              fontSize={'3vh'} 
+              fontSize={'2.5vh'} 
               pt={'1vh'} 
               color={'logo.orange'}
               >

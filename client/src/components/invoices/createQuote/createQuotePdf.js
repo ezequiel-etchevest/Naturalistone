@@ -46,7 +46,7 @@ const CreatedQuotePdf = ({variables, user, customer, project }) => {
 
   const invoiceID = posted_quote.Naturali_Invoice
   const date = posted_quote.InsertDate
-  console.log(date)
+
   var subtotal = 0
 
   let y = 460.8;
