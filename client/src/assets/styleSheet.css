@@ -19,3 +19,8 @@ option::checked {
 /* select option:hover {
     box-shadow: 0 0 10px 100px #E47424 inset !important;;
 } */
+
+.App{
+  background: '#010409';
+  height: 92vh;
+}

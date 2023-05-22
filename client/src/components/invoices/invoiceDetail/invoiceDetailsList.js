@@ -98,7 +98,7 @@ const InvoiceDetailList = ({invoice, payments}) => {
                   fontSize={'2.05vh'} 
                   fontWeight={'bold'}>
                   { payments.paymentsMath ? (
-                    Math.round(payments.paymentsMath.PaymentPercentaje)                  
+                    Math.round(payments.paymentsMath.PaymentPercentage)                  
                     ):(
                     0
                     )
