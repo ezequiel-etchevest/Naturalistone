@@ -32,7 +32,7 @@ const handleNext = () => {
   onClose2()
 
 }
-
+console.log(customer.DiscountID)
   return(
 
 <>
@@ -70,10 +70,10 @@ const handleNext = () => {
           <Text border={'1px'} borderRadius={'md'} w={'25vw'} mb={'1.5vh'}> Company: {customer.Company ? customer.Company : "-"}</Text>
           <Text border={'1px'} borderRadius={'md'} w={'25vw'} mb={'1.5vh'}> Discount: 
           { 
-          customer.DiscountID === 4 || customer.DiscountID === 3 ? 
-            customer.DiscountID === 4 ? '15 %' : '10 %'
+          customer.DiscountID === "4" || customer.DiscountID === "3" ? 
+            customer.DiscountID === "4" ? '15 %' : '10 %'
           : 
-          customer.DiscountID === 2 ?  '5 %' : "-"
+          customer.DiscountID === "2" ?  '5 %' : "-"
           }
           </Text>
           <Text border={'1px'} borderRadius={'md'} w={'25vw'} mb={'1.5vh'}> Address: {customer.Address ? customer.Address : "-"}</Text>
