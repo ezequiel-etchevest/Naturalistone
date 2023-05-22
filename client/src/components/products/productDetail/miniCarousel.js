@@ -29,10 +29,17 @@ const CarouselProduct = () => {
     infinite: true,
     speed: 500,
     slidesToShow: images.length === 1 ? 1 : 2,
-    //slidesToShow: 2,
     slidesToScroll: 1,
     adaptiveHeight: false,
   };
+  const settingsModal = {
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1 ,
+    slidesToScroll: 1,
+    adaptiveHeight: false,
+  };
+  
   
   return (
     <>
@@ -84,7 +91,7 @@ const CarouselProduct = () => {
             <ModalCloseButton />
             <ModalBody w={'100%'} h={'100%'}>
               <Box>
-                <Slider {...settings}>
+                <Slider {...settingsModal}>
                   {/* <Box px='0.5vw'>
                     <img
                       src={img1}
@@ -108,7 +115,7 @@ const CarouselProduct = () => {
                   </Box> */}
                   {
                     images.map((url, i) => (
-                      <Box key={i} p="1vh" h="23vh">
+                      <Box key={i} p="1vh" h="70vh">
                         <img
                           src={url}
                           alt={`Image ${i}`}

@@ -18,17 +18,16 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { createCustomer } from '../../../redux/actions-customers'
 
-export function CreateCustomerModal({customer, user, setCustomer, onOpen2}) {
+export function CreateCustomerModal({ user, setCustomer, onOpen2}) {
 
   const { isOpen, onOpen, onClose } = useDisclosure()
-
+  const [errors, setErrors] = useState({})
   const [formData, setFormData] = useState({
-    Name: '',
-    LastName: '',
+    Contact_Name: '',
     Address: '',
     State: '',
     ZipCode: '',
-    Reference: '',
+    Company: '',
     Phone: '',
     Email: '',
     DiscountID: 1
@@ -45,12 +44,11 @@ export function CreateCustomerModal({customer, user, setCustomer, onOpen2}) {
   };
   const handleClose = () => {
     setFormData({
-      Name: '',
-      LastName: '',
+      Contact_Name: '',
       Address: '',
       State: '',
       ZipCode: '',
-      Reference: '',
+      Company: '',
       Phone: '',
       Email: '',
       DiscountID: 1
@@ -95,7 +93,7 @@ export function CreateCustomerModal({customer, user, setCustomer, onOpen2}) {
           <Box color={'white'}>
             <Text ml={'3vw'} fontSize={'lg'}>Add New Customer</Text>
               <ModalBody mt={'10vh'}>
-                <CreationCustomerForm formData={formData} setFormData={setFormData}/>
+                <CreationCustomerForm formData={formData} setFormData={setFormData} errors={errors} setErrors={setErrors}/>
               </ModalBody>
           </Box>
             <ModalFooter mt={'11vh'} mb={'2vh'} display={'flex'} flexDir={'row'} justifyContent={'space-between'} ml={'2vw'} mr={'2vw'}>

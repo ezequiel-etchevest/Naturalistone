@@ -23,6 +23,7 @@ export default function PaymentDeleteModal({InvoiceID, idPayments}) {
 
   const handleSubmit = () => {
     dispatch(deletePayment(InvoiceID,idPayments))
+    onClose()
     }
   
     return (

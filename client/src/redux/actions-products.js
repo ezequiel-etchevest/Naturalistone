@@ -7,6 +7,7 @@ export const GET_HISTORY_PRICES = ' GET_HISTORY_PRICES';
 export const PATCH_PRODUCT_NOTES = 'PATCH_PRODUCT_NOTES';
 export const PATCH_DISCONTINUED = 'PATCH_DISCONTINUED';
 export const GET_PRODUCT_IMAGES = 'GET_PRODUCT_IMAGES';
+export const GET_PRODUCT_IMAGE = 'GET_PRODUCT_IMAGE';
 export const CLEAN_PRODUCT_DETAIL = 'CLEAN_PRODUCT_DETAIL';
 
 
@@ -143,6 +144,21 @@ export function getProductImages(prodName, material){
                 }
             }
         }
+export function getProductImage(prodName, material, prodID){
+
+    return async function(dispatch){
+        try{
+            let {data} = await axios.get(`/one-drive-data/images/img?prodName=${prodName}&material=${material}`)
+            dispatch(
+                {
+                    type: GET_PRODUCT_IMAGE,
+                    payload: {data, prodID}
+                })
+        }catch(error){
+            console.log({error})           
+        }
+    }
+}
 
 export function cleanProductDetail(){
     return async function (dispatch){

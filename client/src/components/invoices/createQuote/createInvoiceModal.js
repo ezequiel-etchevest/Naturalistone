@@ -12,7 +12,10 @@ import {
     Input,
     IconButton,
     useToast,
-    useDisclosure
+    Select,
+    useDisclosure,
+    Divider,
+    Tooltip
     } from "@chakra-ui/react"
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -20,6 +23,7 @@ import CreateInvoiceProductsList from "./createInvoiceProductsList";
 import ReviewProductsModal from "./createInvoiceProductsReview";
 import { getFiltered } from "../../../redux/actions-products";
 import {BiSearch} from 'react-icons/bi'
+import {AiOutlineClear} from 'react-icons/ai';
 import '../../../assets/styleSheet.css'
 import { useLocation } from "react-router-dom";
 
@@ -29,28 +33,19 @@ const dispatch = useDispatch()
 const toast = useToast()
 const allProducts = useSelector(state => state.all_products)
 const productErrors = useSelector((state) => state.products_errors)
-const location = useLocation();
 const values = useSelector(state => state.product_values)
-const queryString = location.search;
-const searchParams = new URLSearchParams(queryString);
-const getParamsFinish = searchParams.get('finish')
-const getParamsSize = searchParams.get('size')
-const getParamsThickness = searchParams.get('thickness')
-const getParamsMaterial = searchParams.get('material')
-const getParamsSearch = searchParams.get('search')
-const [filters, setFilters] = useState({
-  finish: getParamsFinish ? getParamsFinish : '',
-  size: getParamsSize ? getParamsSize : '',
-  thickness: getParamsThickness ? getParamsThickness : '',
-  material: getParamsMaterial ? getParamsMaterial: '',
-  search: getParamsSearch ? getParamsSearch : '',
-  price: [values?.priceMaxmin?.min === null ? 0 : values?.priceMaxmin?.min, values?.priceMaxmin?.max]
-})
 
 const { isOpen: isOpen5, onOpen: onOpen5, onClose: onClose5 } = useDisclosure()
 
 const [products, setProducts] = useState({})
 const [disable, setDisable] = useState(true)
+
+const [filters, setFilters] = useState({
+  finish:'',
+  material: '',
+  search:'',
+})
+
 
 const validateToast = () => {
   if(Object.entries(productErrors).length){
@@ -79,50 +74,61 @@ useEffect(()=>{
 useEffect(()=>{
   if(Object.keys(products).length) setDisable(false)
   else setDisable(true)
-}, [products])
+}, [products, filters])
 
-  const handleChangeProductName = (e) => {
-    dispatch(
-      getFiltered(
-        filters.finish,
-        filters.size,
-        filters.thickness,
-        filters.material,
-        e.target.value,
-        filters.price,
-        filters.price
-        ))
-  }
+
+const handleFinish = (e) => {
+  setFilters({
+    ...filters,
+    finish: e.target.value
+  })
+  dispatch(getFiltered(e.target.value, '', '', filters.material, filters.search, '', ''))
+}
+
+
+const handleMaterial = (e) => {
+  setFilters({
+    ...filters,
+    material: e.target.value
+  })
+  dispatch(getFiltered(filters.finish, '', '', e.target.value, filters.search, '', ''))
+}
+
+const handleChangeProductName = (e) => {
+  setFilters({
+    ...filters,
+    search: e.target.value
+  })
+  dispatch(getFiltered(filters.finish, '', '', filters.material, e.target.value, '', ''))
+}
+
+const handleClear = () => {
+  setFilters({
+    finish:'',
+    material:'',
+    search:''
+    }) 
+    dispatch(getFiltered('','','','', '','',''))
+}
+
 
   const handlePrevious = () => {
+    handleClear()
     onClose4()
-    dispatch(
-      getFiltered(
-        filters.finish,
-        filters.size,
-        filters.thickness,
-        filters.material,
-        filters.search,
-        filters.price,
-        filters.price
-        ))
     setProducts({})
   }
 
   const handleNext = () => {
       onOpen5()
       onClose4()
-      dispatch(
-        getFiltered(
-          filters.finish,
-          filters.size,
-          filters.thickness,
-          filters.material,
-          filters.search,
-          filters.price,
-          filters.price
-          ))
+      setFilters({
+        finish:'',
+        material:'',
+        search:'',
+        })
+      dispatch(getFiltered('','','','','','',''))
   }
+
 
   return(
 <>
@@ -154,16 +160,73 @@ useEffect(()=>{
             h={'6vh'}
             mb={'2vh'}
             mr={'1.2vw'}
-            spacing={'0.5vw'}>
+            >
+            <Select
+              onChange={(e)=>handleMaterial(e)}
+              mb={'0.5vh'}
+              mr={'2vw'}
+              w={'9vw'}             
+              minH={'5.5vh'}
+              variant="unstyled"
+              textColor={'web.text2'}
+              _placeholder={{ fontFamily: 'body', fontWeight: 'inherit', textColor: 'inherit' }}
+              size={"sm"}
+              borderBottomWidth={"2px"}
+              borderBottomColor={'web.text2'}
+              _hover={{borderColor: 'web.border'}}
+              cursor={'pointer'}
+              value={filters.material}
+            >
+            <option value='' className="options">Type</option>
+            {
+              Object.entries(values).length ?
+              values?.materials.map((v, i) => {
+                  return(
+                    <option value={`${v}`} key={i} className={'options'}>{`${v}`}</option>
+                  )
+                })
+              :
+              null  
+            }
+            </Select>
+            <Select
+              onChange={(e)=>handleFinish(e)}
+              mb={'0.5vh'}
+              w={'9vw'}
+              minH={'5.5vh'}
+              mr={'2vw'}
+              variant="unstyled"
+              textColor={'web.text2'}
+              _placeholder={{ fontFamily: 'body', fontWeight: 'inherit', textColor: 'inherit' }}
+              size={"sm"}
+              borderBottomWidth={"2px"}
+              borderBottomColor={'web.text2'}
+              _hover={{borderColor: 'web.border'}}
+              cursor={'pointer'}
+              value={filters.finish}
+            >
+            <option value='' className="options">Finish</option>
+            {
+              Object.entries(values).length ?
+              values?.finishValues.map((v, i )=> {
+                return(
+                  <option value={`${v}`} key={i} className={'options'}>{`${v}`}</option>
+                )
+              })
+              :
+              null
+            }                     
+            </Select>
             <Input
               mb={'0.5vh'}
-              w={'10vw'}
+              w={'9vw'}
               minH={'4.5vh'}
               variant="unstyled"
               placeholder={'Product name'}
               textColor={'web.text2'}
               _placeholder={{ fontFamily: 'body', fontWeight: 'thin' }}
               size={"sm"}
+              value={filters.search}
               borderBottomWidth={"2px"}
               borderBottomColor={'web.text2'}
               onChange={(e) => handleChangeProductName(e)}
@@ -181,7 +244,26 @@ useEffect(()=>{
               }}
               _active={{ color: 'gray.800'}}
             />
-          </Box>
+            <Divider orientation={'vertical'} h={'5vh'} ml={'1vw'}mr={'1vw'}/>
+            <Tooltip placement={'bottom-start'} label={'Clear all filters'} fontWeight={'hairline'}>      
+            <IconButton
+              icon={ <AiOutlineClear/>}
+              variant={'unstyled'} 
+              display={'flex'} 
+              borderRadius={'sm'} 
+              placeContent={'center'}
+              alignItems={'center'}
+              color={'web.text2'} 
+              _hover={{
+                 color: 'logo.orange'
+                 }}
+              _active={{
+              }}
+              onClick={(e) => handleClear(e)}
+              >
+            </IconButton>
+        </Tooltip> 
+          </Box>          
           <CreateInvoiceProductsList allProducts={allProducts} products={products} setProducts={setProducts}/>
         </ModalBody>
       </Box>  

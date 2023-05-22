@@ -10,11 +10,10 @@ import {
     Text,
   } from '@chakra-ui/react';
 import AddPayment from './addPayment';
-import { useDispatch } from 'react-redux';
 import PaymentDeleteModal from './PaymentDeleteModal'
 
-const ModelTr = ({p, totalAmount, invoice}) => {
-    const dispatch = useDispatch()
+const ModelTr = ({p, totalAmount}) => {
+
     const per = (p.Amount * 100) / totalAmount
 
     return(
@@ -38,6 +37,7 @@ const ModelTr = ({p, totalAmount, invoice}) => {
 }
 
 const PaymentList = ({payments, totalAmount, invoice}) => {
+
   const pendingAmount = payments.paymentsMath.PendingAmount
   const handlePendig = () => {
     if((totalAmount - pendingAmount)=== totalAmount) return false
@@ -67,7 +67,7 @@ const PaymentList = ({payments, totalAmount, invoice}) => {
 
           {
             handlePendig() === true ? (
-              <AddPayment pendingAmount={pendingAmount}/>
+              <AddPayment totalAmount={totalAmount} pendingAmount={pendingAmount} percentage={payments.paymentsMath.PaymentPercentage} cardPaymentAmount={payments.paymentsMath.CardPaymentAmount}   />
             ):(
               null
             )

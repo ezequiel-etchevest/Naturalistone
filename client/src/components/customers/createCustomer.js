@@ -4,7 +4,6 @@ import CreationCustomerForm from "./createCustomerForm";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { createCustomer } from '../../redux/actions-customers'
-import { USStates } from "./AutocompleteState";
 import { validate } from "../../utils/validateForm";
 
 export function CreateNewCustomer() {

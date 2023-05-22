@@ -116,7 +116,7 @@ const List = ({seller_invoices, user}) => {
             w={'80vw'}
             >
               {
-                seller_invoices.length ? (
+                typeof seller_invoices[0] !== 'string' ? (
                   <TableContainer>
                       <Table color={'web.text'}variant={'simple'} size={'sm'}>
                         <Thead h={'6vh'}>

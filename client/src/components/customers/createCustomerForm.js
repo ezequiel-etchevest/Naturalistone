@@ -11,7 +11,7 @@ import '../../assets/styleSheet.css'
 import { formatNumber } from '../../utils/formattedNumber';
 
 export default function CreationCustomerForm({formData, setFormData, validate, errors, setErrors, setChangeInput}) {
-
+  console.log(formData)
   const handleChange = (event) => {
     const { name, value } = event.target;
     // Actualizas solo la propiedad que cambió en el objeto de formData
@@ -160,7 +160,7 @@ export default function CreationCustomerForm({formData, setFormData, validate, e
             name={"discountID"}
             onChange={handleDiscountSelect}
             >
-            <option className='options' disable hidden value={''}>Select Discount</option>
+            <option className='options' disable={true} value={''}>Select Discount</option>
             <option className='options' value={1}>0%</option>
             <option className='options' value={2}>5%</option>
             <option className='options' value={3}>10%</option>
