@@ -118,8 +118,8 @@ const handleClear = () => {
         })
       dispatch(getFiltered('','','','','','',''))
   }
-console.log(filters)
-console.log(values)
+
+
   return(
 <>
   <Modal 
@@ -169,11 +169,14 @@ console.log(values)
             >
             <option value='' className="options">Type</option>
             {
+              Object.entries(values).length ?
               values?.materials.map((v, i) => {
                   return(
                     <option value={`${v}`} key={i} className={'options'}>{`${v}`}</option>
                   )
                 })
+              :
+              null  
             }
             </Select>
             <Select
@@ -194,11 +197,14 @@ console.log(values)
             >
             <option value='' className="options">Finish</option>
             {
+              Object.entries(values).length ?
               values?.finishValues.map((v, i )=> {
                 return(
                   <option value={`${v}`} key={i} className={'options'}>{`${v}`}</option>
                 )
               })
+              :
+              null
             }                     
             </Select>
             <Input
