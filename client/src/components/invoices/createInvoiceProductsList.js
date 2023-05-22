@@ -26,30 +26,62 @@ import{ ImCheckboxChecked, ImCheckboxUnchecked } from 'react-icons/im';
 import { patchDiscontinued } from '../../redux/actions-products';
 
 
-const ModelTr = ({e}) => {
+const ModelTr = ({e, setProducts, products}) => {
 
-//   const a = e.Discontinued_Flag === 'True' ? true : false 
-//   const [flag, setFlag] = useState(a)
+const [input, setInput] = useState({   
+  quantity: 0,
+  prodID: e.ProdID,
+  prodName: e.ProductName,
+  type: e.Type,
+  size:e.Size,
+  thickness:e.Thickness,
+  finish:e.Finish,
+})
 
-//   const navigate = useNavigate()
-//   const dispatch = useDispatch()
 
+const handleInput = (event) => {
 
-//     const handleClickProduct = () => {
-//       dispatch(getProductById(e.ProdID))
-//       if(e.ProdID !== undefined)
-//       navigate(`/products/${e.ProdID}`)
+  if(event === ''|| event === null || event === NaN ){
+    setInput({
+      ...input,
+      quantity: 0,
+    })
+} else{
+  setInput({
+    ...input,
+    quantity: parseFloat(event),
+  })
+}
+};
+
+const handleOnBlur = () => {
+  let updated = false;
+  
+  if (products.length) {
+    products.forEach(e => {
+      if (e.prodID === input.prodID) {
+        e.quantity = input.quantity;
+        if(e.quantity === 0){
+          setProducts(products.filter(q => q.prodID !== input.prodID))
+        }
+        updated = true;
+  }});  
+  }
+
+  if (!updated){
+    if(input.quantity > 0){
+    setProducts([...products, input])
+}}
+}
+
+// const handleValue = () => {
+//   products.map(q => {
+//     if(q.prodID === input.prodID){
+//       console.log(q)
+//       return input.quantity
 //     }
-//     const handleClickSwitch = () => {
-//       setFlag(flag === true ? false : true)
-//       dispatch(patchDiscontinued(e.ProdID, flag))
-//     }
-
-//     let validateSeller = () => {
-//       if(user[0].Secction7Flag === 1 ) return true
-//       else return false
-//     }
-    
+//   })
+// }
   return(
     <Tr       
       cursor={'pointer'} 
@@ -59,15 +91,15 @@ const ModelTr = ({e}) => {
         color: 'logo.orange'
       }} 
       >
-        <Td w={'8vw'}>
+        <Td w={'8vw'} onBlur={() => handleOnBlur()}>
           <NumberInput
-            clampValueOnBlur={true}
+            // clampValueOnBlur={true}
             borderColor={'web.border'} 
             color={'web.text2'}
             w={'6vw'}
             ml={'1vw'}
             h={'4vh'}
-            // onChange={(e)=>handleInput(e)} 
+            onChange={(event)=>handleInput(event)} 
             step={1} 
             defaultValue={0} 
             min={0} 
@@ -87,10 +119,10 @@ const ModelTr = ({e}) => {
           </NumberInput>
           </Td>
       <Td maxW={'3vw'} fontSize={'2xs'} textAlign={'match-parent'}>{e.ProductName}</Td>
-      <Td maxW={'6vw'} fontSize={'2xs'} textAlign={'center'}>{e.Material.slice(0, 4)}</Td>
+      <Td maxW={'6vw'} fontSize={'2xs'} textAlign={'center'}>{e.Material}</Td>
       <Td maxW={'3vw'} fontSize={'2xs'} textAlign={'center'}>{e.Size}</Td>
       <Td maxW={'2vw'} fontSize={'2xs'} textAlign={'center'}> {e.Thickness === null ? 'N/A' : e.Thickness} </Td>
-      <Td maxW={'3vw'} fontSize={'2xs'} textAlign={'center'}> {e.Finish === null ? 'N/A' : e.Finish.slice(0, 1)} </Td>
+      <Td fontSize={'2xs'} maxW={'8vw'} textAlign={'center'}> {e.Finish === null ? 'N/A' : e.Finish} </Td>
       <Td maxW={'3vw'} fontSize={'2xs'} isNumeric>$ { e.Price ? e.Price.toLocaleString('en-US') : '-'}</Td>
       <Td maxW={'2vw'} fontSize={'2xs'} textAlign={'center'}>{e.InStock_Available === null ? 'N/A' : e.InStock_Available}</Td>
       <Td maxW={'2vw'} fontSize={'2xs'} textAlign={'center'}>{e.Incoming_Available === null ? 0 : e.Incoming_Available}</Td>
@@ -98,7 +130,8 @@ const ModelTr = ({e}) => {
   )
 }
 
-const CreateInvoiceProductsList = ({ allProducts }) => {
+const CreateInvoiceProductsList = ({ allProducts, setProducts, products }) => {
+
 
   return(
     <Box
@@ -125,11 +158,11 @@ const CreateInvoiceProductsList = ({ allProducts }) => {
       bg={'web.sideBar'} 
       border={'1px solid'} 
       rounded={'md'} 
-      p={'3vh'}
+      p={'1vh'}
       >
         {
         allProducts.length ? 
-        <TableContainer  mr={'1vw'} >
+        <TableContainer  mr={'0.5vw'}  ml={'0.5vw'}>
           <Table color={'web.text'} variant={'simple'} size={'sm'}>
             <Thead h={'6vh'}>
               <Tr>  
@@ -138,9 +171,7 @@ const CreateInvoiceProductsList = ({ allProducts }) => {
                 <Th color={'web.text2'} fontSize={'2xs'} textAlign={'center'}>Type</Th>
                 <Th color={'web.text2'} fontSize={'2xs'} textAlign={'center'}>Size</Th>
                 <Th color={'web.text2'} fontSize={'2xs'} textAlign={'center'}>Thickness</Th>
-                <Tooltip label={'H - Honed\nB - Brushed'} fontWeight={'hairline'} sx={{ whiteSpace: 'pre-line' }}>
-                  <Th color={'web.text2'} fontSize={'2xs'} textAlign={'center'}>Finish</Th>
-                </Tooltip>
+                <Th color={'web.text2'} fontSize={'2xs'} w={'10vw'} textAlign={'center'}>Finish</Th>
                 <Th color={'web.text2'} fontSize={'2xs'} isNumeric>Price</Th>
                 <Th color={'web.text2'} fontSize={'2xs'} textAlign={'center'}>In Stock</Th>
                 <Th color={'web.text2'} fontSize={'2xs'} textAlign={'center'}>Incoming</Th>
@@ -150,7 +181,7 @@ const CreateInvoiceProductsList = ({ allProducts }) => {
               {
                 allProducts.map((e, i) => {
                   return(
-                    <ModelTr key={i} e={e}/>
+                    <ModelTr key={i} e={e} setProducts={setProducts} products={products}/>
                   )
                 })
               }

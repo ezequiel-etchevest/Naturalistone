@@ -7,7 +7,7 @@ const CustomerFilters = require('../Controllers/customerController');
 
 customersRouter.get('/', async function(req, res){
 
-    const { name, Company } = req.query
+    const { search } = req.query
 
     query_ = `SELECT * FROM  Customers`;
     try{
@@ -17,7 +17,7 @@ customersRouter.get('/', async function(req, res){
                 res.status(400).json(error);
             } else {
                 console.log('Data OK')
-                let filtered = CustomerFilters(results, name, Company)
+                let filtered = CustomerFilters(results, search)
                 res.status(200).json(filtered);
             }
         });
@@ -38,7 +38,7 @@ customersRouter.get('/:id', async function(req, res){
                 res.status(400).json(error);
             } else {
                 console.log('Data OK')
-                res.status(200).json(results);
+                res.status(200).json(results[0]);
             }
         });
     } catch(error){
@@ -47,10 +47,10 @@ customersRouter.get('/:id', async function(req, res){
 });
 
 customersRouter.post('/', async function(req, res){
-    
-    const {Reference, Phone, Email, DiscountID, Name, LastName, Address, ZipCode, State} = req.body
+    //hay que agregar el sellerID, el vendedor encargado de cargar al cliente.
+    const {Company, Phone, Email, DiscountID, Contact_Name, Billing_Address, ZipCode, State} = req.body
 
-    query_ = `INSERT INTO Customers (Reference, Phone, Email, DiscountID, Name, LastName, Address, ZipCode, State) VALUES ("${Reference}", "${Phone}", "${Email}", "${DiscountID}", "${Name}", "${LastName}", "${Address}", "${ZipCode}", "${State}")`
+    query_ = `INSERT INTO Customers (Company, Phone, Email, DiscountID, Contact_Name, Billing_Address, ZipCode, State) VALUES ("${Company}", "${Phone}", "${Email}", "${DiscountID}", "${Contact_Name}", "${Billing_Address}", "${ZipCode}", "${State}")`
             
     try{
          mysqlConnection.query(query_, function(error, results, fields){

@@ -1,5 +1,5 @@
-
-import { 
+import {
+    Box, 
     Button, 
     IconButton,
     Modal,
@@ -14,90 +14,152 @@ import {
     FormControl,
     FormLabel,
     NumberInput,
-    NumberDecrementStepper,
-    NumberIncrementStepper,
-    NumberInputStepper,
     NumberInputField, 
     FormErrorMessage,
     useToast,
-    Tooltip
+    Tooltip,
+    Text
     } from "@chakra-ui/react"
 import { SiAddthis } from 'react-icons/si';
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useParams } from 'react-router-dom';
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { patchPaymentMethod } from "../../../redux/actions-payments";
 import '../../../assets/styleSheet.css'
 
+const AddPayment = ({pendingAmount, percentage, cardPaymentAmount, totalAmount}) => {
 
-
-const AddPayment = ({pendingAmount}) => {
-    const dispatch = useDispatch()
-    const {id} = useParams()
-    const toast = useToast()
-    const { isOpen, onOpen, onClose } = useDisclosure()
-    const [ disabled, setDisabled ] = useState(true)
+  
+  const dispatch = useDispatch()
+  const {id} = useParams()
+  const toast = useToast()
+  const toastId = 'error-toast'
+  const { isOpen, onOpen, onClose } = useDisclosure()
+  const [error, setError] = useState({msg: ''})
+  const [isOptionDisabled, setIsOptionDisabled] = useState(false)
+  const invoice = useSelector(state => state.invoice)
+  cardPaymentAmount = Number(cardPaymentAmount)
     const [input, setInput] = useState({
       Method : '',
-      Amount: ''})
-    const [error, setError] = useState('')
-    const handleCancel = () =>{
-      setDisabled(true)
-      onClose()
+      Amount: 0.00})
+
+
+  useEffect(() => {
+    if (cardPaymentAmount >= 5000 || cardPaymentAmount >= totalAmount / 2) {
+      setIsOptionDisabled(true);
     }
-    const handleSelect = (e) =>{
-         setInput({
+    if(error.msg !== ''){
+      if(!toast.isActive(toastId)){
+      toast({
+        id: toastId,
+        title: "Error",
+        description: error.msg,
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+      });}
+    }
+    return (()=>{
+      setIsOptionDisabled(false)
+    })
+    }, [error, toast, cardPaymentAmount]);
+
+  const handleSelect = (e) =>{
+    if(e.target.value === 'Card'){
+      if((input.Amount + cardPaymentAmount) > 5000 || (input.Amount + cardPaymentAmount) >= totalAmount / 2) {
+        setError({msg: `Card payment amount cannot exceed 50% of the quote or $5000.`})
+        setInput({
+          ...input,
+          Amount : 0.00
+        })
+      }else{
+        setInput({
           ...input,
           Method : e.target.value
          })
-      if(e.target.value !== '' && input.Amount !== ''){
-        setDisabled(false)
-      } else if (e.target.value === '' || input.Amount === 0.00){
-        setDisabled(true)
-      }
-    }
-    const handleInput = (e) => {
+    }}else{
       setInput({
-        ...input,
-        Amount : e
-       })
-       if(input.Method !== '' && input.Amount !== '' ){
-        setDisabled(false)
-      }
-      if(input.Method === ''){
-        setDisabled(true)
-      }
-      if(input.Amount === ''){
-        setDisabled(true)
-      }
-    }
-    const handleSubmit = () => {
-      if(parseFloat(input.Amount) > parseFloat(pendingAmount)){
-        toast({
-          title: 'Invalid amount',
-          description: `Pending amount equals to $${pendingAmount}`,
-          status: 'error',
-          duration: 2000,
-          isClosable: true,
-        });
-      } else{
-        if(input.Method !== '' && input.Amount > 0){ 
-          dispatch(patchPaymentMethod(id, input))
-          setInput({
-            Method : '',
-            Amount: '' })
-          onClose(setError(''))
-      } else{
-        toast({
-          title: 'Inconpleted fields',
-          description: `Both fields must be completed`,
-          status: 'error',
-          duration: 2000,
-          isClosable: true,
-        });
-      }
+          ...input,
+          Method : e.target.value
+         })
     }
   }
+
+  const handleInput = (e) => {
+    setError({msg: ''})
+    if(input.Method === 'Card'){
+      if((Number(e) + cardPaymentAmount) > 5000 || (Number(e) + cardPaymentAmount) > (totalAmount / 2)) {
+        setError({msg: `Card payment amount cannot exceed 50% of the quote or $5000.`})    
+      }else{
+        setInput({
+          ...input,
+          Amount : Number(e)
+        })
+    }}else{
+      if(e > Number(pendingAmount)){
+        setError({msg:`Unpaid balance: ${pendingAmount}`})
+        setInput({
+          ...input,
+          Amount : Number(pendingAmount)
+        })
+        setIsOptionDisabled(true)
+      }else{
+        setInput({
+          ...input,
+          Amount : Number(e)
+        })
+        if((e + cardPaymentAmount) > 5000 || (e + cardPaymentAmount) >= Number(totalAmount / 2)){
+          setIsOptionDisabled(true)}
+        if((e + cardPaymentAmount) < 5000 || (e + cardPaymentAmount) <= Number(totalAmount / 2)){
+        setIsOptionDisabled(false) } 
+      }
+
+    }
+  }
+
+  const handleClickPercentageButtons = (e) => {
+    let amount = e.target.name == '50' ? pendingAmount/2 : e.target.name == '100' ? pendingAmount : 0.00
+    if(input.Method === 'Card'){
+      if((amount + cardPaymentAmount) > (totalAmount/2) || (amount + cardPaymentAmount) > 5000) {
+        setError({msg: `Card payment amount cannot exceed 50% of the quote or $5000.`})
+        }else{
+          setInput({
+            ...input,
+            Amount : amount
+          })
+      }}else{
+        setInput({
+            ...input,
+            Amount : amount
+          })
+        if((amount + cardPaymentAmount) > (totalAmount/2) || (amount + cardPaymentAmount) > 5000){
+          setIsOptionDisabled(true)}
+        if((amount + cardPaymentAmount) < (totalAmount/2) || (amount + cardPaymentAmount) < 5000){
+          setIsOptionDisabled(false) } 
+        }
+      }
+  
+  const handleSubmit = () => {
+    if(input.Amount && input.Method){
+      dispatch(patchPaymentMethod(id, input))
+      setInput({
+        Method : '',
+        Amount: 0 })
+      setError({msg: ''})
+      setIsOptionDisabled(false)
+      onClose()
+    }
+  }
+
+  const handleClose = ()=>{
+    setInput({
+      Method : '',
+      Amount: 0 })
+    setError({msg: ''})
+    setIsOptionDisabled(false)
+    onClose()
+  }
+ 
   return(
     <>
       <Tooltip label={'Add payment'} fontWeight={'hairline'}>
@@ -114,9 +176,10 @@ const AddPayment = ({pendingAmount}) => {
         size={'md'}
         />
       </Tooltip>
+      {/*Modal AddPayment*/}
       <Modal 
         isOpen={isOpen} 
-        onClose={onClose}
+        onClose={handleClose}
         >
         <ModalOverlay/>
         <ModalContent 
@@ -129,12 +192,13 @@ const AddPayment = ({pendingAmount}) => {
             Add payment
           </ModalHeader>
           <ModalCloseButton
+            onClick={handleClose}
             color={'web.text2'}
             _hover={{
               color: 'web.text'
             }} />
           <ModalBody>
-          <FormControl  isRequired>
+          <FormControl isRequired>
             <FormLabel color={'web.text'}>
               Select payment method
             </FormLabel>
@@ -145,53 +209,122 @@ const AddPayment = ({pendingAmount}) => {
               }}
             bg={'web.sideBar'}
             borderColor={'web.border'} 
-            color={'web.text2'} 
-            onChange={(e)=>handleSelect(e)}>
+            color={'web.text2'}
+            onChange={(e)=>handleSelect(e)}
+            value={input.Method}
+            >
               <option value='' className="options" >Select Option</option>
               <option value='Check' className="options" >Check</option>
-              <option value='Card' className="options" >Card</option>
+              <option value='Card' className="options" id="cardId" disabled={isOptionDisabled}>Card</option>
               <option value='Cash' className="options" >Cash</option>
               <option value='Wire transfer' className="options" >Wire Transfer</option>
           </Select>
           </FormControl>
-          <FormControl mt={'2vh'}  isRequired>
-            <FormLabel color={'web.text'}>Amount</FormLabel>
+          <FormControl mt={'2vh'} isRequired>
+            <Box
+              mt={8}
+              display={'flex'} 
+              flexDirection={'row'}
+            >
+              <FormLabel color={'web.text'}>Amount</FormLabel>
+            </Box>
             <NumberInput
-            clampValueOnBlur={true}
+            clampValueOnBlur={true} 
+            value={Number(input.Amount).toLocaleString('en-US')}
             borderColor={'web.border'} 
             color={'web.text2'}
             onChange={(e)=>handleInput(e)} 
-            
             min={0} 
-            precision={2}>
+            precision={2}
+            >
               <NumberInputField
-              placeholder={'0.00'}                    
+              placeholder={'0.00'}
               _focus={{
               borderColor: 'logo.orange',
               boxShadow: '0 0.5px 0.5px rgba(229, 103, 23, 0.075)inset, 0 0 5px rgba(255,144,0,0.6)'
               }} />
-
               </NumberInput>
             </FormControl>
-            { error ? (
-              <FormErrorMessage>{error}</FormErrorMessage>
-              ):(
-                null
-              )}
+              <Box 
+                display={'flex'} 
+                justifyContent={'flex-start'} 
+                width={'100%'}
+                mt={2}
+              >
+                <Button
+                onClick={(e)=>handleClickPercentageButtons(e)}
+                name={'0'}
+                w={'3vw'}
+                variant={'unstyled'}           
+                fontWeight={'light'}
+                display={'flex'}         
+                _hover={{
+                  color: 'logo.orange',
+                  fontWeight: 'normal'
+                }}
+                color={'web.text2'}
+                >
+                0%
+                </Button>
+
+                <Button
+                onClick={(e)=>handleClickPercentageButtons(e)}
+                name={'50'}
+                w={'3vw'}
+                variant={'unstyled'}           
+                fontWeight={'light'}
+                display={'flex'}         
+                _hover={{
+                color: 'logo.orange',
+                fontWeight: 'normal'
+                }}
+                color={'web.text2'}
+                  >
+                  50%
+                </Button>
+                <Button
+                  onClick={(e)=>handleClickPercentageButtons(e)}
+                  name={'100'}
+                  w={'4vw'}
+                  variant={'unstyled'}           
+                  fontWeight={'light'}
+                  display={'flex'}         
+                  _hover={{
+                  color: 'logo.orange',
+                  fontWeight: 'normal'
+                  }}
+                  color={'web.text2'}
+                >
+                  100%
+                </Button>
+              </Box>
           </ModalBody>
           <ModalFooter>
             <Button
               colorScheme={'orange'} 
-              mr={3} 
-              onClick={()=>handleSubmit()}>
+              mr={3}
+              disabled={input.Method == '' || input.Amount == '' || input.Amount == 0.00 ? true : false} 
+              onClick={()=>handleSubmit()}
+              >
               Submit
             </Button>
-            <Button variant='ghost' onClick={()=> handleCancel()}>Cancel</Button>
+            <Button 
+            w={'10vh'}
+            variant={'unstyled'}           
+            fontWeight={'normal'}
+            display={'flex'}         
+            _hover={{
+            color: 'logo.orange',
+            fontWeight: 'normal'
+            }}
+            color={'web.border'}
+            onClick={()=> handleClose()}
+            >Cancel</Button>
           </ModalFooter>
-            </ModalContent>
-          </Modal>
-        </>
-    )
+        </ModalContent>
+      </Modal>
+    </>
+  )
 }
 
 export default AddPayment

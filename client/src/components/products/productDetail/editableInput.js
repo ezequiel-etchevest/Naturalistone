@@ -10,7 +10,7 @@ import {
  } from "@chakra-ui/react";
 import { CheckIcon, CloseIcon, EditIcon } from '@chakra-ui/icons';
 import { useDispatch } from "react-redux";
-import { updateProductNotes } from "../../redux/actions-products";
+import { updateProductNotes } from "../../../redux/actions-products";
 import { useState } from "react";
  
 

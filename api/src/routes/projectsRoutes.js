@@ -26,13 +26,14 @@ projectsRouter.get('/', async function(req, res){
 projectsRouter.get('/:idCustomer', async function(req, res){
 
   const {idCustomer} = req.params 
+
   query_ = `SELECT * FROM  Projects WHERE CustomerID = ${idCustomer}`;
 
   try{
        mysqlConnection.query(query_, function(error, results, fields){
           if(!results.length) {
               console.log('Error al obtener data en get.projects/:idCustomer !')
-              res.status(400).json(error);
+              res.status(200).json([{ProjectName: 'No projects related'}]);
           } else {
               console.log('Data OK')
               res.status(200).json(results);
@@ -46,16 +47,16 @@ projectsRouter.get('/:idCustomer', async function(req, res){
 projectsRouter.post('/:customerID', async function(req, res){
 
     const { customerID } = req.params
-    const {ProjectName} = req.body
+    const { ProjectName, CustomerID, State, ZipCode, City, Shipping_Address } = req.body
    
-    query_ = `INSERT INTO Projects (ProjectName, CustomerID) VALUES ("${ProjectName}", "${customerID}")`
+    query_ = `INSERT INTO Projects (ProjectName, CustomerID, State, ZipCode, City, Shipping_Address ) VALUES ("${ProjectName}", "${CustomerID}", "${State}", "${ZipCode}", "${City}", "${Shipping_Address}")`
             
     try{
          mysqlConnection.query(query_, function(error, results, fields){
             if(error) throw error;
             if(results.length == 0) {
                 console.log('Error en salesRoutes.get /create-project/:customerID')
-                res.status(200).json('');
+                res.status(200).json([]);
             } else {
                 console.log('Project created successfully')
                 res.status(200).json(results);

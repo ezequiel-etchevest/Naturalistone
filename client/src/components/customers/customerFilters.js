@@ -12,36 +12,22 @@ import { useState } from "react";
 import '../../assets/styleSheet.css';
 import {AiOutlineClear} from 'react-icons/ai';
 import { getCustomers } from "../../redux/actions-customers";
+import { CreateNewCustomer } from "./createCustomer";
 
 const CustomerFilters = () => {
 
   const dispatch = useDispatch()
-  const [inputValues, setInputValues] = useState(
-    {
-      inputName: '',
-      inputCompany: ''
-    })
+  const [inputValues, setInputValues] = useState('')
 
-  const handleChangeCustomerName = (e) => {
+  const handleInput = (e) => {
     if(e.target.value.length){
-      setInputValues({...inputValues, inputName: e.target.value})
-      dispatch(getCustomers(e.target.value, inputValues.inputCompany))
+      setInputValues(e.target.value)
+      dispatch(getCustomers(e.target.value))
     } else {
-      setInputValues({...inputValues, inputName: ''})
-      dispatch(getCustomers(e.target.value, inputValues.inputCompanyt))
+      setInputValues('')
+      dispatch(getCustomers(''))
     }
   }
-
-  const handleChangeCompany = (e) => {
-    if(e.target.value.length){
-      setInputValues({...inputValues, inputCompany: e.target.value})
-      dispatch(getCustomers(inputValues.inputName, e.target.value))
-    } else {
-      setInputValues({...inputValues, inputCompany: ''})
-      dispatch(getCustomers(inputValues.inputName, e.target.value))
-    }
-  }
-
   
   return (
     <Box>
@@ -62,7 +48,7 @@ const CustomerFilters = () => {
           <Box
           display={'flex'}
           alignItems={'center'} 
-          w={'15vw'}
+          w={'20vw'}
           h={'10vh'}
           ml={'1vw'}
           >
@@ -71,14 +57,14 @@ const CustomerFilters = () => {
             w={'80%'}
             minH={'4.5vh'}
             variant="unstyled"
-            placeholder={'Name'}
+            placeholder={'Search by name/company'}
             textColor={'web.text2'}
             _placeholder={{ fontFamily: 'body', fontWeight: 'thin' }}
             size={"sm"}
             borderBottomWidth={"2px"}
             borderBottomColor={'web.text2'}
-            value={inputValues.inputName}
-            onChange={(e)=> handleChangeCustomerName(e)}
+            value={inputValues}
+            onChange={(e)=> handleInput(e)}
             />
             <IconButton
             color={'web.text2'}
@@ -93,40 +79,6 @@ const CustomerFilters = () => {
             _active={{ color: 'gray.800'}}
             />
           </Box>
-          <Box
-          display={'flex'}
-          alignItems={'center'} 
-          w={'15vw'}
-          h={'10vh'}
-          ml={'1vw'}
-          >
-            <Input
-            mb={'0.5vh'}
-            w={'80%'}
-            minH={'4.5vh'}
-            variant="unstyled"
-            placeholder={'Company'}
-            textColor={'web.text2'}
-            _placeholder={{ fontFamily: 'body', fontWeight: 'thin' }}
-            size={"sm"}
-            borderBottomWidth={"2px"}
-            borderBottomColor={'web.text2'}
-            value={inputValues.inputCompany}
-            onChange={(e)=> handleChangeCompany(e)}
-            />
-            <IconButton
-            color={'web.text2'}
-            borderRadius={2}
-            aria-label="Search database"
-            bgColor={'web.bg'}
-            ml={1}
-            icon={<SearchIcon />}
-            _hover={{
-              color: 'orange',
-            }}
-            _active={{ color: 'gray.800'}}
-            />
-          </Box>           
         </Box>
         {/*Selects */}
         <Box 
@@ -135,6 +87,7 @@ const CustomerFilters = () => {
         justifyContent={'flex-end'}>  
             
         </Box>
+        <CreateNewCustomer/>
         <Divider orientation={'vertical'} h={'5vh'}/>
         <Tooltip placement={'bottom-start'} label={'Clear all filters'} fontWeight={'hairline'}>      
           <IconButton

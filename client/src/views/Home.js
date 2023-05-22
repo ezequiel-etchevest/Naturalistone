@@ -3,7 +3,6 @@ import SideBar from "../components/sideBar";
 import HomeContainer from "../components/homeContainer";
 import { useDispatch, useSelector } from "react-redux";
 import { getEmployeeById } from '../redux/actions-employees';
-import { cleanStats } from './../redux/actions-statsByMonth'
 
 
 const Home = ({focus, setFocus}) => {
@@ -16,9 +15,7 @@ const Home = ({focus, setFocus}) => {
         if(userLocal && !user.length){
           dispatch(getEmployeeById(userLocal.SellerID))
         }
-        return ()=>{
-          dispatch(cleanStats())
-        }},[dispatch, userLocal, user])
+        },[dispatch, userLocal, user])
 
       if(user.length){
         return(

@@ -141,22 +141,21 @@ const ProductsFilters = ({allProducts, setFilteredProducts, values}) => {
             flexDir={'row'}
             w={'39vw'}
             justifyContent={'space-between'}>
-            <Select 
-              variant='outline' 
-              w={'9vw'}
-              h={'4.2vh'}
-              fontSize={'xs'}             
-              bg={'web.sideBar'}
-              color={'web.text2'}
-              borderColor={'web.border'}
-              cursor={'pointer'}
-              value={filters.material}
-              _focus={{
-                borderColor: 'logo.orange',
-                boxShadow: '0 0.5px 0.5px rgba(229, 103, 23, 0.075)inset, 0 0 5px rgba(255,144,0,0.6)'
-              }}
-              onChange={(e) => handleMaterial(e)}
-              >
+                <Select
+                  onChange={(e)=>handleMaterial(e)}
+                  mb={'0.5vh'}
+                  w={'9vw'}
+                  minH={'4.5vh'}
+                  variant="unstyled"
+                  textColor={'web.text2'}
+                  _placeholder={{ fontFamily: 'body', fontWeight: 'inherit', textColor: 'inherit' }}
+                  size={"sm"}
+                  borderBottomWidth={"2px"}
+                  borderBottomColor={'web.text2'}
+                  _hover={{borderColor: 'web.border'}}
+                  cursor={'pointer'}
+                  value={filters.material}
+                >
                 <option value='' className="options">Type</option>
                 {
                   values.materials.map((v, i) => {
@@ -165,23 +164,22 @@ const ProductsFilters = ({allProducts, setFilteredProducts, values}) => {
                       )
                     })
                 }
-            </Select>
-            <Select 
-              variant='outline' 
-              w={'9vw'}
-              h={'4.2vh'}
-              fontSize={'xs'}             
-              bg={'web.sideBar'}
-              color={'web.text2'}
-              borderColor={'web.border'}
-              cursor={'pointer'}
-              value={filters.size}
-              _focus={{
-                borderColor: 'logo.orange',
-                boxShadow: '0 0.5px 0.5px rgba(229, 103, 23, 0.075)inset, 0 0 5px rgba(255,144,0,0.6)'
-              }}
-              onChange={(e) => handleSize(e)}
-              >
+                </Select>
+                <Select
+                  onChange={(e)=>handleSize(e)}
+                  mb={'0.5vh'}
+                  w={'9vw'}
+                  minH={'4.5vh'}
+                  variant="unstyled"
+                  textColor={'web.text2'}
+                  _placeholder={{ fontFamily: 'body', fontWeight: 'inherit', textColor: 'inherit' }}
+                  size={"sm"}
+                  borderBottomWidth={"2px"}
+                  borderBottomColor={'web.text2'}
+                  _hover={{borderColor: 'web.border'}}
+                  cursor={'pointer'}
+                  value={filters.size}
+                >
                 <option value='' className="options">Size</option>
                 {
                   values.sizes.map((v, i) => {
@@ -191,23 +189,22 @@ const ProductsFilters = ({allProducts, setFilteredProducts, values}) => {
                   })
                        
               }
-            </Select>
-            <Select 
-              variant='outline' 
-              w={'9vw'}
-              h={'4.2vh'}
-              fontSize={'xs'}             
-              bg={'web.sideBar'}
-              color={'web.text2'}
-              borderColor={'web.border'}
-              cursor={'pointer'}
-              value={filters.thickness}
-              _focus={{
-                borderColor: 'logo.orange',
-                boxShadow: '0 0.5px 0.5px rgba(229, 103, 23, 0.075)inset, 0 0 5px rgba(255,144,0,0.6)'
-              }}
-              onChange={(e) => handleThickness(e)}
-              >
+               </Select>
+                <Select
+                  onChange={(e)=>handleThickness(e)}
+                  mb={'0.5vh'}
+                  w={'9vw'}
+                  minH={'4.5vh'}
+                  variant="unstyled"
+                  textColor={'web.text2'}
+                  _placeholder={{ fontFamily: 'body', fontWeight: 'inherit', textColor: 'inherit' }}
+                  size={"sm"}
+                  borderBottomWidth={"2px"}
+                  borderBottomColor={'web.text2'}
+                  _hover={{borderColor: 'web.border'}}
+                  cursor={'pointer'}
+                  value={filters.thickness}
+                >
               <option value='' className="options">Thickness</option>
               {   
                   values.thickness.map((v, i) => {
@@ -216,23 +213,22 @@ const ProductsFilters = ({allProducts, setFilteredProducts, values}) => {
                     )
                   })
               }
-            </Select>
-            <Select 
-              variant='outline' 
-              w={'9vw'}
-              h={'4.2vh'}
-              fontSize={'xs'}            
-              bg={'web.sideBar'}
-              color={'web.text2'}
-              borderColor={'web.border'}
-              cursor={'pointer'}
-              value={filters.finish}
-              _focus={{
-                borderColor: 'logo.orange',
-                boxShadow: '0 0.5px 0.5px rgba(229, 103, 23, 0.075)inset, 0 0 5px rgba(255,144,0,0.6)'
-              }}
-              onChange={(e) => handleFinish(e)}
-              >
+                </Select>
+                <Select
+                  onChange={(e)=>handleFinish(e)}
+                  mb={'0.5vh'}
+                  w={'9vw'}
+                  minH={'4.5vh'}
+                  variant="unstyled"
+                  textColor={'web.text2'}
+                  _placeholder={{ fontFamily: 'body', fontWeight: 'inherit', textColor: 'inherit' }}
+                  size={"sm"}
+                  borderBottomWidth={"2px"}
+                  borderBottomColor={'web.text2'}
+                  _hover={{borderColor: 'web.border'}}
+                  cursor={'pointer'}
+                  value={filters.finish}
+                >
                 <option value='' className="options">Finish</option>
                 {
                   values.finishValues.map((v, i )=> {

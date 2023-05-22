@@ -1,0 +1,12 @@
+ /* CSS */
+.enlarge-image {
+    transition: transform 0.3s ease;
+    height: 2.8vh;
+  }
+  
+  .enlarge-image:hover {
+    transform: scale(5) translateX(10px) translateY(-10px);
+  } 
+
+
+  

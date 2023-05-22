@@ -12,31 +12,33 @@ import {
     useDisclosure
     } from "@chakra-ui/react"
 import { useDispatch } from 'react-redux'
-import '../../assets/styleSheet.css'
-import { getCustomerProjects } from "../../redux/actions-projects"
-import SelectProjectModal from "../customerProjects/selectProjectModal"
+import { getCustomerProjects } from "../../../redux/actions-projects"
+import SelectProjectModal from "../../invoices/createQuote/customerProjects/selectProjectModal"
+import '../../../assets/styleSheet.css'
 
-const SelectedCustomerModal = ({customer, isSecondModalOpen, onSecondModalClose, setCustomer,  isOpen, onClose}) => {
+const SelectedCustomerModal = ({customer, isOpen2, onClose2, onClose1, setCustomer,  isOpen, onClose}) => {
 
 const dispatch = useDispatch()
-const { isOpen: isThirthModalOpen, onOpen: onThirthModalOpen, onClose: onThirthModalClose } = useDisclosure()
+const { isOpen: isOpen3, onOpen: onOpen3, onClose: onClose3 } = useDisclosure()
 
 const handlePrevious = () => {
   setCustomer('')
-  onSecondModalClose()
+  onClose2()
 }
 
 const handleNext = () => {
   dispatch(getCustomerProjects(customer.CustomerID))
-  onThirthModalOpen()
+  onOpen3()
+  onClose2()
+
 }
 
   return(
 
 <>
   <Modal 
-    isOpen={isSecondModalOpen} 
-    onClose={onSecondModalClose}
+    isOpen={isOpen2} 
+    onClose={onClose2}
     size={'3xl'}
     >
     <ModalOverlay />
@@ -51,18 +53,29 @@ const handleNext = () => {
         _hover={{
           color: 'web.text'
         }}
-        onClick={onClose} 
+        onClick={onClose2} 
         />
       <Box color={'white'}>
       <Text ml={'3vw'} fontSize={'lg'}>Selected customer</Text>
       <ModalBody 
         color={'web.text2'} display={'flex'} justifyContent={'center'} flexDir={'column'} h={'58vh'} alignItems={'center'}>
-          <Text border={'1px'} borderRadius={'md'} w={'25vw'} mb={'1.5vh'}> ID: {customer.CustomerID}</Text>
-          <Text border={'1px'} borderRadius={'md'} w={'25vw'} mb={'1.5vh'}> Full Name: {customer.Name ? customer.Name : "-"} {customer.LastName ? customer.LastName : "-"}</Text>
+          {
+            customer.CustomerID ?
+            <Text border={'1px'} borderRadius={'md'} w={'25vw'} mb={'1.5vh'}> ID: {customer.CustomerID}</Text>
+            : null
+          }
+          <Text border={'1px'} borderRadius={'md'} w={'25vw'} mb={'1.5vh'}> Full Name: {customer.Contact_Name ? customer.Contact_Name : "-"}</Text>
           <Text border={'1px'} borderRadius={'md'} w={'25vw'} mb={'1.5vh'}> Email: {customer.Email ? customer.Email : "-"}</Text>
           <Text border={'1px'} borderRadius={'md'} w={'25vw'} mb={'1.5vh'}> Phone: {customer.Phone ? customer.Phone : "-"}</Text>
-          <Text border={'1px'} borderRadius={'md'} w={'25vw'} mb={'1.5vh'}> Reference: {customer.Reference ? customer.Reference : "-"}</Text>
-          <Text border={'1px'} borderRadius={'md'} w={'25vw'} mb={'1.5vh'}> Discount %: {customer.DiscountID ? customer.DiscountID : "-"}</Text>
+          <Text border={'1px'} borderRadius={'md'} w={'25vw'} mb={'1.5vh'}> Company: {customer.Company ? customer.Company : "-"}</Text>
+          <Text border={'1px'} borderRadius={'md'} w={'25vw'} mb={'1.5vh'}> Discount: 
+          { 
+          customer.DiscountID === 4 || customer.DiscountID === 3 ? 
+            customer.DiscountID === 4 ? '15 %' : '10 %'
+          : 
+          customer.DiscountID === 2 ?  '5 %' : "-"
+          }
+          </Text>
           <Text border={'1px'} borderRadius={'md'} w={'25vw'} mb={'1.5vh'}> Address: {customer.Address ? customer.Address : "-"}</Text>
           <Text border={'1px'} borderRadius={'md'} w={'25vw'} mb={'1.5vh'}> Zip Code: {customer.ZipCode ? customer.ZipCode : "-"}</Text>
           <Text border={'1px'} borderRadius={'md'} w={'25vw'} mb={'1.5vh'}> State: {customer.State ? customer.State : "-"}</Text>
@@ -86,32 +99,9 @@ const handleNext = () => {
       </ModalFooter>
     </ModalContent>
   </Modal>
-  <SelectProjectModal isThirthModalOpen={isThirthModalOpen} onThirthModalClose={onThirthModalClose} customer={customer}/>
+  <SelectProjectModal isOpen3={isOpen3} onClose3={onClose3} onClose2={onClose2} onClose1={onClose1} customer={customer}/>
 </>
 )}
 
 export default SelectedCustomerModal
 
-{/* <Modal 
-// isOpen={isSecondModalOpen} 
-// onClose={handleSecondModalClose}
-size={'4xl'}
->
-<ModalOverlay />
-<ModalContent 
-rounded={'md'} 
-mt={'2vh'} 
-mb={'2vh'} 
-w={'64vw'} 
-bg={'web.sideBar'} 
-border={'1px solid'} 
-borderColor={'web.border'}
->
-<ModalHeader/>
-<ModalBody color={'web.text2'} w={'100%'} h={'100%'}>
-{/* <CreateDeliveryNotePdf quantities={quantities} deliveryID={deliveryID} id={id}/> */}
-// </ModalBody>
-// <ModalFooter/>
-// </ModalContent>
-// </Modal>
-// Finish Render created delivery modal */}

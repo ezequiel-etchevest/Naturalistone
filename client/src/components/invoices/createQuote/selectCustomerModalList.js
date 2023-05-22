@@ -11,18 +11,17 @@ import {
     Text,
     Center,
     } from '@chakra-ui/react'
-  import { useState } from 'react';
   import SelectedCustomerModal from './selectedCustomerReview';
   
   
   
-  const ModelTr = ({e, onSecondModalOpen, setCustomer}) => {
+  const ModelTr = ({e, onOpen2, setCustomer}) => {
   
 
 
     const handleClick = (e) => {
       setCustomer(e)
-      onSecondModalOpen()
+      onOpen2()
     }
 
     return(
@@ -36,16 +35,15 @@ import {
         onClick={() => handleClick(e)}
       >
         <Td fontSize={'xs'}  w={'4vw'}>{e.CustomerID}</Td>
-        <Td fontSize={'xs'} textAlign={'center'}>{e.LastName ?`${e.Name} ${e.LastName}` : '-'}</Td>
-        <Td fontSize={'xs'}  w={'24vw'}>{e.Reference}</Td>
+        <Td fontSize={'xs'} textAlign={'center'}>{e.Contact_Name ? e.Contact_Name : '-'}</Td>
+        <Td fontSize={'xs'}  w={'24vw'}>{e.Company}</Td>
 
       </Tr>
     )
   }
   
-  const SelectCustomerModalList = ({customers, onSecondModalOpen, onSecondModalClose, isSecondModalOpen}) => {
-    
-    const [customer, setCustomer] = useState('')
+  const SelectCustomerModalList = ({customers, customer, setCustomer, onOpen2, onClose2, isOpen2, onClose1}) => {
+
   
   return(
 <>
@@ -89,7 +87,7 @@ import {
                 <Tbody >
                 { 
                   customers.map((e, i) => (
-                    <ModelTr key={i} e={e}  onSecondModalOpen={onSecondModalOpen} setCustomer={setCustomer} /> 
+                    <ModelTr key={i} e={e}  onOpen2={onOpen2} setCustomer={setCustomer} /> 
                   ))
                 }
                 </Tbody>
@@ -103,7 +101,12 @@ import {
         }
       </Box> 
     </Box>
-    <SelectedCustomerModal onSecondModalClose={onSecondModalClose} isSecondModalOpen={isSecondModalOpen} customer={customer} setCustomer={setCustomer}/>
+    <SelectedCustomerModal 
+    onClose2={onClose2}
+    onClose1={onClose1}
+    isOpen2={isOpen2} 
+    customer={customer}
+    setCustomer={setCustomer}/>
   </>
   )
 }

@@ -12,15 +12,16 @@ import {
     Center,
     } from '@chakra-ui/react'
     import { useState } from 'react';
-  import CreateInvoiceModal from '../invoices/createInvoiceModal';
+  import CreateInvoiceModal from '../createInvoiceModal';
   
-  const ModelTr = ({e, setProject}) => {
+  const ModelTr = ({e, setProject, setFocus, focus}) => {
   
 
     const handleClick = (e) => {
       setProject(e)
+      setFocus(`${e.idProjects}`)
     }
-
+    
     return(
       <Tr 
       cursor={'pointer'} 
@@ -29,17 +30,21 @@ import {
         bg: 'web.navBar',
         color: 'logo.orange'
         }}
+        color={focus === `${e.idProjects}` ? '#E47424' : 'white'}
+        background={focus === `${e.idProjects}` ? 'web.navBar' : 'none'}
+        focus={focus}
         onClick={() => handleClick(e)}
       >
         <Td fontSize={'xs'} textAlign={'center'} w={'4vw'}>{e.idProjects}</Td>
         <Td fontSize={'xs'} textAlign={'center'} w={'14vw'}>{e.ProjectName}</Td>
+        <Td fontSize={'xs'} textAlign={'center'} w={'14vw'}>{e.Shipping_Address}</Td>
       </Tr>
     )
   }
   
-  const SelectProjectModalList = ({customer, projects, onQuotesModalClose, isQuotesModalOpen}) => {
+  const SelectProjectModalList = ({variables, setVariables, setProject, project, customer, projects, onClose4, isOpen4, onOpen4, onClose3, onClose2, onClose1}) => {
     
-    const [project, setProject] = useState('')
+    const [focus, setFocus] = useState('')
 
     return(
 <>
@@ -48,8 +53,8 @@ import {
     justifyContent={'center'}
     >
       <Box
-      maxHeight={'50vh'}
-      minHeight={'50vh'}
+      maxHeight={'40vh'}
+      minHeight={'40vh'}
       overflow={'auto'}
       css={{
         '&::-webkit-scrollbar': {
@@ -77,12 +82,13 @@ import {
                 <Tr>
                     <Th color={'web.text2'} textAlign={'center'} w={'4vw'} fontSize={'x-small'}>IDs</Th>
                     <Th color={'web.text2'} textAlign={'center'} w={'14vw'}fontSize={'x-small'}>Project Name</Th>
+                    <Th color={'web.text2'} textAlign={'center'} w={'14vw'}fontSize={'x-small'}>Shipping Address</Th>
                   </Tr>
                 </Thead>
                 <Tbody >
                 { 
                   projects.map((e, i) => (
-                    <ModelTr key={i} e={e} setProject={setProject}/> 
+                    <ModelTr key={i} e={e} setProject={setProject} setFocus={setFocus} focus={focus}/> 
                   ))
                 }
                 </Tbody>
@@ -96,7 +102,18 @@ import {
         }
       </Box> 
     </Box>
-    <CreateInvoiceModal isQuotesModalOpen={isQuotesModalOpen} onQuotesModalClose={onQuotesModalClose} customer={customer} project={project}/>
+    <CreateInvoiceModal 
+      variables={variables} 
+      setVariables={setVariables} 
+      customer={customer} 
+      project={project} 
+      isOpen4={isOpen4} 
+      onOpen4={onOpen4} 
+      onClose4={onClose4} 
+      onClose3={onClose3}
+      onClose2={onClose2}
+      onClose1={onClose1}
+    />
   </>
   )
 }

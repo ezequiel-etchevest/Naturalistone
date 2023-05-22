@@ -15,7 +15,7 @@ import { useDispatch } from 'react-redux'
 import { useState } from "react";
 import '../../assets/styleSheet.css';
 import {AiOutlineClear} from 'react-icons/ai';
-import CreateInvoiceButton from './createInvoice'
+import CreateInvoiceButton from './createQuote/createInvoice'
 
 const Filters = ({user, seller_invoices, setFocusFilter, seller_values, customers}) => {
 
@@ -36,24 +36,29 @@ const Filters = ({user, seller_invoices, setFocusFilter, seller_values, customer
     if(user[0].Secction7Flag === 1) return true
     else return false
   }
+  
   const handleClickAllInvoices = () => {
     setInputValues({...inputValues, timeFilter: 'All'})
     dispatch(getInvoicesBySeller(userId, {...inputValues, timeFilter: 'All'}))
 
   }
+
   const handleClickLastWeek = () => {
     setInputValues({...inputValues, timeFilter: 'LastWeek'})
     dispatch(getInvoicesBySeller(userId, {...inputValues, timeFilter: 'LastWeek'}))
   }
+
   const handleClickLastMonth = () => {
     setInputValues({...inputValues, timeFilter: 'LastMonth'})
     dispatch(getInvoicesBySeller(userId, {...inputValues, timeFilter: 'LastMonth'}))
   }
+
   const handleTimeSelect = (e) => {
     if(e.target.value === 'All') return handleClickAllInvoices()
     if(e.target.value === 'Lastweek') return handleClickLastWeek()
     if(e.target.value === 'Lastmonth') return handleClickLastMonth()
   }
+  
   const validateInput = (e) => {
       if(!/^[0-9]*$/.test(e.target.value)){
         setErrores('Special characters or letters not alowed') 
@@ -63,6 +68,7 @@ const Filters = ({user, seller_invoices, setFocusFilter, seller_values, customer
         setErrores('')
       }
   }
+
   const handleChangeInvoiceNumber = (e) => {
     if(e.target.value.length){
       validateInput(e)
@@ -76,6 +82,7 @@ const Filters = ({user, seller_invoices, setFocusFilter, seller_values, customer
       dispatch(getInvoicesBySeller(userId, {...inputValues, inputNumber: ''}))
     }
   }
+
   const handleChangeCustomerName = (e) => {
     if(e.target.value.length){
       setInputValues({...inputValues, inputName: e.target.value})
@@ -85,10 +92,12 @@ const Filters = ({user, seller_invoices, setFocusFilter, seller_values, customer
       dispatch(getInvoicesBySeller(userId, {...inputValues, inputName: ''}))
     }
   }
+
   const handleSellerSelect = (e) => {
     setInputValues({...inputValues, selectSeller: e.target.value})
     dispatch(getInvoicesBySeller(userId, {...inputValues, selectSeller: e.target.value}))
   }
+
   const handleClear = () => {
     setInputValues({
       inputNumber:'',
@@ -221,19 +230,19 @@ const Filters = ({user, seller_invoices, setFocusFilter, seller_values, customer
             <Select
               onChange={(e)=>handleSellerSelect(e)}
               display={validateSeller() === true ? 'unset' : 'none' }
+              mb={'0.5vh'}
               w={'13vw'}
-              variant='outline' 
-              h={'4.4vh'}
-              fontSize={'xs'}            
-              bg={'web.sideBar'}
-              color={'web.text2'}
-              borderColor={'web.border'}
-              cursor={'pointer'}
+              minH={'4.5vh'}
+              variant="unstyled"
+              textColor={'web.text2'}
+              _placeholder={{ fontFamily: 'body', fontWeight: 'inherit', textColor: 'inherit' }}
+              size={"sm"}
+              borderBottomWidth={"2px"}
+              borderBottomColor={'web.text2'}
+              _hover={{borderColor: 'web.border'}}
               value={inputValues.selectSeller}
-              _focus={{
-                borderColor: 'logo.orange',
-                boxShadow: '0 0.5px 0.5px rgba(229, 103, 23, 0.075)inset, 0 0 5px rgba(255,144,0,0.6)'
-              }}>
+              cursor={'pointer'}
+            >
               <option value='' className="options">All seller</option>
               {
                 
@@ -246,20 +255,20 @@ const Filters = ({user, seller_invoices, setFocusFilter, seller_values, customer
                   ): ( null)
               }
             </Select>
-            <Select
-              onChange={(e)=>handleTimeSelect(e)} 
-              w={'9vw'}
-              variant='outline' 
-              h={'4.4vh'}
-              fontSize={'xs'}            
-              bg={'web.sideBar'}
-              color={'web.text2'}
-              borderColor={'web.border'}
-              cursor={'pointer'}
-              _focus={{
-                borderColor: 'logo.orange',
-                boxShadow: '0 0.5px 0.5px rgba(229, 103, 23, 0.075)inset, 0 0 5px rgba(255,144,0,0.6)'
-              }}>
+              <Select
+                onChange={(e)=>handleTimeSelect(e)}
+                mb={'0.5vh'}
+                w={'9vw'}
+                minH={'4.5vh'}
+                variant="unstyled"
+                textColor={'web.text2'}
+                _placeholder={{ fontFamily: 'body', fontWeight: 'inherit', textColor: 'inherit' }}
+                size={"sm"}
+                borderBottomWidth={"2px"}
+                borderBottomColor={'web.text2'}
+                _hover={{borderColor: 'web.border'}}
+                cursor={'pointer'}
+              >
               <option value='All' className="options">All time</option>
               <option value='Lastweek' className="options">Last week</option>
               <option value='Lastmonth' className="options">Last month</option>
@@ -284,7 +293,7 @@ const Filters = ({user, seller_invoices, setFocusFilter, seller_values, customer
             >
             </IconButton>
           </Tooltip>
-        <CreateInvoiceButton userId={userId} customers={customers}/>
+        <CreateInvoiceButton user={user} customers={customers}/>
         </HStack>
 
 

@@ -11,8 +11,8 @@ import {
   } from '@chakra-ui/react'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { getInvoiceById, getInvoiceProducts } from '../../redux/actions-invoices';
-import { cleanStatePayments } from '../../redux/actions-payments';
+import { getInvoiceById, getInvoiceProducts } from '../../../redux/actions-invoices';
+import { cleanStatePayments } from '../../../redux/actions-payments';
 import { useEffect } from 'react';
 
 
