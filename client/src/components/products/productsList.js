@@ -33,6 +33,7 @@ const ModelTr = ({e, user}) => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const id = e.ProdID
+  const name = e.ProdName
 
   
   const handleClickProduct = () => {
@@ -46,15 +47,15 @@ const ModelTr = ({e, user}) => {
     }
 
   useEffect(()=>{
-    dispatch(getProductImage(e.ProductName, e.Material, e.ProdID));
+    if(!productImage[name]) dispatch(getProductImage(e.ProductName, e.Material, e.ProdID));
   }, [])
 
   useEffect(() => {
     setImages([]);
     const fetchImages = async () => {
-      if (productImage[id] && productImage[id].length > 0) {
+      if (productImage[name] && productImage[name].length > 0) {
         const imageUrls = await Promise.all(
-          productImage[id].map((data) => `data:image/jpeg;base64,${data}`)
+          productImage[name].map((data) => `data:image/jpeg;base64,${data}`)
         );
         setImages(imageUrls);
       }

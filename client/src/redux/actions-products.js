@@ -152,7 +152,7 @@ export function getProductImage(prodName, material, prodID){
             dispatch(
                 {
                     type: GET_PRODUCT_IMAGE,
-                    payload: {data, prodID}
+                    payload: {data, prodName}
                 })
         }catch(error){
             console.log({error})           
