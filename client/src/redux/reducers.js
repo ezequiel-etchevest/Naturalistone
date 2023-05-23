@@ -418,7 +418,7 @@ function rootReducer (state = intialState, action) {
           return{
             ...state,
             product_image: {
-              ...product_image,
+              ...state.product_image,
               [action.payload.prodID]: action.payload.data
             }
           }
