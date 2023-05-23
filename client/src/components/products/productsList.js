@@ -34,7 +34,8 @@ const ModelTr = ({e, user}) => {
   const dispatch = useDispatch()
   const id = e.ProdID
   const name = e.ProdName
-
+  console.log({productImage})
+  console.log({images})
   
   const handleClickProduct = () => {
     dispatch(getProductById(e.ProdID))

@@ -144,7 +144,7 @@ export function getProductImages(prodName, material){
                 }
             }
         }
-export function getProductImage(prodName, material, prodID){
+export function getProductImage(prodName, material){
 
     return async function(dispatch){
         try{
