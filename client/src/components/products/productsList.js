@@ -72,22 +72,56 @@ const ModelTr = ({e, user}) => {
       color: 'logo.orange'
     }} 
     >
-      {
-        images[0] ? (
-          <Td maxH={'6vh'} maxW={'3vw'} onClick={() => handleClickProduct()} fontSize={'xs'} textAlign={'match-parent'}>
-          <div maxh={'5vh'} className="image-container">
-            <img src={images[0]} className="enlarge-image" alt="Product Image" />
+            {images[0] ? (
+        <Td
+          maxH={'6vh'}
+          maxW={'3vw'}
+          onClick={() => handleClickProduct()}
+          fontSize={'xs'}
+          textAlign={'match-parent'}
+        >
+          <div
+            style={{
+              maxHeight: '5vh',
+              maxWidth: '3vw',
+              width: '100%',
+              height: '100%',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              overflow: 'hidden'
+            }}
+            className="image-container"
+          >
+            <img
+              src={images[0]}
+              className="enlarge-image"
+              alt="Product Image"
+              style={{
+                width: '100%',
+                height: '100%',
+                objectFit: 'contain'
+              }}
+            />
           </div>
         </Td>
-        ) : (
-          <Td maxH={'6vh'} maxW={'3vw'} onClick={() => handleClickProduct()} fontSize={'xs'} textAlign={'match-parent'}>
-          <div maxh={'5vh'} className="image-container">
-          </div>
+      ) : (
+        <Td
+          maxH={'6vh'}
+          maxW={'3vw'}
+          onClick={() => handleClickProduct()}
+          fontSize={'xs'}
+          textAlign={'match-parent'}
+        >
+          <div
+            style={{
+              maxHeight: '5vh',
+              maxWidth: '3vw'
+            }}
+            className="image-container"
+          ></div>
         </Td>
-        )
-      
-     
-      }
+      )}
       <Td maxH={'6vh'} maxW={'3vw'} onClick={() => handleClickProduct()} fontSize={'xs'} textAlign={'match-parent'}>{e.ProductName}</Td>
       <Td maxH={'6vh'} maxW={'6vw'} onClick={() => handleClickProduct()} fontSize={'xs'} textAlign={'center'}>{e.Material}</Td>
       <Td maxH={'6vh'} maxW={'3vw'} onClick={() => handleClickProduct()} fontSize={'xs'} textAlign={'center'}>{e.Size}</Td>
