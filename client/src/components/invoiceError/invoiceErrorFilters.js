@@ -10,28 +10,48 @@ import {
 import { SearchIcon } from '@chakra-ui/icons';
 import '../../assets/styleSheet.css';
 import {AiOutlineClear} from 'react-icons/ai';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import {  getInvoiceErrorsFiltered, getInvoiceErrors } from '../../redux/actions-invoiceErrors'
+import { useLocation, useNavigate } from "react-router-dom";
 
 
 const InvoiceErrorFilters = ({user, sellers}) => {
   
   const dispatch = useDispatch()
   const [errores, setErrores] = useState('')
+  const navigate = useNavigate()
+  const location = useLocation();
+  const searchParams = new URLSearchParams();
+  const queryString = location.search
+  const url = new URLSearchParams(queryString);
+  const getParamsSellerId = url.get('seller')
+  const getParamsType = url.get('type')
+  const getParamsNumber = url.get('number')
   const [filter, setFilter] = useState({
     user: user,
-    sellerID: '',
-    type: '',
-    number:''
-  }) 
+    sellerID: getParamsSellerId ? getParamsSellerId : '',
+    type: getParamsType ? getParamsType : '',
+    number: getParamsNumber ? getParamsNumber : ''
+  })
+
   let handleClickSeller = (e) => {
-    setFilter({...filter, sellerID: e.target.value})
-    dispatch(getInvoiceErrorsFiltered(e.target.value, filter.type, filter.number, user))
+    const sellerIdTarget = e.target.value
+    searchParams.set('seller', sellerIdTarget)
+    searchParams.set('type', filter.type)
+    searchParams.set('number', filter.number)
+    navigate(`?${searchParams.toString()}`)
+    setFilter({...filter, sellerID: sellerIdTarget})
+    dispatch(getInvoiceErrorsFiltered({...filter, sellerID: sellerIdTarget}))
   }
   let handleClickType = (e) => {
-    setFilter({...filter, type: e.target.value})
-    dispatch(getInvoiceErrorsFiltered(filter.sellerID, e.target.value, filter.number, user))
+    const typeTarget = e.target.value
+    searchParams.set('seller', filter.sellerID)
+    searchParams.set('type',typeTarget)
+    searchParams.set('number', filter.number)
+    navigate(`?${searchParams.toString()}`)
+    setFilter({...filter, type: typeTarget})
+    dispatch(getInvoiceErrorsFiltered({...filter, type: typeTarget}))
   }
   const validateInput = (e) => {
     if(!/^[0-9]*$/.test(e.target.value)){
@@ -43,15 +63,24 @@ const InvoiceErrorFilters = ({user, sellers}) => {
     }
 }
   const handleChangeNumber = (e) => {
-    if(e.target.value.length){
+    const numberTarget = e.target.value
+    if(numberTarget.length){
       validateInput(e)
       if(!errores.length){
-        setFilter({...filter, number: e.target.value})
-        dispatch(getInvoiceErrorsFiltered(filter.sellerID, filter.type, e.target.value, user))
+        searchParams.set('seller', filter.sellerID)
+        searchParams.set('type', filter.type)
+        searchParams.set('number', numberTarget)
+        navigate(`?${searchParams.toString()}`)
+        setFilter({...filter, number: numberTarget})
+        dispatch(getInvoiceErrorsFiltered({...filter, number: numberTarget }))
       }
     } else {
+      searchParams.delete('number')
+      searchParams.set('seller', filter.sellerID)
+      searchParams.set('type', filter.type)
+      navigate(`?${searchParams.toString()}`)
       setFilter({...filter, number: ''})
-      dispatch(getInvoiceErrorsFiltered(filter.sellerID, filter.type, '', user))
+      dispatch(getInvoiceErrorsFiltered({...filter, number: ''}))
     }
   }
   const handleClear = () => {
@@ -63,6 +92,10 @@ const InvoiceErrorFilters = ({user, sellers}) => {
     })
     dispatch(getInvoiceErrors(user))
   }
+
+  useEffect(() => {
+    dispatch(getInvoiceErrorsFiltered(filter))
+  }, [])
 
   return (
     <>    
