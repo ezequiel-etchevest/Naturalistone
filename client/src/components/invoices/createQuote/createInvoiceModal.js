@@ -25,6 +25,7 @@ import { getFiltered } from "../../../redux/actions-products";
 import {BiSearch} from 'react-icons/bi'
 import {AiOutlineClear} from 'react-icons/ai';
 import '../../../assets/styleSheet.css'
+import { useLocation } from "react-router-dom";
 
 const CreateInvoiceModal = ({variables, setVariables, isOpen, onClose, customer, project, onClose4, onClose3, onClose2, onClose1, isOpen4, onOpen4}) => {
  
@@ -57,9 +58,18 @@ const validateToast = () => {
 }
 
 useEffect(()=>{
-  if(!allProducts?.length ) dispatch(getFiltered('','','','','','',''))
+  if(!allProducts?.length ) dispatch(
+    getFiltered(
+      filters.finish,
+      filters.size,
+      filters.thickness,
+      filters.material,
+      filters.search,
+      filters.price,
+      filters.price
+      ))
   validateToast()
-  },[allProducts])
+  },[allProducts, filters])
 
 useEffect(()=>{
   if(Object.keys(products).length) setDisable(false)

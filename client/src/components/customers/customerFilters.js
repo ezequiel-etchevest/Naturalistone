@@ -8,26 +8,43 @@ import {
   } from "@chakra-ui/react";
 import { SearchIcon } from '@chakra-ui/icons';
 import { useDispatch } from 'react-redux'
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import '../../assets/styleSheet.css';
 import {AiOutlineClear} from 'react-icons/ai';
-import { getCustomers } from "../../redux/actions-customers";
+import { cleanCustomerDetail, getCustomers } from "../../redux/actions-customers";
 import { CreateNewCustomer } from "./createCustomer";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const CustomerFilters = () => {
 
   const dispatch = useDispatch()
-  const [inputValues, setInputValues] = useState('')
+  const navigate = useNavigate()
+  const location = useLocation();
+  const searchParams = new URLSearchParams();
+  const queryString = location.search
+  const url = new URLSearchParams(queryString);
+  const getParamsCustomer = url.get('customer')
+  const [inputValues, setInputValues] = useState(getParamsCustomer ? getParamsCustomer : '')
 
   const handleInput = (e) => {
-    if(e.target.value.length){
-      setInputValues(e.target.value)
-      dispatch(getCustomers(e.target.value))
+    const customer = e.target.value
+    if(customer.length){
+      searchParams.set('customer', customer)
+      navigate(`?${searchParams.toString()}`)
+      setInputValues(customer)
+      dispatch(getCustomers(customer))
     } else {
+      searchParams.delete('customer')
+      navigate(`?${searchParams.toString()}`)
       setInputValues('')
       dispatch(getCustomers(''))
     }
   }
+
+  useEffect(() => {
+    dispatch(cleanCustomerDetail())
+    dispatch(getCustomers(inputValues))
+  },[])
   
   return (
     <Box>

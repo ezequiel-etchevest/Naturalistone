@@ -14,44 +14,74 @@ import { getSellers } from "../../redux/actions-sellers";
 import { months } from "../../utils/months";
 import { getStats } from "../../redux/actions-stats";
 import { cleanStats } from "../../redux/actions-statsByMonth";
+import { useNavigate } from 'react-router-dom';
   
 const FilterStats = ({user, setFilters, filters, years}) => {
     
   const dispatch = useDispatch()
   const sellers = useSelector(state => state.sellers)
+  const navigate = useNavigate();  
+  const searchParams = new URLSearchParams();
 
-  const handleSelectMoth = (e) =>{
+  const handleSelectMonth = (e) =>{
+    const selectedMonth = e.target.value
     setFilters({
       ...filters,
-      Month: e.target.value
+      Month: selectedMonth
     })
+
+    searchParams.set('SellerID', filters.SellerID)
+    searchParams.set('Month', selectedMonth)
+    searchParams.set('Year', filters.Year)
+
+    navigate(`?${searchParams.toString()}`);
+
     dispatch(cleanStats())
-    dispatch(getStats({...filters, Month: e.target.value}))
+
+    dispatch(getStats({...filters, Month: selectedMonth}))
   }
   const handleSelectYear = (e) => {
+    const selectedYear = e.target.value
     setFilters({
       ...filters,
-      Year: e.target.value
+      Year: selectedYear
     })
+
+    searchParams.set('SellerID', filters.SellerID)
+    searchParams.set('Month', filters.Month)
+    searchParams.set('Year', selectedYear)
+
+    navigate(`?${searchParams.toString()}`);
+
     dispatch(cleanStats())
-    dispatch(getStats({...filters, Year: e.target.value}))
+
+    dispatch(getStats({...filters, Year: selectedYear}))
   }
 
 
   const handleSelectSeller = (e) => {
+    const selectedSeller = e.target.value
     if(e.target.value === 'all') {
       setFilters({
         ...filters,
         SellerID: 3
       })
+      searchParams.set('Month', filters.Month)
+      searchParams.set('Year', filters.Year)
+      navigate(`?${searchParams.toString()}`);
       dispatch(cleanStats())
       dispatch(getStats({...filters, SellerID: 3 }))
     }
-    else {
+    else {      
       setFilters({
         ...filters,
-        SellerID: e.target.value
+        SellerID: selectedSeller
       })
+      searchParams.set('SellerID', selectedSeller)
+      searchParams.set('Month', filters.Month)
+      searchParams.set('Year', filters.Year)
+      navigate(`?${searchParams.toString()}`);
+      
       dispatch(cleanStats())
       dispatch(getStats({...filters, SellerID: e.target.value}))
     }
@@ -60,6 +90,7 @@ const FilterStats = ({user, setFilters, filters, years}) => {
   useEffect(()=>{
     if(!sellers.length) dispatch(getSellers())
     },[sellers])
+
     
   return (
     <Box>
@@ -110,7 +141,7 @@ const FilterStats = ({user, setFilters, filters, years}) => {
         }
         {/*Filter by month */} 
         <Select
-          onChange={(e)=>handleSelectMoth(e)}
+          onChange={(e)=>handleSelectMonth(e)}
           mb={'0.5vh'}
           w={'9vw'}
           minH={'4.5vh'}

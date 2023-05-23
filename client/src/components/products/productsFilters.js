@@ -13,51 +13,92 @@ import { getFiltered } from "../../redux/actions-products";
 import { useDispatch } from 'react-redux';
 import {AiOutlineClear} from 'react-icons/ai';
 import PriceSlider from "./priceSlider";
+import { useLocation, useNavigate } from "react-router-dom";
 
 
 const ProductsFilters = ({allProducts, setFilteredProducts, values}) => {
 
   const dispatch = useDispatch()
+  const navigate = useNavigate()
+  const location = useLocation();
+  const queryString = location.search;
+  const searchParams = new URLSearchParams(queryString);
+  const getParamsFinish = searchParams.get('finish')
+  const getParamsSize = searchParams.get('size')
+  const getParamsThickness = searchParams.get('thickness')
+  const getParamsMaterial = searchParams.get('material')
+  const getParamsSearch = searchParams.get('search')
   const [filters, setFilters] = useState({
-    finish:'',
-    size:'',
-    thickness:'',
-    material: '',
-    search:'',
-    price: [values.priceMaxmin.min === null ? 0 : values.priceMaxmin.min, values.priceMaxmin.max]
+    finish: getParamsFinish ? getParamsFinish : '',
+    size: getParamsSize ? getParamsSize : '',
+    thickness: getParamsThickness ? getParamsThickness : '',
+    material: getParamsMaterial ? getParamsMaterial: '',
+    search: getParamsSearch ? getParamsSearch : '',
+    price: [values?.priceMaxmin?.min === null ? 0 : values?.priceMaxmin?.min, values?.priceMaxmin?.max]
   })
-  const [limit, setLimit] = useState([values.priceMaxmin.min, values.priceMaxmin.max])
+  const [limit, setLimit] = useState([values?.priceMaxmin?.min, values?.priceMaxmin?.max])
 
   const handleFinish = (e) => {
+    const finish = e.target.value
+    searchParams.set('finish', finish)
+    searchParams.set('size', filters.size)
+    searchParams.set('thickness', filters.thickness)
+    searchParams.set('material', filters.material)
+    searchParams.set('search', filters.search)
+    navigate(`?${searchParams.toString()}`)
     setFilters({
       ...filters,
-      finish: e.target.value
+      finish
     })
-    dispatch(getFiltered(e.target.value, filters.size, filters.thickness, filters.material, filters.search, filters.price))
+    dispatch(getFiltered(finish, filters.size, filters.thickness, filters.material, filters.search, filters.price))
   }
 
   const handleSize = (e) => {
+    const size = e.target.value
+    searchParams.set('size', size)
+    searchParams.set('finish', filters.finish)
+    searchParams.set('thickness', filters.thickness)
+    searchParams.set('material', filters.material)
+    searchParams.set('search', filters.search)
+    navigate(`?${searchParams.toString()}`)
     setFilters({
       ...filters, 
-      size: e.target.value
+      size
     })
-    dispatch(getFiltered(filters.finish, e.target.value, filters.thickness, filters.material, filters.search, filters.price))
+    dispatch(getFiltered(filters.finish, size, filters.thickness, filters.material, filters.search, filters.price))
   }
 
   const handleThickness = (e) => {
+    const thickness = e.target.value
+    searchParams.set('thickness', thickness)
+    searchParams.set('size', filters.size)
+    searchParams.set('finish', filters.finish)
+    searchParams.set('material', filters.material)
+    searchParams.set('search', filters.search)
+    navigate(`?${searchParams.toString()}`)
     setFilters({
       ...filters,
-      thickness: e.target.value
+      thickness
     })
-    dispatch(getFiltered(filters.finish, filters.size, e.target.value, filters.material, filters.search, filters.price))
+    dispatch(getFiltered(filters.finish, filters.size, thickness, filters.material, filters.search, filters.price))
   }
 
   const handleMaterial = (e) => {
+    const material = e.target.value
+    searchParams.set('material', material)
+    searchParams.set('size', filters.size)
+    searchParams.set('finish', filters.finish)
+    searchParams.set('thickness', filters.thickness)
+    searchParams.set('search', filters.search)
+    console.log('soy material', material)
+    console.log('soy material', material)
+    navigate(`?${searchParams.toString()}`)
     setFilters({
       ...filters,
-      material: e.target.value
+      material: material
     })
-    dispatch(getFiltered(filters.finish, filters.size, filters.thickness, e.target.value, filters.search, filters.price))
+    console.log('soy filtermateirla', filters.material)
+    dispatch(getFiltered(filters.finish, filters.size, filters.thickness, material, filters.search, filters.price))
   }
   const handleClear = () => {
     setFilters({
@@ -73,6 +114,13 @@ const ProductsFilters = ({allProducts, setFilteredProducts, values}) => {
   }
 
   const handleChangeProductName = (e) => {
+    const search = e.target.value
+    searchParams.set('search', search)
+    searchParams.set('size', filters.size)
+    searchParams.set('finish', filters.finish)
+    searchParams.set('material', filters.material)
+    searchParams.set('thickness', filters.thickness)
+    navigate(`?${searchParams.toString()}`)
       setFilters({
         ...filters,
         search: e.target.value
@@ -80,10 +128,17 @@ const ProductsFilters = ({allProducts, setFilteredProducts, values}) => {
       dispatch(getFiltered(filters.finish, filters.size, filters.thickness, filters.material, e.target.value, filters.price))
     }
   useEffect(()=>{
-    return ()=> {
-      dispatch(getFiltered('','','','','','',''))
-    }
-    },[])
+      dispatch(
+        getFiltered(
+          filters.finish,
+          filters.size,
+          filters.thickness,
+          filters.material,
+          filters.search,
+          filters.price,
+          filters.price
+          ))
+    },[filters])
 
   return (
     <>    

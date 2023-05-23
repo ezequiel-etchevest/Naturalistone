@@ -7,6 +7,7 @@ import { getCustomers } from '../redux/actions-customers';
 import { getInvoicesBySeller, getSellerValues } from '../redux/actions-invoices';
 import Redirect from "./RedirectPage";
 import { Text } from "@chakra-ui/react";
+import { useLocation, useNavigate } from "react-router-dom";
 
 
 
@@ -17,6 +18,14 @@ const Quotes = ({focus, setFocus}) => {
   const user = useSelector(state => state.user)
   const seller_values = useSelector(state => state.seller_values)
   const customers = useSelector(state => state.customers)
+  const location = useLocation()
+  const queryString = location.search;
+  const url = new URLSearchParams(queryString)
+  const getParamsTimeFilter = url.get('timeFilter')
+  const getParamsSeller = url.get('seller')
+  const getParamsName = url.get('name')
+  const getParamsNumber = url.get('number')
+
 
   const [focusFilter, setFocusFilter] = useState('All')
   const userLocal = JSON.parse(localStorage.getItem('user'))
@@ -30,20 +39,20 @@ const Quotes = ({focus, setFocus}) => {
       useEffect(() => {
         if(user.length && !seller_invoices.length){
           dispatch(getInvoicesBySeller(user[0].SellerID, {
-            inputName: '',
-            inputNumber: '',
-            selectSeller: '',
-            timeFilter: 'All'
+            inputName: getParamsName ? getParamsName : '',
+            inputNumber: getParamsNumber ? getParamsNumber : '',
+            selectSeller: getParamsSeller ? getParamsSeller : '',
+            timeFilter: getParamsTimeFilter ? getParamsTimeFilter : 'All'
           }))
       }}, [dispatch, user])
 
       useEffect(() => {
         if(user.length){
           dispatch(getInvoicesBySeller(user[0].SellerID, {
-            inputName: '',
-            inputNumber: '',
-            selectSeller: '',
-            timeFilter: 'All'
+            inputName: getParamsName ? getParamsName : '',
+            inputNumber: getParamsNumber ? getParamsNumber : '',
+            selectSeller: getParamsSeller ? getParamsSeller : '',
+            timeFilter: getParamsTimeFilter ? getParamsTimeFilter : 'All'
           }))
       }
     }
