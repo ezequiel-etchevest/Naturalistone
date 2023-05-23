@@ -33,7 +33,7 @@ const ModelTr = ({e, user}) => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const id = e.ProdID
-  const name = e.ProdName
+  const name = e.ProductName
   console.log({productImage})
   console.log({images})
   
