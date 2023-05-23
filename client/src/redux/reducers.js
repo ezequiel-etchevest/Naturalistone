@@ -419,7 +419,7 @@ function rootReducer (state = intialState, action) {
             ...state,
             product_image: {
               ...state.product_image,
-              [action.payload.prodID]: action.payload.data
+              [action.payload.prodName]: action.payload.data
             }
           }
         case CLEAN_PRODUCT_DETAIL:
