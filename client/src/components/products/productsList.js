@@ -50,7 +50,7 @@ const ModelTr = ({e, user, allProducts}) => {
 
   useEffect(()=>{
     if(!productImage[name]) dispatch(getProductImage(e.ProductName, e.Material, e.ProdID));
-  }, [])
+  }, [allProducts, productImage])
 
   useEffect(() => {
     setImages([]);
