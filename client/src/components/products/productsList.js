@@ -35,8 +35,6 @@ const ModelTr = ({e, user, allProducts}) => {
   const dispatch = useDispatch()
   const id = e.ProdID
   const name = e.ProductName
-  console.log({productImage})
-  console.log({images})
   
   const handleClickProduct = () => {
     dispatch(getProductById(e.ProdID))
@@ -53,7 +51,6 @@ const ModelTr = ({e, user, allProducts}) => {
   }, [allProducts, productImage])
 
   useEffect(() => {
-    setImages([]);
     const fetchImages = async () => {
       if (productImage[name] && productImage[name].length > 0) {
         const imageUrls = await Promise.all(
@@ -64,7 +61,7 @@ const ModelTr = ({e, user, allProducts}) => {
     };
     fetchImages();
   }, [productImage, allProducts]);
-  
+
     
   return(
     <Tr       
