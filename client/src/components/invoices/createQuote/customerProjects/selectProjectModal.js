@@ -15,18 +15,22 @@ import {
     IconButton,
     Tooltip,
     Divider,
-    Select
+    Select,
+    Progress
     } from "@chakra-ui/react"
 import { useDispatch, useSelector } from "react-redux";
 import { useState, useEffect } from "react";
 import { CreateNewProject } from "../../../customers/customerDetail/createProject";
 import SelectProjectModalList from "./selectProjectModalList";
 import '../../../../assets/styleSheet.css'
+import { getCustomers } from "../../../../redux/actions-customers";
 
 
-const SelectProjectModal = ({customer, isOpen3, onClose3, onClose2, onClose1, isOpen, onClose}) => {
+const SelectProjectModal = ({customer, setCustomer, onOpen2, isOpen3, onClose3, onClose2, onClose1, isOpen, onClose, setInputValue}) => {
 
   const { isOpen: isOpen4, onOpen: onOpen4, onClose: onClose4 } = useDisclosure()
+
+  const dispatch = useDispatch()
 
   const projects = useSelector(state => state.projects_by_customer_id)
   const [disable, setDisable] = useState(true)
@@ -49,6 +53,7 @@ const SelectProjectModal = ({customer, isOpen3, onClose3, onClose2, onClose1, is
 
   const handlePrevious = () => {
     onClose3()
+    onOpen2()
   }
 
   const handleNext = () => {
@@ -70,13 +75,22 @@ const SelectProjectModal = ({customer, isOpen3, onClose3, onClose2, onClose1, is
     setVariables({...variables, estDelivDate: e.target.value})
   }  
 
+  const handleClose = () => {
+    onClose3()
+    onClose2()
+    onClose1()
+    setInputValue('')
+    setCustomer('')
+    dispatch(getCustomers('', ''))
+  }
   return(
 
 <>
   <Modal
     isOpen={isOpen3}
-    onClose={onClose3}
+    onClose={handleClose}
     size={'3xl'}
+    motionPreset='slideInRight'
     >
     <ModalOverlay />
     <ModalContent
@@ -84,24 +98,24 @@ const SelectProjectModal = ({customer, isOpen3, onClose3, onClose2, onClose1, is
       border={'1px solid'}
       borderColor={'web.border'}
       >
-      <ModalHeader></ModalHeader>
-      <ModalCloseButton
-        color={'web.text2'}
-        _hover={{
-          color: 'web.text'
-        }}
-        onClick={onClose3} />
-      <Box color={'white'}>
-      <Text ml={'3vw'} fontSize={'lg'}>Select project</Text>
+      <Progress value={60} 
+        colorScheme={"orange"} 
+        mb={'2vh'} 
+        background={'web.border'} 
+        size={'sm'}
+        borderTopRightRadius={'md'}
+        borderTopLeftRadius={'md'}
+        />
       <ModalBody color={'web.text2'} display={'flex'} justifyContent={'center'} flexDir={'column'} h={'58vh'}>
+      <Text ml={'2vw'} mt={'2vh'} mb={'5vh'} fontSize={'lg'}w={'16vw'} color={'white'} alignSelf={'flex-start'}>Select Project</Text>
       <HStack
         display={'flex'}
         justifyContent={'flex-end'}
         h={'6vh'}
-        mb={'4vh'}
+        mb={'3vh'}
         mr={'1.2vw'}
         ml={'1.4vw'}
-        spacing={'1.5vw'}
+        spacing={'2vw'}
         >
         <Input
           mb={'0.5vh'}
@@ -185,9 +199,10 @@ const SelectProjectModal = ({customer, isOpen3, onClose3, onClose2, onClose1, is
           onClose3={onClose3}
           onClose2={onClose2}
           onClose1={onClose1}
+          setInputValue={setInputValue}
+          setCustomer={setCustomer}
           />
       </ModalBody>
-      </Box>
       <ModalFooter mb={'2vh'} display={'flex'} flexDir={'row'} justifyContent={'space-between'} ml={'2vw'} mr={'2vw'}>
         <Button
           colorScheme={'orange'}
