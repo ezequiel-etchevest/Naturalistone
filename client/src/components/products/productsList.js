@@ -23,12 +23,13 @@ import { getProductImage } from '../../redux/actions-products';
 
 
 
-const ModelTr = ({e, user}) => {
+const ModelTr = ({e, user, allProducts}) => {
 
   
   const a = e.Discontinued_Flag === 'True' ? true : false 
   const [flag, setFlag] = useState(a)
   const productImage = useSelector(state => state.product_image);
+  
   const [images, setImages] = useState([]);
   const navigate = useNavigate()
   const dispatch = useDispatch()
@@ -62,7 +63,7 @@ const ModelTr = ({e, user}) => {
       }
     };
     fetchImages();
-  }, [productImage, id]);
+  }, [productImage, allProducts]);
   
     
   return(
@@ -211,7 +212,7 @@ const ProductList = ({ allProducts, user }) => {
               </Thead>
               <Tbody >
                 {allProducts.slice(0, loadedCount).map((e, i) => {
-                  return <ModelTr key={i} e={e} user={user} />;
+                  return <ModelTr key={i} e={e} user={user} allProducts={allProducts} />;
                 })}
               </Tbody>
             </Table>
