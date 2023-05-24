@@ -16,7 +16,7 @@ const Detail = ({invoice, payments, invoice_products, user, deliveries, windowWi
   const { id } = useParams()
   const dispatch = useDispatch()
     useEffect(()=>{
-      dispatch(getPayments(id))
+      if(Object.entries(payments).length === 0) dispatch(getPayments(id))
     },[payments])
     
     return(

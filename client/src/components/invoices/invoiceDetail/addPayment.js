@@ -15,19 +15,17 @@ import {
     FormLabel,
     NumberInput,
     NumberInputField, 
-    FormErrorMessage,
     useToast,
     Tooltip,
-    Text
     } from "@chakra-ui/react"
 import { SiAddthis } from 'react-icons/si';
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from "react-redux";
 import { patchPaymentMethod } from "../../../redux/actions-payments";
 import '../../../assets/styleSheet.css'
 
-const AddPayment = ({pendingAmount, percentage, cardPaymentAmount, totalAmount}) => {
+const AddPayment = ({pendingAmount, cardPaymentAmount, totalAmount}) => {
 
   
   const dispatch = useDispatch()
@@ -39,15 +37,22 @@ const AddPayment = ({pendingAmount, percentage, cardPaymentAmount, totalAmount})
   const [isOptionDisabled, setIsOptionDisabled] = useState(false)
   const invoice = useSelector(state => state.invoice)
   cardPaymentAmount = Number(cardPaymentAmount)
+  totalAmount = Number(totalAmount)
     const [input, setInput] = useState({
       Method : '',
       Amount: 0.00})
 
+  console.log(input)
 
   useEffect(() => {
-    if (cardPaymentAmount >= 5000 || cardPaymentAmount >= totalAmount / 2) {
-      setIsOptionDisabled(true);
-    }
+      if(totalAmount < 5000){
+         setIsOptionDisabled(false)
+        }else {
+          if((cardPaymentAmount >= 5000) || (cardPaymentAmount >= (totalAmount / 2))) {
+            setIsOptionDisabled(true);
+          }
+        }
+
     if(error.msg !== ''){
       if(!toast.isActive(toastId)){
       toast({
@@ -65,7 +70,7 @@ const AddPayment = ({pendingAmount, percentage, cardPaymentAmount, totalAmount})
     }, [error, toast, cardPaymentAmount]);
 
   const handleSelect = (e) =>{
-    if(e.target.value === 'Card'){
+    if(e.target.value === 'Card' && totalAmount > 5000){
       if((input.Amount + cardPaymentAmount) > 5000 || (input.Amount + cardPaymentAmount) >= totalAmount / 2) {
         setError({msg: `Card payment amount cannot exceed 50% of the quote or $5000.`})
         setInput({
@@ -87,7 +92,7 @@ const AddPayment = ({pendingAmount, percentage, cardPaymentAmount, totalAmount})
 
   const handleInput = (e) => {
     setError({msg: ''})
-    if(input.Method === 'Card'){
+    if(input.Method === 'Card' && totalAmount > 5000){
       if((Number(e) + cardPaymentAmount) > 5000 || (Number(e) + cardPaymentAmount) > (totalAmount / 2)) {
         setError({msg: `Card payment amount cannot exceed 50% of the quote or $5000.`})    
       }else{
@@ -108,36 +113,54 @@ const AddPayment = ({pendingAmount, percentage, cardPaymentAmount, totalAmount})
           ...input,
           Amount : Number(e)
         })
-        if((e + cardPaymentAmount) > 5000 || (e + cardPaymentAmount) >= Number(totalAmount / 2)){
-          setIsOptionDisabled(true)}
-        if((e + cardPaymentAmount) < 5000 || (e + cardPaymentAmount) <= Number(totalAmount / 2)){
-        setIsOptionDisabled(false) } 
+        if(totalAmount > 5000){
+          if((e + cardPaymentAmount) > 5000 && totalAmount > 5000 || (e + cardPaymentAmount) >= Number(totalAmount / 2)){
+            setIsOptionDisabled(true)}
+          if((e + cardPaymentAmount) < 5000 || (e + cardPaymentAmount) <= Number(totalAmount / 2)){
+            setIsOptionDisabled(false) } 
+        }else if (totalAmount < 5000) setIsOptionDisabled(false) 
       }
 
     }
   }
 
   const handleClickPercentageButtons = (e) => {
-    let amount = e.target.name == '50' ? pendingAmount/2 : e.target.name == '100' ? pendingAmount : 0.00
-    if(input.Method === 'Card'){
-      if((amount + cardPaymentAmount) > (totalAmount/2) || (amount + cardPaymentAmount) > 5000) {
-        setError({msg: `Card payment amount cannot exceed 50% of the quote or $5000.`})
-        }else{
+    const { name } = e.target;
+    const is50Percent = name === '50';
+    const is100Percent = name === '100';
+    let amount = is50Percent ? pendingAmount / 2 : is100Percent ? pendingAmount : 0.00;
+  
+    if (totalAmount > 5000) {
+      if (input.Method === 'Card') {
+        const isExceedingLimit = (amount + cardPaymentAmount) > (totalAmount / 2) || (amount + cardPaymentAmount) > 5000;
+        setError({ msg: isExceedingLimit ? `Card payment amount cannot exceed 50% of the quote or $5000.` : '' });
+        if (!isExceedingLimit) {
           setInput({
             ...input,
-            Amount : amount
-          })
-      }}else{
-        setInput({
-            ...input,
-            Amount : amount
-          })
-        if((amount + cardPaymentAmount) > (totalAmount/2) || (amount + cardPaymentAmount) > 5000){
-          setIsOptionDisabled(true)}
-        if((amount + cardPaymentAmount) < (totalAmount/2) || (amount + cardPaymentAmount) < 5000){
-          setIsOptionDisabled(false) } 
+            Amount: amount
+          });
         }
+      } else {
+        setInput({
+          ...input,
+          Amount: amount
+        });
       }
+    } else if (totalAmount < 5000) {
+      setInput({
+        ...input,
+        Amount: amount
+      });
+    }
+  
+    if (totalAmount > 5000) {
+      const isExceedingAmount = (amount + cardPaymentAmount) > 5000 && totalAmount > 5000 || (amount + cardPaymentAmount) >= Number(totalAmount / 2);
+      setIsOptionDisabled(isExceedingAmount);
+    } else if (totalAmount < 5000) {
+      setIsOptionDisabled(false);
+    }
+  };
+  
   
   const handleSubmit = () => {
     if(input.Amount && input.Method){

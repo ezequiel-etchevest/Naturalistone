@@ -18,7 +18,6 @@ import { getProductById } from '../../redux/actions-products';
 import { useEffect, useState } from 'react';
 import{ ImCheckboxChecked, ImCheckboxUnchecked } from 'react-icons/im';
 import { patchDiscontinued } from '../../redux/actions-products';
-import img from '../../assets/ProductPicture/354-1.jpg'
 import '../../assets/styleImgs.css';
 import { getProductImage } from '../../redux/actions-products';
 
@@ -93,34 +92,51 @@ const ModelTr = ({e, user}) => {
 }
 
 const ProductList = ({ allProducts, user }) => {
-
-  const productErrors = useSelector((state) => state.products_errors)
-  const toast = useToast()
+  const productErrors = useSelector((state) => state.products_errors);
+  const toast = useToast();
+  const [initialCount] = useState(20);
+  const [batchCount] = useState(15);
+  const [loadedCount, setLoadedCount] = useState(initialCount);
 
   const validateToast = () => {
-    if(Object.entries(productErrors).length){
-      toast({        
+    if (Object.entries(productErrors).length) {
+      toast({
         title: `${productErrors.error}`,
         status: 'warning',
         duration: 1500,
-        isClosable: true,})
+        isClosable: true,
+      });
     }
-  }
+  };
+  console.log(loadedCount)
+
+  const handleScroll = () => {
+    const container = document.getElementById('scroll-container'); // Reemplaza 'scroll-container' con el ID de tu contenedor de desplazamiento
+    const { scrollTop, clientHeight, scrollHeight } = container;
+
+    if (scrollTop + clientHeight >= scrollHeight - 20) {
+      // El usuario ha llegado al final, carga más productos
+      setLoadedCount(prevCount => prevCount + batchCount);
+    }
+  };
+  useEffect(() => {
+    
+    const container = document.getElementById('scroll-container'); // Reemplaza 'scroll-container' con el ID de tu contenedor de desplazamiento
+    container.addEventListener('scroll', handleScroll);
+
+    return () => {
+      container.removeEventListener('scroll', handleScroll);
+    };
+  }, [batchCount]);
 
   useEffect(() => {
-    validateToast()
-  },[allProducts])
+    validateToast();
+  }, [allProducts]);
 
-  return(
-    <Box
-      userSelect={'none'}
-      display={'flex'}
-      justifyContent={'center'}
-      h={'69vh'}
-      w={'82.8vw'}
-      ml={'1vh'} 
-      >
+  return (
+    <Box userSelect={'none'} display={'flex'} justifyContent={'center'} h={'69vh'} w={'82.8vw'} ml={'1vh'}>
       <Box
+        id='scroll-container'
         maxHeight={'67vh'}
         overflow={'auto'}
         css={{
@@ -136,50 +152,67 @@ const ProductList = ({ allProducts, user }) => {
           },
         }}
         borderColor={'web.border'}
-        bg={'web.sideBar'} 
-        border={'1px solid'} 
-        rounded={'md'} 
+        bg={'web.sideBar'}
+        border={'1px solid'}
+        rounded={'md'}
         p={'3vh'}
         w={'80vw'}
-        >
-        {allProducts.length && !Object.entries(productErrors).length ? 
-        <TableContainer  mr={'1vw'} >
-          <Table color={'web.text'} variant={'simple'} size={'sm'}>
-            <Thead h={'6vh'}>
-              <Tr>
-                <Th fontSize={'0.8vw'} color={'web.text2'}></Th>
-                <Th fontSize={'0.8vw'} color={'web.text2'}>Product Name</Th>
-                <Th fontSize={'0.8vw'} color={'web.text2'} textAlign={'center'}>Type</Th>
-                <Th fontSize={'0.8vw'} color={'web.text2'} textAlign={'center'}>Size</Th>
-                <Th fontSize={'0.8vw'} color={'web.text2'} textAlign={'center'}>Thickness</Th>
-                <Th fontSize={'0.8vw'} color={'web.text2'} textAlign={'center'}>Finish</Th>
-                <Th fontSize={'0.8vw'} color={'web.text2'} isNumeric>Price</Th>
-                <Th fontSize={'0.8vw'} color={'web.text2'} textAlign={'center'}>In Stock</Th>
-                <Th fontSize={'0.8vw'} color={'web.text2'} textAlign={'center'}>Incoming</Th>
-                <Th fontSize={'0.8vw'} color={'web.text2'} textAlign={'center'}>Next Arrival</Th>
-                <Th fontSize={'0.8vw'} color={'web.text2'}>Discontinued</Th>
-              </Tr>
-            </Thead>
-            <Tbody>
-              {
-                allProducts.map((e, i) => {
-                  return(
-                    <ModelTr key={i} e={e} user={user}/>
-                  )
-                })
-              }
-            </Tbody>
-          </Table>
-        </TableContainer>
-        :
-        (
+      >
+        {allProducts.length && !Object.entries(productErrors).length ? (
+          <TableContainer mr={'1vw'}>
+            <Table color={'web.text'} variant={'simple'} size={'sm'}>
+              <Thead h={'6vh'}>
+                <Tr>
+                  <Th fontSize={'0.8vw'} color={'web.text2'}></Th>
+                  <Th fontSize={'0.8vw'} color={'web.text2'}>
+                    Product Name
+                  </Th>
+                  <Th fontSize={'0.8vw'} color={'web.text2'} textAlign={'center'}>
+                    Type
+                  </Th>
+                  <Th fontSize={'0.8vw'} color={'web.text2'} textAlign={'center'}>
+                    Size
+                  </Th>
+                  <Th fontSize={'0.8vw'} color={'web.text2'} textAlign={'center'}>
+                    Thickness
+                  </Th>
+                  <Th fontSize={'0.8vw'} color={'web.text2'} textAlign={'center'}>
+                    Finish
+                  </Th>
+                  <Th fontSize={'0.8vw'} color={'web.text2'} isNumeric>
+                    Price
+                  </Th>
+                  <Th fontSize={'0.8vw'} color={'web.text2'} textAlign={'center'}>
+                    In Stock
+                  </Th>
+                  <Th fontSize={'0.8vw'} color={'web.text2'} textAlign={'center'}>
+                    Incoming
+                  </Th>
+                  <Th fontSize={'0.8vw'} color={'web.text2'} textAlign={'center'}>
+                    Next Arrival
+                  </Th>
+                  <Th fontSize={'0.8vw'} color={'web.text2'}>
+                    Discontinued
+                  </Th>
+                </Tr>
+              </Thead>
+              <Tbody >
+                {allProducts.slice(0, loadedCount).map((e, i) => {
+                  return <ModelTr key={i} e={e} user={user} />;
+                })}
+              </Tbody>
+            </Table>
+          </TableContainer>
+        ) : (
           <Center w={'full'} h={'full'}>
-          <Text userSelect={'none'} fontSize={'2vh'}>No products found</Text>
+            <Text userSelect={'none'} fontSize={'2vh'}>
+              No products found
+            </Text>
           </Center>
-        )
-        }
-      </Box>  
+        )}
+      </Box>
     </Box>
-  )
-}
+  );
+};
+
 export default ProductList;
