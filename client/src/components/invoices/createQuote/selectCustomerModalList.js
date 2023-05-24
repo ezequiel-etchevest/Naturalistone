@@ -7,17 +7,13 @@ import {
     Th,
     Td,
     TableContainer,
-    useToast,
     Text,
     Center,
     } from '@chakra-ui/react'
   import SelectedCustomerModal from './selectedCustomerReview';
   
   
-  
   const ModelTr = ({e, onOpen2, setCustomer}) => {
-  
-
 
     const handleClick = (e) => {
       setCustomer(e)
@@ -37,13 +33,11 @@ import {
         <Td fontSize={'xs'}  w={'4vw'}>{e.CustomerID}</Td>
         <Td fontSize={'xs'} textAlign={'center'}>{e.Contact_Name ? e.Contact_Name : '-'}</Td>
         <Td fontSize={'xs'}  w={'24vw'}>{e.Company}</Td>
-
       </Tr>
     )
   }
   
-  const SelectCustomerModalList = ({customers, customer, setCustomer, onOpen2, onClose2, isOpen2, onClose1}) => {
-
+  const SelectCustomerModalList = ({customers, customer, setCustomer, onOpen2, onClose2, isOpen2, onClose1, setInputValue}) => {
   
   return(
 <>
@@ -67,9 +61,7 @@ import {
           borderRadius: '5px',
         },
       }}
-      borderColor={'web.border'}
       bg={'web.sideBar'} 
-      border={'1px solid'} 
       rounded={'md'} 
       p={'3vh'}
       >
@@ -104,8 +96,10 @@ import {
     <SelectedCustomerModal 
     onClose2={onClose2}
     onClose1={onClose1}
-    isOpen2={isOpen2} 
+    isOpen2={isOpen2}
+    onOpen2={onOpen2} 
     customer={customer}
+    setInputValue={setInputValue}
     setCustomer={setCustomer}/>
   </>
   )

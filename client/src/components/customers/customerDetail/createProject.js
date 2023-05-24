@@ -87,7 +87,7 @@ export function CreateNewProject({customer}) {
           }}
         onClick={onOpen}
         >Add Project</Button>
-      <Modal size={'xl'} isOpen={isOpen} onClose={()=>handleClose()}>
+      <Modal size={'xl'} isOpen={isOpen} onClose={()=>handleClose()} motionPreset='slideInRight'>
         <ModalOverlay/>
         <ModalContent
         minW={'50vw'}

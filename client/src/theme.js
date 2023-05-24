@@ -1,6 +1,7 @@
-import { extendTheme } from '@chakra-ui/react';
-import "@fontsource/roboto"
 
+import { extendTheme } from "@chakra-ui/react";
+import { StepsTheme as Steps } from "chakra-ui-steps";
+import "@fontsource/roboto"
 
 
 export const naturali_theme = extendTheme({
@@ -23,5 +24,8 @@ export const naturali_theme = extendTheme({
     },
     fonts: {
         //body: `"Roboto", sans-serif`
-    }
+    },
+    components: {
+        Steps,
+      },
 })

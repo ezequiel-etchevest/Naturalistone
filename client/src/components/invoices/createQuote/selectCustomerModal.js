@@ -14,8 +14,9 @@ import {
     Divider,
     HStack,
     Box,
+    Progress 
     } from "@chakra-ui/react"
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import SelectCustomerModalList from './selectCustomerModalList'
 import { CreateCustomerModal } from "./createCustomerModal";
@@ -31,27 +32,33 @@ const SelectCustomerModal = ({userId, isOpen1, onClose1, customers}) => {
   const id = userId
   const [inputValue, setInputValue] = useState('')
   const [customer, setCustomer] = useState('')
-  
+
 
   const handleInput = (e) =>  {
     if(e.target.value.length) {
       setInputValue(e.target.value)
       dispatch(getCustomers(e.target.value, e.target.value))
-      
     } else {
       setInputValue('')
       dispatch(getCustomers('', ''))
     }
   }
-//tengo que limpiar de alguna manera el estado de inputvalue, o poner un useeffect para uqe se actualize el componente.
 
+
+  const handleClose = () => {
+    onClose1()
+    setInputValue('')
+    setCustomer('')
+    dispatch(getCustomers('', ''))
+  }
   return(
 
 <>
   <Modal 
     isOpen={isOpen1} 
-    onClose={onClose1}
+    onClose={handleClose}
     size={'3xl'}
+    motionPreset='slideInRight'
     >
     <ModalOverlay />
     <ModalContent 
@@ -59,24 +66,25 @@ const SelectCustomerModal = ({userId, isOpen1, onClose1, customers}) => {
       border={'1px solid'}
       borderColor={'web.border'}
       >
-      <ModalHeader></ModalHeader>
-      <ModalCloseButton
-        color={'web.text2'}
-        _hover={{
-          color: 'web.text'
-        }}
-        onClick={onClose1} />
-      <Box color={'white'}>
-      <Text ml={'3vw'} fontSize={'lg'}>Select customer</Text>
+      <Progress value={20} 
+        colorScheme={"orange"} 
+        mb={'2vh'} 
+        background={'web.border'} 
+        size={'sm'} 
+        borderTopRightRadius={'md'}
+        borderTopLeftRadius={'md'}
+        />
       <ModalBody color={'web.text2'} display={'flex'} justifyContent={'center'} flexDir={'column'} h={'58vh'}>
       <HStack
         display={'flex'}
-        justifyContent={'flex-end'}
+        justifyContent={'space-between'}
         h={'6vh'}
-        mb={'2vh'}
         mr={'1.2vw'}
-        spacing={'0.5vw'}
+        mt={'2vh'}
+        mb={'2vh'}
         >
+        <Text ml={'2vw'} fontSize={'lg'} w={'16vw'} color={'white'} alignSelf={'flex-start'}>Select customer</Text>
+        <Box display={'flex'} flexDir={'row'} h={'6vh'} w={'18vw'} justifyContent={'space-around'}>
           <Box>
             <Input
               mb={'0.5vh'}
@@ -94,7 +102,6 @@ const SelectCustomerModal = ({userId, isOpen1, onClose1, customers}) => {
               />
             <IconButton
               color={'web.text2'}
-              borderRadius={2}
               aria-label="Search database"
               bgColor={'web.sideBar'}
               ml={'-0.5vw'}
@@ -103,11 +110,14 @@ const SelectCustomerModal = ({userId, isOpen1, onClose1, customers}) => {
               _hover={{
                 color: 'orange.500',
               }}
+              boxSize={'auto'}
+              mt={'1.5vh'}
               _active={{ color: 'gray.800'}}
             />
           </Box>
-          <Divider orientation={'vertical'} h={'5vh'}/>
+          <Divider orientation={'vertical'} h={'6vh'} />
           <CreateCustomerModal customer={customer} setCustomer={setCustomer} onOpen2={onOpen2}/>
+          </Box>
         </HStack>
         <SelectCustomerModalList 
           customers={customers} 
@@ -117,16 +127,14 @@ const SelectCustomerModal = ({userId, isOpen1, onClose1, customers}) => {
           onOpen2={onOpen2} 
           onClose2={onClose2}
           onClose1={onClose1}
+          setInputValue={setInputValue}
           />
       </ModalBody>
-      </Box>
       <ModalFooter mb={'2vh'} display={'flex'} flexDir={'row'} justifyContent={'space-between'} ml={'2vw'} mr={'2vw'}>
         <Button
           colorScheme={'orange'}
           size={'sm'}
           visibility={'hidden'}
-        //   onClick={()=>handleSubmit()}
-        //   disabled={disabledConfirm}
           >
          Previous
         </Button>
@@ -134,8 +142,6 @@ const SelectCustomerModal = ({userId, isOpen1, onClose1, customers}) => {
           colorScheme={'orange'}
           size={'sm'}
           visibility={'hidden'} 
-        //   onClick={()=>handleSubmit()}
-        //   disabled={disabledConfirm}
           >
          Next
         </Button>

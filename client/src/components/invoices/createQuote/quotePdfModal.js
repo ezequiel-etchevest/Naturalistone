@@ -29,7 +29,8 @@ import { useDispatch } from 'react-redux'
         <Modal 
         isOpen={isOpen6} 
         onClose={handleCloseAllModal} 
-        size={'6xl'}>
+        size={'6xl'}
+        motionPreset='slideInRight'>
           <ModalOverlay />
           <ModalContent 
             rounded={'md'} 

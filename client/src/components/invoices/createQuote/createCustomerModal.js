@@ -11,10 +11,11 @@ import {
   ModalBody, 
   ModalFooter, 
   Button,
+  Progress,
   Tooltip } from "@chakra-ui/react"
 import { HiUserAdd } from "react-icons/hi";
 import CreationCustomerForm from "../../customers/createCustomerForm";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { createCustomer } from '../../../redux/actions-customers'
 
@@ -34,13 +35,23 @@ export function CreateCustomerModal({ user, setCustomer, onOpen2}) {
   });
 
   const dispatch = useDispatch();
+  const [disable, setDisable] = useState(true)
+
+  useEffect(() => {
+    if(formData.Contact_Name.length && formData.Address.length && formData.State.length && formData.ZipCode.length && formData. Company.length && formData.Phone.length && formData.Email.length){
+      setDisable(false)
+    } else { 
+      setDisable(true)}
+}, [formData]);
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    if(formData.Contact_Name.length && formData.Address.length && formData.State.length && formData.ZipCode.length && formData.Company.length && formData.Phone.length && formData.Email.length){
       dispatch(createCustomer(formData));
       setCustomer(formData)
       handleClose()
       onOpen2()
+    }
   };
   const handleClose = () => {
     setFormData({
@@ -75,27 +86,17 @@ export function CreateCustomerModal({ user, setCustomer, onOpen2}) {
       onClick={onOpen}
       />
       </Tooltip>
-      <Modal size={'3xl'} isOpen={isOpen} onClose={()=>handleClose()}>
+      <Modal size={'3xl'} isOpen={isOpen} onClose={()=>handleClose()} motionPreset='slideInRight'>
         <ModalOverlay/>
         <ModalContent
-        minW={'50vw'}
-        h={'78.2vh'}
-        bg={'web.sideBar'}
-        border={'1px solid'}
-        borderColor={'web.border'}>
-          <ModalHeader></ModalHeader>
-          <ModalCloseButton
-            color={'web.text2'}
-            _hover={{
-              color: 'web.text'
-            }}
-            onClick={()=>handleClose()}/>
-          <Box color={'white'}>
-            <Text ml={'3vw'} fontSize={'lg'}>Add New Customer</Text>
-              <ModalBody mt={'10vh'}>
+           bg={'web.sideBar'}
+           border={'1px solid'}
+           borderColor={'web.border'}>
+            <Progress value={20} colorScheme={"orange"} mb={'2vh'} background={'web.border'} size={'sm'}/>
+                <ModalBody color={'web.text2'} display={'flex'} justifyContent={'center'} flexDir={'column'} h={'58vh'} mb={'4vh'}>
+                <Text ml={'2vw'} mb={'6vh'} mt={'2vh'} fontSize={'lg'} w={'16vw'} color={'white'} alignSelf={'flex-start'}>Add New Customer</Text>
                 <CreationCustomerForm formData={formData} setFormData={setFormData} errors={errors} setErrors={setErrors}/>
               </ModalBody>
-          </Box>
             <ModalFooter mt={'11vh'} mb={'2vh'} display={'flex'} flexDir={'row'} justifyContent={'space-between'} ml={'2vw'} mr={'2vw'}>
               <Button
                 colorScheme={'orange'}
@@ -108,6 +109,7 @@ export function CreateCustomerModal({ user, setCustomer, onOpen2}) {
               <Button
                 colorScheme={'orange'}
                 size={'sm'}
+                disabled={disable}
                 visibility={'none'} 
                 onClick={(e)=>handleSubmit(e)}
                 >

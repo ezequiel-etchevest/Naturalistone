@@ -121,9 +121,7 @@ const CreateInvoiceProductsList = ({ allProducts, setProducts, products }) => {
           borderRadius: '5px',
         },
       }}
-      borderColor={'web.border'}
       bg={'web.sideBar'} 
-      border={'1px solid'} 
       rounded={'md'} 
       p={'1vh'}
       >
