@@ -128,14 +128,14 @@ mappedProducts.forEach((product, index) => {
   <>
     {
       Object.entries(posted_quote).length ?
-      posted_quote.Naturali_Invoice && posted_quote.InsertDate ?
-      <Box h={'85vh'} >
-        {<iframe width={'100%'} height={'100%'} title="quote-blank" src={pdfInfo} ref={viewer} type="application/pdf" />}
-      </Box>
-      :
-      <Center ml={'16vw'} w={'84vw'} bg={'web.bg'} h={'92vh'}>
-        <Spinner thickness={'4px'} size={'xl'} color={'logo.orange'}/>
-      </Center>
+        posted_quote.Naturali_Invoice && posted_quote.InsertDate ?
+        <Box h={'85vh'} >
+          {<iframe width={'100%'} height={'100%'} title="quote-blank" src={pdfInfo} ref={viewer} type="application/pdf" />}
+        </Box>
+        :
+        <Center ml={'16vw'} w={'84vw'} bg={'web.bg'} h={'92vh'}>
+          <Spinner thickness={'4px'} size={'xl'} color={'logo.orange'}/>
+        </Center>
       :
       <Center ml={'16vw'} w={'84vw'} bg={'web.bg'} h={'92vh'}>
         <Spinner thickness={'4px'} size={'xl'} color={'logo.orange'}/>

@@ -11,7 +11,7 @@ import {
     Center,
     } from '@chakra-ui/react'
   import SelectedCustomerModal from './selectedCustomerReview';
-  
+  import { useEffect, useState } from 'react';
   
   const ModelTr = ({e, onOpen2, setCustomer}) => {
 
@@ -39,6 +39,31 @@ import {
   
   const SelectCustomerModalList = ({customers, customer, setCustomer, onOpen2, onClose2, isOpen2, onClose1, setInputValue}) => {
   
+    const [initialCount] = useState(14);
+    const [batchCount] = useState(10);
+    const [loadedCount, setLoadedCount] = useState(initialCount);
+
+    const handleScroll = () => {
+      const container = document.getElementById('selectCustomerList'); // Reemplaza 'scroll-container' con el ID de tu contenedor de desplazamiento
+      const { scrollTop, clientHeight, scrollHeight } = container;
+  
+      if (scrollTop + clientHeight >= scrollHeight - 15) {
+        // El usuario ha llegado al final, carga más productos
+        setLoadedCount(prevCount => prevCount + batchCount);
+      }
+    };
+    
+    useEffect(() => {
+      
+      const container = document.getElementById('selectCustomerList'); // Reemplaza 'scroll-container' con el ID de tu contenedor de desplazamiento
+      container.addEventListener('scroll', handleScroll);
+  
+      return () => {
+        container.removeEventListener('scroll', handleScroll);
+      };
+    }, [batchCount]);
+  
+
   return(
 <>
   <Box
@@ -61,6 +86,7 @@ import {
           borderRadius: '5px',
         },
       }}
+      id={'selectCustomerList'}
       bg={'web.sideBar'} 
       rounded={'md'} 
       p={'3vh'}
@@ -78,7 +104,7 @@ import {
                 </Thead>
                 <Tbody >
                 { 
-                  customers.map((e, i) => (
+                  customers.slice(0, loadedCount).map((e, i) => (
                     <ModelTr key={i} e={e}  onOpen2={onOpen2} setCustomer={setCustomer} /> 
                   ))
                 }

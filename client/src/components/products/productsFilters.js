@@ -97,7 +97,7 @@ const ProductsFilters = ({allProducts, setFilteredProducts, values}) => {
       ...filters,
       material: material
     })
-    console.log('soy filtermateirla', filters.material)
+   
     dispatch(getFiltered(filters.finish, filters.size, filters.thickness, material, filters.search, filters.price))
   }
   const handleClear = () => {
