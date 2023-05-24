@@ -2,14 +2,14 @@ import {
     ButtonGroup, 
     IconButton,
     useDisclosure,
-    Tooltip
+    Tooltip,
     } from "@chakra-ui/react"
     import SelectCustomerModal from "../createQuote/selectCustomerModal";
     import {AiOutlineFileAdd} from 'react-icons/ai';
 
 
 const CreateInvoiceButton = ({customers}) => {
-  
+
   const { isOpen: isOpen1, onOpen: onOpen1, onClose: onClose1 } = useDisclosure()
 
     return(
