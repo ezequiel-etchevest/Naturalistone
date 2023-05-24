@@ -84,6 +84,10 @@ const InvoiceErrorFilters = ({user, sellers}) => {
     }
   }
   const handleClear = () => {
+    searchParams.delete('number')
+    searchParams.delete('seller')
+    searchParams.delete('type')
+    navigate(`?${searchParams.toString()}`)
     setFilter({
       user: user,
       sellerID: '',

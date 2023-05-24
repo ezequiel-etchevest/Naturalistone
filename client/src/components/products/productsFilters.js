@@ -28,13 +28,15 @@ const ProductsFilters = ({allProducts, setFilteredProducts, values}) => {
   const getParamsThickness = searchParams.get('thickness')
   const getParamsMaterial = searchParams.get('material')
   const getParamsSearch = searchParams.get('search')
+  const getParamsPriceMin = searchParams.get('priceMin')
+  const getParamsPriceMax = searchParams.get('priceMax')
   const [filters, setFilters] = useState({
     finish: getParamsFinish ? getParamsFinish : '',
     size: getParamsSize ? getParamsSize : '',
     thickness: getParamsThickness ? getParamsThickness : '',
     material: getParamsMaterial ? getParamsMaterial: '',
     search: getParamsSearch ? getParamsSearch : '',
-    price: [values?.priceMaxmin?.min === null ? 0 : values?.priceMaxmin?.min, values?.priceMaxmin?.max]
+    price: [getParamsPriceMin ? getParamsPriceMin : 0, getParamsPriceMax ? getParamsPriceMax : values?.priceMaxmin?.max]
   })
   const [limit, setLimit] = useState([values?.priceMaxmin?.min, values?.priceMaxmin?.max])
 
@@ -90,14 +92,11 @@ const ProductsFilters = ({allProducts, setFilteredProducts, values}) => {
     searchParams.set('finish', filters.finish)
     searchParams.set('thickness', filters.thickness)
     searchParams.set('search', filters.search)
-    console.log('soy material', material)
-    console.log('soy material', material)
     navigate(`?${searchParams.toString()}`)
     setFilters({
       ...filters,
       material: material
     })
-    console.log('soy filtermateirla', filters.material)
     dispatch(getFiltered(filters.finish, filters.size, filters.thickness, material, filters.search, filters.price))
   }
   const handleClear = () => {
