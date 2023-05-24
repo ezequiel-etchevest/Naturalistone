@@ -36,12 +36,19 @@ const SelectProjectModal = ({customer, setCustomer, onOpen2, isOpen3, onClose3, 
   const [disable, setDisable] = useState(true)
   const [project, setProject] = useState('')
 
+  const date = new Date().toLocaleDateString();
+  const day = `${date.split('/')[0]}`;
+  const month = `${(date.split('/')[1])}`;
+  const month0 = month.length === 1 ? `0${month}` : month
+  const year = `${date.split('/')[2]}`;
+
+
   const [variables, setVariables] = useState(
     {
       shipVia: '',
       method: '',
       paymentTerms:'',
-      estDelivDate:''
+      estDelivDate: `${year}-${month0}-${day}`
     })
 
     useEffect(() => {
@@ -54,6 +61,12 @@ const SelectProjectModal = ({customer, setCustomer, onOpen2, isOpen3, onClose3, 
   const handlePrevious = () => {
     onClose3()
     onOpen2()
+    setVariables({
+      shipVia: '',
+      method: '',
+      paymentTerms:'',
+      estDelivDate: `${year}-${month0}-${day}`
+    })
   }
 
   const handleNext = () => {
@@ -79,10 +92,18 @@ const SelectProjectModal = ({customer, setCustomer, onOpen2, isOpen3, onClose3, 
     onClose3()
     onClose2()
     onClose1()
+    setVariables({
+      shipVia: '',
+      method: '',
+      paymentTerms:'',
+      estDelivDate: `${year}-${month0}-${day}`
+    })
     setInputValue('')
     setCustomer('')
     dispatch(getCustomers('', ''))
   }
+  
+
   return(
 
 <>
@@ -156,12 +177,25 @@ const SelectProjectModal = ({customer, setCustomer, onOpen2, isOpen3, onClose3, 
               textColor={'web.text2'}
               _placeholder={{ fontFamily: 'body', fontWeight: 'inherit' }}
               size={"sm"}
+              value={variables.estDelivDate}
               borderBottomWidth={"2px"}
               borderBottomColor={'web.text2'}
               type={"date"}
               pattern="\d{4}-\d{2}-\d{2}"
               name={"EstDelivDate"}
+              cursor= {'pointer'}
               onChange={(e)=>handleEstDelivDate(e)}
+              css={{
+                '::-webkit-calendar-picker-indicator': {   
+                    background: `url(https://cdn3.iconfinder.com/data/icons/linecons-free-vector-icons-pack/32/calendar-16.png) center/90% no-repeat`,    
+                    cursor: 'pointer',
+                    filter: 'invert(59%) sepia(7%) saturate(31%) hue-rotate(184deg) brightness(97%) contrast(92%)',
+                    left: 94,
+                    position: 'absolute',
+                    right: 0,
+                    top: 5,
+                  },  
+              }}
             />
           </Tooltip>
           <Select
