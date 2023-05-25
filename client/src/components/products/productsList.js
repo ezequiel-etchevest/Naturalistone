@@ -73,22 +73,22 @@ const ModelTr = ({e, user, allProducts}) => {
     }} 
     >
       {/* Descomentar para pruebas en el local -> */}
-      {/* <Td maxH={'5vh'} minH={'5vh'} h={'5vh'} w={'4vw'} onClick={() => handleClickProduct()} fontSize={'xs'} textAlign={'match-parent'}>
-        <div h={'3vh'} className="image-container" >
+      {/* <Td maxH={'3vh'} minH={'3vh'} h={'3vh'} w={'4vw'} onClick={() => handleClickProduct()} fontSize={'xs'} textAlign={'match-parent'}>
+        <div className="image-container" >
           <img src={img} className="enlarge-image" alt="Product Image" />
         </div>
       </Td> */}
       {/* Comentar para pruebas en el local -> */}
       {
         images[0] ? (
-          <Td maxH={'6vh'} maxW={'3vw'} onClick={() => handleClickProduct()} fontSize={'xs'} textAlign={'match-parent'}>
-          <div maxh={'5vh'} className="image-container">
+          <Td maxH={'3vh'} minH={'3vh'} h={'3vh'} w={'4vw'} onClick={() => handleClickProduct()} fontSize={'xs'} textAlign={'match-parent'}>
+          <div className="image-container" >
             <img src={images[0]} className="enlarge-image" alt="Product Image" />
           </div>
         </Td>
         ) : (
-          <Td maxH={'6vh'} maxW={'3vw'} onClick={() => handleClickProduct()} fontSize={'xs'} textAlign={'match-parent'}>
-          <div maxh={'5vh'} className="image-container">
+           <Td maxH={'3vh'} minH={'3vh'} h={'3vh'} w={'4vw'} onClick={() => handleClickProduct()} fontSize={'xs'} textAlign={'match-parent'}>
+         <div className="image-container" >
           </div>
         </Td>
         )   
