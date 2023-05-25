@@ -81,7 +81,7 @@ const ModelTr = ({e, user, allProducts}) => {
       </Td> */}
       {/* Comentar para pruebas en el local -> */}
       {
-        images[0] ? (
+        productImage[name] ? (
           <Td maxH={'3vh'} minH={'3vh'} h={'3vh'} w={'4vw'} onClick={() => handleClickProduct()} fontSize={'xs'} textAlign={'match-parent'}>
           <div className="image-container" >
             <img src={`data:image/jpeg;base64,${productImage[name][0]}`} className="enlarge-image" alt="Product Image" />
