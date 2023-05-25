@@ -21,7 +21,7 @@ const CarouselProduct = () => {
       );
       setImages(imageUrls);
     };
-    fetchImages();
+    if(productImages) fetchImages();
   }, [productImages]);
 
 
@@ -45,6 +45,7 @@ const CarouselProduct = () => {
     <>
     <Box px="1vh">
       <Slider {...settings}>
+      {/* Para pruebas en local, descomentar */}
         {/* <Box p="1vh" h="23vh">
           <img
           onClick={onOpen}
@@ -61,6 +62,7 @@ const CarouselProduct = () => {
           style={{ height: '100%', objectFit: 'cover', margin: '0 auto' }}
           />
         </Box> */}
+        {/* Para pruebas en local, comentar */}
         {
            images.map((url, i) => (
             <Box key={i} p="1vh" h="23vh">

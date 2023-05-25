@@ -20,6 +20,7 @@ import{ ImCheckboxChecked, ImCheckboxUnchecked } from 'react-icons/im';
 import { patchDiscontinued } from '../../redux/actions-products';
 import '../../assets/styleImgs.css';
 import { getProductImage } from '../../redux/actions-products';
+import img from '../../assets/ProductPicture/354-1.jpg'
 
 
 
@@ -33,7 +34,6 @@ const ModelTr = ({e, user, allProducts}) => {
   const [images, setImages] = useState([]);
   const navigate = useNavigate()
   const dispatch = useDispatch()
-  const id = e.ProdID
   const name = e.ProductName
   
   const handleClickProduct = () => {
@@ -72,6 +72,13 @@ const ModelTr = ({e, user, allProducts}) => {
       color: 'logo.orange'
     }} 
     >
+      {/* Descomentar para pruebas en el local -> */}
+      {/* <Td maxH={'5vh'} minH={'5vh'} h={'5vh'} w={'4vw'} onClick={() => handleClickProduct()} fontSize={'xs'} textAlign={'match-parent'}>
+        <div h={'3vh'} className="image-container" >
+          <img src={img} className="enlarge-image" alt="Product Image" />
+        </div>
+      </Td> */}
+      {/* Comentar para pruebas en el local -> */}
       {
         images[0] ? (
           <Td maxH={'6vh'} maxW={'3vw'} onClick={() => handleClickProduct()} fontSize={'xs'} textAlign={'match-parent'}>
@@ -84,9 +91,7 @@ const ModelTr = ({e, user, allProducts}) => {
           <div maxh={'5vh'} className="image-container">
           </div>
         </Td>
-        )
-      
-     
+        )   
       }
       <Td maxH={'6vh'} maxW={'3vw'} onClick={() => handleClickProduct()} fontSize={'xs'} textAlign={'match-parent'}>{e.ProductName}</Td>
       <Td maxH={'6vh'} maxW={'6vw'} onClick={() => handleClickProduct()} fontSize={'xs'} textAlign={'center'}>{e.Material}</Td>
