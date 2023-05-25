@@ -50,7 +50,7 @@ const ModelTr = ({e, user, allProducts}) => {
       if (!productImage[name]?.length) {
         dispatch(getProductImage(e.ProductName, e.Material, e.ProdID));
       }
-    }, [allProducts, productImage[name]]);
+    }, [allProducts]);
   // useEffect(() => {
   //   const fetchImages = async () => {
   //     if (productImage[name] && productImage[name].length > 0) {
