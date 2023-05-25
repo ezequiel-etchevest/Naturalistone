@@ -68,6 +68,7 @@ statsRouter.get('/', async function(req, res){
             if(result_3[0].AvgValue === null || result_3[0].AvgValue === undefined) result_3[0].AvgValue = 0;
             let Payments = paymentStats(result_5)
             let { ClosingRate, TotalCharged, ClosingDaysAvg, ClosingQuotes, PaidQuotes } = Payments
+
             const totalResults = {
                 TotalValue: result_1[0].TotalValue, 
                 InvoicesNumber: result_2[0].InvoicesNumber,
@@ -78,7 +79,8 @@ statsRouter.get('/', async function(req, res){
                 ClosingDaysAvg,
                 ClosingQuotes,
                 PaidQuotes,
-                TotalAmount: result_6[0].total_amount
+                TotalAmount: result_6[0].total_amount,
+                invoices: result_5,
                 }
             res.status(200).json(totalResults);
         })

@@ -6,6 +6,7 @@ const invoicesPayments = require('../Controllers/invoicesPayments')
 const  { getLimitDateMonth, getCurrentMonth } = require('../Controllers/LastMonth')
 const uniqueFormatNames = require('../Controllers/quotesValues')
 const invoicesFilters = require('../Controllers/invoicesFilters')
+const sendInvoiceEmail = require('../utils/email');
 
 salesRouter.get('/:id', async function(req, res){
     
@@ -446,7 +447,14 @@ salesRouter.get('/values/seller', async function(req, res){
 
 salesRouter.post('/create-quote/:sellerID', async function(req, res) {
   const { sellerID } = req.params;
-  const { customer, project, products, variables } = req.body;
+  const { customer, project, products, variables, user } = req.body;
+
+  console.log('soy customer', customer)
+  console.log('soy project', project)
+  console.log('soy products', products)
+  console.log('soy usaer', user)
+
+
 
   const parsedProducts = Object.entries(products)
     .flat()
@@ -460,6 +468,8 @@ salesRouter.post('/create-quote/:sellerID', async function(req, res) {
   const InsertDate = `${date.split('/')[2]}-${date.split('/')[0]}-${date.split('/')[1]}`;
   const EstDelivery_Date = variables.estDelivDate;
   let Naturali_Invoice = 0
+
+  console.log('soy insetrDate', InsertDate)
 
   try {
     mysqlConnection.beginTransaction(function(err) {
@@ -497,6 +507,7 @@ salesRouter.post('/create-quote/:sellerID', async function(req, res) {
             });
           }
 
+          console.log('soy salesvalues', salesValues)
           console.log('Quote created successfully');
 
           const prodSoldQuery = `INSERT INTO NaturaliStone.ProdSold (SaleID, ProdID, Quantity, SalePrice) VALUES ?`;
@@ -516,12 +527,25 @@ salesRouter.post('/create-quote/:sellerID', async function(req, res) {
                     });
                   }
 
+                console.log('soy prodsolvalues', prodSoldValues)
+
+                  
                   console.log('Products inserted successfully (retry)');
                   commitTransaction();
                 });
               }, 500);
               return;
             }
+
+            sendInvoiceEmail(
+            customer.Email, // se enviara correos desde irina hasta que se termine de configurar
+            Contact_Name, 
+            prodSoldValues[0][0], 
+            "description",
+            "amount_value",
+            Value,
+            InsertDate
+            ) // faltaria solo el pdf para enviar
 
             console.log('Products inserted successfully');
 

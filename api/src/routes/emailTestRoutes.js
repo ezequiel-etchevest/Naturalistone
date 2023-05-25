@@ -4,7 +4,7 @@ const emailRouter = express.Router();
 
 emailRouter.post('/email', async function(req, res) {
     try {
-        const email = await sendInvoiceEmail('ariadnaruvini@hotmail.com.ar', 123456)
+        const email = await sendInvoiceEmail('e.etchevest@hotmail.com', 123456)
         return res.status(200).json({success: true, msg:'Email enviado'})
     } catch (error) {
         console.log(error)
