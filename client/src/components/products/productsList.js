@@ -125,6 +125,7 @@ const ProductList = ({ allProducts, user }) => {
     }
   };
 
+
   const handleScroll = () => {
     const container = document.getElementById('scroll-container'); // Reemplaza 'scroll-container' con el ID de tu contenedor de desplazamiento
     const { scrollTop, clientHeight, scrollHeight } = container;

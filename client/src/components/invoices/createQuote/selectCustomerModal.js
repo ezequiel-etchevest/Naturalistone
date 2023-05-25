@@ -44,15 +44,14 @@ const SelectCustomerModal = ({userId, isOpen1, onClose1, customers}) => {
     }
   }
 
-
   const handleClose = () => {
     onClose1()
     setInputValue('')
     setCustomer('')
     dispatch(getCustomers('', ''))
   }
-  return(
 
+  return(
 <>
   <Modal 
     isOpen={isOpen1} 

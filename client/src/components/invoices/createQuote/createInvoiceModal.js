@@ -60,18 +60,21 @@ const validateToast = () => {
 }
 
 useEffect(()=>{
-  if(!allProducts?.length ) dispatch(
-    getFiltered(
-      filters.finish,
-      filters.size,
-      filters.thickness,
-      filters.material,
-      filters.search,
-      filters.price,
-      filters.price
-      ))
+  if(!allProducts.length ) {
+    dispatch(
+      getFiltered(
+        filters.finish,
+        '',
+        '',
+        filters.material,
+        filters.search,
+        '',
+        '',
+        ))
+    }
   validateToast()
   },[allProducts, filters])
+
 
 useEffect(()=>{
   if(Object.keys(products).length) setDisable(false)
