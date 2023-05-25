@@ -28,7 +28,8 @@ function StatsCard(props) {
     color={'web.text'}
     _hover={{
         bg: 'logo.orange',
-        color: 'web.text'
+        color: 'web.text',
+        cursor: 'pointer',
     }}>
     <Flex justifyContent={'space-between'}>
       <Box pl={{ base: 2, md: 6 }}>
