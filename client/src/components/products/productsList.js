@@ -47,7 +47,7 @@ const ModelTr = ({e, user, allProducts}) => {
     }
 
   useEffect(()=>{
-    if(!productImage[name].length) dispatch(getProductImage(e.ProductName, e.Material, e.ProdID));
+    if(!productImage[name]?.length) dispatch(getProductImage(e.ProductName, e.Material, e.ProdID));
   }, [allProducts, productImage])
 
   // useEffect(() => {
