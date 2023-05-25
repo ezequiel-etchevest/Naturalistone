@@ -46,10 +46,11 @@ const ModelTr = ({e, user, allProducts}) => {
     dispatch(patchDiscontinued(e.ProdID, flag))
     }
 
-  useEffect(()=>{
-    if(!productImage[name]?.length) dispatch(getProductImage(e.ProductName, e.Material, e.ProdID));
-  }, [allProducts, productImage[name]])
-
+    useEffect(() => {
+      if (!productImage[name]?.length) {
+        dispatch(getProductImage(e.ProductName, e.Material, e.ProdID));
+      }
+    }, [allProducts, productImage[name]]);
   // useEffect(() => {
   //   const fetchImages = async () => {
   //     if (productImage[name] && productImage[name].length > 0) {
