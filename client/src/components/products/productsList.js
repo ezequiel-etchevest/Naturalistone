@@ -47,22 +47,22 @@ const ModelTr = ({e, user, allProducts}) => {
     }
 
   useEffect(()=>{
-    if(!productImage[name]) dispatch(getProductImage(e.ProductName, e.Material, e.ProdID));
+    if(!productImage[name].length) dispatch(getProductImage(e.ProductName, e.Material, e.ProdID));
   }, [allProducts, productImage])
 
-  useEffect(() => {
-    const fetchImages = async () => {
-      if (productImage[name] && productImage[name].length > 0) {
-        const imageUrls = await Promise.all(
-          productImage[name].map((data) => `data:image/jpeg;base64,${data}`)
-        );
-        setImages(imageUrls);
-      }
-    };
-    fetchImages();
-  }, [productImage, allProducts]);
+  // useEffect(() => {
+  //   const fetchImages = async () => {
+  //     if (productImage[name] && productImage[name].length > 0) {
+  //       const imageUrls = await Promise.all(
+  //         productImage[name].map((data) => `data:image/jpeg;base64,${data}`)
+  //       );
+  //       setImages(imageUrls);
+  //     }
+  //   };
+  //   fetchImages();
+  // }, [productImage, allProducts]);
 
-    
+  console.log(productImage)
   return(
     <Tr       
     cursor={'pointer'} 
@@ -83,7 +83,7 @@ const ModelTr = ({e, user, allProducts}) => {
         images[0] ? (
           <Td maxH={'3vh'} minH={'3vh'} h={'3vh'} w={'4vw'} onClick={() => handleClickProduct()} fontSize={'xs'} textAlign={'match-parent'}>
           <div className="image-container" >
-            <img src={images[0]} className="enlarge-image" alt="Product Image" />
+            <img src={`data:image/jpeg;base64,${productImage[name][0]}`} className="enlarge-image" alt="Product Image" />
           </div>
         </Td>
         ) : (
