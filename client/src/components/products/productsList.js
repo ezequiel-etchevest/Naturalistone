@@ -24,7 +24,7 @@ import img from '../../assets/ProductPicture/354-1.jpg'
 
 
 
-const ModelTr = ({e, user, allProducts}) => {
+const ModelTr = ({e, user, allProducts, loadedCount}) => {
 
   
   const a = e.Discontinued_Flag === 'True' ? true : false 
@@ -50,7 +50,7 @@ const ModelTr = ({e, user, allProducts}) => {
       if (!productImage[name]?.length) {
         dispatch(getProductImage(e.ProductName, e.Material, e.ProdID));
       }
-    }, [allProducts]);
+    }, [allProducts, loadedCount]);
   // useEffect(() => {
   //   const fetchImages = async () => {
   //     if (productImage[name] && productImage[name].length > 0) {
@@ -215,7 +215,7 @@ const ProductList = ({ allProducts, user }) => {
               </Thead>
               <Tbody >
                 {allProducts.slice(0, loadedCount).map((e, i) => {
-                  return <ModelTr key={i} e={e} user={user} allProducts={allProducts} />;
+                  return <ModelTr key={i} e={e} user={user} allProducts={allProducts} loadedCount={loadedCount}/>;
                 })}
               </Tbody>
             </Table>
