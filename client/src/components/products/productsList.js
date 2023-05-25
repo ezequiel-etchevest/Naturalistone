@@ -46,11 +46,11 @@ const ModelTr = ({e, user, allProducts, loadedCount}) => {
     dispatch(patchDiscontinued(e.ProdID, flag))
     }
 
-    useEffect(() => {
-      if (!productImage[name]?.length) {
-        dispatch(getProductImage(e.ProductName, e.Material, e.ProdID));
-      }
-    }, [allProducts, loadedCount]);
+    // useEffect(() => {
+    //   if (!productImage[name]?.length) {
+    //     dispatch(getProductImage(e.ProductName, e.Material, e.ProdID));
+    //   }
+    // }, [allProducts, loadedCount]);
   // useEffect(() => {
   //   const fetchImages = async () => {
   //     if (productImage[name] && productImage[name].length > 0) {
@@ -80,20 +80,20 @@ const ModelTr = ({e, user, allProducts, loadedCount}) => {
         </div>
       </Td> */}
       {/* Comentar para pruebas en el local -> */}
-      {
+      {/* {
         productImage[name] ? (
           <Td maxH={'3vh'} minH={'3vh'} h={'3vh'} w={'4vw'} onClick={() => handleClickProduct()} fontSize={'xs'} textAlign={'match-parent'}>
           <div className="image-container" >
             <img src={`data:image/jpeg;base64,${productImage[name][0]}`} className="enlarge-image" alt="Product Image" />
           </div>
         </Td>
-        ) : (
+        ) : ( */}
            <Td maxH={'3vh'} minH={'3vh'} h={'3vh'} w={'4vw'} onClick={() => handleClickProduct()} fontSize={'xs'} textAlign={'match-parent'}>
          <div className="image-container" >
           </div>
         </Td>
-        )   
-      }
+        {/* )   
+      } */}
       <Td maxH={'6vh'} maxW={'3vw'} onClick={() => handleClickProduct()} fontSize={'xs'} textAlign={'match-parent'}>{e.ProductName}</Td>
       <Td maxH={'6vh'} maxW={'6vw'} onClick={() => handleClickProduct()} fontSize={'xs'} textAlign={'center'}>{e.Material}</Td>
       <Td maxH={'6vh'} maxW={'3vw'} onClick={() => handleClickProduct()} fontSize={'xs'} textAlign={'center'}>{e.Size}</Td>
