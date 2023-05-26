@@ -9,6 +9,7 @@ const client = new postmark.ServerClient(process.env.POSTMARK_API_KEY);
 const companyName = 'NaturaliStone';
 const companyAddress = '261 NW 71st St, Miami, FL 33150, United States';
 const fromEmail = "irina@naturalistone.com"
+const imgDrive = 'https://netorg8591642-my.sharepoint.com/:i:/g/personal/irina_naturalistone_com/EUJMsPLT2jBLokqZ-cz1SVMBijZhI9_At-atEYcxV48L7Q?e=46P25n'
 
 function sendEmailUser() {
   const optionsEmail= {
