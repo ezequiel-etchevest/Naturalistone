@@ -6,16 +6,21 @@ import {
     StatNumber,
     HStack,
     Spinner,
+    useDisclosure,
   } from '@chakra-ui/react';
 import { BsCreditCardFill } from 'react-icons/bs';
 import { HiReceiptPercent } from 'react-icons/hi2';
 import { MdOutlinePayments } from 'react-icons/md';
+import PaymentsMadeModal from './paymentsMadeModal';
   
 function StatsCard(props) {
+
+  const { isOpen: isOpen1, onOpen: onOpen1, onClose: onClose1 } = useDisclosure()
     
   const { title, stat, icon, visibility } = props;
 
   return (
+    <>
     <Stat
     visibility={visibility}
     w={'10vw'}
@@ -30,7 +35,9 @@ function StatsCard(props) {
         bg: 'logo.orange',
         color: 'web.text',
         cursor: 'pointer',
-    }}>
+    }}
+    onClick={onOpen1}
+    >
     <Flex justifyContent={'space-between'}>
       <Box pl={{ base: 2, md: 6 }}>
         <StatLabel fontWeight={'medium'} >
@@ -49,6 +56,8 @@ function StatsCard(props) {
       </Box>
     </Flex>
   </Stat>
+  <PaymentsMadeModal isOpenModal={isOpen1} onCloseModal={onClose1} />
+  </>
     );
   }
   

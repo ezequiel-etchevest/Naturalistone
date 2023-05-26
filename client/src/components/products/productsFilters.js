@@ -30,13 +30,15 @@ const ProductsFilters = ({allProducts, setFilteredProducts, values}) => {
   const getParamsSearch = searchParams.get('search')
   const getParamsPriceMin = searchParams.get('priceMin')
   const getParamsPriceMax = searchParams.get('priceMax')
+  const priceMin = getParamsPriceMin ? getParamsPriceMin : 0
+  const priceMax = getParamsPriceMax ? getParamsPriceMax : values?.priceMaxmin?.max
   const [filters, setFilters] = useState({
     finish: getParamsFinish ? getParamsFinish : '',
     size: getParamsSize ? getParamsSize : '',
     thickness: getParamsThickness ? getParamsThickness : '',
     material: getParamsMaterial ? getParamsMaterial: '',
     search: getParamsSearch ? getParamsSearch : '',
-    price: [getParamsPriceMin ? getParamsPriceMin : 0, getParamsPriceMax ? getParamsPriceMax : values?.priceMaxmin?.max]
+    price: [priceMin, priceMax]
   })
   const [limit, setLimit] = useState([values?.priceMaxmin?.min, values?.priceMaxmin?.max])
 
@@ -135,7 +137,7 @@ const ProductsFilters = ({allProducts, setFilteredProducts, values}) => {
           filters.material,
           filters.search,
           filters.price,
-          filters.price
+          // filters.price
           ))
     },[filters])
 
@@ -294,7 +296,7 @@ const ProductsFilters = ({allProducts, setFilteredProducts, values}) => {
             </Select>
           </Box>
           <Box display={'flex'} alignItems={'center'} flexDir={'row'} h={'4.2vh'}>
-            <PriceSlider  setFilters={setFilters} filters={filters} limit={limit} setLimit={setLimit} values={values}/>
+            <PriceSlider setFilters={setFilters} filters={filters} limit={limit} setLimit={setLimit} values={values}/>
             <Divider orientation={'vertical'} h={'5vh'} ml={'2vw'}/>
             <Tooltip placement={'bottom-start'} label={'Clear all filters'} fontWeight={'hairline'}>      
             <IconButton

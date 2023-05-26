@@ -21,11 +21,40 @@ import {
     Th,
     Tbody,
     } from "@chakra-ui/react"
-import { useSelector } from "react-redux"
+import { useSelector, useDispatch } from "react-redux"
+import { getInvoiceById, getInvoiceProducts } from "../../redux/actions-invoices"
+import { cleanStatePayments } from "../../redux/actions-payments"
+import { useNavigate } from 'react-router-dom'
 
-const StatsModal = ({isOpenModal, onCloseModal}) => {
+const PaymentsModal = ({isOpenModal, onCloseModal}) => {
 
-  const stats = useSelector(state => state.stats)
+  const stats = useSelector(state => state.stats);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const statsWithPayments = stats.invoices.filter((el) => {
+    const payments = el.Payments !== null
+    return payments
+});
+
+function sumPayments(e) {
+    if (e.length > 1) {
+        const sum = e.reduce((total, payment) => {
+          return total + parseFloat(payment[1]);
+        }, 0);
+    
+        return sum.toString();
+      }
+    
+      return e[0][1];
+};
+
+const handleClick = (e) => {
+    dispatch(getInvoiceById(e.Naturali_Invoice))
+    dispatch(getInvoiceProducts(e.Naturali_Invoice))
+    dispatch(cleanStatePayments())
+    navigate(`/quotes/${e.Naturali_Invoice}`)
+  }
 
     return (
         <>
@@ -45,7 +74,7 @@ const StatsModal = ({isOpenModal, onCloseModal}) => {
               display={'flex'}
               justifyContent={'center'}
               color={'web.text2'}> 
-                Invoices derived from the stats 
+                Invoices Payments from the stats 
               </ModalHeader>
               <ModalCloseButton
                 color={'web.text2'}
@@ -81,16 +110,19 @@ const StatsModal = ({isOpenModal, onCloseModal}) => {
                   <Table color={'web.text'}variant={'simple'} size={'sm'}>
                       <Thead h={'6vh'}>
                           <Tr h={'6vh'}>
-                            <Th color={'web.text2'} textAlign={'center'} px={20}>Nº Quote</Th>
-                            <Th color={'web.text2'} textAlign={'center'} px={20}>Value quote</Th>
-                            <Th color={'web.text2'} textAlign={'center'} px={20}>Date</Th>
+                            <Th color={'web.text2'} textAlign={'center'} px={6}>Nº Quote</Th>
+                            <Th color={'web.text2'} textAlign={'center'} px={6}>Value quote</Th>
+                            <Th color={'web.text2'} textAlign={'center'} px={6}>Payments</Th>
+                            <Th color={'web.text2'} textAlign={'center'} px={6}>Percentaje</Th>
+                            <Th color={'web.text2'} textAlign={'center'} px={6}>Date</Th>
                           </Tr>
                       </Thead>
                       <Tbody>
                           { 
-                            stats.invoices.map((e, i) => (
+                            statsWithPayments.map((e, i) => (
                               <Tr
-                              key={e}
+                              onClick={() => handleClick(e)}
+                              key={e.Naturali_Invoice}
                               cursor={'pointer'} 
                               _hover={{
                                 bg: 'web.navBar',
@@ -101,6 +133,12 @@ const StatsModal = ({isOpenModal, onCloseModal}) => {
                                 </Th>
                                 <Th color={'web.text'} textAlign={'center'} fontWeight={'hairline'}>
                                   {e.Value}
+                                </Th>
+                                <Th color={'web.text'} textAlign={'center'} fontWeight={'hairline'}>
+                                  {sumPayments(e.Payments)}
+                                </Th>                                
+                                <Th color={'web.text'} textAlign={'center'} fontWeight={'hairline'}>
+                                  {e.Percentaje}
                                 </Th>
                                 <Th color={'web.text'} textAlign={'center'} fontWeight={'hairline'}>
                                   {e.InvoiceDate.slice(0, 10)}
@@ -119,4 +157,4 @@ const StatsModal = ({isOpenModal, onCloseModal}) => {
     )
 }
 
-export default StatsModal;
+export default PaymentsModal;
