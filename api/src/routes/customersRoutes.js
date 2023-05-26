@@ -68,4 +68,44 @@ customersRouter.post('/', async function(req, res){
     }
 });
 
+customersRouter.patch('/:id', async function(req, res){
+
+    const {id} = req.params
+    const { Contact_Name, Company, Company_Position, Phone, Email, DiscountID, Address, City, ZipCode, State} = req.body
+    
+    const parsedDiscount = () => {
+        if(DiscountID === '15') return 4
+        else if(DiscountID === '10') return 3
+        else if(DiscountID === '5') return 2
+        else return 1
+    } 
+    
+    query_ = `UPDATE Customers SET Contact_Name = "${Contact_Name}", 
+                Company = "${Company}", 
+                Company_Position = "${Company_Position}", 
+                Phone = "${Phone}", 
+                Email = "${Email}", 
+                DiscountID = "${parsedDiscount()}", 
+                Address = "${Address}", 
+                City = "${City}", 
+                ZipCode = "${ZipCode}", 
+                State = "${State}" 
+                WHERE CustomerID = ${id}`;
+    try{
+      mysqlConnection.query(query_, function(error, results, fields){
+
+           if(error) throw error;
+           if(results.length == 0) {
+               console.log(`Failure updating Customer ${id}`)
+               res.status(200).json('');
+           } else {
+               console.log('Customer Update OK')
+               res.status(200).json(results);
+           }
+       });
+    } catch(error){
+        res.status(409).send(error);
+    }
+});
+
 module.exports = customersRouter;

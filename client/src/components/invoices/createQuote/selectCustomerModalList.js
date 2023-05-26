@@ -12,10 +12,15 @@ import {
     } from '@chakra-ui/react'
   import SelectedCustomerModal from './selectedCustomerReview';
   import { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { getCustomerById } from '../../../redux/actions-customers';
   
   const ModelTr = ({e, onOpen2, setCustomer}) => {
+    
+    const dispatch = useDispatch()
 
     const handleClick = (e) => {
+      dispatch(getCustomerById(e.CustomerID))
       setCustomer(e)
       onOpen2()
     }

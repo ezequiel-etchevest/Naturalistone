@@ -5,6 +5,7 @@ export const GET_CUSTOMER_BY_ID = 'GET_CUSTOMERS_BY_ID';
 export const POST_CUSTOMER = 'POST_CUSTOMER';
 export const GET_CUSTOMER_INVOICES = 'GET_CUSTOMER_INVOICES';
 export const CLEAN_CUSTOMER_DETAIL = 'CLEAN_CUSTOMER_DETAIL'
+export const PATCH_CUSTOMER = 'PATCH_CUSTOMER'
 
 
 
@@ -82,3 +83,19 @@ export function cleanCustomerDetail(){
     })
   }
 }
+
+export function updateCustomer(id, customer){
+
+  return async function(dispatch){
+      try{
+        let {response} = await axios.patch(`/customers/${id}`, customer)
+        let {data} = await axios.get(`/customers/${id}`)
+        
+          dispatch(
+          {
+              type: PATCH_CUSTOMER,
+              payload: data
+          })
+      }catch(error){
+          console.log({error})           
+      }}}

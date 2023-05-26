@@ -147,7 +147,7 @@ productsRouter.patch('/discontinued/:id', async function(req, res){
     const {id} = req.params
     const {flag} = req.body
     const val = flag === true ? 'False' : 'True'
-    console.log(val)
+    
     query_ = `UPDATE Products SET Discontinued_Flag = "${val}" WHERE ProdID =${id}`
 
     try{
