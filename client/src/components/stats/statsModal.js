@@ -21,11 +21,23 @@ import {
     Th,
     Tbody,
     } from "@chakra-ui/react"
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
+import { getInvoiceById, getInvoiceProducts } from "../../redux/actions-invoices"
+import { cleanStatePayments } from "../../redux/actions-payments"
+import { useNavigate } from "react-router-dom"
 
 const StatsModal = ({isOpenModal, onCloseModal}) => {
 
   const stats = useSelector(state => state.stats)
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
+  
+  const handleClick = (e) => {
+    dispatch(getInvoiceById(e.Naturali_Invoice))
+    dispatch(getInvoiceProducts(e.Naturali_Invoice))
+    dispatch(cleanStatePayments())
+    navigate(`/quotes/${e.Naturali_Invoice}`)
+  }
 
     return (
         <>
@@ -90,21 +102,28 @@ const StatsModal = ({isOpenModal, onCloseModal}) => {
                           { 
                             stats.invoices.map((e, i) => (
                               <Tr
-                              key={e}
+                              onClick={() => handleClick(e)}
+                              key={e.Naturali_Invoice}
                               cursor={'pointer'} 
                               _hover={{
                                 bg: 'web.navBar',
-                                color: 'logo.orange'
-                              }}>
-                                <Th color={'web.text'} textAlign={'center'} fontWeight={'hairline'}>
+                                color: 'logo.orange',
+                              }}
+                              borderBottom={'1px solid'}
+                              fontSize={'sm'}
+                              textAlign={'center'}
+                              fontWeight={'hairline'}
+                              h={'4.5vh'}
+                              >
+                                <td color={'web.text'} textAlign={'center'} fontWeight={'hairline'}>
                                   {e.Naturali_Invoice}
-                                </Th>
-                                <Th color={'web.text'} textAlign={'center'} fontWeight={'hairline'}>
-                                  {e.Value}
-                                </Th>
-                                <Th color={'web.text'} textAlign={'center'} fontWeight={'hairline'}>
+                                </td>
+                                <td color={'web.text'} textAlign={'center'} fontWeight={'hairline'}>
+                                  $ {e.Value.toLocaleString('en-US')}
+                                </td>
+                                <td color={'web.text'} textAlign={'center'} fontWeight={'hairline'}>
                                   {e.InvoiceDate.slice(0, 10)}
-                                </Th>
+                                </td>
                               </Tr>
                               ))
                           }

@@ -108,20 +108,26 @@ const PaymentsMadeModal = ({isOpenModal, onCloseModal}) => {
                               cursor={'pointer'} 
                               _hover={{
                                 bg: 'web.navBar',
-                                color: 'logo.orange'
-                              }}>
-                                <Th color={'web.text'} textAlign={'center'} fontWeight={'hairline'}>
+                                color: 'logo.orange',
+                              }}
+                              borderBottom={'1px solid'}
+                              fontSize={'sm'}
+                              textAlign={'center'}
+                              fontWeight={'hairline'}
+                              h={'4.5vh'}
+                              >
+                                <td color={'web.text'} textAlign={'center'} fontWeight={'hairline'}>
                                   {e.InvoiceID}
-                                </Th>
-                                <Th color={'web.text'} textAlign={'center'} fontWeight={'hairline'}>
-                                  {e.Amount}
-                                </Th>
-                                <Th color={'web.text'} textAlign={'center'} fontWeight={'hairline'}>
+                                </td>
+                                <td color={'web.text'} textAlign={'center'} fontWeight={'hairline'}>
+                                  $ {e.Amount.toLocaleString('en-US')}
+                                </td>
+                                <td color={'web.text'} textAlign={'center'} fontWeight={'hairline'}>
                                   {e.Method}
-                                </Th>
-                                <Th color={'web.text'} textAlign={'center'} fontWeight={'hairline'}>
+                                </td>
+                                <td color={'web.text'} textAlign={'center'} fontWeight={'hairline'}>
                                   {e.Date.slice(0, 10)}
-                                </Th>
+                                </td>
                               </Tr>
                               ))
                           }

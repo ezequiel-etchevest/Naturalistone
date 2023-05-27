@@ -102,6 +102,14 @@ const ProductsFilters = ({allProducts, setFilteredProducts, values}) => {
     dispatch(getFiltered(filters.finish, filters.size, filters.thickness, material, filters.search, filters.price))
   }
   const handleClear = () => {
+    searchParams.delete('material')
+    searchParams.delete('size')
+    searchParams.delete('finish')
+    searchParams.delete('thickness')
+    searchParams.delete('search')
+    searchParams.delete('priceMin')
+    searchParams.delete('priceMax')
+    navigate(`?${searchParams.toString()}`)
     setFilters({
       finish:'',
       size:'',

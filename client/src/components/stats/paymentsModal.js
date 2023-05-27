@@ -43,10 +43,10 @@ function sumPayments(e) {
           return total + parseFloat(payment[1]);
         }, 0);
     
-        return sum.toString();
+        return Number(sum).toLocaleString('en-US');
       }
     
-      return e[0][1];
+      return Number(e[0][1]).toLocaleString('en-US');
 };
 
 const handleClick = (e) => {
@@ -107,7 +107,7 @@ const handleClick = (e) => {
             }}
             >
               <TableContainer>
-                  <Table color={'web.text'}variant={'simple'} size={'sm'}>
+                  <Table color={'web.text'} variant={'simple'} size={'sm'}>
                       <Thead h={'6vh'}>
                           <Tr h={'6vh'}>
                             <Th color={'web.text2'} textAlign={'center'} px={6}>Nº Quote</Th>
@@ -117,7 +117,7 @@ const handleClick = (e) => {
                             <Th color={'web.text2'} textAlign={'center'} px={6}>Date</Th>
                           </Tr>
                       </Thead>
-                      <Tbody>
+                      <Tbody variant={'simple'}>
                           { 
                             statsWithPayments.map((e, i) => (
                               <Tr
@@ -126,23 +126,29 @@ const handleClick = (e) => {
                               cursor={'pointer'} 
                               _hover={{
                                 bg: 'web.navBar',
-                                color: 'logo.orange'
-                              }}>
-                                <Th color={'web.text'} textAlign={'center'} fontWeight={'hairline'}>
+                                color: 'logo.orange',
+                              }}
+                              borderBottom={'1px solid'}
+                              fontSize={'sm'}
+                              textAlign={'center'}
+                              fontWeight={'hairline'}
+                              h={'4.5vh'}
+                              >
+                                <td>
                                   {e.Naturali_Invoice}
-                                </Th>
-                                <Th color={'web.text'} textAlign={'center'} fontWeight={'hairline'}>
-                                  {e.Value}
-                                </Th>
-                                <Th color={'web.text'} textAlign={'center'} fontWeight={'hairline'}>
-                                  {sumPayments(e.Payments)}
-                                </Th>                                
-                                <Th color={'web.text'} textAlign={'center'} fontWeight={'hairline'}>
-                                  {e.Percentaje}
-                                </Th>
-                                <Th color={'web.text'} textAlign={'center'} fontWeight={'hairline'}>
+                                </td>
+                                <td>
+                                  $ {e.Value.toLocaleString('en-US')}
+                                </td>
+                                <td>
+                                  $ {sumPayments(e.Payments)}
+                                </td>                                
+                                <td>
+                                  {e.Percentaje} %
+                                </td>
+                                <td>
                                   {e.InvoiceDate.slice(0, 10)}
-                                </Th>
+                                </td>
                               </Tr>
                               ))
                           }
