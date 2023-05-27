@@ -12,7 +12,7 @@ import { useEffect, useState } from "react";
 import '../../assets/styleSheet.css';
 import {AiOutlineClear} from 'react-icons/ai';
 import { cleanCustomerDetail, getCustomers } from "../../redux/actions-customers";
-import { CreateNewCustomer } from "./createCustomer";
+import { CreateCustomerModal } from './createCustomer/createCustomerModal';
 import { useLocation, useNavigate } from "react-router-dom";
 
 const CustomerFilters = () => {
@@ -104,7 +104,7 @@ const CustomerFilters = () => {
         justifyContent={'flex-end'}>  
             
         </Box>
-        <CreateNewCustomer/>
+        <CreateCustomerModal/>
         <Divider orientation={'vertical'} h={'5vh'}/>
         <Tooltip placement={'bottom-start'} label={'Clear all filters'} fontWeight={'hairline'}>      
           <IconButton

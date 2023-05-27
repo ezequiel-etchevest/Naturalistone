@@ -19,10 +19,11 @@ import {
 import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import SelectCustomerModalList from './selectCustomerModalList'
-import { CreateCustomerModal } from "./createCustomerModal";
+import { CreateCustomer } from "./createCustomerModal";
 import { getCustomers } from "../../../redux/actions-customers";
 import {BiSearch} from 'react-icons/bi'
 import '../../../assets/styleSheet.css'
+import { CreateCustomerModal } from "../../customers/createCustomer/createCustomerModal";
 
 const SelectCustomerModal = ({userId, isOpen1, onClose1, customers}) => {
  
@@ -115,6 +116,7 @@ const SelectCustomerModal = ({userId, isOpen1, onClose1, customers}) => {
             />
           </Box>
           <Divider orientation={'vertical'} h={'6vh'} />
+          {/* <CreateCustomer customer={customer} setCustomer={setCustomer} onOpen2={onOpen2}/> */}
           <CreateCustomerModal customer={customer} setCustomer={setCustomer} onOpen2={onOpen2}/>
           </Box>
         </HStack>

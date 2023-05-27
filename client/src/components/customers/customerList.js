@@ -14,7 +14,7 @@ import {
 import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { getCustomerById } from '../../redux/actions-customers';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 
 
@@ -56,9 +56,11 @@ const ModelTr = ({e}) => {
 
 const CustomerList = ({customers, user}) => {
 
+const [initialCount] = useState(20);
+const [batchCount] = useState(15);
+const [loadedCount, setLoadedCount] = useState(initialCount);
 const toast = useToast()
 const id = 'test-toast'
-
 const validateResults = () => {
   // if(result === 'no_results'){
   //   if (!toast.isActive(id)) {
@@ -71,10 +73,21 @@ const validateResults = () => {
   //   });
   // }}
 }
+  const handleScroll = () => {
+    const container = document.getElementById('scroll-container'); // Reemplaza 'scroll-container' con el ID de tu contenedor de desplazamiento
+    const { scrollTop, clientHeight, scrollHeight } = container;
 
+    if (scrollTop + clientHeight >= scrollHeight - 20) {
+      // El usuario ha llegado al final, carga más productos
+      setLoadedCount(prevCount => prevCount + batchCount);
+    }
+  };
 useEffect(()=>{
-  validateResults()
-})
+  const container = document.getElementById('scroll-container'); // Reemplaza 'scroll-container' con el ID de tu contenedor de desplazamiento
+  container.addEventListener('scroll', handleScroll);
+  return () => {
+    container.removeEventListener('scroll', handleScroll);
+  }}, [batchCount]);
   return(
   <Box
   display={'flex'}
@@ -84,6 +97,7 @@ useEffect(()=>{
   w={'82.8vw'} 
   >
     <Box
+    id='scroll-container'
     maxHeight={'73vh'}
     overflow={'auto'}
     css={{
@@ -120,9 +134,9 @@ useEffect(()=>{
               </Thead>
               <Tbody >
               { 
-                customers.map((e, i) => (
-                  <ModelTr key={i} e={e} user={user}/> 
-                ))
+                customers.slice(0, loadedCount).map((e, i) => {
+                  return (<ModelTr key={i} e={e} user={user}/> )
+                })
               }
               </Tbody>
             </Table>

@@ -4,14 +4,16 @@ import {
   VStack,
   Box,
   Select,
-  Text
+  Text,
+  Divider
 } from '@chakra-ui/react';
-import AutocompleteState from './AutocompleteState';
-import '../../assets/styleSheet.css'
-import { formatNumber } from '../../utils/formattedNumber';
+import AutocompleteState from '../AutocompleteState';
+import '../../../assets/styleSheet.css'
+import { formatNumber } from '../../../utils/formattedNumber';
+
 
 export default function CreationCustomerForm({formData, setFormData, validate, errors, setErrors, setChangeInput}) {
-  console.log(formData)
+
   const handleChange = (event) => {
     const { name, value } = event.target;
     // Actualizas solo la propiedad que cambió en el objeto de formData
@@ -42,7 +44,7 @@ export default function CreationCustomerForm({formData, setFormData, validate, e
           <FormControl w={'45vw'} >
             <Input
               mb={'0.5vh'}
-              w={'45vw'}
+              w={'20vw'}
               minH={'4.5vh'}
               variant="unstyled"
               textColor={'web.text2'}
@@ -62,12 +64,83 @@ export default function CreationCustomerForm({formData, setFormData, validate, e
                 </Text>
               )}
           </FormControl>
+          <FormControl  w={'20vw'}>
+            <Input
+              mb={'0.5vh'}
+              w={'20vw'}
+              minH={'4.5vh'}
+              variant="unstyled"
+              textColor={'web.text2'}
+              _placeholder={{ fontFamily: 'body', fontWeight: 'inherit' }}
+              size={"sm"}
+              borderBottomWidth={"2px"}
+              borderBottomColor={'web.text2'}
+              placeholder={'E-mail'}
+              type={"email"}
+              name={'Email'}
+              value={formData.Email}
+              onChange={handleChange}
+            />
+            { errors.Email && (
+              <Text position={'absolute'} color={'web.error'} fontSize={'xs'}>
+                {errors.Email}
+              </Text>
+              )}
+          </FormControl>
+        </Box>
+        <Box display={'flex'} flexDir={'row'} justifyContent={'space-between'} w={'45vw'} spacing={4}>
+          <FormControl w={'20vw'}>
+            <Input
+              mb={'0.5vh'}
+              w={'20vw'}
+              minH={'4.5vh'}
+              variant="unstyled"
+              textColor={'web.text2'}
+              _placeholder={{ fontFamily: 'body', fontWeight: 'inherit' }}
+              size={"sm"}
+              borderBottomWidth={"2px"}
+              borderBottomColor={'web.text2'}
+              placeholder={'Phone'}
+              type={"text"}
+              name={"Phone"}
+              value={formatNumber(formData.Phone)}
+              onChange={handleChange}
+            />
+            { errors.Phone && (
+              <Text position={'absolute'} color={'web.error'} fontSize={'xs'}>
+                {errors.Phone}
+              </Text>
+              )}
+          </FormControl>
+          <FormControl  w={'20vw'}>
+            <Input
+              mb={'0.5vh'}
+              w={'20vw'}
+              minH={'4.5vh'}
+              variant="unstyled"
+              textColor={'web.text2'}
+              _placeholder={{ fontFamily: 'body', fontWeight: 'inherit' }}
+              size={"sm"}
+              borderBottomWidth={"2px"}
+              borderBottomColor={'web.text2'}
+              placeholder={'E-mail'}
+              type={"email"}
+              name={'Email'}
+              value={formData.Email}
+              onChange={handleChange}
+            />
+            { errors.Email && (
+              <Text position={'absolute'} color={'web.error'} fontSize={'xs'}>
+                {errors.Email}
+              </Text>
+              )}
+          </FormControl>
         </Box>
         <Box display={'flex'} flexDir={'row'} justifyContent={'space-between'} w={'45vw'}>
           <FormControl w={'45vw'}>
             <Input
               mb={'0.5vh'}
-              w={'45vw'}
+              w={'20vw'}
               minH={'4.5vh'}
               variant="unstyled"
               textColor={'web.text2'}
@@ -84,6 +157,29 @@ export default function CreationCustomerForm({formData, setFormData, validate, e
             { errors.Address && (
               <Text position={'absolute'} color={'web.error'} fontSize={'xs'}>
                 {errors.Address}
+              </Text>
+            )}
+          </FormControl>
+          <FormControl  w={'20vw'}>
+            <Input
+              mb={'0.5vh'}
+              w={'20vw'}
+              minH={'4.5vh'}
+              variant="unstyled"
+              textColor={'web.text2'}
+              _placeholder={{ fontFamily: 'body', fontWeight: 'inherit' }}
+              size={"sm"}
+              borderBottomWidth={"2px"}
+              borderBottomColor={'web.text2'}
+              placeholder={'City'}
+              type={"text"}
+              name="City"
+              value={formData.City}
+              onChange={handleChange}
+            />
+            { errors.City && (
+              <Text position={'absolute'} color={'web.error'} fontSize={'xs'}>
+                {errors.City}
               </Text>
             )}
           </FormControl>
@@ -167,54 +263,6 @@ export default function CreationCustomerForm({formData, setFormData, validate, e
             <option className='options' value={4}>15%</option>
           </Select>
         </FormControl>
-        </Box>
-        <Box display={'flex'} flexDir={'row'} justifyContent={'space-between'} w={'45vw'} spacing={4}>
-          <FormControl w={'20vw'}>
-            <Input
-              mb={'0.5vh'}
-              w={'20vw'}
-              minH={'4.5vh'}
-              variant="unstyled"
-              textColor={'web.text2'}
-              _placeholder={{ fontFamily: 'body', fontWeight: 'inherit' }}
-              size={"sm"}
-              borderBottomWidth={"2px"}
-              borderBottomColor={'web.text2'}
-              placeholder={'Phone'}
-              type={"text"}
-              name={"Phone"}
-              value={formatNumber(formData.Phone)}
-              onChange={handleChange}
-            />
-            { errors.Phone && (
-              <Text position={'absolute'} color={'web.error'} fontSize={'xs'}>
-                {errors.Phone}
-              </Text>
-              )}
-          </FormControl>
-          <FormControl  w={'20vw'}>
-            <Input
-              mb={'0.5vh'}
-              w={'20vw'}
-              minH={'4.5vh'}
-              variant="unstyled"
-              textColor={'web.text2'}
-              _placeholder={{ fontFamily: 'body', fontWeight: 'inherit' }}
-              size={"sm"}
-              borderBottomWidth={"2px"}
-              borderBottomColor={'web.text2'}
-              placeholder={'E-mail'}
-              type={"email"}
-              name={'Email'}
-              value={formData.Email}
-              onChange={handleChange}
-            />
-            { errors.Email && (
-              <Text position={'absolute'} color={'web.error'} fontSize={'xs'}>
-                {errors.Email}
-              </Text>
-              )}
-          </FormControl>
         </Box>
       </VStack>
     </form>

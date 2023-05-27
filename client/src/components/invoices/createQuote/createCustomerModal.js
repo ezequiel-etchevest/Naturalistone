@@ -14,12 +14,12 @@ import {
   Progress,
   Tooltip } from "@chakra-ui/react"
 import { HiUserAdd } from "react-icons/hi";
-import CreationCustomerForm from "../../customers/createCustomerForm";
+import { CreateCustomerModal } from "../../customers/createCustomer/createCustomerModal";
 import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { createCustomer } from '../../../redux/actions-customers'
 
-export function CreateCustomerModal({ user, setCustomer, onOpen2}) {
+export function CreateCustomer({ user, setCustomer, onOpen2}) {
 
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [errors, setErrors] = useState({})
@@ -95,7 +95,7 @@ export function CreateCustomerModal({ user, setCustomer, onOpen2}) {
             <Progress value={20} colorScheme={"orange"} mb={'2vh'} background={'web.border'} size={'sm'}/>
                 <ModalBody color={'web.text2'} display={'flex'} justifyContent={'center'} flexDir={'column'} h={'58vh'} mb={'4vh'}>
                 <Text ml={'2vw'} mb={'6vh'} mt={'2vh'} fontSize={'lg'} w={'16vw'} color={'white'} alignSelf={'flex-start'}>Add New Customer</Text>
-                <CreationCustomerForm formData={formData} setFormData={setFormData} errors={errors} setErrors={setErrors}/>
+                <CreateCustomerModal formData={formData} setFormData={setFormData} errors={errors} setErrors={setErrors}/>
               </ModalBody>
             <ModalFooter mt={'11vh'} mb={'2vh'} display={'flex'} flexDir={'row'} justifyContent={'space-between'} ml={'2vw'} mr={'2vw'}>
               <Button
