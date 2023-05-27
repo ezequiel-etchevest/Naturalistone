@@ -27,7 +27,9 @@ statsRouter.get('/', async function(req, res){
                 WHERE Payments.Date BETWEEN '${startDate}' AND '${endDate}' AND Sales.Status != 'Canceled'`
     query_7A = `SELECT Payments.*, Sales.SellerID, Sales.Status FROM Payments
                 LEFT JOIN Sales ON Payments.InvoiceID = Sales.Naturali_Invoice
-                WHERE Payments.Date BETWEEN '${startDate}' AND '${endDate}' AND Sales.Status != 'Canceled'`
+                WHERE Payments.Date BETWEEN '${startDate}' AND '${endDate}' AND Sales.Status != 'Canceled'
+                ORDER BY Payments.Date DESC`
+
                
     query_1 = `SELECT ROUND(SUM(Value), 2) AS TotalValue FROM Sales WHERE SellerID = ${sellerID} AND InvoiceDate BETWEEN "${startDate}" AND "${endDate}" AND Status != "Canceled"`;
     query_2 = `SELECT COUNT(*) AS InvoicesNumber FROM Sales WHERE SellerID = ${sellerID} AND InvoiceDate BETWEEN "${startDate}" AND "${endDate}" AND Status != "Canceled"`;
@@ -36,15 +38,16 @@ statsRouter.get('/', async function(req, res){
     query_5 = `SELECT Sales.Naturali_Invoice, Sales.Value, Sales.InvoiceDate, Sales.SellerID, Sales.Payment_Stamp, Payments.idPayments,
                 GROUP_CONCAT(
                 CONCAT(Payments.idPayments,';',Payments.Amount,';',Payments.Date))AS Payments FROM Sales 
-                LEFT JOIN Payments ON Sales.Naturali_Invoice = Payments.InvoiceID AND Sales.SellerID = ${sellerID} 
-                WHERE InvoiceDate BETWEEN "${startDate}" AND "${endDate}" AND Sales.Status != "Canceled" AND Sales.SellerID = ${sellerID} 
+                LEFT JOIN Payments ON Sales.Naturali_Invoice = Payments.InvoiceID AND Sales.SellerID = '${sellerID}' 
+                WHERE InvoiceDate BETWEEN "${startDate}" AND "${endDate}" AND Sales.Status != "Canceled" AND Sales.SellerID = '${sellerID}' 
                 GROUP BY Sales.Naturali_Invoice ORDER BY Sales.InvoiceDate DESC`
     query_6 = `SELECT SUM(Payments.Amount) AS total_amount, Payments.*, Sales.SellerID, Sales.Status FROM Payments
                 LEFT JOIN Sales ON Payments.InvoiceID = Sales.Naturali_Invoice
-                WHERE Sales.SellerID = ${sellerID} AND Payments.Date BETWEEN '${startDate}' AND '${endDate}' AND Sales.Status != 'Canceled'`
+                WHERE Sales.SellerID = '${sellerID}' AND Payments.Date BETWEEN '${startDate}' AND '${endDate}' AND Sales.Status != 'Canceled'`
     query_7 = `SELECT Payments.*, Sales.SellerID, Sales.Status FROM Payments
                 LEFT JOIN Sales ON Payments.InvoiceID = Sales.Naturali_Invoice
-                WHERE Sales.SellerID = ${sellerID} AND Payments.Date BETWEEN '${startDate}' AND '${endDate}' AND Sales.Status != 'Canceled'`
+                WHERE Sales.SellerID = '${sellerID}' AND Payments.Date BETWEEN '${startDate}' AND '${endDate}' AND Sales.Status != 'Canceled' 
+                ORDER BY Payments.Date DESC`
 
     let promisesA = [query_1A, query_2A, query_3A, query_4A, query_5A, query_6A, query_7A].map(query => new Promise((resolve, reject) => {
         mysqlConnection.query(query, (error, results) => {
