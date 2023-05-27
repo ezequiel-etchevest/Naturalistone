@@ -7,9 +7,7 @@ import PaymentsStats from "./stats/PaymentsStats";
 import FilterStats from "./stats/filterStats";
 import { getStats } from "../redux/actions-stats";
 import { cleanStats } from "../redux/actions-statsByMonth";
-import { useLocation } from "react-router-dom";
-
-
+import { useLocation, useNavigate } from "react-router-dom";
 
 const HomeContainer = ({user}) => {
 
@@ -23,12 +21,28 @@ const HomeContainer = ({user}) => {
   const getParamsYear = searchParams.get('Year')
   const currentMonth = new Date().getMonth() + 1
   const currentYear = new Date().getFullYear();
+  const navigate = useNavigate();
+
 
   const [filters, setFilters] = useState({
     SellerID: getParamsSellerID ? getParamsSellerID : user[0].SellerID,
     Month: getParamsMonth ? getParamsMonth : currentMonth,
     Year: getParamsYear ? getParamsYear : currentYear,
   });
+
+  const handleClear = () => {
+    searchParams.delete('SellerID')
+    searchParams.delete('Month')
+    searchParams.delete('Year')
+    dispatch(cleanStats())
+    navigate(`?${searchParams.toString()}`);
+    setFilters({
+      SellerID: user[0].SellerID,
+      Month: currentMonth,
+      Year: currentYear,
+    })
+    dispatch(getStats(filters))
+  }
 
   useEffect(() => {
     if(user.length && Object.entries(stats).length === 0){
@@ -65,14 +79,14 @@ const HomeContainer = ({user}) => {
           mb={'1vw'}
           mr={'1.5vw'}
           >
-          <FilterStats user={user} years={stats.YearsInvoices} filters={filters} setFilters={setFilters}/>
+          <FilterStats user={user} years={stats.YearsInvoices} filters={filters} setFilters={setFilters} handleClear={handleClear}/>
         </Box>
         {
           Object.entries(stats).length !== 0 ? (
            <>
             <CurrentMonthStats currentMonth={filters.Month} user={user} stats={stats}/>
-            <TotalStats user={user} stats={stats}/>
-            <PaymentsStats user={user} stats={stats}/>
+            <TotalStats user={user} stats={stats} filters={filters}/>
+            <PaymentsStats user={user} stats={stats} filters={filters}/>
            </> 
 
           ):(

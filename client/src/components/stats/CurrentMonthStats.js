@@ -4,18 +4,23 @@ import {
   Stat,
   StatLabel,
   StatNumber,
-  HStack
+  HStack,
+  useDisclosure
 } from '@chakra-ui/react';
 import { BiDollar } from 'react-icons/bi';
 import { FaSortAmountUpAlt } from 'react-icons/fa';
 import { TbReceiptTax } from 'react-icons/tb';
 import { months } from "../../utils/months";
+import StatsModal from './statsModal';
 
 function StatsCard(props) {
+
+  const { isOpen: isOpen1, onOpen: onOpen1, onClose: onClose1 } = useDisclosure()
   
   const { title, stat, icon } = props;
 
   return (
+    <>
     <Stat
       w={'10vw'}
       h={'16vh'}
@@ -27,8 +32,11 @@ function StatsCard(props) {
       color={'web.text'}
       _hover={{
           bg: 'logo.orange',
-          color: 'web.text'
-      }}>
+          color: 'web.text',
+          cursor: 'pointer',
+      }}
+      onClick={onOpen1}
+      >
       <Flex justifyContent={'space-between'}>
         <Box pl={{ base: 2, md: 6 }}>
           <StatLabel fontWeight={'medium'} >
@@ -46,6 +54,9 @@ function StatsCard(props) {
         </Box>
       </Flex>
     </Stat>
+
+    <StatsModal isOpenModal={isOpen1} onCloseModal={onClose1}/>
+  </>
   );
 }
 

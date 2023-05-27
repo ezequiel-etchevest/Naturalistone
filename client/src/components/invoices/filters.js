@@ -28,6 +28,7 @@ const Filters = ({user, seller_invoices, setFocusFilter, seller_values, customer
   const location = useLocation()
   const lastWeek = 'LastWeek'
   const lastMonth = 'LastMonth'
+  const all = 'All'
   const queryString = location.search;
   const url = new URLSearchParams(queryString)
   const getParamsTimeFilter = url.get('timeFilter')
@@ -50,7 +51,10 @@ const Filters = ({user, seller_invoices, setFocusFilter, seller_values, customer
   }
   
   const handleClickAllInvoices = () => {
-    setInputValues({...inputValues, timeFilter: 'All'})
+    setInputValues({...inputValues, timeFilter: all})
+    searchParams.set('timeFilter', 'All')
+    searchParams.set('seller', inputValues.selectSeller)
+    navigate(`?${searchParams.toString()}`)
     dispatch(getInvoicesBySeller(userId, {...inputValues, timeFilter: 'All'}))
   }
 
@@ -189,6 +193,11 @@ const Filters = ({user, seller_invoices, setFocusFilter, seller_values, customer
   }
   
   const handleClear = () => {
+    searchParams.delete('timeFilter')
+    searchParams.delete('seller')
+    searchParams.delete('number')
+    searchParams.delete('name')
+    navigate(`?${searchParams.toString()}`)
     setInputValues({
       inputNumber:'',
       inputName: '',

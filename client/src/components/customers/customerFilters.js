@@ -45,6 +45,13 @@ const CustomerFilters = () => {
     dispatch(cleanCustomerDetail())
     dispatch(getCustomers(inputValues))
   },[])
+
+  const handleClear = () => {
+    searchParams.delete('customer')
+    navigate(`?${searchParams.toString()}`)
+    setInputValues('')
+    dispatch(getCustomers(''))
+  }
   
   return (
     <Box>
@@ -120,7 +127,7 @@ const CustomerFilters = () => {
              }}
           _active={{
           }}
-          //onClick={(e) => handleClear(e)}
+          onClick={(e) => handleClear(e)}
           >
           </IconButton>
         </Tooltip>     

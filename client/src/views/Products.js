@@ -24,13 +24,17 @@ const Products = ({focus, setFocus}) => {
   const getParamsThickness = searchParams.get('thickness')
   const getParamsMaterial = searchParams.get('material')
   const getParamsSearch = searchParams.get('search')
+  const getParamsPriceMin = searchParams.get('priceMin')
+  const getParamsPriceMax = searchParams.get('priceMax')
+  const priceMin = getParamsPriceMin ? getParamsPriceMin : 0
+  const priceMax = getParamsPriceMax ? getParamsPriceMax : values?.priceMaxmin?.max
   const [filters, setFilters] = useState({
     finish: getParamsFinish ? getParamsFinish : '',
     size: getParamsSize ? getParamsSize : '',
     thickness: getParamsThickness ? getParamsThickness : '',
     material: getParamsMaterial ? getParamsMaterial: '',
     search: getParamsSearch ? getParamsSearch : '',
-    price: [values?.priceMaxmin?.min === null ? 0 : values?.priceMaxmin?.min, values?.priceMaxmin?.max]
+    price: [priceMin, priceMax]
   })
 
   useEffect(()=>{
