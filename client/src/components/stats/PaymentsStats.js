@@ -61,7 +61,7 @@ function StatsCard(props) {
     );
   }
   
-export default function PaymentsStats({stats}) {
+export default function PaymentsStats({stats, filters}) {
 
 
   return (

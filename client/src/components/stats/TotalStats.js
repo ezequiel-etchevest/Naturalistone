@@ -18,7 +18,7 @@ function StatsCard(props) {
 
   const { isOpen: isOpen1, onOpen: onOpen1, onClose: onClose1 } = useDisclosure()
     
-  const { title, stat, icon } = props;
+  const { title, stat, icon, filters } = props;
 
   return (
     <>
@@ -56,12 +56,12 @@ function StatsCard(props) {
           </Box>
         </Flex>
       </Stat>
-      <PaymentsModal isOpenModal={isOpen1} onCloseModal={onClose1}/>
+      <PaymentsModal isOpenModal={isOpen1} onCloseModal={onClose1} filters={filters}/>
     </>
     );
   }
   
-export default function TotalStats({stats}) {
+export default function TotalStats({stats, filters}) {
 
   return (
     <Box h={'92vh'} px={'4vw'} bg={'web.bg'} >
@@ -70,17 +70,17 @@ export default function TotalStats({stats}) {
         title={'Closing Rate'}
         stat={stats.ClosingRate}
         icon={<FaHandsHelping size={'3em'} />}
-        />
+        filters={filters}/>
         <StatsCard
         title={'Payments Amount'}
         stat={Number(stats.TotalCharged)}
         icon={<BsCreditCardFill size={'3em'} />}
-        />
+        filters={filters}/>
         <StatsCard
         title={'Closing Days (Avg)'}
         stat={stats.ClosingDaysAvg}
         icon={<HiReceiptPercent size={'3em'} />}
-        />
+        filters={filters}/>
       </HStack>
     </Box>
     );

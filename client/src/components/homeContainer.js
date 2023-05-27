@@ -23,7 +23,6 @@ const HomeContainer = ({user}) => {
   const currentYear = new Date().getFullYear();
   const navigate = useNavigate();
 
-  console.log('stats', stats)
 
   const [filters, setFilters] = useState({
     SellerID: getParamsSellerID ? getParamsSellerID : user[0].SellerID,
@@ -86,8 +85,8 @@ const HomeContainer = ({user}) => {
           Object.entries(stats).length !== 0 ? (
            <>
             <CurrentMonthStats currentMonth={filters.Month} user={user} stats={stats}/>
-            <TotalStats user={user} stats={stats}/>
-            <PaymentsStats user={user} stats={stats}/>
+            <TotalStats user={user} stats={stats} filters={filters}/>
+            <PaymentsStats user={user} stats={stats} filters={filters}/>
            </> 
 
           ):(

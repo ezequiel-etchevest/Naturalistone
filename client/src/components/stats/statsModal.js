@@ -19,6 +19,7 @@ import {
     Thead,
     Tr,
     Th,
+    Td,
     Tbody,
     } from "@chakra-ui/react"
 import { useDispatch, useSelector } from "react-redux"
@@ -44,20 +45,23 @@ const StatsModal = ({isOpenModal, onCloseModal}) => {
           <Modal
           isOpen={isOpenModal}
           onClose={onCloseModal}
-          size={'4xl'}
+          size={'3xl'}
           >
             <ModalOverlay />
             <ModalContent 
               bg={'web.sideBar'}
               border={'1px solid'}
               borderColor={'web.border'}
-              height={'600px'}
+              h={'76vh'}
             >
               <ModalHeader 
-              display={'flex'}
-              justifyContent={'center'}
-              color={'web.text2'}> 
-                Invoices derived from the stats 
+                display={'flex'}
+                justifyContent={'center'}
+                color={'web.text'}
+                mt={'3vh'}
+                h={'7vh'}
+                > 
+                  Invoices from the stats 
               </ModalHeader>
               <ModalCloseButton
                 color={'web.text2'}
@@ -74,58 +78,56 @@ const StatsModal = ({isOpenModal, onCloseModal}) => {
             maxH={'70vh'}
             >
             <Box
-            maxHeight={'65vh'}
-            overflow={'auto'}
-            css={{
-              '&::-webkit-scrollbar': {
-                width: '0.4vw',
-              },
-              '&::-webkit-scrollbar-track': {
-                width: '6px',
-              },
-              '&::-webkit-scrollbar-thumb': {
-                background: '#E47424',
-                borderRadius: '5px',
-              },
-            }}
-            >
+              maxHeight={'59vh'}
+              minHeight={'50vh'}
+              overflow={'auto'}
+              css={{
+                '&::-webkit-scrollbar': {
+                  width: '0.4vw',
+                },
+                '&::-webkit-scrollbar-track': {
+                  width: '6px',
+                },
+                '&::-webkit-scrollbar-thumb': {
+                  background: '#E47424',
+                  borderRadius: '5px',
+                },
+              }}
+              bg={'web.sideBar'} 
+              rounded={'md'} 
+              p={'3vh'}
+              >
               <TableContainer>
                   <Table color={'web.text'}variant={'simple'} size={'sm'}>
                       <Thead h={'6vh'}>
                           <Tr h={'6vh'}>
-                            <Th color={'web.text2'} textAlign={'center'} px={20}>Nº Quote</Th>
-                            <Th color={'web.text2'} textAlign={'center'} px={20}>Value quote</Th>
-                            <Th color={'web.text2'} textAlign={'center'} px={20}>Date</Th>
+                            <Th color={'web.text2'} textAlign={'center'} fontSize={'x-small'}>Nº Quote</Th>
+                            <Th color={'web.text2'} textAlign={'center'} fontSize={'x-small'}>Value quote</Th>
+                            <Th color={'web.text2'} textAlign={'center'} fontSize={'x-small'}>Date</Th>
                           </Tr>
                       </Thead>
                       <Tbody>
                           { 
                             stats.invoices.map((e, i) => (
                               <Tr
-                              onClick={() => handleClick(e)}
-                              key={e.Naturali_Invoice}
-                              cursor={'pointer'} 
-                              _hover={{
-                                bg: 'web.navBar',
-                                color: 'logo.orange',
-                              }}
-                              borderBottom={'1px solid'}
-                              fontSize={'sm'}
-                              textAlign={'center'}
-                              fontWeight={'hairline'}
-                              h={'4.5vh'}
-                              >
-                                <td color={'web.text'} textAlign={'center'} fontWeight={'hairline'}>
-                                  {e.Naturali_Invoice}
-                                </td>
-                                <td color={'web.text'} textAlign={'center'} fontWeight={'hairline'}>
-                                  $ {e.Value.toLocaleString('en-US')}
-                                </td>
-                                <td color={'web.text'} textAlign={'center'} fontWeight={'hairline'}>
-                                  {e.InvoiceDate.slice(0, 10)}
-                                </td>
+                                onClick={() => handleClick(e)}
+                                key={e.Naturali_Invoice}
+                                cursor={'pointer'} 
+                                _hover={{
+                                  bg: 'web.navBar',
+                                  color: 'logo.orange',
+                                }}
+                                borderBottom={'1px solid'}
+                                fontSize={'xs'}
+                                textAlign={'center'}
+                                fontWeight={'hairline'}
+                                h={'4.5vh'}
+                                >
+                                <Td textAlign={'center'}>{e.Naturali_Invoice}</Td>
+                                <Td textAlign={'center'}>$ {e.Value.toLocaleString('en-US')}</Td>
+                                <Td textAlign={'center'}>{e.InvoiceDate.slice(0, 10)}</Td>
                               </Tr>
-                              ))
+                            ))
                           }
                         </Tbody>
                       </Table>
