@@ -30,20 +30,6 @@ const HomeContainer = ({user}) => {
     Year: getParamsYear ? getParamsYear : currentYear,
   });
 
-  const handleClear = () => {
-    searchParams.delete('SellerID')
-    searchParams.delete('Month')
-    searchParams.delete('Year')
-    dispatch(cleanStats())
-    navigate(`?${searchParams.toString()}`);
-    setFilters({
-      SellerID: user[0].SellerID,
-      Month: currentMonth,
-      Year: currentYear,
-    })
-    dispatch(getStats(filters))
-  }
-
   useEffect(() => {
     if(user.length && Object.entries(stats).length === 0){
       dispatch(getStats(filters))
@@ -79,7 +65,7 @@ const HomeContainer = ({user}) => {
           mb={'1vw'}
           mr={'1.5vw'}
           >
-          <FilterStats user={user} years={stats.YearsInvoices} filters={filters} setFilters={setFilters} handleClear={handleClear}/>
+          <FilterStats user={user} years={stats.YearsInvoices} filters={filters} setFilters={setFilters}/>
         </Box>
         {
           Object.entries(stats).length !== 0 ? (

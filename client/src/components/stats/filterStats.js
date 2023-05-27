@@ -16,7 +16,7 @@ import { getStats } from "../../redux/actions-stats";
 import { cleanStats } from "../../redux/actions-statsByMonth";
 import { useLocation, useNavigate } from 'react-router-dom';
   
-const FilterStats = ({user, setFilters, filters, years, handleClear}) => {
+const FilterStats = ({user, setFilters, filters, years}) => {
     
   const dispatch = useDispatch()
   const sellers = useSelector(state => state.sellers)
@@ -47,6 +47,7 @@ const FilterStats = ({user, setFilters, filters, years, handleClear}) => {
 
     dispatch(getStats({...filters, Month: selectedMonth}))
   }
+
   const handleSelectYear = (e) => {
     const selectedYear = e.target.value
     setFilters({
@@ -94,7 +95,21 @@ const FilterStats = ({user, setFilters, filters, years, handleClear}) => {
     }
     }
 
-  useEffect(()=>{
+    const handleClear = () => {
+      dispatch(cleanStats())
+      setFilters({
+        SellerID: 3,
+        Month: currentMonth,
+        Year: currentYear,
+      })
+      searchParams.delete('SellerID')
+      searchParams.delete('Month')
+      searchParams.delete('Year')
+      navigate(`?${searchParams.toString()}`);
+    }
+
+      
+      useEffect(()=>{
     if(!sellers.length) dispatch(getSellers())
     },[sellers])
 
@@ -200,7 +215,7 @@ const FilterStats = ({user, setFilters, filters, years, handleClear}) => {
         <Divider orientation={'vertical'} h={'5vh'}/>
           <Tooltip placement={'bottom-start'} label={'Clear all filters'} fontWeight={'hairline'}>      
             <IconButton
-            onClick={() => handleClear()}
+            onClick={handleClear}
             icon={ <AiOutlineClear/>}
             variant={'unstyled'} 
             display={'flex'} 

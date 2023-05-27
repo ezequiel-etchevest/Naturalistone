@@ -6,6 +6,8 @@ export function getStats(filters){
 
     const { Month, Year, SellerID } = filters
 
+    console.log(Month,Year,SellerID)
+
     return async function(dispatch){
         try{
             let {data} = await axios.get(`/stats?sellerID=${SellerID}&month=${Month}&year=${Year}`)
