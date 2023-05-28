@@ -170,6 +170,7 @@ export function getProductImage(prodName, material, prodID){
     return async function(dispatch){
         try{
             let {data} = await axios.get(`/one-drive-data/images/texture`)
+            console.log(data)
             // if(data){
             //     const imgURL = await Promise(
             //         data = `data:image/jpeg;base64,${data}`
@@ -178,7 +179,7 @@ export function getProductImage(prodName, material, prodID){
             dispatch(
                 {
                     type: GET_PRODUCT_IMAGE,
-                    payload: {data}
+                    payload: data
                 })
         }catch(error){
             console.log({error})           
