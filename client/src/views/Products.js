@@ -39,7 +39,6 @@ const Products = ({focus, setFocus}) => {
   useEffect(()=>{
       if(userLocal && !user.length){
         dispatch(getEmployeeById(userLocal.SellerID))
-        dispatch(getProductImage())
       }},[dispatch, userLocal, user])
 
     useEffect(()=>{
@@ -54,7 +53,9 @@ const Products = ({focus, setFocus}) => {
             filters.price
             ))
         },[allProducts, values, filters])
-
+      useEffect(()=>{
+        dispatch(getProductImage())
+      })
     if(user){
       if(user.length && values && allProducts){
         return(
