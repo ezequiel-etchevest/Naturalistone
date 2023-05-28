@@ -3,7 +3,7 @@ import SideBar from "../components/sideBar";
 import { Center, Spinner } from "@chakra-ui/react";
 import ProductsContainer from "../components/products/productsContainer";
 import { useDispatch, useSelector } from "react-redux";
-import { getFiltered } from '../redux/actions-products';
+import { getFiltered, getProductImage } from '../redux/actions-products';
 import { getEmployeeById } from "../redux/actions-employees";
 import Redirect from "./RedirectPage";
 import { useLocation } from "react-router-dom";
@@ -36,6 +36,7 @@ const Products = ({focus, setFocus}) => {
   useEffect(()=>{
       if(userLocal && !user.length){
         dispatch(getEmployeeById(userLocal.SellerID))
+        dispatch(getProductImage())
       }},[dispatch, userLocal, user])
 
     useEffect(()=>{

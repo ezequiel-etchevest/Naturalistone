@@ -53,6 +53,71 @@ onedriveRouter.get('/images/img', (req, res) => {
   });
 });
 
+onedriveRouter.get('/images/texture', (req, res) => {
+  const invoicePath = path.join('/app/OneDrive', 'Naturali', 'PHOTOS');
+
+  if (!fs.existsSync(invoicePath)) {
+    return res.status(200).json({ error: 'Directory not found' });
+  }
+
+  const imagePaths = [];
+
+  const readDirectory = (directoryPath) => {
+    fs.readdir(directoryPath, (err, files) => {
+      if (err) {
+        return res.status(500).json({ error: 'Unable to read directory' });
+      }
+
+      files.forEach(file => {
+        const filePath = path.join(directoryPath, file);
+        if (fs.statSync(filePath).isFile()) {
+          // Add file path to the list
+          imagePaths.push(filePath);
+        } else {
+          // Recursively read subdirectories
+          readDirectory(filePath);
+        }
+      });
+
+      // Once all files and subdirectories have been processed
+      if (directoryPath === invoicePath) {
+        const imageData = {};
+        const folderData = {};
+
+        const readImage = (index) => {
+          if (index >= imagePaths.length) {
+            // Send the response once all images have been read
+            return res.json({ imageData, folderData });
+          }
+
+          const file = imagePaths[index];
+          const folder = path.basename(path.dirname(file));
+          
+          if (!folderData[folder]) {
+            folderData[folder] = file;
+          }
+
+          fs.readFile(file, { encoding: 'base64' }, (err, data) => {
+            if (err) {
+              console.error(err);
+            } else {
+              if (!imageData[folder]) {
+                imageData[folder] = data;
+              }
+            }
+
+            readImage(index + 1);
+          });
+        };
+
+        readImage(0);
+      }
+    });
+  };
+
+  readDirectory(invoicePath);
+});
+
 
 
 
