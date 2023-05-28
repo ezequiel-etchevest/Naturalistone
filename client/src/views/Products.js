@@ -15,7 +15,6 @@ const Products = ({focus, setFocus}) => {
   const user = useSelector(state => state.user)
   const allProducts = useSelector(state => state.all_products)
   const values = useSelector(state => state.product_values)
-  const product_image = useSelector(state => state.product_image)
   const userLocal = JSON.parse(localStorage.getItem('user'))
 
   const location = useLocation();
@@ -35,7 +34,7 @@ const Products = ({focus, setFocus}) => {
     search: getParamsSearch ? getParamsSearch : '',
     price: [values?.priceMaxmin?.min === null ? 0 : values?.priceMaxmin?.min, values?.priceMaxmin?.max]
   })
-  console.log({product_image})
+  
   useEffect(()=>{
       if(userLocal && !user.length){
         dispatch(getEmployeeById(userLocal.SellerID))
@@ -53,9 +52,7 @@ const Products = ({focus, setFocus}) => {
             filters.price
             ))
         },[allProducts, values, filters])
-      useEffect(()=>{
-        dispatch(getProductImage())
-      })
+
     if(user){
       if(user.length && values && allProducts){
         return(

@@ -63,7 +63,7 @@ const ModelTr = ({e, user, allProducts, loadedCount}) => {
   //   fetchImages();
   // }, [productImage, allProducts]);
 
-  console.log(productImage)
+
   return(
     <Tr       
     cursor={'pointer'} 

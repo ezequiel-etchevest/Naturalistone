@@ -1,12 +1,20 @@
 import { Box } from "@chakra-ui/react"
 import ProductList from './productsList'
 import ProductsFilters from './productsFilters'
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Center, Spinner } from "@chakra-ui/react"
+import { getProductImage } from "../../redux/actions-products"
+import { useSelector, useDispatch } from "react-redux"
 
 const ProductsContainer = ({ allProducts, user, values }) => {
 
     const [filteredProducts, setFilteredProducts] = useState([])
+    const dispatch = useDispatch()
+    const product_image = useSelector(state => state.product_image)
+    console.log(product_image)
+    useEffect(()=>{
+        if(Object.entries(product_image).length === 0) dispatch(getProductImage())
+    })
     if(Object.entries(values).length && allProducts.length){
         return(
             <Box
