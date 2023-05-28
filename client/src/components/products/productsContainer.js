@@ -13,7 +13,7 @@ const ProductsContainer = ({ allProducts, user, values }) => {
     const product_image = useSelector(state => state.product_image)
     console.log(product_image)
     useEffect(()=>{
-        if(Object.entries(product_image).length === 0) dispatch(getProductImage())
+        dispatch(getProductImage())
     })
     if(Object.entries(values).length && allProducts.length){
         return(
