@@ -115,8 +115,9 @@ onedriveRouter.get('/images/texture', (req, res) => {
     });
   };
 
-  readDirectory(invoicePath);
+  res.status(200).json(readDirectory(invoicePath));
 });
+
 
 
 
