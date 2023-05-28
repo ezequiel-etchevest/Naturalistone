@@ -10,12 +10,14 @@ import { useLocation } from "react-router-dom";
 
 
 const Products = ({focus, setFocus}) => {
-
+  
   const dispatch = useDispatch()
   const user = useSelector(state => state.user)
   const allProducts = useSelector(state => state.all_products)
   const values = useSelector(state => state.product_values)
+  const product_image = useSelector(state => state.product_image)
   const userLocal = JSON.parse(localStorage.getItem('user'))
+
   const location = useLocation();
   const queryString = location.search;
   const searchParams = new URLSearchParams(queryString);
@@ -24,6 +26,7 @@ const Products = ({focus, setFocus}) => {
   const getParamsThickness = searchParams.get('thickness')
   const getParamsMaterial = searchParams.get('material')
   const getParamsSearch = searchParams.get('search')
+
   const [filters, setFilters] = useState({
     finish: getParamsFinish ? getParamsFinish : '',
     size: getParamsSize ? getParamsSize : '',
@@ -32,7 +35,7 @@ const Products = ({focus, setFocus}) => {
     search: getParamsSearch ? getParamsSearch : '',
     price: [values?.priceMaxmin?.min === null ? 0 : values?.priceMaxmin?.min, values?.priceMaxmin?.max]
   })
-
+  console.log({product_image})
   useEffect(()=>{
       if(userLocal && !user.length){
         dispatch(getEmployeeById(userLocal.SellerID))
