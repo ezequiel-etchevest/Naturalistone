@@ -108,7 +108,6 @@ const ProductList = ({ allProducts, user }) => {
       });
     }
   };
-  console.log(loadedCount)
 
   const handleScroll = () => {
     const container = document.getElementById('scroll-container'); // Reemplaza 'scroll-container' con el ID de tu contenedor de desplazamiento

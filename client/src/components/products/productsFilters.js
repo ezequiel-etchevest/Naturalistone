@@ -40,7 +40,7 @@ const ProductsFilters = ({allProducts, setFilteredProducts, values}) => {
     search: getParamsSearch ? getParamsSearch : '',
     price: [priceMin, priceMax]
   })
-  const [limit, setLimit] = useState([values?.priceMaxmin?.min, values?.priceMaxmin?.max])
+  const [limit, setLimit] = useState([priceMin, priceMax])
 
   const handleFinish = (e) => {
     const finish = e.target.value

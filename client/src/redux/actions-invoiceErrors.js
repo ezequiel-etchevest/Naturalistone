@@ -8,8 +8,6 @@ export function getInvoiceErrors(user) {
     let admin = user[0].Secction7Flag === 1 ? true : false
     let seller = user[0].SellerID
 
-    console.log('user', user)
-
     return async function(dispatch){
         try{
             
