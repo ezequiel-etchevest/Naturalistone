@@ -1,6 +1,6 @@
 import { IconButton, useDisclosure, Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, ModalFooter, Button, useToast } from "@chakra-ui/react"
 import { HiUserAdd } from "react-icons/hi";
-import CreationCustomerForm from "./createCustomerForm";
+import CreationCustomerForm from "./createCustomer/createCustomerForm";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { createCustomer } from '../../redux/actions-customers'
@@ -15,6 +15,7 @@ export function CreateNewCustomer() {
   const [changeInput, setChangeInput] = useState(false)
   const [formData, setFormData] = useState({
     Contact_Name: '',
+    City: '',
     Address: '',
     State: '',
     ZipCode: '',
@@ -57,6 +58,7 @@ export function CreateNewCustomer() {
   const handleClose = () => {
     setFormData({
       Contact_Name: '',
+      City: '',
       Address: '',
       State: '',
       ZipCode: '',
@@ -66,6 +68,7 @@ export function CreateNewCustomer() {
       DiscountID: 1
     })
     setChangeInput(false)
+    setErrors({})
     onClose()
   }
 

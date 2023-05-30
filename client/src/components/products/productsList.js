@@ -20,20 +20,21 @@ import{ ImCheckboxChecked, ImCheckboxUnchecked } from 'react-icons/im';
 import { patchDiscontinued } from '../../redux/actions-products';
 import '../../assets/styleImgs.css';
 import { getProductImage } from '../../redux/actions-products';
+import img from '../../assets/ProductPicture/354-1.jpg'
 
 
 
-const ModelTr = ({e, user}) => {
+const ModelTr = ({e, user, allProducts, loadedCount}) => {
 
   
   const a = e.Discontinued_Flag === 'True' ? true : false 
   const [flag, setFlag] = useState(a)
   const productImage = useSelector(state => state.product_image);
+  
   const [images, setImages] = useState([]);
   const navigate = useNavigate()
   const dispatch = useDispatch()
-  const id = e.ProdID
-
+  const name = e.ProductName
   
   const handleClickProduct = () => {
     dispatch(getProductById(e.ProdID))
@@ -45,24 +46,24 @@ const ModelTr = ({e, user}) => {
     dispatch(patchDiscontinued(e.ProdID, flag))
     }
 
-  useEffect(()=>{
-    dispatch(getProductImage(e.ProductName, e.Material, e.ProdID));
-  }, [])
+    // useEffect(() => {
+    //   if (!productImage[name]?.length) {
+    //     dispatch(getProductImage(e.ProductName, e.Material, e.ProdID));
+    //   }
+    // }, [allProducts, loadedCount]);
+  // useEffect(() => {
+  //   const fetchImages = async () => {
+  //     if (productImage[name] && productImage[name].length > 0) {
+  //       const imageUrls = await Promise.all(
+  //         productImage[name].map((data) => `data:image/jpeg;base64,${data}`)
+  //       );
+  //       setImages(imageUrls);
+  //     }
+  //   };
+  //   fetchImages();
+  // }, [productImage, allProducts]);
 
-  useEffect(() => {
-    setImages([]);
-    const fetchImages = async () => {
-      if (productImage[id] && productImage[id].length > 0) {
-        const imageUrls = await Promise.all(
-          productImage[id].map((data) => `data:image/jpeg;base64,${data}`)
-        );
-        setImages(imageUrls);
-      }
-    };
-    fetchImages();
-  }, [productImage, id]);
-  
-    
+  console.log(productImage)
   return(
     <Tr       
     cursor={'pointer'} 
@@ -72,11 +73,27 @@ const ModelTr = ({e, user}) => {
       color: 'logo.orange'
     }} 
     >
-      <Td maxH={'6vh'} maxW={'3vw'} onClick={() => handleClickProduct()} fontSize={'xs'} textAlign={'match-parent'}>
-        <div maxh={'5vh'} className="image-container">
-          <img src={images[0]} className="enlarge-image" alt="Product Image" />
+      {/* Descomentar para pruebas en el local -> */}
+      {/* <Td maxH={'3vh'} minH={'3vh'} h={'3vh'} w={'4vw'} onClick={() => handleClickProduct()} fontSize={'xs'} textAlign={'match-parent'}>
+        <div className="image-container" >
+          <img src={img} className="enlarge-image" alt="Product Image" />
         </div>
-      </Td>
+      </Td> */}
+      {/* Comentar para pruebas en el local -> */}
+      {/* {
+        productImage[name] ? (
+          <Td maxH={'3vh'} minH={'3vh'} h={'3vh'} w={'4vw'} onClick={() => handleClickProduct()} fontSize={'xs'} textAlign={'match-parent'}>
+          <div className="image-container" >
+            <img src={`data:image/jpeg;base64,${productImage[name][0]}`} className="enlarge-image" alt="Product Image" />
+          </div>
+        </Td>
+        ) : ( */}
+           <Td maxH={'3vh'} minH={'3vh'} h={'3vh'} w={'4vw'} onClick={() => handleClickProduct()} fontSize={'xs'} textAlign={'match-parent'}>
+         <div className="image-container" >
+          </div>
+        </Td>
+        {/* )   
+      } */}
       <Td maxH={'6vh'} maxW={'3vw'} onClick={() => handleClickProduct()} fontSize={'xs'} textAlign={'match-parent'}>{e.ProductName}</Td>
       <Td maxH={'6vh'} maxW={'6vw'} onClick={() => handleClickProduct()} fontSize={'xs'} textAlign={'center'}>{e.Material}</Td>
       <Td maxH={'6vh'} maxW={'3vw'} onClick={() => handleClickProduct()} fontSize={'xs'} textAlign={'center'}>{e.Size}</Td>
@@ -108,6 +125,7 @@ const ProductList = ({ allProducts, user }) => {
       });
     }
   };
+
 
   const handleScroll = () => {
     const container = document.getElementById('scroll-container'); // Reemplaza 'scroll-container' con el ID de tu contenedor de desplazamiento
@@ -197,7 +215,7 @@ const ProductList = ({ allProducts, user }) => {
               </Thead>
               <Tbody >
                 {allProducts.slice(0, loadedCount).map((e, i) => {
-                  return <ModelTr key={i} e={e} user={user} />;
+                  return <ModelTr key={i} e={e} user={user} allProducts={allProducts} loadedCount={loadedCount}/>;
                 })}
               </Tbody>
             </Table>

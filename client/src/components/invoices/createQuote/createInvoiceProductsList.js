@@ -15,7 +15,7 @@ import {
     NumberDecrementStepper,
     NumberInputStepper
   } from '@chakra-ui/react';
-
+  import { useEffect, useState } from 'react';
 
 
 const ModelTr = ({e, setProducts, products}) => {
@@ -99,6 +99,31 @@ const handleInput = (event) => {
 
 const CreateInvoiceProductsList = ({ allProducts, setProducts, products }) => {
   
+  
+  const [initialCount] = useState(12);
+  const [batchCount] = useState(14);
+  const [loadedCount, setLoadedCount] = useState(initialCount);
+
+  const handleScroll = () => {
+    const container = document.getElementById('createQuoteProductList'); // Reemplaza 'scroll-container' con el ID de tu contenedor de desplazamiento
+    const { scrollTop, clientHeight, scrollHeight } = container;
+
+    if (scrollTop + clientHeight >= scrollHeight - 14) {
+      // El usuario ha llegado al final, carga más productos
+      setLoadedCount(prevCount => prevCount + batchCount);
+    }
+  };
+  
+  useEffect(() => {
+    
+    const container = document.getElementById('createQuoteProductList'); // Reemplaza 'scroll-container' con el ID de tu contenedor de desplazamiento
+    container.addEventListener('scroll', handleScroll);
+
+    return () => {
+      container.removeEventListener('scroll', handleScroll);
+    };
+  }, [batchCount]);
+
 
   return(
     <Box
@@ -121,9 +146,8 @@ const CreateInvoiceProductsList = ({ allProducts, setProducts, products }) => {
           borderRadius: '5px',
         },
       }}
-      borderColor={'web.border'}
+      id={'createQuoteProductList'}
       bg={'web.sideBar'} 
-      border={'1px solid'} 
       rounded={'md'} 
       p={'1vh'}
       >
@@ -146,7 +170,7 @@ const CreateInvoiceProductsList = ({ allProducts, setProducts, products }) => {
             </Thead>
             <Tbody>
               {
-                allProducts.map((e, i) => {
+                allProducts.slice(0, loadedCount).map((e, i) => {
                   return(
                     <ModelTr key={i} e={e} setProducts={setProducts} products={products}/>
                   )

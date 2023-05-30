@@ -15,7 +15,8 @@ import {
     Select,
     useDisclosure,
     Divider,
-    Tooltip
+    Tooltip,
+    Progress
     } from "@chakra-ui/react"
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -26,8 +27,9 @@ import {BiSearch} from 'react-icons/bi'
 import {AiOutlineClear} from 'react-icons/ai';
 import '../../../assets/styleSheet.css'
 import { useLocation } from "react-router-dom";
+import { getCustomers } from "../../../redux/actions-customers";
 
-const CreateInvoiceModal = ({variables, setVariables, isOpen, onClose, customer, project, onClose4, onClose3, onClose2, onClose1, isOpen4, onOpen4}) => {
+const CreateInvoiceModal = ({variables, setVariables, isOpen, onClose, customer, project, onClose4, onClose3, onClose2, onClose1, isOpen4, onOpen4, setInputValue, setCustomer}) => {
  
 const dispatch = useDispatch()
 const toast = useToast()
@@ -58,18 +60,21 @@ const validateToast = () => {
 }
 
 useEffect(()=>{
-  if(!allProducts?.length ) dispatch(
-    getFiltered(
-      filters.finish,
-      filters.size,
-      filters.thickness,
-      filters.material,
-      filters.search,
-      filters.price,
-      filters.price
-      ))
+  if(!allProducts.length ) {
+    dispatch(
+      getFiltered(
+        filters.finish,
+        '',
+        '',
+        filters.material,
+        filters.search,
+        '',
+        '',
+        ))
+    }
   validateToast()
   },[allProducts, filters])
+
 
 useEffect(()=>{
   if(Object.keys(products).length) setDisable(false)
@@ -129,13 +134,23 @@ const handleClear = () => {
       dispatch(getFiltered('','','','','','',''))
   }
 
+  const handleClose = () => {
+    onClose4()
+    onClose3()
+    onClose2()
+    onClose1()
+    setInputValue('')
+    setCustomer('')
+    dispatch(getCustomers('', ''))
+  }
 
   return(
 <>
   <Modal 
     isOpen={isOpen4} 
-    onClose={onClose4}
+    onClose={handleClose}
     size={'4xl'}
+    motionPreset='slideInRight'
     >
     <ModalOverlay />
     <ModalContent 
@@ -143,17 +158,16 @@ const handleClear = () => {
       border={'1px solid'}
       borderColor={'web.border'}
       >
-      <ModalHeader></ModalHeader>
-      <ModalCloseButton
-        color={'web.text2'}
-        _hover={{
-          color: 'web.text'
-        }}
-        onClick={onClose4} 
-      />
-      <Box color={'white'}>
-        <Text ml={'3vw'} fontSize={'lg'}>Create quote</Text>
+      <Progress value={80} 
+        colorScheme={"orange"} 
+        mb={'2vh'} 
+        background={'web.border'} 
+        size={'sm'}
+        borderTopRightRadius={'md'}
+        borderTopLeftRadius={'md'}
+        />  
         <ModalBody color={'web.text2'} display={'flex'} justifyContent={'center'} flexDir={'column'} h={'58vh'}>
+        <Text ml={'2vw'} mt={'2vh'} fontSize={'lg'} w={'14vw'} color={'white'} alignSelf={'flex-start'}>Select products</Text>
           <Box
             display={'flex'}
             justifyContent={'flex-end'}
@@ -192,7 +206,7 @@ const handleClear = () => {
             <Select
               onChange={(e)=>handleFinish(e)}
               mb={'0.5vh'}
-              w={'9vw'}
+              w={'10vw'}
               minH={'5.5vh'}
               mr={'2vw'}
               variant="unstyled"
@@ -219,7 +233,7 @@ const handleClear = () => {
             </Select>
             <Input
               mb={'0.5vh'}
-              w={'9vw'}
+              w={'10vw'}
               minH={'4.5vh'}
               variant="unstyled"
               placeholder={'Product name'}
@@ -233,7 +247,6 @@ const handleClear = () => {
               />
             <IconButton
               color={'web.text2'}
-              borderRadius={2}
               aria-label="Search database"
               bgColor={'web.sideBar'}
               ml={'-0.5vw'}
@@ -242,6 +255,8 @@ const handleClear = () => {
               _hover={{
                 color: 'orange.500',
               }}
+              boxSize={'3.5'}
+              mt={'3.3vh'}
               _active={{ color: 'gray.800'}}
             />
             <Divider orientation={'vertical'} h={'5vh'} ml={'1vw'}mr={'1vw'}/>
@@ -266,7 +281,6 @@ const handleClear = () => {
           </Box>          
           <CreateInvoiceProductsList allProducts={allProducts} products={products} setProducts={setProducts}/>
         </ModalBody>
-      </Box>  
         <ModalFooter mb={'2vh'} display={'flex'} flexDir={'row'} justifyContent={'space-between'} ml={'2vw'} mr={'2vw'}>
         <Button
           colorScheme={'orange'}
@@ -300,6 +314,8 @@ const handleClear = () => {
     onClose3={onClose3}
     onClose2={onClose2}
     onClose1={onClose1}
+    setInputValue={setInputValue}
+    setCustomer={setCustomer}
   />
 </>
 )}

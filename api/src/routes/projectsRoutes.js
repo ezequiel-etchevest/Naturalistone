@@ -12,7 +12,7 @@ projectsRouter.get('/', async function(req, res){
        mysqlConnection.query(query_, function(error, results, fields){
           if(!results.length) {
               console.log('Error al obtener data en projects.get !')
-              res.status(400).json(error);
+              res.status(200).json(error);
           } else {
               console.log('Data OK')
               res.status(200).json(results);

@@ -99,6 +99,7 @@ const ProductsFilters = ({allProducts, setFilteredProducts, values}) => {
       ...filters,
       material: material
     })
+   
     dispatch(getFiltered(filters.finish, filters.size, filters.thickness, material, filters.search, filters.price))
   }
   const handleClear = () => {

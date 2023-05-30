@@ -9,14 +9,20 @@ import {
     ModalBody,
     ModalCloseButton,
     Box,
-    useDisclosure
+    useDisclosure,
+    Progress,
+    Heading,
+    Stack,
+    StackDivider
     } from "@chakra-ui/react"
+import { Card, CardHeader, CardBody, CardFooter } from '@chakra-ui/card'
 import { useDispatch } from 'react-redux'
 import { getCustomerProjects } from "../../../redux/actions-projects"
 import SelectProjectModal from "../../invoices/createQuote/customerProjects/selectProjectModal"
 import '../../../assets/styleSheet.css'
+import { getCustomers } from "../../../redux/actions-customers"
 
-const SelectedCustomerModal = ({customer, isOpen2, onClose2, onClose1, setCustomer,  isOpen, onClose}) => {
+const SelectedCustomerModal = ({customer, isOpen2, onOpen2, onClose2, onClose1, setCustomer,  isOpen, onClose, setInputValue}) => {
 
 const dispatch = useDispatch()
 const { isOpen: isOpen3, onOpen: onOpen3, onClose: onClose3 } = useDisclosure()
@@ -30,16 +36,23 @@ const handleNext = () => {
   dispatch(getCustomerProjects(customer.CustomerID))
   onOpen3()
   onClose2()
-
 }
 
+const handleClose = () => {
+  onClose2()
+  onClose1()
+  setInputValue('')
+  setCustomer('')
+  dispatch(getCustomers('', ''))
+}
   return(
 
 <>
   <Modal 
     isOpen={isOpen2} 
-    onClose={onClose2}
+    onClose={handleClose}
     size={'3xl'}
+    motionPreset='slideInRight'
     >
     <ModalOverlay />
     <ModalContent 
@@ -47,40 +60,79 @@ const handleNext = () => {
       border={'1px solid'}
       borderColor={'web.border'}
       >
-      <ModalHeader></ModalHeader>
-      <ModalCloseButton
-        color={'web.text2'}
-        _hover={{
-          color: 'web.text'
-        }}
-        onClick={onClose2} 
+      <Progress value={40} 
+        colorScheme={"orange"} 
+        mb={'2vh'} 
+        background={'web.border'} 
+        size={'sm'}
+        borderTopRightRadius={'md'}
+        borderTopLeftRadius={'md'}
         />
-      <Box color={'white'}>
-      <Text ml={'3vw'} fontSize={'lg'}>Selected customer</Text>
       <ModalBody 
-        color={'web.text2'} display={'flex'} justifyContent={'center'} flexDir={'column'} h={'58vh'} alignItems={'center'}>
-          {
-            customer.CustomerID ?
-            <Text border={'1px'} borderRadius={'md'} w={'25vw'} mb={'1.5vh'}> ID: {customer.CustomerID}</Text>
-            : null
-          }
-          <Text border={'1px'} borderRadius={'md'} w={'25vw'} mb={'1.5vh'}> Full Name: {customer.Contact_Name ? customer.Contact_Name : "-"}</Text>
-          <Text border={'1px'} borderRadius={'md'} w={'25vw'} mb={'1.5vh'}> Email: {customer.Email ? customer.Email : "-"}</Text>
-          <Text border={'1px'} borderRadius={'md'} w={'25vw'} mb={'1.5vh'}> Phone: {customer.Phone ? customer.Phone : "-"}</Text>
-          <Text border={'1px'} borderRadius={'md'} w={'25vw'} mb={'1.5vh'}> Company: {customer.Company ? customer.Company : "-"}</Text>
-          <Text border={'1px'} borderRadius={'md'} w={'25vw'} mb={'1.5vh'}> Discount: 
-          { 
-          customer.DiscountID === 4 || customer.DiscountID === 3 ? 
-            customer.DiscountID === 4 ? '15 %' : '10 %'
-          : 
-          customer.DiscountID === 2 ?  '5 %' : "-"
-          }
-          </Text>
-          <Text border={'1px'} borderRadius={'md'} w={'25vw'} mb={'1.5vh'}> Address: {customer.Address ? customer.Address : "-"}</Text>
-          <Text border={'1px'} borderRadius={'md'} w={'25vw'} mb={'1.5vh'}> Zip Code: {customer.ZipCode ? customer.ZipCode : "-"}</Text>
-          <Text border={'1px'} borderRadius={'md'} w={'25vw'} mb={'1.5vh'}> State: {customer.State ? customer.State : "-"}</Text>
+        color={'web.text2'} 
+        display={'flex'} 
+        flexDir={'column'} 
+        h={'58vh'} 
+        alignItems={'center'}>
+        <Text ml={'2vw'} mt={'2vh'} mb={'6vh'} fontSize={'lg'}w={'16vw'} color={'white'} alignSelf={'flex-start'}>Selected customer</Text>
+        <Card h={'46vh'} w={'40vw'} mb={'2vh'}>
+          <CardBody  h={'38vh'} display={'flex'} flexDir={'row'} justifyContent={'space-around'}>
+            <Stack divider={<StackDivider />}>
+              <Box w={'18vw'}>
+                <Text pt='2' fontSize='sm' > Full Name </Text>
+                <Heading size='xs'><Text pt='2'pl='2' fontSize='sm'>{customer.Contact_Name ? customer.Contact_Name : "-"}</Text></Heading>
+              </Box>
+              <Box>
+                <Text pt='2' fontSize='sm' > Phone </Text>
+                <Heading size='xs'><Text pt='2'pl='2' fontSize='sm'>{customer.Phone ? customer.Phone : "-"}</Text></Heading>
+              </Box>
+              <Box>
+                <Text pt='2' fontSize='sm' > Email </Text>
+                <Heading size='xs'><Text pt='2'pl='2' fontSize='sm'>{customer.Email ? customer.Email : "-"}</Text></Heading>
+              </Box>
+              <Box>
+                <Text pt='2' fontSize='sm' > Company </Text>
+                <Heading size='xs'><Text pt='2'pl='2' fontSize='sm'>{customer.Company ? customer.Company : "-"}</Text></Heading>
+              </Box>
+              <Box>
+                <Text pt='2' fontSize='sm' > Company Position </Text>
+                <Heading size='xs'><Text pt='2'pl='2' fontSize='sm'>{customer.Company_Position ? customer.Company_Position : "-"}</Text></Heading>
+              </Box>
+            </Stack>
+            <Stack divider={<StackDivider />}>
+              <Box>
+                <Text pt='2' fontSize='sm' > Discount </Text>
+                <Heading size='xs'>
+                  <Text pt='2'pl='2' fontSize='sm'>
+                    { 
+                      customer.DiscountID === 4 || customer.DiscountID === 3 ? 
+                        customer.DiscountID === 4 ? '15 %' : '10 %'
+                      : 
+                      customer.DiscountID === 2 ?  '5 %' : "-"
+                    }
+                  </Text>
+                </Heading>
+              </Box>
+              <Box w={'18vw'}>
+                <Text pt='2' fontSize='sm' > Address </Text>
+                <Heading size='xs'><Text pt='2'pl='2' fontSize='sm'>{customer.Address ? customer.Address : "-"}</Text></Heading>
+              </Box>
+              <Box>
+                <Text pt='2' fontSize='sm' > City </Text>
+                <Heading size='xs'><Text pt='2'pl='2' fontSize='sm'>{customer.ZipCode ? customer.ZipCode : "-"}</Text></Heading>
+              </Box>
+              <Box>
+                <Text pt='2' fontSize='sm' > ZipCode </Text>
+                <Heading size='xs'><Text pt='2'pl='2' fontSize='sm'>{customer.ZipCode ? customer.ZipCode : "-"}</Text></Heading>
+              </Box>
+              <Box>
+                <Text pt='2' fontSize='sm' > State </Text>
+                <Heading size='xs'><Text pt='2'pl='2' fontSize='sm'>{customer.State ? customer.State : "-"}</Text></Heading>
+              </Box>
+            </Stack>
+          </CardBody>
+        </Card>
       </ModalBody>
-      </Box>
       <ModalFooter mb={'2vh'} display={'flex'} flexDir={'row'} justifyContent={'space-between'} ml={'2vw'} mr={'2vw'}>
         <Button
           colorScheme={'orange'}
@@ -99,7 +151,7 @@ const handleNext = () => {
       </ModalFooter>
     </ModalContent>
   </Modal>
-  <SelectProjectModal isOpen3={isOpen3} onClose3={onClose3} onClose2={onClose2} onClose1={onClose1} customer={customer}/>
+  <SelectProjectModal isOpen3={isOpen3} onOpen2={onOpen2} onClose3={onClose3} onClose2={onClose2} onClose1={onClose1} customer={customer} setCustomer={setCustomer} setInputValue={setInputValue}/>
 </>
 )}
 

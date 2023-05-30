@@ -14,16 +14,17 @@ export const USStates = [
   "Virginia", "Washington", "West Virginia", "Wisconsin", "Wyoming", "Non-US locations"
     ];
 
-export default function AutocompleteState({formData, setFormData, errors, validate, setErrors}) {
+export default function AutocompleteState({formData, setFormData, errors, validate, setErrors, name}) {
   
   const [filteredStates, setFilteredStates] = useState(USStates);
 
   const handleInputChange = (event) => {
+    setErrors({})
     const name = event.target.name
     const value = event.target.value;
     setFormData((prevFormData) => ({
       ...prevFormData,
-      State : value,
+      [name] : value,
     }))
     setErrors(
       validate({
@@ -44,17 +45,14 @@ export default function AutocompleteState({formData, setFormData, errors, valida
       <FormControl>
         <Input
           mb={'0.5vh'}
-          w={'20vw'}
-          minH={'4.5vh'}
           variant="unstyled"
           textColor={'web.text2'}
           _placeholder={{ fontFamily: 'body', fontWeight: 'inherit' }}
           size={"sm"}
           borderBottomWidth={"2px"}
           borderBottomColor={'web.text2'}
-          placeholder={'State'}
           type="text"
-          name={'State'}
+          name={name}
           value={formData.State}
           onChange={handleInputChange}
           list="stateOptions"

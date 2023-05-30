@@ -7,17 +7,13 @@ import {
     Th,
     Td,
     TableContainer,
-    useToast,
     Text,
     Center,
     } from '@chakra-ui/react'
   import SelectedCustomerModal from './selectedCustomerReview';
-  
-  
+  import { useEffect, useState } from 'react';
   
   const ModelTr = ({e, onOpen2, setCustomer}) => {
-  
-
 
     const handleClick = (e) => {
       setCustomer(e)
@@ -37,14 +33,37 @@ import {
         <Td fontSize={'xs'}  w={'4vw'}>{e.CustomerID}</Td>
         <Td fontSize={'xs'} textAlign={'center'}>{e.Contact_Name ? e.Contact_Name : '-'}</Td>
         <Td fontSize={'xs'}  w={'24vw'}>{e.Company}</Td>
-
       </Tr>
     )
   }
   
-  const SelectCustomerModalList = ({customers, customer, setCustomer, onOpen2, onClose2, isOpen2, onClose1}) => {
-
+  const SelectCustomerModalList = ({customers, customer, setCustomer, onOpen2, onClose2, isOpen2, onClose1, setInputValue}) => {
   
+    const [initialCount] = useState(14);
+    const [batchCount] = useState(10);
+    const [loadedCount, setLoadedCount] = useState(initialCount);
+
+    const handleScroll = () => {
+      const container = document.getElementById('selectCustomerList'); // Reemplaza 'scroll-container' con el ID de tu contenedor de desplazamiento
+      const { scrollTop, clientHeight, scrollHeight } = container;
+  
+      if (scrollTop + clientHeight >= scrollHeight - 15) {
+        // El usuario ha llegado al final, carga más productos
+        setLoadedCount(prevCount => prevCount + batchCount);
+      }
+    };
+    
+    useEffect(() => {
+      
+      const container = document.getElementById('selectCustomerList'); // Reemplaza 'scroll-container' con el ID de tu contenedor de desplazamiento
+      container.addEventListener('scroll', handleScroll);
+  
+      return () => {
+        container.removeEventListener('scroll', handleScroll);
+      };
+    }, [batchCount]);
+  
+
   return(
 <>
   <Box
@@ -67,9 +86,8 @@ import {
           borderRadius: '5px',
         },
       }}
-      borderColor={'web.border'}
+      id={'selectCustomerList'}
       bg={'web.sideBar'} 
-      border={'1px solid'} 
       rounded={'md'} 
       p={'3vh'}
       >
@@ -86,7 +104,7 @@ import {
                 </Thead>
                 <Tbody >
                 { 
-                  customers.map((e, i) => (
+                  customers.slice(0, loadedCount).map((e, i) => (
                     <ModelTr key={i} e={e}  onOpen2={onOpen2} setCustomer={setCustomer} /> 
                   ))
                 }
@@ -104,8 +122,10 @@ import {
     <SelectedCustomerModal 
     onClose2={onClose2}
     onClose1={onClose1}
-    isOpen2={isOpen2} 
+    isOpen2={isOpen2}
+    onOpen2={onOpen2} 
     customer={customer}
+    setInputValue={setInputValue}
     setCustomer={setCustomer}/>
   </>
   )

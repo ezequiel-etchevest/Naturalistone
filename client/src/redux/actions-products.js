@@ -149,10 +149,15 @@ export function getProductImage(prodName, material, prodID){
     return async function(dispatch){
         try{
             let {data} = await axios.get(`/one-drive-data/images/img?prodName=${prodName}&material=${material}`)
+            // if(data){
+            //     const imgURL = await Promise(
+            //         data = `data:image/jpeg;base64,${data}`
+            //     )
+            // }
             dispatch(
                 {
                     type: GET_PRODUCT_IMAGE,
-                    payload: {data, prodID}
+                    payload: {data, prodName}
                 })
         }catch(error){
             console.log({error})           

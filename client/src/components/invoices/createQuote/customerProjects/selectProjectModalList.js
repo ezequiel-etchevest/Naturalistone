@@ -42,7 +42,7 @@ import {
     )
   }
   
-  const SelectProjectModalList = ({variables, setVariables, setProject, project, customer, projects, onClose4, isOpen4, onOpen4, onClose3, onClose2, onClose1}) => {
+  const SelectProjectModalList = ({variables, setVariables, setProject, project, customer, projects, onClose4, isOpen4, onOpen4, onClose3, onClose2, onClose1, setInputValue, setCustomer}) => {
     
     const [focus, setFocus] = useState('')
 
@@ -68,9 +68,7 @@ import {
           borderRadius: '5px',
         },
       }}
-      borderColor={'web.border'}
       bg={'web.sideBar'} 
-      border={'1px solid'} 
       rounded={'md'} 
       p={'3vh'}
       >
@@ -113,6 +111,8 @@ import {
       onClose3={onClose3}
       onClose2={onClose2}
       onClose1={onClose1}
+      setInputValue={setInputValue}
+      setCustomer={setCustomer}
     />
   </>
   )

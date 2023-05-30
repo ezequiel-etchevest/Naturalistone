@@ -20,7 +20,7 @@ onedriveRouter.get('/images/img', (req, res) => {
   const invoicePath = path.join('/app/OneDrive', 'Naturali', 'PHOTOS', `${material}`, `${prodName}`);
 
   if (!fs.existsSync(invoicePath)) {
-    return res.status(404).json({ error: 'Directory not found' });
+    return res.status(200).json({ error: 'Directory not found' });
   }
 
   fs.readdir(invoicePath, (err, files) => {
