@@ -14,9 +14,9 @@ const Products = ({focus, setFocus}) => {
   const dispatch = useDispatch()
   const user = useSelector(state => state.user)
   const allProducts = useSelector(state => state.all_products)
+  const productsErrors = useSelector(state => state.products_errors)
   const values = useSelector(state => state.product_values)
   const userLocal = JSON.parse(localStorage.getItem('user'))
-
   const location = useLocation();
   const queryString = location.search;
   const searchParams = new URLSearchParams(queryString);
@@ -44,7 +44,7 @@ const Products = ({focus, setFocus}) => {
       }},[dispatch, userLocal, user])
 
     useEffect(()=>{
-        if(!allProducts?.length ) dispatch(
+        if(!allProducts?.length && !Object.entries(productsErrors)?.length) dispatch(
           getFiltered(
             filters.finish,
             filters.size,

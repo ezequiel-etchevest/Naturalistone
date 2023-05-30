@@ -33,16 +33,20 @@ function findMaxMinPrice(arr) {
   let minPrice = Infinity;
   let maxPrice = -Infinity;
 
-  arr.forEach(obj => {
-    if (obj.Price < minPrice) {
-      minPrice = obj.Price;
-    }
-    if (obj.Price > maxPrice) {
-      maxPrice = obj.Price;
-    }
-  });
-  if (minPrice === null ) minPrice = 0
-  return { min: minPrice, max: maxPrice };
+  if(arr.length > 0 ){
+    arr.forEach(obj => {
+      if (obj.Price < minPrice) {
+        minPrice = obj.Price;
+      }
+      if (obj.Price > maxPrice) {
+        maxPrice = obj.Price;
+      }
+    });
+    if (minPrice === null ) minPrice = 0
+    return { min: minPrice, max: maxPrice };
+  }else{
+    return { min: 0, max: 9999};
+  }
 }
 module.exports = {prodValues, findMaxMinPrice}
   

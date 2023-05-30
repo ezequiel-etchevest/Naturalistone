@@ -82,6 +82,7 @@ productsRouter.get('/filtered', async function(req, res){
     let { finish, size, thickness, material, search, price1, price2 } = req.query;
     const min = price1 === '' ? 0 : price1
     const max = price2 === '' ? 99999999 : price2
+
     const query = `
     SELECT    
       ProdNames.Naturali_ProdName AS ProductName,
@@ -116,7 +117,14 @@ productsRouter.get('/filtered', async function(req, res){
         `AND (LOWER(ProdNames.Naturali_ProdName) LIKE LOWER('%${search}%'))`
       ) : (``)
     }
-    AND (Products.SalePrice >= ${min} AND Products.SalePrice <= ${max})
+    ${
+      (price1 === '' && price2 === '') ? (``) : (
+        `AND (
+          (Products.SalePrice IS NULL) OR
+          (Products.SalePrice >= ${min} AND Products.SalePrice <= ${max})
+        )`
+      )
+    }
     ORDER BY ProdNames.Naturali_ProdName ASC
     `;
   
@@ -128,10 +136,10 @@ productsRouter.get('/filtered', async function(req, res){
           let price = findMaxMinPrice(results);
           let filteredValues = prodValues(results, search, price)
           console.log('Error en productsRoutes.get /filtered');
-          res.status(200).json({results, errorSearch: 'No products found'}, filteredValues);
+          res.status(200).json({results, errorSearch: 'No products found', filteredValues});
 
         } else {
-
+          console.log(results.length)
           let price = findMaxMinPrice(results);
           let filteredValues = prodValues(results, search, price)
           let errorSearch = {}
