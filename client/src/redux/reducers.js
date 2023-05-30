@@ -64,7 +64,8 @@ import {
   GET_CUSTOMER_BY_ID,
   POST_CUSTOMER,
   GET_CUSTOMER_INVOICES,
-  CLEAN_CUSTOMER_DETAIL
+  CLEAN_CUSTOMER_DETAIL,
+  PATCH_CUSTOMER
 } from './actions-customers'
 import {
   GET_MONTH
@@ -350,6 +351,11 @@ function rootReducer (state = intialState, action) {
             customer_by_id: action.payload
           }
         case POST_CUSTOMER:
+          return{
+            ...state,
+            customers: action.payload
+          }
+        case PATCH_CUSTOMER:
           return{
             ...state,
             customers: action.payload

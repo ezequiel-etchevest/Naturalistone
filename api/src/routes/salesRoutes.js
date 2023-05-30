@@ -449,13 +449,6 @@ salesRouter.post('/create-quote/:sellerID', async function(req, res) {
   const { sellerID } = req.params;
   const { customer, project, products, variables, user } = req.body;
 
-  console.log('soy customer', customer)
-  console.log('soy project', project)
-  console.log('soy products', products)
-  console.log('soy usaer', user)
-
-
-
   const parsedProducts = Object.entries(products)
     .flat()
     .filter((element) => typeof element === 'object')
@@ -469,7 +462,7 @@ salesRouter.post('/create-quote/:sellerID', async function(req, res) {
   const EstDelivery_Date = variables.estDelivDate;
   let Naturali_Invoice = 0
 
-  console.log('soy insetrDate', InsertDate)
+
 
   try {
     mysqlConnection.beginTransaction(function(err) {
