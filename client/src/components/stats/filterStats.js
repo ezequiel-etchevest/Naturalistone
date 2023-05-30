@@ -16,14 +16,17 @@ import { getStats } from "../../redux/actions-stats";
 import { cleanStats } from "../../redux/actions-statsByMonth";
 import { useNavigate } from 'react-router-dom';
   
-const FilterStats = ({user, setFilters, filters, years}) => {
+const FilterStats = ({user, setFilters, filters, years, setSpinner}) => {
     
   const dispatch = useDispatch()
   const sellers = useSelector(state => state.sellers)
   const navigate = useNavigate();  
   const searchParams = new URLSearchParams();
+  const currentMonth = new Date().getMonth() + 1
+  const currentYear = new Date().getFullYear();
 
   const handleSelectMonth = (e) =>{
+    setSpinner(true)
     const selectedMonth = e.target.value
     setFilters({
       ...filters,
@@ -36,11 +39,15 @@ const FilterStats = ({user, setFilters, filters, years}) => {
 
     navigate(`?${searchParams.toString()}`);
 
-    dispatch(cleanStats())
-
     dispatch(getStats({...filters, Month: selectedMonth}))
+
+    setTimeout(() => {
+      setSpinner(false)
+    },1500)
   }
+
   const handleSelectYear = (e) => {
+    setSpinner(true)
     const selectedYear = e.target.value
     setFilters({
       ...filters,
@@ -53,13 +60,16 @@ const FilterStats = ({user, setFilters, filters, years}) => {
 
     navigate(`?${searchParams.toString()}`);
 
-    dispatch(cleanStats())
-
     dispatch(getStats({...filters, Year: selectedYear}))
+
+    setTimeout(() => {
+      setSpinner(false)
+    },1500)
   }
 
 
   const handleSelectSeller = (e) => {
+    setSpinner(true)
     const selectedSeller = e.target.value
     if(e.target.value === 'all') {
       setFilters({
@@ -69,10 +79,15 @@ const FilterStats = ({user, setFilters, filters, years}) => {
       searchParams.set('Month', filters.Month)
       searchParams.set('Year', filters.Year)
       navigate(`?${searchParams.toString()}`);
-      dispatch(cleanStats())
+
       dispatch(getStats({...filters, SellerID: 3 }))
+
+      setTimeout(() => {
+        setSpinner(false)
+      },1500)
     }
     else {      
+      setSpinner(true)
       setFilters({
         ...filters,
         SellerID: selectedSeller
@@ -82,12 +97,29 @@ const FilterStats = ({user, setFilters, filters, years}) => {
       searchParams.set('Year', filters.Year)
       navigate(`?${searchParams.toString()}`);
       
-      dispatch(cleanStats())
       dispatch(getStats({...filters, SellerID: e.target.value}))
+
+      setTimeout(() => {
+        setSpinner(false)
+      },1500)
     }
     }
 
-  useEffect(()=>{
+    const handleClear = () => {
+      dispatch(cleanStats())
+      setFilters({
+        SellerID: 3,
+        Month: currentMonth,
+        Year: currentYear,
+      })
+      searchParams.delete('SellerID')
+      searchParams.delete('Month')
+      searchParams.delete('Year')
+      navigate(`?${searchParams.toString()}`);
+    }
+
+      
+      useEffect(()=>{
     if(!sellers.length) dispatch(getSellers())
     },[sellers])
 
@@ -180,7 +212,7 @@ const FilterStats = ({user, setFilters, filters, years}) => {
           _hover={{borderColor: 'web.border'}}
           value={filters.Year}
           > 
-          <option value="" disabled hidden>Filter by Year</option>
+          <option value='' disabled hidden >Filter by Year</option>
             {  
               years?.map((e, i) => {
                 return(
@@ -193,7 +225,7 @@ const FilterStats = ({user, setFilters, filters, years}) => {
         <Divider orientation={'vertical'} h={'5vh'}/>
           <Tooltip placement={'bottom-start'} label={'Clear all filters'} fontWeight={'hairline'}>      
             <IconButton
-            disabled={true}
+            onClick={handleClear}
             icon={ <AiOutlineClear/>}
             variant={'unstyled'} 
             display={'flex'} 

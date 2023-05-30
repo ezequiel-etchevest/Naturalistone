@@ -8,12 +8,23 @@ import {
 } from '@chakra-ui/react';
 import { useDispatch } from 'react-redux'
 import { getFiltered }  from "../../redux/actions-products";
+import { useNavigate } from 'react-router-dom';
 
 let PriceSlider = ({setFilters, filters, limit, setLimit, values}) =>{
-
     
     const dispatch = useDispatch()
+    const searchParams = new URLSearchParams()
+    const navigate = useNavigate()
+
     const handlePrice = (e) => {
+      searchParams.set('priceMin', e[0])
+      searchParams.set('priceMax', e[1])
+      searchParams.set('finish', filters.finish)
+      searchParams.set('size', filters.size)
+      searchParams.set('thickness', filters.thickness)
+      searchParams.set('material', filters.material)
+      searchParams.set('search', filters.search)
+      navigate(`?${searchParams.toString()}`)
         setLimit(e);
         setFilters({
           ...filters,

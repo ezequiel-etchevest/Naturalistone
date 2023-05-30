@@ -1,18 +1,15 @@
-require('dotenv').config()
-const dayjs = require('dayjs')
+require('dotenv').config();
 
 // Require:
 const postmark = require("postmark");
-
+ 
 // Send an email:
-const date = dayjs()
-const formatDay = date.format('YYYY-MM-DD')
-const imageNaturaliStone = 'https://drive.google.com/uc?id=1wuc3b9aU2nGN2ZK7uSOFSxIfPQn5JhCL'
+const imageNaturaliStone = 'https://drive.google.com/uc?id=1EpYJ-SvGsqGsDVwjRGYO16oZlVea0KDU'
 const client = new postmark.ServerClient(process.env.POSTMARK_API_KEY);
 const companyName = 'NaturaliStone';
 const companyAddress = '261 NW 71st St, Miami, FL 33150, United States';
 const fromEmail = "irina@naturalistone.com"
-// const date = new Date()
+const imgDrive = 'https://netorg8591642-my.sharepoint.com/:i:/g/personal/irina_naturalistone_com/EUJMsPLT2jBLokqZ-cz1SVMBijZhI9_At-atEYcxV48L7Q?e=46P25n'
 
 function sendEmailUser() {
   const optionsEmail= {
@@ -29,13 +26,14 @@ function sendEmailUser() {
 
 function sendInvoiceEmail(
   clientEmail,
-  // name_value,
+  name_value,
   invoiceId,
   // naturali_Invoice,
-  // invoice_details,
-  // description,
-  // amount_value,
-  // total_value,
+  invoice_details,
+  description,
+  amount_value,
+  total_value,
+  date,
   ) {
   const optionsEmail = {
     From: fromEmail,
@@ -43,17 +41,17 @@ function sendInvoiceEmail(
     TemplateId: 31786965,
     TemplateModel: {
       product_name: companyName,
-      name: "name_value", // "name_value"
+      name: name_value, // "name_value"
       image: imageNaturaliStone,
       invoice_id: invoiceId,
-      date: formatDay,
+      date: date,
       invoice_details: [ //array for products
         {
-          description: "description_Value", // description_value name products
-          amount: "amount_Value" // "amount_value" amount products
+          description: description, // description_value name products
+          amount: amount_value // "amount_value" amount products
         }
       ],
-      total: "total_Value", // total value for products
+      total: total_value, // total value for products
       company_name: companyName,
       company_address: companyAddress,
     }
@@ -61,4 +59,4 @@ function sendInvoiceEmail(
   return client.sendEmailWithTemplate(optionsEmail);
 }
 
-module.exports = sendInvoiceEmail
+module.exports = { sendInvoiceEmail }

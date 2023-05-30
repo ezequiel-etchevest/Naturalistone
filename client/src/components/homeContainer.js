@@ -9,8 +9,6 @@ import { getStats } from "../redux/actions-stats";
 import { cleanStats } from "../redux/actions-statsByMonth";
 import { useLocation } from "react-router-dom";
 
-
-
 const HomeContainer = ({user}) => {
 
   const dispatch = useDispatch()
@@ -24,11 +22,14 @@ const HomeContainer = ({user}) => {
   const currentMonth = new Date().getMonth() + 1
   const currentYear = new Date().getFullYear();
 
+
   const [filters, setFilters] = useState({
     SellerID: getParamsSellerID ? getParamsSellerID : user[0].SellerID,
     Month: getParamsMonth ? getParamsMonth : currentMonth,
     Year: getParamsYear ? getParamsYear : currentYear,
   });
+
+  const [spinner, setSpinner] = useState(false);
 
   useEffect(() => {
     if(user.length && Object.entries(stats).length === 0){
@@ -65,14 +66,20 @@ const HomeContainer = ({user}) => {
           mb={'1vw'}
           mr={'1.5vw'}
           >
-          <FilterStats user={user} years={stats.YearsInvoices} filters={filters} setFilters={setFilters}/>
+          <FilterStats 
+          user={user}
+          years={stats.YearsInvoices}
+          filters={filters}
+          setFilters={setFilters}
+          setSpinner={setSpinner}
+          />
         </Box>
         {
-          Object.entries(stats).length !== 0 ? (
+          Object.entries(stats).length !== 0 && spinner === false ? (
            <>
             <CurrentMonthStats currentMonth={filters.Month} user={user} stats={stats}/>
-            <TotalStats user={user} stats={stats}/>
-            <PaymentsStats user={user} stats={stats}/>
+            <TotalStats user={user} stats={stats} filters={filters}/>
+            <PaymentsStats user={user} stats={stats} filters={filters}/>
            </> 
 
           ):(

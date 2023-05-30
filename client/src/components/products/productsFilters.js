@@ -28,15 +28,19 @@ const ProductsFilters = ({allProducts, setFilteredProducts, values}) => {
   const getParamsThickness = searchParams.get('thickness')
   const getParamsMaterial = searchParams.get('material')
   const getParamsSearch = searchParams.get('search')
+  const getParamsPriceMin = searchParams.get('priceMin')
+  const getParamsPriceMax = searchParams.get('priceMax')
+  const priceMin = getParamsPriceMin ? getParamsPriceMin : 0
+  const priceMax = getParamsPriceMax ? getParamsPriceMax : values?.priceMaxmin?.max
   const [filters, setFilters] = useState({
     finish: getParamsFinish ? getParamsFinish : '',
     size: getParamsSize ? getParamsSize : '',
     thickness: getParamsThickness ? getParamsThickness : '',
     material: getParamsMaterial ? getParamsMaterial: '',
     search: getParamsSearch ? getParamsSearch : '',
-    price: [values?.priceMaxmin?.min === null ? 0 : values?.priceMaxmin?.min, values?.priceMaxmin?.max]
+    price: [priceMin, priceMax]
   })
-  const [limit, setLimit] = useState([values?.priceMaxmin?.min, values?.priceMaxmin?.max])
+  const [limit, setLimit] = useState([priceMin, priceMax])
 
   const handleFinish = (e) => {
     const finish = e.target.value
@@ -90,8 +94,6 @@ const ProductsFilters = ({allProducts, setFilteredProducts, values}) => {
     searchParams.set('finish', filters.finish)
     searchParams.set('thickness', filters.thickness)
     searchParams.set('search', filters.search)
-    console.log('soy material', material)
-    console.log('soy material', material)
     navigate(`?${searchParams.toString()}`)
     setFilters({
       ...filters,
@@ -101,6 +103,14 @@ const ProductsFilters = ({allProducts, setFilteredProducts, values}) => {
     dispatch(getFiltered(filters.finish, filters.size, filters.thickness, material, filters.search, filters.price))
   }
   const handleClear = () => {
+    searchParams.delete('material')
+    searchParams.delete('size')
+    searchParams.delete('finish')
+    searchParams.delete('thickness')
+    searchParams.delete('search')
+    searchParams.delete('priceMin')
+    searchParams.delete('priceMax')
+    navigate(`?${searchParams.toString()}`)
     setFilters({
       finish:'',
       size:'',
@@ -136,7 +146,7 @@ const ProductsFilters = ({allProducts, setFilteredProducts, values}) => {
           filters.material,
           filters.search,
           filters.price,
-          filters.price
+          // filters.price
           ))
     },[filters])
 
@@ -295,7 +305,7 @@ const ProductsFilters = ({allProducts, setFilteredProducts, values}) => {
             </Select>
           </Box>
           <Box display={'flex'} alignItems={'center'} flexDir={'row'} h={'4.2vh'}>
-            <PriceSlider  setFilters={setFilters} filters={filters} limit={limit} setLimit={setLimit} values={values}/>
+            <PriceSlider setFilters={setFilters} filters={filters} limit={limit} setLimit={setLimit} values={values}/>
             <Divider orientation={'vertical'} h={'5vh'} ml={'2vw'}/>
             <Tooltip placement={'bottom-start'} label={'Clear all filters'} fontWeight={'hairline'}>      
             <IconButton
