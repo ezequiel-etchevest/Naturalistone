@@ -34,3 +34,25 @@ console.log(req.files.pdf)
 });
 
 module.exports = testRouter;
+
+
+const express = require('express');
+const app = express();
+const fs = require('fs-extra');
+
+app.post('/api/save-pdf', (req, res) => {
+  const pdfBuffer = req.body;
+
+  // Especifica la ruta de destino donde deseas guardar el PDF en el servidor
+  const destinationPath = '/ruta/de/destino/nombre_archivo.pdf';
+
+  fs.writeFile(destinationPath, pdfBuffer, (error) => {
+    if (error) {
+      console.error('Error al guardar el PDF en el servidor:', error);
+      res.status(500).send('Error al guardar el PDF en el servidor.');
+    } else {
+      console.log('PDF guardado en el servidor correctamente.');
+      res.status(200).send('PDF guardado en el servidor.');
+    }
+  });
+});
