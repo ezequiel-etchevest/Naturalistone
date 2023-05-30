@@ -32,7 +32,6 @@ export function getFiltered(finish, size, thickness, material, search, price){
         try{
             
             let {data} = await axios.get(`/products/filtered?finish=${finish}&size=${size}&thickness=${thickness}&material=${material}&search=${search}&price1=${price[0] ? price[0] : ''}&price2=${price[1]? price[1] : ''}`)
-            console.log(data)
             dispatch(
             {
                 type: GET_FILTERED_PRODUCTS,
