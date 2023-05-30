@@ -202,8 +202,8 @@ function rootReducer (state = intialState, action) {
         case GET_FILTERED_PRODUCTS:
             return {
               ...state,
-              all_products: action.payload.filter.filteredProds,
-              products_errors: action.payload.filter.errorsSearch,
+              all_products: action.payload.results,
+              products_errors: action.payload.errorSearch,
               product_values: action.payload.filteredValues
           }
         case GET_CURRENT_MONTH:

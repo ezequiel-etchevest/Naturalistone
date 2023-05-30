@@ -109,6 +109,7 @@ const ModelTr = ({e, user, allProducts, loadedCount}) => {
 }
 
 const ProductList = ({ allProducts, user }) => {
+
   const productErrors = useSelector((state) => state.products_errors);
   const toast = useToast();
   const [initialCount] = useState(20);
@@ -175,7 +176,8 @@ const ProductList = ({ allProducts, user }) => {
         p={'3vh'}
         w={'80vw'}
       >
-        {allProducts.length && !Object.entries(productErrors).length ? (
+        {
+        allProducts.length ? (
           <TableContainer mr={'1vw'}>
             <Table color={'web.text'} variant={'simple'} size={'sm'}>
               <Thead h={'6vh'}>
