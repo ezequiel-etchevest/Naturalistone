@@ -29,6 +29,7 @@
     "morgan": "^1.10.0",
     "msal": "^1.4.17",
     "msgraph-sdk-javascript": "^0.3.1",
+    "multer": "^1.4.5-lts.1",
     "mysql": "^2.18.1",
     "mysql2": "^2.3.3",
     "node-fetch": "^3.3.1",

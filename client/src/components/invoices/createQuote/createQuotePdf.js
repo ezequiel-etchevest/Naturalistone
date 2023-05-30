@@ -2,12 +2,9 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { PDFDocument, rgb } from 'pdf-lib';
 import { Box, Center, Spinner } from '@chakra-ui/react';
-
+// import enviarPDFAlBackend from './enviarpdfBACKTest';
 
 const CreatedQuotePdf = ({variables, user, customer, project }) => {
-// console.log('customer',customer)
-// console.log('products',products)
-// console.log(user)
 
 
     const posted_quote = useSelector(state => state.posted_quote)

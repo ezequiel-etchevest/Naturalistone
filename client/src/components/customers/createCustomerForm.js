@@ -11,7 +11,7 @@ import '../../assets/styleSheet.css'
 import { formatNumber } from '../../utils/formattedNumber';
 
 export default function CreationCustomerForm({formData, setFormData, validate, errors, setErrors, setChangeInput}) {
-  console.log(formData)
+  
   const handleChange = (event) => {
     const { name, value } = event.target;
     // Actualizas solo la propiedad que cambió en el objeto de formData
