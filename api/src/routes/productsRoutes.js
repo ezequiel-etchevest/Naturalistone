@@ -79,61 +79,73 @@ productsRouter.get('/id/:id', async function(req, res){
 });
 
 productsRouter.get('/filtered', async function(req, res){
-    const { finish, size, thickness, material, search, price1, price2 } = req.query;
-  
+    let { finish, size, thickness, material, search, price1, price2 } = req.query;
+    const min = price1 === '' ? 0 : price1
+    const max = price2 === '' ? 99999999 : price2
+
     const query = `
-      SELECT    
-        ProdNames.Naturali_ProdName AS ProductName,
-        ProdNames.Material,
-        Dimension.Type,
-        Dimension.Size,
-        Dimension.Finish,
-        Dimension.Thickness,
-        Products.SalePrice AS Price,
-        Products.ProdID,
-        Inventory.*
-      FROM Products
-        INNER JOIN ProdNames ON ProdNames.ProdNameID = Products.ProdNameID
-        INNER JOIN Dimension ON Dimension.DimensionID = Products.DimensionID
-        INNER JOIN Inventory ON Inventory.ProdID = Products.ProdID 
-      ORDER BY ProdNames.Naturali_ProdName ASC
+    SELECT    
+      ProdNames.Naturali_ProdName AS ProductName,
+      ProdNames.Material,
+      Dimension.Type,
+      Dimension.Size,
+      Dimension.Finish,
+      Dimension.Thickness,
+      Products.SalePrice AS Price,
+      Products.ProdID,
+      Inventory.*
+    FROM Products
+    INNER JOIN ProdNames ON ProdNames.ProdNameID = Products.ProdNameID
+    INNER JOIN Dimension ON Dimension.DimensionID = Products.DimensionID
+    INNER JOIN Inventory ON Inventory.ProdID = Products.ProdID 
+    WHERE (Inventory.InStock_Available > 0 OR Inventory.Incoming_Available > 0)
+    
+    ${
+      material.length ? (`AND (ProdNames.Material = "${material}")`) : (``)
+    }
+    ${
+      finish.length ? (`AND (Dimension.Finish = "${finish}")`) : (``)
+    }
+    ${
+      size.length ? (` AND (Dimension.Size = "${size}")`) : (``)
+    }
+    ${
+      thickness.length ? (`AND (Dimension.Thickness = "${thickness}")`) : (``)
+    }
+    ${
+      search.length ? (
+        `AND (LOWER(ProdNames.Naturali_ProdName) LIKE LOWER('%${search}%'))`
+      ) : (``)
+    }
+    ${
+      (price1 === '' && price2 === '') ? (``) : (
+        `AND (
+          (Products.SalePrice IS NULL) OR
+          (Products.SalePrice >= ${min} AND Products.SalePrice <= ${max})
+        )`
+      )
+    }
+    ORDER BY ProdNames.Naturali_ProdName ASC
     `;
   
     try {
       mysqlConnection.query(query, function(error, results, fields) {
         if (error) throw error;
-  
         if (results.length == 0) {
+
+          let price = findMaxMinPrice(results);
+          let filteredValues = prodValues(results, search, price)
           console.log('Error en productsRoutes.get /filtered');
-          res.status(200).json({});
+          res.status(200).json({results, errorSearch: 'No products found', filteredValues});
+
         } else {
-          let instock = objetosFiltrados(results);
-          const filter = filterProducts(finish, size, thickness, material, search, price1, price2, instock);
-  
-          let price = findMaxMinPrice(instock);
-          let filteredValues = prodValues(instock, search, price)
-          res.status(200).json({filter, filteredValues});
-          // Aquí llamamos a la función `getImage` para obtener los datos de las imágenes
-        //   getImage(filter.filteredProds)
-        //     .then(updatedProds => {
-        //       // Aquí actualizamos la propiedad `img` en cada objeto del `filter`
-        //       const updatedFilter = {
-        //         ...filter,
-        //         filteredProds: updatedProds.map((obj, index) => ({
-        //           ...obj,
-        //           img: updatedProds[index].img
-        //         }))
-        //       };
-  
-        //       res.status(200).json({
-        //         filter: updatedFilter,
-        //         filteredValues: prodValues(updatedFilter.filteredProds, search, price)
-        //       });
-        //     })
-        //     .catch(error => {
-        //       console.log('Error al obtener las imágenes', error);
-        //       res.status(500).send(error);
-        //     });
+          console.log(results.length)
+          let price = findMaxMinPrice(results);
+          let filteredValues = prodValues(results, search, price)
+          let errorSearch = {}
+
+          res.status(200).json({results, errorSearch, filteredValues});
+
         }
       });            
     } catch(error) {
@@ -147,7 +159,7 @@ productsRouter.patch('/discontinued/:id', async function(req, res){
     const {id} = req.params
     const {flag} = req.body
     const val = flag === true ? 'False' : 'True'
-    console.log(val)
+    
     query_ = `UPDATE Products SET Discontinued_Flag = "${val}" WHERE ProdID =${id}`
 
     try{

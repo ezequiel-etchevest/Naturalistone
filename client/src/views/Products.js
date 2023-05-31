@@ -3,17 +3,18 @@ import SideBar from "../components/sideBar";
 import { Center, Spinner } from "@chakra-ui/react";
 import ProductsContainer from "../components/products/productsContainer";
 import { useDispatch, useSelector } from "react-redux";
-import { getFiltered } from '../redux/actions-products';
+import { getFiltered, getProductImage } from '../redux/actions-products';
 import { getEmployeeById } from "../redux/actions-employees";
 import Redirect from "./RedirectPage";
 import { useLocation } from "react-router-dom";
 
 
 const Products = ({focus, setFocus}) => {
-
+  
   const dispatch = useDispatch()
   const user = useSelector(state => state.user)
   const allProducts = useSelector(state => state.all_products)
+  const productsErrors = useSelector(state => state.products_errors)
   const values = useSelector(state => state.product_values)
   const userLocal = JSON.parse(localStorage.getItem('user'))
   const location = useLocation();
@@ -36,14 +37,14 @@ const Products = ({focus, setFocus}) => {
     search: getParamsSearch ? getParamsSearch : '',
     price: [priceMin, priceMax]
   })
-
+  
   useEffect(()=>{
       if(userLocal && !user.length){
         dispatch(getEmployeeById(userLocal.SellerID))
       }},[dispatch, userLocal, user])
 
     useEffect(()=>{
-        if(!allProducts?.length ) dispatch(
+        if(!allProducts?.length && !Object.entries(productsErrors)?.length) dispatch(
           getFiltered(
             filters.finish,
             filters.size,

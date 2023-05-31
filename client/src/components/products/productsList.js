@@ -63,7 +63,7 @@ const ModelTr = ({e, user, allProducts, loadedCount}) => {
   //   fetchImages();
   // }, [productImage, allProducts]);
 
-  console.log(productImage)
+
   return(
     <Tr       
     cursor={'pointer'} 
@@ -109,20 +109,26 @@ const ModelTr = ({e, user, allProducts, loadedCount}) => {
 }
 
 const ProductList = ({ allProducts, user }) => {
+
   const productErrors = useSelector((state) => state.products_errors);
   const toast = useToast();
   const [initialCount] = useState(20);
   const [batchCount] = useState(15);
   const [loadedCount, setLoadedCount] = useState(initialCount);
-
+  const toastId = 'error_products'
+  console.log(productErrors)
   const validateToast = () => {
     if (Object.entries(productErrors).length) {
-      toast({
-        title: `${productErrors.error}`,
-        status: 'warning',
-        duration: 1500,
-        isClosable: true,
-      });
+      if(!toast.isActive(toastId)){
+        toast({
+          id: toastId,
+          title: `${productErrors}`,
+          status: 'warning',
+          duration: 1500,
+          isClosable: true,
+        });
+      }
+
     }
   };
 
@@ -175,7 +181,8 @@ const ProductList = ({ allProducts, user }) => {
         p={'3vh'}
         w={'80vw'}
       >
-        {allProducts.length && !Object.entries(productErrors).length ? (
+        {
+        allProducts.length ? (
           <TableContainer mr={'1vw'}>
             <Table color={'web.text'} variant={'simple'} size={'sm'}>
               <Thead h={'6vh'}>

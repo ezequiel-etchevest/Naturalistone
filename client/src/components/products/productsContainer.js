@@ -7,7 +7,8 @@ import { Center, Spinner } from "@chakra-ui/react"
 const ProductsContainer = ({ allProducts, user, values }) => {
 
     const [filteredProducts, setFilteredProducts] = useState([])
-    if(Object.entries(values).length && allProducts.length){
+
+    if(Object.entries(values).length){
         return(
             <Box
             ml={'16vw'}

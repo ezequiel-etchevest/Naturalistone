@@ -32,6 +32,7 @@ export function getFiltered(finish, size, thickness, material, search, price){
         try{
             
             let {data} = await axios.get(`/products/filtered?finish=${finish}&size=${size}&thickness=${thickness}&material=${material}&search=${search}&price1=${price[0] ? price[0] : ''}&price2=${price[1]? price[1] : ''}`)
+            console.log(data)
             dispatch(
             {
                 type: GET_FILTERED_PRODUCTS,
@@ -144,11 +145,34 @@ export function getProductImages(prodName, material){
                 }
             }
         }
+// export function getProductImage(prodName, material, prodID){
+
+//     return async function(dispatch){
+//         try{
+//             let {data} = await axios.get(`/one-drive-data/images/img?prodName=${prodName}&material=${material}`)
+//             // if(data){
+//             //     const imgURL = await Promise(
+//             //         data = `data:image/jpeg;base64,${data}`
+//             //     )
+//             // }
+//             dispatch(
+//                 {
+//                     type: GET_PRODUCT_IMAGE,
+//                     payload: {data, prodName}
+//                 })
+//         }catch(error){
+//             console.log({error})           
+//         }
+//     }
+// }
+
 export function getProductImage(prodName, material, prodID){
 
     return async function(dispatch){
         try{
-            let {data} = await axios.get(`/one-drive-data/images/img?prodName=${prodName}&material=${material}`)
+            let {data} = await axios.get(`/one-drive-data/images/texture`)
+
+            console.log('data',data)
             // if(data){
             //     const imgURL = await Promise(
             //         data = `data:image/jpeg;base64,${data}`
@@ -157,7 +181,7 @@ export function getProductImage(prodName, material, prodID){
             dispatch(
                 {
                     type: GET_PRODUCT_IMAGE,
-                    payload: {data, prodName}
+                    payload: data
                 })
         }catch(error){
             console.log({error})           
