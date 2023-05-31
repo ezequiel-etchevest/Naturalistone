@@ -12,17 +12,17 @@ import {
     ModalCloseButton
   } from '@chakra-ui/react'
 import { AiOutlineDelete } from 'react-icons/ai';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { deletePayment } from '../../../redux/actions-payments';
 
 export default function PaymentDeleteModal({InvoiceID, idPayments}) {
     
   const { isOpen, onOpen, onClose } = useDisclosure()
-  
+  const user = useSelector(state => state.user)
   const dispatch = useDispatch()
 
   const handleSubmit = () => {
-    dispatch(deletePayment(InvoiceID,idPayments))
+    dispatch(deletePayment(InvoiceID,idPayments, user[0].SellerID))
     onClose()
     }
   

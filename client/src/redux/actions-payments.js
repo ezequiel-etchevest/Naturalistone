@@ -4,11 +4,11 @@ export const DELETE_PAYMENT_METHOD = 'DELETE_PAYMENT_METHOD';
 export const GET_PAYMENTS_BY_ID = 'GET_PAYMENTS_BY_ID';
 export const CLEAN_PAYMENTS_BY_ID = 'CLEAN_PAYMENTS_BY_ID';
 
-export function patchPaymentMethod(id, input){
+export function patchPaymentMethod(id, input, seller){
 
     return async function(dispatch){
         try{
-            let {response} = await axios.post(`/payments/invoice/${id}`, input)
+            let {response} = await axios.post(`/payments/invoice/${id}`, {input, seller})
             let { data } = await axios.get(`/payments/${id}`)
             
             dispatch(
@@ -34,11 +34,11 @@ export function getPayments(id){
         }
 }
 
-export function deletePayment(invoiceID, paymentID){
+export function deletePayment(invoiceID, paymentID, seller){
 
     return async function(dispatch){
         try{
-            let { response } = await axios.delete(`/payments/invoice/${paymentID}`)
+            let { response } = await axios.delete(`/payments/invoice/${paymentID}/${seller}`)
             let { data } = await axios.get(`/payments/${invoiceID}`)
             console.log(response)
             dispatch(
