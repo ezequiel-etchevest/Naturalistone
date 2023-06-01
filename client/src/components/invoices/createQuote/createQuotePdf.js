@@ -5,9 +5,7 @@ import { Box, Center, Spinner } from '@chakra-ui/react';
 
 
 const CreatedQuotePdf = ({variables, user, customer, project }) => {
-// console.log('customer',customer)
-// console.log('products',products)
-// console.log(user)
+
 
 
     const posted_quote = useSelector(state => state.posted_quote)
@@ -26,7 +24,7 @@ const CreatedQuotePdf = ({variables, user, customer, project }) => {
           if (Array.isArray(mappedProducts)) {
             resolve();
           } else {
-            setTimeout(checkMappedProducts, 100); // Esperar 100ms antes de volver a verificar
+            setTimeout(checkMappedProducts, 100); // Esperar 100ms antes de volver a verificar 
           }
         };
     
