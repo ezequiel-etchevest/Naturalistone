@@ -9,6 +9,7 @@ services:
     volumes:
       - ./api:/usr/src/app
       - /root/OneDrive:/app/OneDrive
+      - /root/OneDrive2:/app/OneDrive2
 
     restart: always  
   reactapp:

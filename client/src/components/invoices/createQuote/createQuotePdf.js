@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { PDFDocument, rgb } from 'pdf-lib';
 import { Box, Center, Spinner } from '@chakra-ui/react';
-
+import axios from 'axios';
 
 const CreatedQuotePdf = ({variables, user, customer, project }) => {
 
@@ -10,6 +10,8 @@ const CreatedQuotePdf = ({variables, user, customer, project }) => {
 
     const posted_quote = useSelector(state => state.posted_quote)
  
+    let invoiceID = posted_quote.Naturali_Invoice
+    const date = posted_quote.InsertDate
     const [pdfInfo, setPdfInfo] = useState([]);
     const viewer = useRef(null);
     const mappedProducts =  posted_quote.parsedProducts
@@ -42,8 +44,7 @@ const CreatedQuotePdf = ({variables, user, customer, project }) => {
   const pages = pdfDoc.getPages();
   const page = pages[0];
 
-  const invoiceID = posted_quote.Naturali_Invoice
-  const date = posted_quote.InsertDate
+
 
   var subtotal = 0
 
@@ -120,8 +121,37 @@ mappedProducts.forEach((product, index) => {
   
   setPdfInfo(URL.createObjectURL(blob));
 
+  savePdfOnServer(pdfBytes, invoiceID);
 
   };
+  
+  async function savePdfOnServer(pdfBytes, invoiceID) {
+    console.log(invoiceID)
+    try {
+      // Configurar el encabezado Content-Type para FormData
+      axios.interceptors.request.use(function (config) {
+        config.headers['Content-Type'] = 'multipart/form-data';
+        return config;
+      });
+  
+      const formData = new FormData();
+      formData.append('pdfFile', new Blob([pdfBytes], { type: 'application/pdf' }), `${invoiceID}.pdf`);
+      console.log('formData', formData);
+     
+      const response = await axios.post('/save-pdf', formData);
+  
+      if (response.status === 200) {
+        console.log('PDF guardado en el servidor correctamente.');
+        // Realizar cualquier acción adicional después de guardar el PDF en el servidor
+      } else {
+        console.error('Error al guardar el PDF en el servidor.');
+      }
+    } catch (error) {
+      console.error('Error al realizar la solicitud al servidor:', error);
+    }
+  }
+  
+  
   return (
   <>
     {
@@ -142,4 +172,6 @@ mappedProducts.forEach((product, index) => {
   </>
   )
   };
+
+
 export default CreatedQuotePdf
