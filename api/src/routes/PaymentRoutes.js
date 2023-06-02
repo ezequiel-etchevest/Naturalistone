@@ -62,6 +62,8 @@ PaymentRouter.post('/invoice/:id', async function(req, res){
 PaymentRouter.delete('/invoice/:id/:seller', async function(req, res){
   const { id, seller } = req.params
 
+  console.log('so y sller', seller)
+
   try{
     mysqlConnection.beginTransaction(function(error){
       if(error) {
@@ -80,12 +82,14 @@ PaymentRouter.delete('/invoice/:id/:seller', async function(req, res){
             throw error
           })
         }
+
+        console.log('soy seller en query', seller)
         console.log('Update payment completed', results)
 
         query_1 = `DELETE FROM Payments WHERE idPayments = ${id}`
-  
+
         mysqlConnection.query(query_1, function(error1, results1, fields){
-          
+
           if(error1) {
             console.log('Error in delete Payments in PaymentRoutes /invoices/:id/:seller' + error)
             res.status(500).json('Failed to delete payments')

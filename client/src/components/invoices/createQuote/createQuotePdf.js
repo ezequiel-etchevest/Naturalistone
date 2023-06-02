@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { PDFDocument, rgb } from 'pdf-lib';
-import { Box, Center, Spinner } from '@chakra-ui/react';
+import { Box, Button, Center, Spinner } from '@chakra-ui/react';
 import axios from 'axios';
 
-const CreatedQuotePdf = ({variables, user, customer, project }) => {
+const CreatedQuotePdf = ({variables, user, customer, project, sendEmail, handleChangeEmail }) => {
 
 
     const posted_quote = useSelector(state => state.posted_quote)
@@ -157,6 +157,12 @@ mappedProducts.forEach((product, index) => {
       Object.entries(posted_quote).length ?
         posted_quote.Naturali_Invoice && posted_quote.InsertDate ?
         <Box h={'85vh'} >
+        <Button
+          size={'sm'}
+          onClick={handleChangeEmail}
+          colorScheme={'orange'}>
+          Send Email
+        </Button>
           {<iframe width={'100%'} height={'100%'} title="quote-blank" src={pdfInfo} ref={viewer} type="application/pdf" />}
         </Box>
         :
