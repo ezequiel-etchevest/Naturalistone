@@ -25,7 +25,7 @@ sellerRouter.get('/', async function(req, res){
 sellerRouter.get('/:id', async function(req, res){
     const { id } = req.params
 
-    query_ = `SELECT Seller.*, Logins.Secction7Flag FROM NaturaliStone.Seller
+    query_ = `SELECT Seller.*, Logins.Secction7Flag, Logins.Username FROM NaturaliStone.Seller
             LEFT JOIN Logins On Logins.SellerID = Seller.SellerID WHERE Seller.SellerID = ${id}`;
     try{
          mysqlConnection.query(query_, function(error, results, fields){

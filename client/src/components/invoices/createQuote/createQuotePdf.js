@@ -122,6 +122,28 @@ mappedProducts.forEach((product, index) => {
 
   savePdfOnServer(pdfBytes, invoiceID);
 
+  function readBlobAsBase64(pdfBlob) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+  
+      reader.onloadend = function() {
+        const base64String = reader.result.split(',')[1]; // Obtiene el contenido base64
+        resolve(base64String);
+      };
+  
+      reader.onerror = reject;
+  
+      reader.readAsDataURL(pdfBlob);
+    });
+  }
+  
+  const pdf = readBlobAsBase64(blob)  // archivo pdf en base64
+    .then((result) => {
+      console.log('soy pdf:', result)
+    }).catch((err) => {
+      console.log('soy err', err)
+    })
+
   };
   
   async function savePdfOnServer(pdfBytes, invoiceID) {

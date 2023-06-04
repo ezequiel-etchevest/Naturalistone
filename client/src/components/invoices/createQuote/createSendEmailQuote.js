@@ -8,7 +8,7 @@ const SendEmailModal = ({handleChangeEmail, customer}) => {
   const user = useSelector((state) => state.user)
 
   console.log(user)
-  console.log(customer)
+  console.log('soy customer', customer)
 
   return (
   <>
@@ -27,7 +27,7 @@ const SendEmailModal = ({handleChangeEmail, customer}) => {
             <Box mt={'15px'} mr={'30px'}>
               <Flex>
                 <Heading as='h1' size='sm' color={'web.text2'} mr={'20px'} > From</Heading>
-                <Input w={'25vw'} size='xs' />
+                <Input w={'25vw'} color={'web.text'} size='xs' value={user[0].Username}/>
               </Flex>
             </Box>
           </Center>
@@ -55,6 +55,15 @@ const SendEmailModal = ({handleChangeEmail, customer}) => {
               </Flex>
             </Box>
           </Center>
+          <Flex justify={'flex-end'}>
+          <Button 
+          size={'sm'}
+          onClick={handleChangeEmail}
+          colorScheme={'orange'}
+          >
+            Send
+          </Button>
+            </Flex>
         </Box>
   </>
   )

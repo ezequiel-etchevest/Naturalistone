@@ -1,7 +1,8 @@
 require('dotenv').config();
-
-// Require:
+const fs = require('fs')
 const postmark = require("postmark");
+const path = require('path')
+
  
 // Send an email:
 const imageNaturaliStone = 'https://drive.google.com/uc?id=1EpYJ-SvGsqGsDVwjRGYO16oZlVea0KDU'
@@ -10,6 +11,11 @@ const companyName = 'NaturaliStone';
 const companyAddress = '261 NW 71st St, Miami, FL 33150, United States';
 const fromEmail = "irina@naturalistone.com"
 const imgDrive = 'https://netorg8591642-my.sharepoint.com/:i:/g/personal/irina_naturalistone_com/EUJMsPLT2jBLokqZ-cz1SVMBijZhI9_At-atEYcxV48L7Q?e=46P25n'
+
+const pdfPath = path.join(__dirname, './POSTMARKpdf.pdf'); // Ajusta el nombre del archivo y la ruta según sea necesario
+const file = fs.readFileSync(pdfPath, { encoding: 'base64' });
+
+
 
 function sendEmailUser() {
   const optionsEmail= {
@@ -39,6 +45,13 @@ function sendInvoiceEmail(
     From: fromEmail,
     To: clientEmail,
     TemplateId: 31786965,
+    attachments: [
+      { 
+       Name: 'archivo.pdf',
+       Content: file,
+       ContentType: 'application/pdf'
+     }
+     ],
     TemplateModel: {
       product_name: companyName,
       name: name_value, // "name_value"

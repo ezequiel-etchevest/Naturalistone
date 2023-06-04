@@ -21,6 +21,9 @@ import SendEmailModal from './createSendEmailQuote'
   const handleChangeEmail = () => {
     setSendEmail(!sendEmail)
   }
+
+  console.log('soy customer en quotpdf', customer)
+  console.log('soy user', user)
   
   const handleCloseAllModal = () => {
     onClose6()
@@ -53,7 +56,7 @@ import SendEmailModal from './createSendEmailQuote'
               
             <ModalBody w={'100%'} h={'100%'}>
               {
-                sendEmail ?
+                sendEmail === false ?
                 <CreatedQuotePdf 
                   variables={variables}
                   customer={customer}
