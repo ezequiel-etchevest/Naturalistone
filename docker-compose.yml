@@ -44,8 +44,8 @@ services:
     image: jwilder/nginx-proxy
     restart: always
     ports:
-      - 3010:80
-      - 3010:443
+      - 80:8080
+      - 443:8443
     volumes:
       - certs:/etc/nginx/certs:ro
       - /var/www/pedia/.well-known/acme-challenge/test.txt
@@ -55,7 +55,9 @@ services:
       - /var/run/docker.sock:/tmp/docker.sock:ro
     labels:
       - com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy
-
+    environment:
+      - DEFAULT_HOST=nginx-dev
+  
   # acme-companion-dev:
   #   image: nginxproxy/acme-companion
   #   restart: always
