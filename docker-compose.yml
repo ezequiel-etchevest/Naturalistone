@@ -1,36 +1,36 @@
 
 version: "3.9"
 services: 
-  expressapp:
-    container_name: expressapp
+  expressapp-dev:
+    container_name: expressapp-dev
     build: ./api
     expose: 
-      - 5000
+      - 5010
     volumes:
       - ./api:/usr/src/app
       - /root/OneDrive:/app/OneDrive
 
     restart: always  
-  reactapp:
-    container_name: reactapp
+  reactapp-dev:
+    container_name: reactapp-dev
     build: ./client
     expose: 
-      - 3000
+      - 3010
     volumes:
       - ./client:/usr/src/app
 
     depends_on:
-      - expressapp
+      - expressapp-dev
     environment:
-      - REACT_APP_API_URL=http://expressapp:5000
+      - REACT_APP_API_URL=http://expressapp:5010
     restart: always  
   nginx:
     build: ./nginx
     ports:
       - 8080:80
     depends_on:
-      - expressapp
-      - reactapp
+      - expressapp-dev
+      - reactapp-dev
       - nginx-proxy
       - acme-companion
     environment:

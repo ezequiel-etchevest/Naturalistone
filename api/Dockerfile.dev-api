@@ -6,7 +6,7 @@ COPY . /app
 
 RUN npm install 
 
-EXPOSE 5000
+EXPOSE 5010
 
 ENV DB_USER=admin
 ENV DB_PASSWORD=Ra7878782
