@@ -34,7 +34,7 @@ services:
       context: ./nginx
       dockerfile: Dockerfile-dev-nginx
     ports:
-      - 8081:80
+      - 8081:81
     depends_on:
       - expressapp-dev
       - reactapp-dev
@@ -62,11 +62,11 @@ services:
   #   environment:
   #     - NGINX_PROXY_CONTAINER=nginx-proxy
   #   volumes:
-      # - /var/run/docker.sock:/var/run/docker.sock:ro
-      # - certs:/etc/nginx/certs:rw
-      # - acme:/etc/acme.sh
-      # - vhostd:/etc/nginx/vhost.d
-      # - html:/usr/share/nginx/html
+  #     - /var/run/docker.sock:/var/run/docker.sock:ro
+  #     - certs:/etc/nginx/certs:rw
+  #     - acme:/etc/acme.sh
+  #     - vhostd:/etc/nginx/vhost.d
+  #     - html:/usr/share/nginx/html
 volumes:
   certs:
   html:
