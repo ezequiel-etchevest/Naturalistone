@@ -3,12 +3,9 @@ import {
     Modal,
     ModalOverlay,
     ModalContent,
-    ModalHeader,
     ModalFooter,
     Text,
     ModalBody,
-    ModalCloseButton,
-    Box,
     Table,
     Thead,
     Tbody,
@@ -29,7 +26,6 @@ const ReviewProductsModal = ({variables, setVariables, setCustomer, customer,  i
 
 const dispatch = useDispatch()
 const user = useSelector(state => state.user)
-
 const { isOpen: isOpen6, onOpen: onOpen6, onClose: onClose6 } = useDisclosure()
 
 const handlePrevious = () => {
@@ -37,9 +33,21 @@ const handlePrevious = () => {
   onClose5()
   onOpen4()
 }
+const validateAuthFlag = (objetos) => {
+  for (const id in objetos) {
+    if (objetos.hasOwnProperty(id)) {
+      if (objetos[id].authFlag) {
+        return true;
+      }
+    }
+  }
+  return false;
+}
+
+let authFlag = validateAuthFlag(products)
 
 const handleConfirm = () => {
-  dispatch(createQuote(user[0].SellerID, {customer, project, products, variables}))
+  dispatch(createQuote(user[0].SellerID, {customer, project, products, variables, authFlag}))
   // dispatch(getCustomerProjects(customer.CustomerID))
   onOpen6()
   setInputValue('')

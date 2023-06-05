@@ -4,11 +4,15 @@ import {
   ModalContent,
   ModalBody,
   useDisclosure ,
-  Image
+  ButtonGroup,
+  IconButton,
+  Button
 } from '@chakra-ui/react'
-import miniPDF from '../../../assets/miniPDF.png'
+
 import LoadPDF from '../../pdf/pdfModify'
 import LoadPdfPaid from '../../pdf/pdfPaidFunction'
+import { MdOpenInNew } from 'react-icons/md'
+
 
 export default function ModalPDF({invoice, payments}) {
   
@@ -17,7 +21,26 @@ export default function ModalPDF({invoice, payments}) {
 
   return (
     <>
-      <Image m={'0.5vh'} onClick={onOpen} src={miniPDF} cursor={'pointer'} />
+       <ButtonGroup
+         textColor={'web.text2'}
+         h={'5vh'}
+         display={'flex'}
+         spacing={0}
+         _hover={{
+         color: 'logo.orange'
+         }}
+         onClick={onOpen}
+         >
+        <IconButton
+         variant={'unstyled'}           
+         fontSize={'xl'}
+         icon={<MdOpenInNew/>}/>
+         <Button
+         fontSize={'1vw'}
+         variant={'unstyled'}           
+         fontWeight={'normal'}
+         >Open</Button>       
+        </ButtonGroup>
       <Modal isOpen={isOpen} onClose={onClose} size={'6xl'}>
         <ModalOverlay />
         <ModalContent 

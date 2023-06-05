@@ -230,11 +230,13 @@ salesRouter.patch('/quote/:id', async function(req, res){
     }
 });
 
-salesRouter.patch('/cancelquote/:id', async function(req, res){
+salesRouter.patch('/changeStatus/:id', async function(req, res){
     
     const {id} = req.params
+    const status = req.body
 
-    query_ = `UPDATE Sales SET Status = 'Canceled' WHERE Naturali_Invoice =${id}`
+
+    query_ = (`UPDATE Sales SET Status = '${status.action}' WHERE Naturali_Invoice =${id}`)
 
     try{
        mysqlConnection.query(query_, function(error, results, fields){
@@ -284,8 +286,9 @@ salesRouter.get('/values/seller', async function(req, res){
 
 
 salesRouter.post('/create-quote/:sellerID', async function(req, res) {
+
   const { sellerID } = req.params;
-  const { customer, project, products, variables, user } = req.body;
+  const { customer, project, products, variables, user, authFlag } = req.body;
 
   const parsedProducts = Object.entries(products)
     .flat()
@@ -325,9 +328,9 @@ salesRouter.post('/create-quote/:sellerID', async function(req, res) {
 
         const ids = quotesIDs.map(q => Number(q.Naturali_Invoice));
         Naturali_Invoice = Math.max(...ids) + 1;
-
-        const salesQuery = `INSERT INTO Sales (Naturali_Invoice, Value, ProjectID, InvoiceDate, EstDelivery_Date, SellerID, ShippingMethod, PaymentTerms, P_O_No) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`;
-        const salesValues = [Naturali_Invoice, Value, ProjectID, InsertDate, EstDelivery_Date, sellerID, variables.shipVia, variables.paymentTerms, variables.method];
+        const status = authFlag ? ('Pending_Approval') : ('Pending')
+        const salesQuery = `INSERT INTO Sales (Naturali_Invoice, Value, ProjectID, InvoiceDate, EstDelivery_Date, SellerID, ShippingMethod, PaymentTerms, P_O_No, Status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+        const salesValues = [Naturali_Invoice, Value, ProjectID, InsertDate, EstDelivery_Date, sellerID, variables.shipVia, variables.paymentTerms, variables.method, status ];
 
         mysqlConnection.query(salesQuery, salesValues, async function(error, salesResult, fields) {
           if (error) {
@@ -368,15 +371,15 @@ salesRouter.post('/create-quote/:sellerID', async function(req, res) {
               return;
             }
 
-            sendInvoiceEmail(
-            customer.Email, // se enviara correos desde irina hasta que se termine de configurar
-            Contact_Name, 
-            prodSoldValues[0][0], 
-            "description",
-            "amount_value",
-            Value,
-            InsertDate
-            ) // faltaria solo el pdf para enviar
+            // sendInvoiceEmail(
+            // customer.Email, // se enviara correos desde irina hasta que se termine de configurar
+            // Contact_Name, 
+            // prodSoldValues[0][0], 
+            // "description",
+            // "amount_value",
+            // Value,
+            // InsertDate
+            // ) // faltaria solo el pdf para enviar
 
             console.log('Products inserted successfully');
 

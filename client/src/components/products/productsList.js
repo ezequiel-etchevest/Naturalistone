@@ -116,7 +116,7 @@ const ProductList = ({ allProducts, user }) => {
   const [batchCount] = useState(15);
   const [loadedCount, setLoadedCount] = useState(initialCount);
   const toastId = 'error_products'
-  console.log(productErrors)
+
   const validateToast = () => {
     if (Object.entries(productErrors).length) {
       if(!toast.isActive(toastId)){

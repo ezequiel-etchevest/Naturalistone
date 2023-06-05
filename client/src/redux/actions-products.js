@@ -9,6 +9,7 @@ export const PATCH_DISCONTINUED = 'PATCH_DISCONTINUED';
 export const GET_PRODUCT_IMAGES = 'GET_PRODUCT_IMAGES';
 export const GET_PRODUCT_IMAGE = 'GET_PRODUCT_IMAGE';
 export const CLEAN_PRODUCT_DETAIL = 'CLEAN_PRODUCT_DETAIL';
+export const GET_PRODUCTS_NEW_QUOTE = 'GET_PRODUCTS_NEW_QUOTE';
 
 
 export function getAllProducts(){
@@ -26,13 +27,28 @@ export function getAllProducts(){
         }
     }
 }
+export function getAllProductsNewQuote(finish, material, search){
+    return async function(dispatch){
+        try{ 
+            let {data} = await axios.get(`/products/new_quote?finish=${finish}&material=${material}&search=${search}`)
+
+            dispatch(
+            {
+                type: GET_PRODUCTS_NEW_QUOTE,
+                payload: data
+            })
+        }catch(error){
+            console.log({error})           
+
+        }
+    }
+}
 export function getFiltered(finish, size, thickness, material, search, price){
     return async function(dispatch){
 
         try{
             
             let {data} = await axios.get(`/products/filtered?finish=${finish}&size=${size}&thickness=${thickness}&material=${material}&search=${search}&price1=${price[0] ? price[0] : ''}&price2=${price[1]? price[1] : ''}`)
-            console.log(data)
             dispatch(
             {
                 type: GET_FILTERED_PRODUCTS,
@@ -43,7 +59,6 @@ export function getFiltered(finish, size, thickness, material, search, price){
         }
     }
 }
-
 export function getProductById(id){
 
     return async function(dispatch){
@@ -58,8 +73,7 @@ export function getProductById(id){
                 console.log({error})           
             }
         }
-    }
-
+}
 export function cleanProductById(){
 
   return async function(dispatch){
@@ -72,7 +86,6 @@ export function cleanProductById(){
         }
     }
 }
-
 export function getHistoryPrices(id){
 
     return async function(dispatch){
@@ -88,8 +101,7 @@ export function getHistoryPrices(id){
                 console.log({error})           
             }
         }
-    }
-
+}
 export function updateProductNotes(input, idProduct){
 
     return async function(dispatch){
@@ -108,8 +120,7 @@ export function updateProductNotes(input, idProduct){
                 console.log({error})     
             }
         }
-    }
-
+}
 export function patchDiscontinued(idProduct, flag){
 
     return async function(dispatch){
@@ -128,8 +139,7 @@ export function patchDiscontinued(idProduct, flag){
                 console.log({error})     
             }
         }
-    }
-
+}
 export function getProductImages(prodName, material){
 
         return async function(dispatch){
@@ -144,9 +154,9 @@ export function getProductImages(prodName, material){
                     console.log({error})           
                 }
             }
-        }
-// export function getProductImage(prodName, material, prodID){
+}
 
+// export function getProductImage(prodName, material, prodID){
 //     return async function(dispatch){
 //         try{
 //             let {data} = await axios.get(`/one-drive-data/images/img?prodName=${prodName}&material=${material}`)

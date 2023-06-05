@@ -92,3 +92,5 @@ onedriveRouter.get('/images/texture', (req, res) => {
   });
 });
 
+module.exports = onedriveRouter
+

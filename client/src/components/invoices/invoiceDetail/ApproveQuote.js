@@ -15,22 +15,32 @@ import {
     } from "@chakra-ui/react"
 import { useParams } from 'react-router-dom';
 import { useDispatch } from "react-redux";
-import { MdOutlineCancel } from 'react-icons/md';
+import { BsFileEarmarkCheck } from 'react-icons/bs'
 import { changeStatus } from "../../../redux/actions-invoices";
 import '../../../assets/styleSheet.css';
 
 
 
-const CancelQuote= ({invoice, user}) => {
+const ApproveQuote= ({invoice, user}) => {
 
   const dispatch = useDispatch()
   const {id} = useParams()
   const { isOpen, onOpen, onClose } = useDisclosure()
   const handleSubmit = () => {
-    dispatch(changeStatus(id, 'Canceled'))
+    dispatch(changeStatus(id, 'Pending'))
     onClose()
   }
 
+  const handleDisabled = () => {
+    if(invoice[0].Status === 'Canceled') return true
+    if(invoice[0].Status === 'Pending') return true
+    else{
+        if(user.Secction7Flag === 1) return false
+        else return true
+    }
+  }
+  let d = handleDisabled()
+  console.log(d)
     return(
         <>
           <ButtonGroup
@@ -42,29 +52,21 @@ const CancelQuote= ({invoice, user}) => {
             _hover={{
             color: 'logo.orange'
             }}
-            disabled={
-              user.Secction7Flag === 1 ? false :
-              invoice[0].Payment_Stamp === 0 ? false : true 
-            }
+            disabled={handleDisabled()}
             >
           <IconButton
             fontSize={'xl'}
-            disabled={
-              user.Secction7Flag === 1 ? false :
-              invoice[0].Payment_Stamp === 0 ? false : true 
-            }
             variant={'unstyled'}           
             fontWeight={'normal'}
-            icon={<MdOutlineCancel/>}/>
+            disabled={handleDisabled()}
+            icon={<BsFileEarmarkCheck/>}/>
           
               <Button
-                disabled={
-                  user.Secction7Flag === 1 ? false :
-                  invoice[0].Payment_Stamp === 0 ? false : true }
                 variant={'unstyled'}           
                 fontWeight={'normal'}
                 fontSize={'1vw'}
-                >Cancel </Button>   
+                disabled={handleDisabled()}
+                >Approve </Button>   
           
           </ButtonGroup>
           <Modal 
@@ -79,7 +81,7 @@ const CancelQuote= ({invoice, user}) => {
               >
               <ModalHeader
               color={'web.text'}>
-                Cancel Quote
+                Approve Quote
               </ModalHeader>
               <ModalCloseButton
                 color={'web.text2'}
@@ -87,7 +89,7 @@ const CancelQuote= ({invoice, user}) => {
                   color: 'web.text'
                 }} />
               <ModalBody color={'web.text2'}>
-               <Text>Are you sure you want to cancel this Quote?</Text>
+               <Text>Are you sure you want to approve this Quote?</Text>
               <Text> This action can't be undone</Text>
               </ModalBody>
               <ModalFooter>
@@ -106,4 +108,4 @@ const CancelQuote= ({invoice, user}) => {
     )
 }
 
-export default CancelQuote
+export default ApproveQuote
