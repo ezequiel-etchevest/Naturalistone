@@ -32,3 +32,59 @@ testRouter.post('/', upload.single('pdfFile'), async function (req, res) {
 });
 
 module.exports = testRouter;
+
+
+
+
+// const { PDFDocument } = require('pdf-lib');
+// const AWS = require('aws-sdk');
+// const fs = require('fs');
+
+// // AWS S3 bucket configuration
+// const bucketName = 'your-s3-bucket-name';
+// const accessKeyId = 'your-access-key-id';
+// const secretAccessKey = 'your-secret-access-key';
+
+// // Create a new PDF document using pdf-lib
+// async function createPDF() {
+//   const pdfDoc = await PDFDocument.create();
+  
+//   // Add content to the PDF document (e.g., add pages, text, images, etc.)
+//   // ...
+
+//   // Save the PDF as a buffer
+//   const pdfBytes = await pdfDoc.save();
+
+//   return pdfBytes;
+// }
+
+// // Upload the PDF to S3 bucket
+// async function uploadToS3() {
+//   try {
+//     // Initialize AWS SDK with your access credentials
+//     const s3 = new AWS.S3({
+//       accessKeyId: accessKeyId,
+//       secretAccessKey: secretAccessKey
+//     });
+
+//     // Generate the PDF using pdf-lib
+//     const pdfBytes = await createPDF();
+
+//     // Specify the S3 upload parameters
+//     const params = {
+//       Bucket: bucketName,
+//       Key: 'example.pdf', // Specify the desired key (filename) for the PDF in the S3 bucket
+//       Body: pdfBytes,
+//       ACL: 'public-read' // Set ACL to 'public-read' for public access
+//     };
+
+//     // Upload the PDF to the S3 bucket
+//     const response = await s3.upload(params).promise();
+//     console.log('PDF uploaded successfully:', response.Location);
+//   } catch (error) {
+//     console.error('Error uploading PDF to S3:', error);
+//   }
+// }
+
+// // Invoke the function to upload the PDF to S3
+// uploadToS3();
