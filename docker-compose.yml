@@ -4,6 +4,7 @@ services:
   expressapp-dev:
     container_name: expressapp-dev
     build: ./api
+    dockerfile: Dockerfile.dev-api
     expose: 
       - 5010
     volumes:
@@ -14,6 +15,7 @@ services:
   reactapp-dev:
     container_name: reactapp-dev
     build: ./client
+    dockerfile: Dockerfile.dev-client
     expose: 
       - 3010
     volumes:
