@@ -41,7 +41,7 @@ services:
     restart: always
 
   nginx-proxy-dev:
-    image: jwilder/nginx-proxy-dev
+    image: jwilder/nginx-proxy
     restart: always
     ports:
       - 81:81
@@ -57,7 +57,7 @@ services:
       - com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy
 
   acme-companion-dev:
-    image: nginxproxy/acme-companion-dev
+    image: nginxproxy/acme-companion
     restart: always
     environment:
       - NGINX_PROXY_CONTAINER=nginx-proxy-dev
