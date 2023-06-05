@@ -500,7 +500,6 @@ salesRouter.post('/create-quote/:sellerID', async function(req, res) {
             });
           }
 
-          console.log('soy salesvalues', salesValues)
           console.log('Quote created successfully');
 
           const prodSoldQuery = `INSERT INTO NaturaliStone.ProdSold (SaleID, ProdID, Quantity, SalePrice) VALUES ?`;
@@ -510,6 +509,7 @@ salesRouter.post('/create-quote/:sellerID', async function(req, res) {
             if (error) {
               console.log('Error in salesRoutes.post /create-quote/:sellerID: ' + error);
               console.log('Retrying ProdSold insert after 0.5 seconds...');
+              
               setTimeout(() => {
                 mysqlConnection.query(prodSoldQuery, [prodSoldValues], async function(error, prodSoldResult, fields) {
                   if (error) {
@@ -520,9 +520,7 @@ salesRouter.post('/create-quote/:sellerID', async function(req, res) {
                     });
                   }
 
-                console.log('soy prodsolvalues', prodSoldValues)
-
-                  
+      
                   console.log('Products inserted successfully (retry)');
                   commitTransaction();
                 });
@@ -532,7 +530,7 @@ salesRouter.post('/create-quote/:sellerID', async function(req, res) {
 
             sendInvoiceEmail(
             customer.Email, // se enviara correos desde irina hasta que se termine de configurar
-            Contact_Name, 
+            customer.Contact_Name, 
             prodSoldValues[0][0], 
             "description",
             "amount_value",

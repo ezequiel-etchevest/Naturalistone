@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { PDFDocument, rgb } from 'pdf-lib';
-import { Box, Center, Spinner } from '@chakra-ui/react';
+import { Box, Center, Spinner, Button } from '@chakra-ui/react';
 import axios from 'axios';
 
 const CreatedQuotePdf = ({variables, user, customer, project }) => {
@@ -157,6 +157,7 @@ mappedProducts.forEach((product, index) => {
       Object.entries(posted_quote).length ?
         posted_quote.Naturali_Invoice && posted_quote.InsertDate ?
         <Box h={'85vh'} >
+          <Button>SEND EMAIL</Button>
           {<iframe width={'100%'} height={'100%'} title="quote-blank" src={pdfInfo} ref={viewer} type="application/pdf" />}
         </Box>
         :
