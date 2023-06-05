@@ -29,7 +29,9 @@ services:
       - REACT_APP_API_URL=http://expressapp:5010
     restart: always  
   nginx:
-    build: ./nginx
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile.dev-nginx
     ports:
       - 8080:80
     depends_on:
