@@ -28,49 +28,49 @@ services:
     environment:
       - REACT_APP_API_URL=http://expressapp:5010
     restart: always  
-  nginx-dev:
-    build:
-      context: ./nginx
-      dockerfile: Dockerfile-dev-nginx
-    ports:
-      - 8080:80
-    depends_on:
-      - expressapp-dev
-      - reactapp-dev
-      - nginx-proxy
-      - acme-companion
-    environment:
-      - VIRTUAL_HOST=internal-naturalistone.com,www.internal-naturalistone.com
-      - LETSENCRYPT_HOST=internal-naturalistone.com,www.internal-naturalistone.com
-    restart: always
-  nginx-proxy:
-    image: jwilder/nginx-proxy
-    restart: always
-    ports:
-      - 80:80
-      - 443:443
-    volumes:
-      - certs:/etc/nginx/certs:ro
-      - /var/www/pedia/.well-known/acme-challenge/test.txt
-      - vhostd:/etc/nginx/vhost.d
-      - html:/usr/share/nginx/html
-      - acme:/etc/nginx/acme
-      - /var/run/docker.sock:/tmp/docker.sock:ro
-    labels:
-      - com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy
-  acme-companion:
-    image: nginxproxy/acme-companion
-    restart: always
-    environment:
-      - NGINX_PROXY_CONTAINER=nginx-proxy
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock:ro
-      - certs:/etc/nginx/certs:rw
-      - acme:/etc/acme.sh
-      - vhostd:/etc/nginx/vhost.d
-      - html:/usr/share/nginx/html
-volumes:
-  certs:
-  html:
-  vhostd:
-  acme:
+#   nginx-dev:
+#     build:
+#       context: ./nginx
+#       dockerfile: Dockerfile-dev-nginx
+#     ports:
+#       - 8080:80
+#     depends_on:
+#       - expressapp-dev
+#       - reactapp-dev
+#       - nginx-proxy
+#       - acme-companion
+#     environment:
+#       - VIRTUAL_HOST=internal-naturalistone.com,www.internal-naturalistone.com
+#       - LETSENCRYPT_HOST=internal-naturalistone.com,www.internal-naturalistone.com
+#     restart: always
+#   nginx-proxy:
+#     image: jwilder/nginx-proxy
+#     restart: always
+#     ports:
+#       - 80:80
+#       - 443:443
+#     volumes:
+#       - certs:/etc/nginx/certs:ro
+#       - /var/www/pedia/.well-known/acme-challenge/test.txt
+#       - vhostd:/etc/nginx/vhost.d
+#       - html:/usr/share/nginx/html
+#       - acme:/etc/nginx/acme
+#       - /var/run/docker.sock:/tmp/docker.sock:ro
+#     labels:
+#       - com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy
+#   acme-companion:
+#     image: nginxproxy/acme-companion
+#     restart: always
+#     environment:
+#       - NGINX_PROXY_CONTAINER=nginx-proxy
+#     volumes:
+#       - /var/run/docker.sock:/var/run/docker.sock:ro
+#       - certs:/etc/nginx/certs:rw
+#       - acme:/etc/acme.sh
+#       - vhostd:/etc/nginx/vhost.d
+#       - html:/usr/share/nginx/html
+# volumes:
+#   certs:
+#   html:
+#   vhostd:
+#   acme:
