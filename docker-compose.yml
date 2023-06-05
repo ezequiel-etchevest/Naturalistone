@@ -19,7 +19,7 @@ services:
       context: ./client
       dockerfile: Dockerfile.dev-client
     expose: 
-      - 3000
+      - 3010
     volumes:
       - ./client:/usr/src/app
 
@@ -34,39 +34,39 @@ services:
       context: ./nginx
       dockerfile: Dockerfile-dev-nginx
     ports:
-      - 8081:81
+      - 3010:81
     depends_on:
       - expressapp-dev
       - reactapp-dev
     restart: always
 
-  nginx-proxy-dev:
-    image: jwilder/nginx-proxy
-    restart: always
-    ports:
-      - 81:81
-      - 444:444
-    volumes:
-      - certs:/etc/nginx/certs:ro
-      - /var/www/pedia/.well-known/acme-challenge/test.txt
-      - vhostd:/etc/nginx/vhost.d
-      - html:/usr/share/nginx/html
-      - acme:/etc/nginx/acme
-      - /var/run/docker.sock:/tmp/docker.sock:ro
-    labels:
-      - com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy
+  # nginx-proxy-dev:
+  #   image: jwilder/nginx-proxy
+  #   restart: always
+  #   ports:
+  #     - 80:3010
+  #     - 443:3010
+  #   volumes:
+  #     - certs:/etc/nginx/certs:ro
+  #     - /var/www/pedia/.well-known/acme-challenge/test.txt
+  #     - vhostd:/etc/nginx/vhost.d
+  #     - html:/usr/share/nginx/html
+  #     - acme:/etc/nginx/acme
+  #     - /var/run/docker.sock:/tmp/docker.sock:ro
+  #   labels:
+  #     - com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy
 
-  acme-companion-dev:
-    image: nginxproxy/acme-companion
-    restart: always
-    environment:
-      - NGINX_PROXY_CONTAINER=nginx-proxy-dev
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock:ro
-      - certs:/etc/nginx/certs:rw
-      - acme:/etc/acme.sh
-      - vhostd:/etc/nginx/vhost.d
-      - html:/usr/share/nginx/html
+  # acme-companion-dev:
+  #   image: nginxproxy/acme-companion
+  #   restart: always
+  #   environment:
+  #     - NGINX_PROXY_CONTAINER=nginx-proxy-dev
+  #   volumes:
+  #     - /var/run/docker.sock:/var/run/docker.sock:ro
+  #     - certs:/etc/nginx/certs:rw
+  #     - acme:/etc/acme.sh
+  #     - vhostd:/etc/nginx/vhost.d
+  #     - html:/usr/share/nginx/html
 volumes:
   certs:
   html:
