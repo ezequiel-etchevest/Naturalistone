@@ -19,7 +19,7 @@ services:
       context: ./client
       dockerfile: Dockerfile.dev-client
     expose: 
-      - 3010
+      - 3000
     volumes:
       - ./client:/usr/src/app
 
