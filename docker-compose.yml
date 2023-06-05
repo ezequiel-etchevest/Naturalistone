@@ -40,7 +40,7 @@ services:
       - reactapp-dev
     restart: always
 
-nginx-proxy-dev:
+  nginx-proxy-dev:
     image: jwilder/nginx-proxy
     restart: always
     ports:
@@ -55,7 +55,6 @@ nginx-proxy-dev:
       - /var/run/docker.sock:/tmp/docker.sock:ro
     labels:
       - com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy
-
 
   # acme-companion-dev:
   #   image: nginxproxy/acme-companion
