@@ -9,7 +9,7 @@ import CreatedQuotePdf from './createQuotePdf'
 import { cleanCreatedQuote } from '../../../redux/actions-invoices'
 import { useDispatch } from 'react-redux'
   
-  export default function QuotePdfModal({variables, isOpen6, onClose6, customer, project, products, user, onClose5, onClose4, onClose3, onClose2, onClose1}) {
+  export default function QuotePdfModal({variables, isOpen6, onClose6, customer, project, products, user, onClose5, onClose4, onClose3, onClose2, onClose1, authFlag}) {
     
   const dispatch = useDispatch()
 
@@ -44,7 +44,7 @@ import { useDispatch } from 'react-redux'
             borderColor={'web.border'}>
               
             <ModalBody w={'100%'} h={'100%'}>
-              <CreatedQuotePdf variables={variables} customer={customer} project={project} products={products} user={user}/>
+              <CreatedQuotePdf variables={variables} customer={customer} project={project} products={products} user={user} authFlag={authFlag} />
             </ModalBody>
           </ModalContent>
       </Modal>

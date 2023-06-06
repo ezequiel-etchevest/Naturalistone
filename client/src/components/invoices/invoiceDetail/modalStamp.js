@@ -34,32 +34,29 @@ import { stampInvoice } from '../../../redux/actions-invoices';
       <>
         <Tooltip label={payments.paymentsMath.PendingAmount === '0.00'? null : 'Pending amount should be 0'}>
         <ButtonGroup
+          textColor={'web.text2'}
           h={'5vh'}
-          size={'sm'}
           display={'flex'}
           spacing={0}
             _hover={{
             color: 'logo.orange'
           }}>
           <IconButton
-            fontSize={'1.5vw'}
+            fontSize={'xl'}
             disabled={payments.paymentsMath.PendingAmount === '0.00' ? false : true}  
             variant={'unstyled'}           
             fontWeight={'normal'}
             icon={<TfiStamp/>}/>
-          {
-            windowWidth > 1100 ? 
+
               <Button
                 disabled={payments.paymentsMath.PendingAmount === '0.00' ? false : true}  
                 variant={'unstyled'}              
                 fontWeight={'normal'}
                 onClick={onOpen}
                 fontSize={'1vw'}
-                  >Stamp PDF
+                  >Stamp 
               </Button>
-            : null
-          }        
-          
+        
         </ButtonGroup>
         </Tooltip>
         <Modal isOpen={isOpen} onClose={onClose} size={'xl'} >

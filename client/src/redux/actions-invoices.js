@@ -141,11 +141,11 @@ export function stampInvoice(id){
 
         }}}
 
-export function changeStatus(id){
+export function changeStatus(id, action){
 
     return async function(dispatch){
         try{
-            let {response} = await axios.patch(`/sales/cancelquote/${id}`)
+            let {response} = await axios.patch(`/sales/changeStatus/${id}`, {action})
             console.log({response})
             let { data } = await axios.get(`/sales/invoice/${id}`)
             console.log(response)

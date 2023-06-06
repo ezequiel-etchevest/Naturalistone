@@ -69,7 +69,7 @@ const InvoiceProductList = ({invoice_products, invoice}) => {
             bg={'web.sideBar'}           
             >
             <Text fontSize={'1.6vw'} color={'web.text2'}>Products Details</Text>
-            <TableContainer w={'53vw'} >
+            <TableContainer w={'60vw'} >
                 <Table mt={'2vh'} color={'web.text'} variant={'simple'} size={'sm'} >
                   <Thead h={'6vh'}>
                     <Tr>

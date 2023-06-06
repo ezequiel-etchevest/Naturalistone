@@ -4,7 +4,7 @@ const multer = require('multer');
 const path = require('path');
 
 
-const invoicePath = path.join('/app/OneDrive', 'Naturali', 'InvoicesReceived', 'Parsed Documents', 'Invoice Naturali');
+const invoicePath = path.join('/app/OneDrive2', 'Nuevos Invoices');
 // Configurar multer para manejar la carga de archivos
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {

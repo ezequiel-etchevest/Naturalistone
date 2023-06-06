@@ -1,12 +1,15 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
-import { PDFDocument, rgb } from 'pdf-lib';
+import { PDFDocument, rgb, degrees } from 'pdf-lib';
 import { Box, Center, Spinner } from '@chakra-ui/react';
+import approvalPic from '../../../assets/pending_approval.png'
 import axios from 'axios';
 
-const CreatedQuotePdf = ({variables, user, customer, project }) => {
+
+const CreatedQuotePdf = ({variables, user, customer, project, authFlag}) => {
 
 
+  console.log({variables, user, customer, project, authFlag})
     const posted_quote = useSelector(state => state.posted_quote)
  
     let invoiceID = posted_quote.Naturali_Invoice
@@ -25,7 +28,7 @@ const CreatedQuotePdf = ({variables, user, customer, project }) => {
           if (Array.isArray(mappedProducts)) {
             resolve();
           } else {
-            setTimeout(checkMappedProducts, 100); // Esperar 100ms antes de volver a verificar
+            setTimeout(checkMappedProducts, 100); // Esperar 100ms antes de volver a verificar 
           }
         };
     
@@ -88,6 +91,18 @@ const CreatedQuotePdf = ({variables, user, customer, project }) => {
   page.drawText(`${deliveryMethod}`, { x: 439, y: 508, size: 10 }) 
   page.drawText(`${paymentTerms}`, { x: 524, y: 508, size: 10 }) 
 
+  if(authFlag === true ) {
+    const pngDims = pngImage.scale(0.12)
+    const pngImage = await pdfDoc.embedPng(pngImageBytes)
+    const pngImageBytes = await fetch(approvalPic).then((res) => res.arrayBuffer())
+    page.drawImage(pngImage, {
+      x: page.getWidth() / 2 - pngDims.width / 3 + 50,
+      y: page.getHeight() / 7 - pngDims.height + 250,
+      width: pngDims.width,
+      height: pngDims.height,
+      rotate: degrees(55)
+    })
+  }
 
 // //This line uses the forEach method to iterate over each key-value pair in the array created by Object.
 // //entries. For each iteration, the key (variableName) and value (element) are destructured from the pair and
@@ -113,7 +128,6 @@ mappedProducts.forEach((product, index) => {
   page.drawText(`(${tax} %)`, { x: 454, y: 249, size: 12 });
   page.drawText(`${(subtotal * tax / 100).toFixed(2)}`, { x: 528, y: 247, size: 10 });
   page.drawText(`$ ${(subtotal + (subtotal * tax / 100)).toFixed(2)}`, { x: 510, y: 222, size: 12 });
-
 
   const pdfBytes = await pdfDoc.save();
   const blob = new Blob([pdfBytes], { type: 'application/pdf' });

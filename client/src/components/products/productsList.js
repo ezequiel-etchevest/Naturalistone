@@ -116,7 +116,7 @@ const ProductList = ({ allProducts, user }) => {
   const [batchCount] = useState(15);
   const [loadedCount, setLoadedCount] = useState(initialCount);
   const toastId = 'error_products'
-  console.log(productErrors)
+
   const validateToast = () => {
     if (Object.entries(productErrors).length) {
       if(!toast.isActive(toastId)){
@@ -131,7 +131,6 @@ const ProductList = ({ allProducts, user }) => {
 
     }
   };
-
 
   const handleScroll = () => {
     const container = document.getElementById('scroll-container'); // Reemplaza 'scroll-container' con el ID de tu contenedor de desplazamiento

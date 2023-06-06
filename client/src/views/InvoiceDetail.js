@@ -20,16 +20,7 @@ const InvoiceDetail = ({focus, setFocus}) => {
   const payments = useSelector(state => state.payments_by_id)
   const userLocal = JSON.parse(localStorage.getItem('user'))
   const { id } = useParams()
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
-  useEffect(() => {
-    function handleResize() {
-      setWindowWidth(window.innerWidth);
-    }
-
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
 
   useEffect(()=>{
       dispatch(getInvoiceById(id))
@@ -52,7 +43,6 @@ const InvoiceDetail = ({focus, setFocus}) => {
             {
               invoice.length && Object.entries(payments).length && invoice_products && deliveries ? (
                 <Detail
-                  windowWidth={windowWidth} 
                   invoice={invoice} 
                   invoice_products={invoice_products}
                   payments={payments}

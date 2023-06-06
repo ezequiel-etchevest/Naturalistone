@@ -3,11 +3,9 @@ import {
     Modal,
     ModalOverlay,
     ModalContent,
-    ModalHeader,
     ModalFooter,
     Text,
     ModalBody,
-    ModalCloseButton,
     Box,
     Input,
     IconButton,
@@ -22,18 +20,18 @@ import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import CreateInvoiceProductsList from "./createInvoiceProductsList";
 import ReviewProductsModal from "./createInvoiceProductsReview";
-import { getFiltered } from "../../../redux/actions-products";
+import { getAllProductsNewQuote } from "../../../redux/actions-products";
 import {BiSearch} from 'react-icons/bi'
 import {AiOutlineClear} from 'react-icons/ai';
 import '../../../assets/styleSheet.css'
-import { useLocation } from "react-router-dom";
 import { getCustomers } from "../../../redux/actions-customers";
 
-const CreateInvoiceModal = ({variables, setVariables, isOpen, onClose, customer, project, onClose4, onClose3, onClose2, onClose1, isOpen4, onOpen4, setInputValue, setCustomer}) => {
+const CreateInvoiceModal = ({variables, setVariables, customer, project, onClose4, onClose3, onClose2, onClose1, isOpen4, onOpen4, setInputValue, setCustomer}) => {
  
 const dispatch = useDispatch()
 const toast = useToast()
-const allProducts = useSelector(state => state.all_products)
+const allProducts = useSelector(state => state.products_new_quote)
+const allProductsErrors = useSelector(state => state.products_new_quote_errors)
 const productErrors = useSelector((state) => state.products_errors)
 const values = useSelector(state => state.product_values)
 
@@ -60,16 +58,12 @@ const validateToast = () => {
 }
 
 useEffect(()=>{
-  if(!allProducts.length ) {
+  if(!allProducts?.length && !Object.entries(allProductsErrors)?.length ) {
     dispatch(
-      getFiltered(
+      getAllProductsNewQuote(
         filters.finish,
-        '',
-        '',
         filters.material,
         filters.search,
-        '',
-        '',
         ))
     }
   validateToast()
@@ -87,7 +81,7 @@ const handleFinish = (e) => {
     ...filters,
     finish: e.target.value
   })
-  dispatch(getFiltered(e.target.value, '', '', filters.material, filters.search, '', ''))
+  dispatch(getAllProductsNewQuote(e.target.value, filters.material, filters.search))
 }
 
 
@@ -96,7 +90,7 @@ const handleMaterial = (e) => {
     ...filters,
     material: e.target.value
   })
-  dispatch(getFiltered(filters.finish, '', '', e.target.value, filters.search, '', ''))
+  dispatch(getAllProductsNewQuote(filters.finish, e.target.value, filters.search))
 }
 
 const handleChangeProductName = (e) => {
@@ -104,7 +98,7 @@ const handleChangeProductName = (e) => {
     ...filters,
     search: e.target.value
   })
-  dispatch(getFiltered(filters.finish, '', '', filters.material, e.target.value, '', ''))
+  dispatch(getAllProductsNewQuote(filters.finish, filters.material, e.target.value))
 }
 
 const handleClear = () => {
@@ -113,7 +107,7 @@ const handleClear = () => {
     material:'',
     search:''
     }) 
-    dispatch(getFiltered('','','','', '','',''))
+    dispatch(getAllProductsNewQuote( '','',''))
 }
 
 
@@ -131,7 +125,7 @@ const handleClear = () => {
         material:'',
         search:'',
         })
-      dispatch(getFiltered('','','','','','',''))
+      dispatch(getAllProductsNewQuote('','',''))
   }
 
   const handleClose = () => {
@@ -279,7 +273,7 @@ const handleClear = () => {
             </IconButton>
         </Tooltip> 
           </Box>          
-          <CreateInvoiceProductsList allProducts={allProducts} products={products} setProducts={setProducts}/>
+          <CreateInvoiceProductsList allProducts={allProducts} allProductsErrors={allProductsErrors} products={products} setProducts={setProducts}/>
         </ModalBody>
         <ModalFooter mb={'2vh'} display={'flex'} flexDir={'row'} justifyContent={'space-between'} ml={'2vw'} mr={'2vw'}>
         <Button

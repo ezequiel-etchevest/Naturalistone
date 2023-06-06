@@ -230,11 +230,13 @@ salesRouter.patch('/quote/:id', async function(req, res){
     }
 });
 
-salesRouter.patch('/cancelquote/:id', async function(req, res){
+salesRouter.patch('/changeStatus/:id', async function(req, res){
     
     const {id} = req.params
+    const status = req.body
 
-    query_ = `UPDATE Sales SET Status = 'Canceled' WHERE Naturali_Invoice =${id}`
+
+    query_ = (`UPDATE Sales SET Status = '${status.action}' WHERE Naturali_Invoice =${id}`)
 
     try{
        mysqlConnection.query(query_, function(error, results, fields){
@@ -283,171 +285,10 @@ salesRouter.get('/values/seller', async function(req, res){
 });
 
 
-// Sin Variable beginTransaction
-
-// salesRouter.post('/create-quote/:sellerID', async function(req, res) {
-//   const { sellerID } = req.params
-//   const { customer, project, products, variables } = req.body
-
-//   const Value = products.reduce((acc, curr) => acc + curr.quantity * curr.price, 0)
-//   const ProjectID = project.idProjects
-//   const date = new Date().toLocaleDateString("en-US")
-//   const InsertDate = `${date.split('/')[2]}-${date.split('/')[0]}-${date.split('/')[1]}`
-
-//   const EstDelivery_Date = variables.estDelivDate
-
-//   try {
-//     // Obtener el último Naturali_Invoice de la tabla Sales
-//     const query_0 = `SELECT Naturali_Invoice FROM NaturaliStone.Sales ORDER BY Naturali_Invoice DESC LIMIT 1;`
-//     const quotesIDs = await new Promise((resolve, reject) => {
-//       mysqlConnection.query(query_0, function(error, quotesIDs, fields) {
-//         if (error) {
-//           console.log('Error in salesRoutes.get /create-quote/:sellerID: ' + error)
-//           reject(error)
-//         } else {
-//           console.log('QuotesIds retrieved successfully')
-//           resolve(quotesIDs)
-//         }
-//       })
-//     })
-
-//     const ids = quotesIDs.map(q => Number(q.Naturali_Invoice))
-//     const Naturali_Invoice = Math.max(...ids) + 1
-
-//     const query_ = `INSERT INTO Sales (Naturali_Invoice, Value, ProjectID, InvoiceDate, EstDelivery_Date, SellerID, ShippingMethod, PaymentTerms, P_O_No) VALUES ("${Naturali_Invoice}", "${Value}", "${ProjectID}", "${InsertDate}", "${EstDelivery_Date}", "${sellerID}", "${variables.shipVia}", "${variables.paymentTerms}", "${variables.method}")`
-//     await new Promise((resolve, reject) => {
-//       mysqlConnection.query(query_, function(error, results, fields) {
-//         if (error) {
-//           console.log('Error in salesRoutes.get /create-quote/:sellerID: ' + error)
-//           reject(error)
-//         } else {
-//           console.log('Quote created successfully')
-//           resolve()
-//         }
-//       })
-//     })
-
-//     const insertProductsPromises = products.map((product) => {
-//       const { prodID, quantity, price } = product;
-//       const query = `INSERT INTO ProdSold (SaleID, ProdID, Quantity, SalePrice) VALUES ("${Naturali_Invoice}", "${prodID}", "${quantity}", "${price}")`;
-//       return new Promise((resolve, reject) => {
-//         mysqlConnection.query(query, function(error, results, fields) {
-//           if (error) {
-//             console.log('Error in salesRoutes.get Insert INTO ProdSold ' + error)
-//             reject(error)
-//           } else {
-//             console.log('Product inserted successfully');
-//             resolve()
-//           }
-//         });
-//       })
-//     })
-
-//     await Promise.all(insertProductsPromises)
-
-//     res.status(200).json({ Naturali_Invoice: Naturali_Invoice, InsertDate: InsertDate })
-//   } catch (error) {
-//     res.status(500).json('Failed to create quote')
-//   }
-// })
-
-
-
-// Variable solo insert en Sales, sin la query de los productos
-
-// salesRouter.post('/create-quote/:sellerID', async function(req, res){
-//   const { sellerID } = req.params
-//   const { customer, project, variables, products } = req.body
-
-//   const parsedProducts = Object.entries(products)
-//                       .flat()
-//                       .filter((element) => typeof element === 'object')
-//                       .map((product, index) => ({ variableName: `${index + 1}`, ...product }))
-                      
-//   const Value = parsedProducts.reduce((acc, curr) => acc + curr.quantity * curr.price, 0)
-
-//   const ProjectID = project.idProjects
-//   const date = new Date().toLocaleDateString("en-US")
-//   // const InsertDate = `${date.split('/')[2]}-${date.split('/')[0]}-${date.split('/')[1]}`
-//   const InsertDate = `2019-02-20`
-
-//   const EstDelivery_Date = variables.estDelivDate
-
-//   // Obtener el último Naturali_Invoice de la tabla Sales
-//   const query_0 = `SELECT Naturali_Invoice FROM NaturaliStone.Sales ORDER BY Naturali_Invoice DESC LIMIT 1;`
-
-//   try {
-//     mysqlConnection.query(query_0, function(error, quotesIDs, fields) {
-//       if (error) {
-//         console.log('Error in salesRoutes.get /create-quote/:sellerID: ' + error)
-//         res.status(500).json("Can't obtain Naturali_Invoice")
-//       } else {
-//         console.log('QuotesIds retrieved successfully')
-
-//         const ids = quotesIDs.map(q => Number(q.Naturali_Invoice)) // crea un quoteID agregando +1 al ultimo registrado en la db
-//         const Naturali_Invoice = Math.max(...ids) + 1
-
-//         // Hace el posteo en la tabla de Sales con los valores que llegaron por body y el id del quote creado.
-//         const query_ = `INSERT INTO Sales (Naturali_Invoice, Value, ProjectID, InvoiceDate, EstDelivery_Date, SellerID, ShippingMethod, PaymentTerms, P_O_No) VALUES ("${Naturali_Invoice}", "${Value}", "${ProjectID}", "${InsertDate}", "${EstDelivery_Date}", "${sellerID}", "${variables.shipVia}", "${variables.paymentTerms}", "${variables.method}")`
-//         try {
-//           mysqlConnection.query(query_, function(error, results, fields) {
-//             if (error) {
-//               console.log('Error in salesRoutes.get /create-quote/:sellerID: ' + error)
-//               res.status(500).json('Failed to create quote')
-//             } else {
-//               console.log(`Quote created successfully ${Naturali_Invoice}`)
-//               res.status(200).json({ Naturali_Invoice: Naturali_Invoice, InsertDate: InsertDate, parsedProducts:  parsedProducts })
-//             }
-//           })
-//         } catch (error) {
-//           res.status(409).send(error)
-//         }
-//       }
-//     })
-//   } catch (error) {
-//     res.status(409).send(error)
-//   }
-// })
-
-// Variable insert solo producto sin crear nada en Sales.
-
-// salesRouter.post('/create-quote/:sellerID', async function(req, res){
-    
-//   const { products } = req.body
-
-//   let query = `INSERT INTO ProdSold (SaleID, ProdID, Quantity, SalePrice) VALUES `;
-//   const values = [];
-
-//   try{
-// console.log(products)
-//   for (const product of products) {
-//     const { prodID, quantity, price } = product;
-//     values.push(`("100003", "${prodID}", "${quantity}", "${price}")`);
-//   }
-
-//   query += values.join(", ");
-
-//   mysqlConnection.query(query, function(error, results, fields) {
-
-//     if (error) {
-//       console.log('Error in salesRoutes.get Insert INTO ProdSold ' + error)
-//       res.status(500).json('Failed to insert ProdSold')
-//     } else {
-//       console.log('Products inserted successfully');
-//       res.status(200).json('Products inserted successfully');
-//     }
-//     });
-//   } catch(error){
-//       res.status(409).send(error);
-//   }
-// });
-
-
-// Con variable BeginTransaction --------------
-
 salesRouter.post('/create-quote/:sellerID', async function(req, res) {
+
   const { sellerID } = req.params;
-  const { customer, project, products, variables, user } = req.body;
+  const { customer, project, products, variables, user, authFlag } = req.body;
 
   const parsedProducts = Object.entries(products)
     .flat()
@@ -487,9 +328,9 @@ salesRouter.post('/create-quote/:sellerID', async function(req, res) {
 
         const ids = quotesIDs.map(q => Number(q.Naturali_Invoice));
         Naturali_Invoice = Math.max(...ids) + 1;
-
-        const salesQuery = `INSERT INTO Sales (Naturali_Invoice, Value, ProjectID, InvoiceDate, EstDelivery_Date, SellerID, ShippingMethod, PaymentTerms, P_O_No) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`;
-        const salesValues = [Naturali_Invoice, Value, ProjectID, InsertDate, EstDelivery_Date, sellerID, variables.shipVia, variables.paymentTerms, variables.method];
+        const status = authFlag ? ('Pending_Approval') : ('Pending')
+        const salesQuery = `INSERT INTO Sales (Naturali_Invoice, Value, ProjectID, InvoiceDate, EstDelivery_Date, SellerID, ShippingMethod, PaymentTerms, P_O_No, Status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+        const salesValues = [Naturali_Invoice, Value, ProjectID, InsertDate, EstDelivery_Date, sellerID, variables.shipVia, variables.paymentTerms, variables.method, status ];
 
         mysqlConnection.query(salesQuery, salesValues, async function(error, salesResult, fields) {
           if (error) {
@@ -530,15 +371,15 @@ salesRouter.post('/create-quote/:sellerID', async function(req, res) {
               return;
             }
 
-            sendInvoiceEmail(
-            customer.Email, // se enviara correos desde irina hasta que se termine de configurar
-            Contact_Name, 
-            prodSoldValues[0][0], 
-            "description",
-            "amount_value",
-            Value,
-            InsertDate
-            ) // faltaria solo el pdf para enviar
+            // sendInvoiceEmail(
+            // customer.Email, // se enviara correos desde irina hasta que se termine de configurar
+            // Contact_Name, 
+            // prodSoldValues[0][0], 
+            // "description",
+            // "amount_value",
+            // Value,
+            // InsertDate
+            // ) // faltaria solo el pdf para enviar
 
             console.log('Products inserted successfully');
 

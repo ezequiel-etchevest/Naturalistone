@@ -33,7 +33,8 @@ import {
     PATCH_DISCONTINUED,
     GET_PRODUCT_IMAGES,
     GET_PRODUCT_IMAGE,
-    CLEAN_PRODUCT_DETAIL
+    CLEAN_PRODUCT_DETAIL,
+    GET_PRODUCTS_NEW_QUOTE
      } from './actions-products';
 import { 
   GET_CURRENT_MONTH,
@@ -116,7 +117,10 @@ const intialState = {
     stats: {},
     posted_quote:{},
     product_images:[],
-    product_image: {}
+    product_image: {},
+    products_new_quote: [],
+    products_new_quote_errors: {}
+
 }
 
 function rootReducer (state = intialState, action) {
@@ -433,6 +437,13 @@ function rootReducer (state = intialState, action) {
         //       [action.payload.prodName]: action.payload.data
         //     }
         //   }
+        case GET_PRODUCTS_NEW_QUOTE:
+          return {
+            ...state,
+            products_new_quote: action.payload.results,
+            products_new_quote_errors: action.payload.errorSearch
+
+          }
         case CLEAN_PRODUCT_DETAIL:
           return {
             ...state,
