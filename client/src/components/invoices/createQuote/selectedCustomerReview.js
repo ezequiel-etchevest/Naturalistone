@@ -42,18 +42,18 @@ const [disable, setDisable] = useState(false)
 const idCustomer = customer.CustomerID
 const id = 'test-toast'
 
-
 const { isOpen: isOpen3, onOpen: onOpen3, onClose: onClose3 } = useDisclosure()
 
+const rate = customer.DiscountRate?.toString()
 
 const handleInputChange = (e) => {
   const enteredValue = e.target.value;
   const allowedValues = ['0', '5', '10', '15'];
-  
+
   if (enteredValue) {
     if (allowedValues.includes(enteredValue)) {
-      setCustomer({ ...customer, DiscountID: enteredValue });
-      setDisable(false)
+      setCustomer({ ...customer, DiscountRate: enteredValue });
+      setDisable(false);
     } else {
       toast({
         title: 'Incorrect Values',
@@ -62,28 +62,14 @@ const handleInputChange = (e) => {
         duration: 5000,
         isClosable: true,
       });
-      setDisable(true)
+      setDisable(true);
     }
   } else {
-    setCustomer({ ...customer, DiscountID: '0' });
-    setDisable(false)
+    setCustomer({ ...customer, DiscountRate: '0'});
+    setDisable(false);
   }
 };
 
-const transformedValue = (() => {
-  switch (customer.DiscountID) {
-    case 1:
-      return '0';
-    case 2:
-      return '5';
-    case 3:
-      return '10';
-    case 4:
-      return '15';
-    default:
-      return '0';
-  }
-})();
 
 const handlePrevious = () => {
   setCustomer('')
@@ -93,9 +79,29 @@ const handlePrevious = () => {
 
 const handleNext = () => {
   dispatch(getCustomerProjects(customer.CustomerID))
-  dispatch(updateCustomer(idCustomer, customer))
-  onOpen3()
-  onClose2()
+  if(customer.Contact_Name != "undefined" 
+    && customer.Email != "undefined" 
+    && customer.City != "undefined" 
+    && customer.State!= "undefined"
+    // && customer.DiscountID != "undefined"
+    && customer.DiscountRate != "undefined"
+    && customer.ZipCode != "undefined"  
+    && customer.Phone != "undefined" 
+    && customer.Company != "undefined" 
+    && customer.Company_Position != "undefined" 
+    && customer.Address != "undefined"){
+      dispatch(updateCustomer(idCustomer, customer))
+      onOpen3()
+      onClose2()
+  } else {
+    toast({
+      title: 'Incorrect Values',
+      description: 'All fields must be filled',
+      status: 'error',
+      duration: 5000,
+      isClosable: true,
+    });
+  }
 }
 
 const handleClose = () => {
@@ -225,8 +231,11 @@ function EditableControls() {
                    }} 
                     size={"sm"}
                     type={"text"}
-                    onChange={(e) => setCustomer({...customer, Contact_Name: e.target.value})
-                    }
+                    onChange={(e) =>{
+                      if(e.target.value.length){
+                      setCustomer({...customer, Contact_Name: e.target.value})
+                    }else return
+                  }}
                   /> 
                   <EditableControls />
                 </Editable>
@@ -257,7 +266,11 @@ function EditableControls() {
                    }} 
                     size={"sm"}
                     type={"text"}
-                    onChange={(e) => setCustomer({...customer, Phone: e.target.value})}
+                    onChange={(e) =>{
+                      if(e.target.value.length){
+                      setCustomer({...customer, Phone: e.target.value})
+                    }else return
+                  }}
                   /> 
                   <EditableControls />
                 </Editable>
@@ -288,7 +301,11 @@ function EditableControls() {
                       outline: 'none',
                       boxShadow: 'none',
                    }} 
-                    onChange={(e) => setCustomer({...customer, Email: e.target.value})}
+                   onChange={(e) =>{
+                    if(e.target.value.length){
+                    setCustomer({...customer, Email: e.target.value})
+                  }else return
+                }}
                   /> 
                   <EditableControls />
                 </Editable>
@@ -319,7 +336,11 @@ function EditableControls() {
                       outline: 'none',
                       boxShadow: 'none',
                    }} 
-                    onChange={(e) => setCustomer({...customer, Company: e.target.value})}
+                   onChange={(e) =>{
+                    if(e.target.value.length){
+                    setCustomer({...customer, Company: e.target.value})
+                  }else return
+                }}
                   /> 
                   <EditableControls />
                 </Editable>
@@ -350,7 +371,11 @@ function EditableControls() {
                       outline: 'none',
                       boxShadow: 'none',
                    }} 
-                    onChange={(e) => setCustomer({...customer, Company_Position: e.target.value})}
+                   onChange={(e) =>{
+                    if(e.target.value.length){
+                    setCustomer({...customer, Company_Position: e.target.value})
+                  }else return
+                }}
                   /> 
                   <EditableControls />
                 </Editable>
@@ -361,7 +386,7 @@ function EditableControls() {
               <Box>
                 <Text pt='2' fontSize='sm' > Discount </Text>
                 <Editable
-                  defaultValue={transformedValue}
+                  defaultValue={rate}
                   fontSize='sm'
                   fontWeight={'bold'}
                   isPreviewFocusable={false}
@@ -384,7 +409,6 @@ function EditableControls() {
                       outline: 'none',
                       boxShadow: 'none',
                    }} 
-                    value={customer.DiscountID}
                     onChange={(e) => handleInputChange(e)}
                   />
                   <EditableControls />
@@ -416,7 +440,11 @@ function EditableControls() {
                       outline: 'none',
                       boxShadow: 'none',
                    }} 
-                    onChange={(e) => setCustomer({...customer, Address: e.target.value})}
+                   onChange={(e) =>{
+                    if(e.target.value.length){
+                    setCustomer({...customer, Address: e.target.value})
+                  }else return
+                }}
                   /> 
                   <EditableControls />
                 </Editable>
@@ -447,7 +475,11 @@ function EditableControls() {
                       outline: 'none',
                       boxShadow: 'none',
                    }} 
-                    onChange={(e) => setCustomer({...customer, City: e.target.value})}
+                   onChange={(e) =>{
+                    if(e.target.value.length){
+                    setCustomer({...customer, City: e.target.value})
+                  }else return
+                }}
                   /> 
                   <EditableControls />
                 </Editable>
@@ -478,7 +510,11 @@ function EditableControls() {
                       outline: 'none',
                       boxShadow: 'none',
                    }} 
-                    onChange={(e) => setCustomer({...customer, ZipCode: e.target.value})}
+                   onChange={(e) =>{
+                    if(e.target.value.length){
+                    setCustomer({...customer, ZipCode: e.target.value})
+                  }else return
+                }}
                   /> 
                   <EditableControls />
                 </Editable>
@@ -509,7 +545,11 @@ function EditableControls() {
                       outline: 'none',
                       boxShadow: 'none',
                    }} 
-                    onChange={(e) => setCustomer({...customer, State: e.target.value})}
+                   onChange={(e) =>{
+                    if(e.target.value.length){
+                    setCustomer({...customer, State: e.target.value})
+                  }else return
+                }}
                   /> 
                   <EditableControls />
                 </Editable>
