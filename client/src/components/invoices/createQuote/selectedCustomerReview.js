@@ -70,8 +70,6 @@ const handleInputChange = (e) => {
   }
 };
 
-console.log(rate)
-
 
 const handlePrevious = () => {
   setCustomer('')
