@@ -1,128 +1,42 @@
-
-# version: "3.9"
-# services: 
-#   expressapp-dev:
-#     container_name: expressapp-dev
-#     build:
-#       context: ./api
-#       dockerfile: Dockerfile.dev-api
-#     expose: 
-#       - 5010
-#     volumes:
-#       - ./api:/usr/src/app
-#       - /root/OneDrive:/app/OneDrive
-
-#     restart: always  
-#   reactapp-dev:
-#     container_name: reactapp-dev
-#     build:
-#       context: ./client
-#       dockerfile: Dockerfile.dev-client
-#     expose: 
-#       - 3010
-#     volumes:
-#       - ./client:/usr/src/app
-
-#     depends_on:
-#       - expressapp-dev
-#     environment:
-#       - REACT_APP_API_URL=http://expressapp:5010
-#     restart: always
-
-#   nginx-dev:
-#     build:
-#       context: ./nginx
-#       dockerfile: Dockerfile-dev-nginx
-#     ports:
-#       - 8080:80
-#     depends_on:
-#       - expressapp-dev
-#       - reactapp-dev
-#     restart: always
-
-#   nginx-proxy-dev:
-#     image: jwilder/nginx-proxy
-#     restart: always
-#     ports:
-#       - 80:80
-#       - 443:443
-#     volumes:
-#       - certs:/etc/nginx/certs:ro
-#       - /var/www/pedia/.well-known/acme-challenge/test.txt
-#       - vhostd:/etc/nginx/vhost.d
-#       - html:/usr/share/nginx/html
-#       - acme:/etc/nginx/acme
-#       - /var/run/docker.sock:/tmp/docker.sock:ro
-#     labels:
-#       - com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy
-
-#   # acme-companion-dev:
-#   #   image: nginxproxy/acme-companion
-#   #   restart: always
-#   #   environment:
-#   #     - NGINX_PROXY_CONTAINER=nginx-proxy-dev
-#   #   volumes:
-#   #     - /var/run/docker.sock:/var/run/docker.sock:ro
-#   #     - certs:/etc/nginx/certs:rw
-#   #     - acme:/etc/acme.sh
-#   #     - vhostd:/etc/nginx/vhost.d
-#   #     - html:/usr/share/nginx/html
-# volumes:
-#   certs:
-#   html:
-#   vhostd:
-#   acme:
-
-
-
-
 version: "3.9"
 services: 
-  expressapp-dev:
-    container_name: expressapp-dev
-    build:
-      context: ./api
-      dockerfile: Dockerfile.dev-api
+  expressapp:
+    container_name: expressapp
+    build: ./api
     expose: 
-      - 5010
+      - 5000
     volumes:
       - ./api:/usr/src/app
       - /root/OneDrive:/app/OneDrive
       - /root/OneDrive2:/app/OneDrive2
 
     restart: always  
-  reactapp-dev:
-    container_name: reactapp-dev
-    build:
-      context: ./client
-      dockerfile: Dockerfile.dev-client
+  reactapp:
+    container_name: reactapp
+    build: ./client
     expose: 
       - 3000
     volumes:
       - ./client:/usr/src/app
 
     depends_on:
-      - expressapp-dev
+      - expressapp
     environment:
-      - REACT_APP_API_URL=http://expressapp-dev:5010
+      - REACT_APP_API_URL=http://expressapp:5000
     restart: always  
-
-  nginx-dev:
-    build:
-      context: ./nginx
-      dockerfile: Dockerfile.dev-nginx
+  nginx:
+    build: ./nginx
     ports:
       - 8080:80
     depends_on:
-      - expressapp-dev
-      - reactapp-dev
+      - expressapp
+      - reactapp
       - nginx-proxy
       - acme-companion
     environment:
       - VIRTUAL_HOST=internal-naturalistone.com,www.internal-naturalistone.com
       - LETSENCRYPT_HOST=internal-naturalistone.com,www.internal-naturalistone.com
     restart: always
-
   nginx-proxy:
     image: jwilder/nginx-proxy
     restart: always
@@ -154,3 +68,5 @@ volumes:
   html:
   vhostd:
   acme:
+
+
