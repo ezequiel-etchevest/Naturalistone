@@ -80,7 +80,9 @@ version: "3.9"
 services: 
   expressapp-dev:
     container_name: expressapp-dev
-    build: ./api
+    build:
+      context: ./api
+      dockerfile: Dockerfile-dev-api
     expose: 
       - 5010
     volumes:
@@ -91,7 +93,9 @@ services:
     restart: always  
   reactapp-dev:
     container_name: reactapp-dev
-    build: ./client
+    build:
+      context: ./client
+      dockerfile: Dockerfile-dev-client
     expose: 
       - 3000
     volumes:
@@ -104,7 +108,9 @@ services:
     restart: always  
 
   nginx-dev:
-    build: ./nginx
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile-dev-nginx
     ports:
       - 8080:80
     depends_on:
