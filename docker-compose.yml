@@ -107,7 +107,7 @@ services:
     ports:
       - 8080:80
     depends_on:
-      - expressapp
+      - expressapp-dev
       - reactapp
       - nginx-proxy
       - acme-companion
