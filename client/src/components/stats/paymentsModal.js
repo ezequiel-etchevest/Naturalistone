@@ -78,7 +78,7 @@ const handleClick = (e) => {
               mt={'3vh'}
               h={'7vh'}> 
                 {/* Invoices filtered by {filters.SellerID} - {filters.Month} - {filters.Year} */}
-                Payments by filters
+                Intramonth quotes payments
               </ModalHeader>
               <ModalCloseButton
                 color={'web.text2'}
