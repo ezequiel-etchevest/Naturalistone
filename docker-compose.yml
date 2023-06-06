@@ -102,19 +102,21 @@ services:
     environment:
       - REACT_APP_API_URL=http://expressapp-dev:5010
     restart: always  
-  nginx:
+
+  nginx-dev:
     build: ./nginx
     ports:
       - 8080:80
     depends_on:
       - expressapp-dev
-      - reactapp
+      - reactapp-dev
       - nginx-proxy
       - acme-companion
     environment:
       - VIRTUAL_HOST=internal-naturalistone.com,www.internal-naturalistone.com
       - LETSENCRYPT_HOST=internal-naturalistone.com,www.internal-naturalistone.com
     restart: always
+
   nginx-proxy:
     image: jwilder/nginx-proxy
     restart: always
