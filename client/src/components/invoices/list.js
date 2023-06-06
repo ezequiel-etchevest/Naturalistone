@@ -40,6 +40,7 @@ const ModelTr = ({e, validateSeller}) => {
           bg: 'web.navBar',
           color: 'logo.orange'
         }}
+        textColor={e.Status === 'Pending_Approval' ? 'logo.orange' : 'unset'}
         >
         <Td fontSize={'xs'} textAlign={'center'}>{e.Naturali_Invoice}</Td>
         {

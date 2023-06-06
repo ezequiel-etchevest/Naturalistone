@@ -8,7 +8,7 @@ import {
 import { BsTruck } from 'react-icons/bs';
 import CreateDeliveryModal from "./CreateDeliveryModal";
 
-const CreateDeliveryButton = ({invoice, user, invoice_products, payments, windowWidth}) => {
+const CreateDeliveryButton = ({invoice, user, invoice_products, payments}) => {
 
   const { isOpen, onOpen, onClose } = useDisclosure()
 
@@ -27,8 +27,8 @@ const CreateDeliveryButton = ({invoice, user, invoice_products, payments, window
     return(
         <>
           <ButtonGroup
+            textColor={'web.text2'}
             h={'5vh'}
-            size={'sm'}
             onClick={() => {
               if (!handleDisable()) {
                 onOpen()
@@ -42,13 +42,11 @@ const CreateDeliveryButton = ({invoice, user, invoice_products, payments, window
             >
             <IconButton
               disabled={handleDisable()}
-              fontSize={'1.5vw'}
+              fontSize={'xl'}
               variant={'unstyled'}           
               fontWeight={'normal'}
               icon={<BsTruck/>}
               />
-            {
-              windowWidth > 1100 ? 
               <Button
               disabled={handleDisable()}
               variant={'unstyled'}           
@@ -56,8 +54,6 @@ const CreateDeliveryButton = ({invoice, user, invoice_products, payments, window
               fontSize={'1vw'}
               >New Delivery Note
               </Button>
-              : null
-            }
           <CreateDeliveryModal invoice={invoice} user={user} isOpen={isOpen} onClose={onClose} invoice_products={invoice_products}/> 
           </ButtonGroup>
         </>
