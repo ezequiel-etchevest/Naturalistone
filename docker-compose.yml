@@ -34,7 +34,7 @@ services:
       context: ./nginx
       dockerfile: Dockerfile-dev-nginx
     ports:
-      - 80:80
+      - 8080:80
     depends_on:
       - expressapp-dev
       - reactapp-dev
