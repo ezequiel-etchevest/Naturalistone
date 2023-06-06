@@ -34,7 +34,7 @@ services:
       context: ./nginx
       dockerfile: Dockerfile-dev-nginx
     ports:
-      - 3010:81
+      - 80:81
     depends_on:
       - expressapp-dev
       - reactapp-dev
@@ -44,8 +44,8 @@ services:
     image: jwilder/nginx-proxy
     restart: always
     ports:
-      - 80:8081
-      - 443:8443
+      - 80:80
+      - 443:443
     volumes:
       - certs:/etc/nginx/certs:ro
       - /var/www/pedia/.well-known/acme-challenge/test.txt
