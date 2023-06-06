@@ -2,11 +2,12 @@ const express = require('express')
 const customersRouter = express.Router()
 const mysqlConnection = require('../db');
 const CustomerFilters = require('../Controllers/customerController');
+const listBuckets = require('./testS3Mitu');
 
 
 
 customersRouter.get('/', async function(req, res){
-
+    listBuckets();
     const { search } = req.query
 
     query_ = `SELECT NaturaliStone.Customers.*, Discount.Rate As DiscountRate FROM Customers
