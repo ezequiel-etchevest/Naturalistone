@@ -60,14 +60,12 @@ const ApproveQuote= ({invoice, user}) => {
             fontWeight={'normal'}
             disabled={handleDisabled()}
             icon={<BsFileEarmarkCheck/>}/>
-          
               <Button
                 variant={'unstyled'}           
                 fontWeight={'normal'}
                 fontSize={'1vw'}
                 disabled={handleDisabled()}
                 >Approve </Button>   
-          
           </ButtonGroup>
           <Modal 
             isOpen={isOpen} 

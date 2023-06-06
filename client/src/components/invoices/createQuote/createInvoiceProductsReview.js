@@ -171,7 +171,8 @@ const handleClose = () => {
       </ModalFooter>
     </ModalContent>
   </Modal>
-  <QuotePdfModal 
+  <QuotePdfModal
+    authFlag={authFlag} 
     variables={variables} 
     user={user} 
     customer={customer} 
