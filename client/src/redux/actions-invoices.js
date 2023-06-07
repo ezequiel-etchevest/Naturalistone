@@ -179,6 +179,7 @@ export function createQuote(sellerId, quoteDetails){
 
 
   return async function(dispatch){
+    console.log(quoteDetails)
       try{
           let { data } = await axios.post(`/sales/create-quote/${sellerId}`, quoteDetails)
         //   let { data } = await axios.get(`/create-quote/${sellerId}`, quoteDetails)

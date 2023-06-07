@@ -9,7 +9,7 @@ import axios from 'axios';
 const CreatedQuotePdf = ({variables, user, customer, project, authFlag}) => {
 
 
-  console.log({variables, user, customer, project, authFlag})
+  // console.log({variables, user, customer, project, authFlag})
     const posted_quote = useSelector(state => state.posted_quote)
  
     let invoiceID = posted_quote.Naturali_Invoice
@@ -17,6 +17,9 @@ const CreatedQuotePdf = ({variables, user, customer, project, authFlag}) => {
     const [pdfInfo, setPdfInfo] = useState([]);
     const viewer = useRef(null);
     const mappedProducts =  posted_quote.parsedProducts
+
+  console.log(posted_quote)
+
 
     useEffect(() => {
         CreateForm();
@@ -91,18 +94,18 @@ const CreatedQuotePdf = ({variables, user, customer, project, authFlag}) => {
   page.drawText(`${deliveryMethod}`, { x: 439, y: 508, size: 10 }) 
   page.drawText(`${paymentTerms}`, { x: 524, y: 508, size: 10 }) 
 
-  if(authFlag === true ) {
-    const pngDims = pngImage.scale(0.12)
-    const pngImage = await pdfDoc.embedPng(pngImageBytes)
-    const pngImageBytes = await fetch(approvalPic).then((res) => res.arrayBuffer())
-    page.drawImage(pngImage, {
-      x: page.getWidth() / 2 - pngDims.width / 3 + 50,
-      y: page.getHeight() / 7 - pngDims.height + 250,
-      width: pngDims.width,
-      height: pngDims.height,
-      rotate: degrees(55)
-    })
-  }
+  // if(authFlag === true ) {
+  //   const pngDims = pngImage.scale(0.12)
+  //   const pngImage = await pdfDoc.embedPng(pngImageBytes)
+  //   const pngImageBytes = await fetch(approvalPic).then((res) => res.arrayBuffer())
+  //   page.drawImage(pngImage, {
+  //     x: page.getWidth() / 2 - pngDims.width / 3 + 50,
+  //     y: page.getHeight() / 7 - pngDims.height + 250,
+  //     width: pngDims.width,
+  //     height: pngDims.height,
+  //     rotate: degrees(55)
+  //   })
+  // }
 
 // //This line uses the forEach method to iterate over each key-value pair in the array created by Object.
 // //entries. For each iteration, the key (variableName) and value (element) are destructured from the pair and
@@ -134,12 +137,12 @@ mappedProducts.forEach((product, index) => {
   
   setPdfInfo(URL.createObjectURL(blob));
 
-  savePdfOnServer(pdfBytes, invoiceID);
+  // savePdfOnServer(pdfBytes, invoiceID);
 
   };
   
   async function savePdfOnServer(pdfBytes, invoiceID) {
-    console.log(invoiceID)
+
     try {
       // Configurar el encabezado Content-Type para FormData
       axios.interceptors.request.use(function (config) {

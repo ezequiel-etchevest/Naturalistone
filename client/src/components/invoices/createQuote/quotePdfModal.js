@@ -13,7 +13,6 @@ import { useDispatch } from 'react-redux'
     
   const dispatch = useDispatch()
 
-  
   const handleCloseAllModal = () => {
     onClose6()
     onClose5()
