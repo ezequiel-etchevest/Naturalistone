@@ -26,7 +26,6 @@ export function CreateCustomerModal() {
   const [errors, setErrors] = useState({})
   const [ progress, setProgress ] = useState(25)
   const toast = useToast()
-  const [isToastShowing, setIsToastShowing] = useState(false);
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [changeInput, setChangeInput] = useState(true)
   const [formData, setFormData] = useState({

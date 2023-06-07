@@ -1,5 +1,8 @@
 import { USStates } from "../components/customers/AutocompleteState";
 
+
+
+// VALIDACIONES CUSTOMER FORM 
 export const validateCompletedInputs = (formData) =>{
   let errors = {}
   const regexNoNumber = /^[a-zA-Z\s!"#$%&'()*+,\-./:;<=>?@\[\\\]^_`{|}~]*$/;
@@ -59,7 +62,6 @@ export const validateCompletedInputs = (formData) =>{
 
   return errors
 }
-                      
                       
 export const validateEmptyInputs = (formData, progress) => {
   let errors = {}
@@ -127,16 +129,49 @@ export const validateEmptyInputs = (formData, progress) => {
    return errors 
   
 }
-export const validateProject = (formData) =>{
+
+// VALIDACIONES PROJECT FORM 
+
+export const validateCompletedInputsProject = (formData) =>{
+
   let errors = {}
   const regexNoNumber = /^[a-zA-Z\s!"#$%&'()*+,\-./:;<=>?@\[\\\]^_`{|}~]*$/;
   const regexNumberAndPlus = /^[\d+()\[\]-\s]*$/;
   const regexNumber = /^[0-9]+$/;
   const regexEmail = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
 
+  if(formData.State != ''){
+    const string = formData.State
+    if(typeof string === 'string'){
+      const match = USStates.find((item) => item.toLowerCase() === string.toLowerCase() || item.toLowerCase().includes(string.toLowerCase()));
+      console.log(match)
+      if(!match) {
+        errors.State = 'Please enter a valid state'
+      }else{
+        errors.State = ''
+      }
+
+    }
+  }
+  if(formData.City != ''){
+    if(!regexNoNumber.test(formData.City)){
+      errors.City = 'Please enter a valid City'
+    }
+  }
+  if(formData.ZipCode != ''){
+    if(!regexNumber.test(formData.ZipCode)) {
+      errors.ZipCode = 'Please enter a valid zip code'
+    }
+  }
+  return errors
+
+}
+
+export const validateEmptyInputsProjects = (formData) =>{
+  let errors = {}
   if(!formData.State) {
-    errors.State = 'Please enter a state'
-  } else if(!USStates.includes(formData.State)) {
+    errors.State = 'Please enter a valid state'
+  }else if(!USStates.includes(formData.State)){
     errors.State = 'Please enter a valid state'
   }
   if(!formData.ProjectName){
@@ -144,16 +179,12 @@ export const validateProject = (formData) =>{
   }
   if(!formData.City){
     errors.City = 'Please enter a City'
-  } else if(!regexNoNumber.test(formData.City)){
-    errors.City = 'Please enter a valid City'
-  }
+  } 
   if(!formData.Shipping_Address){
     errors.Shipping_Address = 'Please enter a Shipping_Address'
   }
   if(!formData.ZipCode){
     errors.ZipCode = 'Please enter your zip code'
-  } else if(!regexNumber.test(formData.ZipCode)) {
-    errors.ZipCode = 'Please enter a valid zip code'
-  }
+  } 
    return errors
-  }
+}
