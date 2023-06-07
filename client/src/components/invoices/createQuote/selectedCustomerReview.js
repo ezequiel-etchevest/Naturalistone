@@ -73,6 +73,7 @@ const handleInputChange = (e) => {
 
 const handlePrevious = () => {
   setCustomer('')
+  setInputValue('')
   onClose2()
   dispatch(cleanCustomerDetail())
 }
