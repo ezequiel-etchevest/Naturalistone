@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-import { FormControl, FormLabel, Input, Text, VStack } from '@chakra-ui/react';
+import { useState } from 'react';
+import { FormControl, Input, Text, VStack } from '@chakra-ui/react';
 
 export const USStates = [
   "Alabama", "Alaska", "Arizona", "Arkansas", "California",
@@ -39,6 +39,7 @@ export default function AutocompleteState({formData, setFormData, errors, valida
     );
     setFilteredStates(filtered);
   };
+    
 
   return (
     <VStack>
@@ -62,7 +63,7 @@ export default function AutocompleteState({formData, setFormData, errors, valida
               {errors.State}
             </Text>
               )}
-        <datalist id="stateOptions">
+        <datalist id="stateOptions" onClick={handleInputChange}>
           {filteredStates.map((state) => (
             <option key={state} value={state} />
             ))}
