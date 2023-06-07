@@ -6,11 +6,15 @@ import axios from 'axios';
 
 const SendEmailModal = ({handleChangeEmail, customer, pdf}) => {
 
+  const user = useSelector((state) => state.user)
   const [isToastShowing, setIsToastShowing] = useState(false)
+
   const dispatch = useDispatch()
   const [ input, setInput ] = useState({
     subject: '',
     htmlBody: '',
+    emailClient: customer.Email,
+    ccEmail: '',
   })
   const toast = useToast()
 
@@ -26,15 +30,14 @@ const SendEmailModal = ({handleChangeEmail, customer, pdf}) => {
     const resolvePdf = await pdf
     if(!isToastShowing){
       const email = {
+        ccEmail: input.ccEmail,
+        sellerEmail: user[0].Username,
         htmlBody: input.htmlBody,
         subject: input.subject,
-        clientEmail: 'eduardoasm19@gmail.com',
-        pdf: resolvePdf
-        // nameValue: customer.name
-        // sellerEmail: customer.Email
+        clientEmail: input.emailClient,
+        pdf: resolvePdf,
       }
-      console.log('soy email', email)
-      dispatch(sendEmail(email, pdf))
+      dispatch(sendEmail(email))
       setIsToastShowing(true)
       toast({
         title: 'E-mail sent.',
@@ -48,13 +51,9 @@ const SendEmailModal = ({handleChangeEmail, customer, pdf}) => {
       subject: '',
       htmlBody: '',
     })
+
   }
   }
-
-  const user = useSelector((state) => state.user)
-
-  console.log(user)
-  console.log('soy customer', customer)
 
   return (
   <>
@@ -73,7 +72,7 @@ const SendEmailModal = ({handleChangeEmail, customer, pdf}) => {
             <Box mt={'15px'} mr={'30px'}>
               <Flex>
                 <Heading as='h1' size='sm' color={'web.text2'} mr={'20px'} > From</Heading>
-                <Input w={'25vw'} color={'web.text'} size='xs' value={user[0].Username}/>
+                <Input w={'25vw'} color={'web.text'} size='xs' readOnly={true} value={user[0].Username}/>
               </Flex>
             </Box>
           </Center>
@@ -81,23 +80,39 @@ const SendEmailModal = ({handleChangeEmail, customer, pdf}) => {
             <Box mt={'15px'} mr={'10px'}>
               <Flex>
                 <Heading as='h1' size='sm' color={'web.text2'} mr={'20px'} > To </Heading>
-                <Input w={'25vw'} size='xs' color={'web.text'} value={customer}/>
+                <Input
+                  w={'25vw'}
+                  type="text"
+                  color={'web.text'}
+                  size='xs'
+                  name={'emailClient'}
+                  defaultValue={input.emailClient}
+                />
               </Flex>
             </Box>
           </Center>
           <Center>
-            <Box mt={'15px'} mr={'35px'}>
+            <Box mt={'15px'} mr={'10px'}>
+              <Flex>
+                <Heading as='h1' size='sm' color={'web.text2'} mr={'20px'} > CC </Heading>
+                <Input w={'25vw'} size='xs' color={'web.text'} onChange={handleChange} name={'ccEmail'}/>
+              </Flex>
+            </Box>
+          </Center>
+          <Center>
+            <Box mt={'15px'} mr={'45px'}>
               <Flex>
                 <Heading
                 as='h1'
                 size='sm'
                 color={'web.text2'}
-                mr={'20px'}
+                mr={'18px'}
                 > Subject </Heading>
                 <Input
                 color={'web.text'}
                 w={'25vw'}
                 size='xs'
+                type='text'
                 name='subject'
                 onChange={handleChange}
                 value={input.subject}
@@ -108,16 +123,11 @@ const SendEmailModal = ({handleChangeEmail, customer, pdf}) => {
           <Center>
             <Box mt={'15px'} mr={'35px'}>
               <Flex>
-                <Heading 
-                as='h1'
-                size='sm'
-                color={'web.text2'}
-                mr={'20px'}
-                > Body </Heading>
                 <Textarea
                 color={'web.text'}
                 w={'40vw'}
                 h={'50vh'}
+                type='text'
                 size='xs'
                 name='htmlBody'
                 onChange={handleChange}

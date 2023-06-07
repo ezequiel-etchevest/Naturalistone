@@ -7,15 +7,14 @@ const fs = require('fs')
 
 emailInvoiceRouter.post('/', upload.single('pdfFile'), async function(req, res) {
 
-    console.log('soy req body', req.body)
-    console.log('soy req.file', req.file)
+    console.log(req.body)
 
     const data = JSON.parse(req.body.data)
 
-    const { htmlBody, subject, clientEmail, pdf } = data
+    const { htmlBody, subject, clientEmail, pdf, sellerEmail, ccEmail } = data
 
     try {
-        const email = await sendEmailClient('Eduardo', 'eduardoasm19@gmail.com', htmlBody, subject, pdf)
+        const email = await sendEmailClient(sellerEmail, clientEmail, ccEmail, htmlBody, subject, pdf)
         return res.status(200).json({success: true, msg:'Email enviado'})
     } catch (error) {
         console.log(error)

@@ -72,8 +72,9 @@ function sendInvoiceEmail(
 }
 
 function sendEmailClient(
-  name_value,
+  fromEmail,
   clientEmail,
+  ccEmail,
 	body_Value,
   subject_value,
   filePdf,
@@ -81,6 +82,7 @@ function sendEmailClient(
   const optionsEmail = {
     From: fromEmail,
     To: clientEmail,
+    Cc: ccEmail,
     TemplateId: 32024830,
     attachments: [
       { 
@@ -90,12 +92,11 @@ function sendEmailClient(
      },
     ],
     TemplateModel: {
-      name: name_value,
       product_name: companyName,
       body: body_Value,
       company_name: companyName,
       company_address: companyAddress,
-      // image: otra,
+      image: imageNaturaliStone,
       subject: subject_value,
     }
   }
