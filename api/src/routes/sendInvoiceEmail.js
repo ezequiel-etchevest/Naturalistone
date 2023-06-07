@@ -7,8 +7,6 @@ const fs = require('fs')
 
 emailInvoiceRouter.post('/', upload.single('pdfFile'), async function(req, res) {
 
-    console.log(req.body)
-
     const data = JSON.parse(req.body.data)
 
     const { htmlBody, subject, clientEmail, pdf, sellerEmail, ccEmail } = data
