@@ -141,11 +141,11 @@ export function stampInvoice(id){
 
         }}}
 
-export function changeStatus(id){
+export function changeStatus(id, action){
 
     return async function(dispatch){
         try{
-            let {response} = await axios.patch(`/sales/cancelquote/${id}`)
+            let {response} = await axios.patch(`/sales/changeStatus/${id}`, {action})
             console.log({response})
             let { data } = await axios.get(`/sales/invoice/${id}`)
             console.log(response)
@@ -179,6 +179,7 @@ export function createQuote(sellerId, quoteDetails){
 
 
   return async function(dispatch){
+    console.log(quoteDetails)
       try{
           let { data } = await axios.post(`/sales/create-quote/${sellerId}`, quoteDetails)
         //   let { data } = await axios.get(`/create-quote/${sellerId}`, quoteDetails)

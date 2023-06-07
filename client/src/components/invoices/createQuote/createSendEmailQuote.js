@@ -24,7 +24,6 @@ const SendEmailModal = ({handleChangeEmail, customer, pdf}) => {
 
   const handleSendEmail = async () => {
     const resolvePdf = await pdf
-    console.log('soy resolvepdf', resolvePdf)
     if(!isToastShowing){
       const email = {
         htmlBody: input.htmlBody,

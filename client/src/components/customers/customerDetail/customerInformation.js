@@ -8,7 +8,7 @@ const CustomerInformation = ({customer}) => {
         userSelect={'none'}
         px={'1.5vw'}
         py={'2vh'}
-        w={'20vw'}
+        w={'18vw'}
         display={'flex'}
         flexDir={'column'}
         color={'web.text'}

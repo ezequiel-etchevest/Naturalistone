@@ -1,10 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
-import { PDFDocument, rgb } from 'pdf-lib';
-import { Box, Button, Center, Spinner } from '@chakra-ui/react';
+import { PDFDocument, rgb, degrees } from 'pdf-lib';
+import { Box, Center, Spinner, Button } from '@chakra-ui/react';
+import approvalPic from '../../../assets/pending_approval.png'
 import axios from 'axios';
 
-const CreatedQuotePdf = ({variables, user, customer, project, handleChangeEmail, updatePdf}) => {
+
+const CreatedQuotePdf = ({variables, user, customer, project, handleChangeEmail, updatePdf, authFlag}) => {
 
     const posted_quote = useSelector(state => state.posted_quote)
     let invoiceID = posted_quote.Naturali_Invoice
@@ -12,6 +14,9 @@ const CreatedQuotePdf = ({variables, user, customer, project, handleChangeEmail,
     const [pdfInfo, setPdfInfo] = useState([]);
     const viewer = useRef(null);
     const mappedProducts =  posted_quote.parsedProducts
+
+  console.log(posted_quote)
+
 
     useEffect(() => {
         CreateForm();
@@ -23,7 +28,7 @@ const CreatedQuotePdf = ({variables, user, customer, project, handleChangeEmail,
           if (Array.isArray(mappedProducts)) {
             resolve();
           } else {
-            setTimeout(checkMappedProducts, 100); // Esperar 100ms antes de volver a verificar
+            setTimeout(checkMappedProducts, 100); // Esperar 100ms antes de volver a verificar 
           }
         };
     
@@ -86,6 +91,18 @@ async function CreateForm() {
   page.drawText(`${deliveryMethod}`, { x: 439, y: 508, size: 10 }) 
   page.drawText(`${paymentTerms}`, { x: 524, y: 508, size: 10 }) 
 
+  // if(authFlag === true ) {
+  //   const pngDims = pngImage.scale(0.12)
+  //   const pngImage = await pdfDoc.embedPng(pngImageBytes)
+  //   const pngImageBytes = await fetch(approvalPic).then((res) => res.arrayBuffer())
+  //   page.drawImage(pngImage, {
+  //     x: page.getWidth() / 2 - pngDims.width / 3 + 50,
+  //     y: page.getHeight() / 7 - pngDims.height + 250,
+  //     width: pngDims.width,
+  //     height: pngDims.height,
+  //     rotate: degrees(55)
+  //   })
+  // }
 
 // //This line uses the forEach method to iterate over each key-value pair in the array created by Object.
 // //entries. For each iteration, the key (variableName) and value (element) are destructured from the pair and
@@ -112,13 +129,12 @@ mappedProducts.forEach((product, index) => {
   page.drawText(`${(subtotal * tax / 100).toFixed(2)}`, { x: 528, y: 247, size: 10 });
   page.drawText(`$ ${(subtotal + (subtotal * tax / 100)).toFixed(2)}`, { x: 510, y: 222, size: 12 });
 
-
   const pdfBytes = await pdfDoc.save();
   const blob = new Blob([pdfBytes], { type: 'application/pdf' });
   
   setPdfInfo(URL.createObjectURL(blob));
   
-  savePdfOnServer(pdfBytes, invoiceID);
+  // savePdfOnServer(pdfBytes, invoiceID);
   
   function readBlobAsBase64(pdfBlob) {
     return new Promise((resolve, reject) => {
@@ -141,7 +157,7 @@ mappedProducts.forEach((product, index) => {
   };
   
   async function savePdfOnServer(pdfBytes, invoiceID) {
-    console.log(invoiceID)
+
     try {
       // Configurar el encabezado Content-Type para FormData
       axios.interceptors.request.use(function (config) {
@@ -182,7 +198,7 @@ mappedProducts.forEach((product, index) => {
           {<iframe width={'100%'} height={'100%'} title="quote-blank" src={pdfInfo} ref={viewer} type="application/pdf" />}
         </Box>
         :
-        <Center ml={'16vw'} w={'84vw'} bg={'web.bg'} h={'92vh'}>
+        <Center w={'84vw'} bg={'web.bg'} h={'92vh'}>
           <Spinner thickness={'4px'} size={'xl'} color={'logo.orange'}/>
         </Center>
       :

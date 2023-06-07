@@ -21,8 +21,14 @@ import {
 const ModelTr = ({e, setProducts, products}) => {
   let id = e.ProdID
 
+const handleAuthFlag = (event) =>{
+  if(event !== 0){
+    if((Number(e.InStock_Available) + Number(e.Incoming_Available)) < event) return true
+    if((Number(e.InStock_Available) + Number(e.Incoming_Available)) > event) return false
+  }else return null 
+}
+
 const handleInput = (event) => {
-  
   // Actualizas solo la propiedad que cambió en el objeto de formData
   if(event != 0){
       setProducts((prevFormData) => ({
@@ -36,10 +42,10 @@ const handleInput = (event) => {
           size:e.Size,
           thickness:e.Thickness,
           finish:e.Finish,
-          price: e.Price
+          price: e.Price,
+          authFlag: handleAuthFlag(event)
         },
       }));
-    
   }else {
     setProducts((prevFormData) => {
       const { [id]: value, ...updatedFormData } = prevFormData;   //Se elimina la clave [id] y su valor del objeto products, actualizando así el 
@@ -47,6 +53,7 @@ const handleInput = (event) => {
     })
   }
 }
+
 
   return(
     <Tr       
@@ -115,7 +122,6 @@ const CreateInvoiceProductsList = ({ allProducts, setProducts, products }) => {
   };
   
   useEffect(() => {
-    
     const container = document.getElementById('createQuoteProductList'); // Reemplaza 'scroll-container' con el ID de tu contenedor de desplazamiento
     container.addEventListener('scroll', handleScroll);
 
@@ -172,7 +178,7 @@ const CreateInvoiceProductsList = ({ allProducts, setProducts, products }) => {
               {
                 allProducts.slice(0, loadedCount).map((e, i) => {
                   return(
-                    <ModelTr key={i} e={e} setProducts={setProducts} products={products}/>
+                    <ModelTr key={i} e={e} setProducts={setProducts} products={products} />
                   )
                 })
               }

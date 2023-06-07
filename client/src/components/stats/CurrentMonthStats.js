@@ -54,7 +54,6 @@ function StatsCard(props) {
         </Box>
       </Flex>
     </Stat>
-
     <StatsModal isOpenModal={isOpen1} onCloseModal={onClose1}/>
   </>
   );

@@ -12,10 +12,9 @@ const InvoiceDetailList = ({invoice, payments}) => {
           mr={'1vw'}
           pl={'2vw'}
           pt={'1.5vw'}
-          pr={'1.5vw'}
           pb={'1.5vw'}
           h={'44vh'}
-          w={'26vw'}
+          w={'23vw'}
           display={'flex'}
           flexDir={'column'}
           color={'web.text'}
@@ -51,27 +50,28 @@ const InvoiceDetailList = ({invoice, payments}) => {
               display={'flex'}
               flexDir={'column'}
               justifyContent={'space-around'}
-              w={'10vw'}>
-              <Box>
+              w={'10vw'}
+              >
+              <Box >
               <Text 
-                fontSize={'1.6vh'} 
+                fontSize={'xs'} 
                 color={'web.text2'}>
                   Customer name
               </Text>
               <Text 
-                fontSize={'2.05vh'} 
+                fontSize={'lg'} 
                 fontWeight={'bold'}>
                   {invoice[0].Reference}
               </Text>
               </Box>
               <Box>
                 <Text 
-                  fontSize={'1.6vh'} 
+                  fontSize={'xs'}  
                   color={'web.text2'}>
                   Shipping Method
                 </Text>
                 <Text 
-                  fontSize={'2.05vh'} 
+                  fontSize={'lg'} 
                   fontWeight={'bold'}>
                     {invoice[0].ShippingMethod}
                 </Text>
@@ -79,11 +79,11 @@ const InvoiceDetailList = ({invoice, payments}) => {
               <Box>
               <Text 
                 color={'web.text2'} 
-                fontSize={'1.6vh'}>
+                fontSize={'xs'} >
                   Amount
                 </Text>
                 <Text 
-                fontSize={'2.05vh'}
+                fontSize={'lg'} 
                 fontWeight={'bold'}>
                   $ {invoice[0].Value.toLocaleString('en-US')}
                   </Text>
@@ -91,11 +91,11 @@ const InvoiceDetailList = ({invoice, payments}) => {
               <Box>
                 <Text 
                   color={'web.text2'} 
-                  fontSize={'1.6vh'}>
+                  fontSize={'xs'} >
                   Payment percentage
                 </Text>
                 <Text 
-                  fontSize={'2.05vh'} 
+                  fontSize={'lg'} 
                   fontWeight={'bold'}>
                   { payments.paymentsMath ? (
                     Math.round(payments.paymentsMath.PaymentPercentage)                  
@@ -110,27 +110,29 @@ const InvoiceDetailList = ({invoice, payments}) => {
               display={'flex'}
               flexDir={'column'}
               justifyContent={'space-around'}
-              w={'10vw'}>
+              w={'10vw'}
+             >
               <Box>
                 <Text 
-                  fontSize={'1.6vh'} 
+                  fontSize={'xs'}  
                   color={'web.text2'}>
                   Project name
                 </Text>
                 <Text 
-                  fontSize={'2.05vh'} 
+                  fontSize={'lg'}  
                   fontWeight={'bold'}>
                   {invoice[0].ProjectName}
                 </Text>
               </Box>
               <Box>
               <Text 
-                  fontSize={'1.6vh'} 
+                  fontSize={'xs'}  
                   color={'web.text2'}>
                   Status
                 </Text>
                 <Text 
-                  fontSize={'2.05vh'} 
+                  fontSize={'lg'}
+                  textColor={invoice[0].Status === 'Pending_Approval' ? 'logo.orange' : 'unset'} 
                   fontWeight={'bold'}>
                   {invoice[0].Status}
                 </Text>
@@ -138,11 +140,11 @@ const InvoiceDetailList = ({invoice, payments}) => {
               <Box>
               <Text 
                 color={'web.text2'} 
-                fontSize={'1.6vh'}>
+                fontSize={'xs'} >
                   Date
               </Text>
               <Text 
-              fontSize={'2.05vh'}
+              fontSize={'lg'} 
               fontWeight={'bold'}>
                 {invoice[0].InvoiceDate.split('T')[0]}
                 </Text>
@@ -150,11 +152,11 @@ const InvoiceDetailList = ({invoice, payments}) => {
               <Box>
                 <Text 
                   color={'web.text2'} 
-                  fontSize={'1.6vh'}>
+                  fontSize={'xs'} >
                     Pending amount
                 </Text>
                 <Text 
-                  fontSize={'2.05vh'} 
+                  fontSize={'lg'} 
                   fontWeight={'bold'}>
                   $ {payments.paymentsMath  ? (
                    Number(payments?.paymentsMath?.PendingAmount).toLocaleString('en-US')
@@ -163,8 +165,7 @@ const InvoiceDetailList = ({invoice, payments}) => {
                     )
                  }</Text>
               </Box>
-            </Box>
-            
+            </Box>     
           </Box>
         </Box> 
         </>

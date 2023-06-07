@@ -43,6 +43,7 @@ import {
   }
   
   const SelectProjectModalList = ({variables, setVariables, setProject, project, customer, projects, onClose4, isOpen4, onOpen4, onClose3, onClose2, onClose1, setInputValue, setCustomer}) => {
+
     
     const [focus, setFocus] = useState('')
 

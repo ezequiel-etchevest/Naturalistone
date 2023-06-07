@@ -37,6 +37,7 @@ const StatsModal = ({isOpenModal, onCloseModal}) => {
     dispatch(getInvoiceById(e.Naturali_Invoice))
     dispatch(getInvoiceProducts(e.Naturali_Invoice))
     dispatch(cleanStatePayments())
+    console.log(e)
     navigate(`/quotes/${e.Naturali_Invoice}`)
   }
 
@@ -61,7 +62,7 @@ const StatsModal = ({isOpenModal, onCloseModal}) => {
                 mt={'3vh'}
                 h={'7vh'}
                 > 
-                  Invoices from the stats 
+                  Total payments 
               </ModalHeader>
               <ModalCloseButton
                 color={'web.text2'}
@@ -103,6 +104,7 @@ const StatsModal = ({isOpenModal, onCloseModal}) => {
                           <Tr h={'6vh'}>
                             <Th color={'web.text2'} textAlign={'center'} fontSize={'x-small'}>Nº Quote</Th>
                             <Th color={'web.text2'} textAlign={'center'} fontSize={'x-small'}>Value quote</Th>
+                            {/* <Th color={'web.text2'} textAlign={'center'} fontSize={'x-small'}>Paid %</Th> */}
                             <Th color={'web.text2'} textAlign={'center'} fontSize={'x-small'}>Date</Th>
                           </Tr>
                       </Thead>
@@ -125,6 +127,7 @@ const StatsModal = ({isOpenModal, onCloseModal}) => {
                                 >
                                 <Td textAlign={'center'}>{e.Naturali_Invoice}</Td>
                                 <Td textAlign={'center'}>$ {e.Value.toLocaleString('en-US')}</Td>
+                                <Td textAlign={'center'}>{e.Status}</Td>
                                 <Td textAlign={'center'}>{e.InvoiceDate.slice(0, 10)}</Td>
                               </Tr>
                             ))

@@ -37,11 +37,14 @@ const ModelTr = ({p, totalAmount}) => {
 }
 
 const PaymentList = ({payments, totalAmount, invoice}) => {
-
+  console.log(invoice)
   const pendingAmount = payments.paymentsMath.PendingAmount
   const handlePendig = () => {
-    if((totalAmount - pendingAmount)=== totalAmount) return false
-    else return true
+    if(invoice[0].Status === 'Pending_Approval') return false
+    else{
+      if((totalAmount - pendingAmount) === totalAmount) return false
+      else return true
+    }
   }
   return(
 
@@ -91,15 +94,15 @@ const PaymentList = ({payments, totalAmount, invoice}) => {
                 borderRadius: '5px',
               },
             }}>
-          <TableContainer  w={'48vw'} >
-            <Table color={'web.text'} variant={'simple'} size={'sm'} >
+          <TableContainer  w={'35vw'} >
+            <Table mt={'2vh'} color={'web.text'} variant={'simple'} size={'sm'} >
               <Thead h={'5vh'}>
                 <Tr>
-                  <Th color={'web.text2'} fontSize={'1.6vh'}>Payment Date</Th>
-                  <Th color={'web.text2'} fontSize={'1.6vh'}>Amount</Th>
-                  <Th color={'web.text2'} fontSize={'1.6vh'}>Method</Th>
-                  <Th color={'web.text2'} fontSize={'1.6vh'}>Percentage</Th>
-                  <Th w={'2vh'} color={'web.text2'} fontSize={'1.6vh'}></Th>
+                  <Th color={'web.text2'} textAlign={'center'} fontSize={'1.3vh'}>Payment Date</Th>
+                  <Th color={'web.text2'} textAlign={'center'} fontSize={'1.3vh'}>Amount</Th>
+                  <Th color={'web.text2'} textAlign={'center'} fontSize={'1.3vh'}>Method</Th>
+                  <Th color={'web.text2'} textAlign={'center'} fontSize={'1.3vh'}>Percentage</Th>
+                  <Th w={'2vh'} color={'web.text2'} textAlign={'center'} fontSize={'1.3vh'}></Th>
                 </Tr>
               </Thead>
               <Tbody >

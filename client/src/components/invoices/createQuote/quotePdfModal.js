@@ -13,7 +13,7 @@ import { useDispatch } from 'react-redux'
 import { useEffect, useState } from 'react'
 import SendEmailModal from './createSendEmailQuote'
   
-  export default function QuotePdfModal({variables, isOpen6, onClose6, customer, project, products, user, onClose5, onClose4, onClose3, onClose2, onClose1}) {
+  export default function QuotePdfModal({variables, isOpen6, onClose6, customer, project, products, user, onClose5, onClose4, onClose3, onClose2, onClose1, authFlag}) {
     
   const dispatch = useDispatch()
   const [sendEmail, setSendEmail] = useState(false)
@@ -67,7 +67,8 @@ import SendEmailModal from './createSendEmailQuote'
                   user={user}
                   handleChangeEmail={handleChangeEmail}
                   updatePdf={updatePdf}
-                />
+                  authFlag={authFlag}
+                 />
                 :
                 <SendEmailModal 
                   handleChangeEmail={handleChangeEmail}

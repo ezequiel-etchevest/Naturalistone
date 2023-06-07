@@ -4,14 +4,14 @@ import CreateProjectForm from "./createProjectForm";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { createProject } from '../../../redux/actions-projects';
-import { validateProject } from "../../../utils/validateForm";
+import { validateCompletedInputsProject, validateEmptyInputsProjects } from "../../../utils/validateForm";
 import { useToast } from "@chakra-ui/react";
 
 
 export function CreateNewProject({customer}) {
 
   const toast = useToast()
-  const [isToastShowing, setIsToastShowing] = useState(false)
+  const toastId = 'error-toast'
   const [errors, setErrors] = useState({})
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [changeInput, setChangeInput] = useState(false)
@@ -26,35 +26,29 @@ export function CreateNewProject({customer}) {
 
   const dispatch = useDispatch();
 
-  const handleSubmit = (event) => {
-    if(!isToastShowing){
-    if(!changeInput){
-      setIsToastShowing(true)
-      return toast({
-        title: 'Please complete de Info',
-        description: `Need Complete the info to create a customer`,
-        status: 'error',
-        duration: 4000,
-        isClosable: true,
-        onCloseComplete: () => setIsToastShowing(false),
-      });
-    }
-    event.preventDefault();
-      if(Object.keys(errors).length > 0){
-        setIsToastShowing(true)
-        return toast({
-          title: 'Please complete de Info',
-          description: `Need Complete the info to create a project`,
-          status: 'error',
-          duration: 4000,
+  const handleSubmit = () => {
+    setErrors({})
+    let newErrors = validateEmptyInputsProjects(formData)
+    let newErrorsComp = validateCompletedInputsProject(formData)
+    setErrors(newErrors)
+    
+    if(Object.entries(newErrors).length || Object.entries(newErrorsComp).length){
+      if(!toast.isActive(toastId)){
+        return toast(({
+          id: toastId,
+          title: "Error",
+          description: 'All fields must be completed correctly.',
+          status: "error",
+          duration: 5000,
           isClosable: true,
-          onCloseComplete: () => setIsToastShowing(false),
-        });
-      }
+          }))
+    }}else{
       dispatch(createProject(formData));
+      setErrors({})
       handleClose()
-  };
-}
+    } 
+  }
+
 
   const handleClose = () => {
     setFormData({
@@ -66,6 +60,7 @@ export function CreateNewProject({customer}) {
         Shipping_Address: ''
     })
     setChangeInput(false)
+    setErrors({})
     onClose()
   }
 
@@ -90,7 +85,6 @@ export function CreateNewProject({customer}) {
       <Modal size={'xl'} isOpen={isOpen} onClose={()=>handleClose()} motionPreset='slideInRight'>
         <ModalOverlay/>
         <ModalContent
-        minW={'50vw'}
         bg={'web.sideBar'}
         border={'1px solid'}
         borderColor={'web.border'}>
@@ -98,7 +92,7 @@ export function CreateNewProject({customer}) {
           <ModalCloseButton onClick={()=>handleClose()} />
             <ModalBody >
               <CreateProjectForm formData={formData} setFormData={setFormData} errors={errors}
-               setErrors={setErrors} validateProject={validateProject} setChangeInput={setChangeInput}/>
+               setErrors={setErrors} validateCompletedInputsProject={validateCompletedInputsProject} setChangeInput={setChangeInput}/>
             </ModalBody>
             <ModalFooter>
               <Button colorScheme='orange' mr={3} onClick={(e)=>handleSubmit(e)}>
