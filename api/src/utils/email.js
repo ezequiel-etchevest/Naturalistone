@@ -12,9 +12,8 @@ const companyAddress = '261 NW 71st St, Miami, FL 33150, United States';
 const fromEmail = "irina@naturalistone.com"
 const imgDrive = 'https://netorg8591642-my.sharepoint.com/:i:/g/personal/irina_naturalistone_com/EUJMsPLT2jBLokqZ-cz1SVMBijZhI9_At-atEYcxV48L7Q?e=46P25n'
 
-const pdfPath = path.join(__dirname, './POSTMARKpdf.pdf'); // Ajusta el nombre del archivo y la ruta según sea necesario
-const file = fs.readFileSync(pdfPath, { encoding: 'base64' });
-
+const imgPath = path.join(__dirname, '../pictures/NaturalistoneLogo.png'); // Ajusta el nombre del archivo y la ruta según sea necesario
+const file = fs.readFileSync(imgPath);
 
 
 function sendEmailUser() {
@@ -72,4 +71,36 @@ function sendInvoiceEmail(
   return client.sendEmailWithTemplate(optionsEmail);
 }
 
-module.exports = { sendInvoiceEmail }
+function sendEmailClient(
+  name_value,
+  clientEmail,
+	body_Value,
+  // filePdf,
+  subject_value,
+) {
+  const optionsEmail = {
+    From: fromEmail,
+    To: clientEmail,
+    TemplateId: 32024830,
+    // attachments: [
+    //   { 
+    //    Name: 'archivo.pdf',
+    //    Content: filePdf,
+    //    ContentType: 'application/pdf'
+    //  },
+    // ],
+    TemplateModel: {
+      name: name_value,
+      product_name: companyName,
+      body: body_Value,
+      company_name: companyName,
+      company_address: companyAddress,
+      // image: otra,
+      subject: subject_value,
+    }
+  }
+
+  return client.sendEmailWithTemplate(optionsEmail)
+}
+
+module.exports = { sendInvoiceEmail, sendEmailClient, sendEmailUser }

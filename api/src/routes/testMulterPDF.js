@@ -18,6 +18,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 testRouter.post('/', upload.single('pdfFile'), async function (req, res) {
+
   try {
     console.log(req.file); // Verificar el objeto file recibido
 

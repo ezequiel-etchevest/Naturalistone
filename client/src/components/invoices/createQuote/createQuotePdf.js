@@ -4,11 +4,9 @@ import { PDFDocument, rgb } from 'pdf-lib';
 import { Box, Button, Center, Spinner } from '@chakra-ui/react';
 import axios from 'axios';
 
-const CreatedQuotePdf = ({variables, user, customer, project, sendEmail, handleChangeEmail }) => {
-
+const CreatedQuotePdf = ({variables, user, customer, project, handleChangeEmail, updatePdf}) => {
 
     const posted_quote = useSelector(state => state.posted_quote)
- 
     let invoiceID = posted_quote.Naturali_Invoice
     const date = posted_quote.InsertDate
     const [pdfInfo, setPdfInfo] = useState([]);
@@ -33,7 +31,7 @@ const CreatedQuotePdf = ({variables, user, customer, project, sendEmail, handleC
       });
     }
 
- async function CreateForm() {
+async function CreateForm() {
 
   const url = `/Quote/quote-blank.pdf`
   const existingPdfBytes = await fetch(url).then((res) => res.arrayBuffer());
@@ -119,31 +117,27 @@ mappedProducts.forEach((product, index) => {
   const blob = new Blob([pdfBytes], { type: 'application/pdf' });
   
   setPdfInfo(URL.createObjectURL(blob));
-
+  
   savePdfOnServer(pdfBytes, invoiceID);
+  
+  // function readBlobAsBase64(pdfBlob) {
+  //   return new Promise((resolve, reject) => {
+  //     const reader = new FileReader();
+  
+  //     reader.onloadend = function() {
+  //       const base64String = reader.result.split(',')[1]; // Obtiene el contenido base64
+  //       resolve(base64String);
+  //     };
+  
+  //     reader.onerror = reject;
+  
+  //     reader.readAsDataURL(pdfBlob);
+  //   });
+  // }
 
-  function readBlobAsBase64(pdfBlob) {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-  
-      reader.onloadend = function() {
-        const base64String = reader.result.split(',')[1]; // Obtiene el contenido base64
-        resolve(base64String);
-      };
-  
-      reader.onerror = reject;
-  
-      reader.readAsDataURL(pdfBlob);
-    });
-  }
-  
-  const pdf = readBlobAsBase64(blob)  // archivo pdf en base64
-    .then((result) => {
-      console.log('soy pdf:', result)
-    }).catch((err) => {
-      console.log('soy err', err)
-    })
+  updatePdf(blob)
 
+  
   };
   
   async function savePdfOnServer(pdfBytes, invoiceID) {

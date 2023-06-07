@@ -10,20 +10,22 @@ import {
 import CreatedQuotePdf from './createQuotePdf'
 import { cleanCreatedQuote } from '../../../redux/actions-invoices'
 import { useDispatch } from 'react-redux'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import SendEmailModal from './createSendEmailQuote'
   
   export default function QuotePdfModal({variables, isOpen6, onClose6, customer, project, products, user, onClose5, onClose4, onClose3, onClose2, onClose1}) {
     
   const dispatch = useDispatch()
   const [sendEmail, setSendEmail] = useState(false)
+  const [pdf, setPdf] = useState(null)
+
+  const updatePdf = (pdfBase64) => {
+    setPdf(pdfBase64)
+  }
 
   const handleChangeEmail = () => {
     setSendEmail(!sendEmail)
   }
-
-  console.log('soy customer en quotpdf', customer)
-  console.log('soy user', user)
   
   const handleCloseAllModal = () => {
     onClose6()
@@ -32,7 +34,7 @@ import SendEmailModal from './createSendEmailQuote'
     onClose3()
     onClose2()
     onClose1()
-    dispatch(cleanCreatedQuote())
+    // dispatch(cleanCreatedQuote())
   }
 
     return (
@@ -64,11 +66,13 @@ import SendEmailModal from './createSendEmailQuote'
                   products={products}
                   user={user}
                   handleChangeEmail={handleChangeEmail}
+                  updatePdf={updatePdf}
                 />
                 :
                 <SendEmailModal 
                   handleChangeEmail={handleChangeEmail}
                   customer={customer}
+                  pdf={pdf}
                 />
               }
             </ModalBody>
