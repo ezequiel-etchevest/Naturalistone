@@ -38,17 +38,18 @@ const SelectProjectModal = ({customer, setCustomer, onOpen2, isOpen3, onClose3, 
 
   const date = new Date().toLocaleDateString();
   const day = `${date.split('/')[0]}`;
+  const day0 = day.length === 1 ? `0${day}` : day
   const month = `${(date.split('/')[1])}`;
   const month0 = month.length === 1 ? `0${month}` : month
   const year = `${date.split('/')[2]}`;
-
+  
 
   const [variables, setVariables] = useState(
     {
       shipVia: '',
       method: '',
       paymentTerms:'',
-      estDelivDate: `${year}-${month0}-${day}`
+      estDelivDate: `${year}-${month0}-${day0}`
     })
 
     useEffect(() => {
@@ -181,7 +182,7 @@ const SelectProjectModal = ({customer, setCustomer, onOpen2, isOpen3, onClose3, 
               borderBottomWidth={"2px"}
               borderBottomColor={'web.text2'}
               type={"date"}
-              pattern="\d{4}-\d{2}-\d{2}"
+              pattern={"\d{4}-\d{2}-\d{2}"}
               name={"EstDelivDate"}
               cursor= {'pointer'}
               onChange={(e)=>handleEstDelivDate(e)}

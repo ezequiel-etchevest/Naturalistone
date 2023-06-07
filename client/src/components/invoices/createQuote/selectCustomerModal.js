@@ -14,7 +14,9 @@ import {
     Divider,
     HStack,
     Box,
-    Progress 
+    Progress,
+    Center,
+    Spinner 
     } from "@chakra-ui/react"
 import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
@@ -33,9 +35,14 @@ const SelectCustomerModal = ({userId, isOpen1, onClose1, customers}) => {
   const id = userId
   const [inputValue, setInputValue] = useState('')
   const [customer, setCustomer] = useState('')
+console.log(customers)
 
-  useEffect(() => {
-  }, [customers]);
+  // useEffect(() => {
+  //   // dispatch(getCustomers('', ''))
+  // }, [customers]);
+
+//limpiar estado customers de redux, cuando se cierra el modal.
+// error, al updatear se queda el spinner. Hay un error con el estado de redux customers.
 
   const handleInput = (e) =>  {
     if(e.target.value.length) {
@@ -51,8 +58,8 @@ const SelectCustomerModal = ({userId, isOpen1, onClose1, customers}) => {
     onClose1()
     setInputValue('')
     setCustomer('')
-    dispatch(getCustomers('', ''))
   }
+  console.log({customers})
 
   return(
 <>
@@ -122,16 +129,25 @@ const SelectCustomerModal = ({userId, isOpen1, onClose1, customers}) => {
           <CreateCustomerModal customer={customer} setCustomer={setCustomer} onOpen2={onOpen2}/>
           </Box>
         </HStack>
-        <SelectCustomerModalList 
-          customers={customers} 
-          customer={customer} 
-          setCustomer={setCustomer} 
-          isOpen2={isOpen2}
-          onOpen2={onOpen2} 
-          onClose2={onClose2}
-          onClose1={onClose1}
-          setInputValue={setInputValue}
-          />
+        { customers.length ?
+          Array.isArray(customers) ?
+            <SelectCustomerModalList 
+              customers={customers} 
+              customer={customer} 
+              setCustomer={setCustomer} 
+              isOpen2={isOpen2}
+              onOpen2={onOpen2} 
+              onClose2={onClose2}
+              onClose1={onClose1}
+              setInputValue={setInputValue}
+              />
+            :
+            <Text maxH={'50vh'} minH={'50vh'} display={'flex'} justifyContent={'center'} alignItems={'center'}>No customers match this filters</Text>
+          :
+          <Center maxH={'50vh'} minH={'50vh'}>
+            <Spinner thickness={'4px'} size={'xl'} color={'logo.orange'}/>
+          </Center>
+        }
       </ModalBody>
       <ModalFooter mb={'2vh'} display={'flex'} flexDir={'row'} justifyContent={'space-between'} ml={'2vw'} mr={'2vw'}>
         <Button

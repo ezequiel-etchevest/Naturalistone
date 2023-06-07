@@ -103,7 +103,6 @@ const handleNext = () => {
     });
   }
 }
-
 const handleClose = () => {
   onClose2()
   onClose1()

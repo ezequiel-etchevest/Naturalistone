@@ -5,7 +5,7 @@ var cors = require('cors')
 
 //settings
 
-app.set('port', process.env.PORT || 5010);
+app.set('port', process.env.PORT || 5000);
 app.use(cors());
 
 //middlewares

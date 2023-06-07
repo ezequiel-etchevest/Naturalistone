@@ -7,7 +7,7 @@ const listBuckets = require('./testS3Mitu');
 
 
 customersRouter.get('/', async function(req, res){
-    listBuckets();
+    // listBuckets();
     const { search } = req.query
 
     query_ = `SELECT NaturaliStone.Customers.*, Discount.Rate As DiscountRate FROM Customers
@@ -20,7 +20,8 @@ customersRouter.get('/', async function(req, res){
             } else {
                 console.log('Data OK')
                 let filtered = CustomerFilters(results, search)
-                res.status(200).json(filtered);
+                if(!filtered.length) res.status(200).send('No match for this filters')
+                else res.status(200).json(filtered);
             }
         });
     } catch(error){
@@ -73,38 +74,21 @@ customersRouter.post('/', async function(req, res){
 customersRouter.patch('/:id', async function(req, res){
 
     const {id} = req.params
-    const { Contact_Name, Company, Company_Position, Phone, Email, DiscountRate, Address, City, ZipCode, State} = req.body
-
-    const DiscountID = (() => {
-        switch (DiscountRate) {
-          case '0':
-            return  1;
-          case '5':
-            return  2;
-          case '10':
-            return  3;
-          case '15':
-            return  4;
-          default:
-            return  0;
-        }
-      })();
-
-
+    const { Contact_Name, Company, Company_Position, Phone, Email, DiscountID, Address, City, ZipCode, State, DiscountRate} = req.body
     
-    // const parsedDiscount = () => {
-    //     if(DiscountID === '15') return 4
-    //     else if(DiscountID === '10') return 3
-    //     else if(DiscountID === '5') return 2
-    //     else return 1
-    // } 
+    const parsedDiscount = () => {
+        if(DiscountRate === '15') return 4
+        else if(DiscountRate === '10') return 3
+        else if(DiscountRate === '5') return 2
+        else return 1
+    } 
     
     query_ = `UPDATE Customers SET Contact_Name = "${Contact_Name}", 
                 Company = "${Company}", 
                 Company_Position = "${Company_Position}", 
                 Phone = "${Phone}", 
                 Email = "${Email}", 
-                DiscountID = "${DiscountID}", 
+                DiscountID = "${parsedDiscount()}", 
                 Address = "${Address}", 
                 City = "${City}", 
                 ZipCode = "${ZipCode}", 

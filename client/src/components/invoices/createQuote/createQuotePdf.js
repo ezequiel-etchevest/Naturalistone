@@ -175,7 +175,7 @@ mappedProducts.forEach((product, index) => {
           {<iframe width={'100%'} height={'100%'} title="quote-blank" src={pdfInfo} ref={viewer} type="application/pdf" />}
         </Box>
         :
-        <Center ml={'16vw'} w={'84vw'} bg={'web.bg'} h={'92vh'}>
+        <Center w={'84vw'} bg={'web.bg'} h={'92vh'}>
           <Spinner thickness={'4px'} size={'xl'} color={'logo.orange'}/>
         </Center>
       :

@@ -89,7 +89,7 @@ export function updateCustomer(id, customer){
   return async function(dispatch){
       try{
         let {response} = await axios.patch(`/customers/${id}`, customer)
-        let {data} = await axios.get(`/customers/${id}`)
+        let {data} = await axios.get(`/customers`)
         
           dispatch(
           {
