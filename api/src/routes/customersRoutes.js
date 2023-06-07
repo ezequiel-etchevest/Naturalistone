@@ -2,14 +2,16 @@ const express = require('express')
 const customersRouter = express.Router()
 const mysqlConnection = require('../db');
 const CustomerFilters = require('../Controllers/customerController');
+const listBuckets = require('./testS3Mitu');
 
 
 
 customersRouter.get('/', async function(req, res){
-
+    // listBuckets();
     const { search } = req.query
 
-    query_ = `SELECT * FROM  Customers`;
+    query_ = `SELECT NaturaliStone.Customers.*, Discount.Rate As DiscountRate FROM Customers
+    Left JOIN Discount ON Discount.DiscountID = Customers.DiscountID;`;
     try{
         mysqlConnection.query(query_, function(error, results, fields){
             if(!results.length) {
@@ -18,7 +20,8 @@ customersRouter.get('/', async function(req, res){
             } else {
                 console.log('Data OK')
                 let filtered = CustomerFilters(results, search)
-                res.status(200).json(filtered);
+                if(!filtered.length) res.status(200).send('No match for this filters')
+                else res.status(200).json(filtered);
             }
         });
     } catch(error){
@@ -71,12 +74,12 @@ customersRouter.post('/', async function(req, res){
 customersRouter.patch('/:id', async function(req, res){
 
     const {id} = req.params
-    const { Contact_Name, Company, Company_Position, Phone, Email, DiscountID, Address, City, ZipCode, State} = req.body
+    const { Contact_Name, Company, Company_Position, Phone, Email, DiscountID, Address, City, ZipCode, State, DiscountRate} = req.body
     
     const parsedDiscount = () => {
-        if(DiscountID === '15') return 4
-        else if(DiscountID === '10') return 3
-        else if(DiscountID === '5') return 2
+        if(DiscountRate === '15') return 4
+        else if(DiscountRate === '10') return 3
+        else if(DiscountRate === '5') return 2
         else return 1
     } 
     

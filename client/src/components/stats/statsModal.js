@@ -62,7 +62,7 @@ const StatsModal = ({isOpenModal, onCloseModal}) => {
                 mt={'3vh'}
                 h={'7vh'}
                 > 
-                  Invoices from the stats 
+                  Total payments 
               </ModalHeader>
               <ModalCloseButton
                 color={'web.text2'}
