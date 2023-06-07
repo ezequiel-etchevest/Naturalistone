@@ -120,22 +120,22 @@ mappedProducts.forEach((product, index) => {
   
   savePdfOnServer(pdfBytes, invoiceID);
   
-  // function readBlobAsBase64(pdfBlob) {
-  //   return new Promise((resolve, reject) => {
-  //     const reader = new FileReader();
+  function readBlobAsBase64(pdfBlob) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
   
-  //     reader.onloadend = function() {
-  //       const base64String = reader.result.split(',')[1]; // Obtiene el contenido base64
-  //       resolve(base64String);
-  //     };
+      reader.onloadend = function() {
+        const base64String = reader.result.split(',')[1]; // Obtiene el contenido base64
+        resolve(base64String);
+      };
   
-  //     reader.onerror = reject;
+      reader.onerror = reject;
   
-  //     reader.readAsDataURL(pdfBlob);
-  //   });
-  // }
+      reader.readAsDataURL(pdfBlob);
+    });
+  }
 
-  updatePdf(blob)
+  updatePdf(readBlobAsBase64(blob))
 
   
   };

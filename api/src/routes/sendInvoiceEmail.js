@@ -3,18 +3,19 @@ const { sendEmailClient } = require('../utils/email');
 const emailInvoiceRouter = express.Router();
 const multer = require('multer')
 const upload = multer();
+const fs = require('fs')
 
 emailInvoiceRouter.post('/', upload.single('pdfFile'), async function(req, res) {
-    const { subject, htmlBody, clientEmail, sellerEmail, pdf, nameValue } = req.body
 
-    console.log('soy body', req.body)
+    console.log('soy req body', req.body)
+    console.log('soy req.file', req.file)
 
-    // console.log('soy req', req)
+    const data = JSON.parse(req.body.data)
 
-    console.log('soy req,file', req.file)
+    const { htmlBody, subject, clientEmail, pdf } = data
 
     try {
-        // const email = await sendEmailClient(null, 'eduardoasm19@gmail.com', htmlBody, subject)
+        const email = await sendEmailClient('Eduardo', 'eduardoasm19@gmail.com', htmlBody, subject, pdf)
         return res.status(200).json({success: true, msg:'Email enviado'})
     } catch (error) {
         console.log(error)

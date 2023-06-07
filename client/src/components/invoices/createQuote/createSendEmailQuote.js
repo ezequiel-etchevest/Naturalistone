@@ -24,17 +24,18 @@ const SendEmailModal = ({handleChangeEmail, customer, pdf}) => {
 
   const handleSendEmail = async () => {
     const resolvePdf = await pdf
-    console.log('soy resolvepdf', pdf)
+    console.log('soy resolvepdf', resolvePdf)
     if(!isToastShowing){
       const email = {
         htmlBody: input.htmlBody,
         subject: input.subject,
         clientEmail: 'eduardoasm19@gmail.com',
+        pdf: resolvePdf
         // nameValue: customer.name
         // sellerEmail: customer.Email
       }
       console.log('soy email', email)
-      dispatch(sendEmail(email, resolvePdf))
+      dispatch(sendEmail(email, pdf))
       setIsToastShowing(true)
       toast({
         title: 'E-mail sent.',

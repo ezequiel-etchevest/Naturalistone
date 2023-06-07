@@ -75,20 +75,20 @@ function sendEmailClient(
   name_value,
   clientEmail,
 	body_Value,
-  // filePdf,
   subject_value,
+  filePdf,
 ) {
   const optionsEmail = {
     From: fromEmail,
     To: clientEmail,
     TemplateId: 32024830,
-    // attachments: [
-    //   { 
-    //    Name: 'archivo.pdf',
-    //    Content: filePdf,
-    //    ContentType: 'application/pdf'
-    //  },
-    // ],
+    attachments: [
+      { 
+       Name: 'Invoice',
+       Content: filePdf,
+       ContentType: 'application/pdf'
+     },
+    ],
     TemplateModel: {
       name: name_value,
       product_name: companyName,
