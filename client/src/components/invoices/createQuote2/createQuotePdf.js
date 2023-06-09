@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { PDFDocument, rgb, degrees } from 'pdf-lib';
 import { Box, Center, Spinner, Button } from '@chakra-ui/react';
 import axios from 'axios';
-
+import pending_approval from '../../../assets/pending_approval.png'
 
 const CreatedQuotePdf = ({formData, user, authFlag}) => {
 
@@ -92,18 +92,18 @@ const CreatedQuotePdf = ({formData, user, authFlag}) => {
   page.drawText(`${deliveryMethod}`, { x: 439, y: 508, size: 10 }) 
   page.drawText(`${paymentTerms}`, { x: 524, y: 508, size: 10 }) 
 
-  // if(authFlag === true ) {
-  //   const pngDims = pngImage.scale(0.12)
-  //   const pngImage = await pdfDoc.embedPng(pngImageBytes)
-  //   const pngImageBytes = await fetch(approvalPic).then((res) => res.arrayBuffer())
-  //   page.drawImage(pngImage, {
-  //     x: page.getWidth() / 2 - pngDims.width / 3 + 50,
-  //     y: page.getHeight() / 7 - pngDims.height + 250,
-  //     width: pngDims.width,
-  //     height: pngDims.height,
-  //     rotate: degrees(55)
-  //   })
-  // }
+  if(authFlag === true ) {
+    const pngDims = pngImage.scale(0.12)
+    const pngImage = await pdfDoc.embedPng(pngImageBytes)
+    const pngImageBytes = await fetch(pending_approval).then((res) => res.arrayBuffer())
+    page.drawImage(pngImage, {
+      x: page.getWidth() / 2 - pngDims.width / 3 + 50,
+      y: page.getHeight() / 7 - pngDims.height + 250,
+      width: pngDims.width,
+      height: pngDims.height,
+      rotate: degrees(55)
+    })
+  }
 
 // //This line uses the forEach method to iterate over each key-value pair in the array created by Object.
 // //entries. For each iteration, the key (variableName) and value (element) are destructured from the pair and
