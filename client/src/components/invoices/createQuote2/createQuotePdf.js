@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { PDFDocument, rgb, degrees } from 'pdf-lib';
-import { Box, Center, Spinner, Button } from '@chakra-ui/react';
+import { Box, Center, Spinner, Button, Flex } from '@chakra-ui/react';
 import axios from 'axios';
 
 
@@ -171,21 +171,25 @@ mappedProducts.forEach((product, index) => {
     {
       Object.entries(posted_quote).length ?
         posted_quote.Naturali_Invoice && posted_quote.InsertDate ?
-        <Box h={'85vh'} w={'58vw'} border={'2px solid red'} display={'flex'} flexDir={'column'} justifyContent={'space-between'}>
-          <Box
-            as="object"
-            // data={pdfInfo}
-            type="application/pdf"
-            width="82%"
-            height="98%"
-            position="absolute"
-            top={0}
-            left={0}
-            border={'2px solid green'}
-          />
-          <Box border={'2px solid blue'} w={'8vw'} h={'10vh'}display={'flex'}>
-            <Button>SEND EMAIL</Button>
-          </Box>
+        <Box h={'85vh'} w={'58vw'}>
+          <Flex h="100%" flexDir="row">
+            <Box
+              as="object"
+              data={pdfInfo}
+              type="application/pdf"
+              width="82%"
+              height="98%"
+              position="relative"
+            />
+            <Box
+              position="absolute"
+              bottom="3vh"
+              right="2vw"
+              display={'flex'}
+            >
+              <Button>SEND EMAIL</Button>
+            </Box>
+          </Flex>
         </Box>
        :
         <Center>
