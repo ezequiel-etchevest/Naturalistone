@@ -245,7 +245,7 @@ import CreatedQuotePdf from "./createQuotePdf";
               borderTopLeftRadius={'md'}
               />
             <ModalCloseButton color={'web.text2'} mt={'2vh'} mr={'0.5vw'} position={'absolute'}/>
-            <ModalBody color={'web.text2'} display={'flex'} justifyContent={'center'} flexDir={'column'} minH={'80vh'}  maxH={'80vh'}>
+            <ModalBody color={'web.text2'} display={'flex'} justifyContent={'center'} flexDir={'column'} minH={!submited ? '64vh' : '80vh'}  maxH={!submited ? '64vh' : '80vh'}>
             {
               progress == 20 &&(
                 <CreateQuoteCustomer customers={customers} setFormData={setFormData} formData={formData} setDisable={setDisable}/>
