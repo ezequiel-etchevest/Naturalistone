@@ -27,7 +27,6 @@ customersRouter.get('/', async function(req, res){
                 res.status(400).json(error);
             } else {
                 console.log('Data OK')
-                // let filtered = CustomerFilters(results, search)
                 if(!results.length) res.status(200).send('No match for this filters')
                 else res.status(200).json(results);
             }
