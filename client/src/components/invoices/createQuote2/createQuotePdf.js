@@ -93,15 +93,17 @@ const CreatedQuotePdf = ({formData, user, authFlag}) => {
   page.drawText(`${paymentTerms}`, { x: 524, y: 508, size: 10 }) 
 
   if(authFlag === true ) {
-    const pngDims = pngImage.scale(0.12)
-    const pngImage = await pdfDoc.embedPng(pngImageBytes)
     const pngImageBytes = await fetch(pending_approval).then((res) => res.arrayBuffer())
+    const pngImage = await pdfDoc.embedPng(pngImageBytes)
+    const pngDims = pngImage.scale(0.5)
+    
+   
     page.drawImage(pngImage, {
       x: page.getWidth() / 2 - pngDims.width / 3 + 50,
       y: page.getHeight() / 7 - pngDims.height + 250,
       width: pngDims.width,
       height: pngDims.height,
-      rotate: degrees(55)
+      rotate: degrees(30)
     })
   }
 
