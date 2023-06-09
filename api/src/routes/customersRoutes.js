@@ -10,8 +10,16 @@ customersRouter.get('/', async function(req, res){
     // listBuckets();
     const { search } = req.query
 
-    query_ = `SELECT NaturaliStone.Customers.*, Discount.Rate As DiscountRate FROM Customers
-    Left JOIN Discount ON Discount.DiscountID = Customers.DiscountID;`;
+    let query_ = `
+        SELECT NaturaliStone.Customers.*, Discount.Rate As DiscountRate 
+        FROM Customers
+        LEFT JOIN Discount ON Discount.DiscountID = Customers.DiscountID
+        ${
+            search ? 
+            `WHERE (Customers.Company LIKE LOWER('%${search}%') OR Customers.Contact_Name LIKE LOWER('%${search}%'))`
+            : (``)
+        }
+        `;
     try{
         mysqlConnection.query(query_, function(error, results, fields){
             if(!results.length) {
@@ -19,9 +27,9 @@ customersRouter.get('/', async function(req, res){
                 res.status(400).json(error);
             } else {
                 console.log('Data OK')
-                let filtered = CustomerFilters(results, search)
-                if(!filtered.length) res.status(200).send('No match for this filters')
-                else res.status(200).json(filtered);
+                // let filtered = CustomerFilters(results, search)
+                if(!results.length) res.status(200).send('No match for this filters')
+                else res.status(200).json(results);
             }
         });
     } catch(error){
