@@ -2,13 +2,12 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { PDFDocument, rgb, degrees } from 'pdf-lib';
 import { Box, Center, Spinner, Button } from '@chakra-ui/react';
-import approvalPic from '../../../assets/pending_approval.png'
 import axios from 'axios';
 
 
-const CreatedQuotePdf = ({variables, user, customer, project, authFlag}) => {
+const CreatedQuotePdf = ({formData, user, authFlag}) => {
 
-
+  const {variables, customer, project} = formData
   // console.log({variables, user, customer, project, authFlag})
     const posted_quote = useSelector(state => state.posted_quote)
  
@@ -17,9 +16,6 @@ const CreatedQuotePdf = ({variables, user, customer, project, authFlag}) => {
     const [pdfInfo, setPdfInfo] = useState([]);
     const viewer = useRef(null);
     const mappedProducts =  posted_quote.parsedProducts
-
-  console.log(posted_quote)
-
 
     useEffect(() => {
         CreateForm();
@@ -50,7 +46,6 @@ const CreatedQuotePdf = ({variables, user, customer, project, authFlag}) => {
   const page = pages[0];
 
 
-
   var subtotal = 0
 
   let y = 460.8;
@@ -58,10 +53,11 @@ const CreatedQuotePdf = ({variables, user, customer, project, authFlag}) => {
   const name = customer.Contact_Name
   const phone = customer.Phone
   const email = customer.Email
+  const projectName = project.ProjectName
   const street = project.Shipping_Address
-  const city = project.City
-  const state = project.State
-  const zipCode = project.ZipCode
+  const city = project.Shipping_City
+  const state = project.Shipping_State
+  const zipCode = project.Shipping_ZipCode
   const company = customer.Company
   const PO = variables.method
   const ref = user[0].SellerReference
@@ -70,22 +66,24 @@ const CreatedQuotePdf = ({variables, user, customer, project, authFlag}) => {
   const deliveryMethod = variables.shipVia
   const paymentTerms = variables.paymentTerms
 
-  const streetCustomer = customer.Address
-  const cityCustomer = customer.City
-  const stateCustomer = customer.State
-  const zipCodeCustomer = customer.ZipCode
+  // const streetCustomer = customer.Address
+  // const cityCustomer = customer.City
+  // const stateCustomer = customer.State
+  // const zipCodeCustomer = customer.ZipCode
 
 //   page.drawText(`${no}`, { x: 472, y: 666, size: 16, color: rgb(1, 0.3, 0) })
   page.drawText(`${date}`, { x: 448, y: 688, size: 10 })
   page.drawText(`${invoiceID}`, { x: 514, y: 687, size: 12, color: rgb(1, 0.3, 0)})
 
-  page.drawText(`${name}`, { x: 42, y: 626, size: 10 })
-  page.drawText(`${phone}`, { x: 42, y: 612, size: 10 })
-  page.drawText(`${email}`, { x: 42, y: 598, size: 10 })
+  page.drawText(`${company}`, { x: 42, y: 626, size: 10 })
+  page.drawText(`${name}`, { x: 42, y: 612, size: 10 })
+  page.drawText(`${phone}`, { x: 42, y: 598, size: 10 })
+  page.drawText(`${email}`, { x: 42, y: 582, size: 10 })
 
-  page.drawText(street, { x: 336, y: 626, size: 10 })
-  page.drawText(`${city }, ${state}`, { x: 336, y: 612, size: 10 })
-  page.drawText(zipCode, { x: 336, y: 598, size: 10 })
+  page.drawText(projectName, { x: 336, y: 626, size: 10 })
+  page.drawText(street, { x: 336, y: 612, size: 10 })
+  page.drawText(`${city }, ${state}`, { x: 336, y: 598, size: 10 })
+  page.drawText(zipCode, { x: 336, y: 582, size: 10 })
 
   page.drawText(`${company}`, { x: 40, y: 508, size: 10 })
   page.drawText(`${PO}`, { x: 162, y: 508, size: 10 })
@@ -141,31 +139,31 @@ mappedProducts.forEach((product, index) => {
 
   };
   
-  async function savePdfOnServer(pdfBytes, invoiceID) {
+  // async function savePdfOnServer(pdfBytes, invoiceID) {
 
-    try {
-      // Configurar el encabezado Content-Type para FormData
-      axios.interceptors.request.use(function (config) {
-        config.headers['Content-Type'] = 'multipart/form-data';
-        return config;
-      });
+  //   try {
+  //     // Configurar el encabezado Content-Type para FormData
+  //     axios.interceptors.request.use(function (config) {
+  //       config.headers['Content-Type'] = 'multipart/form-data';
+  //       return config;
+  //     });
   
-      const formData = new FormData();
-      formData.append('pdfFile', new Blob([pdfBytes], { type: 'application/pdf' }), `${invoiceID}.pdf`);
-      console.log('formData', formData);
+  //     const formData = new FormData();
+  //     formData.append('pdfFile', new Blob([pdfBytes], { type: 'application/pdf' }), `${invoiceID}.pdf`);
+  //     console.log('formData', formData);
      
-      const response = await axios.post('/save-pdf', formData);
+  //     const response = await axios.post('/save-pdf', formData);
   
-      if (response.status === 200) {
-        console.log('PDF guardado en el servidor correctamente.');
-        // Realizar cualquier acción adicional después de guardar el PDF en el servidor
-      } else {
-        console.error('Error al guardar el PDF en el servidor.');
-      }
-    } catch (error) {
-      console.error('Error al realizar la solicitud al servidor:', error);
-    }
-  }
+  //     if (response.status === 200) {
+  //       console.log('PDF guardado en el servidor correctamente.');
+  //       // Realizar cualquier acción adicional después de guardar el PDF en el servidor
+  //     } else {
+  //       console.error('Error al guardar el PDF en el servidor.');
+  //     }
+  //   } catch (error) {
+  //     console.error('Error al realizar la solicitud al servidor:', error);
+  //   }
+  // }
   
   
   return (
@@ -173,16 +171,28 @@ mappedProducts.forEach((product, index) => {
     {
       Object.entries(posted_quote).length ?
         posted_quote.Naturali_Invoice && posted_quote.InsertDate ?
-        <Box h={'85vh'} >
-          <Button>SEND EMAIL</Button>
-          {<iframe width={'100%'} height={'100%'} title="quote-blank" src={pdfInfo} ref={viewer} type="application/pdf" />}
+        <Box h={'85vh'} w={'58vw'} border={'2px solid red'} display={'flex'} flexDir={'column'} justifyContent={'space-between'}>
+          <Box
+            as="object"
+            // data={pdfInfo}
+            type="application/pdf"
+            width="82%"
+            height="98%"
+            position="absolute"
+            top={0}
+            left={0}
+            border={'2px solid green'}
+          />
+          <Box border={'2px solid blue'} w={'8vw'} h={'10vh'}display={'flex'}>
+            <Button>SEND EMAIL</Button>
+          </Box>
         </Box>
-        :
-        <Center w={'84vw'} bg={'web.bg'} h={'92vh'}>
+       :
+        <Center>
           <Spinner thickness={'4px'} size={'xl'} color={'logo.orange'}/>
         </Center>
       :
-      <Center ml={'16vw'} w={'84vw'} bg={'web.bg'} h={'92vh'}>
+      <Center>
         <Spinner thickness={'4px'} size={'xl'} color={'logo.orange'}/>
       </Center>
     }

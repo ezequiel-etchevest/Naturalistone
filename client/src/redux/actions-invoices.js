@@ -175,12 +175,13 @@ export function getSellerValues(){
     }
 }
 
-export function createQuote(sellerId, quoteDetails){
+export function createQuote(sellerId, formData, authFlag){
 
 
   return async function(dispatch){
+  
       try{
-          let { data } = await axios.post(`/sales/create-quote/${sellerId}`, quoteDetails)
+          let { data } = await axios.post(`/sales/create-quote/${sellerId}`, formData, authFlag)
         //   let { data } = await axios.get(`/create-quote/${sellerId}`, quoteDetails)
          
               dispatch(

@@ -7,6 +7,8 @@ const  { getLimitDateMonth, getCurrentMonth } = require('../Controllers/LastMont
 const uniqueFormatNames = require('../Controllers/quotesValues')
 const invoicesFilters = require('../Controllers/invoicesFilters')
 const sendInvoiceEmail = require('../utils/email');
+const { year, month0, day0 } = require('../todayDate');
+
 
 salesRouter.get('/:id', async function(req, res){
     
@@ -288,7 +290,8 @@ salesRouter.get('/values/seller', async function(req, res){
 salesRouter.post('/create-quote/:sellerID', async function(req, res) {
 
   const { sellerID } = req.params;
-  const { customer, project, products, variables, user, authFlag } = req.body;
+  const { formData, authFlag } = req.body;
+  const {customer, project, products, variables} = formData
 
   const parsedProducts = Object.entries(products)
     .flat()
@@ -298,8 +301,7 @@ salesRouter.post('/create-quote/:sellerID', async function(req, res) {
   const Value = parsedProducts.reduce((acc, curr) => acc + curr.quantity * curr.price, 0);
 
   const ProjectID = project.idProjects;
-  const date = new Date().toLocaleDateString("en-US");
-  const InsertDate = `${date.split('/')[2]}-${date.split('/')[0]}-${date.split('/')[1]}`;
+  const InsertDate = `${year}-${month0}-${day0}`
   const EstDelivery_Date = variables.estDelivDate;
   let Naturali_Invoice = 0
 

@@ -7,19 +7,27 @@ import {
     Th,
     Td,
     TableContainer,
-    useToast,
     Text,
     Center,
     } from '@chakra-ui/react'
-    import { useState } from 'react';
-  import CreateInvoiceModal from '../createInvoiceModal';
+
   
-  const ModelTr = ({e, setProject, setFocus, focus}) => {
+  const ModelTr = ({e, formData, setFormData, setDisable }) => {
   
 
     const handleClick = (e) => {
-      setProject(e)
-      setFocus(`${e.idProjects}`)
+      setFormData({
+        ...formData,
+        project: {
+          ...formData.project,
+          ProjectName: e.ProjectName || '',
+          idProjects: e.idProjects || '',
+          Shipping_State: e.Shipping_State || '',
+          Shipping_ZipCode: e.Shipping_ZipCode || '',
+          Shipping_City: e.Shipping_City || '',
+          Shipping_Address: e.Shipping_Address || ''
+        }
+      })
     }
     
     return(
@@ -30,9 +38,8 @@ import {
         bg: 'web.navBar',
         color: 'logo.orange'
         }}
-        color={focus === `${e.idProjects}` ? '#E47424' : 'white'}
-        background={focus === `${e.idProjects}` ? 'web.navBar' : 'none'}
-        focus={focus}
+        textColor={ e.idProjects === formData.project.idProjects  ? 'logo.orange' : 'unset'}
+        bg={e.idProjects === formData.project.idProjects ? 'web.navBar' : 'unset'}
         onClick={() => handleClick(e)}
       >
         <Td fontSize={'xs'} textAlign={'center'} w={'4vw'}>{e.idProjects}</Td>
@@ -42,10 +49,7 @@ import {
     )
   }
   
-  const SelectProjectModalList = ({variables, setVariables, setProject, project, customer, projects, onClose4, isOpen4, onOpen4, onClose3, onClose2, onClose1, setInputValue, setCustomer}) => {
-
-    
-    const [focus, setFocus] = useState('')
+  const CreateQuoteProjectList = ({ projects, formData, setFormData, setDisable }) => {
 
     return(
 <>
@@ -86,8 +90,8 @@ import {
                 </Thead>
                 <Tbody >
                 { 
-                  projects.map((e, i) => (
-                    <ModelTr key={i} e={e} setProject={setProject} setFocus={setFocus} focus={focus}/> 
+                  projects.map((e, i) => (  
+                    <ModelTr key={i} e={e} setFormData={setFormData} formData={formData} setDisable={setDisable}/> 
                   ))
                 }
                 </Tbody>
@@ -101,22 +105,8 @@ import {
         }
       </Box> 
     </Box>
-    <CreateInvoiceModal 
-      variables={variables} 
-      setVariables={setVariables} 
-      customer={customer} 
-      project={project} 
-      isOpen4={isOpen4} 
-      onOpen4={onOpen4} 
-      onClose4={onClose4} 
-      onClose3={onClose3}
-      onClose2={onClose2}
-      onClose1={onClose1}
-      setInputValue={setInputValue}
-      setCustomer={setCustomer}
-    />
   </>
   )
 }
-  export default SelectProjectModalList;
+  export default CreateQuoteProjectList;
   

@@ -89,13 +89,13 @@ import {
               borderBottomWidth={"2px"}
               borderBottomColor={'web.text2'}
               type={"text"}
-              name={"City"}
-              value={formData.City}
+              name={"Shipping_City"}
+              value={formData.Shipping_City}
               onChange={handleChange}
               />
-              { errors.City && (
+              { errors.Shipping_City && (
                 <Text position={'absolute'} color={'web.error'} fontSize={'xs'}>
-                  {errors.City}
+                  {errors.Shipping_City}
                 </Text>
               )}
           </FormControl>
@@ -109,7 +109,7 @@ import {
               errors={errors}
               validate={validateCompletedInputsProject}
               setErrors={setErrors}
-              name={'State'}
+              name={'Shipping_State'}
             />
           </FormControl>
         </Box>
@@ -126,12 +126,12 @@ import {
               borderBottomColor={'web.text2'}
               type={"text"}
               name={"ZipCode"}
-              value={formData.ZipCode}
+              value={formData.Shipping_ZipCode}
               onChange={handleChange}
               />
-              { errors.ZipCode && (
+              { errors.Shipping_ZipCode && (
                 <Text position={'absolute'} color={'web.error'} fontSize={'xs'}>
-                  {errors.ZipCode}
+                  {errors.Shipping_ZipCode}
                 </Text>
               )}
           </FormControl>

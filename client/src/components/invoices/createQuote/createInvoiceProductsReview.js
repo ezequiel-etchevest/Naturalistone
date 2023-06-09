@@ -51,7 +51,6 @@ const handleConfirm = () => {
   // dispatch(getCustomerProjects(customer.CustomerID))
   onOpen6()
   setInputValue('')
-  setCustomer('')
 }
 
 const handleClose = () => {

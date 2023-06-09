@@ -119,7 +119,8 @@ const intialState = {
     product_images:[],
     product_image: {},
     products_new_quote: [],
-    products_new_quote_errors: {}
+    products_new_quote_errors: {},
+    products_new_quote_values: []
 
 }
 
@@ -165,7 +166,8 @@ function rootReducer (state = intialState, action) {
               projects_by_customer_id: {},
               customers: [],
               customer_by_id: {},
-              posted_quote: {}
+              posted_quote: {},
+              products_new_quote_values: []
             }  
         case GET_INVOICE_BY_ID:
             return {
@@ -441,6 +443,7 @@ function rootReducer (state = intialState, action) {
           return {
             ...state,
             products_new_quote: action.payload.results,
+            products_new_quote_values: action.payload.filteredValues,
             products_new_quote_errors: action.payload.errorSearch
 
           }

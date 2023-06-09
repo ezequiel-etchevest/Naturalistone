@@ -35,7 +35,6 @@ const SelectCustomerModal = ({userId, isOpen1, onClose1, customers}) => {
   const id = userId
   const [inputValue, setInputValue] = useState('')
   const [customer, setCustomer] = useState('')
-console.log(customers)
 
   // useEffect(() => {
   //   // dispatch(getCustomers('', ''))
@@ -59,7 +58,7 @@ console.log(customers)
     setInputValue('')
     setCustomer('')
   }
-  console.log({customers})
+
 
   return(
 <>
