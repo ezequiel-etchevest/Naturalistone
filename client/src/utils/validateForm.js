@@ -12,13 +12,8 @@ export const validateCompletedInputs = (formData) =>{
   
   if(formData.Contact_Name !== ''){
     if(!regexNoNumber.test(formData.Contact_Name)) {
-      errors.Contact_Name = 'must be a valid name'
+      errors.Contact_Name = 'Please enter a valid name'
     } 
-  }
-  if(formData.ZipCode !== ''){
-    if(!regexNumber.test(formData.ZipCode)) {
-      errors.ZipCode = 'Please enter a valid zip code'
-    }
   }
   if(formData.Billing_ZipCode !== ''){
     if(!regexNumber.test(formData.Billing_ZipCode)) {
@@ -37,20 +32,9 @@ export const validateCompletedInputs = (formData) =>{
     }
   }
 
-  if(formData.State !== ''){
-    if(!USStates.includes(formData.State)) {
-      errors.State = 'Please enter a valid state'
-    }
-  }
   if(formData.Billing_State !== ''){
     if(!USStates.includes(formData.Billing_State)) {
       errors.Billing_State = 'Please enter a valid state'
-    }
-  }
-
-  if(formData.City !== '') {
-    if(!regexNoNumber.test(formData.City)){
-      errors.City = 'Please enter a valid City'
     }
   }
   if(formData.Billing_City !== '') {
@@ -58,35 +42,78 @@ export const validateCompletedInputs = (formData) =>{
       errors.Billing_City = 'Please enter a valid City'
     }
   }
-  
+  if(formData.DiscountRate !== '') {
+    const allowedValues = ['0', '5', '10', '15'];
+    if(!allowedValues.includes(formData.DiscountRate)){
+      errors.DiscountRate = 'Valid discounts: 0, 5, 10, 15'
+    }
+  }
 
   return errors
 }
-                      
+
+export const validateEmptyInputsCreateQuote = (formData) => {
+  let errors = validateCompletedInputs(formData)
+  
+  if(!formData.Contact_Name){
+    errors.Contact_Name = 'Please enter customer name'
+    }
+  if(!formData.Phone){
+    errors.Phone = 'Please enter phone number'
+  }
+  if(!formData.Email){
+    errors.Email = 'Please enter email address'
+  }
+  if(!formData.Billing_Address){
+    errors.Billing_Address = 'Please enter an address'
+  }
+  if(!formData.Billing_ZipCode){
+    errors.Billing_ZipCode = 'Please enter a zip code'
+  } 
+  if(!formData.Billing_City){
+    errors.Billing_City = 'Please enter a city'
+  }
+  if(!formData.Billing_State) {
+    errors.Billing_State = 'Please enter a state'
+  }
+  if(!formData.DiscountRate){
+    errors.DiscountRate = 'Please enter discount rate'
+    }
+  if(!formData.Company){
+    errors.Company = 'Please enter customer company name'
+  }
+  if(!formData.Company_Position){
+    errors.Company_Position = 'Please enter customer company position'
+  }
+return errors
+}
+
+
+
 export const validateEmptyInputs = (formData, progress) => {
   let errors = {}
 
   if(progress === 25){
     if(!formData.Contact_Name){
-      errors.Contact_Name = 'Please enter your email'
+      errors.Contact_Name = 'Please enter customer name'
       }
     if(!formData.Phone){
-      errors.Phone = 'Please enter your phone'
+      errors.Phone = 'Please enter phone number'
     }
     if(!formData.Email){
-      errors.Email = 'Please enter your email'
+      errors.Email = 'Please enter email address'
     }
     return errors  
   }
   if (progress === 50){
     if(!formData.Address){
-      errors.Address = 'Please enter your address'
+      errors.Address = 'Please enter an address'
     }
     if(!formData.ZipCode){
-      errors.ZipCode = 'Please enter your zip code'
+      errors.ZipCode = 'Please enter a zip code'
     } 
     if(!formData.City){
-      errors.City = 'Please enter a City'
+      errors.City = 'Please enter a city'
     }
     if(!formData.State) {
       errors.State = 'Please enter a state'
@@ -96,19 +123,19 @@ export const validateEmptyInputs = (formData, progress) => {
   if (progress === 75){
 
     if(!formData.Company){
-      errors.Company = 'Please enter your company name'
+      errors.Company = 'Please enter customer company name'
     }
     if(!formData.DiscountID){
-      errors.DiscountID = 'Please enter a discount'
+      errors.DiscountID = 'Please enter discount rate'
     }
     if(!formData.Company_Position){
-      errors.Company_Position = 'Please enter a company role'
+      errors.Company_Position = 'Please enter customer company position'
     }
     return errors
   }
   if (progress === 100){
     if(!formData.Billing_Address){
-      errors.Billing_Address = 'Please enter a billing address'
+      errors.Billing_Address = 'Please enter an address'
     }
     if(!formData.Billing_ZipCode){
       errors.Billing_ZipCode = 'Please enter a zip code'
@@ -122,11 +149,10 @@ export const validateEmptyInputs = (formData, progress) => {
     return errors
   }
   
-
-  if(!formData.Shipping_Address){
-    errors.Shipping_Address = 'Please enter a Shipping_Address'
-  } 
-   return errors 
+  // if(!formData.Shipping_Address){
+  //   errors.Shipping_Address = 'Please enter a shipping address'
+  // } 
+  //  return errors 
   
 }
 

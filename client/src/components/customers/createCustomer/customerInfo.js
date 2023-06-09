@@ -37,7 +37,7 @@ export function CustomerInfo({formData, setFormData, validate, errors, setErrors
         </Box>
         <Box w={'22vw'} display={'flex'} flexDir={'row'} justifyContent={'space-between'}>
           <FormControl>
-          <FormLabel textColor={'web.text2'} fontSize={'sm'}>E-mail</FormLabel>
+          <FormLabel textColor={'web.text2'} fontSize={'sm'}>Email</FormLabel>
             <Input
               mb={'0.5vh'}
               variant="unstyled"

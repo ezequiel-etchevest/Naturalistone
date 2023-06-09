@@ -51,9 +51,9 @@ customersRouter.get('/:id', async function(req, res){
 
 customersRouter.post('/', async function(req, res){
     //hay que agregar el sellerID, el vendedor encargado de cargar al cliente.
-    const {Company, Phone, Email, DiscountID, Contact_Name, Billing_Address, ZipCode, State} = req.body
+    const {Company, Phone, Email, DiscountID, Contact_Name, Billing_Address, ZipCode, State, Billing_City, Billing_ZipCode, Billing_State} = req.body
 
-    query_ = `INSERT INTO Customers (Company, Phone, Email, DiscountID, Contact_Name, Billing_Address, ZipCode, State) VALUES ("${Company}", "${Phone}", "${Email}", "${DiscountID}", "${Contact_Name}", "${Billing_Address}", "${ZipCode}", "${State}")`
+    query_ = `INSERT INTO Customers (Company, Phone, Email, DiscountID, Contact_Name, Billing_Address, ZipCode, State, Billing_City, Billing_ZipCode, Billing_State) VALUES ("${Company}", "${Phone}", "${Email}", "${DiscountID}", "${Contact_Name}", "${Billing_Address}", "${ZipCode}", "${State}, "${Billing_City}, "${Billing_ZipCode}, "${Billing_State}")`
             
     try{
          mysqlConnection.query(query_, function(error, results, fields){
@@ -74,7 +74,7 @@ customersRouter.post('/', async function(req, res){
 customersRouter.patch('/:id', async function(req, res){
 
     const {id} = req.params
-    const { Contact_Name, Company, Company_Position, Phone, Email, DiscountID, Address, City, ZipCode, State, DiscountRate} = req.body
+    const { Contact_Name, Company, Company_Position, Phone, Email, DiscountID, Billing_Address, Billing_City, Billing_ZipCode, Billing_State, DiscountRate} = req.body
     
     const parsedDiscount = () => {
         if(DiscountRate === '15') return 4
@@ -89,10 +89,10 @@ customersRouter.patch('/:id', async function(req, res){
                 Phone = "${Phone}", 
                 Email = "${Email}", 
                 DiscountID = "${parsedDiscount()}", 
-                Address = "${Address}", 
-                City = "${City}", 
-                ZipCode = "${ZipCode}", 
-                State = "${State}" 
+                Billing_Address = "${Billing_Address}", 
+                Billing_City = "${Billing_City}", 
+                Billing_ZipCode = "${Billing_ZipCode}", 
+                Billing_State = "${Billing_State}" 
                 WHERE CustomerID = ${id}`;
     try{
       mysqlConnection.query(query_, function(error, results, fields){

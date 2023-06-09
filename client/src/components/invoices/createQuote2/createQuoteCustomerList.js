@@ -13,7 +13,7 @@ import {
   import { useEffect, useState } from 'react';
 
   
-  const ModelTr = ({e, setFormData, formData}) => {
+  const ModelTr = ({e, setFormData, formData, setDisable}) => {
     
     const handleClick = (e) => {
       setFormData({
@@ -31,13 +31,14 @@ import {
           Phone: e.Phone || '',
           Email: e.Email || '',
           DiscountID: e.DiscountID || '',
-          DiscountRate: e.DiscountRate.toString() || '',
+          DiscountRate: e.DiscountRate?.toString() || '',
           Billing_Address: e.Billing_Address || '',
           Billing_City: e.Billing_City || '',
           Billing_ZipCode: e.Billing_ZipCode || '',
           Billing_State: e.Billing_State || '',
         },
       });
+      setDisable(false)
     };
    
     return(
@@ -59,7 +60,7 @@ import {
     )
   }
   
-  const SelectCustomerModalList = ({customers, setFormData, formData}) => {
+  const CreateQuoteCustomerList = ({customers, setFormData, formData, setDisable}) => {
   
     const [initialCount] = useState(14);
     const [batchCount] = useState(10);
@@ -127,7 +128,7 @@ import {
                 <Tbody >
                 { 
                   customers.slice(0, loadedCount).map((e, i) => (
-                    <ModelTr key={i} e={e} setFormData={setFormData} formData={formData} /> 
+                    <ModelTr key={i} e={e} setFormData={setFormData} formData={formData} setDisable={setDisable} /> 
                   ))
                 }
                 </Tbody>
@@ -144,5 +145,5 @@ import {
   </>
   )
 }
-  export default SelectCustomerModalList;
+  export default CreateQuoteCustomerList;
   
