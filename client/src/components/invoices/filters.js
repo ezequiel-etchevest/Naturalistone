@@ -17,6 +17,7 @@ import '../../assets/styleSheet.css';
 import {AiOutlineClear} from 'react-icons/ai';
 import CreateInvoiceButton from './createQuote/createInvoice'
 import { useLocation, useNavigate } from "react-router-dom";
+import CreateQuote from "./createQuote2/createQuoteModal";
 
 const Filters = ({user, seller_invoices, setFocusFilter, seller_values, customers}) => {
 
@@ -395,7 +396,8 @@ const Filters = ({user, seller_invoices, setFocusFilter, seller_values, customer
             >
             </IconButton>
           </Tooltip>
-        <CreateInvoiceButton user={user} customers={customers}/>
+        {/* <CreateInvoiceButton user={user} customers={customers}/> */}
+        <CreateQuote customers={customers}/>
         </HStack>
 
 

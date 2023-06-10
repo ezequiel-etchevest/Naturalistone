@@ -54,14 +54,14 @@ export default function AutocompleteState({formData, setFormData, errors, valida
           borderBottomWidth={"2px"}
           borderBottomColor={'web.text2'}
           type="text"
-          name={"State"}
-          value={formData.State}
+          name={name}
+          value={formData[name]}
           onChange={handleInputChange}
           list="stateOptions"
         />
-          { errors.State && (
+          { errors[name] && (
             <Text position={'absolute'} color={'web.error'} fontSize={'xs'}>
-              {errors.State}
+              {errors[name]}
             </Text>
               )}
         <datalist id="stateOptions" onClick={handleInputChange}>

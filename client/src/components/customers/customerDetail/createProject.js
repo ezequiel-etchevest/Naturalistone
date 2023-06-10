@@ -18,9 +18,9 @@ export function CreateNewProject({customer}) {
   const [formData, setFormData] = useState({
     ProjectName: '',
     CustomerID: customer.CustomerID,
-    State: '',
-    ZipCode: '',
-    City: '',
+    Shipping_State: '',
+    Shipping_ZipCode: '',
+    Shipping_City: '',
     Shipping_Address: ''
   });
 
@@ -54,9 +54,9 @@ export function CreateNewProject({customer}) {
     setFormData({
         ProjectName: '',
         CustomerID: customer.CustomerID,
-        State: '',
-        ZipCode: '',
-        City: '',
+        Shipping_State: '',
+        Shipping_ZipCode: '',
+        Shipping_City: '',
         Shipping_Address: ''
     })
     setChangeInput(false)
