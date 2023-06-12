@@ -31,7 +31,7 @@ const ModelTr = ({p}) => {
         onClick={() => handleClick()}
         >
         <Td textAlign={'-moz-initial'}>{p.ProductName}</Td>
-        <Td textAlign={'center'} w={'6vw'} fontSize={'1.6vh'}>{p.Type}</Td>
+        <Td textAlign={'center'} w={'6vw'} fontSize={'1.6vh'}>{p.Material}</Td>
         <Td textAlign={'center'} w={'6vw'} fontSize={'1.6vh'}>{p.Size}</Td>
         <Td textAlign={'center'} w={'6vw'} fontSize={'1.6vh'}>{p.Thickness}</Td>
         <Td textAlign={'center'} w={'6vw'} fontSize={'1.6vh'}>{p.Finish}</Td>
