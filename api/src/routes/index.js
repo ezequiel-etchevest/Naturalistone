@@ -14,7 +14,7 @@ const customersRouter = require('./customersRoutes')
 const onedriveRouter  = require('./pdfOneDriveRoutes.js')
 const statsRouter = require('./statsRoutes');
 const emailRouter = require('./emailTestRoutes')
-const testRouter = require('./testMulterPDF')
+// const testRouter = require('./testMulterPDF')
 
 mainRouter.use('/api/login', loginRouter);
 mainRouter.use('/api/seller', sellerRouter);
@@ -29,7 +29,7 @@ mainRouter.use('/api/one-drive-data', onedriveRouter);
 mainRouter.use('/api/projects', projectsRouter);
 mainRouter.use('/api/customers', customersRouter);
 mainRouter.use('/api/stats', statsRouter)
-mainRouter.use('/api/save-pdf', testRouter)
+// mainRouter.use('/api/save-pdf', testRouter)
 mainRouter.use('/api', emailRouter)
 
 
