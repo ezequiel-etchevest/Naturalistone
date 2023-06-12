@@ -81,7 +81,23 @@ customersRouter.post('/', async function(req, res){
 customersRouter.patch('/:id', async function(req, res){
 
     const {id} = req.params
-    const { Contact_Name, Company, Company_Position, Phone, Email, DiscountID, Billing_Address, Billing_City, Billing_ZipCode, Billing_State, DiscountRate} = req.body
+    const { 
+        Contact_Name,
+        Company,
+        Company_Position,
+        Phone,
+        Email,
+        Address,
+        ZipCode,
+        City,
+        State,
+        DiscountID,
+        Billing_Address,
+        Billing_City,
+        Billing_ZipCode,
+        Billing_State,
+        DiscountRate
+    } = req.body
     
     const parsedDiscount = () => {
         if(DiscountRate === '15') return 4
@@ -94,7 +110,11 @@ customersRouter.patch('/:id', async function(req, res){
                 Company = "${Company}", 
                 Company_Position = "${Company_Position}", 
                 Phone = "${Phone}", 
-                Email = "${Email}", 
+                Email = "${Email}",
+                Address = "${Address}",
+                ZipCode = "${ZipCode}",
+                City = "${City}",
+                State = "${State}",
                 DiscountID = "${parsedDiscount()}", 
                 Billing_Address = "${Billing_Address}", 
                 Billing_City = "${Billing_City}", 

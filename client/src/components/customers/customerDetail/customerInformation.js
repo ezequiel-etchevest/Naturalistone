@@ -1,6 +1,9 @@
-import { Box, Text, HStack } from "@chakra-ui/react"
+import { Box, Text, HStack, IconButton, useDisclosure } from "@chakra-ui/react"
+import CustomersEdit from "../customersEdit"
 
 const CustomerInformation = ({customer}) => {
+
+  const { isOpen, onOpen, onClose } = useDisclosure()
   
   return(
     <>
@@ -44,6 +47,7 @@ const CustomerInformation = ({customer}) => {
               >
               - {customer.Contact_Name}  
             </Text>
+          <CustomersEdit customer={customer} onOpen={onOpen} onClose={onClose} isOpen={isOpen}/>
           </Box>
           {/*Phone */} 
           <Box display={'flex'} flexDir={'row'} px={'1vw'} mt={'1.5vh'}>
