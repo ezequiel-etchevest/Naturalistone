@@ -22,11 +22,13 @@ ordersRouter.get('/', async function(req, res){
     }
 });
 
-ordersRouter.get('/:id', async function(req, res){
+ordersRouter.get('/:orderId/:factoryId', async function(req, res){
 
-    const { id } = req.params   
+    const { orderId, factoryId } = req.params
+
     query_ = `SELECT Orders.*, Factory.Factory_Name as FactoryName FROM Orders
-    LEFT JOIN Factory ON  Factory.FactoryID = Orders.FactoryID WHERE OrderID = ${id} ORDER BY InvoiceDate DESC`;
+    LEFT JOIN Factory ON  Factory.FactoryID = Orders.FactoryID WHERE OrderID = ${orderId} AND Orders.FactoryID = ${factoryId}
+    ORDER BY InvoiceDate DESC`;
     try{
          mysqlConnection.query(query_, function(error, results, fields){
             if(!results.length) {
@@ -42,15 +44,15 @@ ordersRouter.get('/:id', async function(req, res){
     }
 });
 
-ordersRouter.get('/products/:id', async function(req, res){
+ordersRouter.get('/products/:orderId/:factoryId', async function(req, res){
 
-    const { id } = req.params
+    const { orderId, factoryId } = req.params
     
     query_ = `SELECT ProdOrdered.*, Products.*, Dimension.*,ProdNames.Material, ProdNames.Naturali_ProdName as ProductName, ProdNames.Factory_ProdName as FactoryProductName FROM ProdOrdered
     INNER JOIN Products ON  ProdOrdered.ProdID = Products.ProdID 
     INNER JOIN ProdNames ON  ProdNames.ProdNameID = Products.ProdNameID
     INNER JOIN Dimension ON Dimension.DimensionID = Products.DimensionID
-    WHERE OrderID = ${id} AND Status != 'Canceled'
+    WHERE ProdOrdered.OrderID = ${orderId} AND ProdOrdered.FactoryId = ${factoryId} AND ProdOrdered.Status != 'Canceled'
     ORDER BY Quantity DESC`;
     
     try{

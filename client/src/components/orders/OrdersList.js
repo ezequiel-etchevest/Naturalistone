@@ -21,13 +21,12 @@ const ModelTr = ({o}) => {
     const dispatch = useDispatch()
 
     const handleClick = async () => {
-      await dispatch(getOrdersByID(o.OrderID))
+      dispatch(getOrdersByID(o.OrderID, o.FactoryID))
       dispatch(cleanOrderProducts())
-      await dispatch(getOrderProducts(o.OrderID))
-      navigate(`/orders/${o.OrderID}`)
+      dispatch(getOrderProducts(o.OrderID, o.FactoryID))
+      navigate(`/orders/${o.OrderID}/${o.FactoryID}`)
     }
-    
-   
+
     return(
       <Tr 
         onClick={() => handleClick()} 

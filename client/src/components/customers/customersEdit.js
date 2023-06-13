@@ -205,6 +205,7 @@ return (
         <Modal isOpen={isOpen} onClose={onClose} size={'xl'}>
         <ModalOverlay />
         <ModalContent
+        p={'15px'}
         mb={'20px'} 
         maxW={'770px'} 
         maxH={'900px'}
@@ -214,24 +215,6 @@ return (
         borderColor={'web.border'}>
         <ModalCloseButton />
         <ModalBody>
-        <Box
-          maxWidth={'1000px'}
-          maxHeight={'80vh'}
-          minHeight={'50vh'}
-          overflow={'auto'}
-          css={{
-            '&::-webkit-scrollbar': {
-              width: '0.4vw',
-            },
-            '&::-webkit-scrollbar-track': {
-              width: '6px',
-            },
-            '&::-webkit-scrollbar-thumb': {
-              background: '#E47424',
-              borderRadius: '5px',
-            },
-          }}
-        >
           <Card w={'46vw'} mb={'3vh'}>
             <CardHeader ml={'1vw'} textColor={'web.text'} fontSize={'xl'}>Edit Customer</CardHeader>
             <CardBody display={'flex'} flexDir={'row'} justifyContent={'space-around'} mt={'1vh'}>
@@ -825,7 +808,6 @@ return (
             </Button>
           </Box>
         </Flex>
-        </ Box>
         </ModalBody>
         </ModalContent>
       </Modal>
