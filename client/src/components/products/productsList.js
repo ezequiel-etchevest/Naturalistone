@@ -65,7 +65,7 @@ const ModelTr = ({e, user, allProducts, loadedCount}) => {
         urlImg ? (
           <Td maxH={'3vh'} minH={'3vh'} h={'3vh'} w={'4vw'} onClick={() => handleClickProduct()} fontSize={'xs'} textAlign={'match-parent'}>
           <div className="image-container" >
-            <img src={urlImg} className="enlarge-image" alt="Product Image" />
+            <img src={urlImg} className="enlarge-image" alt="" />
           </div>
         </Td>
         ) : (
