@@ -31,13 +31,9 @@ mainRouter.use('/api/projects', projectsRouter);
 mainRouter.use('/api/customers', customersRouter);
 mainRouter.use('/api/stats', statsRouter)
 mainRouter.use('/api/save-pdf', testRouter)
-<<<<<<<<< Temporary merge branch 1
 mainRouter.use('/api/invoiceEmail', emailInvoiceRouter)
-=========
 mainRouter.use('/api', emailRouter)
 mainRouter.use('/api/images', s3Images)
 
-
->>>>>>>>> Temporary merge branch 2
 
 module.exports = mainRouter
