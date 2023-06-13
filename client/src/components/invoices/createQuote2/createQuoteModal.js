@@ -199,7 +199,6 @@ import CreatedQuotePdf from "./createQuotePdf";
       setProgress(progress - 20)
     }
 
-    console.log(submited)
     return (
       <>
         <ButtonGroup
