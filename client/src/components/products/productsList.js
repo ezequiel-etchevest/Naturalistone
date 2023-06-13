@@ -30,7 +30,7 @@ const ModelTr = ({e, user, allProducts, loadedCount}) => {
   const productImage = useSelector(state => state.product_image);
   const navigate = useNavigate()
   const dispatch = useDispatch()
-  const name = e.ProductName
+
   
   const handleClickProduct = () => {
     dispatch(getProductById(e.ProdID))
@@ -42,13 +42,17 @@ const ModelTr = ({e, user, allProducts, loadedCount}) => {
     dispatch(patchDiscontinued(e.ProdID, flag))
     }
 
-    useEffect(() => {
-      if (!productImage[name]) {
-        dispatch(getProductImage(e.ProductName, e.Material, e.ProdID));
-      }
-    }, [allProducts, loadedCount]);
+    // useEffect(() => {
+    //   if (!productImage[name]) {
+    //     dispatch(getProductImage(e.ProductName, e.Material, e.ProdID));
+    //   }
+    // }, [allProducts, loadedCount]);
+
+    const material = e.Material.replace(/\+/g, '+')
+    const name = e.ProductName.replace(/\+/g, '+')
+    const urlImg = `https://naturalistone-images.s3.amazonaws.com/${material}/${name}/${name}_0.jpg`
   
-  return(
+    return(
     <Tr       
     cursor={'pointer'} 
     key={e.ProdNameID}
@@ -58,10 +62,10 @@ const ModelTr = ({e, user, allProducts, loadedCount}) => {
     }} 
     >
       {
-        productImage[name] ? (
+        urlImg ? (
           <Td maxH={'3vh'} minH={'3vh'} h={'3vh'} w={'4vw'} onClick={() => handleClickProduct()} fontSize={'xs'} textAlign={'match-parent'}>
           <div className="image-container" >
-            <img src={productImage[name]} className="enlarge-image" alt="Product Image" />
+            <img src={urlImg} className="enlarge-image" alt="Product Image" />
           </div>
         </Td>
         ) : (

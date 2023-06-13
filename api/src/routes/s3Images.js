@@ -16,7 +16,7 @@ const s3 = new AWS.S3();
 // Ahora puedes usar s3.getObject() u otros métodos de S3
 // Ejemplo:
 s3Images.get('/s3/:folder/:fileName', (req, res) => {
-
+    console.log('chay')
     const { folder, fileName } = req.params;
     let path = `${folder}/${fileName}/${fileName}_0.jpg`
     const params = {
@@ -37,7 +37,30 @@ s3Images.get('/s3/:folder/:fileName', (req, res) => {
     });
   });
 
-s3.listBuckets()
+  s3Images.get('/s3/all-images/:folder/:fileName', (req, res) => {
+    console.log('hola')
+    const { folder, fileName } = req.params;
+    const prefix = `${folder}/${fileName}/`;
+    const params = {
+      Bucket: 'naturalistone-images',
+      Prefix: prefix,
+    };
+  
+    s3.listObjectsV2(params, (err, data) => {
+      if (err) {
+        console.error(err);
+        return res.status(500).send('Error al obtener las imágenes de S3');
+      }
+  
+      const images = data.Contents.map(obj => ({
+        key: obj.Key,
+        url: `https://naturalistone-images.s3.amazonaws.com/${obj.Key}`,
+      }));
+  
+      res.status(200).json(images);
+    });
+  });
+
 
 
   module.exports = s3Images;

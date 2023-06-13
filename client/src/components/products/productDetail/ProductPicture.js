@@ -1,7 +1,6 @@
 import React from "react";
 import { Box } from "@chakra-ui/react";
 import CarouselProduct from "./miniCarousel";
-import Carousel from "./carousel";
 import { useEffect } from "react";
 import { getProductImages } from "../../../redux/actions-products";
 import { useDispatch } from "react-redux";
@@ -16,7 +15,6 @@ const ProductPicture = ({product}) => {
     }
   }, [product.ProductName, product.Material, dispatch]);
   
-
   return (
     <>
       <Box
