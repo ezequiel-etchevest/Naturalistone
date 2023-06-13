@@ -8,7 +8,7 @@ import {
   Center,
   Spinner 
   } from "@chakra-ui/react"
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import {BiSearch} from 'react-icons/bi'
 import '../../../assets/styleSheet.css'
@@ -23,7 +23,11 @@ const dispatch = useDispatch()
 const [inputValue, setInputValue] = useState('')
 const [customer, setCustomer] = useState('')
 
+    // useEffect(()=>{
+      
+    // },[customers])
 
+// console.log(customers)
 const handleInput = (e) =>  {
   if(e.target.value.length) {
     setInputValue(e.target.value)
