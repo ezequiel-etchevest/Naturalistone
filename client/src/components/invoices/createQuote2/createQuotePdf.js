@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { PDFDocument, rgb, degrees } from 'pdf-lib';
-import { Box, Center, Spinner, Button } from '@chakra-ui/react';
+import { Box, Center, Spinner, Button, Flex } from '@chakra-ui/react';
 import axios from 'axios';
-
+import pending_approval from '../../../assets/pending_approval.png'
 
 const CreatedQuotePdf = ({formData, user, authFlag}) => {
 
@@ -92,18 +92,20 @@ const CreatedQuotePdf = ({formData, user, authFlag}) => {
   page.drawText(`${deliveryMethod}`, { x: 439, y: 508, size: 10 }) 
   page.drawText(`${paymentTerms}`, { x: 524, y: 508, size: 10 }) 
 
-  // if(authFlag === true ) {
-  //   const pngDims = pngImage.scale(0.12)
-  //   const pngImage = await pdfDoc.embedPng(pngImageBytes)
-  //   const pngImageBytes = await fetch(approvalPic).then((res) => res.arrayBuffer())
-  //   page.drawImage(pngImage, {
-  //     x: page.getWidth() / 2 - pngDims.width / 3 + 50,
-  //     y: page.getHeight() / 7 - pngDims.height + 250,
-  //     width: pngDims.width,
-  //     height: pngDims.height,
-  //     rotate: degrees(55)
-  //   })
-  // }
+  if(authFlag === true ) {
+    const pngImageBytes = await fetch(pending_approval).then((res) => res.arrayBuffer())
+    const pngImage = await pdfDoc.embedPng(pngImageBytes)
+    const pngDims = pngImage.scale(0.5)
+    
+   
+    page.drawImage(pngImage, {
+      x: page.getWidth() / 2 - pngDims.width / 3 + 50,
+      y: page.getHeight() / 7 - pngDims.height + 250,
+      width: pngDims.width,
+      height: pngDims.height,
+      rotate: degrees(30)
+    })
+  }
 
 // //This line uses the forEach method to iterate over each key-value pair in the array created by Object.
 // //entries. For each iteration, the key (variableName) and value (element) are destructured from the pair and
@@ -171,21 +173,25 @@ mappedProducts.forEach((product, index) => {
     {
       Object.entries(posted_quote).length ?
         posted_quote.Naturali_Invoice && posted_quote.InsertDate ?
-        <Box h={'85vh'} w={'58vw'} border={'2px solid red'} display={'flex'} flexDir={'column'} justifyContent={'space-between'}>
-          <Box
-            as="object"
-            // data={pdfInfo}
-            type="application/pdf"
-            width="82%"
-            height="98%"
-            position="absolute"
-            top={0}
-            left={0}
-            border={'2px solid green'}
-          />
-          <Box border={'2px solid blue'} w={'8vw'} h={'10vh'}display={'flex'}>
-            <Button>SEND EMAIL</Button>
-          </Box>
+        <Box h={'85vh'} w={'58vw'}>
+          <Flex h="100%" flexDir="row">
+            <Box
+              as="object"
+              data={pdfInfo}
+              type="application/pdf"
+              width="82%"
+              height="98%"
+              position="relative"
+            />
+            <Box
+              position="absolute"
+              bottom="3vh"
+              right="2vw"
+              display={'flex'}
+            >
+              <Button>SEND EMAIL</Button>
+            </Box>
+          </Flex>
         </Box>
        :
         <Center>
