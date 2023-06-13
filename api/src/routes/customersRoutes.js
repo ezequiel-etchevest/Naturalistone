@@ -1,13 +1,11 @@
 const express = require('express')
 const customersRouter = express.Router()
 const mysqlConnection = require('../db');
-const CustomerFilters = require('../Controllers/customerController');
+const CustomerFilters = require('../Controllers/customerController')
 const listBuckets = require('./testS3Mitu');
 
-
-
 customersRouter.get('/', async function(req, res){
-    // listBuckets();
+    listBuckets();
     const { search } = req.query
 
     let query_ = `
@@ -57,11 +55,12 @@ customersRouter.get('/:id', async function(req, res){
 });
 
 customersRouter.post('/', async function(req, res){
-    //hay que agregar el sellerID, el vendedor encargado de cargar al cliente.
-    const {Company, Phone, Email, DiscountID, Contact_Name, Billing_Address, ZipCode, State, Billing_City, Billing_ZipCode, Billing_State} = req.body
 
-    query_ = `INSERT INTO Customers (Company, Phone, Email, DiscountID, Contact_Name, Billing_Address, ZipCode, State, Billing_City, Billing_ZipCode, Billing_State) VALUES ("${Company}", "${Phone}", "${Email}", "${DiscountID}", "${Contact_Name}", "${Billing_Address}", "${ZipCode}", "${State}, "${Billing_City}, "${Billing_ZipCode}, "${Billing_State}")`
-            
+    //hay que agregar el sellerID, el vendedor encargado de cargar al cliente.
+    const {Company, Phone, Email, DiscountID, Contact_Name, Address, Billing_Address, ZipCode, State, Billing_City, Billing_ZipCode, Billing_State} = req.body
+
+    query_ = `INSERT INTO Customers (Company, Phone, Email, DiscountID, Contact_Name, Address, Billing_Address, ZipCode, State, Billing_City, Billing_ZipCode, Billing_State) VALUES ("${Company}", "${Phone}", "${Email}", "${DiscountID}", "${Contact_Name}", "${Address}", "${Billing_Address}", "${ZipCode}", "${State}, "${Billing_City}, "${Billing_ZipCode}, "${Billing_State}")`
+
     try{
          mysqlConnection.query(query_, function(error, results, fields){
             if(error) throw error;
@@ -81,23 +80,7 @@ customersRouter.post('/', async function(req, res){
 customersRouter.patch('/:id', async function(req, res){
 
     const {id} = req.params
-    const { 
-        Contact_Name,
-        Company,
-        Company_Position,
-        Phone,
-        Email,
-        Address,
-        ZipCode,
-        City,
-        State,
-        DiscountID,
-        Billing_Address,
-        Billing_City,
-        Billing_ZipCode,
-        Billing_State,
-        DiscountRate
-    } = req.body
+    const { Contact_Name, Company, Company_Position, Phone, Email, DiscountID, Billing_Address, Billing_City, Billing_ZipCode, Billing_State, DiscountRate} = req.body
     
     const parsedDiscount = () => {
         if(DiscountRate === '15') return 4
@@ -110,11 +93,7 @@ customersRouter.patch('/:id', async function(req, res){
                 Company = "${Company}", 
                 Company_Position = "${Company_Position}", 
                 Phone = "${Phone}", 
-                Email = "${Email}",
-                Address = "${Address}",
-                ZipCode = "${ZipCode}",
-                City = "${City}",
-                State = "${State}",
+                Email = "${Email}", 
                 DiscountID = "${parsedDiscount()}", 
                 Billing_Address = "${Billing_Address}", 
                 Billing_City = "${Billing_City}", 

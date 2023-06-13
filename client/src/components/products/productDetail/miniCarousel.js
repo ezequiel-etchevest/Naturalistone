@@ -12,23 +12,23 @@ const CarouselProduct = () => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const productImages = useSelector(state => state.product_images);
   const [images, setImages] = useState([]);
-  
-  useEffect(() => {
-    setImages([])
-    const fetchImages = async () => {
-      const imageUrls = await Promise.all(
-        productImages.map(data => `data:image/jpeg;base64,${data}`)
-      );
-      setImages(imageUrls);
-    };
-    if(productImages) fetchImages();
-  }, [productImages]);
+  console.log(productImages)
+  // useEffect(() => {
+  //   setImages([])
+  //   const fetchImages = async () => {
+  //     const imageUrls = await Promise.all(
+  //       productImages.map(data => `data:image/jpeg;base64,${data}`)
+  //     );
+  //     setImages(imageUrls);
+  //   };
+  //   if(productImages) fetchImages();
+  // }, [productImages]);
 
 
   const settings = {
     infinite: true,
     speed: 500,
-    slidesToShow: images.length === 1 ? 1 : 2,
+    slidesToShow: productImages.length === 1 ? 1 : 2,
     slidesToScroll: 1,
     adaptiveHeight: false,
   };
@@ -45,30 +45,12 @@ const CarouselProduct = () => {
     <>
     <Box px="1vh">
       <Slider {...settings}>
-      {/* Para pruebas en local, descomentar */}
-        {/* <Box p="1vh" h="23vh">
-          <img
-          onClick={onOpen}
-          src={img1}
-          alt={`Image `}
-          style={{ height: '100%', objectFit: 'cover', margin: '0 auto' }}
-          />
-        </Box>
-        <Box p="1vh" h="23vh">
-          <img
-          onClick={onOpen}
-          src={img1}
-          alt={`Image `}
-          style={{ height: '100%', objectFit: 'cover', margin: '0 auto' }}
-          />
-        </Box> */}
-        {/* Para pruebas en local, comentar */}
         {
-           images.map((url, i) => (
+           productImages.map((img, i) => (
             <Box key={i} p="1vh" h="23vh">
               <img
                 onClick={onOpen}
-                src={url}
+                src={img.url}
                 alt={`Image ${i}`}
                 style={{ height: '100%', objectFit: 'cover', margin: '0 auto' }} 
                 />
@@ -94,32 +76,11 @@ const CarouselProduct = () => {
             <ModalBody w={'100%'} h={'100%'}>
               <Box>
                 <Slider {...settingsModal}>
-                  {/* <Box px='0.5vw'>
-                    <img
-                      src={img1}
-                      alt={`Image `}
-                      style={{ height: '100%', objectFit: 'cover', margin: '0 auto' }}
-                    />
-                  </Box>
-                  <Box px='0.5vw'>
-                    <img
-                      src={img1}
-                      alt={`Image `}
-                      style={{ height: '100%', objectFit: 'cover', margin: '0 auto' }}
-                    />
-                  </Box>
-                  <Box px='0.5vw'>
-                    <img
-                      src={img1}
-                      alt={`Image `}
-                      style={{ height: '100%', objectFit: 'cover', margin: '0 auto' }}
-                    />
-                  </Box> */}
                   {
-                    images.map((url, i) => (
+                    productImages.map((img, i) => (
                       <Box key={i} p="1vh" h="70vh">
                         <img
-                          src={url}
+                          src={img.url}
                           alt={`Image ${i}`}
                           style={{ height: '100%', objectFit: 'cover', margin: '0 auto' }} 
                           />

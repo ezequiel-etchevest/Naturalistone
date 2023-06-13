@@ -11,42 +11,42 @@ statsRouter.get('/', async function(req, res){
     const endDate = new Date(year, month, 0).toISOString().split('T')[0];
     const today = new Date().toISOString().split('T')[0]
 
-    query_1A = `SELECT ROUND(SUM(Value), 2) AS TotalValue FROM Sales WHERE InvoiceDate BETWEEN "${startDate}" AND "${endDate}" AND Status != "Canceled"`;
-    query_2A = `SELECT COUNT(*) AS InvoicesNumber FROM Sales WHERE InvoiceDate BETWEEN "${startDate}" AND "${endDate}" AND Status != "Canceled"`;
-    query_3A = `SELECT ROUND(AVG(Value), 2) AS AvgValue FROM Sales WHERE InvoiceDate BETWEEN "${startDate}" AND "${endDate}" AND Status != "Canceled"`;
+    query_1A = `SELECT ROUND(SUM(Value), 2) AS TotalValue FROM Sales WHERE InvoiceDate BETWEEN "${startDate}" AND "${endDate}" AND Status != "Canceled" AND Sales.Status != 'Pending_Approval' `;
+    query_2A = `SELECT COUNT(*) AS InvoicesNumber FROM Sales WHERE InvoiceDate BETWEEN "${startDate}" AND "${endDate}" AND Status != "Canceled" AND Sales.Status != 'Pending_Approval' `;
+    query_3A = `SELECT ROUND(AVG(Value), 2) AS AvgValue FROM Sales WHERE InvoiceDate BETWEEN "${startDate}" AND "${endDate}" AND Status != "Canceled" AND Sales.Status != 'Pending_Approval' `;
     query_4A = `SELECT DISTINCT YEAR(InvoiceDate) AS dates FROM Sales ORDER BY InvoiceDate DESC`;
     query_5A = `SELECT Sales.Naturali_Invoice, Sales.Value, Sales.InvoiceDate, Sales.SellerID, Sales.Payment_Stamp, Payments.idPayments,
                GROUP_CONCAT(
                 CONCAT(Payments.idPayments,';',Payments.Amount,';',Payments.Date))AS Payments FROM Sales 
                 LEFT JOIN Payments ON Sales.Naturali_Invoice = Payments.InvoiceID 
-                WHERE InvoiceDate BETWEEN "${startDate}" AND "${today}" AND Sales.Status != "Canceled"
+                WHERE InvoiceDate BETWEEN "${startDate}" AND "${today}" AND Sales.Status != "Canceled" AND Sales.Status != 'Pending_Approval' 
                 GROUP BY Sales.Naturali_Invoice
                 ORDER BY Sales.Naturali_Invoice DESC`
     query_6A = `SELECT SUM(Payments.Amount) AS total_amount, Payments.*, Sales.SellerID, Sales.Status FROM Payments
                 LEFT JOIN Sales ON Payments.InvoiceID = Sales.Naturali_Invoice
-                WHERE Payments.Date BETWEEN '${startDate}' AND '${endDate}' AND Sales.Status != 'Canceled'`
+                WHERE Payments.Date BETWEEN '${startDate}' AND '${endDate}' AND Sales.Status != 'Canceled' AND Sales.Status != 'Pending_Approval' `
     query_7A = `SELECT Payments.*, Sales.SellerID, Sales.Status FROM Payments
                 LEFT JOIN Sales ON Payments.InvoiceID = Sales.Naturali_Invoice
-                WHERE Payments.Date BETWEEN '${startDate}' AND '${endDate}' AND Sales.Status != 'Canceled'
+                WHERE Payments.Date BETWEEN '${startDate}' AND '${endDate}' AND Sales.Status != 'Canceled' AND Sales.Status != 'Pending_Approval' 
                 ORDER BY Sales.Naturali_Invoice DESC`
 
                
-    query_1 = `SELECT ROUND(SUM(Value), 2) AS TotalValue FROM Sales WHERE SellerID = ${sellerID} AND InvoiceDate BETWEEN "${startDate}" AND "${endDate}" AND Status != "Canceled"`;
-    query_2 = `SELECT COUNT(*) AS InvoicesNumber FROM Sales WHERE SellerID = ${sellerID} AND InvoiceDate BETWEEN "${startDate}" AND "${endDate}" AND Status != "Canceled"`;
-    query_3 = `SELECT ROUND(AVG(Value), 2) AS AvgValue FROM Sales WHERE SellerID = ${sellerID} AND InvoiceDate BETWEEN "${startDate}" AND "${endDate}" AND Status != "Canceled"`;
+    query_1 = `SELECT ROUND(SUM(Value), 2) AS TotalValue FROM Sales WHERE SellerID = ${sellerID} AND InvoiceDate BETWEEN "${startDate}" AND "${endDate}" AND Status != "Canceled" AND Sales.Status != 'Pending_Approval' `;
+    query_2 = `SELECT COUNT(*) AS InvoicesNumber FROM Sales WHERE SellerID = ${sellerID} AND InvoiceDate BETWEEN "${startDate}" AND "${endDate}" AND Status != "Canceled" AND Sales.Status != 'Pending_Approval' `;
+    query_3 = `SELECT ROUND(AVG(Value), 2) AS AvgValue FROM Sales WHERE SellerID = ${sellerID} AND InvoiceDate BETWEEN "${startDate}" AND "${endDate}" AND Status != "Canceled" AND Sales.Status != 'Pending_Approval' `;
     query_4 = `SELECT DISTINCT YEAR(InvoiceDate) AS dates FROM Sales WHERE SellerID = ${sellerID} ORDER BY InvoiceDate DESC`;
     query_5 = `SELECT Sales.Naturali_Invoice, Sales.Value, Sales.InvoiceDate, Sales.SellerID, Sales.Payment_Stamp, Payments.idPayments,
                 GROUP_CONCAT(
                 CONCAT(Payments.idPayments,';',Payments.Amount,';',Payments.Date))AS Payments FROM Sales 
                 LEFT JOIN Payments ON Sales.Naturali_Invoice = Payments.InvoiceID AND Sales.SellerID = '${sellerID}' 
-                WHERE InvoiceDate BETWEEN "${startDate}" AND "${endDate}" AND Sales.Status != "Canceled" AND Sales.SellerID = '${sellerID}' 
+                WHERE InvoiceDate BETWEEN "${startDate}" AND "${endDate}" AND Sales.Status != "Canceled" AND Sales.Status != 'Pending_Approval'  AND Sales.SellerID = '${sellerID}' 
                 GROUP BY Sales.Naturali_Invoice ORDER BY Sales.Naturali_Invoice DESC`
     query_6 = `SELECT SUM(Payments.Amount) AS total_amount, Payments.*, Sales.SellerID, Sales.Status FROM Payments
                 LEFT JOIN Sales ON Payments.InvoiceID = Sales.Naturali_Invoice
-                WHERE Sales.SellerID = '${sellerID}' AND Payments.Date BETWEEN '${startDate}' AND '${endDate}' AND Sales.Status != 'Canceled'`
+                WHERE Sales.SellerID = '${sellerID}' AND Payments.Date BETWEEN '${startDate}' AND '${endDate}' AND Sales.Status != 'Canceled' AND Sales.Status != 'Pending_Approval' `
     query_7 = `SELECT Payments.*, Sales.SellerID, Sales.Status FROM Payments
                 LEFT JOIN Sales ON Payments.InvoiceID = Sales.Naturali_Invoice
-                WHERE Sales.SellerID = '${sellerID}' AND Payments.Date BETWEEN '${startDate}' AND '${endDate}' AND Sales.Status != 'Canceled' 
+                WHERE Sales.SellerID = '${sellerID}' AND Payments.Date BETWEEN '${startDate}' AND '${endDate}' AND Sales.Status != 'Canceled' AND Sales.Status != 'Pending_Approval' 
                 ORDER BY Sales.Naturali_Invoice DESC`
 
     let promisesA = [query_1A, query_2A, query_3A, query_4A, query_5A, query_6A, query_7A].map(query => new Promise((resolve, reject) => {
