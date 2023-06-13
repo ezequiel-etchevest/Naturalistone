@@ -24,7 +24,7 @@ export function getOrders() {
 
 export function getOrdersByID(orderId, factoryId) {
     return async function(dispatch){
-      try{ 
+      try{  
           let {data} = await axios.get(`/orders/${orderId}/${factoryId}`)
           dispatch(
           {
