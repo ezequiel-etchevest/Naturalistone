@@ -29,10 +29,9 @@ export function CreateNewProject({customer}) {
   const handleSubmit = () => {
     setErrors({})
     let newErrors = validateEmptyInputsProjects(formData)
-    let newErrorsComp = validateCompletedInputsProject(formData)
     setErrors(newErrors)
-    
-    if(Object.entries(newErrors).length || Object.entries(newErrorsComp).length){
+
+    if(Object.entries(newErrors).length){
       if(!toast.isActive(toastId)){
         return toast(({
           id: toastId,

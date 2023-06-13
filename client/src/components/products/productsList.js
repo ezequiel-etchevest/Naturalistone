@@ -20,8 +20,6 @@ import{ ImCheckboxChecked, ImCheckboxUnchecked } from 'react-icons/im';
 import { patchDiscontinued } from '../../redux/actions-products';
 import '../../assets/styleImgs.css';
 import { getProductImage } from '../../redux/actions-products';
-import img from '../../assets/ProductPicture/354-1.jpg'
-
 
 
 const ModelTr = ({e, user, allProducts, loadedCount}) => {
@@ -30,11 +28,9 @@ const ModelTr = ({e, user, allProducts, loadedCount}) => {
   const a = e.Discontinued_Flag === 'True' ? true : false 
   const [flag, setFlag] = useState(a)
   const productImage = useSelector(state => state.product_image);
-  
-  const [images, setImages] = useState([]);
   const navigate = useNavigate()
   const dispatch = useDispatch()
-  const name = e.ProductName
+
   
   const handleClickProduct = () => {
     dispatch(getProductById(e.ProdID))
@@ -47,24 +43,16 @@ const ModelTr = ({e, user, allProducts, loadedCount}) => {
     }
 
     // useEffect(() => {
-    //   if (!productImage[name]?.length) {
+    //   if (!productImage[name]) {
     //     dispatch(getProductImage(e.ProductName, e.Material, e.ProdID));
     //   }
     // }, [allProducts, loadedCount]);
-  // useEffect(() => {
-  //   const fetchImages = async () => {
-  //     if (productImage[name] && productImage[name].length > 0) {
-  //       const imageUrls = await Promise.all(
-  //         productImage[name].map((data) => `data:image/jpeg;base64,${data}`)
-  //       );
-  //       setImages(imageUrls);
-  //     }
-  //   };
-  //   fetchImages();
-  // }, [productImage, allProducts]);
 
-
-  return(
+    const material = e.Material.replace(/\+/g, '+')
+    const name = e.ProductName.replace(/\+/g, '+')
+    const urlImg = `https://naturalistone-images.s3.amazonaws.com/${material}/${name}/${name}_0.jpg`
+  
+    return(
     <Tr       
     cursor={'pointer'} 
     key={e.ProdNameID}
@@ -73,27 +61,19 @@ const ModelTr = ({e, user, allProducts, loadedCount}) => {
       color: 'logo.orange'
     }} 
     >
-      {/* Descomentar para pruebas en el local -> */}
-      {/* <Td maxH={'3vh'} minH={'3vh'} h={'3vh'} w={'4vw'} onClick={() => handleClickProduct()} fontSize={'xs'} textAlign={'match-parent'}>
-        <div className="image-container" >
-          <img src={img} className="enlarge-image" alt="Product Image" />
-        </div>
-      </Td> */}
-      {/* Comentar para pruebas en el local -> */}
-      {/* {
-        productImage[name] ? (
+      {
+        urlImg ? (
           <Td maxH={'3vh'} minH={'3vh'} h={'3vh'} w={'4vw'} onClick={() => handleClickProduct()} fontSize={'xs'} textAlign={'match-parent'}>
           <div className="image-container" >
-            <img src={`data:image/jpeg;base64,${productImage[name][0]}`} className="enlarge-image" alt="Product Image" />
+            <img src={urlImg} className="enlarge-image" alt="Product Image" />
           </div>
         </Td>
-        ) : ( */}
+        ) : (
            <Td maxH={'3vh'} minH={'3vh'} h={'3vh'} w={'4vw'} onClick={() => handleClickProduct()} fontSize={'xs'} textAlign={'match-parent'}>
          <div className="image-container" >
           </div>
         </Td>
-        {/* )   
-      } */}
+        )}
       <Td maxH={'6vh'} maxW={'3vw'} onClick={() => handleClickProduct()} fontSize={'xs'} textAlign={'match-parent'}>{e.ProductName}</Td>
       <Td maxH={'6vh'} maxW={'6vw'} onClick={() => handleClickProduct()} fontSize={'xs'} textAlign={'center'}>{e.Material}</Td>
       <Td maxH={'6vh'} maxW={'3vw'} onClick={() => handleClickProduct()} fontSize={'xs'} textAlign={'center'}>{e.Size}</Td>
