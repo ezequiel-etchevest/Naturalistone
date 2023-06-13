@@ -6,18 +6,19 @@ import {
   useDisclosure ,
   ButtonGroup,
   IconButton,
-  Button
+  Button,
+  Center,
+  Spinner
 } from '@chakra-ui/react'
-
-import LoadPDF from '../../pdf/pdfModify'
-import LoadPdfPaid from '../../pdf/pdfPaidFunction'
+import LoadPdf from '../../pdf/pdfPaidFunction'
 import { MdOpenInNew } from 'react-icons/md'
 
 
-export default function ModalPDF({invoice, payments}) {
-  
+export default function ModalPDF({invoice}) {
+
   const { isOpen, onOpen, onClose } = useDisclosure()
   const id = invoice[0].Naturali_Invoice
+  const stamp = invoice[0].Payment_Stamp
 
   return (
     <>
@@ -56,11 +57,12 @@ export default function ModalPDF({invoice, payments}) {
             
           <ModalBody w={'100%'} h={'100%'}>
             {
-            invoice[0].Payment_Stamp != 0 ? (
-              <LoadPdfPaid idpdf={id}/>
-              ):(
-              <LoadPDF idpdf={id} />
-              )
+             !invoice.length ?
+              <Center>
+                <Spinner thickness={'4px'} size={'xl'} color={'logo.orange'}/>
+              </Center>
+              :
+              <LoadPdf idpdf={id} stamp={stamp}/>
             }
           </ModalBody>
         </ModalContent>
