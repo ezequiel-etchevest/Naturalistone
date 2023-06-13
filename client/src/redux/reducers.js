@@ -429,8 +429,12 @@ function rootReducer (state = intialState, action) {
         case GET_PRODUCT_IMAGE: 
           return {
             ...state,
-            product_image: action.payload
-          }
+            product_image: {
+                 ...state.product_image,
+                    [action.payload.prodName]: action.payload.url
+                  }
+                }   
+          
         // case GET_PRODUCT_IMAGE:
         //   return{
         //     ...state,

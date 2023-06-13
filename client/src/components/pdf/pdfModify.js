@@ -4,7 +4,7 @@ import { Box } from '@chakra-ui/react';
 import axios from 'axios'
 
 const LoadPDF = ({idpdf}) => {
-
+    console.log(idpdf)
     const [pdfInfo, setPdfInfo] = useState([]);
     const viewer = useRef(null);
     const filename = idpdf
