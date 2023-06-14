@@ -57,10 +57,26 @@ customersRouter.get('/:id', async function(req, res){
 customersRouter.post('/', async function(req, res){
 
     //hay que agregar el sellerID, el vendedor encargado de cargar al cliente.
-    const {Company, Phone, Email, DiscountID, Contact_Name, Address, Billing_Address, ZipCode, State, Billing_City, Billing_ZipCode, Billing_State} = req.body
+    const {
+        Company,
+        Phone,
+        Email,
+        DiscountID,
+        Contact_Name,
+        Address,
+        Billing_Address,
+        ZipCode, 
+        State, 
+        Billing_City, 
+        Billing_ZipCode,
+        Billing_State,
+        Company_Position,
+        City
+    } = req.body
 
-    query_ = `INSERT INTO Customers (Company, Phone, Email, DiscountID, Contact_Name, Address, Billing_Address, ZipCode, State, Billing_City, Billing_ZipCode, Billing_State) VALUES ("${Company}", "${Phone}", "${Email}", "${DiscountID}", "${Contact_Name}", "${Address}", "${Billing_Address}", "${ZipCode}", "${State}, "${Billing_City}, "${Billing_ZipCode}, "${Billing_State}")`
-
+    query_ = `INSERT INTO Customers (Company, Phone, Email, DiscountID, Contact_Name, Address, Billing_Address, ZipCode, State, Billing_City, Billing_ZipCode, Billing_State, Company_Position, City) 
+    VALUES ("${Company}", "${Phone}", "${Email}", "${DiscountID}", "${Contact_Name}", "${Address}", "${Billing_Address}", "${ZipCode}", "${State}", "${Billing_City}", "${Billing_ZipCode}", "${Billing_State}", "${Company_Position}", "${City}")`;
+    
     try{
          mysqlConnection.query(query_, function(error, results, fields){
             if(error) throw error;
