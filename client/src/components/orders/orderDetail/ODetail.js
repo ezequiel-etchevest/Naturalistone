@@ -4,48 +4,48 @@ import OrderProductList from './OrderProductList'
 
 const ODetail = ({order, order_products}) => {
 
-    return(
+  return(
+    <Box
+      bg={'web.bg'}  
+      ml={'16vw'} 
+      h={'92vh'}
+      display={'flex'}
+      flexDir={'column'}
+      >
       <Box
-        bg={'web.bg'}  
-        ml={'16vw'} 
-        h={'92vh'}
         display={'flex'}
         flexDir={'column'}
         >
-        <Box
-          display={'flex'}
-          flexDir={'column'}
-          >
-            {
-              Object.entries(order).length ? (
-                <OrderDetailList order={order}/>
-                ) : (
-                <Center ml={'16vh'} bg={'web.bg'} h={'92vh'}>
-                  <Spinner thickness={'4px'} size={'xl'} color={'logo.orange'}/>
-                </Center>
-                )
-            }
-        <Box
-            mt={'3vh'}
-            ml={'2vw'}
-            mr={'2vw'}
-            pt={'1.5vw'}
-            pb={'1.5vw'} 
-            border={'1px solid'} 
-            rounded={'md'} 
-            borderColor={'web.border'} 
-            bg={'web.sideBar'}
-            h={'40vh'}
-            w={'76vw'}>
-            {
-              order_products.length ? (
-                <OrderProductList order_products={order_products}  />
-              ) : (
-                <Center w={'full'} h={'full'}>
-                <Text userSelect={'none'} color={'web.border'} fontSize={'2.3vh'}>No products linked to this order</Text>
-                </Center>
-              )
-            }
+        {
+          Object.entries(order).length ? (
+            <OrderDetailList order={order}/>
+            ):(
+            <Center ml={'16vh'} bg={'web.bg'} h={'92vh'}>
+              <Spinner thickness={'4px'} size={'xl'} color={'logo.orange'}/>
+            </Center>
+            )
+        }
+      <Box
+        mt={'3vh'}
+        ml={'2vw'}
+        mr={'2vw'}
+        pt={'1.5vw'}
+        pb={'1.5vw'} 
+        border={'1px solid'} 
+        rounded={'md'} 
+        borderColor={'web.border'} 
+        bg={'web.sideBar'}
+        h={'40vh'}
+        w={'76vw'}>
+        {
+          order_products.length ? (
+            <OrderProductList order_products={order_products}  />
+          ) : (
+            <Center w={'full'} h={'full'}>
+            <Text userSelect={'none'} color={'web.border'} fontSize={'2.3vh'}>No products linked to this order</Text>
+            </Center>
+          )
+        }
         </Box>
         </Box>
         {/* <Box
