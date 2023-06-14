@@ -13,7 +13,7 @@ export function BillingInfo({formData, setFormData, validate, errors, setErrors,
         </Box>
         <Box w={'22vw'} display={'flex'} flexDir={'row'} justifyContent={'space-between'}>
           <FormControl>
-          <FormLabel textColor={'web.text2'} fontSize={'sm'} fontWeight={'normal'}>Billing Address</FormLabel>
+          <FormLabel textColor={'web.text2'} fontSize={'sm'} name={'billingaddress'} fontWeight={'normal'}>Billing Address</FormLabel>
             <Input
               mb={'0.5vh'}
               variant="unstyled"
@@ -36,7 +36,7 @@ export function BillingInfo({formData, setFormData, validate, errors, setErrors,
         </Box>
         <Box w={'22vw'} display={'flex'} flexDir={'row'} justifyContent={'space-between'}>
           <FormControl>
-          <FormLabel textColor={'web.text2'} fontSize={'sm'}>City</FormLabel>
+          <FormLabel textColor={'web.text2'} name={'billingcity'} fontSize={'sm'}>City</FormLabel>
             <Input
               mb={'0.5vh'}
               variant="unstyled"
@@ -59,7 +59,7 @@ export function BillingInfo({formData, setFormData, validate, errors, setErrors,
         </Box>
         <Box w={'22vw'} display={'flex'} flexDir={'row'} justifyContent={'space-between'}>
         <FormControl>
-          <FormLabel textColor={'web.text2'} fontSize={'sm'}>State</FormLabel>
+          <FormLabel textColor={'web.text2'} name={'billingstate'} fontSize={'sm'}>State</FormLabel>
             <AutocompleteState 
               formData={formData}
               setFormData={setFormData}
@@ -72,7 +72,7 @@ export function BillingInfo({formData, setFormData, validate, errors, setErrors,
         </Box>
         <Box w={'22vw'} display={'flex'} flexDir={'row'} justifyContent={'space-between'}>
           <FormControl>
-          <FormLabel textColor={'web.text2'} fontSize={'sm'}>Zip Code</FormLabel>
+          <FormLabel textColor={'web.text2'} name={'billingzipcode'} fontSize={'sm'}>Zip Code</FormLabel>
             <Input
               mb={'0.5vh'}
               variant="unstyled"

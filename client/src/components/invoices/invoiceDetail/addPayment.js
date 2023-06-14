@@ -42,8 +42,6 @@ const AddPayment = ({pendingAmount, cardPaymentAmount, totalAmount}) => {
       Method : '',
       Amount: 0.00})
 
-  console.log(input)
-
   useEffect(() => {
       if(totalAmount < 5000){
          setIsOptionDisabled(false)
