@@ -1,19 +1,11 @@
 import { 
-    Button,
+    Box,
     Modal,
     ModalOverlay,
     ModalContent,
     ModalHeader,
-    ModalFooter,
-    Text,
     ModalBody,
     ModalCloseButton,
-    useDisclosure,
-    IconButton,
-    Input,
-    Divider,
-    HStack,
-    Box,
     TableContainer,
     Table,
     Thead,
@@ -40,7 +32,7 @@ const StatsModal = ({isOpenModal, onCloseModal}) => {
     console.log(e)
     navigate(`/quotes/${e.Naturali_Invoice}`)
   }
-
+  console.log(stats)
     return (
         <>
           <Modal
@@ -104,7 +96,6 @@ const StatsModal = ({isOpenModal, onCloseModal}) => {
                           <Tr h={'6vh'}>
                             <Th color={'web.text2'} textAlign={'center'} fontSize={'x-small'}>Nº Quote</Th>
                             <Th color={'web.text2'} textAlign={'center'} fontSize={'x-small'}>Value quote</Th>
-                            {/* <Th color={'web.text2'} textAlign={'center'} fontSize={'x-small'}>Paid %</Th> */}
                             <Th color={'web.text2'} textAlign={'center'} fontSize={'x-small'}>Date</Th>
                           </Tr>
                       </Thead>
@@ -127,7 +118,6 @@ const StatsModal = ({isOpenModal, onCloseModal}) => {
                                 >
                                 <Td textAlign={'center'}>{e.Naturali_Invoice}</Td>
                                 <Td textAlign={'center'}>$ {e.Value.toLocaleString('en-US')}</Td>
-                                <Td textAlign={'center'}>{e.Status}</Td>
                                 <Td textAlign={'center'}>{e.InvoiceDate.slice(0, 10)}</Td>
                               </Tr>
                             ))
