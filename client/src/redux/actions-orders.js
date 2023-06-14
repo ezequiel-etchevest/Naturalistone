@@ -22,10 +22,10 @@ export function getOrders() {
 }
 }
 
-export function getOrdersByID(id) {
+export function getOrdersByID(orderId, factoryId) {
     return async function(dispatch){
-      try{ 
-          let {data} = await axios.get(`/orders/${id}`)
+      try{  
+          let {data} = await axios.get(`/orders/${orderId}/${factoryId}`)
           dispatch(
           {
               type: GET_ORDERS_BY_ID,
@@ -38,10 +38,10 @@ export function getOrdersByID(id) {
   }
 }
 
-export function getOrderProducts(id) {
+export function getOrderProducts(orderId, factoryId) {
   return async function(dispatch){
     try{ 
-        let {data} = await axios.get(`/orders/products/${id}`)
+        let {data} = await axios.get(`/orders/products/${orderId}/${factoryId}`)
         dispatch(
         {
             type: GET_ORDERS_PRODUCTS,
