@@ -31,6 +31,6 @@ mainRouter.use('/api/projects', projectsRouter);
 mainRouter.use('/api/customers', customersRouter);
 mainRouter.use('/api/stats', statsRouter)
 mainRouter.use('/api/save-pdf', testRouter)
-mainRouter.use('/api', emailRouter)
+mainRouter.use('/api', emailInvoiceRouter)
 
 module.exports = mainRouter
