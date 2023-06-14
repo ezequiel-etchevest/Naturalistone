@@ -32,8 +32,6 @@ mainRouter.use('/api/customers', customersRouter);
 mainRouter.use('/api/stats', statsRouter)
 mainRouter.use('/api/save-pdf', testRouter)
 mainRouter.use('/api', emailInvoiceRouter)
-mainRouter.use('/api/invoiceEmail', emailInvoiceRouter)
-// mainRouter.use('/api', emailRouter)
 mainRouter.use('/api/images', s3Images)
 
 
