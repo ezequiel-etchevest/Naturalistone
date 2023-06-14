@@ -14,7 +14,7 @@ export function CustomerInfo({formData, setFormData, validate, errors, setErrors
         </Box>
         <Box w={'22vw'} display={'flex'} flexDir={'row'} pt={'4vh'} justifyContent={'space-between'}>
           <FormControl>
-          <FormLabel textColor={'web.text2'} fontSize={'sm'} fontWeight={'normal'}>Full Name</FormLabel>
+          <FormLabel textColor={'web.text2'} fontSize={'sm'} name={'name'} fontWeight={'normal'}>Full Name</FormLabel>
             <Input
               mb={'0.5vh'}
               variant="unstyled"
@@ -37,7 +37,7 @@ export function CustomerInfo({formData, setFormData, validate, errors, setErrors
         </Box>
         <Box w={'22vw'} display={'flex'} flexDir={'row'} justifyContent={'space-between'}>
           <FormControl>
-          <FormLabel textColor={'web.text2'} fontSize={'sm'}>Email</FormLabel>
+          <FormLabel textColor={'web.text2'}name={'email'}  fontSize={'sm'}>Email</FormLabel>
             <Input
               mb={'0.5vh'}
               variant="unstyled"
@@ -60,7 +60,7 @@ export function CustomerInfo({formData, setFormData, validate, errors, setErrors
         </Box>
         <Box w={'22vw'} display={'flex'} flexDir={'row'} justifyContent={'space-between'}>
           <FormControl>
-          <FormLabel textColor={'web.text2'} fontSize={'sm'}>Phone</FormLabel>
+          <FormLabel textColor={'web.text2'}name={'phone'} fontSize={'sm'}>Phone</FormLabel>
             <Input
               mb={'0.5vh'}
               variant="unstyled"

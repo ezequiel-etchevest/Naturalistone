@@ -36,7 +36,7 @@ export function AddressInfo({formData, setFormData, validate, errors, setErrors,
         </Box>
         <Box w={'22vw'} display={'flex'} flexDir={'row'} justifyContent={'space-between'}>
           <FormControl>
-          <FormLabel textColor={'web.text2'} fontSize={'sm'} fontWeight={'normal'}>Address</FormLabel>
+          <FormLabel textColor={'web.text2'} fontSize={'sm'} name={'address'}  fontWeight={'normal'}>Address</FormLabel>
             <Input
               mb={'0.5vh'}
               variant="unstyled"
@@ -59,7 +59,7 @@ export function AddressInfo({formData, setFormData, validate, errors, setErrors,
         </Box>
         <Box w={'22vw'} display={'flex'} flexDir={'row'} justifyContent={'space-between'}>
           <FormControl>
-          <FormLabel textColor={'web.text2'} fontSize={'sm'}>City</FormLabel>
+          <FormLabel textColor={'web.text2'} name={'city'} fontSize={'sm'}>City</FormLabel>
             <Input
               mb={'0.5vh'}
               variant="unstyled"
@@ -82,7 +82,7 @@ export function AddressInfo({formData, setFormData, validate, errors, setErrors,
         </Box>
         <Box w={'22vw'} display={'flex'} flexDir={'row'} justifyContent={'space-between'}>
         <FormControl>
-          <FormLabel textColor={'web.text2'} fontSize={'sm'}>State</FormLabel>
+          <FormLabel textColor={'web.text2'} name={'state'}  fontSize={'sm'}>State</FormLabel>
             <AutocompleteState 
               formData={formData}
               setFormData={setFormData}
@@ -95,7 +95,7 @@ export function AddressInfo({formData, setFormData, validate, errors, setErrors,
         </Box>
         <Box w={'22vw'} display={'flex'} flexDir={'row'} justifyContent={'space-between'}>
           <FormControl>
-          <FormLabel textColor={'web.text2'} fontSize={'sm'}>Zip Code</FormLabel>
+          <FormLabel textColor={'web.text2'} name={'zipcode'}  fontSize={'sm'}>Zip Code</FormLabel>
             <Input
               mb={'0.5vh'}
               variant="unstyled"

@@ -39,7 +39,7 @@ const handleInput = (event) => {
               quantity: event,
               prodID: e.ProdID,
               prodName: e.ProductName,
-              type: e.Type,
+              type: e.Material,
               size:e.Size,
               thickness:e.Thickness,
               finish:e.Finish,

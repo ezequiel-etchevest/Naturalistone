@@ -199,6 +199,7 @@ import CreatedQuotePdf from "./createQuotePdf";
       setProgress(progress - 20)
     }
 
+
     return (
       <>
         <ButtonGroup
@@ -226,7 +227,7 @@ import CreatedQuotePdf from "./createQuotePdf";
         <Modal 
           isOpen={isOpen} 
           onClose={handleClose}
-          size={!submited ? '4xl' : '5xl'}
+          size={'4xl'}
           motionPreset='slideInRight'
           >
           <ModalOverlay />
