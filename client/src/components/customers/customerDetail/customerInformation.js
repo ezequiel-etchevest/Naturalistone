@@ -1,6 +1,13 @@
-import { Box, Text, HStack } from "@chakra-ui/react"
+import { Box, Text, HStack, IconButton, useDisclosure } from "@chakra-ui/react"
+import CustomerEdit from "../customerEdit"
 
 const CustomerInformation = ({customer}) => {
+
+  const { isOpen, onOpen, onClose } = useDisclosure()
+
+  const normalizeValue = (value) => {
+    return value === null || value === "null" || value === '' ? "-" : value;
+  };
   
   return(
     <>
@@ -35,15 +42,16 @@ const CustomerInformation = ({customer}) => {
               pt={'1vh'} 
               color={'logo.orange'}
               >
-              #{customer.CustomerID}  
+              #{normalizeValue(customer.CustomerID)}  
             </Text>
             <Text 
               fontSize={'2.5vh'} 
               pt={'1vh'} 
               color={'logo.text1'}
               >
-              - {customer.Contact_Name}  
+              - {normalizeValue(customer.Contact_Name)}  
             </Text>
+          <CustomerEdit customer={customer} onOpen={onOpen} onClose={onClose} isOpen={isOpen}/>
           </Box>
           {/*Phone */} 
           <Box display={'flex'} flexDir={'row'} px={'1vw'} mt={'1.5vh'}>
@@ -54,7 +62,7 @@ const CustomerInformation = ({customer}) => {
               justifyContent={'space-around'}
               alignContent={'center'}>
                 <Text fontSize={'1.6vh'} color={'web.text2'}> Phone </Text>
-                <Text fontSize={'2.2vh'} fontWeight={'bold'}>{customer.Phone}</Text>
+                <Text fontSize={'2.2vh'} fontWeight={'bold'}>{normalizeValue(customer.Phone)}</Text>
             </Box>
           </Box>
           {/*Email */} 
@@ -66,7 +74,7 @@ const CustomerInformation = ({customer}) => {
               justifyContent={'space-around'}
               alignContent={'center'}>
               <Text fontSize={'1.6vh'} color={'web.text2'}>E-mail</Text>
-              <Text fontSize={'2.05vh'} fontWeight={'bold'}>{customer.Email}</Text>
+              <Text fontSize={'2.05vh'} fontWeight={'bold'}>{normalizeValue(customer.Email)}</Text>
             </Box>
           </Box>
           {/*Company */} 
@@ -78,7 +86,7 @@ const CustomerInformation = ({customer}) => {
               justifyContent={'space-around'}
               alignContent={'center'}>
               <Text fontSize={'1.6vh'} color={'web.text2'}>Company</Text>
-              <Text fontSize={'2.05vh'} fontWeight={'bold'}>{customer.Company}</Text>
+              <Text fontSize={'2.05vh'} fontWeight={'bold'}>{normalizeValue(customer.Company)}</Text>
             </Box>
           </Box>
           {/*Billing Address */} 
@@ -90,7 +98,7 @@ const CustomerInformation = ({customer}) => {
               justifyContent={'space-around'}
               alignContent={'center'}>
               <Text fontSize={'1.6vh'} color={'web.text2'}>Billing Address</Text>
-              <Text fontSize={'2.05vh'} fontWeight={'bold'}>{customer.Billing_Address}</Text>
+              <Text fontSize={'2.05vh'} fontWeight={'bold'}>{normalizeValue(customer.Billing_Address)}</Text>
             </Box>
           </Box>
           {/*ZipCode */} 
@@ -102,7 +110,7 @@ const CustomerInformation = ({customer}) => {
               justifyContent={'space-around'}
               alignContent={'center'}>
               <Text fontSize={'1.6vh'} color={'web.text2'}>Zip Code</Text>
-              <Text fontSize={'2.05vh'} fontWeight={'bold'}>{customer.ZipCode}</Text>
+              <Text fontSize={'2.05vh'} fontWeight={'bold'}>{normalizeValue(customer.ZipCode)}</Text>
             </Box>
           </Box>
           {/*State */} 
@@ -114,7 +122,7 @@ const CustomerInformation = ({customer}) => {
               justifyContent={'space-around'}
               alignContent={'center'}>
               <Text fontSize={'1.6vh'} color={'web.text2'}>State</Text>
-              <Text fontSize={'2.05vh'} fontWeight={'bold'}>{customer.State}</Text>
+              <Text fontSize={'2.05vh'} fontWeight={'bold'}>{normalizeValue(customer.State)}</Text>
             </Box>
           </Box>
           {/*Seller ID */} 
@@ -126,7 +134,7 @@ const CustomerInformation = ({customer}) => {
               justifyContent={'space-around'}
               alignContent={'center'}>
               <Text fontSize={'1.6vh'} color={'web.text2'}>Seller</Text>
-              <Text fontSize={'2.05vh'} fontWeight={'bold'}>{customer.SellerID}</Text>
+              <Text fontSize={'2.05vh'} fontWeight={'bold'}>{normalizeValue(customer.SellerID)}</Text>
             </Box>
           </Box>
           {/*Discount*/} 
@@ -138,7 +146,7 @@ const CustomerInformation = ({customer}) => {
               justifyContent={'space-around'}
               alignContent={'center'}>
               <Text fontSize={'1.6vh'} color={'web.text2'}>Discount</Text>
-              <Text fontSize={'2.05vh'} fontWeight={'bold'}>{customer.DiscountID}</Text>
+              <Text fontSize={'2.05vh'} fontWeight={'bold'}>{normalizeValue(customer.DiscountID)}</Text>
             </Box>
           </Box>
         </Box>

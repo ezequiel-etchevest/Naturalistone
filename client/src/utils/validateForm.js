@@ -214,3 +214,139 @@ export const validateEmptyInputsProjects = (formData) =>{
   } 
    return errors
 }
+
+export const validateEmptyInputsEditCustomer = (formData, progress) => {
+  let errors = {}
+
+  if(progress === 50){
+    if(!formData.Contact_Name){
+      errors.Contact_Name = 'Please enter customer name'
+      }
+    if(!formData.Phone){
+      errors.Phone = 'Please enter phone number'
+    }
+    if(!formData.Email){
+      errors.Email = 'Please enter email address'
+    }
+    if(!formData.Company){
+      errors.Company = 'Please enter customer company name'
+    }
+    if(!formData.DiscountID){
+      errors.DiscountID = 'Please enter discount rate'
+    }
+    if(!formData.Company_Position){
+      errors.Company_Position = 'Please enter customer company position'
+    }
+    if(!formData.Address){
+      errors.Address = 'Please enter an address'
+    }
+    if(!formData.ZipCode){
+      errors.ZipCode = 'Please enter a zip code'
+    } 
+    if(!formData.City){
+      errors.City = 'Please enter a city'
+    }
+    if(!formData.State) {
+      errors.State = 'Please enter a state'
+    }
+    return errors  
+  }
+  if (progress === 100){
+    if(!formData.Billing_Address){
+      errors.Billing_Address = 'Please enter an address'
+    }
+    if(!formData.Billing_ZipCode){
+      errors.Billing_ZipCode = 'Please enter a zip code'
+    } 
+    if(!formData.Billing_City){
+      errors.Billing_City = 'Please enter a city'
+    }
+    if(!formData.Billing_State) {
+      errors.Billing_State = 'Please enter a state'
+    }
+    return errors
+  }
+}
+
+export const validateCompletedInputsEditCustomer = (formData) =>{
+  let errors = {}
+  const regexNoNumber = /^[a-zA-Z\s!"#$%&'()*+,./:;<=>?@\[\\\]^_`{|}~]*$/;
+  const regexNumberAndPlus = /^[\d+()\[\]-\s]*$/;
+  const regexNumber = /^\d+[^-]*$/
+  const regexEmail = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
+  const regexOnlySting = /^[a-zA-Z\s]*$/
+  const regexNoCaracters = /^[a-zA-Z\s]+$/
+
+  
+  if(formData.Contact_Name !== ''){
+    if(!regexNoNumber.test(formData.Contact_Name)) {
+      errors.Contact_Name = 'Please enter a valid name'
+    } 
+  }
+  if(formData.Company === ''){
+    errors.Company = 'Please enter a Company'
+  }
+  if(formData.Email !== ''){
+    if(!regexEmail.test(formData.Email)){
+      errors.Email = 'Please enter a valid email'
+    }
+  }
+  if(formData.Company_Position !== ''){
+    if(!regexOnlySting.test(formData.Company_Position)){
+      errors.Company_Position = 'Please enter a valid Company position'
+    }
+  }
+  if(formData.DiscountRate !== '') {
+    const allowedValues = [0, 5, 10, 15];
+    if(!allowedValues.includes(formData.DiscountRate)){
+      errors.DiscountRate = 'Valid discounts: 0, 5, 10, 15'
+    }
+  }
+  if(formData.Address !== ''){
+    if(!regexNoCaracters.test(formData.Address)) {
+      errors.Address = 'Please enter a valid address'
+    }
+  }
+  if(formData.ZipCode !== ''){
+    if(!regexNumber.test(formData.ZipCode)) {
+      errors.ZipCode = 'Please enter a valid zip code'
+    }
+  }
+  if(formData.City !== '') {
+    if(!regexNoNumber.test(formData.City)){
+      errors.City = 'Please enter a valid City'
+    }
+  }
+  if(formData.State !== '' || formData.State === '-') {
+    if(!regexNoNumber.test(formData.State)){
+      errors.State = 'Please enter a valid City'
+    }
+  }
+  if(formData.Billing_ZipCode !== ''){
+    if(!regexNumber.test(formData.Billing_ZipCode)) {
+      errors.Billing_ZipCode = 'Please enter a valid zip code'
+    }
+  }
+  if(formData.Phone !== ''){
+    if(!regexNumberAndPlus.test(formData.Phone)) {
+      errors.Phone = 'Please enter a valid Phone'
+    } 
+  }
+  if(formData.Billing_Address !== ''){
+    if(!regexNoCaracters.test(formData.Billing_Address)) {
+      errors.Billing_Address = 'Please enter a valid state'
+    }
+  }
+  if(formData.Billing_State !== ''){
+    if(!USStates.includes(formData.Billing_State)) {
+      errors.Billing_State = 'Please enter a valid state'
+    }
+  }
+  if(formData.Billing_City !== '') {
+    if(!regexNoNumber.test(formData.Billing_City)){
+      errors.Billing_City = 'Please enter a valid City'
+    }
+  }
+
+  return errors
+}

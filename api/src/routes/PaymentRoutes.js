@@ -40,10 +40,10 @@ PaymentRouter.get('/:id', async function(req, res){
 PaymentRouter.post('/invoice/:id', async function(req, res){
     
     const { id } = req.params
-    const input = req.body
+    const {input, seller} = req.body
     const today = new Date().toISOString()
 
-    query_ = `INSERT INTO Payments (Method, Date, Amount, InvoiceID) VALUES ("${input.Method}","${today}","${input.Amount}","${id}")`;
+    query_ = `INSERT INTO Payments (Method, Date, Amount, InvoiceID, \`By\`) VALUES ("${input.Method}","${today}","${input.Amount}","${id}","${seller}")`;
 
     try{
          mysqlConnection.query(query_, function(error, results, fields){
@@ -59,21 +59,74 @@ PaymentRouter.post('/invoice/:id', async function(req, res){
         }}
 )
 
-PaymentRouter.delete('/invoice/:id', async function(req, res){
-    const { id } = req.params
-    query_= `DELETE FROM Payments WHERE idPayments = ${id}`
-    try{
-    mysqlConnection.query(query_, function(error, results, fields){
-            
-        if(error) throw {error};
-        if(results.length == 0) {
+PaymentRouter.delete('/invoice/:id/:seller', async function(req, res){
+  const { id, seller } = req.params
+
+  console.log('so y sller', seller)
+
+  try{
+    mysqlConnection.beginTransaction(function(error){
+      if(error) {
+        console.log('Error in start BeginTransaction, paymentRoutes.delete /invoice/:id' + error)
+        res.status(500).json('failed to start Begin transaction')
+        return;
+      }
+
+      query_ = `UPDATE Payments SET \`By\` = ${seller} WHERE idPayments = ${id}`
+
+      mysqlConnection.query(query_, function(error, results, fields) {
+        if (error) {
+          console.log('Error in update payments By, PaymentsRoutes /invoice/:id/:seller' + error)
+          res.status(500).json('Failed to update payments to propertie By')
+          return mysqlConnection.rollback(function() {
+            throw error
+          })
+        }
+
+        console.log('soy seller en query', seller)
+        console.log('Update payment completed', results)
+
+        query_1 = `DELETE FROM Payments WHERE idPayments = ${id}`
+
+        mysqlConnection.query(query_1, function(error1, results1, fields){
+
+          if(error1) {
+            console.log('Error in delete Payments in PaymentRoutes /invoices/:id/:seller' + error)
+            res.status(500).json('Failed to delete payments')
+            return mysqlConnection.rollback(function() {
+              throw error
+            })
+          };
+          if(results1.length == 0) {
             console.log('Error en delete')
             res.status(200).json({ estado: false, data: {}});
-        
-        } else res.status(200).json({results})
+          } else {
+            res.status(200).json({results1})
+            commitTransaction();
+            return;
+          }
+        })
+      })
+
     })}catch(error){
         res.status(409).send(error);
-    }}
-)
+    }
+    
+    function commitTransaction() {
+      mysqlConnection.commit(function(err) {
+        if (err) {
+          console.log('Error in paymentRoutes.delete /invoice/id ' + err);
+          res.status(500).json('Failed to delete payment');
+          return mysqlConnection.rollback(function() {
+            throw err;
+          });
+        }
+    
+        console.log('Transaction committed successfully, payment delete');
+        return;
+      });
+    }
+
+  })
        
 module.exports = PaymentRouter

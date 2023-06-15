@@ -6,12 +6,9 @@ import approvalPic from '../../../assets/pending_approval.png'
 import axios from 'axios';
 
 
-const CreatedQuotePdf = ({variables, user, customer, project, authFlag}) => {
+const CreatedQuotePdf = ({variables, user, customer, project, handleChangeEmail, updatePdf, authFlag}) => {
 
-
-  // console.log({variables, user, customer, project, authFlag})
     const posted_quote = useSelector(state => state.posted_quote)
- 
     let invoiceID = posted_quote.Naturali_Invoice
     const date = posted_quote.InsertDate
     const [pdfInfo, setPdfInfo] = useState([]);
@@ -39,7 +36,7 @@ const CreatedQuotePdf = ({variables, user, customer, project, authFlag}) => {
       });
     }
 
- async function CreateForm() {
+async function CreateForm() {
 
   const url = `/Quote/quote-blank.pdf`
   const existingPdfBytes = await fetch(url).then((res) => res.arrayBuffer());
@@ -136,9 +133,27 @@ mappedProducts.forEach((product, index) => {
   const blob = new Blob([pdfBytes], { type: 'application/pdf' });
   
   setPdfInfo(URL.createObjectURL(blob));
-
+  
   // savePdfOnServer(pdfBytes, invoiceID);
+  
+  function readBlobAsBase64(pdfBlob) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+  
+      reader.onloadend = function() {
+        const base64String = reader.result.split(',')[1]; // Obtiene el contenido base64
+        resolve(base64String);
+      };
+  
+      reader.onerror = reject;
+  
+      reader.readAsDataURL(pdfBlob);
+    });
+  }
 
+  updatePdf(readBlobAsBase64(blob))
+
+  
   };
   
   async function savePdfOnServer(pdfBytes, invoiceID) {
@@ -174,7 +189,12 @@ mappedProducts.forEach((product, index) => {
       Object.entries(posted_quote).length ?
         posted_quote.Naturali_Invoice && posted_quote.InsertDate ?
         <Box h={'85vh'} >
-          <Button>SEND EMAIL</Button>
+        <Button
+          size={'sm'}
+          onClick={handleChangeEmail}
+          colorScheme={'orange'}>
+          Send Email
+        </Button>
           {<iframe width={'100%'} height={'100%'} title="quote-blank" src={pdfInfo} ref={viewer} type="application/pdf" />}
         </Box>
         :

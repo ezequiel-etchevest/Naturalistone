@@ -342,7 +342,6 @@ salesRouter.post('/create-quote/:sellerID', async function(req, res) {
               throw error;
             });
           }
-
           console.log('Quote created successfully');
 
           const prodSoldQuery = `INSERT INTO NaturaliStone.ProdSold (SaleID, ProdID, Quantity, SalePrice) VALUES ?`;
@@ -362,8 +361,7 @@ salesRouter.post('/create-quote/:sellerID', async function(req, res) {
                       throw error;
                     });
                   }
-
-      
+                  
                   console.log('Products inserted successfully (retry)');
                   commitTransaction();
                 });
@@ -372,14 +370,14 @@ salesRouter.post('/create-quote/:sellerID', async function(req, res) {
             }
 
             // sendInvoiceEmail(
-            // // customer.Email, // se enviara correos desde irina hasta que se termine de configurar
-            // // customer.Contact_Name, 
-            // // prodSoldValues[0][0], 
-            // // "description",
-            // // "amount_value",
-            // // Value,
-            // // InsertDate
-            // // ) // faltaria solo el pdf para enviar
+            // customer.Email, // se enviara correos desde irina hasta que se termine de configurar
+            // Contact_Name, 
+            // prodSoldValues[0][0], 
+            // "description",
+            // "amount_value",
+            // Value,
+            // InsertDate
+            // ) // faltaria solo el pdf para enviar
 
             console.log('Products inserted successfully');
 

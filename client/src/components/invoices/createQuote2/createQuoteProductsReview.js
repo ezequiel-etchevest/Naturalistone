@@ -48,13 +48,13 @@ const CreateQuoteProductsReview = ({ formData, setFormData }) => {
       <Table color={'web.text'} variant={'simple'} size={'sm'}>
         <Thead h={'6vh'}>
           <Tr>  
-            <Th color={'web.text2'} fontSize={'2xs'} textAlign={'center'}>Quantities</Th>
-            <Th color={'web.text2'} fontSize={'2xs'} >Product Name</Th>
-            <Th color={'web.text2'} fontSize={'2xs'} textAlign={'center'}>Type</Th>
-            <Th color={'web.text2'} fontSize={'2xs'} textAlign={'center'}>Size</Th>
-            <Th color={'web.text2'} fontSize={'2xs'} textAlign={'center'}>Thickness</Th>
-            <Th color={'web.text2'} fontSize={'2xs'} textAlign={'center'}>Price</Th>
-            <Th color={'web.text2'} fontSize={'2xs'} w={'10vw'} textAlign={'center'}>Finish</Th>
+            <Th color={'web.text2'} fontSize={'sm'} textAlign={'center'}>Quantities</Th>
+            <Th color={'web.text2'} fontSize={'sm'} w={'16vw'} >Product Name</Th>
+            <Th color={'web.text2'} fontSize={'sm'} textAlign={'center'}>Type</Th>
+            <Th color={'web.text2'} fontSize={'sm'} textAlign={'center'}>Size</Th>
+            <Th color={'web.text2'} fontSize={'sm'} textAlign={'center'}>Thickness</Th>
+            <Th color={'web.text2'} fontSize={'sm'} textAlign={'center'}>Price</Th>
+            <Th color={'web.text2'} fontSize={'sm'} w={'10vw'} textAlign={'center'}>Finish</Th>
           </Tr>
         </Thead>
         <Tbody>
@@ -67,13 +67,13 @@ const CreateQuoteProductsReview = ({ formData, setFormData }) => {
               bg: 'web.navBar',
               color: 'logo.orange'
             }}>
-              <Td maxW={'2vw'} fontSize={'2xs'} textAlign={'center'}>{e[1].quantity}</Td>
-              <Td maxW={'2vw'} fontSize={'2xs'} textAlign={'center'}>{e[1].prodName}</Td>
-              <Td maxW={'2vw'} fontSize={'2xs'} textAlign={'center'}>{e[1].type}</Td>
-              <Td maxW={'2vw'} fontSize={'2xs'} textAlign={'center'}>{e[1].size}</Td>
-              <Td maxW={'2vw'} fontSize={'2xs'} textAlign={'center'}>{e[1].thickness}</Td>
-              <Td maxW={'2vw'} fontSize={'2xs'} textAlign={'center'}>{e[1].price}</Td>
-              <Td maxW={'2vw'} fontSize={'2xs'} textAlign={'center'}>{e[1].finish}</Td>
+              <Td fontSize={'xs'} textAlign={'center'}>{e[1].quantity}</Td>
+              <Td fontSize={'xs'} w={'16vw'} textAlign={'center'}>{e[1].prodName}</Td>
+              <Td fontSize={'xs'} textAlign={'center'}>{e[1].type}</Td>
+              <Td fontSize={'xs'} textAlign={'center'}>{e[1].size}</Td>
+              <Td fontSize={'xs'} textAlign={'center'}>{e[1].thickness}</Td>
+              <Td fontSize={'xs'} textAlign={'center'}>{e[1].price}</Td>
+              <Td fontSize={'xs'} textAlign={'center'}>{e[1].finish}</Td>
             </Tr>
           ))
         }

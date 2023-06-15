@@ -34,15 +34,15 @@ const AddPayment = ({pendingAmount, cardPaymentAmount, totalAmount}) => {
   const toastId = 'error-toast'
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [error, setError] = useState({msg: ''})
+  const user = useSelector(state => state.user)
   const [isOptionDisabled, setIsOptionDisabled] = useState(false)
   const invoice = useSelector(state => state.invoice)
   cardPaymentAmount = Number(cardPaymentAmount)
   totalAmount = Number(totalAmount)
     const [input, setInput] = useState({
       Method : '',
-      Amount: 0.00})
-
-  console.log(input)
+      Amount: 0.00
+    })
 
   useEffect(() => {
       if(totalAmount < 5000){
@@ -164,7 +164,7 @@ const AddPayment = ({pendingAmount, cardPaymentAmount, totalAmount}) => {
   
   const handleSubmit = () => {
     if(input.Amount && input.Method){
-      dispatch(patchPaymentMethod(id, input))
+      dispatch(patchPaymentMethod(id, input, user[0].SellerID))
       setInput({
         Method : '',
         Amount: 0 })

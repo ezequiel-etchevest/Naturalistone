@@ -1,7 +1,8 @@
 require('dotenv').config();
-
-// Require:
+const fs = require('fs')
 const postmark = require("postmark");
+const path = require('path')
+
  
 // Send an email:
 const imageNaturaliStone = 'https://drive.google.com/uc?id=1EpYJ-SvGsqGsDVwjRGYO16oZlVea0KDU'
@@ -10,6 +11,10 @@ const companyName = 'NaturaliStone';
 const companyAddress = '261 NW 71st St, Miami, FL 33150, United States';
 const fromEmail = "irina@naturalistone.com"
 const imgDrive = 'https://netorg8591642-my.sharepoint.com/:i:/g/personal/irina_naturalistone_com/EUJMsPLT2jBLokqZ-cz1SVMBijZhI9_At-atEYcxV48L7Q?e=46P25n'
+
+const imgPath = path.join(__dirname, '../pictures/NaturalistoneLogo.png'); // Ajusta el nombre del archivo y la ruta según sea necesario
+const file = fs.readFileSync(imgPath);
+
 
 function sendEmailUser() {
   const optionsEmail= {
@@ -39,6 +44,13 @@ function sendInvoiceEmail(
     From: fromEmail,
     To: clientEmail,
     TemplateId: 31786965,
+    attachments: [
+      { 
+       Name: 'archivo.pdf',
+       Content: file,
+       ContentType: 'application/pdf'
+     }
+     ],
     TemplateModel: {
       product_name: companyName,
       name: name_value, // "name_value"
@@ -59,4 +71,37 @@ function sendInvoiceEmail(
   return client.sendEmailWithTemplate(optionsEmail);
 }
 
-module.exports = { sendInvoiceEmail }
+function sendEmailClient(
+  fromEmail,
+  clientEmail,
+  ccEmail,
+	body_Value,
+  subject_value,
+  filePdf,
+) {
+  const optionsEmail = {
+    From: fromEmail,
+    To: clientEmail,
+    Cc: ccEmail,
+    TemplateId: 32024830,
+    attachments: [
+      { 
+       Name: 'Invoice',
+       Content: filePdf,
+       ContentType: 'application/pdf'
+     },
+    ],
+    TemplateModel: {
+      product_name: companyName,
+      body: body_Value,
+      company_name: companyName,
+      company_address: companyAddress,
+      image: imageNaturaliStone,
+      subject: subject_value,
+    }
+  }
+
+  return client.sendEmailWithTemplate(optionsEmail)
+}
+
+module.exports = { sendInvoiceEmail, sendEmailClient, sendEmailUser }

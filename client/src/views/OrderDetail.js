@@ -16,13 +16,14 @@ const OrderDetail = ({focus, setFocus}) => {
   const order_products = useSelector(state=>state.order_products)
   const userLocal = JSON.parse(localStorage.getItem('user'))
 
-  const { id } = useParams()
+  const { orderId, factoryId } = useParams()
 
+  
   useEffect(()=>{
     if(!Object.entries(order).length || !order_products.length){
-      dispatch(getOrdersByID(id))
+      dispatch(getOrdersByID(orderId, factoryId))
       dispatch(cleanOrderProducts())
-      dispatch(getOrderProducts(id))} 
+      dispatch(getOrderProducts(orderId, factoryId))} 
      } ,[])
 //ver dependencias del useEffect parea que se renderise correctamente.
 

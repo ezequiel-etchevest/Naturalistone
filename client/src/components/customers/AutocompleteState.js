@@ -19,9 +19,10 @@ export default function AutocompleteState({formData, setFormData, errors, valida
   const [filteredStates, setFilteredStates] = useState(USStates);
 
   const handleInputChange = (event) => {
-    setErrors({})
+    // setErrors({})
     const name = event.target.name
     const value = event.target.value;
+
     setFormData((prevFormData) => ({
       ...prevFormData,
       [name] : value,

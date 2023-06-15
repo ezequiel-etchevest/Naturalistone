@@ -37,7 +37,7 @@ const ModelTr = ({p, totalAmount}) => {
 }
 
 const PaymentList = ({payments, totalAmount, invoice}) => {
-  console.log(invoice)
+
   const pendingAmount = payments.paymentsMath.PendingAmount
   const handlePendig = () => {
     if(invoice[0].Status === 'Pending_Approval') return false

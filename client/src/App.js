@@ -45,7 +45,7 @@ function App() {
         <Route path="/products/:id" element={<PrivateRoute><ProductDetailView focus={focus} setFocus={setFocus} /></PrivateRoute>}/>
         <Route path="/invoice-errors" element={<PrivateRoute><InvoiceErrors focus={focus} setFocus={setFocus} /></PrivateRoute>}/>
         <Route path="/orders" element={<PrivateRoute><Orders focus={focus} setFocus={setFocus} /></PrivateRoute>}/>
-        <Route path="/orders/:id" element={<PrivateRoute><OrderDetail focus={focus} setFocus={setFocus} /></PrivateRoute>}/>
+        <Route path="/orders/:orderId/:factoryId" element={<PrivateRoute><OrderDetail focus={focus} setFocus={setFocus} /></PrivateRoute>}/>
         <Route path="/warehouse" element={<PrivateRoute><Warehouse focus={focus} setFocus={setFocus} /></PrivateRoute>}/>
         <Route path="/customers" element={<PrivateRoute><Customers focus={focus} setFocus={setFocus} /></PrivateRoute>}/>
         <Route path="/customers/:id" element={<PrivateRoute><CustomerDetailView focus={focus} setFocus={setFocus} /></PrivateRoute>}/>
