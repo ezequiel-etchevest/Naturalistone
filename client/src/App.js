@@ -18,6 +18,7 @@ import { useState, useEffect } from 'react';
 import {PrivateRoute} from './components/PrivateRoutes';
 import Redirect from './views/RedirectPage';
 import { Box } from '@chakra-ui/react';
+import Freights from './views/Freight';
 
 function App() {
 
@@ -49,7 +50,7 @@ function App() {
         <Route path="/warehouse" element={<PrivateRoute><Warehouse focus={focus} setFocus={setFocus} /></PrivateRoute>}/>
         <Route path="/customers" element={<PrivateRoute><Customers focus={focus} setFocus={setFocus} /></PrivateRoute>}/>
         <Route path="/customers/:id" element={<PrivateRoute><CustomerDetailView focus={focus} setFocus={setFocus} /></PrivateRoute>}/>
-        
+        <Route path="/freights" element={<PrivateRoute><Freights focus={focus} setFocus={setFocus} /></PrivateRoute>}/>
       </Routes> 
     </Box>
     </BrowserRouter>

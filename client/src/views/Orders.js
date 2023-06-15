@@ -5,8 +5,6 @@ import OrdersContainer from "../components/orders/OrdersContainer";
 import { getOrders } from "../redux/actions-orders";
 import { getEmployeeById } from '../redux/actions-employees';
 
-
-
 const Orders = ({focus, setFocus}) => {
 
   const dispatch = useDispatch()
