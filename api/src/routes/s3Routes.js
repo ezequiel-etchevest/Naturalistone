@@ -15,26 +15,50 @@ AWS.config.update({
 const s3 = new AWS.S3();
 
 s3Router.get('/images/:folder/:fileName', (req, res) => {
+  console.log('chay')
+  const { folder, fileName } = req.params;
+  let path = `${folder}/${fileName}/${fileName}_0.jpg`
+  const params = {
+    Bucket: 'naturalistone-images',
+    Key: path,
+  };
+  s3.getObject(params, (err, data) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).send('Error al obtener la imagen de S3');
+    }
 
-    const { folder, fileName } = req.params;
-    let path = `${folder}/${fileName}/${fileName}_0.jpg`
-    const params = {
-      Bucket: 'naturalistone-images',
-      Key: path,
-    };
-    s3.getObject(params, (err, data) => {
-      if (err) {
-        console.error(err);
-        return res.status(500).send('Error al obtener la imagen de S3');
-      }
-  
-      res.writeHead(200, {
-        'Content-Type': data.ContentType,
-        'Content-Length': data.ContentLength,
-      });
-      res.end(data.Body);
+    res.writeHead(200, {
+      'Content-Type': data.ContentType,
+      'Content-Length': data.ContentLength,
     });
+    res.end(data.Body);
   });
+});
+
+s3Router.get('/all-images/:folder/:fileName', (req, res) => {
+  console.log('hola')
+  const { folder, fileName } = req.params;
+  const prefix = `${folder}/${fileName}/`;
+  const params = {
+    Bucket: 'naturalistone-images',
+    Prefix: prefix,
+  };
+
+  s3.listObjectsV2(params, (err, data) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).send('Error al obtener las imágenes de S3');
+    }
+
+    const images = data.Contents.map(obj => ({
+      key: obj.Key,
+      url: `https://naturalistone-images.s3.amazonaws.com/${obj.Key}`,
+    }));
+    res.status(200).json(images);
+  });
+});
+
 
 
 s3Router.get('/pdf/:id', (req, res) => {

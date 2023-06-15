@@ -1,4 +1,5 @@
 const { Router } = require('express');
+const mainRouter = Router();
 const loginRouter = require('./loginRoutes')
 const sellerRouter = require('./sellersRoutes')
 const salesRouter = require('./salesRoutes')
@@ -8,12 +9,10 @@ const paymentsRouter = require('./PaymentRoutes')
 const ordersRouter = require('./ordersRoutes')
 const invoiceErrorsRouter = require('./invoiceErrorsRoutes')
 const deliveryRouter = require('./deliveryRoutes')
-const mainRouter = Router();
 const projectsRouter = require('./projectsRoutes')
 const customersRouter = require('./customersRoutes')
 const onedriveRouter  = require('./pdfOneDriveRoutes.js')
 const statsRouter = require('./statsRoutes');
-const emailInvoiceRouter = require('./sendInvoiceEmail')
 const testRouter = require('./testMulterPDF')
 const s3Router = require('./s3Routes')
 
