@@ -144,7 +144,7 @@ export function getProductImages(prodName, material){
 
         return async function(dispatch){
             try{
-                let {data} = await axios.get(`/images/s3/all-images/${material}/${prodName}`)
+                let {data} = await axios.get(`/s3/all-images/${material}/${prodName}`)
                 console.log(data)
 
                 dispatch(
@@ -161,7 +161,7 @@ export function getProductImages(prodName, material){
 export function getProductImage(prodName, material, prodID) {
     return async function(dispatch) {
       try {
-        const response = await axios.get(`/images/s3/${material}/${prodName}`, {
+        const response = await axios.get(`/s3/images/${material}/${prodName}`, {
           responseType: 'blob' // Agrega esta opción para obtener los datos como un Blob
         });
         

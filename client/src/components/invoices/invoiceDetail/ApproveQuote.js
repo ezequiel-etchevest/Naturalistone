@@ -40,7 +40,7 @@ const ApproveQuote= ({invoice, user}) => {
     }
   }
   let d = handleDisabled()
-  console.log(d)
+
     return(
         <>
           <ButtonGroup

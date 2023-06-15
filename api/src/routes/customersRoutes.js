@@ -1,11 +1,10 @@
 const express = require('express')
 const customersRouter = express.Router()
 const mysqlConnection = require('../db');
-const CustomerFilters = require('../Controllers/customerController')
-const listBuckets = require('./testS3Mitu');
+const CustomerFilters = require('../Controllers/customerController');
 
 customersRouter.get('/', async function(req, res){
-    listBuckets();
+
     const { search } = req.query
 
     let query_ = `

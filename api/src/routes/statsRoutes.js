@@ -19,7 +19,7 @@ statsRouter.get('/', async function(req, res){
                GROUP_CONCAT(
                 CONCAT(Payments.idPayments,';',Payments.Amount,';',Payments.Date))AS Payments FROM Sales 
                 LEFT JOIN Payments ON Sales.Naturali_Invoice = Payments.InvoiceID 
-                WHERE InvoiceDate BETWEEN "${startDate}" AND "${today}" AND Sales.Status != "Canceled" AND Sales.Status != 'Pending_Approval' 
+                WHERE InvoiceDate BETWEEN "${startDate}" AND "${endDate}" AND Sales.Status != "Canceled" AND Sales.Status != 'Pending_Approval' 
                 GROUP BY Sales.Naturali_Invoice
                 ORDER BY Sales.Naturali_Invoice DESC`
     query_6A = `SELECT SUM(Payments.Amount) AS total_amount, Payments.*, Sales.SellerID, Sales.Status FROM Payments

@@ -137,36 +137,37 @@ mappedProducts.forEach((product, index) => {
   
   setPdfInfo(URL.createObjectURL(blob));
 
-  // savePdfOnServer(pdfBytes, invoiceID);
+  savePdfOnServer(pdfBytes, invoiceID);
 
   };
-  
-  // async function savePdfOnServer(pdfBytes, invoiceID) {
 
-  //   try {
-  //     // Configurar el encabezado Content-Type para FormData
-  //     axios.interceptors.request.use(function (config) {
-  //       config.headers['Content-Type'] = 'multipart/form-data';
-  //       return config;
-  //     });
+  async function savePdfOnServer(pdfBytes, invoiceID) {
+    try {
+      const formData = new FormData();
+      if(authFlag === true ) {
+        formData.append('pdf', new Blob([pdfBytes], { type: 'application/pdf' }), `${invoiceID}PA.pdf`)
+        }
+      else {
+        formData.append('pdf', new Blob([pdfBytes], { type: 'application/pdf' }), `${invoiceID}.pdf`)  
+        }
+      const config = {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      };
   
-  //     const formData = new FormData();
-  //     formData.append('pdfFile', new Blob([pdfBytes], { type: 'application/pdf' }), `${invoiceID}.pdf`);
-  //     console.log('formData', formData);
-     
-  //     const response = await axios.post('/save-pdf', formData);
+      const response = await axios.post(`/s3/uploadPdf/${invoiceID}`, formData, config);
   
-  //     if (response.status === 200) {
-  //       console.log('PDF guardado en el servidor correctamente.');
-  //       // Realizar cualquier acción adicional después de guardar el PDF en el servidor
-  //     } else {
-  //       console.error('Error al guardar el PDF en el servidor.');
-  //     }
-  //   } catch (error) {
-  //     console.error('Error al realizar la solicitud al servidor:', error);
-  //   }
-  // }
-  
+      if (response.status === 200) {
+        console.log('PDF guardado en S3 correctamente.');
+        // Realizar cualquier acción adicional después de guardar el PDF en S3
+      } else {
+        console.error('Error al guardar el PDF en S3.');
+      }
+    } catch (error) {
+      console.error('Error al realizar la solicitud al backend:', error);
+    }
+  }
   
   return (
   <>

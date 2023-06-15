@@ -22,7 +22,7 @@ export function CompanyInfo({formData, setFormData, validate, errors, setErrors,
           </Box>
           <Box w={'22vw'} display={'flex'} pt={'4vh'}  flexDir={'row'} justifyContent={'space-between'}>
             <FormControl>
-              <FormLabel textColor={'web.text2'} fontSize={'sm'} fontWeight={'normal'}>Company Name</FormLabel>
+              <FormLabel textColor={'web.text2'} fontSize={'sm'} name={'companyname'} fontWeight={'normal'}>Company Name</FormLabel>
                 <Input
                   mb={'0.5vh'}
                   variant="unstyled"
@@ -45,7 +45,7 @@ export function CompanyInfo({formData, setFormData, validate, errors, setErrors,
             </Box>
             <Box w={'22vw'} display={'flex'} flexDir={'row'} justifyContent={'space-between'}>
               <FormControl>
-                <FormLabel textColor={'web.text2'} fontSize={'sm'}>Company Role</FormLabel>
+                <FormLabel textColor={'web.text2'} name={'companyrole'}  fontSize={'sm'}>Company Role</FormLabel>
                   <Input
                   mb={'0.5vh'}
                   variant="unstyled"
@@ -68,7 +68,7 @@ export function CompanyInfo({formData, setFormData, validate, errors, setErrors,
             </Box>
             <Box w={'22vw'} display={'flex'} flexDir={'row'} justifyContent={'space-between'}>
               <FormControl>
-              <FormLabel textColor={'web.text2'} fontSize={'sm'}>Discount</FormLabel>
+              <FormLabel textColor={'web.text2'} name={'discount'} fontSize={'sm'}>Discount</FormLabel>
                 <RadioGroup
                 textColor={'web.text2'} 
                 name={'DiscountID'} 

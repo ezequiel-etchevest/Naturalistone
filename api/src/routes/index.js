@@ -1,4 +1,5 @@
 const { Router } = require('express');
+const mainRouter = Router();
 const loginRouter = require('./loginRoutes')
 const sellerRouter = require('./sellersRoutes')
 const salesRouter = require('./salesRoutes')
@@ -8,15 +9,15 @@ const paymentsRouter = require('./PaymentRoutes')
 const ordersRouter = require('./ordersRoutes')
 const invoiceErrorsRouter = require('./invoiceErrorsRoutes')
 const deliveryRouter = require('./deliveryRoutes')
-const mainRouter = Router();
 const projectsRouter = require('./projectsRoutes')
 const customersRouter = require('./customersRoutes')
 const onedriveRouter  = require('./pdfOneDriveRoutes.js')
 const statsRouter = require('./statsRoutes');
-const emailInvoiceRouter = require('./sendInvoiceEmail')
 const testRouter = require('./testMulterPDF')
-const s3Images = require('./s3Images')
 const freightRouter = require('./freightRoutes')
+const s3Router = require('./s3Routes')
+const emailInvoiceRouter = require('./sendInvoiceEmail')
+
 
 mainRouter.use('/api/login', loginRouter);
 mainRouter.use('/api/seller', sellerRouter);
@@ -32,8 +33,9 @@ mainRouter.use('/api/projects', projectsRouter);
 mainRouter.use('/api/customers', customersRouter);
 mainRouter.use('/api/stats', statsRouter)
 mainRouter.use('/api/save-pdf', testRouter)
-mainRouter.use('/api/invoiceEmail', emailInvoiceRouter)
-mainRouter.use('/api/images', s3Images)
+mainRouter.use('/api/s3', s3Router)
 mainRouter.use('/api/freight', freightRouter)
+mainRouter.use('/api/invoiceEmail', emailInvoiceRouter)
+
 
 module.exports = mainRouter
