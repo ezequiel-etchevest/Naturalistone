@@ -9,8 +9,6 @@ const Freights = ({focus, setFocus}) => {
   const dispatch = useDispatch()
   const user = useSelector(state => state.user)
   const freights = useSelector(state => state.freights)
-
-  console.log('soy freight', freights)
  
   const userLocal = JSON.parse(localStorage.getItem('user'))
 

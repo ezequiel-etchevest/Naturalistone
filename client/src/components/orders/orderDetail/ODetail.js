@@ -1,8 +1,9 @@
 import { Box, Center, Spinner, Text } from "@chakra-ui/react";
 import OrderDetailList from './OrderDetailList';
 import OrderProductList from './OrderProductList'
+import ProformaList from "./orderProforma";
 
-const ODetail = ({order, order_products}) => {
+const ODetail = ({order, order_products, proformas}) => {
 
   return(
     <Box
@@ -13,18 +14,24 @@ const ODetail = ({order, order_products}) => {
       flexDir={'column'}
       >
       <Box
-        display={'flex'}
-        flexDir={'column'}
+      display={'flex'}
+      flexDir={'column'}
+      >
+        <Box
+          display={'flex'}
+          flexDir={'row'}
         >
-        {
-          Object.entries(order).length ? (
-            <OrderDetailList order={order}/>
-            ):(
-            <Center ml={'16vh'} bg={'web.bg'} h={'92vh'}>
-              <Spinner thickness={'4px'} size={'xl'} color={'logo.orange'}/>
-            </Center>
-            )
-        }
+          {
+            Object.entries(order).length ? (
+              <OrderDetailList order={order}/>
+              ):(
+              <Center ml={'16vh'} bg={'web.bg'} h={'92vh'}>
+                <Spinner thickness={'4px'} size={'xl'} color={'logo.orange'}/>
+              </Center>
+             )
+            }
+            <ProformaList proformas={proformas}/>
+        </Box>
       <Box
         mt={'3vh'}
         ml={'2vw'}

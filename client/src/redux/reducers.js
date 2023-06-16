@@ -89,6 +89,9 @@ import {
 import {
   GET_FREIGHTS
 } from './actions-freights';
+import {
+  GET_PROFORMAS
+} from './actions-proformas';
 
 const intialState = {
     employees: [],
@@ -127,7 +130,8 @@ const intialState = {
     products_new_quote: [],
     products_new_quote_errors: {},
     products_new_quote_values: [],
-    freight: []
+    freight: [],
+    proformas: [],
 }
 
 function rootReducer (state = intialState, action) {
@@ -474,6 +478,11 @@ function rootReducer (state = intialState, action) {
           return {
             ...state,
             freights: action.payload
+          }
+        case GET_PROFORMAS:
+          return {
+            ...state,
+            proformas: action.payload,
           }
         default:
             return {
