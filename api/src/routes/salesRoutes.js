@@ -309,6 +309,7 @@ salesRouter.post('/create-quote/:sellerID', async function(req, res) {
 
   const ProjectID = project.idProjects;
   const InsertDate = `${year}-${month0}-${day0}`
+  console.log(InsertDate)
   const EstDelivery_Date = variables.estDelivDate;
   let Naturali_Invoice = 0
 
@@ -338,8 +339,8 @@ salesRouter.post('/create-quote/:sellerID', async function(req, res) {
         const ids = quotesIDs.map(q => Number(q.Naturali_Invoice));
         Naturali_Invoice = Math.max(...ids) + 1;
         const status = authFlag ? ('Pending_Approval') : ('Pending')
-        const salesQuery = `INSERT INTO Sales (Naturali_Invoice, Value, ProjectID, EstDelivery_Date, SellerID, ShippingMethod, PaymentTerms, P_O_No, Status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`;
-        const salesValues = [Naturali_Invoice, Value, ProjectID, EstDelivery_Date, sellerID, variables.shipVia, variables.paymentTerms, variables.method, status ];
+        const salesQuery = `INSERT INTO Sales (Naturali_Invoice, Value, ProjectID, InvoiceDate, EstDelivery_Date, SellerID, ShippingMethod, PaymentTerms, P_O_No, Status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+        const salesValues = [Naturali_Invoice, Value, ProjectID, InsertDate, EstDelivery_Date, sellerID, variables.shipVia, variables.paymentTerms, variables.method, status ];
         
         mysqlConnection.query(salesQuery, salesValues, async function(error, salesResult, fields) {
           if (error) {
