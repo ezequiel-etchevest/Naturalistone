@@ -9,7 +9,7 @@ const OrdersContainer = ({orders}) => {
     ml={'16vw'}
     bg={'web.bg'}
     userSelect={'none'}> 
-      {/* <CreateOrderModal orders={orders}/> */}
+      <CreateOrderModal orders={orders}/>
       <OrdersList orders={orders}/>
     </Box>
   )

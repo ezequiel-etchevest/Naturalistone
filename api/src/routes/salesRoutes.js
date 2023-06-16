@@ -7,7 +7,7 @@ const  { getLimitDateMonth, getCurrentMonth } = require('../Controllers/LastMont
 const uniqueFormatNames = require('../Controllers/quotesValues')
 const invoicesFilters = require('../Controllers/invoicesFilters')
 const sendInvoiceEmail = require('../utils/email');
-const { year, month0, day0 } = require('../todayDate');
+
 
 
 salesRouter.get('/:id', async function(req, res){
@@ -292,7 +292,14 @@ salesRouter.post('/create-quote/:sellerID', async function(req, res) {
   const { sellerID } = req.params;
   const { formData, authFlag } = req.body;
   const {customer, project, products, variables} = formData
-
+  
+  const date = new Date().toLocaleDateString();
+  const day = `${date.split('/')[0]}`;
+  const month = `${(date.split('/')[1])}`;
+  const day0 = day.length === 1 ? `0${day}` : day
+  const month0 = month.length === 1 ? `0${month}` : month
+  const year = `${date.split('/')[2]}`;
+  
   const parsedProducts = Object.entries(products)
     .flat()
     .filter((element) => typeof element === 'object')
