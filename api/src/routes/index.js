@@ -13,9 +13,10 @@ const projectsRouter = require('./projectsRoutes')
 const customersRouter = require('./customersRoutes')
 const onedriveRouter  = require('./pdfOneDriveRoutes.js')
 const statsRouter = require('./statsRoutes');
-const testRouter = require('./testMulterPDF')
 const freightRouter = require('./freightRoutes')
-const s3Router = require('./s3Routes')
+const s3Router = require('./s3Routes');
+const factoryRouter = require('./factoriesRoutes');
+
 const emailInvoiceRouter = require('./sendInvoiceEmail')
 const proformasRoutes = require('./proformasRoutes')
 
@@ -32,8 +33,8 @@ mainRouter.use('/api/one-drive-data', onedriveRouter);
 mainRouter.use('/api/projects', projectsRouter);
 mainRouter.use('/api/customers', customersRouter);
 mainRouter.use('/api/stats', statsRouter)
-mainRouter.use('/api/save-pdf', testRouter)
 mainRouter.use('/api/s3', s3Router)
+mainRouter.use('/api/factories', factoryRouter)
 mainRouter.use('/api/freight', freightRouter)
 mainRouter.use('/api/invoiceEmail', emailInvoiceRouter)
 mainRouter.use('/api/proformas', proformasRoutes)

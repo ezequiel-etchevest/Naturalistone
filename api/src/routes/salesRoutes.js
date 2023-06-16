@@ -7,7 +7,7 @@ const  { getLimitDateMonth, getCurrentMonth } = require('../Controllers/LastMont
 const uniqueFormatNames = require('../Controllers/quotesValues')
 const invoicesFilters = require('../Controllers/invoicesFilters')
 const sendInvoiceEmail = require('../utils/email');
-const { year, month0, day0 } = require('../todayDate');
+
 
 
 salesRouter.get('/:id', async function(req, res){
@@ -292,7 +292,14 @@ salesRouter.post('/create-quote/:sellerID', async function(req, res) {
   const { sellerID } = req.params;
   const { formData, authFlag } = req.body;
   const {customer, project, products, variables} = formData
-
+  
+  const date = new Date().toLocaleDateString();
+  const day = `${date.split('/')[1]}`;
+  const month = `${(date.split('/')[0])}`;
+  const day0 = day.length === 1 ? `0${day}` : day
+  const month0 = month.length === 1 ? `0${month}` : month
+  const year = `${date.split('/')[2]}`;
+  
   const parsedProducts = Object.entries(products)
     .flat()
     .filter((element) => typeof element === 'object')
@@ -302,6 +309,7 @@ salesRouter.post('/create-quote/:sellerID', async function(req, res) {
 
   const ProjectID = project.idProjects;
   const InsertDate = `${year}-${month0}-${day0}`
+  console.log(InsertDate)
   const EstDelivery_Date = variables.estDelivDate;
   let Naturali_Invoice = 0
 
@@ -333,7 +341,7 @@ salesRouter.post('/create-quote/:sellerID', async function(req, res) {
         const status = authFlag ? ('Pending_Approval') : ('Pending')
         const salesQuery = `INSERT INTO Sales (Naturali_Invoice, Value, ProjectID, InvoiceDate, EstDelivery_Date, SellerID, ShippingMethod, PaymentTerms, P_O_No, Status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
         const salesValues = [Naturali_Invoice, Value, ProjectID, InsertDate, EstDelivery_Date, sellerID, variables.shipVia, variables.paymentTerms, variables.method, status ];
-
+        
         mysqlConnection.query(salesQuery, salesValues, async function(error, salesResult, fields) {
           if (error) {
             console.log('Error in salesRoutes.post /create-quote/:sellerID: ' + error);

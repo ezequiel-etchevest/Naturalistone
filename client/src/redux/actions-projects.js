@@ -40,7 +40,7 @@ export function getCustomerProjects(idCustomer){
 }
 
 export function createProject(project){
-    console.log({project})
+
     return async function(dispatch){
         try{
             let { } = await axios.post(`/projects/${project.CustomerID}`, project)

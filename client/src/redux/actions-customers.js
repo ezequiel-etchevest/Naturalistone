@@ -42,7 +42,7 @@ export function getCustomerById(customerId){
 }
 
 export function createCustomer(customerDetails){
-  console.log({customerDetails})
+
   return async function(dispatch){
       try{
           let { } = await axios.post(`/customers`, customerDetails)

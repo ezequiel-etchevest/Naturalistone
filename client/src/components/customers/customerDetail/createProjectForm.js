@@ -125,7 +125,7 @@ import {
               borderBottomWidth={"2px"}
               borderBottomColor={'web.text2'}
               type={"text"}
-              name={"ZipCode"}
+              name={"Shipping_ZipCode"}
               value={formData.Shipping_ZipCode}
               onChange={handleChange}
               />
