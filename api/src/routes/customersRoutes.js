@@ -21,7 +21,7 @@ customersRouter.get('/', async function(req, res){
         mysqlConnection.query(query_, function(error, results, fields){
             if(!results.length) {
                 console.log('Error al obtener data!')
-                res.status(400).json(error);
+                res.status(200).json({});
             } else {
                 console.log('Data OK')
                 if(!results.length) res.status(200).send('No match for this filters')

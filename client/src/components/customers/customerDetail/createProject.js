@@ -30,7 +30,7 @@ export function CreateNewProject({customer}) {
     setErrors({})
     let newErrors = validateEmptyInputsProjects(formData)
     setErrors(newErrors)
-
+    console.log(newErrors)
     if(Object.entries(newErrors).length){
       if(!toast.isActive(toastId)){
         return toast(({

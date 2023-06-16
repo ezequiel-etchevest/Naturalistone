@@ -86,6 +86,10 @@ import {
 import {
   SEND_EMAIL_CLIENT
 } from './actions-invoiceEmail';
+import {
+  GET_FACTORIES,
+  POST_FACTORY
+} from './actions-factories';
 
 const intialState = {
     employees: [],
@@ -123,7 +127,8 @@ const intialState = {
     product_image: {},
     products_new_quote: [],
     products_new_quote_errors: {},
-    products_new_quote_values: []
+    products_new_quote_values: [],
+    factories: []
 
 }
 
@@ -171,7 +176,8 @@ function rootReducer (state = intialState, action) {
               customer_by_id: {},
               posted_quote: {},
               send_email_client: {},
-              products_new_quote_values: []
+              products_new_quote_values: [],
+              factories: []
             }  
         case GET_INVOICE_BY_ID:
             return {
@@ -461,12 +467,22 @@ function rootReducer (state = intialState, action) {
             product_images: [],
             product_by_id: [],
             history_prices: []
+        }
+        case SEND_EMAIL_CLIENT:
+          return{
+            ...state,
+            send_email_client: action.payload
           }
-          case SEND_EMAIL_CLIENT:
-            return{
-              ...state,
-              send_email_client: action.payload
-            }
+        case GET_FACTORIES:
+          return {
+            ...state,
+            factories: action.payload
+        }
+        case POST_FACTORY:
+          return{
+            ...state,
+            factories: action.payload
+          }
         default:
             return {
               ...state
