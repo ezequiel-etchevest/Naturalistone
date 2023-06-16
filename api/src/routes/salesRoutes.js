@@ -294,8 +294,8 @@ salesRouter.post('/create-quote/:sellerID', async function(req, res) {
   const {customer, project, products, variables} = formData
   
   const date = new Date().toLocaleDateString();
-  const day = `${date.split('/')[0]}`;
-  const month = `${(date.split('/')[1])}`;
+  const day = `${date.split('/')[1]}`;
+  const month = `${(date.split('/')[0])}`;
   const day0 = day.length === 1 ? `0${day}` : day
   const month0 = month.length === 1 ? `0${month}` : month
   const year = `${date.split('/')[2]}`;
@@ -339,7 +339,7 @@ salesRouter.post('/create-quote/:sellerID', async function(req, res) {
         const ids = quotesIDs.map(q => Number(q.Naturali_Invoice));
         Naturali_Invoice = Math.max(...ids) + 1;
         const status = authFlag ? ('Pending_Approval') : ('Pending')
-        const salesQuery = `INSERT INTO Sales (Naturali_Invoice, Value, ProjectID, Sales.InvoiceDate, EstDelivery_Date, SellerID, ShippingMethod, PaymentTerms, P_O_No, Status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+        const salesQuery = `INSERT INTO Sales (Naturali_Invoice, Value, ProjectID, InvoiceDate, EstDelivery_Date, SellerID, ShippingMethod, PaymentTerms, P_O_No, Status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
         const salesValues = [Naturali_Invoice, Value, ProjectID, InsertDate, EstDelivery_Date, sellerID, variables.shipVia, variables.paymentTerms, variables.method, status ];
         
         mysqlConnection.query(salesQuery, salesValues, async function(error, salesResult, fields) {
