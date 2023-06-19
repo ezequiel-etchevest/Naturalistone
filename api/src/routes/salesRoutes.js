@@ -13,7 +13,7 @@ const sendInvoiceEmail = require('../utils/email');
 salesRouter.get('/:id', async function(req, res){
     
   const {id} = req.params
-  const { name, time, seller, number } = req.query
+  const { name, time, seller, number, quoteStatus } = req.query
 
   query_0 = `SELECT Secction7Flag From Logins Where SellerID = ${id}` 
   try{
@@ -83,7 +83,7 @@ salesRouter.get('/:id', async function(req, res){
          console.log('Error en salesRoutes.get /:id')
          res.status(200).json({});
      }else{
-        let invoicesFiltered = invoicesFilters(Invoices, name, number, seller)
+        let invoicesFiltered = invoicesFilters(Invoices, name, number, seller, quoteStatus)
         let result = invoicesPayments(invoicesFiltered)
         if(result.length === 0){
           res.status(200).json(['No results']);
