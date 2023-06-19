@@ -23,6 +23,28 @@ projectsRouter.get('/', async function(req, res){
   }
 });
 
+projectsRouter.get('/id/:ProjectID', async function(req, res){
+
+    const {ProjectID} = req.params 
+
+
+    query_ = `SELECT * FROM Projects WHERE idProjects = ${ProjectID} `;
+  
+    try{
+         mysqlConnection.query(query_, function(error, results, fields){
+            if(!results.length) {
+                console.log('Error al obtener data en projectbyid.get !')
+                res.status(200).json(error);
+            } else {
+                console.log('Data OK')
+                res.status(200).json(results);
+            }
+        });
+    } catch(error){
+        res.status(409).send(error);
+    }
+  });
+
 projectsRouter.get('/:idCustomer', async function(req, res){
 
   const {idCustomer} = req.params 

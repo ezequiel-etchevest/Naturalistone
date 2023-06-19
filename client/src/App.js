@@ -11,6 +11,7 @@ import InvoiceErrors from './views/InvoiceErrors';
 import Products from './views/Products';
 import { naturali_theme } from './theme';
 import ProductDetailView from './views/ProductDetailView';
+import TaskBoardView from './views/TaskBoardView';
 import CustomerDetailView from './views/CustomerDetailView';
 import Warehouse from './views/Warehouse';
 import Customers from './views/Customers';
@@ -49,6 +50,7 @@ function App() {
         <Route path="/warehouse" element={<PrivateRoute><Warehouse focus={focus} setFocus={setFocus} /></PrivateRoute>}/>
         <Route path="/customers" element={<PrivateRoute><Customers focus={focus} setFocus={setFocus} /></PrivateRoute>}/>
         <Route path="/customers/:id" element={<PrivateRoute><CustomerDetailView focus={focus} setFocus={setFocus} /></PrivateRoute>}/>
+        <Route path="/task-board" element={<PrivateRoute><TaskBoardView focus={focus} setFocus={setFocus} /></PrivateRoute>}/>
         
       </Routes> 
     </Box>

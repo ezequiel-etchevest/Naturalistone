@@ -56,9 +56,10 @@ import {
 } from './actions-deliveryNotes';
 import {
   GET_PROJECTS,
-  GET_PROJECTS_BY_ID,
+  GET_PROJECTS_BY_CUSTOMER,
   POST_PROJECT,
-  GET_PROJECT_INVOICES
+  GET_PROJECT_INVOICES,
+  GET_PROJECTS_BY_ID
 } from './actions-projects'
 import {
   GET_CUSTOMERS,
@@ -85,7 +86,14 @@ import {
 } from './actions-stats'
 import {
   SEND_EMAIL_CLIENT
-} from './actions-invoiceEmail';
+} from './actions-invoiceEmail'
+import {
+  GET_ALL_TASKS,
+  GET_TASK_BY_ID,
+  POST_COMMENT,
+  POST_TASK,
+  GET_COMMENTS
+} from './actions-tasks'
 
 const intialState = {
     employees: [],
@@ -113,6 +121,7 @@ const intialState = {
     delivery_by_id:[],
     projects: [],
     projects_by_customer_id: [],
+    project_by_id: {},
     customers: [],
     customer_by_id: {},
     payments_by_month: [],
@@ -123,7 +132,10 @@ const intialState = {
     product_image: {},
     products_new_quote: [],
     products_new_quote_errors: {},
-    products_new_quote_values: []
+    products_new_quote_values: [],
+    tasks:[],
+    task_by_id: {},
+    task_comments: []
 
 }
 
@@ -375,7 +387,7 @@ function rootReducer (state = intialState, action) {
             ...state,
             projects: action.payload
           }
-        case GET_PROJECTS_BY_ID:
+        case GET_PROJECTS_BY_CUSTOMER:
             return{
               ...state,
               projects_by_customer_id: action.payload
@@ -466,6 +478,38 @@ function rootReducer (state = intialState, action) {
             return{
               ...state,
               send_email_client: action.payload
+            }
+          case GET_ALL_TASKS:
+            return{
+              ...state,
+              tasks: action.payload
+            }
+          case GET_TASK_BY_ID:
+            return{
+              ...state,
+              task_by_id: action.payload.task,
+              task_comments: action.payload.comments
+            }
+          case POST_TASK:
+            return{
+              ...state,
+              task_by_id: action.payload.task,
+              task_comments: action.payload.comments
+            }
+          case POST_COMMENT:
+            return{
+              ...state,
+              task_comments: action.payload
+            }
+          case GET_COMMENTS:
+            return{
+              ...state,
+              task_comments: action.payload
+            }
+          case GET_PROJECTS_BY_ID:
+            return{
+              ...state,
+              project_by_id: action.payload
             }
         default:
             return {
