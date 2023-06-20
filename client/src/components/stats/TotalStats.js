@@ -67,7 +67,7 @@ export default function TotalStats({stats, filters}) {
     <Box h={'92vh'} px={'4vw'} bg={'web.bg'} >
       <HStack columns={{ base: 1, md: 3 }} spacing={{ base: 5, lg: 8 }}>
         <StatsCard
-        title={'Closing Rate'}
+        title={'Closing Rate ($)'}
         stat={stats.ClosingRate}
         icon={<FaHandsHelping size={'3em'} />}
         filters={filters}/>
