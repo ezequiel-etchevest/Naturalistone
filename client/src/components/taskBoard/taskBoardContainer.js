@@ -18,7 +18,7 @@ const TaskBoardContainer = ({user}) => {
     <>
       <Box userSelect={'none'} h={'92vh'} ml={'16vw'} bg={'web.bg'} display={'flex'} flexDir={'row'} justifyContent={'space-between'}>
         <Box display={'flex'} flexDir={'row'}>
-       <Board tasks={tasks} setActiveCard={setActiveCard} activeCard={activeCard}/>
+       <Board setActiveCard={setActiveCard} activeCard={activeCard}/>
        {
         activeCard ? (
             <TaskDetail activeCard={activeCard}/>

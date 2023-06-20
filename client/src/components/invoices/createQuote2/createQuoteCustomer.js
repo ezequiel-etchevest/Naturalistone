@@ -23,11 +23,6 @@ const dispatch = useDispatch()
 const [inputValue, setInputValue] = useState('')
 const [customer, setCustomer] = useState('')
 
-    // useEffect(()=>{
-      
-    // },[customers])
-
-// console.log(customers)
 const handleInput = (e) =>  {
   if(e.target.value.length) {
     setInputValue(e.target.value)

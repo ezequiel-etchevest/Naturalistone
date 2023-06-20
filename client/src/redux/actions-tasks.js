@@ -13,6 +13,7 @@ export function getAllTasks(SellerID){
   return async function(dispatch){
     try{ 
       let {data} = await axios.get(`/tasks/all-tasks?SellerID=${SellerID}`)
+      console.log(data)
         dispatch(
           {
             type: GET_ALL_TASKS,
@@ -25,7 +26,6 @@ export function getAllTasks(SellerID){
 }
 
 export function postTask(task){
-    
     return async function(dispatch){
       try{ 
         let {} = await axios.post(`/tasks/new-task`, task)

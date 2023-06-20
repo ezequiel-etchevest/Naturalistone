@@ -493,8 +493,7 @@ function rootReducer (state = intialState, action) {
           case POST_TASK:
             return{
               ...state,
-              task_by_id: action.payload.task,
-              task_comments: action.payload.comments
+              tasks: action.payload,
             }
           case POST_COMMENT:
             return{

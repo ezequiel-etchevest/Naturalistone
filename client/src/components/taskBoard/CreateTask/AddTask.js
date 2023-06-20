@@ -1,12 +1,22 @@
 import { ButtonGroup, IconButton, Progress, Button, useToast, useDisclosure, FormLabel, Modal, ModalBody, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalFooter, Text, Box, Input, FormControl, Textarea } from "@chakra-ui/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BiTask } from 'react-icons/bi';
 import { useDispatch } from 'react-redux'
-import { postComment } from "../../../redux/actions-tasks";
 import { AddTaskInfo } from "./AddTaskInfo";
+import AddTaskCustomer  from "./AddTaskCustomer";
+import AddTaskProject  from "./AddTaskProject";
+import { getCustomerById, getCustomers } from "../../../redux/actions-customers";
+import { useSelector } from "react-redux";
+import { getInvoiceById, getInvoicesBySeller } from "../../../redux/actions-invoices";
+import AddTaskInvoice from "./AddTaskInvoice";
+import { getProjectById } from "../../../redux/actions-projects";
+import AddTaskReview from "./AddTaskReview";
+import { postTask } from "../../../redux/actions-tasks";
 
-export const AddTask = ({task, user, activeCard}) => {
+export const AddTask = ({ user}) => {
   
+
+  const customers = useSelector(state => state.customers)
   const dispatch = useDispatch();
   const toastId = 'error-toast'
   const { isOpen, onOpen, onClose } = useDisclosure()
@@ -15,41 +25,72 @@ export const AddTask = ({task, user, activeCard}) => {
   const [formData, setFormData ] = useState({
     Title: '',
     Description: '',
-    CustomerID: '',
-    ProjectID: '',
-    InvoiceID: '',
-    SellerID: user[0].SellerID
+    CustomerID: null,
+    ProjectID: null,
+    InvoiceID: null,
+    SellerID: user[0].SellerID,
   })
+
   const handleClose = () => {
-    // setTask_comment({})
+    setProgress(20)
+    setFormData({})
     onClose()
   }
-  const handleChange = (e) => {
-    // setTask_comment({
-    //   ...task_comment,
-    //   Description: e.target.value,
-    //   TaskID: activeCard.taskID
-    // })
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setFormData({
+      ...formData,
+      [name]: value
+    })
   }
-  const handleNextButton = () => {}
-  const handlePreviousButton = () => {}
+
+  const handleNextButton = () => {
+    if(progress == 20){
+      if(formData.Title && formData.Description){
+        return setProgress(progress + 20)
+      }else{
+        if(!toast.isActive(toastId)){
+          return toast(({
+            id: toastId,
+            title: "Error",
+            description: 'All fields must be completed',
+            status: "error",
+            duration: 5000,
+            isClosable: true,
+            }))
+          }
+      }}
+      if(progress === 40){
+        if(formData.CustomerID) return setProgress(progress + 20)
+        else return setProgress(progress + 40)
+      } 
+      if(progress === 60) return setProgress(progress + 20)
+      if(progress === 80){
+        if(formData.CustomerID) dispatch(getCustomerById(formData.CustomerID))
+        if(formData.ProjectID) dispatch(getProjectById(formData.ProjectID))
+        if(formData.InvoiceID) dispatch(getInvoiceById(formData.InvoiceID))
+        return setProgress(progress + 20)
+      }
+       
+    }
+  const handlePreviousButton = () => {
+    if(progress === 80 ){
+      if(formData.CustomerID) return setProgress(progress - 20)
+      else return setProgress(progress - 40)
+    }else return setProgress(progress - 20)
+  }
+
   const handleSubmit = () => {
-    // if(!task_comment.Description.length) {
-    //   if(!toast.isActive(toastId)){
-    //     return toast(({
-    //       id: toastId,
-    //       title: "Error",
-    //       description: 'To add a comment you must write a description',
-    //       status: "error",
-    //       duration: 5000,
-    //       isClosable: true,
-    //       }))
-    // }}else{
-    //   dispatch(postComment(task_comment))
-    //   handleClose()
-    //}
+    if(!formData.SellerID) setFormData({...formData, SellerID: user[0].SellerID})
+    dispatch(postTask(formData))
+    setFormData({})
+    handleClose()
   }
-  
+  useEffect(()=>{
+    if(!customers.length)dispatch(getCustomers(''))
+    dispatch(getInvoicesBySeller(user[0].SellerID, {inputName: '', inputNumber: '', selectSeller: '', timeFilter: ''}))
+  })
+
   return(
     <>
       <ButtonGroup
@@ -77,7 +118,7 @@ export const AddTask = ({task, user, activeCard}) => {
     <Modal 
       isOpen={isOpen} 
       onClose={handleClose}
-      size={'2xl'}
+      size={'3xl'}
       >
       <ModalOverlay/>
       <ModalContent 
@@ -102,15 +143,35 @@ export const AddTask = ({task, user, activeCard}) => {
           _hover={{
             color: 'web.text'
           }} />
-        <ModalBody color={'web.text2'}>
+        <ModalBody color={'web.text2'} p={'2vh'}>
           {
             progress === 20 && (
-              <AddTaskInfo formData={formData} setFormData={setFormData} user={user}/>
+              <AddTaskInfo handleChange={handleChange} formData={formData} setFormData={setFormData} user={user}/>
+            )
+          }
+          {
+            progress === 40 && (
+              <AddTaskCustomer customers={customers} formData={formData} setFormData={setFormData} user={user}/>
+            )
+          }
+          {
+            progress === 60 && (
+              <AddTaskProject formData={formData} setFormData={setFormData} user={user}/>
+            )
+          }
+          {
+            progress === 80 && (
+              <AddTaskInvoice handleChange={handleChange} formData={formData} setFormData={setFormData} user={user}/>
+            )
+          }
+          {
+            progress === 100 && (
+              <AddTaskReview formData={formData} user={user}/>
             )
           }
         </ModalBody>
         <ModalFooter display={'flex'} justifyContent={'space-between'}>
-              <Button visibility={progress === 25 ? 'hidden' : 'unset'} colorScheme='orange' mr={3} onClick={()=>handlePreviousButton()}>
+              <Button visibility={progress === 20 ? 'hidden' : 'unset'} colorScheme='orange' mr={3} onClick={()=>handlePreviousButton()}>
               Prev
               </Button>
               {

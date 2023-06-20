@@ -104,7 +104,7 @@ tasksRouter.post('/new-comment', async function(req, res) {
   });
   
 tasksRouter.post('/new-task', async function(req, res){
-
+    console.log(req.body)
     const {
         taskID,
         Description,

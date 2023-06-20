@@ -2,17 +2,16 @@ import { VStack, Box, FormControl, Input, Text, FormLabel, Textarea} from "@chak
 
 
 
-export function AddTaskInfo({formData, setFormData, validate, errors, setErrors, setChangeInput, handleChange, user}) {
+export function AddTaskInfo({formData, handleChange, user}) {
 
-console.log(user)
   return (
     <>
     <form>
       <VStack h={'40vh'}>
-        <Box w={'22vw'} display={'flex'} pt={'2vh'} flexDir={'row'} justifyContent={'space-between'}>
+        <Box w={'35vw'} display={'flex'} pt={'2vh'} flexDir={'row'} justifyContent={'space-between'}>
           <Text alignSelf={'flex-start'} textColor={'web.text2'} fontWeight={'bold'} >Task Info</Text>
         </Box>
-        <Box w={'22vw'} display={'flex'} flexDir={'row'} pt={'4vh'} justifyContent={'space-between'}>
+        <Box  w={'35vw'} display={'flex'} flexDir={'row'} pt={'1vh'} justifyContent={'space-between'}>
           <FormControl>
           <FormLabel textColor={'web.text2'} fontSize={'sm'} name={'name'} fontWeight={'normal'}>Assignee</FormLabel>
             <Input
@@ -23,13 +22,14 @@ console.log(user)
               _placeholder={{ fontFamily: 'body', fontWeight: 'inherit' }}
               size={"sm"}
               borderBottomWidth={"2px"}
+              borderColor={'web.border'}
               type={"text"}
               name={"Title"}
               value={`${user[0].FirstName} ${user[0].LastName}`}
               />
           </FormControl>
         </Box>
-        <Box w={'22vw'} display={'flex'} flexDir={'row'} pt={'4vh'} justifyContent={'space-between'}>
+        <Box  w={'35vw'} display={'flex'} flexDir={'row'} pt={'1vh'} justifyContent={'space-between'}>
           <FormControl>
           <FormLabel textColor={'web.text2'} fontSize={'sm'} name={'name'} fontWeight={'normal'}>Title</FormLabel>
             <Input
@@ -39,6 +39,7 @@ console.log(user)
               _placeholder={{ fontFamily: 'body', fontWeight: 'inherit' }}
               size={"sm"}
               borderBottomWidth={"2px"}
+              borderColor={'web.border'}
               type={"text"}
               name={"Title"}
               value={formData.Title}
@@ -46,15 +47,18 @@ console.log(user)
               />
           </FormControl>
         </Box>
-        <Box w={'22vw'} display={'flex'} flexDir={'row'} justifyContent={'space-between'}>
+        <Box w={'35vw'} display={'flex'} flexDir={'row'} justifyContent={'space-between'}>
           <FormControl>
-          <FormLabel textColor={'web.text2'}name={'email'}  fontSize={'sm'}>Description</FormLabel>
+          <FormLabel textColor={'web.text2'} name={'Description'}  fontSize={'sm'}>Description</FormLabel>
           <Textarea
+              resize={'none'}
+              p={'1vw'}
               mb={'0.5vh'}
+              minH={'13vh'}
               variant="unstyled"
               textColor={'web.text'}
-              placeholder="Write your comment here..."
-              _placeholder={{ fontFamily: 'body', fontWeight: 'inherit', fontStyle:'italic', pl:'1vw' }}
+              placeholder="Describe the new task here..."
+              _placeholder={{ fontFamily: 'body', fontWeight: 'inherit', fontStyle:'italic' }}
               size={"sm"}
               border={'1px solid'}
               borderColor={'web.border'}

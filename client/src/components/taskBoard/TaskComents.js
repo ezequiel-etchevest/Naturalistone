@@ -50,7 +50,7 @@ export const TaskComents = ({comments}) => {
         }}>
         <Stack divider={<StackDivider />} spacing='4'>
          {
-          comments.length ?
+          comments?.length ?
           typeof comments === 'string' ? (
             <Center h={'20vh'}>
             <Text color={'web.text2'}>No comments added to this task</Text>

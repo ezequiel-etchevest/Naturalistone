@@ -2,12 +2,14 @@ import { Box, Highlight, chakra, Stack, StackDivider, Heading, Select, Text, Div
 import { Card, CardBody, CardHeader } from '@chakra-ui/card'
 import TaskCard from "./TaskCard";
 import '../../assets/styleSheet.css'
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
 
 
-const Board = ({setActiveCard, activeCard, tasks}) => {
+const Board = ({setActiveCard, activeCard}) => {
 
-  const today = new Date().toISOString().split('T')[0]
-
+  const tasks = useSelector(state => state.tasks)
+  useEffect(()=>{},[tasks])
 
   return(
     <>
@@ -75,7 +77,7 @@ const Board = ({setActiveCard, activeCard, tasks}) => {
               },
             }}>
               {
-                tasks.map((task, i) =>{
+                tasks?.map((task, i) =>{
                   return(
                     <TaskCard task={task} key={i} setActiveCard={setActiveCard} activeCard={activeCard}/>
                   )
