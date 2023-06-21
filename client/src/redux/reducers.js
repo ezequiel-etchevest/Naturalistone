@@ -91,7 +91,9 @@ import {
   POST_FACTORY
 } from './actions-factories';
 import {
-  GET_FREIGHTS
+  GET_FREIGHTS,
+  GET_FREIGHT_ID,
+  GET_FREIGHTS_FACTORY,
 } from './actions-freights';
 import {
   GET_PROFORMAS
@@ -135,8 +137,10 @@ const intialState = {
     products_new_quote_errors: {},
     products_new_quote_values: [],
     factories: [],
-    freight: [],
+    freights: [],
     proformas: [],
+    freight: {},
+    freights_factory: [],
 }
 
 function rootReducer (state = intialState, action) {
@@ -499,6 +503,16 @@ function rootReducer (state = intialState, action) {
           return {
             ...state,
             proformas: action.payload,
+          }
+        case GET_FREIGHT_ID:
+          return {
+            ...state,
+            freight: action.payload,
+          }
+        case GET_FREIGHTS_FACTORY:
+          return {
+            ...state,
+            freights_factory: action.payload,
           }
         default:
             return {
