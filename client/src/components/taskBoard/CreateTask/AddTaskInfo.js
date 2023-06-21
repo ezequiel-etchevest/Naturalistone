@@ -1,4 +1,5 @@
-import { VStack, Box, FormControl, Input, Text, FormLabel, Textarea} from "@chakra-ui/react"
+import { VStack, Box, FormControl, Input, Text, FormLabel, Textarea} from "@chakra-ui/react";
+import '../../../assets/styleSheet.css'
 
 
 
@@ -12,7 +13,7 @@ export function AddTaskInfo({formData, handleChange, user}) {
           <Text alignSelf={'flex-start'} textColor={'web.text2'} fontWeight={'bold'} >Task Info</Text>
         </Box>
         <Box  w={'35vw'} display={'flex'} flexDir={'row'} pt={'1vh'} justifyContent={'space-between'}>
-          <FormControl>
+          <FormControl  pr={'2vw'}>
           <FormLabel textColor={'web.text2'} fontSize={'sm'} name={'name'} fontWeight={'normal'}>Assignee</FormLabel>
             <Input
               isReadOnly={true}
@@ -26,6 +27,32 @@ export function AddTaskInfo({formData, handleChange, user}) {
               type={"text"}
               name={"Title"}
               value={`${user[0].FirstName} ${user[0].LastName}`}
+              />
+          </FormControl>
+          <FormControl pl={'2vw'}>
+          <FormLabel textColor={'web.text2'} fontSize={'sm'} name={'name'} fontWeight={'normal'}>Due Date</FormLabel>
+            <Input
+              mb={'0.5vh'}
+              variant="unstyled"
+              textColor={'web.text'}
+              _placeholder={{ fontFamily: 'body', fontWeight: 'inherit' }}
+              size={"sm"}
+              borderBottomWidth={"2px"}
+              borderColor={'web.border'}
+              type={"date"}
+              name={"DueDate"}
+              value={formData.DueDate}
+              onChange={handleChange}
+              css={{
+                '::-webkit-calendar-picker-indicator': {   
+                    background: `url(https://cdn3.iconfinder.com/data/icons/linecons-free-vector-icons-pack/32/calendar-16.png) center/90% no-repeat`,    
+                    cursor: 'pointer',
+                    filter: 'invert(59%) sepia(7%) saturate(31%) hue-rotate(184deg) brightness(97%) contrast(92%)',
+                    position: 'absolute',
+                    right: 6,
+                    top: 0,
+                  },  
+              }}
               />
           </FormControl>
         </Box>

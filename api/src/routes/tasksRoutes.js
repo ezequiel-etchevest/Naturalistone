@@ -5,13 +5,16 @@ const executeQuery = require('../Controllers/taskRoutesController');
 
 
 tasksRouter.get('/all-tasks', async function(req, res){
-    console.log(req.query)
+
     const { SellerID, Status } = req.query
-    
+    console.log(Status)
     let query_ = `
-        SELECT NaturaliStone.Tasks.*
-        FROM Tasks
-        WHERE Tasks.SellerID = ${SellerID} AND Status= "${Status}"`;
+    SELECT Tasks.*
+    FROM Tasks
+    WHERE Tasks.SellerID = ${SellerID} AND Status = "${Status}"
+    ORDER BY Tasks.DueDate ${Status == 'todo' ? 'ASC' : 'DESC'};
+    `;
+    
     try{
         mysqlConnection.query(query_, function(error, results, fields){
             if(!results) {
@@ -110,11 +113,12 @@ tasksRouter.post('/new-task', async function(req, res){
         CustomerID,
         ProjectID,
         InvoiceID,
-        SellerID
+        SellerID,
+        DueDate
     } = req.body
-
-    query_ = `INSERT INTO Tasks (taskID, Description, Title, Status, CustomerID, ProjectID, InvoiceID, SellerID) 
-    VALUES ("${taskID}", "${Description}", "${Title}", "todo", "${CustomerID}", "${ProjectID}", "${InvoiceID}", "${SellerID}")`;
+    console.log(DueDate)
+    query_ = `INSERT INTO Tasks (taskID, Description, Title, Status, CustomerID, ProjectID, InvoiceID, SellerID, DueDate) 
+    VALUES ("${taskID}", "${Description}", "${Title}", "todo", "${CustomerID}", "${ProjectID}", "${InvoiceID}", "${SellerID}", "${DueDate}")`;
     
     try{
          mysqlConnection.query(query_, function(error, results, fields){
@@ -136,7 +140,14 @@ tasksRouter.patch('/change-status/:taskID', async function(req, res){
     
     const {taskID} = req.params
 
-    query_ = `UPDATE NaturaliStone.Tasks SET Status = 'done' WHERE taskID = ${taskID}`
+    const currentDate = new Date().toISOString().slice(0, 19).replace('T', ' ');
+
+    const query_ = `
+        UPDATE NaturaliStone.Tasks
+        SET Status = 'done', CompletedDate = '${currentDate}'
+        WHERE taskID = ${taskID}
+        `;
+
 
     try{
        mysqlConnection.query(query_, function(error, results, fields){

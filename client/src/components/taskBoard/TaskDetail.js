@@ -1,15 +1,29 @@
 import { Box, Divider, Text, chakra, Highlight } from "@chakra-ui/react"
 import { TaskComents } from "./TaskComents"
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
+import { useEffect } from "react";
+import { getCustomerById } from "../../redux/actions-customers";
+import { getProjectById } from "../../redux/actions-projects";
+import { getInvoiceById } from "../../redux/actions-invoices";
+import { getComments } from "../../redux/actions-tasks";
 
 const TaskDetail = ({activeCard}) => {
 
-  const { taskID, Description, Title, Status } = activeCard 
+  const { taskID, Description, Title, Status, CompletedDate, CustomerID, ProjectID, InvoiceID } = activeCard 
 
   const customer = useSelector(state => state.customer_by_id)
   const invoice = useSelector(state => state.invoice)
   const project = useSelector(state => state.project_by_id)
   const comments = useSelector(state => state.task_comments)
+  const dispatch = useDispatch()
+
+  useEffect(()=>{
+    if(CustomerID) dispatch(getCustomerById(CustomerID))
+    if(ProjectID) dispatch(getProjectById(ProjectID))
+    if(InvoiceID) dispatch(getInvoiceById(InvoiceID))
+    dispatch(getComments(taskID))
+
+  }, [activeCard])
   
     return(
       <>
@@ -73,6 +87,23 @@ const TaskDetail = ({activeCard}) => {
           >
             {Description}
         </Text>
+        {
+          Status === 'done' && (
+            <Box mb={'1.5vh'}>
+            <Text 
+              fontSize={'xs'}  
+              color={'web.text2'}>
+              Done on
+            </Text>
+            <Text 
+              fontSize={'lg'} 
+              fontWeight={'bold'}>
+              {CompletedDate.replace('T', ' ').split('.')[0]}
+            </Text>
+          </Box>
+          )
+        }
+
         <Divider mb={'2.5vh'}/>
         <Box mb={'1.5vh'}>
           <Text 

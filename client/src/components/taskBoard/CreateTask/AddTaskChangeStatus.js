@@ -34,13 +34,13 @@ export const ChangeTaskStatusModal = ({user, activeCard, setActiveCard}) => {
         variant={'unstyled'}           
         fontSize={'xl'}
         icon={<BiCommentAdd/>}
-        disabled={ activeCard ? false : true}/>
+        disabled={activeCard ? activeCard.Status === 'todo' ? false : true : true}/>
         <Button
         onClick={onOpen}
         fontSize={'md'}
         variant={'unstyled'}           
         fontWeight={'normal'}
-        disabled={ activeCard ? false : true}
+        disabled={activeCard ? activeCard.Status === 'todo' ? false : true : true}
         >Check as Done</Button>       
     </ButtonGroup>
     {

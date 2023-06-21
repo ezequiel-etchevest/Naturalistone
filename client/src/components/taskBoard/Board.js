@@ -17,8 +17,9 @@ const Board = ({setActiveCard, activeCard, user}) => {
   const handleChange = (e) => {
     console.log(user)
     dispatch(getAllTasks(user[0].SellerID, e.target.value))
+    setActiveCard( null)
   }
-  console.log(tasks)
+
   return(
     <>
       <Box

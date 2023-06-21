@@ -24,8 +24,9 @@ const AddTaskReview = ({formData}) => {
         borderColor={'web.border'}
         bg={'web.sideBar'}
         >
-        <Box display={'flex'} flexDir={'row'} justifyContent={'space-between'} alignContent={'baseline'}>
-        </Box>
+        <Box display={'flex'} flexDir={'row'} justifyContent={'space-between'} placeItems={'center'}>
+
+        
         <Text
           placeContent={'flex-start'}
           textAlign={'start'}
@@ -38,6 +39,15 @@ const AddTaskReview = ({formData}) => {
           >
             {formData.Title}
         </Text>
+        <Box>
+        <Text 
+            fontSize={'xs'}  
+            color={'web.text2'}>
+            Due Date
+          </Text>
+        <Text>{formData.DueDate}</Text>
+        </Box>
+        </Box>
         <Text
           placeContent={'flex-start'}
           textAlign={'start'}

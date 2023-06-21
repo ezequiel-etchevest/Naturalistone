@@ -30,6 +30,7 @@ export const AddTask = ({ user}) => {
     CustomerID: null,
     ProjectID: null,
     InvoiceID: null,
+    DueDate: new Date().toISOString().split('T')[0],
     SellerID: userLocal.SellerID ,
   })
 
@@ -127,6 +128,7 @@ export const AddTask = ({ user}) => {
         bg={'web.sideBar'}
         border={'1px solid'}
         borderColor={'web.border'}
+        minW={'40vw'}
         >
         <Progress
         value={progress} 

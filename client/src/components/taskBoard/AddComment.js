@@ -8,10 +8,11 @@ export const AddCommentModal = ({task, user, activeCard}) => {
   
   const dispatch = useDispatch();
   const toastId = 'error-toast'
+  const userLocal = JSON.parse(localStorage.getItem('user'))
   const { isOpen, onOpen, onClose } = useDisclosure()
   const toast = useToast()
   const [task_comment, setTask_comment ] = useState({
-    By: user[0].SellerID,
+    By: userLocal.SellerID,
     Description: '',
     Date:new Date().toISOString().split('T')[0],
     TaskID: ''
@@ -24,7 +25,9 @@ export const AddCommentModal = ({task, user, activeCard}) => {
     setTask_comment({
       ...task_comment,
       Description: e.target.value,
-      TaskID: activeCard.taskID
+      TaskID: activeCard.taskID,
+      By: userLocal.SellerID,
+      Date:new Date().toISOString().split('T')[0],
     })
   }
   const handleSubmit = () => {
@@ -39,6 +42,7 @@ export const AddCommentModal = ({task, user, activeCard}) => {
           isClosable: true,
           }))
     }}else{
+      console.log(task_comment)
       dispatch(postComment(task_comment))
       handleClose()
     }}
