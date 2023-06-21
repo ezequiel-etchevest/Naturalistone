@@ -3,14 +3,22 @@ import { Card, CardBody, CardHeader } from '@chakra-ui/card'
 import TaskCard from "./TaskCard";
 import '../../assets/styleSheet.css'
 import { useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllTasks } from "../../redux/actions-tasks";
 
 
-const Board = ({setActiveCard, activeCard}) => {
+const Board = ({setActiveCard, activeCard, user}) => {
 
   const tasks = useSelector(state => state.tasks)
+  const dispatch = useDispatch()
+
   useEffect(()=>{},[tasks])
 
+  const handleChange = (e) => {
+    console.log(user)
+    dispatch(getAllTasks(user[0].SellerID, e.target.value))
+  }
+  console.log(tasks)
   return(
     <>
       <Box
@@ -49,6 +57,7 @@ const Board = ({setActiveCard, activeCard}) => {
           borderBottomColor={'web.text2'}
           _hover={{borderColor: 'web.border'}}
           cursor={'pointer'}
+          onChange={handleChange}
         >
         <option value='todo' className="options">To Do </option>
         <option value='done' className="options">Done</option>
@@ -77,11 +86,16 @@ const Board = ({setActiveCard, activeCard}) => {
               },
             }}>
               {
-                tasks?.map((task, i) =>{
-                  return(
-                    <TaskCard task={task} key={i} setActiveCard={setActiveCard} activeCard={activeCard}/>
-                  )
-                })
+                Array.isArray(tasks) ? (
+                  tasks?.map((task, i) =>{
+                    return(
+                      <TaskCard task={task} key={i} setActiveCard={setActiveCard} activeCard={activeCard}/>
+                    )
+                  })
+                ):(
+                  <Text>{tasks}</Text>
+                )
+               
               }
             </Stack>
           </CardBody>

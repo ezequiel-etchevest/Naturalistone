@@ -17,10 +17,12 @@ export const AddTask = ({ user}) => {
   
 
   const customers = useSelector(state => state.customers)
+  const seller_invoices = useSelector(state => state.seller_invoices)
   const dispatch = useDispatch();
   const toastId = 'error-toast'
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [ progress, setProgress ] = useState(20)
+  const userLocal = JSON.parse(localStorage.getItem('user'))
   const toast = useToast()
   const [formData, setFormData ] = useState({
     Title: '',
@@ -28,7 +30,7 @@ export const AddTask = ({ user}) => {
     CustomerID: null,
     ProjectID: null,
     InvoiceID: null,
-    SellerID: user[0].SellerID,
+    SellerID: userLocal.SellerID ,
   })
 
   const handleClose = () => {
@@ -82,14 +84,14 @@ export const AddTask = ({ user}) => {
 
   const handleSubmit = () => {
     if(!formData.SellerID) setFormData({...formData, SellerID: user[0].SellerID})
-    dispatch(postTask(formData))
+    dispatch(postTask(formData, 'todo'))
     setFormData({})
     handleClose()
   }
   useEffect(()=>{
     if(!customers.length)dispatch(getCustomers(''))
-    dispatch(getInvoicesBySeller(user[0].SellerID, {inputName: '', inputNumber: '', selectSeller: '', timeFilter: ''}))
-  })
+    if(!seller_invoices.length) dispatch(getInvoicesBySeller(user[0].SellerID, {inputName: '', inputNumber: '', selectSeller: '', timeFilter: ''}))
+  }, [seller_invoices])
 
   return(
     <>

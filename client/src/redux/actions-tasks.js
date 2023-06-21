@@ -4,15 +4,16 @@ export const GET_ALL_TASKS = 'GET_ALL_TASKS';
 export const GET_TASK_BY_ID = 'GET_TASK_BY_ID';
 export const POST_COMMENT = 'POST_COMMENT';
 export const POST_TASK = 'POST_TASK';
-export const GET_COMMENTS = 'GET_COMMENTS'
+export const GET_COMMENTS = 'GET_COMMENTS';
+export const PATCH_TASK_STATUS = 'PATCH_TASK_STATUS';
 
 
 
-export function getAllTasks(SellerID){
-    
+export function getAllTasks(SellerID, status){
+
   return async function(dispatch){
     try{ 
-      let {data} = await axios.get(`/tasks/all-tasks?SellerID=${SellerID}`)
+      let {data} = await axios.get(`/tasks/all-tasks?SellerID=${SellerID}&Status=${status}`)
       console.log(data)
         dispatch(
           {
@@ -25,11 +26,13 @@ export function getAllTasks(SellerID){
     }
 }
 
-export function postTask(task){
+export function postTask(task, status){
     return async function(dispatch){
       try{ 
+        
         let {} = await axios.post(`/tasks/new-task`, task)
-        let { data } = await axios.get(`/tasks/all-tasks?SellerID=${task.SellerID}`)
+        let { data } = await axios.get(`/tasks/all-tasks?SellerID=${task.SellerID}&Status=${status}`)
+        console.log(data)
           dispatch(
             {
               type: POST_TASK,
@@ -40,7 +43,23 @@ export function postTask(task){
         }
       }
   }
+export function changeTaskStatus(taskID, sellerID, status){
+  console.log('actions', taskID, sellerID)
+    return async function(dispatch){
+        try{
+            let {} = await axios.patch(`/tasks/change-status/${taskID}`)
+            let { data } = await axios.get(`/tasks/all-tasks?SellerID=${sellerID}&Status=${status}`)
 
+            dispatch(
+                {
+                    type: PATCH_TASK_STATUS,
+                    payload: data
+                })
+        }catch(error){
+            console.log({error})     
+        }
+    }
+}
 export function getTaskById(TaskId){
     
     return async function(dispatch){

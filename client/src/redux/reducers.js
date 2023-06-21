@@ -92,7 +92,8 @@ import {
   GET_TASK_BY_ID,
   POST_COMMENT,
   POST_TASK,
-  GET_COMMENTS
+  GET_COMMENTS,
+  PATCH_TASK_STATUS
 } from './actions-tasks'
 
 const intialState = {
@@ -491,6 +492,11 @@ function rootReducer (state = intialState, action) {
               task_comments: action.payload.comments
             }
           case POST_TASK:
+            return{
+              ...state,
+              tasks: action.payload,
+            }
+          case PATCH_TASK_STATUS:
             return{
               ...state,
               tasks: action.payload,

@@ -2,20 +2,19 @@ const express = require('express')
 const tasksRouter = express.Router()
 const mysqlConnection = require('../db');
 const executeQuery = require('../Controllers/taskRoutesController');
-const e = require('express');
 
 
 tasksRouter.get('/all-tasks', async function(req, res){
-
-    const { SellerID } = req.query
-
+    console.log(req.query)
+    const { SellerID, Status } = req.query
+    
     let query_ = `
         SELECT NaturaliStone.Tasks.*
         FROM Tasks
-        WHERE Tasks.SellerID = ${SellerID}`;
+        WHERE Tasks.SellerID = ${SellerID} AND Status= "${Status}"`;
     try{
         mysqlConnection.query(query_, function(error, results, fields){
-            if(!results.length) {
+            if(!results) {
                 console.log('Error al obtener tasks data!')
                 res.status(400).json(error);
             } else {
@@ -48,7 +47,6 @@ tasksRouter.get('/comments/:TaskID', async function(req, res){
         res.status(409).send(error);
     }
 });
-
 
 tasksRouter.get('/id/:TaskID', async function(req, res){
     const { TaskID } = req.query
@@ -109,7 +107,6 @@ tasksRouter.post('/new-task', async function(req, res){
         taskID,
         Description,
         Title,
-        Status,
         CustomerID,
         ProjectID,
         InvoiceID,
@@ -117,7 +114,7 @@ tasksRouter.post('/new-task', async function(req, res){
     } = req.body
 
     query_ = `INSERT INTO Tasks (taskID, Description, Title, Status, CustomerID, ProjectID, InvoiceID, SellerID) 
-    VALUES ("${taskID}", "${Description}", "${Title}", "${Status}", "${CustomerID}", "${ProjectID}", "${InvoiceID}", "${SellerID}")`;
+    VALUES ("${taskID}", "${Description}", "${Title}", "todo", "${CustomerID}", "${ProjectID}", "${InvoiceID}", "${SellerID}")`;
     
     try{
          mysqlConnection.query(query_, function(error, results, fields){
@@ -134,4 +131,28 @@ tasksRouter.post('/new-task', async function(req, res){
         res.status(409).send(error);
     }
 });
+
+tasksRouter.patch('/change-status/:taskID', async function(req, res){
+    
+    const {taskID} = req.params
+
+    query_ = `UPDATE NaturaliStone.Tasks SET Status = 'done' WHERE taskID = ${taskID}`
+
+    try{
+       mysqlConnection.query(query_, function(error, results, fields){
+
+            if(error) throw error;
+            if(results.length == 0) {
+                console.log('Failure updating status task')
+                res.status(200).json('');
+            } else {
+                console.log('Data OK')
+                res.status(200).json(results);
+            }
+        });
+    } catch(error){
+        res.status(400).send(error);
+    }
+});
+
 module.exports = tasksRouter

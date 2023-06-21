@@ -15,10 +15,11 @@ import { BiAddToQueue, BiTask, BiLinkAlt } from 'react-icons/bi'
 import { AiOutlineDelete } from 'react-icons/ai'
 import { AddCommentModal } from './AddComment';
 import { AddTask } from './CreateTask/AddTask';
+import { ChangeTaskStatusModal } from './CreateTask/AddTaskChangeStatus';
 
 
 
-export const TaskBoardToolbar = ({activeCard, user}) => {
+export const TaskBoardToolbar = ({activeCard, user, setActiveCard}) => {
 
 
   return(
@@ -28,6 +29,7 @@ export const TaskBoardToolbar = ({activeCard, user}) => {
       <Box pl={'1vh'} pb={'1vh'}>
         <AddCommentModal activeCard={activeCard} user={user}/>
         <AddTask user={user}/>
+        <ChangeTaskStatusModal activeCard={activeCard} setActiveCard={setActiveCard} user={user} />
       </Box>
       <Text fontSize={'xs'} textColor={'web.text2'} w={'100%'}>Customer</Text>
       <Divider w={'100%'} textColor={'web.border'}/>

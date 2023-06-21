@@ -12,13 +12,13 @@ const TaskBoardContainer = ({user}) => {
     const dispatch = useDispatch()
     const tasks = useSelector(state => state.tasks)
     useEffect(()=>{
-      if(!tasks.length) dispatch(getAllTasks(user[0].SellerID))
+      if(!tasks.length) dispatch(getAllTasks(user[0].SellerID, 'todo'))
     }, [tasks])
     return(
     <>
       <Box userSelect={'none'} h={'92vh'} ml={'16vw'} bg={'web.bg'} display={'flex'} flexDir={'row'} justifyContent={'space-between'}>
         <Box display={'flex'} flexDir={'row'}>
-       <Board setActiveCard={setActiveCard} activeCard={activeCard}/>
+       <Board setActiveCard={setActiveCard} activeCard={activeCard} user={user}/>
        {
         activeCard ? (
             <TaskDetail activeCard={activeCard}/>
@@ -44,7 +44,7 @@ const TaskBoardContainer = ({user}) => {
         )
        }
        </Box>
-       <TaskBoardToolbar user={user} activeCard={activeCard}/>
+       <TaskBoardToolbar user={user} activeCard={activeCard} setActiveCard={setActiveCard}/>
 
       </Box> 
       </>
