@@ -105,18 +105,24 @@ export const TaskBoardToolbar = ({activeCard, user, setActiveCard}) => {
         	spacing={0}
            _hover={{
            color: 'logo.orange'
-         	}}>
+         	}}
+          disabled={activeCard?.InvoiceID ? false : true}
+          onClick={()=> navigate(`/quotes/${activeCard.InvoiceID}`)}>
         <IconButton
          variant={'unstyled'}           
          fontWeight={'normal'}
          fontSize={'xl'}
-         icon={<TbFileInvoice/>}/>
+         icon={<TbFileInvoice/>}
+         disabled={activeCard?.InvoiceID ? false : true}
+         onClick={()=> navigate(`/quotes/${activeCard.InvoiceID}`)}/>
          <Button
          fontSize={'md'}
          display={'flex'}
          alignSelf={'flex-start'}
          variant={'unstyled'}           
          fontWeight={'normal'}
+         disabled={activeCard?.InvoiceID ? false : true}
+         onClick={()=> navigate(`/quotes/${activeCard.InvoiceID}`)}
          >Invoice Details
         </Button>            
         </ButtonGroup>
