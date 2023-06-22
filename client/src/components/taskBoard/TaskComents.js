@@ -34,7 +34,7 @@ export const TaskComents = ({comments}) => {
         <Heading size='sm'>Comments</Heading>
       </CardHeader>
       <CardBody 
-        maxH={'25vh'}
+        maxH={'22vh'}
         overflow={'auto'}
         css={{
           '&::-webkit-scrollbar': {

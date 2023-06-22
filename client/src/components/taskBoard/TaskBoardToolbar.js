@@ -16,10 +16,17 @@ import { AiOutlineDelete } from 'react-icons/ai'
 import { AddCommentModal } from './AddComment';
 import { AddTask } from './CreateTask/AddTask';
 import { ChangeTaskStatusModal } from './CreateTask/AddTaskChangeStatus';
+import { LinkCustomerModal } from './LinkCustomer';
+import { useNavigate } from 'react-router-dom';
+import { LinkProjectModal } from './LinkProject';
+import { LinkInvoiceModal } from './LinkInvoice';
+
 
 
 
 export const TaskBoardToolbar = ({activeCard, user, setActiveCard}) => {
+
+  const navigate = useNavigate()
 
 
   return(
@@ -34,6 +41,9 @@ export const TaskBoardToolbar = ({activeCard, user, setActiveCard}) => {
       <Text fontSize={'xs'} textColor={'web.text2'} w={'100%'}>Customer</Text>
       <Divider w={'100%'} textColor={'web.border'}/>
       <Box pl={'1vh'}pb={'1vh'}>
+        <LinkCustomerModal activeCard={activeCard} user={user} setActiveCard={setActiveCard}/>
+        <LinkProjectModal activeCard={activeCard} user={user} setActiveCard={setActiveCard}/>
+        
         <ButtonGroup
          textColor={'web.text2'}
          h={'5vh'}
@@ -42,16 +52,22 @@ export const TaskBoardToolbar = ({activeCard, user, setActiveCard}) => {
          _hover={{
          color: 'logo.orange'
          }}
+         disabled={activeCard ? activeCard.CustomerID ? false : true : true}
+         onClick={ ()=>navigate(`/customers/${activeCard.CustomerID}`)}
          >
         <IconButton
          variant={'unstyled'}           
          fontSize={'xl'}
-         icon={<AiOutlineInfoCircle/>}/>
+         icon={<AiOutlineInfoCircle/>}
+         disabled={activeCard ? activeCard.CustomerID ? false : true : true}
+         onClick={()=> navigate(`/customers/${activeCard.CustomerID}`)}
+         />
          <Button
          fontSize={'md'}
          variant={'unstyled'}           
          fontWeight={'normal'}
-
+         onClick={()=> navigate(`/customers/${activeCard.CustomerID}`)}
+         disabled={activeCard ? activeCard.CustomerID ? false : true : true}
          >Customer Details</Button>       
         </ButtonGroup>
         <ButtonGroup
@@ -81,28 +97,7 @@ export const TaskBoardToolbar = ({activeCard, user, setActiveCard}) => {
       </Box>
       <Text fontSize={'xs'} textColor={'web.text2'} w={'100%'}>Invoice</Text>
       <Divider w={'100%'}  textColor={'web.border'}/>
-      <ButtonGroup
-         textColor={'web.text2'}
-         h={'5vh'}
-        	display={'flex'}
-        	spacing={0}
-           _hover={{
-           color: 'logo.orange'
-         	}}>
-        <IconButton
-         variant={'unstyled'}           
-         fontWeight={'normal'}
-         fontSize={'xl'}
-         icon={<BiLinkAlt/>}/>
-         <Button
-         fontSize={'md'}
-         display={'flex'}
-         alignSelf={'flex-start'}
-         variant={'unstyled'}           
-         fontWeight={'normal'}
-         >Link Invoice
-        </Button>            
-        </ButtonGroup>
+        <LinkInvoiceModal activeCard={activeCard} user={user} setActiveCard={setActiveCard}/>
         <ButtonGroup
          textColor={'web.text2'}
          h={'5vh'}

@@ -55,7 +55,7 @@ projectsRouter.get('/:idCustomer', async function(req, res){
        mysqlConnection.query(query_, function(error, results, fields){
           if(!results.length) {
               console.log('Error al obtener data en get.projects/:idCustomer !')
-              res.status(200).json([{ProjectName: 'No projects related'}]);
+              res.status(200).json('No projects related');
           } else {
               console.log('Data OK')
               res.status(200).json(results);

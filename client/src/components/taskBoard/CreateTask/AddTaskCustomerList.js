@@ -18,6 +18,7 @@ import { getCustomerProjects } from '../../../redux/actions-projects';
 
 const ModelTr = ({e, setFormData, formData}) => {
   const dispatch = useDispatch()
+
   const handleClick = () => {
     setFormData({
       ...formData,

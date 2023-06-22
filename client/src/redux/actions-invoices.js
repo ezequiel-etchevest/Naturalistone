@@ -9,6 +9,7 @@ export const PATCH_STAMP = 'PATCH_STAMP';
 export const PATCH_STATUS = 'PATCH_STATUS';
 export const POST_QUOTE = 'POST_QUOTE';
 export const CLEAN_POST_QUOTE = 'CLEAN_POST_QUOTE';
+export const CLEAN_INVOICE_DETAIL = 'CLEAN_INVOICE_DETAIL';
 
 export function getInvoicesBySeller(id, inputValues){
 
@@ -45,30 +46,6 @@ export function getInvoiceById(id){
     }
 }
 
-// export function getInvoicesLastWeek(id){
-//     return async function(dispatch){
-//         try{
-//             let {data} = await axios.get(`/sales/lastWeek/${id}`)
-//             if(data.length === 0){
-//                 dispatch(
-//                 {
-//                     type: GET_INVOICES_LASTWEEK,
-//                     payload: {data, result: 'no_results'}
-//                 })
-//             }else{
-//                 dispatch(
-//                     {
-//                         type: GET_INVOICES_LASTWEEK,
-//                         payload: {data, result: 'results'}
-//                     })
-//             }
-//         }catch(error){
-//             console.log({error})           
-
-//         }
-//     }
-// }
-
 export function getFilteredInvoices(filteredInvoices){
     return async function(dispatch){
         try{
@@ -85,29 +62,6 @@ export function getFilteredInvoices(filteredInvoices){
     }
 }
 
-// export function getInvoicesLastMonth(id){
-//     return async function(dispatch){
-//         try{
-//             let {data} = await axios.get(`/sales/lastMonth/${id}`)
-//             if(data.length === 0){
-//                 dispatch(
-//                 {
-//                     type: GET_INVOICES_LASTMONTH,
-//                     payload: {data, result: 'no_results'}
-//                 })
-//             }else{
-//                 dispatch(
-//                     {
-//                         type: GET_INVOICES_LASTMONTH,
-//                         payload: {data, result: 'results'}
-//                     })
-//             }
-//         }catch(error){
-//             console.log({error})           
-
-//         }
-//     }
-// }
 
 export function getInvoiceProducts(id){
     return async function(dispatch){
@@ -202,6 +156,19 @@ export function cleanCreatedQuote(){
             dispatch(
             {
                 type: CLEAN_POST_QUOTE,
+            })
+
+      }catch(error){
+          console.log({error})           
+      }}
+    }
+export function cleanInvoiceDetail(){
+
+  return async function(dispatch){
+      try{
+            dispatch(
+            {
+                type: CLEAN_INVOICE_DETAIL,
             })
 
       }catch(error){

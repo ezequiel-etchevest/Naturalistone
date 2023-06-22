@@ -11,7 +11,8 @@ import {
     PATCH_STATUS,
     GET_SELLER_VALUES,
     POST_QUOTE,
-    CLEAN_POST_QUOTE
+    CLEAN_POST_QUOTE,
+    CLEAN_INVOICE_DETAIL
 } from './actions-invoices';
 import { 
   GET_INVOICE_ERRORS,
@@ -59,7 +60,8 @@ import {
   GET_PROJECTS_BY_CUSTOMER,
   POST_PROJECT,
   GET_PROJECT_INVOICES,
-  GET_PROJECTS_BY_ID
+  GET_PROJECTS_BY_ID,
+  CLEAN_PROJECT_DETAIL
 } from './actions-projects'
 import {
   GET_CUSTOMERS,
@@ -93,7 +95,8 @@ import {
   POST_COMMENT,
   POST_TASK,
   GET_COMMENTS,
-  PATCH_TASK_STATUS
+  PATCH_TASK_STATUS,
+  LINK_ITEMS
 } from './actions-tasks'
 
 const intialState = {
@@ -451,15 +454,7 @@ function rootReducer (state = intialState, action) {
                     [action.payload.prodName]: action.payload.url
                   }
                 }   
-          
-        // case GET_PRODUCT_IMAGE:
-        //   return{
-        //     ...state,
-        //     product_image: {
-        //       ...state.product_image,
-        //       [action.payload.prodName]: action.payload.data
-        //     }
-        //   }
+
         case GET_PRODUCTS_NEW_QUOTE:
           return {
             ...state,
@@ -516,6 +511,22 @@ function rootReducer (state = intialState, action) {
               ...state,
               project_by_id: action.payload
             }
+          case CLEAN_PROJECT_DETAIL:
+            return{
+              ...state,
+              project_by_id: {}
+            }
+          case CLEAN_INVOICE_DETAIL:
+            return{
+              ...state,
+              invoice: {}
+            }
+          case LINK_ITEMS:
+            return{
+              ...state,
+              tasks: action.payload
+            }
+
         default:
             return {
               ...state

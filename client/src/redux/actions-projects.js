@@ -6,6 +6,7 @@ export const POST_PROJECT = 'POST_PROJECT';
 export const GET_PROJECT_INVOICES = 'GET_PROJECT_INVOICES';
 export const GET_PROJECT_BY_ID = 'GET_PROJECT_BY_ID';
 export const GET_PROJECTS_BY_CUSTOMER = 'GET_PROJECTS_BY_CUSTOMER';
+export const CLEAN_PROJECT_DETAIL = 'CLEAN_PROJECT_DETAIL';
 
 
 
@@ -85,6 +86,20 @@ export function getProjectInvoices(idProject){
             {
                 type: GET_PROJECT_INVOICES,
                 payload: data
+            })
+        }catch(error){
+            console.log({error})
+        }
+    }
+}
+
+export function cleanProjectDetail(){
+    return async function(dispatch){
+        try{ 
+          
+            dispatch(
+            {
+                type: CLEAN_PROJECT_DETAIL
             })
         }catch(error){
             console.log({error})

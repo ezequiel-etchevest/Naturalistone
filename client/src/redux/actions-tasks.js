@@ -6,6 +6,7 @@ export const POST_COMMENT = 'POST_COMMENT';
 export const POST_TASK = 'POST_TASK';
 export const GET_COMMENTS = 'GET_COMMENTS';
 export const PATCH_TASK_STATUS = 'PATCH_TASK_STATUS';
+export const LINK_ITEMS = 'LINK_ITEMS';
 
 
 
@@ -14,7 +15,6 @@ export function getAllTasks(SellerID, status){
   return async function(dispatch){
     try{ 
       let {data} = await axios.get(`/tasks/all-tasks?SellerID=${SellerID}&Status=${status}`)
-      console.log(data)
         dispatch(
           {
             type: GET_ALL_TASKS,
@@ -44,7 +44,7 @@ export function postTask(task, status){
       }
   }
 export function changeTaskStatus(taskID, sellerID, status){
-  console.log('actions', taskID, sellerID)
+
     return async function(dispatch){
         try{
             let {} = await axios.patch(`/tasks/change-status/${taskID}`)
@@ -59,6 +59,24 @@ export function changeTaskStatus(taskID, sellerID, status){
             console.log({error})     
         }
     }
+}
+
+export function linkItems(task, sellerID, TaskID){
+
+  return async function(dispatch){
+      try{
+          let {} = await axios.patch(`/tasks/link-items/${TaskID}`, task)
+          let { data } = await axios.get(`/tasks/all-tasks?SellerID=${sellerID}&Status=todo`)
+
+          dispatch(
+              {
+                  type: LINK_ITEMS,
+                  payload: data
+              })
+      }catch(error){
+          console.log({error})     
+      }
+  }
 }
 export function getTaskById(TaskId){
     
@@ -99,7 +117,7 @@ export function getComments(TaskId){
   return async function(dispatch){
     try{ 
       let {data} = await axios.get(`tasks/comments/${TaskId}`)
-      console.log(data)
+
         dispatch(
           {
             type: GET_COMMENTS,

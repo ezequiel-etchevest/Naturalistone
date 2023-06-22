@@ -1,8 +1,8 @@
 import { Box, Heading, Highlight, Text } from "@chakra-ui/react"
 import { useDispatch } from "react-redux";
-import { getCustomerById } from "../../redux/actions-customers";
-import { getProjectById } from "../../redux/actions-projects";
-import { getInvoiceById } from "../../redux/actions-invoices";
+import { cleanCustomerDetail, getCustomerById } from "../../redux/actions-customers";
+import { getProjectById, cleanProjectDetail } from "../../redux/actions-projects";
+import { getInvoiceById, cleanInvoiceDetail } from "../../redux/actions-invoices";
 import { getComments } from "../../redux/actions-tasks";
 
 const TaskCard = ({task, setActiveCard, activeCard }) => {
@@ -11,8 +11,11 @@ const TaskCard = ({task, setActiveCard, activeCard }) => {
   const dispatch = useDispatch()
   const handleClick = () => {
     if(CustomerID) dispatch(getCustomerById(CustomerID))
+    else dispatch(cleanCustomerDetail())
     if(ProjectID) dispatch(getProjectById(ProjectID))
+    else dispatch(cleanProjectDetail())
     if(InvoiceID) dispatch(getInvoiceById(InvoiceID))
+    else dispatch(cleanInvoiceDetail())
     dispatch(getComments(taskID))
     setActiveCard(task)
   }

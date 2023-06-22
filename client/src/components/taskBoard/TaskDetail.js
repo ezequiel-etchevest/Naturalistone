@@ -16,7 +16,7 @@ const TaskDetail = ({activeCard}) => {
   const project = useSelector(state => state.project_by_id)
   const comments = useSelector(state => state.task_comments)
   const dispatch = useDispatch()
-
+  console.log(invoice)
   useEffect(()=>{
     if(CustomerID) dispatch(getCustomerById(CustomerID))
     if(ProjectID) dispatch(getProjectById(ProjectID))
@@ -98,7 +98,7 @@ const TaskDetail = ({activeCard}) => {
             <Text 
               fontSize={'lg'} 
               fontWeight={'bold'}>
-              {CompletedDate.replace('T', ' ').split('.')[0]}
+              {CompletedDate?.replace('T', ' ').split('.')[0]}
             </Text>
           </Box>
           )
@@ -138,7 +138,7 @@ const TaskDetail = ({activeCard}) => {
           <Text 
             fontSize={'lg'} 
             fontWeight={'bold'}>
-              {project.ProjectName ? project.ProjectName : '-'}
+              {project[0]?.ProjectName ? project[0].ProjectName : '-'}
           </Text>
         </Box>
         <Box mb={'1.5vh'}>
@@ -150,7 +150,7 @@ const TaskDetail = ({activeCard}) => {
           <Text 
             fontSize={'lg'} 
             fontWeight={'bold'}>
-              {invoice.Naturali_Invoice ? invoice.Naturali_Invoice : '-'}
+              {invoice[0]?.Naturali_Invoice ? invoice[0]?.Naturali_Invoice : '-'}
           </Text>
         </Box>
         <Divider mb={'2vh'}/>

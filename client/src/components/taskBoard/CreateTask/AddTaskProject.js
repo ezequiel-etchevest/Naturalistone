@@ -32,6 +32,7 @@ import {
         </HStack>
         { 
         projects.length ?
+          
           Array.isArray(projects) ?
             <AddTaskProjectList 
               projects={projects} 
