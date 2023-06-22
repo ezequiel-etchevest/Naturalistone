@@ -16,18 +16,12 @@ import { CreateCustomerModal } from "../../customers/createCustomer/createCustom
 import { getCustomers } from "../../../redux/actions-customers";
 import CreateQuoteCustomerList from "./createQuoteCustomerList";
 
-const CreateQuoteCustomer = ({customers, setFormData, formData, setDisable}) =>{
+const CreateQuoteCustomer = ({customers, setFormData, formData, setDisable, update, invoice}) =>{
 
 
 const dispatch = useDispatch()
 const [inputValue, setInputValue] = useState('')
-const [customer, setCustomer] = useState('')
 
-    // useEffect(()=>{
-      
-    // },[customers])
-
-// console.log(customers)
 const handleInput = (e) =>  {
   if(e.target.value.length) {
     setInputValue(e.target.value)
@@ -48,7 +42,38 @@ return(
       mt={'2vh'}
       mb={'2vh'}
       >
-      <Text ml={'2vw'} fontSize={'lg'} w={'16vw'} color={'white'} alignSelf={'flex-start'}>Select customer</Text>
+      
+      {
+        update === 'Update' ?
+        <Box ml={'2vw'} mt={'2vh'} mb={'2vh'} display={'flex'}flexDir={'row'} w={'40vw'}>
+          <Box>
+              <Text fontSize={'md'} color={'white'} alignSelf={'flex-start'}>Previous customer </Text>
+            <Box mt={'1vh'} display={'flex'} flexDir={'row'} w={'18vw'}>
+              <Text fontSize={'sm'}>{invoice[0].CustomerID } </Text>
+              <Text ml={'2vw'} fontSize={'sm'}> {invoice[0].Contact_Name != '-' && invoice[0].Contact_Name != null ? invoice[0].Contact_Name : ''}</Text>
+            </Box>        
+          </Box>
+          <Box>
+              <Text fontSize={'md'} color={'white'} alignSelf={'flex-start'}>New customer </Text>
+            <Box mt={'1vh'} display={'flex'} flexDir={'row'}>
+              <Text fontSize={'sm'}>
+                {
+                  formData.customer.CustomerID == invoice[0].CustomerID ? '' : formData.customer.CustomerID 
+                } 
+              </Text>
+              <Text ml={'2vw'} fontSize={'sm'}> 
+                { formData.customer.Contact_Name == invoice[0].Contact_Name ? ''
+                  :
+                  formData.customer.Contact_Name != '-' && formData.customer.Contact_Name != null ? formData.customer.Contact_Name : ''
+                }
+              </Text>
+            </Box>        
+          </Box>
+        </Box>
+        :
+        <Text ml={'2vw'} fontSize={'lg'} w={'16vw'} color={'white'} alignSelf={'flex-start'}>Select customer</Text>
+        
+      }
       <Box display={'flex'} flexDir={'row'} h={'6vh'} w={'18vw'} justifyContent={'space-around'}>
         <Box>
           <Input

@@ -1,4 +1,3 @@
-// addFactory
 import { IconButton, 
   useDisclosure,
   Modal, 
@@ -13,22 +12,33 @@ import { IconButton,
   FormControl,
   FormLabel,
   Input, 
-  useToast, 
+  useToast,
+  Button, 
   Progress, 
   Tooltip} from "@chakra-ui/react";
 import { TbBuildingFactory2 } from "react-icons/tb";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
+import { validateCompletedInputsFactory, validateEmptyFactory } from "../../../utils/validateForm";
+import { addFactory, getFactories } from "../../../redux/actions-factories";
 
-export function AddFactoryModal({formData, setFormData}) {
+export function AddFactoryModal({progress, setProgress}) {
 
 const dispatch = useDispatch();
 const toastId = 'error-toast'
 const [errors, setErrors] = useState({})
-const [ progress, setProgress ] = useState(25)
 const toast = useToast()
 const { isOpen, onOpen, onClose } = useDisclosure()
 const [changeInput, setChangeInput] = useState(true)
+const [formData, setFormData] = useState({
+  FactoryID: '', 
+  Reference: '', 
+  Factory_Name: '', 
+  Phone: '', 
+  Email: '', 
+  WebSite: '', 
+  International_Flag: ''
+});
 
 const handleChange = (event) => {
   const { name, value } = event.target;
@@ -38,35 +48,35 @@ const handleChange = (event) => {
   ...prevFormData,
   [name]: value,
   }));
-  // setErrors(
-  // validateCompletedInputs({
-  //   ...formData,
-  //   [name]: value,
-  // })
-  // );
+  setErrors(
+    validateCompletedInputsFactory({
+    ...formData,
+    [name]: value,
+  })
+  );
   setChangeInput(true)
 };
 
-// const handleSubmit = () => {
-//   setErrors({})
-//   let newErrors = validateEmptyInputs(formData, progress)
-//   setErrors(newErrors)
+const handleSubmit = () => {
+  setErrors({})
+  let newErrors = validateEmptyFactory(formData, progress)
+  setErrors(newErrors)
 
-//   if(Object.entries(newErrors).length){
-//   if(!toast.isActive(toastId)){
-//     return toast(({
-//       id: toastId,
-//       title: "Error",
-//       description: 'All fields must be completed',
-//       status: "error",
-//       duration: 5000,
-//       isClosable: true,
-//       }))
-//   }} else{
-//     dispatch(createCustomer(formData));
-//     handleClose()
-//   } 
-// }
+  if(Object.entries(newErrors).length){
+  if(!toast.isActive(toastId)){
+    return toast(({
+      id: toastId,
+      title: "Error",
+      description: 'All fields must be completed',
+      status: "error",
+      duration: 5000,
+      isClosable: true,
+      }))
+  }} else{
+    dispatch(addFactory(formData));
+    handleClose()
+  } 
+}
 const handleClose = () => {
   setFormData({
     FactoryID: '', 
@@ -77,34 +87,12 @@ const handleClose = () => {
     WebSite: '', 
     International_Flag: '',
   })
-  // setChangeInput(false)
-  // setErrors({})
-  // setProgress(25)
+  setChangeInput(false)
+  setErrors({})
+  setProgress(25)
   onClose()
 }
 
-// const handleNextButton = () =>{
-//   setErrors({})
-//   let newErrors = validateEmptyInputs(formData, progress)
-//   setErrors(newErrors)
-//   if(Object.entries(newErrors).length){
-//     if(!toast.isActive(toastId)){
-//       return toast(({
-//         id: toastId,
-//         title: "Error",
-//         description: 'All fields must be completed',
-//         status: "error",
-//         duration: 5000,
-//         isClosable: true,
-//         }))
-//     }
-//   } else{
-//       setProgress(progress + 25)
-//   }
-// }
-// const handlePreviousButton = () => {
-//   setProgress(progress - 25)
-// }
 return (
 <>
 <Tooltip placement={'bottom-start'}  label={'Add new factory'} fontWeight={'hairline'}>
@@ -141,21 +129,21 @@ return (
       <ModalHeader mt={'2vh'} ml={'2vw'} color={'web.text'}>Add new factory</ModalHeader>
         <ModalBody >
           <form>
-            <VStack h={'64vh'}>
-              <Box w={'22vw'} display={'flex'} flexDir={'row'} pt={'4vh'} justifyContent={'space-between'}>
+            <VStack h={'52vh'}>
+              <Box w={'22vw'} display={'flex'} h={'10vh'} flexDir={'row'} pt={'2vh'} mb={'1vh'} mt={'1vh'} justifyContent={'space-between'}>
                 <FormControl>
-                <FormLabel textColor={'web.text2'} fontSize={'sm'} name={'name'} fontWeight={'normal'}>Factory name</FormLabel>
+                <FormLabel textColor={'web.text2'} fontSize={'sm'} name={'name'}>Factory name</FormLabel>
                   <Input
                     mb={'0.5vh'}
                     variant="unstyled"
-                    textColor={'web.text'}
+                    textColor={'web.text2'}
                     _placeholder={{ fontFamily: 'body', fontWeight: 'inherit' }}
                     size={"sm"}
                     borderBottomWidth={"2px"}
                     borderBottomColor={'web.text2'}
                     type={"text"}
-                    name={"Contact_Name"}
-                    value={formData.factory.Factory_Name}
+                    name={"Factory_Name"}
+                    value={formData.Factory_Name}
                     onChange={handleChange}
                     />
                     { errors.Factory_Name && (
@@ -167,18 +155,18 @@ return (
               </Box>
               <Box w={'22vw'} display={'flex'} flexDir={'row'} justifyContent={'space-between'}>
                 <FormControl>
-                <FormLabel textColor={'web.text2'}name={'reference'}  fontSize={'sm'}>Reference</FormLabel>
+                <FormLabel textColor={'web.text2'}name={'Reference'} mb={'1vh'} fontSize={'sm'}>Reference</FormLabel>
                   <Input
                     mb={'0.5vh'}
                     variant="unstyled"
-                    textColor={'web.text'}
+                    textColor={'web.text2'}
                     _placeholder={{ fontFamily: 'body', fontWeight: 'inherit' }}
                     size={"sm"}
                     borderBottomWidth={"2px"}
                     borderBottomColor={'web.text2'}
                     type={"text"}
-                    name={"Email"}
-                    value={formData.factory.Reference}
+                    name={"Reference"}
+                    value={formData.Reference}
                     onChange={handleChange}
                     />
                     { errors.Reference && (
@@ -188,13 +176,13 @@ return (
                     )}
                 </FormControl>
               </Box>
-              <Box w={'22vw'} display={'flex'} flexDir={'row'} justifyContent={'space-between'}>
+              <Box w={'22vw'} h={'10vh'} display={'flex'} flexDir={'row'} mb={'1vh'} justifyContent={'space-between'}>
                 <FormControl>
-                <FormLabel textColor={'web.text2'}name={'phone'} fontSize={'sm'}>Phone</FormLabel>
+                <FormLabel textColor={'web.text2'}name={'Phone'} fontSize={'sm'}>Phone</FormLabel>
                   <Input
                     mb={'0.5vh'}
                     variant="unstyled"
-                    textColor={'web.text'}
+                    textColor={'web.text2'}
                     _placeholder={{ fontFamily: 'body', fontWeight: 'inherit' }}
                     size={"sm"}
                     borderBottomWidth={"2px"}
@@ -211,20 +199,20 @@ return (
                     )}
                 </FormControl>
               </Box>
-              <Box w={'22vw'} display={'flex'} flexDir={'row'} justifyContent={'space-between'}>
+              <Box w={'22vw'} display={'flex'}h={'10vh'}  flexDir={'row'} mb={'1vh'} justifyContent={'space-between'}>
                 <FormControl>
-                <FormLabel textColor={'web.text2'}name={'email'} fontSize={'sm'}>Email</FormLabel>
+                <FormLabel textColor={'web.text2'}name={'Email'} fontSize={'sm'}>Email</FormLabel>
                   <Input
                     mb={'0.5vh'}
                     variant="unstyled"
-                    textColor={'web.text'}
+                    textColor={'web.text2'}
                     _placeholder={{ fontFamily: 'body', fontWeight: 'inherit' }}
                     size={"sm"}
                     borderBottomWidth={"2px"}
                     borderBottomColor={'web.text2'}
                     type={"text"}
-                    name={"Phone"}
-                    value={formData.factory.Email}
+                    name={"Email"}
+                    value={formData.Email}
                     onChange={handleChange}
                     />
                     { errors.Email && (
@@ -234,43 +222,43 @@ return (
                     )}
                 </FormControl>
               </Box>
-              <Box w={'22vw'} display={'flex'} flexDir={'row'} justifyContent={'space-between'}>
+              <Box w={'22vw'} display={'flex'}h={'10vh'}  flexDir={'row'} mb={'1vh'} justifyContent={'space-between'}>
                 <FormControl>
-                <FormLabel textColor={'web.text2'}name={'website'} fontSize={'sm'}>Website</FormLabel>
+                <FormLabel textColor={'web.text2'}name={'Website'} fontSize={'sm'}>Website</FormLabel>
                   <Input
                     mb={'0.5vh'}
                     variant="unstyled"
-                    textColor={'web.text'}
+                    textColor={'web.text2'}
                     _placeholder={{ fontFamily: 'body', fontWeight: 'inherit' }}
                     size={"sm"}
                     borderBottomWidth={"2px"}
                     borderBottomColor={'web.text2'}
                     type={"text"}
-                    name={"Phone"}
-                    value={formData.factory.WebSite}
+                    name={"Website"}
+                    value={formData.Website}
                     onChange={handleChange}
                     />
-                    { errors.WebSite && (
+                    { errors.Website && (
                       <Text position={'absolute'} color={'web.error'} fontSize={'xs'}>
-                        {errors.WebSite}
+                        {errors.Website}
                       </Text>
                     )}
                 </FormControl>
               </Box>
               <Box w={'22vw'} display={'flex'} flexDir={'row'} justifyContent={'space-between'}>
                 <FormControl>
-                <FormLabel textColor={'web.text2'}name={'international'} fontSize={'sm'}>International</FormLabel>
+                <FormLabel textColor={'web.text2'}name={'International_Flag'} fontSize={'sm'}>Foreing</FormLabel>
                   <Input
                     mb={'0.5vh'}
                     variant="unstyled"
-                    textColor={'web.text'}
+                    textColor={'web.text2'}
                     _placeholder={{ fontFamily: 'body', fontWeight: 'inherit' }}
                     size={"sm"}
                     borderBottomWidth={"2px"}
                     borderBottomColor={'web.text2'}
                     type={"text"}
-                    name={"Phone"}
-                    value={formData.factory.International_Flag}
+                    name={"International_Flag"}
+                    value={formData.International_Flag}
                     onChange={handleChange}
                     />
                     { errors.International_Flag && (
@@ -283,22 +271,14 @@ return (
             </VStack>
           </form>
         </ModalBody>
-        {/* <ModalFooter display={'flex'} justifyContent={'space-between'}>
-          <Button visibility={progress === 25 ? 'hidden' : 'unset'} colorScheme='orange' mr={3} onClick={()=>handlePreviousButton()}>
-          Prev
+        <ModalFooter display={'flex'} justifyContent={'space-between'} mb={'2vh'} mt={'3vh'}>
+          <Button colorScheme='orange' ml={'1vw'} onClick={()=>handleClose()}>
+            Prev
           </Button>
-          {
-          progress === 100 ? (
-            <Button colorScheme='orange' mr={3} onClick={(e)=>handleSubmit(e)}>
-              Submit
-            </Button>
-          ):(
-            <Button colorScheme='orange' mr={3} onClick={()=>handleNextButton()}>
-              Next
-            </Button>
-          )
-          }
-        </ModalFooter> */}
+          <Button colorScheme='orange' mr={'1vw'} onClick={(e)=>handleSubmit(e)}>
+            Submit
+          </Button>
+        </ModalFooter>
       </ModalContent>
     </Modal>
   </>

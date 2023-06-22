@@ -9,6 +9,7 @@ export const PATCH_STAMP = 'PATCH_STAMP';
 export const PATCH_STATUS = 'PATCH_STATUS';
 export const POST_QUOTE = 'POST_QUOTE';
 export const CLEAN_POST_QUOTE = 'CLEAN_POST_QUOTE';
+export const PATCH_QUOTE = 'PATCH_QUOTE';
 
 export function getInvoicesBySeller(id, inputValues){
 
@@ -146,9 +147,8 @@ export function changeStatus(id, action){
     return async function(dispatch){
         try{
             let {response} = await axios.patch(`/sales/changeStatus/${id}`, {action})
-            console.log({response})
             let { data } = await axios.get(`/sales/invoice/${id}`)
-            console.log(response)
+
             dispatch(
                 {
                     type: PATCH_STATUS,
@@ -164,7 +164,6 @@ export function getSellerValues(){
     return async function(dispatch){
         try{
             let {data} = await axios.get(`/sales/values/seller`)
- 
             return dispatch({
                 type: GET_SELLER_VALUES,
                 payload: data
@@ -208,3 +207,22 @@ export function cleanCreatedQuote(){
           console.log({error})           
       }}
     }
+
+
+export function updateQuote(quoteID, formData, SellerID){
+    
+    return async function(dispatch){
+        try{
+            let {} = await axios.patch(`/sales/sales-update/${quoteID}`, {formData, SellerID})
+            let { data } = await axios.get(`/sales/invoice/${quoteID}`)
+            console.log(data)
+            dispatch(
+                {
+                    type: PATCH_QUOTE,
+                    payload: data
+                })
+        }catch(error){
+            console.log({error})     
+        }
+    }
+}

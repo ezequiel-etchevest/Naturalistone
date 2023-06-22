@@ -7,9 +7,6 @@ import {
     Th,
     Td,
     TableContainer,
-    Tooltip,
-    useToast,
-    Switch,
     Text,
     Center,
     NumberInput,
@@ -18,70 +15,50 @@ import {
     NumberDecrementStepper,
     NumberInputStepper
   } from '@chakra-ui/react';
-import { useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { getProductById } from '../../redux/actions-products';
-import { useEffect, useState } from 'react';
-import{ ImCheckboxChecked, ImCheckboxUnchecked } from 'react-icons/im';
-import { patchDiscontinued } from '../../redux/actions-products';
+  import { useEffect, useState } from 'react';
 
 
-const ModelTr = ({e, setProducts, products}) => {
+const ModelTr = ({e, formData, setFormData}) => {
+  let id = e.ProdID
 
-const [input, setInput] = useState({   
-  quantity: 0,
-  prodID: e.ProdID,
-  prodName: e.ProductName,
-  type: e.Type,
-  size:e.Size,
-  thickness:e.Thickness,
-  finish:e.Finish,
-})
-
+const handleAuthFlag = (event) =>{
+  if(event !== 0){
+    if((Number(e.InStock_Available) + Number(e.Incoming_Available)) < event) return true
+    if((Number(e.InStock_Available) + Number(e.Incoming_Available)) > event) return false
+  }else return null 
+}
 
 const handleInput = (event) => {
-
-  if(event === ''|| event === null || event === NaN ){
-    setInput({
-      ...input,
-      quantity: 0,
-    })
-} else{
-  setInput({
-    ...input,
-    quantity: parseFloat(event),
-  })
-}
-};
-
-const handleOnBlur = () => {
-  let updated = false;
-  
-  if (products.length) {
-    products.forEach(e => {
-      if (e.prodID === input.prodID) {
-        e.quantity = input.quantity;
-        if(e.quantity === 0){
-          setProducts(products.filter(q => q.prodID !== input.prodID))
-        }
-        updated = true;
-  }});  
-  }
-
-  if (!updated){
-    if(input.quantity > 0){
-    setProducts([...products, input])
-}}
-}
-
-// const handleValue = () => {
-//   products.map(q => {
-//     if(q.prodID === input.prodID){
-//       console.log(q)
-//       return input.quantity
-//     }
-//   })
-// }
+  if (event !== '0') {
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      products: {
+        ...prevFormData.products,
+        [id]: {
+          ...prevFormData.products[id],
+              quantity: event,
+              prodID: e.ProdID,
+              prodName: e.ProductName,
+              type: e.Material,
+              size:e.Size,
+              thickness:e.Thickness,
+              finish:e.Finish,
+              price: e.Price,
+              authFlag: handleAuthFlag(event)
+            },
+          },
+        }));
+      } else {
+        setFormData((prevFormData) => {
+          const { [id]: value, ...updatedProducts } = prevFormData.products;
+          return {
+            ...prevFormData,
+            products: updatedProducts,
+          };
+        });
+      }
+    };
+    
   return(
     <Tr       
       cursor={'pointer'} 
@@ -91,26 +68,27 @@ const handleOnBlur = () => {
         color: 'logo.orange'
       }} 
       >
-        <Td w={'8vw'} onBlur={() => handleOnBlur()}>
+        <Td w={'8vw'}>
           <NumberInput
-            // clampValueOnBlur={true}
             borderColor={'web.border'} 
             color={'web.text2'}
             w={'6vw'}
             ml={'1vw'}
             h={'4vh'}
-            onChange={(event)=>handleInput(event)} 
+            onChange={handleInput} 
             step={1} 
-            defaultValue={0} 
             min={0} 
             precision={0}
+            key={e.ProdID}
+             value={ formData.products[id] ? formData.products[id].quantity : 0} 
             >
             <NumberInputField 
             fontSize={'2xs'}                   
             _focus={{
               borderColor: 'logo.orange',
               boxShadow: '0 0.5px 0.5px rgba(229, 103, 23, 0.075)inset, 0 0 5px rgba(255,144,0,0.6)'
-                    }} 
+                    }}
+
               h={'4vh'}/>
             <NumberInputStepper>
               <NumberIncrementStepper fontSize={'3xs'}/>
@@ -130,7 +108,31 @@ const handleOnBlur = () => {
   )
 }
 
-const CreateInvoiceProductsList = ({ allProducts, setProducts, products }) => {
+const CreateOrderProductsList = ({ allProducts, allProductsErrors, formData, setFormData }) => {
+  
+  
+  const [initialCount] = useState(12);
+  const [batchCount] = useState(14);
+  const [loadedCount, setLoadedCount] = useState(initialCount);
+
+  const handleScroll = () => {
+    const container = document.getElementById('createQuoteProductList'); // Reemplaza 'scroll-container' con el ID de tu contenedor de desplazamiento
+    const { scrollTop, clientHeight, scrollHeight } = container;
+
+    if (scrollTop + clientHeight >= scrollHeight - 14) {
+      // El usuario ha llegado al final, carga más productos
+      setLoadedCount(prevCount => prevCount + batchCount);
+    }
+  };
+  
+  useEffect(() => {
+    const container = document.getElementById('createQuoteProductList'); // Reemplaza 'scroll-container' con el ID de tu contenedor de desplazamiento
+    container.addEventListener('scroll', handleScroll);
+
+    return () => {
+      container.removeEventListener('scroll', handleScroll);
+    };
+  }, [batchCount]);
 
 
   return(
@@ -139,8 +141,8 @@ const CreateInvoiceProductsList = ({ allProducts, setProducts, products }) => {
     justifyContent={'center'}
       >
       <Box
-      maxHeight={'50vh'}
-      minHeight={'50vh'}
+      maxHeight={'45vh'}
+      minHeight={'45vh'}
       overflow={'auto'}
       css={{
         '&::-webkit-scrollbar': {
@@ -154,15 +156,14 @@ const CreateInvoiceProductsList = ({ allProducts, setProducts, products }) => {
           borderRadius: '5px',
         },
       }}
-      borderColor={'web.border'}
+      id={'createQuoteProductList'}
       bg={'web.sideBar'} 
-      border={'1px solid'} 
       rounded={'md'} 
       p={'1vh'}
       >
         {
         allProducts.length ? 
-        <TableContainer  mr={'0.5vw'}  ml={'0.5vw'}>
+        <TableContainer  mr={'1vw'}  ml={'1vw'}>
           <Table color={'web.text'} variant={'simple'} size={'sm'}>
             <Thead h={'6vh'}>
               <Tr>  
@@ -179,9 +180,9 @@ const CreateInvoiceProductsList = ({ allProducts, setProducts, products }) => {
             </Thead>
             <Tbody>
               {
-                allProducts.map((e, i) => {
+                allProducts.slice(0, loadedCount).map((e, i) => {
                   return(
-                    <ModelTr key={i} e={e} setProducts={setProducts} products={products}/>
+                    <ModelTr key={i} e={e} setFormData={setFormData} formData={formData} />
                   )
                 })
               }
@@ -199,4 +200,4 @@ const CreateInvoiceProductsList = ({ allProducts, setProducts, products }) => {
     </Box>
   )
 }
-export default CreateInvoiceProductsList;
+export default CreateOrderProductsList;

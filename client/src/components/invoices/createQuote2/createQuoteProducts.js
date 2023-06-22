@@ -163,10 +163,11 @@ return(
         mt={'3.3vh'}
         _active={{ color: 'gray.800'}}
       />
-      <Divider orientation={'vertical'} h={'5vh'} ml={'1vw'}mr={'1vw'}/>
+      <Divider orientation={'vertical'} h={'5vh'} ml={'1vw'}mr={'1vw'} pt={'2vh'}/>
       <Tooltip placement={'bottom-start'} label={'Clear all filters'} fontWeight={'hairline'}>      
       <IconButton
         icon={ <AiOutlineClear/>}
+        pt={'2.2vh'}
         variant={'unstyled'} 
         display={'flex'} 
         borderRadius={'sm'} 

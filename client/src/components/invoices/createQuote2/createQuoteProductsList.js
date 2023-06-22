@@ -146,7 +146,7 @@ const CreateQuoteProductsList = ({ allProducts, allProductsErrors, formData, set
       overflow={'auto'}
       css={{
         '&::-webkit-scrollbar': {
-          width: '0.4vw',
+          width: '0.2vw',
         },
         '&::-webkit-scrollbar-track': {
           width: '6px',

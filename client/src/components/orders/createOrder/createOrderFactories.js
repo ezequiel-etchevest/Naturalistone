@@ -17,11 +17,11 @@ import { getFactories } from "../../../redux/actions-factories";
 import { AddFactoryModal } from "./addNewFactoryForm";
 
   
-  const CreateOrderFactory = ({ setFormData, formData, setDisable}) =>{
+  const CreateOrderFactories = ({ setFormData, formData, setDisable, progress, setProgress, factories}) =>{
   
   const dispatch = useDispatch()
   const [inputValue, setInputValue] = useState('')
-  const factories = useSelector(state => state.factories)
+
   
   const handleInput = (e) =>  {
     if(e.target.value.length) {
@@ -76,7 +76,7 @@ import { AddFactoryModal } from "./addNewFactoryForm";
             />
           </Box>
           <Divider orientation={'vertical'} h={'6vh'} />
-          <AddFactoryModal formData={formData} setFormData={setFormData}/>
+          <AddFactoryModal progress={progress} setProgress={setProgress}/>
           </Box>
         </HStack>
         { 
@@ -99,4 +99,4 @@ import { AddFactoryModal } from "./addNewFactoryForm";
     )
   }
   
-  export default CreateOrderFactory
+  export default CreateOrderFactories

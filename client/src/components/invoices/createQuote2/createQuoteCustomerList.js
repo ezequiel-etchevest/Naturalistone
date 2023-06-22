@@ -15,7 +15,11 @@ import {
   
   const ModelTr = ({e, setFormData, formData, setDisable}) => {
     
+    const [selectedCustomerID, setSelectedCustomerID] = useState(formData.customer.CustomerID);
+
     const handleClick = (e) => {
+      const customerID = e.CustomerID;
+      setSelectedCustomerID(customerID);
       setFormData({
         ...formData,
         customer: {
@@ -94,12 +98,12 @@ import {
     justifyContent={'center'}
     >
       <Box
-      maxHeight={'50vh'}
-      minHeight={'50vh'}
+      maxHeight={'51vh'}
+      minHeight={'51vh'}
       overflow={'auto'}
       css={{
         '&::-webkit-scrollbar': {
-          width: '0.4vw',
+          width: '0.2vw',
         },
         '&::-webkit-scrollbar-track': {
           width: '6px',

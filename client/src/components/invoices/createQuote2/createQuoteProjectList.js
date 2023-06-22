@@ -10,12 +10,16 @@ import {
     Text,
     Center,
     } from '@chakra-ui/react'
+import { useState } from 'react';
 
   
   const ModelTr = ({e, formData, setFormData, setDisable }) => {
-  
+
+    const [selectedProjectID, setSelectedProjectID] = useState(formData.project.idProjects);
 
     const handleClick = (e) => {
+      const projectId = e.idProjects;
+      setSelectedProjectID(projectId);
       setFormData({
         ...formData,
         project: {
@@ -45,6 +49,9 @@ import {
         <Td fontSize={'xs'} textAlign={'center'} w={'4vw'}>{e.idProjects}</Td>
         <Td fontSize={'xs'} textAlign={'center'} w={'14vw'}>{e.ProjectName}</Td>
         <Td fontSize={'xs'} textAlign={'center'} w={'14vw'}>{e.Shipping_Address}</Td>
+        <Td fontSize={'xs'} textAlign={'center'} w={'14vw'}>{e.Shipping_ZipCode}</Td>
+        <Td fontSize={'xs'} textAlign={'center'} w={'14vw'}>{e.Shipping_City}</Td>
+        <Td fontSize={'xs'} textAlign={'center'} w={'14vw'}>{e.Shipping_State}</Td>
       </Tr>
     )
   }
@@ -63,7 +70,7 @@ import {
       overflow={'auto'}
       css={{
         '&::-webkit-scrollbar': {
-          width: '0.4vw',
+          width: '0.2vw',
         },
         '&::-webkit-scrollbar-track': {
           width: '6px',
@@ -79,13 +86,16 @@ import {
       >
       {
         projects.length ? (
-          <TableContainer w={'46vw'}>
+          <TableContainer w={'66vw'}>
             <Table color={'web.text'}variant={'simple'} size={'sm'}>
               <Thead h={'3vh'}>
                 <Tr>
                     <Th color={'web.text2'} textAlign={'center'} w={'4vw'} fontSize={'x-small'}>IDs</Th>
                     <Th color={'web.text2'} textAlign={'center'} w={'14vw'}fontSize={'x-small'}>Project Name</Th>
                     <Th color={'web.text2'} textAlign={'center'} w={'14vw'}fontSize={'x-small'}>Shipping Address</Th>
+                    <Th color={'web.text2'} textAlign={'center'} w={'14vw'}fontSize={'x-small'}>Shipping ZipCode</Th>
+                    <Th color={'web.text2'} textAlign={'center'} w={'14vw'}fontSize={'x-small'}>Shipping City</Th>
+                    <Th color={'web.text2'} textAlign={'center'} w={'14vw'}fontSize={'x-small'}>Shipping State</Th>
                   </Tr>
                 </Thead>
                 <Tbody >
@@ -99,7 +109,7 @@ import {
             </TableContainer> 
             ) : (
             <Center w={'full'} h={'full'}>
-              <Text userSelect={'none'} fontSize={'2vh'}>No projects register </Text>
+              <Text userSelect={'none'} fontSize={'2vh'}>No projects register for customer {formData.customer.Contact_Name?.length ? formData.customer?.Contact_Name : formData.customer?.CustomerID } </Text>
             </Center>
             )
         }

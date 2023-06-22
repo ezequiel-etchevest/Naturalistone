@@ -26,9 +26,9 @@ const ModelTr = ({p, totalAmount}) => {
           color: 'logo.orange'
         }}
         >
-        <Td textAlign={'match-parent'} fontSize={'1.6vh'}>{p.Date.split('T')[0]}</Td>
-        <Td textAlign={'match-parent'} fontSize={'1.6vh'}>$ {p.Amount.toLocaleString('en-US')} </Td>
-        <Td textAlign={'match-parent'} fontSize={'1.6vh'}>{p.Method}</Td>
+        <Td textAlign={'center'} fontSize={'1.6vh'}>{p.Date.split('T')[0]}</Td>
+        <Td textAlign={'center'} fontSize={'1.6vh'}>$ {p.Amount.toLocaleString('en-US')} </Td>
+        <Td textAlign={'center'} fontSize={'1.6vh'}>{p.Method}</Td>
         <Td w={'2vh'} textAlign={'center'} fontSize={'1.6vh'} >{Math.round(per.toFixed(2))} %</Td>
         <Td w={'2vh'}> <PaymentDeleteModal InvoiceID={p.InvoiceID} idPayments={p.idPayments}/>
         </Td>
@@ -62,7 +62,7 @@ const PaymentList = ({payments, totalAmount, invoice}) => {
         justifyContent={'space-between'} 
         >
           <Text
-          mb={'1vh'} 
+          mb={'1vh'}
           alignSelf={'center'} 
           fontSize={'2.6vh'} 
           color={'web.text2'}
@@ -80,7 +80,8 @@ const PaymentList = ({payments, totalAmount, invoice}) => {
           payments.paymentData ? (
           <Box
             maxHeight={'27vh'}
-            maxWidth={'50vw'}
+            maxWidth={'30.5vw'}
+            minWidth={'30.5vw'}
             overflow={'auto'}
             css={{
               '&::-webkit-scrollbar': {
@@ -94,14 +95,14 @@ const PaymentList = ({payments, totalAmount, invoice}) => {
                 borderRadius: '5px',
               },
             }}>
-          <TableContainer  w={'35vw'} >
+          <TableContainer >
             <Table mt={'2vh'} color={'web.text'} variant={'simple'} size={'sm'} >
               <Thead h={'5vh'}>
                 <Tr>
                   <Th color={'web.text2'} textAlign={'center'} fontSize={'1.3vh'}>Payment Date</Th>
                   <Th color={'web.text2'} textAlign={'center'} fontSize={'1.3vh'}>Amount</Th>
                   <Th color={'web.text2'} textAlign={'center'} fontSize={'1.3vh'}>Method</Th>
-                  <Th color={'web.text2'} textAlign={'center'} fontSize={'1.3vh'}>Percentage</Th>
+                  <Th color={'web.text2'} textAlign={'center'} fontSize={'1.3vh'}>%</Th>
                   <Th w={'2vh'} color={'web.text2'} textAlign={'center'} fontSize={'1.3vh'}></Th>
                 </Tr>
               </Thead>

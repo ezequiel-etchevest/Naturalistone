@@ -7,6 +7,7 @@ const  { getLimitDateMonth, getCurrentMonth } = require('../Controllers/LastMont
 const uniqueFormatNames = require('../Controllers/quotesValues')
 const invoicesFilters = require('../Controllers/invoicesFilters')
 const sendInvoiceEmail = require('../utils/email');
+const { year, month0, day0 } = require('../todayDate');
 
 
 
@@ -293,12 +294,12 @@ salesRouter.post('/create-quote/:sellerID', async function(req, res) {
   const { formData, authFlag } = req.body;
   const {customer, project, products, variables} = formData
   
-  const date = new Date().toLocaleDateString();
-  const day = `${date.split('/')[1]}`;
-  const month = `${(date.split('/')[0])}`;
-  const day0 = day.length === 1 ? `0${day}` : day
-  const month0 = month.length === 1 ? `0${month}` : month
-  const year = `${date.split('/')[2]}`;
+  // const date = new Date().toLocaleDateString();
+  // const day = `${date.split('/')[1]}`;
+  // const month = `${(date.split('/')[0])}`;
+  // const day0 = day.length === 1 ? `0${day}` : day
+  // const month0 = month.length === 1 ? `0${month}` : month
+  // const year = `${date.split('/')[2]}`;
   
   const parsedProducts = Object.entries(products)
     .flat()
@@ -309,7 +310,7 @@ salesRouter.post('/create-quote/:sellerID', async function(req, res) {
 
   const ProjectID = project.idProjects;
   const InsertDate = `${year}-${month0}-${day0}`
-  console.log(InsertDate)
+
   const EstDelivery_Date = variables.estDelivDate;
   let Naturali_Invoice = 0
 
@@ -461,7 +462,95 @@ salesRouter.get('/customer/:id', async function(req, res){
   }
 });
 
+salesRouter.patch('/sales-update/:id', async function(req, res){
 
+  const {id} = req.params
+  const { project, products, variables } = req.body.formData
+  const { SellerID } = req.body
+  const { idProjects } = project
+  const { estDelivDate, shipVia, paymentTerms, method } = variables
+  const LastInsertDate = `${year}-${month0}-${day0}` 
+  const ModificationFlag = true
+
+  const parsedProducts = Object.entries(products)
+    .flat()
+    .filter((element) => typeof element === 'object')
+    .map((product, index) => ({ variableName: `${index + 1}`, ...product }));
+
+  const Value = parsedProducts.reduce((acc, curr) => acc + curr.quantity * curr.price, 0);
+
+  const salesQuery = 'UPDATE Sales SET ' + buildUpdateValuesQuery(SellerID, idProjects, LastInsertDate, estDelivDate, shipVia, ModificationFlag, paymentTerms, method, Value) + ` WHERE Naturali_Invoice = ${id}`;
+
+  // const prodSoldQuery = `UPDATE NaturaliStone.ProdSold SET  SaleID, ProdID, Quantity, SalePrice VALUES ?`;
+  const prodSoldQuery = `SELECT * FROM ProdSold WHERE ProdSold.SaleID = ${id}`
+  const prodSoldValues = parsedProducts.map((product) => [Naturali_Invoice, product.prodID, product.quantity, product.price]);
+
+  try {
+    mysqlConnection.beginTransaction(function(err) {
+      if (err) {
+        throw err;
+      }
+
+      mysqlConnection.query(salesQuery, function(error, salesResult, fields) {
+        if (error) {
+          return mysqlConnection.rollback(function() {
+            throw error;
+          });
+        }
+        
+        if (salesResult.affectedRows === 0) {
+          console.log(`Failure updating Sale ${id}`);
+          res.status(200).json('');
+          return mysqlConnection.rollback(function() {
+            throw new Error(`Failure updating Sale ${id}`);
+          });
+        } else {
+          console.log('Updated Sales successfully');
+          mysqlConnection.query(prodSoldQuery, [prodSoldValues], async function(error, prodSoldResult, fields) {
+            if (error) {
+              console.log('Error updating ProdSold: ' + error);
+              return mysqlConnection.rollback(function() {
+                throw error;
+              });
+            }
+            
+            console.log('Updated ProdSold successfully');
+            mysqlConnection.commit(function(err) {
+              if (err) {
+                return mysqlConnection.rollback(function() {
+                  throw err;
+                });
+              }
+              
+              console.log('Transaction committed successfully');
+              res.status(200).json(salesResult);
+            });
+          });
+        }
+      });
+    });
+  } catch (error) {
+    res.status(409).send(error);
+  }
+});
+
+function buildUpdateValuesQuery( SellerID, idProjects, LastInsertDate, estDelivDate, shipVia, ModificationFlag, paymentTerms, method, Value) {
+  let updateValues = [];
+
+  if (Value) updateValues.push(`Value = ${Value}`)
+  if (idProjects) updateValues.push(`ProjectID = ${idProjects}`)
+  if (LastInsertDate) updateValues.push(`LastInsertDate = '${LastInsertDate}'`)
+  if (estDelivDate) updateValues.push(`EstDelivery_Date = '${estDelivDate}'`)
+  if (shipVia) updateValues.push(`ShippingMethod = '${shipVia}'`)
+  if (SellerID) updateValues.push(`SellerID = '${SellerID}'`)
+  if (ModificationFlag) updateValues.push(`ModificationFlag = '${ModificationFlag}'`)
+  if (paymentTerms) updateValues.push(`PaymentTerms = '${paymentTerms}'`)
+  if (method) updateValues.push(`P_O_No = '${method}'`)
+
+  return updateValues.join(', ');
+}
 
 
 module.exports = salesRouter;
+
+

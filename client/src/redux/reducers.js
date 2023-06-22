@@ -11,7 +11,8 @@ import {
     PATCH_STATUS,
     GET_SELLER_VALUES,
     POST_QUOTE,
-    CLEAN_POST_QUOTE
+    CLEAN_POST_QUOTE,
+    PATCH_QUOTE
 } from './actions-invoices';
 import { 
   GET_INVOICE_ERRORS,
@@ -406,6 +407,7 @@ function rootReducer (state = intialState, action) {
             ...state,
             posted_quote: action.payload
           }
+ 
         case CLEAN_POST_QUOTE:
           return{
             ...state,
@@ -483,6 +485,11 @@ function rootReducer (state = intialState, action) {
             ...state,
             factories: action.payload
           }
+        case PATCH_QUOTE:
+          return{
+            ...state,
+            invoice: action.payload
+          } 
         default:
             return {
               ...state
