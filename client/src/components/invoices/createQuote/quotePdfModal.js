@@ -3,9 +3,6 @@ import {
     ModalOverlay,
     ModalContent,
     ModalBody,
-    useDisclosure,
-    Box,
-    Button
   } from '@chakra-ui/react'
 import CreatedQuotePdf from './createQuotePdf'
 import { cleanCreatedQuote } from '../../../redux/actions-invoices'

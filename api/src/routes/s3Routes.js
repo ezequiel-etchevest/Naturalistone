@@ -76,11 +76,39 @@ s3Router.get('/pdf/:id', (req, res) => {
       return res.status(404).send('Error al obtener el archivo PDF de S3');
     }
 
+    console.log('datico', data)
+
     res.writeHead(200, {
       'Content-Type': data.ContentType,
       'Content-Length': data.ContentLength,
     });
+
+    console.log(data)
+
     res.end(data.Body);
+  });
+});
+
+s3Router.get('/pdf/send/:id', (req, res) => {
+  const { id } = req.params;
+
+  const key = `Invoice Naturali/${id}.pdf`; // Key del objeto específico a acceder
+  const params = {
+    Bucket: 'naturali-parseddocuments',
+    Key: key,
+  };
+
+  s3.getObject(params, (err, data) => {
+    if (err) {
+      console.error(err);
+      return res.status(404).send('Error al obtener el archivo PDF de S3');
+    }
+
+    const buffer = Buffer.from(data.Body, 'binary')
+
+    const base64 = buffer.toString('base64')
+
+    res.status(200).json(base64);
   });
 });
 
