@@ -94,6 +94,7 @@ import {
   GET_FREIGHTS,
   GET_FREIGHT_ID,
   GET_FREIGHTS_FACTORY,
+  CLEAN_STATS_FREIGHT,
 } from './actions-freights';
 import {
   GET_PROFORMAS
@@ -513,6 +514,13 @@ function rootReducer (state = intialState, action) {
           return {
             ...state,
             freights_factory: action.payload,
+          }
+        case CLEAN_STATS_FREIGHT:
+          return {
+            ...state,
+            freights: [],
+            freight: {},
+            freights_factory: [],
           }
         default:
             return {

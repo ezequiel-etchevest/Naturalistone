@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import SideBar from "../components/sideBar";
 import FreightsContainer from '../components/freights/freightsContainer';
-import { getFreight } from '../redux/actions-freights';
+import { cleanStatsFreight, getFreight } from '../redux/actions-freights';
 import { Center, Spinner } from "@chakra-ui/react";
 import { getEmployeeById } from "../redux/actions-employees";
 
@@ -20,6 +20,7 @@ const Freights = ({focus, setFocus}) => {
       }})
 
   useEffect(() => {
+    dispatch(cleanStatsFreight())
     dispatch(getFreight())
   }, [])
 

@@ -42,7 +42,7 @@ const ModelTr = ({freight}) => {
         <Td textAlign={'center'}>{freight.InvoiceNumber} </Td>
         <Td textAlign={'center'}>{freight.TotalCost}</Td>
         <Td textAlign={'center'}>{freight.InvoiceDate !== null ? freight.InvoiceDate.split('T')[0] :  '-'}</Td>
-        <Td textAlign={'center'}>{freight.EstimatedDate !== null ? freight.InvoiceDate.split('T')[0] : '-'}</Td>
+        <Td textAlign={'center'}>{freight.EstimatedDate !== null ? freight.EstimatedDate.split('T')[0] : '-'}</Td>
       </Tr>
     )
 }

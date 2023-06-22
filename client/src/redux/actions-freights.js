@@ -2,6 +2,7 @@ import axios from 'axios';
 export const GET_FREIGHTS = 'GET_FREIGHTS';
 export const GET_FREIGHT_ID = 'GET_FREIGHT_ID';
 export const GET_FREIGHTS_FACTORY = 'GET_FREIGHTS_FACTORY';
+export const CLEAN_STATS_FREIGHT = 'CLEAN_STATS_FREIGHT'
 
 export function getFreight() {
 
@@ -54,5 +55,14 @@ export function getFreightOrders(freightRef) {
     } catch (error) {
       console.log(error)
     }
+  }
+}
+
+export function cleanStatsFreight() {
+  return async function (dispatch) {
+    return dispatch({
+      type: CLEAN_STATS_FREIGHT,
+      payload: [],
+    })
   }
 }

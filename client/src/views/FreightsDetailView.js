@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import {getEmployeeById } from "../redux/actions-employees";
 import { useParams } from "react-router-dom";
 import FreightDetails from "../components/freights/freightDetail";
-import { getFreightOrders, getFreightId } from "../redux/actions-freights";
+import { getFreightOrders, getFreightId, cleanStatsFreight } from "../redux/actions-freights";
 
 
 const FreightDetailView = ({focus, setFocus}) => {
@@ -26,6 +26,7 @@ const FreightDetailView = ({focus, setFocus}) => {
 
   useEffect(() => {
     if(!Object.entries(freight).length || !freights_factory.length){
+      dispatch(cleanStatsFreight())
       dispatch(getFreightId(freightRef))
       dispatch(getFreightOrders(freightRef))
     } 
