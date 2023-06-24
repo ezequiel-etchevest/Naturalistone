@@ -1,9 +1,12 @@
-import { VStack, Box, FormControl, Input, Text, FormLabel, Textarea} from "@chakra-ui/react";
+import { VStack, Box, FormControl, Input, Text, FormLabel, Textarea, Select} from "@chakra-ui/react";
 import '../../../assets/styleSheet.css'
+import { useSelector } from "react-redux";
 
 
 
 export function AddTaskInfo({formData, handleChange, user}) {
+
+  const sellers = useSelector(state => state.sellers)
 
   return (
     <>
@@ -15,7 +18,36 @@ export function AddTaskInfo({formData, handleChange, user}) {
         <Box  w={'35vw'} display={'flex'} flexDir={'row'} pt={'1vh'} justifyContent={'space-between'}>
           <FormControl  pr={'2vw'}>
           <FormLabel textColor={'web.text2'} fontSize={'sm'} name={'name'} fontWeight={'normal'}>Assignee</FormLabel>
-            <Input
+          {
+            user[0].Secction7Flag === 1 ? (
+              <Select
+              onChange={handleChange}
+              mb={'0.5vh'}
+              w={'12vw'}
+              minH={'3vh'}
+              variant="unstyled"
+              textColor={'web.text'}
+              _placeholder={{ fontFamily: 'body', fontWeight: 'inherit', textColor: 'inherit' }}
+              size={"sm"}
+              borderBottomWidth={"2px"}
+              borderBottomColor={'web.border'}
+              _hover={{borderColor: 'web.border'}}
+              cursor={'pointer'}
+              value={formData.SellerID}
+              name={'SellerID'}
+            >
+                {  
+                    sellers?.map((e, i) => {
+                      if(e.SellerID !== 3){
+                        return(
+                          <option key={i} className={'options'} value={e.SellerID}>{e.FirstName} {e.LastName}</option>
+                          )
+                      }
+                       })
+                }
+            </Select>
+            ):(
+              <Input
               isReadOnly={true}
               mb={'0.5vh'}
               variant="unstyled"
@@ -28,6 +60,9 @@ export function AddTaskInfo({formData, handleChange, user}) {
               name={"Title"}
               value={`${user[0].FirstName} ${user[0].LastName}`}
               />
+            )
+          }
+           
           </FormControl>
           <FormControl pl={'2vw'}>
           <FormLabel textColor={'web.text2'} fontSize={'sm'} name={'name'} fontWeight={'normal'}>Due Date</FormLabel>

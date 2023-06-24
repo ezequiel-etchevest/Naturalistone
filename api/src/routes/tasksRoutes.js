@@ -7,13 +7,20 @@ const executeQuery = require('../Controllers/taskRoutesController');
 tasksRouter.get('/all-tasks', async function(req, res){
 
     const { SellerID, Status } = req.query
-    console.log(Status)
+
     let query_ = `
     SELECT Tasks.*
     FROM Tasks
-    WHERE Tasks.SellerID = ${SellerID} AND Status = "${Status}"
+    ${
+        Number(SellerID) !== 3 ? (
+            `WHERE Tasks.SellerID = ${SellerID} AND Status = "${Status}"`
+        ):(
+            `WHERE Status = "${Status}"`
+        )
+    } 
     ORDER BY Tasks.DueDate ${Status == 'todo' ? 'ASC' : 'DESC'};
     `;
+    console.log({SellerID, Status})
     
     try{
         mysqlConnection.query(query_, function(error, results, fields){
@@ -70,7 +77,7 @@ tasksRouter.get('/id/:TaskID', async function(req, res){
             executeQuery(query_2)
         ]);
 
-        if (!results[0].length) {
+        if (!results[0]) {
             console.log('Error al obtener tasks data!')
             res.status(400).json(error);
         } else {

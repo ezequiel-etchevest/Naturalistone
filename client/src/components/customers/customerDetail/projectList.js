@@ -74,10 +74,21 @@ return(
             </Thead>
             <Tbody >
               { 
-                projects_by_customer_id?.map((project, i) =>{
-                  return(
-                    <ModelTr key={i} project={project}/>
-                    )})                   
+                projects_by_customer_id?.length ? (
+                  Array.isArray(projects_by_customer_id) ? (
+                  projects_by_customer_id?.map((project, i) =>{
+                    return(
+                      <ModelTr key={i} project={project}/>
+                    )})):(
+                      <Tr
+                      h={'5vh'} 
+                      cursor={'pointer'}
+                      _hover={{
+                        bg: 'web.navBar',
+                        color: 'logo.orange'
+                          }}>
+                      <Td display={'flex'} placeContent={'center'}>{projects_by_customer_id}</Td></Tr>
+                    )) : (null)
                   }
                 <Tr
                   h={'5vh'} 

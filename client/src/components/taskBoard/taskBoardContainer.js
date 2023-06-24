@@ -1,5 +1,5 @@
 import React, {  useEffect, useState } from "react";
-import { Box, Center, Text } from '@chakra-ui/react';
+import { Box, Center, Text, filter } from '@chakra-ui/react';
 import Board from "./Board";
 import TaskDetail from "./TaskDetail";
 import { TaskBoardToolbar } from "./TaskBoardToolbar";
@@ -9,6 +9,11 @@ import { getAllTasks } from '../../redux/actions-tasks'
 const TaskBoardContainer = ({user}) => {
 
     const [ activeCard, setActiveCard ] = useState(null)
+    const [ filters, setFilters ] = useState({
+      SellerID: Number(user[0].SellerID),
+      Status: 'todo'
+    })
+    console.log(filters)
     const dispatch = useDispatch()
     const tasks = useSelector(state => state.tasks)
     useEffect(()=>{
@@ -18,7 +23,7 @@ const TaskBoardContainer = ({user}) => {
     <>
       <Box userSelect={'none'} h={'92vh'} ml={'16vw'} bg={'web.bg'} display={'flex'} flexDir={'row'} justifyContent={'space-between'}>
         <Box display={'flex'} flexDir={'row'}>
-       <Board setActiveCard={setActiveCard} activeCard={activeCard} user={user}/>
+       <Board setActiveCard={setActiveCard} activeCard={activeCard} user={user} filters={filters} setFilters={setFilters}/>
        {
         activeCard ? (
             <TaskDetail activeCard={activeCard}/>
@@ -44,7 +49,7 @@ const TaskBoardContainer = ({user}) => {
         )
        }
        </Box>
-       <TaskBoardToolbar user={user} activeCard={activeCard} setActiveCard={setActiveCard}/>
+       <TaskBoardToolbar user={user} activeCard={activeCard} setActiveCard={setActiveCard} filters={filters} setFilters={setFilters}/>
 
       </Box> 
       </>

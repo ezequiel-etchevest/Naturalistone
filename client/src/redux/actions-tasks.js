@@ -32,7 +32,7 @@ export function postTask(task, status){
         
         let {} = await axios.post(`/tasks/new-task`, task)
         let { data } = await axios.get(`/tasks/all-tasks?SellerID=${task.SellerID}&Status=${status}`)
-        console.log(data)
+
           dispatch(
             {
               type: POST_TASK,

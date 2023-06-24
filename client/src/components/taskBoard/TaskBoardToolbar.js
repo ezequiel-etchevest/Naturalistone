@@ -24,7 +24,7 @@ import { LinkInvoiceModal } from './LinkInvoice';
 
 
 
-export const TaskBoardToolbar = ({activeCard, user, setActiveCard}) => {
+export const TaskBoardToolbar = ({activeCard, user, setActiveCard, setFilters, filters}) => {
 
   const navigate = useNavigate()
 
@@ -35,7 +35,7 @@ export const TaskBoardToolbar = ({activeCard, user, setActiveCard}) => {
       <Divider w={'100%'} textColor={'web.border'} />
       <Box pl={'1vh'} pb={'1vh'}>
         <AddCommentModal activeCard={activeCard} user={user}/>
-        <AddTask user={user}/>
+        <AddTask user={user} setFilters={setFilters} filters={filters}/>
         <ChangeTaskStatusModal activeCard={activeCard} setActiveCard={setActiveCard} user={user} />
       </Box>
       <Text fontSize={'xs'} textColor={'web.text2'} w={'100%'}>Customer</Text>

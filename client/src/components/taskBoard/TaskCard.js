@@ -31,7 +31,7 @@ const TaskCard = ({task, setActiveCard, activeCard }) => {
         color: 'logo.orange'
       }}
       py={'1vh'}>
-        <Heading size='xs' textTransform='uppercase' display={'flex'} textDecor={Status === 'done' ? 'line-through': 'unset'}>
+        <Heading size='xs' textTransform='uppercase' display={'flex'} >
           <Text mr={'0.75vw'} color={'logo.orange'}>#{task.taskID}</Text>{Title}
         </Heading>
         <Box display={'flex'} flexDir={'row'} alignItems={'baseline'} >

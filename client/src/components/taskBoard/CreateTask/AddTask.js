@@ -13,7 +13,7 @@ import { getProjectById } from "../../../redux/actions-projects";
 import AddTaskReview from "./AddTaskReview";
 import { postTask } from "../../../redux/actions-tasks";
 
-export const AddTask = ({ user}) => {
+export const AddTask = ({ user, filters, setFilters}) => {
   
 
   const customers = useSelector(state => state.customers)
@@ -31,7 +31,7 @@ export const AddTask = ({ user}) => {
     ProjectID: null,
     InvoiceID: null,
     DueDate: new Date().toISOString().split('T')[0],
-    SellerID: userLocal.SellerID ,
+    SellerID: userLocal.SellerID === 3 ? ('') : (userLocal.SellerID) ,
   })
 
   const handleClose = () => {
@@ -74,7 +74,6 @@ export const AddTask = ({ user}) => {
         if(formData.InvoiceID) dispatch(getInvoiceById(formData.InvoiceID))
         return setProgress(progress + 20)
       }
-       
     }
   const handlePreviousButton = () => {
     if(progress === 80 ){
@@ -87,6 +86,10 @@ export const AddTask = ({ user}) => {
     if(!formData.SellerID) setFormData({...formData, SellerID: user[0].SellerID})
     dispatch(postTask(formData, 'todo'))
     setFormData({})
+    setFilters({
+      ...filters,
+      SellerID: formData.SellerID
+    })
     handleClose()
   }
   useEffect(()=>{

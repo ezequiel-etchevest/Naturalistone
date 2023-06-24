@@ -2,21 +2,34 @@ import { Box, Highlight, chakra, Stack, StackDivider, Heading, Select, Text, Div
 import { Card, CardBody, CardHeader } from '@chakra-ui/card'
 import TaskCard from "./TaskCard";
 import '../../assets/styleSheet.css'
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllTasks } from "../../redux/actions-tasks";
+import { getSellers } from "../../redux/actions-sellers";
 
 
-const Board = ({setActiveCard, activeCard, user}) => {
+const Board = ({setActiveCard, activeCard, user, filters, setFilters}) => {
 
   const tasks = useSelector(state => state.tasks)
+  const sellers = useSelector(state => state.sellers)
   const dispatch = useDispatch()
+  console.log(filters)
 
   useEffect(()=>{},[tasks])
+  useEffect(()=>{
+    if(!sellers.length) dispatch(getSellers())
+    },[sellers])
+
 
   const handleChange = (e) => {
-    console.log(user)
-    dispatch(getAllTasks(user[0].SellerID, e.target.value))
+    const {name, value} = e.target
+    setFilters({
+      ...filters,
+      [name]:value
+    })
+    if(name === 'SellerID')  dispatch(getAllTasks(value, filters.Status, user[0].SellerID))
+    if(name === 'Status')  dispatch(getAllTasks( filters.SellerID, value, user[0].SellerID))
+  
     setActiveCard( null)
   }
 
@@ -45,10 +58,45 @@ const Board = ({setActiveCard, activeCard, user}) => {
          query={['TASKS']}
          styles={{color: '#E47424', fontWeight:'semibold' }}
           >Tasks Board </Highlight></Text>  
-       
+
+        {/*Filter by seller */}
+        <Box display={'flex'} flexDir={'row'}>
+        {
+          user[0].Secction7Flag === 1 ? (
+            <Select
+            onChange={(e)=>handleChange(e)}
+            mb={'0.5vh'}
+            w={'8vw'}
+            minH={'4.5vh'}
+            variant="unstyled"
+            textColor={'web.text2'}
+            _placeholder={{ fontFamily: 'body', fontWeight: 'inherit', textColor: 'inherit' }}
+            size={"sm"}
+            borderBottomWidth={"2px"}
+            borderBottomColor={'web.text2'}
+            _hover={{borderColor: 'web.border'}}
+            cursor={'pointer'}
+            value={filters.SellerID}
+            name="SellerID"
+          >
+            <option value="" disabled hidden>Filter by Seller</option>
+            <option value={3} className="options">All seller</option>
+              {  
+                  sellers?.map((e, i) => {
+                    if(e.SellerID !== 3){
+                      return(
+                        <option key={i} className={'options'} value={e.SellerID}>{e.FirstName} {e.LastName}</option>
+                        )
+                    }
+                     })
+              }
+          </Select>
+          ):(null)
+        }
         <Select
+          ml={'1vw'}
           mb={'0.5vh'}
-          w={'6vw'}
+          w={'5vw'}
           minH={'4.5vh'}
           variant="unstyled"
           textColor={'web.text2'}
@@ -59,11 +107,12 @@ const Board = ({setActiveCard, activeCard, user}) => {
           _hover={{borderColor: 'web.border'}}
           cursor={'pointer'}
           onChange={handleChange}
-        >
+          name="Status"
+          >
         <option value='todo' className="options">To Do </option>
         <option value='done' className="options">Done</option>
-
             </Select>
+            </Box>
           </Box>
         <Divider mt={'2vh'}></Divider>
         <Card>
