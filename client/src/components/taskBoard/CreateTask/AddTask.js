@@ -32,6 +32,7 @@ export const AddTask = ({ user, filters, setFilters}) => {
     InvoiceID: null,
     DueDate: new Date().toISOString().split('T')[0],
     SellerID: userLocal.SellerID === 3 ? ('') : (userLocal.SellerID) ,
+    Assigner: userLocal.SellerID
   })
 
   const handleClose = () => {

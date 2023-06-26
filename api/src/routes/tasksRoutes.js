@@ -20,7 +20,7 @@ tasksRouter.get('/all-tasks', async function(req, res){
     } 
     ORDER BY Tasks.DueDate ${Status == 'todo' ? 'ASC' : 'DESC'};
     `;
-    console.log({SellerID, Status})
+
     
     try{
         mysqlConnection.query(query_, function(error, results, fields){
@@ -114,7 +114,7 @@ tasksRouter.post('/new-comment', async function(req, res) {
   });
   
 tasksRouter.post('/new-task', async function(req, res){
-    console.log(req.body)
+
     const {
         taskID,
         Description,
@@ -123,11 +123,12 @@ tasksRouter.post('/new-task', async function(req, res){
         ProjectID,
         InvoiceID,
         SellerID,
-        DueDate
+        DueDate,
+        Assigner
     } = req.body
 
-    query_ = `INSERT INTO Tasks (taskID, Description, Title, Status, CustomerID, ProjectID, InvoiceID, SellerID, DueDate) 
-    VALUES ("${taskID}", "${Description}", "${Title}", "todo", "${CustomerID}", "${ProjectID}", "${InvoiceID}", "${SellerID}", "${DueDate}")`;
+    query_ = `INSERT INTO Tasks (taskID, Description, Title, Status, CustomerID, ProjectID, InvoiceID, SellerID, DueDate, Assigner) 
+    VALUES ("${taskID}", "${Description}", "${Title}", "todo", "${CustomerID}", "${ProjectID}", "${InvoiceID}", "${SellerID}", "${DueDate}" , "${Assigner}")`;
     
     try{
          mysqlConnection.query(query_, function(error, results, fields){

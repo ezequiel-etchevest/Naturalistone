@@ -13,13 +13,10 @@ const projectsRouter = require('./projectsRoutes')
 const customersRouter = require('./customersRoutes')
 const onedriveRouter  = require('./pdfOneDriveRoutes.js')
 const statsRouter = require('./statsRoutes');
-const testRouter = require('./testMulterPDF')
 const s3Router = require('./s3Routes')
 const tasksRouter = require('./tasksRoutes')
 const freightRouter = require('./freightRoutes')
-const s3Router = require('./s3Routes');
 const factoryRouter = require('./factoriesRoutes');
-
 const emailInvoiceRouter = require('./sendInvoiceEmail')
 const proformasRoutes = require('./proformasRoutes')
 
