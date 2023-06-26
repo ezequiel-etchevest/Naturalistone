@@ -16,7 +16,7 @@ export function getInvoicesBySeller(id, inputValues){
     return async function(dispatch){
 
         try{
-            let {data} = await axios.get(`/sales/${id}?name=${inputValues.inputName}&number=${inputValues.inputNumber}&seller=${inputValues.selectSeller}&time=${inputValues.timeFilter}`)
+            let {data} = await axios.get(`/sales/${id}?name=${inputValues.inputName}&number=${inputValues.inputNumber}&seller=${inputValues.selectSeller}&time=${inputValues.timeFilter}&quoteStatus=${inputValues.quoteStatus ? inputValues.quoteStatus : ''}`)
 
             dispatch(
                 {

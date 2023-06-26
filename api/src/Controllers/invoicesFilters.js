@@ -1,4 +1,4 @@
-const invoicesFilters = (invoices, name, number, seller) => {
+const invoicesFilters = (invoices, name, number, seller, quoteStatus) => {
   let filtered = invoices
  
   if (name !== '') {
@@ -14,6 +14,10 @@ const invoicesFilters = (invoices, name, number, seller) => {
   if(seller !== ''){
     filtered = filtered.filter(s => s.SellerID === Number(seller))
   }
+  if(quoteStatus !== ''){
+    filtered = filtered.filter(invoice => invoice.Status === quoteStatus)
+  }
+
   return filtered
 }
 

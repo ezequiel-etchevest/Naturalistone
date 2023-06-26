@@ -32,7 +32,7 @@ const StatsModal = ({isOpenModal, onCloseModal}) => {
     console.log(e)
     navigate(`/quotes/${e.Naturali_Invoice}`)
   }
-  console.log(stats)
+
     return (
         <>
           <Modal
@@ -97,6 +97,7 @@ const StatsModal = ({isOpenModal, onCloseModal}) => {
                             <Th color={'web.text2'} textAlign={'center'} fontSize={'x-small'}>Nº Quote</Th>
                             <Th color={'web.text2'} textAlign={'center'} fontSize={'x-small'}>Value quote</Th>
                             <Th color={'web.text2'} textAlign={'center'} fontSize={'x-small'}>Date</Th>
+                            <Th color={'web.text2'} textAlign={'center'} fontSize={'x-small'}>Percentage Paid</Th>
                           </Tr>
                       </Thead>
                       <Tbody>
@@ -119,6 +120,7 @@ const StatsModal = ({isOpenModal, onCloseModal}) => {
                                 <Td textAlign={'center'}>{e.Naturali_Invoice}</Td>
                                 <Td textAlign={'center'}>$ {e.Value.toLocaleString('en-US')}</Td>
                                 <Td textAlign={'center'}>{e.InvoiceDate.slice(0, 10)}</Td>
+                                <Td textAlign={'center'}>{e.Percentaje ? e.Percentaje : '0.00'} %</Td>
                               </Tr>
                             ))
                           }

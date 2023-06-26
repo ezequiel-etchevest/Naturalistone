@@ -98,6 +98,19 @@ import {
   PATCH_TASK_STATUS,
   LINK_ITEMS
 } from './actions-tasks'
+import {
+  GET_FACTORIES,
+  POST_FACTORY
+} from './actions-factories';
+import {
+  GET_FREIGHTS,
+  GET_FREIGHT_ID,
+  GET_FREIGHTS_FACTORY,
+  CLEAN_STATS_FREIGHT,
+} from './actions-freights';
+import {
+  GET_PROFORMAS
+} from './actions-proformas';
 
 const intialState = {
     employees: [],
@@ -139,8 +152,12 @@ const intialState = {
     products_new_quote_values: [],
     tasks:[],
     task_by_id: {},
-    task_comments: []
-
+    task_comments: [],
+    factories: [],
+    freights: [],
+    proformas: [],
+    freight: {},
+    freights_factory: [],
 }
 
 function rootReducer (state = intialState, action) {
@@ -187,7 +204,8 @@ function rootReducer (state = intialState, action) {
               customer_by_id: {},
               posted_quote: {},
               send_email_client: {},
-              products_new_quote_values: []
+              products_new_quote_values: [],
+              factories: []
             }  
         case GET_INVOICE_BY_ID:
             return {
@@ -469,6 +487,48 @@ function rootReducer (state = intialState, action) {
             product_images: [],
             product_by_id: [],
             history_prices: []
+        }
+        case SEND_EMAIL_CLIENT:
+          return{
+            ...state,
+            send_email_client: action.payload
+          }
+        case GET_FACTORIES:
+          return {
+            ...state,
+            factories: action.payload
+        }
+        case POST_FACTORY:
+          return{
+            ...state,
+            factories: action.payload
+          }
+        case GET_FREIGHTS:
+          return {
+            ...state,
+            freights: action.payload
+          }
+        case GET_PROFORMAS:
+          return {
+            ...state,
+            proformas: action.payload,
+          }
+        case GET_FREIGHT_ID:
+          return {
+            ...state,
+            freight: action.payload,
+          }
+        case GET_FREIGHTS_FACTORY:
+          return {
+            ...state,
+            freights_factory: action.payload,
+          }
+        case CLEAN_STATS_FREIGHT:
+          return {
+            ...state,
+            freights: [],
+            freight: {},
+            freights_factory: [],
           }
           case SEND_EMAIL_CLIENT:
             return{

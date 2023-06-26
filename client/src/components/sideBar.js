@@ -4,6 +4,7 @@ import { HiUsers} from 'react-icons/hi'
 import { IoMdBoat } from 'react-icons/io'
 import { CgLogOut } from 'react-icons/cg'
 import { BiError } from 'react-icons/bi'
+import { GiCargoShip } from 'react-icons/gi'
 import naturalipic from '../assets/naturalistonefav.png'
 import { useNavigate } from 'react-router';
 import { useDispatch } from 'react-redux';
@@ -18,8 +19,8 @@ const LinkItems = [
   { name: 'Orders', icon: IoMdBoat },
   { name: 'Customers', icon: HiUsers },
   { name: 'Task-Board', icon: FaTasks },
+  { name: 'Freights', icon: GiCargoShip },
   { name: 'Log Out', icon: CgLogOut },
-
   ];
 
 
@@ -54,7 +55,7 @@ const SideBar = ({user, focus, setFocus}) => {
       {
       user[0].Secction7Flag !== 1  
       ? LinkItems
-      .filter(l => l.name !== 'Orders')
+      .filter(l => l.name !== 'Orders' && l.name !== 'Freights')
       .map((link) => (
         <NavItem
           focus={focus}

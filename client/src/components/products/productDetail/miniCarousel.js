@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/img-redundant-alt */
 import Slider from 'react-slick';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -11,8 +12,7 @@ const CarouselProduct = () => {
 
   const { isOpen, onOpen, onClose } = useDisclosure()
   const productImages = useSelector(state => state.product_images);
-  const [images, setImages] = useState([]);
-  console.log(productImages)
+  const [imageIndex, setImageIndex ] = useState(0)
   // useEffect(() => {
   //   setImages([])
   //   const fetchImages = async () => {
@@ -23,7 +23,6 @@ const CarouselProduct = () => {
   //   };
   //   if(productImages) fetchImages();
   // }, [productImages]);
-
 
   const settings = {
     infinite: true,
@@ -38,18 +37,23 @@ const CarouselProduct = () => {
     slidesToShow: 1 ,
     slidesToScroll: 1,
     adaptiveHeight: false,
+    initialSlide: imageIndex,
   };
   
   
   return (
     <>
     <Box px="1vh">
-      <Slider {...settings}>
+      <Slider 
+      {...settings}>
         {
            productImages.map((img, i) => (
             <Box key={i} p="1vh" h="23vh">
               <img
-                onClick={onOpen}
+                onClick={() => {
+                  setImageIndex(i)
+                  onOpen()
+                }}
                 src={img.url}
                 alt={`Image ${i}`}
                 style={{ height: '100%', objectFit: 'cover', margin: '0 auto' }} 

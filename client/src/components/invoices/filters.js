@@ -19,30 +19,16 @@ import CreateInvoiceButton from './createQuote/createInvoice'
 import { useLocation, useNavigate } from "react-router-dom";
 import CreateQuote from "./createQuote2/createQuoteModal";
 
-const Filters = ({user, seller_invoices, setFocusFilter, seller_values, customers}) => {
+const Filters = ({user, seller_invoices, setFocusFilter, seller_values, customers, inputValues, setInputValues, setLoading}) => {
 
   const dispatch = useDispatch()
   const [ disabled, setDisabled ] = useState(false)
   const [errores, setErrores] = useState('')
   const searchParams = new URLSearchParams();
   const navigate = useNavigate()
-  const location = useLocation()
   const lastWeek = 'LastWeek'
   const lastMonth = 'LastMonth'
   const all = 'All'
-  const queryString = location.search;
-  const url = new URLSearchParams(queryString)
-  const getParamsTimeFilter = url.get('timeFilter')
-  const getParamsSeller = url.get('seller')
-  const getParamsName = url.get('name')
-  const getParamsNumber = url.get('number')
-  const [inputValues, setInputValues] = useState(
-    {
-      inputName: getParamsName ? getParamsName : '',
-      inputNumber: getParamsNumber ? getParamsNumber : '',
-      selectSeller: getParamsSeller ? getParamsSeller : '',
-      timeFilter: getParamsTimeFilter ? getParamsTimeFilter : 'All'
-    })
 
   const userId  =  user[0].SellerID
 
@@ -51,19 +37,44 @@ const Filters = ({user, seller_invoices, setFocusFilter, seller_values, customer
     else return false
   }
   
+  const handleClickStatus = (e) => {
+    setLoading(true)
+    const status = e.target.value
+    searchParams.set('status', status)
+    searchParams.set('timeFilter', inputValues.timeFilter)
+    searchParams.set('seller', inputValues.selectSeller)
+    if(inputValues.inputName){
+      searchParams.set('name', inputValues.inputName)
+    } else {
+      searchParams.delete('name')
+    }
+    if(inputValues.inputNumber){
+      searchParams.set('number', inputValues.inputNumber)
+    } else {
+      searchParams.delete('number')
+    }
+    navigate(`?${searchParams.toString()}`)
+    setInputValues({...inputValues, quoteStatus: status})
+    dispatch(getInvoicesBySeller(userId, {...inputValues, quoteStatus: status}))
+  }
+
   const handleClickAllInvoices = () => {
+    setLoading(true)
     setInputValues({...inputValues, timeFilter: all})
     searchParams.set('timeFilter', 'All')
     searchParams.set('seller', inputValues.selectSeller)
+    searchParams.set('status', inputValues.quoteStatus)
     navigate(`?${searchParams.toString()}`)
     dispatch(getInvoicesBySeller(userId, {...inputValues, timeFilter: 'All'}))
   }
 
   
   const handleClickLastWeek = () => {
+    setLoading(true)
     setInputValues({...inputValues, timeFilter: lastWeek})
     searchParams.set('timeFilter', lastWeek)
     searchParams.set('seller', inputValues.selectSeller)
+    searchParams.set('status', inputValues.quoteStatus)
     if(inputValues.inputName){
       searchParams.set('name', inputValues.inputName)
     } else {
@@ -79,8 +90,10 @@ const Filters = ({user, seller_invoices, setFocusFilter, seller_values, customer
   }
 
   const handleClickLastMonth = () => {
+    setLoading(true)
     setInputValues({...inputValues, timeFilter: lastMonth})
     searchParams.set('timeFilter', lastMonth)
+    searchParams.set('status', inputValues.quoteStatus)
     searchParams.set('seller', inputValues.selectSeller)
     if(inputValues.inputName){
       searchParams.set('name', inputValues.inputName)
@@ -97,6 +110,7 @@ const Filters = ({user, seller_invoices, setFocusFilter, seller_values, customer
   }
 
   const handleTimeSelect = (e) => {
+    setLoading(true)
     if(e.target.value === 'All') return handleClickAllInvoices()
     if(e.target.value === 'LastWeek') return handleClickLastWeek()
     if(e.target.value === 'LastMonth') return handleClickLastMonth()
@@ -113,6 +127,7 @@ const Filters = ({user, seller_invoices, setFocusFilter, seller_values, customer
     }
 
   const handleChangeInvoiceNumber = (e) => {
+    setLoading(true)
     const invoiceNumber = e.target.value
     if(invoiceNumber.length){
       validateInput(e)
@@ -120,6 +135,7 @@ const Filters = ({user, seller_invoices, setFocusFilter, seller_values, customer
         setInputValues({...inputValues, inputNumber: invoiceNumber})
         searchParams.set('timeFilter', inputValues.timeFilter)
         searchParams.set('seller', inputValues.selectSeller)
+        searchParams.set('status', inputValues.quoteStatus)
         if(inputValues.inputName){
           searchParams.set('name', inputValues.inputName)
         } else {
@@ -136,6 +152,7 @@ const Filters = ({user, seller_invoices, setFocusFilter, seller_values, customer
     } else {
       searchParams.delete('number');
       searchParams.set('timeFilter', inputValues.timeFilter)
+      searchParams.set('status', inputValues.quoteStatus)
       searchParams.set('seller', inputValues.selectSeller)
       if(inputValues.inputName){
         searchParams.set('name', inputValues.inputName)
@@ -150,6 +167,7 @@ const Filters = ({user, seller_invoices, setFocusFilter, seller_values, customer
   }
 
   const handleChangeCustomerName = (e) => {
+    setLoading(true)
     const customerName = e.target.value
     if(customerName.length){
       setInputValues({...inputValues, inputName: customerName})
@@ -157,12 +175,14 @@ const Filters = ({user, seller_invoices, setFocusFilter, seller_values, customer
       searchParams.set('seller', inputValues.selectSeller)
       searchParams.set('name', customerName)
       searchParams.set('number', inputValues.inputNumber)
+      searchParams.set('status', inputValues.quoteStatus)
       navigate(`?${searchParams.toString()}`)
       dispatch(getInvoicesBySeller(userId, {...inputValues, inputName: customerName}))
     } else {
       searchParams.delete('name');
       searchParams.set('timeFilter', inputValues.timeFilter)
       searchParams.set('seller', inputValues.selectSeller)
+      searchParams.set('status', inputValues.quoteStatus)
       if(inputValues.inputNumber){
         searchParams.set('number', inputValues.inputNumber)
       } else {
@@ -175,9 +195,11 @@ const Filters = ({user, seller_invoices, setFocusFilter, seller_values, customer
   }
   
   const handleSellerSelect = (e) => {
+    setLoading(true)
     const selectSeller = e.target.value
     setInputValues({...inputValues, selectSeller: selectSeller})
     searchParams.set('timeFilter', inputValues.timeFilter)
+    searchParams.set('status', inputValues.quoteStatus)
     searchParams.set('seller', selectSeller)
     if(inputValues.inputName){
       searchParams.set('name', inputValues.inputName)
@@ -194,22 +216,27 @@ const Filters = ({user, seller_invoices, setFocusFilter, seller_values, customer
   }
   
   const handleClear = () => {
+    setLoading(true)
     searchParams.delete('timeFilter')
     searchParams.delete('seller')
     searchParams.delete('number')
     searchParams.delete('name')
+    searchParams.delete('status')
     navigate(`?${searchParams.toString()}`)
     setInputValues({
       inputNumber:'',
       inputName: '',
       selectSeller:'',
-      timeFilter:'All'
+      timeFilter:'All',
+      quoteStatus: '',
     })
     dispatch(getInvoicesBySeller(userId, {      
     inputNumber:'',
     inputName: '',
     selectSeller:'',
-    timeFilter:'All'}
+    timeFilter:'All',
+    quoteStatus: '',
+  }
     ))
     setFocusFilter('All')
   }
@@ -326,14 +353,14 @@ const Filters = ({user, seller_invoices, setFocusFilter, seller_values, customer
           </Box>
           {/*Selects */}
           <Box 
-            w={'24vw'} 
+            w={'30vw'} 
             display={'flex'} 
             justifyContent={validateSeller() === true ? 'space-between' : 'flex-end'}>  
             <Select
               onChange={(e)=>handleSellerSelect(e)}
               display={validateSeller() === true ? 'unset' : 'none' }
               mb={'0.5vh'}
-              w={'13vw'}
+              w={'10vw'}
               minH={'4.5vh'}
               variant="unstyled"
               textColor={'web.text2'}
@@ -360,7 +387,7 @@ const Filters = ({user, seller_invoices, setFocusFilter, seller_values, customer
               <Select
                 onChange={(e)=>handleTimeSelect(e)}
                 mb={'0.5vh'}
-                w={'9vw'}
+                w={'8vw'}
                 minH={'4.5vh'}
                 variant="unstyled"
                 textColor={'web.text2'}
@@ -375,6 +402,28 @@ const Filters = ({user, seller_invoices, setFocusFilter, seller_values, customer
               <option value='All' className="options">All time</option>
               <option value='LastWeek' className="options">Last week</option>
               <option value='LastMonth' className="options">Last month</option>
+            </Select>
+            <Select
+                onChange={(e)=>handleClickStatus(e)}
+                mb={'0.5vh'}
+                w={'8vw'}
+                minH={'4.5vh'}
+                variant="unstyled"
+                textColor={'web.text2'}
+                _placeholder={{ fontFamily: 'body', fontWeight: 'inherit', textColor: 'inherit' }}
+                size={"sm"}
+                borderBottomWidth={"2px"}
+                borderBottomColor={'web.text2'}
+                _hover={{borderColor: 'web.border'}}
+                cursor={'pointer'}
+                value={inputValues.quoteStatus}
+              >
+              <option value='' className="options">All status</option>
+              <option value='Canceled' className="options">Canceled</option>
+              <option value='Half-Paid' className="options">Half Paid</option>
+              <option value='Paid' className="options">Paid</option>
+              <option value='Pending' className="options">Pending</option>
+              <option value='Pending_Approval' className="options">Pending Approval</option>
             </Select>
             </Box>
         <Divider orientation={'vertical'} h={'5vh'}/>

@@ -56,13 +56,13 @@ const OrdersList = ({orders}) => {
           display={'flex'}
           justifyContent={'center'}
           ml={'1vh'}
-          h={'92vh'}
+          h={'80vh'}
           w={'82.8vw'} 
           >
           <Box
-            maxHeight={'80vh'}
+            maxHeight={'77vh'}
             overflow={'auto'}
-            mt={'7vh'}
+            mt={'2vh'}
             css={{
               '&::-webkit-scrollbar': {
                 width: '0.2vw',

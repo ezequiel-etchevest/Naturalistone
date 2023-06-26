@@ -195,21 +195,21 @@ export const validateCompletedInputsProject = (formData) =>{
 
 export const validateEmptyInputsProjects = (formData) =>{
   let errors = {}
-  if(!formData.State) {
-    errors.State = 'Please enter a valid state'
-  }else if(!USStates.includes(formData.State)){
-    errors.State = 'Please enter a valid state'
+  if(!formData.Shipping_State) {
+    errors.Shipping_State = 'Please enter a valid state'
+  }else if(!USStates.includes(formData.Shipping_State)){
+    errors.Shipping_State = 'Please enter a valid state'
   }
   if(!formData.ProjectName){
     errors.ProjectName = 'Please enter a ProjectName'
   }
-  if(!formData.City){
+  if(!formData.Shipping_City){
     errors.City = 'Please enter a City'
   } 
   if(!formData.Shipping_Address){
     errors.Shipping_Address = 'Please enter a Shipping_Address'
   }
-  if(!formData.ZipCode){
+  if(!formData.Shipping_ZipCode){
     errors.ZipCode = 'Please enter your zip code'
   } 
    return errors

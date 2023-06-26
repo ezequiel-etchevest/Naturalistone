@@ -76,11 +76,11 @@ return(
           />
         </Box>
         <Divider orientation={'vertical'} h={'6vh'} />
-        <CreateCustomerModal customer={customer} setCustomer={setCustomer}/>
+        <CreateCustomerModal/>
         </Box>
       </HStack>
       { 
-      customers.length ?
+      customers ?
         Array.isArray(customers) ?
           <CreateQuoteCustomerList 
             customers={customers} 
