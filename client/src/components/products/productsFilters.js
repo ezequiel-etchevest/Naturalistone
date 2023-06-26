@@ -16,7 +16,7 @@ import PriceSlider from "./priceSlider";
 import { useLocation, useNavigate } from "react-router-dom";
 
 
-const ProductsFilters = ({allProducts, setFilteredProducts, values}) => {
+const ProductsFilters = ({setCurrentPage, values}) => {
 
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -42,6 +42,8 @@ const ProductsFilters = ({allProducts, setFilteredProducts, values}) => {
   })
   const [limit, setLimit] = useState([priceMin, priceMax])
 
+  console.log('soy values', values)
+
   const handleFinish = (e) => {
     const finish = e.target.value
     searchParams.set('finish', finish)
@@ -54,6 +56,7 @@ const ProductsFilters = ({allProducts, setFilteredProducts, values}) => {
       ...filters,
       finish
     })
+    setCurrentPage(1)
     dispatch(getFiltered(finish, filters.size, filters.thickness, filters.material, filters.search, filters.price))
   }
 
@@ -69,6 +72,7 @@ const ProductsFilters = ({allProducts, setFilteredProducts, values}) => {
       ...filters, 
       size
     })
+    setCurrentPage(1)
     dispatch(getFiltered(filters.finish, size, filters.thickness, filters.material, filters.search, filters.price))
   }
 
@@ -84,6 +88,7 @@ const ProductsFilters = ({allProducts, setFilteredProducts, values}) => {
       ...filters,
       thickness
     })
+    setCurrentPage(1)
     dispatch(getFiltered(filters.finish, filters.size, thickness, filters.material, filters.search, filters.price))
   }
 
@@ -99,7 +104,7 @@ const ProductsFilters = ({allProducts, setFilteredProducts, values}) => {
       ...filters,
       material: material
     })
-   
+    setCurrentPage(1)
     dispatch(getFiltered(filters.finish, filters.size, filters.thickness, material, filters.search, filters.price))
   }
   const handleClear = () => {
@@ -110,6 +115,7 @@ const ProductsFilters = ({allProducts, setFilteredProducts, values}) => {
     searchParams.delete('search')
     searchParams.delete('priceMin')
     searchParams.delete('priceMax')
+    searchParams.delete('page')
     navigate(`?${searchParams.toString()}`)
     setFilters({
       finish:'',
@@ -119,8 +125,9 @@ const ProductsFilters = ({allProducts, setFilteredProducts, values}) => {
       search:'',
       price: [values.priceMaxmin.min, values.priceMaxmin.max]
       })
-      dispatch(getFiltered('','','','', '','',''))
-      setLimit([values.priceMaxmin.min, values.priceMaxmin.max])
+    setCurrentPage(1)
+    dispatch(getFiltered('','','','', '','',''))
+    setLimit([values.priceMaxmin.min, values.priceMaxmin.max])
   }
 
   const handleChangeProductName = (e) => {
@@ -135,7 +142,8 @@ const ProductsFilters = ({allProducts, setFilteredProducts, values}) => {
         ...filters,
         search: e.target.value
       })
-      dispatch(getFiltered(filters.finish, filters.size, filters.thickness, filters.material, e.target.value, filters.price))
+    setCurrentPage(1)
+    dispatch(getFiltered(filters.finish, filters.size, filters.thickness, filters.material, e.target.value, filters.price))
     }
   useEffect(()=>{
       dispatch(

@@ -2,7 +2,7 @@ const express = require('express')
 const productsRouter = express.Router()
 const mysqlConnection = require('../db')
 const filterProducts = require('../Controllers/productFiltersController')
-const { prodValues, findMaxMinPrice } = require('../Controllers/productValues')
+const { prodValues, findMaxMinPrice, getSqftMaxMin } = require('../Controllers/productValues')
 const objetosFiltrados = require('../Controllers/inventoryController')
 const {getImage} = require('../Controllers/oneDriveProductImages')
 
@@ -136,9 +136,9 @@ productsRouter.get('/id/:id', async function(req, res){
 });
 
 productsRouter.get('/filtered', async function(req, res){
-    let { finish, size, thickness, material, search, price1, price2 } = req.query;
-    const min = price1 === '' ? 0 : price1
-    const max = price2 === '' ? 99999999 : price2
+    let { finish, size, thickness, material, search, sqft1, sqft2 } = req.query;
+    const sqftMin = sqft1 === '' ? 0 : sqft1
+    const sqftMax = sqft2 === '' ? 99999999 : sqft2
 
     const query = `
     SELECT    
@@ -150,7 +150,11 @@ productsRouter.get('/filtered', async function(req, res){
       Dimension.Thickness,
       Products.SalePrice AS Price,
       Products.ProdID,
-      Inventory.*
+      Inventory.*,
+    CASE
+      WHEN Dimension.Type = 'Tile' THEN Inventory.InStock_Available + Inventory.InComing_Available
+      WHEN Dimension.Type = 'Slab' THEN (Inventory.InStock_Available + Inventory.InComing_Available) * Dimension.SQFT_per_Slab
+    END AS sqft
     FROM Products
     INNER JOIN ProdNames ON ProdNames.ProdNameID = Products.ProdNameID
     INNER JOIN Dimension ON Dimension.DimensionID = Products.DimensionID
@@ -174,14 +178,6 @@ productsRouter.get('/filtered', async function(req, res){
         `AND (LOWER(ProdNames.Naturali_ProdName) LIKE LOWER('%${search}%'))`
       ) : (``)
     }
-    ${
-      (price1 === '' && price2 === '') ? (``) : (
-        `AND (
-          (Products.SalePrice IS NULL) OR
-          (Products.SalePrice >= ${min} AND Products.SalePrice <= ${max})
-        )`
-      )
-    }
     ORDER BY ProdNames.Naturali_ProdName ASC
     `;
   
@@ -189,18 +185,32 @@ productsRouter.get('/filtered', async function(req, res){
       mysqlConnection.query(query, function(error, results, fields) {
         if (error) throw error;
         if (results.length == 0) {
-
+          const sqftMinMax = getSqftMaxMin(results)
           let price = findMaxMinPrice(results);
-          let filteredValues = prodValues(results, search, price)
+          let filteredValues = prodValues(results, search, price, sqftMin, sqftMax, sqftMinMax)
           console.log('Error en productsRoutes.get /filtered');
+          results = results.sort((a, b) => {
+            const nameA = a.ProductName.toUpperCase();
+            const nameB = b.ProductName.toUpperCase();
+            if (nameA < nameB) return -1;
+            if (nameA > nameB) return 1;
+            return 0;
+          }) 
           res.status(200).json({results, errorSearch: 'No products found', filteredValues});
 
         } else {
-
+          const sqftMinMax = getSqftMaxMin(results)
           let price = findMaxMinPrice(results);
-          let filteredValues = prodValues(results, search, price)
+          let filteredValues = prodValues(results, search, price, sqftMin, sqftMax, sqftMinMax)
           let errorSearch = {}
-
+          results = results.sort((a, b) => {
+            const nameA = a.ProductName.toUpperCase();
+            const nameB = b.ProductName.toUpperCase();
+            if (nameA < nameB) return -1;
+            if (nameA > nameB) return 1;
+            return 0;
+          }) 
+          // console.log('soy filters', filteredValues)
           res.status(200).json({results, errorSearch, filteredValues});
 
         }
