@@ -6,25 +6,27 @@ import { getCustomerById } from "../../redux/actions-customers";
 import { getProjectById } from "../../redux/actions-projects";
 import { getInvoiceById } from "../../redux/actions-invoices";
 import { getComments } from "../../redux/actions-tasks";
+import { getSellers } from "../../redux/actions-sellers";
 
-const TaskDetail = ({activeCard}) => {
+const TaskDetail = ({activeCard, user}) => {
 
   const { taskID, Description, Title, Status, CompletedDate, CustomerID, ProjectID, InvoiceID } = activeCard 
-
+  const sellers = useSelector(state => state.sellers)
   const customer = useSelector(state => state.customer_by_id)
   const invoice = useSelector(state => state.invoice)
   const project = useSelector(state => state.project_by_id)
   const comments = useSelector(state => state.task_comments)
   const dispatch = useDispatch()
-  console.log(invoice)
+
   useEffect(()=>{
     if(CustomerID) dispatch(getCustomerById(CustomerID))
     if(ProjectID) dispatch(getProjectById(ProjectID))
     if(InvoiceID) dispatch(getInvoiceById(InvoiceID))
+    if(!sellers.length) dispatch(getSellers())
     dispatch(getComments(taskID))
-
   }, [activeCard])
-  
+    const seller = sellers.find(e => e.SellerID === activeCard.SellerID)
+
     return(
       <>
         <Box
@@ -45,11 +47,13 @@ const TaskDetail = ({activeCard}) => {
         >
         <Box display={'flex'} flexDir={'row'} justifyContent={'space-between'} alignContent={'baseline'}>
         <chakra.h1
+          display={'flex'}
+          flexDir={'row'}
           fontSize={'2xl'}
           textColor={'#E47424'}
           fontWeight={'normal'}
           maxH={'17vh'}
-          >{`#${taskID}`}
+          >{`#${taskID}`}<Text ml={'1vw'} textColor={'web.text2'}>{user[0].Secction7Flag === 1 ? `${seller.FirstName} ${seller.LastName}`: null}</Text>
         </chakra.h1>
         <Box>
           <Text 

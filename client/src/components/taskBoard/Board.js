@@ -139,7 +139,7 @@ const Board = ({setActiveCard, activeCard, user, filters, setFilters}) => {
                 Array.isArray(tasks) ? (
                   tasks?.map((task, i) =>{
                     return(
-                      <TaskCard task={task} key={i} setActiveCard={setActiveCard} activeCard={activeCard}/>
+                      <TaskCard user={user} task={task} key={i} setActiveCard={setActiveCard} activeCard={activeCard}/>
                     )
                   })
                 ):(

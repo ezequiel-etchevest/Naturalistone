@@ -26,7 +26,7 @@ const TaskBoardContainer = ({user}) => {
        <Board setActiveCard={setActiveCard} activeCard={activeCard} user={user} filters={filters} setFilters={setFilters}/>
        {
         activeCard ? (
-            <TaskDetail activeCard={activeCard}/>
+            <TaskDetail activeCard={activeCard} user={user}/>
         ):(
             <Center
             mt={'3vh'}

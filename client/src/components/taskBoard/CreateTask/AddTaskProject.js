@@ -1,23 +1,26 @@
 import { 
     Text,
-    IconButton,
-    Input,
-    Divider,
     HStack,
-    Box,
     Center,
-    Spinner 
+    Spinner, 
+    Box,
     } from "@chakra-ui/react"
-  import { useEffect, useState } from "react";
-  import { useDispatch, useSelector } from "react-redux";
-  import {BiSearch} from 'react-icons/bi'
   import '../../../assets/styleSheet.css'
   import { AddTaskProjectList } from "./AddTaskProjectList";
+import { CreateNewProject } from "../../customers/customerDetail/createProject";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { getCustomerById } from "../../../redux/actions-customers";
 
   const AddTaskProject = ({ setFormData, formData, setDisable}) =>{
-  
+  const dispatch = useDispatch()
   const projects = useSelector(state => state.projects_by_customer_id)
-  
+  const customer = useSelector(state => state.customer_by_id)
+  useEffect(()=>{
+    if(formData.CustomerID && !Object.entries(customer).length ){
+      dispatch(getCustomerById(formData.CustomerID))
+    }
+  }, [customer])
   return(
     <>
       <Text fontWeight={'semibold'}  ml={'1vw'} fontSize={'lg'}  color={'web.text2'} alignSelf={'flex-start'}>If you want to link a project, please select one from the list:</Text>
@@ -34,14 +37,26 @@ import {
         projects.length ?
           
           Array.isArray(projects) ?
+          <>
+            <Box display={'flex'} flexDir={'column'} >
+            <Box placeSelf={'end'}mr={'2vw'} display={'flex'} flexDir={'row'}>
+              <CreateNewProject customer={customer}/>
+            </Box>
             <AddTaskProjectList 
               projects={projects} 
               setFormData={setFormData}
               formData={formData}
               setDisable={setDisable}
               />
+            </Box>
+            </>
             :
-            <Text maxH={'50vh'} minH={'50vh'} display={'flex'} justifyContent={'center'} alignItems={'center'}>No customers match this filters</Text>
+            <>
+            <Box  maxH={'50vh'} minH={'50vh'} display={'flex'} flexDir={'column'} justifyContent={'center'} alignItems={'center'}>
+            <Text mb={'1vh'}>This customer does not have any assigned projects yet.</Text>
+            <CreateNewProject customer={customer}/>
+            </Box>
+            </>
           :
           <Center maxH={'50vh'} minH={'50vh'}>
             <Spinner thickness={'4px'} size={'xl'} color={'logo.orange'}/>

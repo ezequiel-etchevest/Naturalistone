@@ -9,8 +9,8 @@ tasksRouter.get('/all-tasks', async function(req, res){
     const { SellerID, Status } = req.query
 
     let query_ = `
-    SELECT Tasks.*
-    FROM Tasks
+    SELECT Tasks.*, Seller.* FROM Tasks
+    LEFT JOIN Seller ON Tasks.SellerID = Seller.SellerID
     ${
         Number(SellerID) !== 3 ? (
             `WHERE Tasks.SellerID = ${SellerID} AND Status = "${Status}"`
@@ -46,7 +46,8 @@ tasksRouter.get('/comments/:TaskID', async function(req, res){
         SELECT Task_Comments.*, Seller.*
         FROM Task_Comments
         LEFT JOIN Seller ON Task_Comments.By = Seller.SellerID
-        WHERE  Task_Comments.TaskID = ${TaskID}`;
+        WHERE  Task_Comments.TaskID = ${TaskID}
+        ORDER BY Task_Comments.Date DESC`;
     try{
         mysqlConnection.query(query_, function(error, results, fields){
             if(!results) res.status(400).json('error in comments tasks')

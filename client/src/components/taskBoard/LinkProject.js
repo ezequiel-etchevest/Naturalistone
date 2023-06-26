@@ -2,19 +2,15 @@ import { ButtonGroup, IconButton, Button, useToast, useDisclosure, FormLabel, Mo
 import { useEffect, useState } from "react";
 import { BiLinkAlt } from 'react-icons/bi';
 import { useDispatch, useSelector } from 'react-redux'
-import { AddTask } from "./CreateTask/AddTask";
-import AddTaskCustomer from "./CreateTask/AddTaskCustomer";
 import { linkItems } from "../../redux/actions-tasks";
 import { getProjectById, getCustomerProjects } from "../../redux/actions-projects";
 import AddTaskProject from "./CreateTask/AddTaskProject";
+import { getCustomerById } from "../../redux/actions-customers";
 
 export const LinkProjectModal = ({task, user, activeCard, setActiveCard}) => {
   
   const dispatch = useDispatch();
-  const toastId = 'error-toast'
-  const userLocal = JSON.parse(localStorage.getItem('user'))
   const { isOpen, onOpen, onClose } = useDisclosure()
-  const toast = useToast()
   const projects = useSelector(state => state.projects_by_customer_id)
   const [ formData, setFormData ] = useState({
     ProjectID: null,
@@ -36,6 +32,7 @@ export const LinkProjectModal = ({task, user, activeCard, setActiveCard}) => {
     dispatch(getCustomerProjects(activeCard.CustomerID))
     }
   },[projects])
+
   return(
     <>
       <ButtonGroup
