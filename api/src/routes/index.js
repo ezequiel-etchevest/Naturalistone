@@ -13,10 +13,10 @@ const projectsRouter = require('./projectsRoutes')
 const customersRouter = require('./customersRoutes')
 const onedriveRouter  = require('./pdfOneDriveRoutes.js')
 const statsRouter = require('./statsRoutes');
+const s3Router = require('./s3Routes')
+const tasksRouter = require('./tasksRoutes')
 const freightRouter = require('./freightRoutes')
-const s3Router = require('./s3Routes');
 const factoryRouter = require('./factoriesRoutes');
-
 const emailInvoiceRouter = require('./sendInvoiceEmail')
 const proformasRoutes = require('./proformasRoutes')
 
@@ -34,6 +34,7 @@ mainRouter.use('/api/projects', projectsRouter);
 mainRouter.use('/api/customers', customersRouter);
 mainRouter.use('/api/stats', statsRouter)
 mainRouter.use('/api/s3', s3Router)
+mainRouter.use('/api/tasks', tasksRouter)
 mainRouter.use('/api/factories', factoryRouter)
 mainRouter.use('/api/freight', freightRouter)
 mainRouter.use('/api/invoiceEmail', emailInvoiceRouter)

@@ -1,5 +1,5 @@
 import {	Box, Icon, Flex, Avatar, HStack, Text   } from '@chakra-ui/react';
-import { FaFileInvoiceDollar, FaHome, FaBoxOpen } from 'react-icons/fa';
+import { FaFileInvoiceDollar, FaHome, FaBoxOpen, FaTasks } from 'react-icons/fa';
 import { HiUsers} from 'react-icons/hi'
 import { IoMdBoat } from 'react-icons/io'
 import { CgLogOut } from 'react-icons/cg'
@@ -18,6 +18,7 @@ const LinkItems = [
   { name: 'Invoice-errors', icon: BiError },
   { name: 'Orders', icon: IoMdBoat },
   { name: 'Customers', icon: HiUsers },
+  { name: 'Task-Board', icon: FaTasks },
   { name: 'Freights', icon: GiCargoShip },
   { name: 'Log Out', icon: CgLogOut },
   ];
@@ -36,14 +37,14 @@ const SideBar = ({user, focus, setFocus}) => {
       borderRightWidth={'0.2vh'}
       borderColor={'web.border'}
 	    > 
-    <Box w={'13vw'} display={'flex'} alignItems={'center'} justifyContent={'space-evenly'} mt={'10vh'} mb={'4vh'}>
+    <Box w={'13vw'} display={'flex'} alignItems={'center'} justifyContent={'space-evenly'} mt={'10vh'} mb={'3vh'}>
       <Avatar
         boxSize={'2vw'}
         src={naturalipic}
         />
       <Text
       color={'web.text'} 
-      fontSize={'1.1vw'} 
+      fontSize={'1.1vw'}
       pl={'1vw'}> 
         {user[0].FirstName} {user[0].LastName}
       </Text>
@@ -111,8 +112,8 @@ const SideBar = ({user, focus, setFocus}) => {
         <Flex
           align="center"
           p={'1vh'}
-          mx={'2vh'}
-          
+          mr={'1vh'}
+          ml={'2vh'}
           role={"group"}
           cursor={"pointer"}
           _hover={{

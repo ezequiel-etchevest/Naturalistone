@@ -19,14 +19,10 @@ customersRouter.get('/', async function(req, res){
         `;
     try{
         mysqlConnection.query(query_, function(error, results, fields){
-            if(!results.length) {
-                console.log('Error al obtener data!')
-                res.status(200).json({});
-            } else {
                 console.log('Data OK')
                 if(!results.length) res.status(200).send('No match for this filters')
                 else res.status(200).json(results);
-            }
+            
         });
     } catch(error){
         res.status(409).send(error);
