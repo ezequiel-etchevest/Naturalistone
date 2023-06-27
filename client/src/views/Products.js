@@ -3,7 +3,7 @@ import SideBar from "../components/sideBar";
 import { Center, Spinner } from "@chakra-ui/react";
 import ProductsContainer from "../components/products/productsContainer";
 import { useDispatch, useSelector } from "react-redux";
-import { getFiltered, getProductImage } from '../redux/actions-products';
+import { cleanProductValue, getFiltered, getProductImage } from '../redux/actions-products';
 import { getEmployeeById } from "../redux/actions-employees";
 import Redirect from "./RedirectPage";
 import { useLocation } from "react-router-dom";
@@ -25,18 +25,22 @@ const Products = ({focus, setFocus}) => {
   const getParamsThickness = searchParams.get('thickness')
   const getParamsMaterial = searchParams.get('material')
   const getParamsSearch = searchParams.get('search')
-  const getParamsPriceMin = searchParams.get('priceMin')
-  const getParamsPriceMax = searchParams.get('priceMax')
-  const priceMin = getParamsPriceMin ? getParamsPriceMin : 0
-  const priceMax = getParamsPriceMax ? getParamsPriceMax : values?.priceMaxmin?.max
+  const getParamsSqftMin = searchParams.get('sqftMin')
+  const getParamsSqftMax = searchParams.get('sqftMax')
+  const getParamsType = searchParams.get('type')
+  const sqftMin = getParamsSqftMin ? getParamsSqftMin : values?.sqftMinMax?.min
+  const sqftMax = getParamsSqftMax ? getParamsSqftMax : values?.sqftMinMax?.max
   const [filters, setFilters] = useState({
     finish: getParamsFinish ? getParamsFinish : '',
     size: getParamsSize ? getParamsSize : '',
     thickness: getParamsThickness ? getParamsThickness : '',
     material: getParamsMaterial ? getParamsMaterial: '',
     search: getParamsSearch ? getParamsSearch : '',
-    price: [priceMin, priceMax]
+    sqft: [sqftMin, sqftMax],
+    type: getParamsType ? getParamsType : ''
   })
+
+  
   
   useEffect(()=>{
       if(userLocal && !user.length){
@@ -51,8 +55,8 @@ const Products = ({focus, setFocus}) => {
             filters.thickness,
             filters.material,
             filters.search,
-            filters.price,
-            filters.price
+            filters.sqft,
+            filters.type,
             ))
         },[allProducts, values, filters])
 

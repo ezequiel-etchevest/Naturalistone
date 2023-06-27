@@ -8,11 +8,6 @@ import { useLocation } from "react-router-dom"
 const ProductsContainer = ({ allProducts, user, values }) => {
 
     const [filteredProducts, setFilteredProducts] = useState([])
-    const location = useLocation()
-    const queryString = location.search;
-    const url = new URLSearchParams(queryString);
-    const getParamsPage = url.get('page')
-    const [currentPage, setCurrentPage] = useState(getParamsPage ? getParamsPage : 1)
 
     if(Object.entries(values).length){
         return(
@@ -25,14 +20,12 @@ const ProductsContainer = ({ allProducts, user, values }) => {
                 allProducts={allProducts}
                 setFilteredProducts={setFilteredProducts}
                 values={values}
-                setCurrentPage={setCurrentPage}
                 />
                 <ProductList 
                 allProducts={allProducts}
                 filteredProducts={filteredProducts}
                 user={user}
-                currentPage={currentPage}
-                setCurrentPage={setCurrentPage}/>
+                />
             </Box>
             </Box>
         )

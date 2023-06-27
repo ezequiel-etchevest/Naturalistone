@@ -10,10 +10,9 @@ import {
   useToast,
   Switch,
   Text,
-  Center,
-  Button
+  Center
 } from '@chakra-ui/react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getProductById } from '../../redux/actions-products';
 import { useEffect, useState } from 'react';
@@ -77,6 +76,7 @@ const handleClickSwitch = () => {
       )}
     <Td maxH={'6vh'} maxW={'3vw'} onClick={() => handleClickProduct()} fontSize={'xs'} textAlign={'match-parent'}>{e.ProductName}</Td>
     <Td maxH={'6vh'} maxW={'6vw'} onClick={() => handleClickProduct()} fontSize={'xs'} textAlign={'center'}>{e.Material}</Td>
+    <Td maxH={'6vh'} maxW={'6vw'} onClick={() => handleClickProduct()} fontSize={'xs'} textAlign={'center'}>{e.Type}</Td>
     <Td maxH={'6vh'} maxW={'3vw'} onClick={() => handleClickProduct()} fontSize={'xs'} textAlign={'center'}>{e.Size}</Td>
     <Td maxH={'6vh'} maxW={'2vw'} onClick={() => handleClickProduct()} fontSize={'xs'} textAlign={'center'}> {e.Thickness === null ? 'N/A' : e.Thickness} </Td>
     <Td maxH={'6vh'} maxW={'3vw'} onClick={() => handleClickProduct()} fontSize={'xs'} textAlign={'center'}> {e.Finish === null ? 'N/A' : e.Finish} </Td>
@@ -89,24 +89,14 @@ const handleClickSwitch = () => {
 )
 }
 
-const ProductList = ({ allProducts, user, currentPage, setCurrentPage, filters }) => {
+const ProductList = ({ allProducts, user }) => {
 
 const productErrors = useSelector((state) => state.products_errors);
 const toast = useToast();
+const [initialCount] = useState(20);
+const [batchCount] = useState(15);
+const [loadedCount, setLoadedCount] = useState(initialCount);
 const toastId = 'error_products'
-const [productsPerPage] = useState(20);
-const navigate = useNavigate()
-const searchParams = new URLSearchParams()
-const location = useLocation()
-const queryString = location.search;
-const url = new URLSearchParams(queryString);
-const getParamsFinish = url.get('finish')
-const getParamsSize = url.get('size')
-const getParamsThickness = url.get('thickness')
-const getParamsMaterial = url.get('material')
-const getParamsSearch = url.get('search')
-const getParamsPriceMin = url.get('priceMin')
-const getParamsPriceMax = url.get('priceMax')
 
 const validateToast = () => {
   if (Object.entries(productErrors).length) {
@@ -123,47 +113,34 @@ const validateToast = () => {
   }
 };
 
-const totalPages = Math.ceil(allProducts.length / productsPerPage);
+const handleScroll = () => {
+  const container = document.getElementById('scroll-container'); // Reemplaza 'scroll-container' con el ID de tu contenedor de desplazamiento
+  const { scrollTop, clientHeight, scrollHeight } = container;
 
-const handleNextPage = () => {
-  if (currentPage < totalPages) {
-    setCurrentPage((prevPage) => prevPage + 1);
+  if (scrollTop + clientHeight >= scrollHeight - 20) {
+    // El usuario ha llegado al final, carga más productos
+    setLoadedCount(prevCount => prevCount + batchCount);
   }
-  searchParams.set('size', getParamsSize ?? '')
-  searchParams.set('finish', getParamsFinish ?? '')
-  searchParams.set('thickness', getParamsThickness ?? '')
-  searchParams.set('material', getParamsMaterial ?? '')
-  searchParams.set('search', getParamsSearch ?? '')
-  searchParams.set('page', currentPage + 1)
-  navigate(`?${searchParams.toString()}`)
 };
+useEffect(() => {
+  
+  const container = document.getElementById('scroll-container'); // Reemplaza 'scroll-container' con el ID de tu contenedor de desplazamiento
+  container.addEventListener('scroll', handleScroll);
 
-const handlePrevPage = () => {
-  if (currentPage > 1) {
-    setCurrentPage((prevPage) => prevPage - 1);
-  }
-  searchParams.set('size', getParamsSize ?? '')
-  searchParams.set('finish', getParamsFinish ?? '')
-  searchParams.set('thickness', getParamsThickness ?? '')
-  searchParams.set('material', getParamsMaterial ?? '')
-  searchParams.set('search', getParamsSearch ?? '')
-  searchParams.set('page', currentPage - 1)
-  navigate(`?${searchParams.toString()}`)
-};
+  return () => {
+    container.removeEventListener('scroll', handleScroll);
+  };
+}, [batchCount]);
 
 useEffect(() => {
   validateToast();
 }, [allProducts]);
 
-const indexOfLastProduct = currentPage * productsPerPage;
-const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
-const currentProducts = allProducts.slice(indexOfFirstProduct, indexOfLastProduct);
-
-
 return (
   <Box userSelect={'none'} display={'flex'} justifyContent={'center'} h={'69vh'} w={'82.8vw'} ml={'1vh'}>
     <Box
-      maxHeight={'60vh'}
+      id='scroll-container'
+      maxHeight={'67vh'}
       overflow={'auto'}
       css={{
         '&::-webkit-scrollbar': {
@@ -182,7 +159,7 @@ return (
       border={'1px solid'}
       rounded={'md'}
       p={'3vh'}
-      w={'80vw'}
+      w={'82vw'}
     >
       {
       allProducts.length ? (
@@ -193,6 +170,9 @@ return (
                 <Th fontSize={'0.8vw'} color={'web.text2'}></Th>
                 <Th fontSize={'0.8vw'} color={'web.text2'}>
                   Product Name
+                </Th>
+                <Th fontSize={'0.8vw'} color={'web.text2'} textAlign={'center'}>
+                  Material Type
                 </Th>
                 <Th fontSize={'0.8vw'} color={'web.text2'} textAlign={'center'}>
                   Type
@@ -223,11 +203,11 @@ return (
                 </Th>
               </Tr>
             </Thead>
-            <Tbody>
-                {currentProducts.map((e, i) => {
-                  return <ModelTr key={i} e={e} user={user} />;
-                })}
-              </Tbody>
+            <Tbody >
+              {allProducts.slice(0, loadedCount).map((e, i) => {
+                return <ModelTr key={i} e={e} user={user} allProducts={allProducts} loadedCount={loadedCount}/>;
+              })}
+            </Tbody>
           </Table>
         </TableContainer>
       ) : (
@@ -237,41 +217,6 @@ return (
           </Text>
         </Center>
       )}
-          <Box mt={4} display="flex" justifyContent="center">
-          <Button
-            onClick={handlePrevPage}
-            disabled={currentPage === 1}
-            variant="outline"
-            _hover={{
-              color: 'logo.orange',
-              fontWeight: 'normal'
-              }}
-            color={'web.text2'}
-            borderColor={'none'}
-            mr={2}
-            _active={'none'}
-          >
-            Back
-          </Button>
-          <Box
-          p={'8px'}>
-            <Text color={'web.text2'}> Page: {currentPage}</Text>
-          </Box>
-          <Button
-            onClick={handleNextPage}
-            disabled={currentPage === totalPages}
-            variant="outline"
-            _hover={{
-              color: 'logo.orange',
-              fontWeight: 'normal'
-              }}
-            color={'web.text2'}
-            borderColor={'none'}
-            _active={'none'}
-          >
-            Next
-          </Button>
-        </Box>
     </Box>
   </Box>
 );

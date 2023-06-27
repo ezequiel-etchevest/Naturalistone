@@ -34,7 +34,7 @@ import {
     GET_PRODUCT_IMAGES,
     GET_PRODUCT_IMAGE,
     CLEAN_PRODUCT_DETAIL,
-    GET_PRODUCTS_NEW_QUOTE
+    GET_PRODUCTS_NEW_QUOTE,
      } from './actions-products';
 import { 
   GET_CURRENT_MONTH,
@@ -456,7 +456,6 @@ function rootReducer (state = intialState, action) {
                     [action.payload.prodName]: action.payload.url
                   }
                 }   
-          
         // case GET_PRODUCT_IMAGE:
         //   return{
         //     ...state,

@@ -1,4 +1,4 @@
-const prodValues = (arr, search, price, sqftMin, sqftMax, sqftMinMax) => {
+const prodValues = (arr, search, price, sqft, sqftMin, sqftMax) => {
 
 function getUniqueFinishes(arr) {
     let finishes = arr.map(obj => obj.Finish === null ? obj.Finish = 'N/A' : obj.Finish);
@@ -18,21 +18,21 @@ const materialsValues = (arr) => {
     const materials = arr.map(item => item.Material);
     return [...new Set(materials)];
   };
-const sqftValues = (arr) => {
-  const sqftFilter = arr.filter(item => item.sqft > sqftMin && item.sqft < sqftMax)
-  return [...new Set(sqftFilter)];
+const typesValues = (arr) => {
+  const types = arr.map(item => item.Type);
+  return [...new Set(types)]
 }
+
 
   let finishValues = getUniqueFinishes(arr)
   let priceMaxmin = price
-  let minMaxsqft = sqftMinMax
+  let sqftMinMax = sqft
   let sizes = getUniqueSizes(arr)
   let thickness = thicknessValues(arr)
   let materials = materialsValues(arr)
-  let sqftFilters = sqftValues(arr)
+  let types = typesValues(arr)
 
-
-  return {finishValues, priceMaxmin, sizes, thickness, materials, search, sqftFilters, minMaxsqft}
+  return {finishValues, priceMaxmin, sizes, thickness, materials, search, types, sqftMinMax}
 }
 
 function findMaxMinPrice(arr) {
@@ -62,5 +62,6 @@ function getSqftMaxMin(products) {
     max: sqft[sqft.length -1].sqft
   }
 }
+
 module.exports = {prodValues, findMaxMinPrice, getSqftMaxMin}
   

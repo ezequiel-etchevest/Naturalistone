@@ -136,7 +136,7 @@ productsRouter.get('/id/:id', async function(req, res){
 });
 
 productsRouter.get('/filtered', async function(req, res){
-    let { finish, size, thickness, material, search, sqft1, sqft2 } = req.query;
+    let { finish, size, thickness, material, search, sqft1, sqft2, type} = req.query;
     const sqftMin = sqft1 === '' ? 0 : sqft1
     const sqftMax = sqft2 === '' ? 99999999 : sqft2
 
@@ -148,6 +148,7 @@ productsRouter.get('/filtered', async function(req, res){
       Dimension.Size,
       Dimension.Finish,
       Dimension.Thickness,
+      Dimension.SQFT_per_Slab,
       Products.SalePrice AS Price,
       Products.ProdID,
       Inventory.*,
@@ -163,6 +164,9 @@ productsRouter.get('/filtered', async function(req, res){
     
     ${
       material.length ? (`AND (ProdNames.Material = "${material}")`) : (``)
+    }
+    ${
+      type.length ? (`AND (Dimension.Type = "${type}")`) : (``)
     }
     ${
       finish.length ? (`AND (Dimension.Finish = "${finish}")`) : (``)
@@ -187,7 +191,7 @@ productsRouter.get('/filtered', async function(req, res){
         if (results.length == 0) {
           const sqftMinMax = getSqftMaxMin(results)
           let price = findMaxMinPrice(results);
-          let filteredValues = prodValues(results, search, price, sqftMin, sqftMax, sqftMinMax)
+          let filteredValues = prodValues(results, search, price, sqftMinMax)
           console.log('Error en productsRoutes.get /filtered');
           results = results.sort((a, b) => {
             const nameA = a.ProductName.toUpperCase();
@@ -201,8 +205,11 @@ productsRouter.get('/filtered', async function(req, res){
         } else {
           const sqftMinMax = getSqftMaxMin(results)
           let price = findMaxMinPrice(results);
-          let filteredValues = prodValues(results, search, price, sqftMin, sqftMax, sqftMinMax)
+          let filteredValues = prodValues(results, search, price, sqftMinMax, sqftMin, sqftMax)
           let errorSearch = {}
+          if(sqftMin > 0 || sqftMax < 99999999) {
+            results = results.filter(item => item.sqft > sqftMin && item.sqft < sqftMax)
+          }
           results = results.sort((a, b) => {
             const nameA = a.ProductName.toUpperCase();
             const nameB = b.ProductName.toUpperCase();
@@ -210,7 +217,8 @@ productsRouter.get('/filtered', async function(req, res){
             if (nameA > nameB) return 1;
             return 0;
           }) 
-          // console.log('soy filters', filteredValues)
+          console.log('soy results', results)
+          console.log('filters', filteredValues)
           res.status(200).json({results, errorSearch, filteredValues});
 
         }
