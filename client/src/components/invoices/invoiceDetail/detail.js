@@ -1,4 +1,4 @@
-import { Box, Text } from '@chakra-ui/react';
+import { Box, Text, Center, Spinner } from '@chakra-ui/react';
 import InvoiceProductList from './invoiceProductList';
 import InvoiceDetailList from './invoiceDetailsList';
 import PaymentList from './PaymentList';
@@ -15,6 +15,7 @@ const Detail = ({invoice, payments, invoice_products, user, deliveries, windowWi
 
   const { id } = useParams()
   const dispatch = useDispatch()
+  
     useEffect(()=>{
       if(Object.entries(payments).length === 0) dispatch(getPayments(id))
     },[payments])
@@ -74,7 +75,9 @@ const Detail = ({invoice, payments, invoice_products, user, deliveries, windowWi
             invoice_products.length ? (
               <InvoiceProductList invoice_products={invoice_products} invoice={invoice} />
             ) : (
-              <Text color={'web.text'}> No products linked to this invoice</Text>
+              <Center h={'35vh'}>
+                <Spinner thickness={'4px'} size={'xl'} color={'logo.orange'}/>
+              </Center>
             )
           }
         </Box>

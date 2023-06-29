@@ -28,7 +28,7 @@ const InvoiceDetail = ({focus, setFocus}) => {
       dispatch(getInvoiceProducts(id))
       dispatch(getDeliveriesNotes(id))
     },[])
-      
+
   useEffect(()=>{
       if(userLocal && !user.length){
       dispatch(getEmployeeById(userLocal.SellerID))}

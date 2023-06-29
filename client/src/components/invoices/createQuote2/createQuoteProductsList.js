@@ -16,9 +16,10 @@ import {
     NumberInputStepper
   } from '@chakra-ui/react';
   import { useEffect, useState } from 'react';
+import { formatProducts } from '../../../utils/formatedProducts';
 
 
-const ModelTr = ({e, formData, setFormData}) => {
+const ModelTr = ({e, formData, setFormData, setDisable}) => {
   let id = e.ProdID
 
 const handleAuthFlag = (event) =>{
@@ -48,6 +49,7 @@ const handleInput = (event) => {
             },
           },
         }));
+      setDisable(false)
       } else {
         setFormData((prevFormData) => {
           const { [id]: value, ...updatedProducts } = prevFormData.products;
@@ -56,9 +58,10 @@ const handleInput = (event) => {
             products: updatedProducts,
           };
         });
+      setDisable(true)
       }
     };
-    
+
   return(
     <Tr       
       cursor={'pointer'} 
@@ -108,9 +111,11 @@ const handleInput = (event) => {
   )
 }
 
-const CreateQuoteProductsList = ({ allProducts, allProductsErrors, formData, setFormData }) => {
+const CreateQuoteProductsList = ({ allProducts, allProductsErrors, formData, setFormData, filterProducts, invoice_products, setDisable }) => {
   
-  
+  const productKeys = Object.keys(formData.products);
+  const filteredProducts = allProducts.filter((product) => productKeys.includes(String(product.ProdID)));
+
   const [initialCount] = useState(12);
   const [batchCount] = useState(14);
   const [loadedCount, setLoadedCount] = useState(initialCount);
@@ -134,6 +139,12 @@ const CreateQuoteProductsList = ({ allProducts, allProductsErrors, formData, set
     };
   }, [batchCount]);
 
+  useEffect(() => {
+    setFormData({
+      ...formData,
+      products: formatProducts(invoice_products)
+    })
+  }, []);
 
   return(
     <Box
@@ -146,7 +157,7 @@ const CreateQuoteProductsList = ({ allProducts, allProductsErrors, formData, set
       overflow={'auto'}
       css={{
         '&::-webkit-scrollbar': {
-          width: '0.4vw',
+          width: '0.2vw',
         },
         '&::-webkit-scrollbar-track': {
           width: '6px',
@@ -162,33 +173,66 @@ const CreateQuoteProductsList = ({ allProducts, allProductsErrors, formData, set
       p={'1vh'}
       >
         {
-        allProducts.length ? 
-        <TableContainer  mr={'0.5vw'}  ml={'0.5vw'}>
-          <Table color={'web.text'} variant={'simple'} size={'sm'}>
-            <Thead h={'6vh'}>
-              <Tr>  
-                <Th color={'web.text2'} fontSize={'2xs'} textAlign={'center'}>Quantities</Th>
-                <Th color={'web.text2'} fontSize={'2xs'} >Product Name</Th>
-                <Th color={'web.text2'} fontSize={'2xs'} textAlign={'center'}>Type</Th>
-                <Th color={'web.text2'} fontSize={'2xs'} textAlign={'center'}>Size</Th>
-                <Th color={'web.text2'} fontSize={'2xs'} textAlign={'center'}>Thickness</Th>
-                <Th color={'web.text2'} fontSize={'2xs'} w={'10vw'} textAlign={'center'}>Finish</Th>
-                <Th color={'web.text2'} fontSize={'2xs'} isNumeric>Price</Th>
-                <Th color={'web.text2'} fontSize={'2xs'} textAlign={'center'}>In Stock</Th>
-                <Th color={'web.text2'} fontSize={'2xs'} textAlign={'center'}>Incoming</Th>
-              </Tr>
-            </Thead>
-            <Tbody>
-              {
-                allProducts.slice(0, loadedCount).map((e, i) => {
-                  return(
-                    <ModelTr key={i} e={e} setFormData={setFormData} formData={formData} />
-                  )
-                })
-              }
-            </Tbody>
-          </Table>
-        </TableContainer>
+        allProducts.length ?
+          filterProducts === "All" ?
+            <TableContainer  mr={'0.5vw'}  ml={'0.5vw'}>
+              <Table color={'web.text'} variant={'simple'} size={'sm'}>
+                <Thead h={'6vh'}>
+                  <Tr>  
+                    <Th color={'web.text2'} fontSize={'2xs'} textAlign={'center'}>Quantities</Th>
+                    <Th color={'web.text2'} fontSize={'2xs'} >Product Name</Th>
+                    <Th color={'web.text2'} fontSize={'2xs'} textAlign={'center'}>Type</Th>
+                    <Th color={'web.text2'} fontSize={'2xs'} textAlign={'center'}>Size</Th>
+                    <Th color={'web.text2'} fontSize={'2xs'} textAlign={'center'}>Thickness</Th>
+                    <Th color={'web.text2'} fontSize={'2xs'} w={'10vw'} textAlign={'center'}>Finish</Th>
+                    <Th color={'web.text2'} fontSize={'2xs'} isNumeric>Price</Th>
+                    <Th color={'web.text2'} fontSize={'2xs'} textAlign={'center'}>In Stock</Th>
+                    <Th color={'web.text2'} fontSize={'2xs'} textAlign={'center'}>Incoming</Th>
+                  </Tr>
+                </Thead>
+                <Tbody>
+                  {
+                    allProducts.slice(0, loadedCount).map((e, i) => {
+                      return(
+                        <ModelTr key={i} e={e} setFormData={setFormData} formData={formData} setDisable={setDisable}/>
+                      )
+                    })
+                  }
+                </Tbody>
+              </Table>
+            </TableContainer>
+          :
+          Object.entries(formData.products).length ? 
+            <TableContainer  mr={'0.5vw'}  ml={'0.5vw'}>
+              <Table color={'web.text'} variant={'simple'} size={'sm'}>
+                <Thead h={'6vh'}>
+                  <Tr>  
+                    <Th color={'web.text2'} fontSize={'2xs'} textAlign={'center'}>Quantities</Th>
+                    <Th color={'web.text2'} fontSize={'2xs'} >Product Name</Th>
+                    <Th color={'web.text2'} fontSize={'2xs'} textAlign={'center'}>Type</Th>
+                    <Th color={'web.text2'} fontSize={'2xs'} textAlign={'center'}>Size</Th>
+                    <Th color={'web.text2'} fontSize={'2xs'} textAlign={'center'}>Thickness</Th>
+                    <Th color={'web.text2'} fontSize={'2xs'} w={'10vw'} textAlign={'center'}>Finish</Th>
+                    <Th color={'web.text2'} fontSize={'2xs'} isNumeric>Price</Th>
+                    <Th color={'web.text2'} fontSize={'2xs'} textAlign={'center'}>In Stock</Th>
+                    <Th color={'web.text2'} fontSize={'2xs'} textAlign={'center'}>Incoming</Th>
+                  </Tr>
+                </Thead>
+                <Tbody>
+                  {
+                    filteredProducts.map((e, i) => {
+                      return(
+                        <ModelTr key={i} e={e} setFormData={setFormData} formData={formData} setDisable={setDisable} />
+                      )
+                    })
+                  }
+                </Tbody>
+              </Table>
+            </TableContainer>
+            :
+            <Center w={'full'} h={'full'}>
+              <Text userSelect={'none'} fontSize={'2vh'}>No current products selected yet</Text>
+            </Center>   
         :
         (
           <Center w={'full'} h={'full'}>

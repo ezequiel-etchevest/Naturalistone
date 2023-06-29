@@ -36,6 +36,7 @@ import {
       <Tr 
       cursor={'pointer'} 
       key={e.FactoryID}
+      ml={'1vw'}
       _hover={{
         bg: 'web.navBar',
         color: 'logo.orange'
@@ -44,9 +45,8 @@ import {
         bg={e.FactoryID === formData.factory.FactoryID ? 'web.navBar' : 'unset'}
         onClick={() => handleClick(e)}
       >
-        <Td fontSize={'xs'}  w={'4vw'}>{e.FactoryID}</Td>
+        <Td fontSize={'xs'} textAlign={'-moz-initial'} w={'16vw'}>{e.Factory_Name ? e.Factory_Name : '-'}</Td>
         <Td fontSize={'xs'} textAlign={'center'}>{e.Reference ? e.Reference : '-'}</Td>
-        <Td fontSize={'xs'} textAlign={'center'}>{e.Factory_Name ? e.Factory_Name : '-'}</Td>
         <Td fontSize={'xs'} textAlign={'center'}>{e.Phone ? e.Phone : '-'}</Td>
         <Td fontSize={'xs'} textAlign={'center'}>{e.Email ? e.Email : '-'}</Td>
         <Td fontSize={'xs'} textAlign={'center'}>{e.WebSite ? e.WebSite : '-'}</Td>
@@ -113,10 +113,9 @@ import {
           <TableContainer >
             <Table color={'web.text'}variant={'simple'} size={'sm'}>
               <Thead h={'3vh'}>
-                <Tr>
-                    <Th color={'web.text2'} textAlign={'center'} w={'4vw'} fontSize={'x-small'}>IDs</Th>
+                <Tr >
+                    <Th color={'web.text2'} textAlign={'justify'} fontSize={'x-small'}>Factory Name</Th>
                     <Th color={'web.text2'} textAlign={'center'} fontSize={'x-small'}>Reference</Th>
-                    <Th color={'web.text2'} textAlign={'center'} fontSize={'x-small'} w={'24vw'}>Factory Name</Th>
                     <Th color={'web.text2'} textAlign={'center'} fontSize={'x-small'} w={'24vw'}>Phone</Th>
                     <Th color={'web.text2'} textAlign={'center'} fontSize={'x-small'} w={'24vw'}>Email</Th>
                     <Th color={'web.text2'} textAlign={'center'} fontSize={'x-small'} w={'24vw'}>WebSite</Th>

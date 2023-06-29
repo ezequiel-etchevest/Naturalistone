@@ -350,3 +350,50 @@ export const validateCompletedInputsEditCustomer = (formData) =>{
 
   return errors
 }
+
+export const validateEmptyFactory = (formData, progress) => {
+  let errors = {}
+
+  if(progress === 25){
+    if(!formData.Factory_Name){
+      errors.Factory_Name = 'Please enter factory name'
+      }
+    if(!formData.Phone){
+      errors.Phone = 'Please enter phone number'
+    }
+    if(!formData.Email){
+      errors.Email = 'Please enter email address'
+    }
+    if(!formData.International_Flag){
+      errors.International_Flag = 'Please enter Y (yes) or N (no) for international factory'
+    }
+    return errors  
+  }
+}
+export const validateCompletedInputsFactory = (formData) =>{
+  let errors = {}
+  const regexNoNumber = /^[a-zA-Z\s!"#$%&'()*+,\-./:;<=>?@\[\\\]^_`{|}~]*$/;
+  const regexNumberAndPlus = /^[\d+()\[\]-\s]*$/;
+  const regexNumber = /^[0-9]+$/;
+  const regexYN = /^[YN]$/;
+  const regexEmail = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
+  
+
+  if(formData.Phone !== ''){
+    if(!regexNumberAndPlus.test(formData.Phone)) {
+      errors.Phone = 'Please enter a valid Phone'
+    } 
+  }
+  if(formData.Email !== ''){
+    if(!regexEmail.test(formData.Email)){
+      errors.Email = 'Please enter a valid email'
+    }
+  }
+  if(formData.International_Flag !== ''){
+    if(!regexYN.test(formData.International_Flag)){
+      errors.International_Flag = 'Please enter Y (yes) or N (no) for international factory'
+    }
+  }
+
+  return errors
+}

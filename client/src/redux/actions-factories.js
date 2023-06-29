@@ -23,7 +23,8 @@ export function addFactory(factory){
   return async function(dispatch){
     try{
         let {} = await axios.post(`/factories`, factory)
-        const data =  await axios.get(`/factories?search=${''}`)
+        const {data} =  await axios.get(`/factories?search=${''}`)
+        console.log(data)
         dispatch(
             {
                 type:POST_FACTORY,

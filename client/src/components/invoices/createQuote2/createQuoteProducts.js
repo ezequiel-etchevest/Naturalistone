@@ -16,7 +16,7 @@ import {AiOutlineClear} from 'react-icons/ai';
 import '../../../assets/styleSheet.css'
 import CreateQuoteProductsList from "./createQuoteProductsList";
 
-const CreateQuoteProducts = ({formData, setFormData}) => {
+const CreateQuoteProducts = ({formData, setFormData, invoice_products, setDisable}) => {
 
 const dispatch = useDispatch()
 const toast = useToast()
@@ -25,11 +25,15 @@ const allProductsErrors = useSelector(state => state.products_new_quote_errors)
 const productErrors = useSelector((state) => state.products_errors)
 const values = useSelector(state => state.products_new_quote_values)
 
+
+
 const [filters, setFilters] = useState({
   finish:'',
   material: '',
-  search:'',
+  search:''
 })
+
+const [filterProducts, setFilterProducts]= useState('All')
 
 const handleFinish = (e) => {
   setFilters({
@@ -60,10 +64,14 @@ const handleClear = () => {
     finish:'',
     material:'',
     search:''
-    }) 
+    })
+  setFilterProducts('All')   
     dispatch(getAllProductsNewQuote( '','',''))
 }
 
+const handleProducts = (e) => {
+  setFilterProducts(e.target.value)
+}
 
 return(
 <>
@@ -77,10 +85,30 @@ return(
       mr={'1.2vw'}
       >
       <Select
-        onChange={(e)=>handleMaterial(e)}
         mb={'0.5vh'}
         mr={'2vw'}
         w={'9vw'}             
+        minH={'5.5vh'}
+        variant="unstyled"
+        textColor={'web.text2'}
+        _placeholder={{ fontFamily: 'body', fontWeight: 'inherit', textColor: 'inherit' }}
+        size={"sm"}
+        borderBottomWidth={"2px"}
+        borderBottomColor={'web.text2'}
+        _hover={{borderColor: 'web.border'}}
+        cursor={'pointer'}
+        name={'products'}
+        onChange={(e)=>handleProducts(e)}
+        value={filterProducts}
+      >
+        <option value='All' className="options">All</option>
+        <option value='Current' className="options">Current</option>
+      </Select>
+      <Select
+        onChange={(e)=>handleMaterial(e)}
+        mb={'0.5vh'}
+        mr={'2vw'}
+        w={'10vw'}             
         minH={'5.5vh'}
         variant="unstyled"
         textColor={'web.text2'}
@@ -163,10 +191,11 @@ return(
         mt={'3.3vh'}
         _active={{ color: 'gray.800'}}
       />
-      <Divider orientation={'vertical'} h={'5vh'} ml={'1vw'}mr={'1vw'}/>
+      <Divider orientation={'vertical'} h={'5vh'} ml={'1vw'}mr={'1vw'} pt={'2vh'}/>
       <Tooltip placement={'bottom-start'} label={'Clear all filters'} fontWeight={'hairline'}>      
       <IconButton
         icon={ <AiOutlineClear/>}
+        pt={'2.2vh'}
         variant={'unstyled'} 
         display={'flex'} 
         borderRadius={'sm'} 
@@ -183,7 +212,7 @@ return(
       </IconButton>
   </Tooltip> 
     </Box>          
-    <CreateQuoteProductsList allProducts={allProducts} allProductsErrors={allProductsErrors} formData={formData} setFormData={setFormData}/>
+    <CreateQuoteProductsList allProducts={allProducts} allProductsErrors={allProductsErrors} formData={formData} setFormData={setFormData} filterProducts={filterProducts} invoice_products={invoice_products} setDisable={setDisable}/>
   </Box> 
 </>
 )}
