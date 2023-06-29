@@ -8,6 +8,7 @@ const uniqueFormatNames = require('../Controllers/quotesValues')
 const invoicesFilters = require('../Controllers/invoicesFilters')
 const sendInvoiceEmail = require('../utils/email');
 const { year, month0, day0 } = require('../todayDate');
+const {updateProducts, buildUpdateValuesQuery} = require('../Controllers/updateProductsSales');
 
 
 
@@ -462,15 +463,11 @@ salesRouter.get('/customer/:id', async function(req, res){
   }
 });
 
-salesRouter.patch('/sales-update/:id', async function(req, res){
 
-  const {id} = req.params
-  const { project, products, variables } = req.body.formData
-  const { SellerID } = req.body
-  const { idProjects } = project
-  const { estDelivDate, shipVia, paymentTerms, method } = variables
-  const LastInsertDate = `${year}-${month0}-${day0}` 
-  const ModificationFlag = true
+
+salesRouter.patch('/sales-update-products/:id', async function(req, res) {
+  const { id } = req.params;
+  const { products } = req.body.formData;
 
   const parsedProducts = Object.entries(products)
     .flat()
@@ -479,17 +476,157 @@ salesRouter.patch('/sales-update/:id', async function(req, res){
 
   const Value = parsedProducts.reduce((acc, curr) => acc + curr.quantity * curr.price, 0);
 
-  const salesQuery = 'UPDATE Sales SET ' + buildUpdateValuesQuery(SellerID, idProjects, LastInsertDate, estDelivDate, shipVia, ModificationFlag, paymentTerms, method, Value) + ` WHERE Naturali_Invoice = ${id}`;
+  mysqlConnection.beginTransaction(function(err) {
+    if (err) {
+      console.log('Error starting transaction: ' + err);
+      throw err;
+    }
 
-  // const prodSoldQuery = `UPDATE NaturaliStone.ProdSold SET  SaleID, ProdID, Quantity, SalePrice VALUES ?`;
-  const prodSoldQuery = `SELECT * FROM ProdSold WHERE ProdSold.SaleID = ${id}`
-  const prodSoldValues = parsedProducts.map((product) => [Naturali_Invoice, product.prodID, product.quantity, product.price]);
+    const prodSoldQuery = `SELECT * FROM ProdSold WHERE ProdSold.SaleID = ${id}`;
+
+    mysqlConnection.query(prodSoldQuery, async function(error, prodSoldResult, fields) {
+      if (error) {
+        console.log('Error retrieving ProdSold data: ' + error);
+        return mysqlConnection.rollback(function() {
+          throw error;
+        });
+      }
+
+      const queryProducts = updateProducts(prodSoldResult, parsedProducts);
+
+      if (queryProducts.updateQuantity.length) {
+        const updateQuantityStatements = queryProducts.updateQuantity.map((product) => {
+          const { quantity, prodID } = product;
+          return `UPDATE ProdSold SET Quantity = ${quantity} WHERE ProdID = ${prodID} AND SaleID = ${id}`;
+        });
+
+        updateQuantityStatements.forEach((updateStatement) => {
+          mysqlConnection.query(updateStatement, function(error, updateResult, fields) {
+            if (error) {
+              console.log('Error updating product: ' + error);
+              return mysqlConnection.rollback(function() {
+                throw error;
+              });
+            }
+            console.log('Updated product successfully 1');
+          });
+        });
+      }
+
+      if (queryProducts.updateStatusQuantity.length) {
+        const updateStatusQuantityStatements = queryProducts.updateStatusQuantity.map((product) => {
+          const { quantity, prodID } = product;
+          return `UPDATE ProdSold SET Quantity = ${quantity}, Status = "Pending" WHERE ProdID = ${prodID} AND SaleID = ${id}`;
+        });
+
+        updateStatusQuantityStatements.forEach((updateStatement) => {
+          mysqlConnection.query(updateStatement, function(error, updateResult, fields) {
+            if (error) {
+              console.log('Error updating product: ' + error);
+              return mysqlConnection.rollback(function() {
+                throw error;
+              });
+            }
+            console.log('Updated product successfully 2');
+          });
+        });
+      }
+
+      if (queryProducts.updateStatus.length) {
+        const updateStatusStatements = queryProducts.updateStatus.map((product) => {
+          const { prodID } = product;
+          return `UPDATE ProdSold SET Status = "Pending" WHERE ProdID = ${prodID} AND SaleID = ${id}`;
+        });
+
+        updateStatusStatements.forEach((updateStatement) => {
+          mysqlConnection.query(updateStatement, function(error, updateResult, fields) {
+            if (error) {
+              console.log('Error updating product: ' + error);
+              return mysqlConnection.rollback(function() {
+                throw error;
+              });
+            }
+            console.log('Updated product successfully 3');
+          });
+        });
+      }
+
+      if (queryProducts.cancelStatus.length) {
+        const cancelStatusStatements = queryProducts.cancelStatus.map((product) => {
+          const { ProdID } = product;
+          return `UPDATE ProdSold SET Status = "Canceled" WHERE ProdID = ${ProdID} AND SaleID = ${id}`;
+        });
+
+        cancelStatusStatements.forEach((updateStatement) => {
+          mysqlConnection.query(updateStatement, function(error, updateResult, fields) {
+            if (error) {
+              console.log('Error updating product: ' + error);
+              return mysqlConnection.rollback(function() {
+                throw error;
+              });
+            }
+            console.log('Updated product Status(Canceled) successfully 4');
+          });
+        });
+      }
+
+      if (queryProducts.insert.length) {
+        queryProducts.insert.forEach((product) => {
+          const { prodID, quantity, price } = product;
+          const insertQuery = `INSERT INTO ProdSold (SaleID, ProdID, Quantity, SalePrice, Status) VALUES (${id}, ${prodID}, ${quantity}, ${price}, 'Pending')`;
+
+          mysqlConnection.query(insertQuery, function(error, insertResult, fields) {
+            if (error) {
+              console.log('Error inserting new product: ' + error);
+              return mysqlConnection.rollback(function() {
+                throw error;
+              });
+            }
+            console.log('Inserted new product successfully');
+          });
+        });
+      }
+
+      // Agregar la consulta de actualización de Sales
+      const updateSalesQuery = `UPDATE Sales SET Value = ${Value} WHERE Sales.Naturali_Invoice = ${id}`;
+
+      mysqlConnection.query(updateSalesQuery, function(error, updateSalesResult, fields) {
+        if (error) {
+          console.log('Error updating Sales: ' + error);
+          return mysqlConnection.rollback(function() {
+            throw error;
+          });
+        }
+        console.log('Updated Sales successfully');
+      });
+
+      mysqlConnection.commit(function(commitErr) {
+        if (commitErr) {
+          console.log('Error committing transaction: ' + commitErr);
+          return mysqlConnection.rollback(function() {
+            throw commitErr;
+          });
+        }
+        console.log('Transaction committed successfully');
+        res.status(200).send('Update products ok');
+      });
+    });
+  });
+});
+
+
+salesRouter.patch('/sales-update/:id', async function(req, res) {
+  const { id } = req.params
+  const { SellerID } = req.body
+  const { variables, products, project } = req.body.formData
+  const { idProjects } = project
+  const { estDelivDate, shipVia, paymentTerms, method } = variables
+  const LastInsertDate = `${year}-${month0}-${day0}` 
+  const ModificationFlag = true
+
+  const salesQuery = 'UPDATE Sales SET ' + buildUpdateValuesQuery(SellerID, idProjects, LastInsertDate, estDelivDate, shipVia, ModificationFlag, paymentTerms, method) + ` WHERE Naturali_Invoice = ${id}`;
 
   try {
-    mysqlConnection.beginTransaction(function(err) {
-      if (err) {
-        throw err;
-      }
 
       mysqlConnection.query(salesQuery, function(error, salesResult, fields) {
         if (error) {
@@ -505,52 +642,174 @@ salesRouter.patch('/sales-update/:id', async function(req, res){
             throw new Error(`Failure updating Sale ${id}`);
           });
         } else {
-          console.log('Updated Sales successfully');
-          mysqlConnection.query(prodSoldQuery, [prodSoldValues], async function(error, prodSoldResult, fields) {
-            if (error) {
-              console.log('Error updating ProdSold: ' + error);
-              return mysqlConnection.rollback(function() {
-                throw error;
-              });
-            }
-            
-            console.log('Updated ProdSold successfully');
-            mysqlConnection.commit(function(err) {
-              if (err) {
-                return mysqlConnection.rollback(function() {
-                  throw err;
-                });
-              }
-              
-              console.log('Transaction committed successfully');
+            console.log('Updated Sales successfully');
+
               res.status(200).json(salesResult);
-            });
+            }
           });
-        }
-      });
-    });
-  } catch (error) {
-    res.status(409).send(error);
-  }
+    } catch (error) {
+      res.status(409).send(error);
+    }
 });
-
-function buildUpdateValuesQuery( SellerID, idProjects, LastInsertDate, estDelivDate, shipVia, ModificationFlag, paymentTerms, method, Value) {
-  let updateValues = [];
-
-  if (Value) updateValues.push(`Value = ${Value}`)
-  if (idProjects) updateValues.push(`ProjectID = ${idProjects}`)
-  if (LastInsertDate) updateValues.push(`LastInsertDate = '${LastInsertDate}'`)
-  if (estDelivDate) updateValues.push(`EstDelivery_Date = '${estDelivDate}'`)
-  if (shipVia) updateValues.push(`ShippingMethod = '${shipVia}'`)
-  if (SellerID) updateValues.push(`SellerID = '${SellerID}'`)
-  if (ModificationFlag) updateValues.push(`ModificationFlag = '${ModificationFlag}'`)
-  if (paymentTerms) updateValues.push(`PaymentTerms = '${paymentTerms}'`)
-  if (method) updateValues.push(`P_O_No = '${method}'`)
-
-  return updateValues.join(', ');
-}
 
 
 module.exports = salesRouter;
 
+//   const { id } = req.params;
+//   const { products, project, variables } = req.body.formData;
+//   const { SellerID } = req.body;
+//   const { idProjects } = project;
+//   const { estDelivDate, shipVia, paymentTerms, method } = variables;
 
+//   const LastInsertDate = `${year}-${month0}-${day0}`;
+//   const ModificationFlag = true;
+
+//   const parsedProducts = Object.entries(products)
+//     .flat()
+//     .filter((element) => typeof element === 'object')
+//     .map((product, index) => ({ variableName: `${index + 1}`, ...product }));
+
+//   const Value = parsedProducts.reduce((acc, curr) => acc + curr.quantity * curr.price, 0);
+
+//   const salesQuery = 'UPDATE Sales SET ' + buildUpdateValuesQuery(SellerID, idProjects, LastInsertDate, estDelivDate, shipVia, ModificationFlag, paymentTerms, method, Value) + ` WHERE Naturali_Invoice = ${id}`;
+
+//   const prodSoldQuery = `SELECT * FROM ProdSold WHERE ProdSold.SaleID = ${id}`;
+
+//   try {
+//     mysqlConnection.beginTransaction(function(err) {
+//       if (err) {
+//         throw err;
+//       }
+
+//       mysqlConnection.query(salesQuery, function(error, salesResult, fields) {
+//         if (error) {
+//           return mysqlConnection.rollback(function() {
+//             throw error;
+//           });
+//         }
+
+//         if (salesResult.affectedRows === 0) {
+//           console.log(`Failure updating Sale ${id}`);
+//           res.sendStatus(200);
+//           return mysqlConnection.rollback(function() {
+//             throw new Error(`Failure updating Sale ${id}`);
+//           });
+//         } else {
+//           console.log('Updated Sales successfully');
+
+//           mysqlConnection.query(prodSoldQuery, async function(error, prodSoldResult, fields) {
+//             if (error) {
+//               console.log('Error retrieving ProdSold data: ' + error);
+//               return mysqlConnection.rollback(function() {
+//                 throw error;
+//               });
+//             } else {
+
+//             const queryProducts = updateProducts(prodSoldResult, parsedProducts);
+
+//             if (queryProducts.updateQuantity.length) {
+//               const updateQuantityStatements = queryProducts.updateQuantity.map((product) => {
+//                 const { quantity, prodID } = product;
+//                 return `UPDATE ProdSold SET Quantity = ${quantity} WHERE ProdID = ${prodID} AND SaleID = ${id}`;
+//               });
+
+//               updateQuantityStatements.forEach((updateStatement) => {
+//                 mysqlConnection.query(updateStatement, function(error, updateResult, fields) {
+//                   if (error) {
+//                     console.log('Error updating product: ' + error);
+//                     return mysqlConnection.rollback(function() {
+//                       throw error;
+//                     });
+//                   }
+//                   console.log('Updated product successfully 1');
+//                 });
+//               });
+//             }
+
+//             if (queryProducts.updateStatusQuantity.length) {
+//               const updateStatusQuantityStatements = queryProducts.updateStatusQuantity.map((product) => {
+//                 const { quantity, prodID } = product;
+//                 return `UPDATE ProdSold SET Quantity = ${quantity}, Status = "Pending" WHERE ProdID = ${prodID} AND SaleID = ${id}`;
+//               });
+
+//               updateStatusQuantityStatements.forEach((updateStatement) => {
+//                 mysqlConnection.query(updateStatement, function(error, updateResult, fields) {
+//                   if (error) {
+//                     console.log('Error updating product: ' + error);
+//                     return mysqlConnection.rollback(function() {
+//                       throw error;
+//                     });
+//                   }
+//                   console.log('Updated product successfully 2');
+//                 });
+//               });
+//             }
+
+//             if (queryProducts.updateStatus.length) {
+//               const updateStatusStatements = queryProducts.updateStatus.map((product) => {
+//                 const { prodID } = product;
+//                 return `UPDATE ProdSold SET Status = "Pending" WHERE ProdID = ${prodID} AND SaleID = ${id}`;
+//               });
+
+//               updateStatusStatements.forEach((updateStatement) => {
+//                 mysqlConnection.query(updateStatement, function(error, updateResult, fields) {
+//                   if (error) {
+//                     console.log('Error updating product: ' + error);
+//                     return mysqlConnection.rollback(function() {
+//                       throw error;
+//                     });
+//                   }
+//                   console.log('Updated product successfully 3');
+//                 });
+//               });
+//             }
+
+//             if (queryProducts.cancelStatus.length) {
+//               const cancelStatusStatements = queryProducts.cancelStatus.map((product) => {
+//                 const { ProdID } = product;
+//                 return `UPDATE ProdSold SET Status = "Canceled" WHERE ProdID = ${ProdID} AND SaleID = ${id}`;
+//               });
+
+//               cancelStatusStatements.forEach((updateStatement) => {
+//                 mysqlConnection.query(updateStatement, function(error, updateResult, fields) {
+//                   if (error) {
+//                     console.log('Error updating product: ' + error);
+//                     return mysqlConnection.rollback(function() {
+//                       throw error;
+//                     });
+//                   }
+//                   console.log('Updated product Status(Canceled) successfully 4');
+//                 });
+//               });
+//             }
+
+//             if (queryProducts.insert.length) {
+//               queryProducts.insert.forEach((product) => {
+//                 const { prodID, quantity, price } = product;
+//                 const insertQuery = `INSERT INTO ProdSold (SaleID, ProdID, Quantity, SalePrice, Status) VALUES (${id}, ${prodID}, ${quantity}, ${price}, 'Pending')`;
+
+//                 mysqlConnection.query(insertQuery, function(error, insertResult, fields) {
+//                   if (error) {
+//                     console.log('Error inserting new product: ' + error);
+//                     return mysqlConnection.rollback(function() {
+//                       throw error;
+//                     });
+//                   }
+//                   console.log('Inserted new product successfully');
+//                 });
+//               });
+//             }
+//           }
+
+//             console.log('Updated ProdSold data successfully');
+//           });
+
+//           console.log('Transaction committed successfully');
+//           res.status(200).send('updated');
+//         }
+//       });
+//     });
+//   } catch (error) {
+//     res.status(409).send(error);
+//   }
+// });

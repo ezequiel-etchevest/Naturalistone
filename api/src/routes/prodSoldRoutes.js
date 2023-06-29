@@ -17,7 +17,7 @@ prodSoldRouter.get('/:id', async function(req, res){
                   INNER JOIN ProdNames ON ProdNames.ProdNameID = Products.ProdNameID
                   INNER JOIN ProdSold ON ProdSold.ProdID = Products.ProdID
                   INNER JOIN Dimension ON Dimension.DimensionID = Products.DimensionID
-                  WHERE SaleID = ${id} 
+                  WHERE SaleID = ${id} AND ProdSold.Status != "Canceled"
                   ORDER BY ProdNames.Naturali_ProdName ASC`;
 
     try{
@@ -25,7 +25,7 @@ prodSoldRouter.get('/:id', async function(req, res){
             if(error) throw error;
             if(results.length == 0) {
                 console.log('Error en prodSold.get /:id')
-                res.status(200).json({});
+                res.status(200).json([]);
             } else {
 
                 console.log('data ok')

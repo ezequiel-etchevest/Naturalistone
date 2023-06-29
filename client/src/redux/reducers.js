@@ -7,12 +7,14 @@ import {
     GET_INVOICE_BY_ID, 
     GET_INVOICES_BY_SELLER, 
     GET_INVOICE_PRODUCTS,
+    CLEAN_INVOICE_PRODUCTS,
     PATCH_STAMP,
     PATCH_STATUS,
     GET_SELLER_VALUES,
     POST_QUOTE,
     CLEAN_POST_QUOTE,
-    PATCH_QUOTE
+    PATCH_QUOTE,
+    PATCH_QUOTE_PRODS
 } from './actions-invoices';
 import { 
   GET_INVOICE_ERRORS,
@@ -243,6 +245,11 @@ function rootReducer (state = intialState, action) {
             return {
                 ...state,
                 invoice_products: action.payload
+          }
+        case CLEAN_INVOICE_PRODUCTS:
+            return {
+                ...state,
+                invoice_products: []
           }
         case GET_PAYMENTS_BY_ID:
             return {
@@ -485,6 +492,12 @@ function rootReducer (state = intialState, action) {
             ...state,
             factories: action.payload
           }
+        case PATCH_QUOTE_PRODS:
+          return{
+            ...state,
+            invoice_products: action.payload.prods,
+            invoice: action.payload.invoice
+          } 
         case PATCH_QUOTE:
           return{
             ...state,

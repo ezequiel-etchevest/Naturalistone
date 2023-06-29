@@ -4,12 +4,14 @@ export const GET_INVOICES_BY_SELLER = 'GET_INVOICEs_BY_SELLER';
 export const GET_INVOICES_BY_SELLER_ALL = 'GET_INVOICES_BY_SELLER_ALL';
 export const GET_FILTERED_INVOICES = 'GET_FILTERED_INVOICES';
 export const GET_INVOICE_PRODUCTS = 'GET_INVOICE_PRODUCTS';
+export const CLEAN_INVOICE_PRODUCTS = 'CLEAN_INVOICE_PRODUCTS';
 export const GET_SELLER_VALUES = 'GET_SELLER_VALUES';
 export const PATCH_STAMP = 'PATCH_STAMP';
 export const PATCH_STATUS = 'PATCH_STATUS';
 export const POST_QUOTE = 'POST_QUOTE';
 export const CLEAN_POST_QUOTE = 'CLEAN_POST_QUOTE';
 export const PATCH_QUOTE = 'PATCH_QUOTE';
+export const PATCH_QUOTE_PRODS = 'PATCH_QUOTE_PRODS';
 
 export function getInvoicesBySeller(id, inputValues){
 
@@ -124,6 +126,17 @@ export function getInvoiceProducts(id){
         }
     }
 }
+export function cleanInvoiceProducts(){
+    return async function(dispatch){
+        try{
+            return dispatch({
+                type: CLEAN_INVOICE_PRODUCTS
+            })
+        }catch(error){
+            console.log({error})
+        }
+    }
+}
 
 export function stampInvoice(id){
 
@@ -209,13 +222,30 @@ export function cleanCreatedQuote(){
     }
 
 
+export function updateQuoteProds(quoteID, formData, SellerID){
+    
+    return async function(dispatch){
+        try{
+            let {} = await axios.patch(`/sales/sales-update-products/${quoteID}`, {formData, SellerID})
+            let prods = await axios.get(`/prodSold/${quoteID}`)
+            let invoice = await axios.get(`/sales/invoice/${quoteID}`)
+            const data = {prods: prods.data, invoice: invoice.data}
+            dispatch(
+                {
+                    type: PATCH_QUOTE_PRODS,
+                    payload: data
+                })
+        }catch(error){
+            console.log({error})     
+        }
+    }
+}
 export function updateQuote(quoteID, formData, SellerID){
     
     return async function(dispatch){
         try{
             let {} = await axios.patch(`/sales/sales-update/${quoteID}`, {formData, SellerID})
             let { data } = await axios.get(`/sales/invoice/${quoteID}`)
-            console.log(data)
             dispatch(
                 {
                     type: PATCH_QUOTE,
