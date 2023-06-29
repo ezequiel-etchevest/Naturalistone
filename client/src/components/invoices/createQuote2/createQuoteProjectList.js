@@ -9,6 +9,7 @@ import {
     TableContainer,
     Text,
     Center,
+    Spinner,
     } from '@chakra-ui/react'
 import { useState } from 'react';
 
@@ -86,7 +87,8 @@ import { useState } from 'react';
       >
       {
         projects.length ? (
-          <TableContainer w={'66vw'}>
+          Array.isArray(projects) ? (
+            <TableContainer w={'66vw'}>
             <Table color={'web.text'}variant={'simple'} size={'sm'}>
               <Thead h={'3vh'}>
                 <Tr>
@@ -107,9 +109,15 @@ import { useState } from 'react';
                 </Tbody>
               </Table>
             </TableContainer> 
+          ):(
+            <Center w={'full'} h={'full'}>
+              <Text userSelect={'none'} fontSize={'sm'}>No projects registered for {formData.customer.Contact_Name?.length ? formData.customer?.Contact_Name : formData.customer?.CustomerID } </Text>
+            </Center>
+          )
+
             ) : (
             <Center w={'full'} h={'full'}>
-              <Text userSelect={'none'} fontSize={'2vh'}>No projects register for customer {formData.customer.Contact_Name?.length ? formData.customer?.Contact_Name : formData.customer?.CustomerID } </Text>
+              <Spinner colorScheme='orange'/>
             </Center>
             )
         }

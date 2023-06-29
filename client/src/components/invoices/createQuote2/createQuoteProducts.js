@@ -65,6 +65,7 @@ const handleClear = () => {
     material:'',
     search:''
     })
+
   setFilterProducts('All')   
     dispatch(getAllProductsNewQuote( '','',''))
 }
@@ -148,7 +149,7 @@ return(
         _hover={{borderColor: 'web.border'}}
         cursor={'pointer'}
         name={'finish'}
-        value={filters.finishfinish}
+        value={filters.finish}
       >
       <option value='' className="options">Finish</option>
       {

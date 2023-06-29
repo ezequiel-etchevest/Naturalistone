@@ -53,7 +53,6 @@ const {name, value} = e
 }
 
 const handleCancel = (e) => {
-
   const {name} = e
     setInputs({
       ...inputs,

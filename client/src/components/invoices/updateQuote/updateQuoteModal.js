@@ -10,8 +10,6 @@ import {
     ButtonGroup,
     Progress,
     useToast,
-    Spinner,
-    Center,
     ModalCloseButton} from "@chakra-ui/react"
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -21,7 +19,7 @@ import { getCustomers, updateCustomer } from "../../../redux/actions-customers";
 import { getCustomerProjects } from "../../../redux/actions-projects";
 import CreateQuoteCustomerProjets from "../createQuote2/createQuoteProject";
 import { getAllProductsNewQuote } from "../../../redux/actions-products";
-import {  cleanInvoiceProducts, getInvoiceById, getInvoiceProducts, updateQuote, updateQuoteProds } from "../../../redux/actions-invoices";
+import {  cleanInvoiceProducts, updateQuote, updateQuoteProds } from "../../../redux/actions-invoices";
 import CreateQuoteCustomer from "../createQuote2/createQuoteCustomer";
 import CreateQuoteCustomerReview from "../createQuote2/createQuoteCustomerReview";
 import { UpdateQuoteSelection } from "./updateQuoteSelection";
@@ -81,7 +79,7 @@ export default function UpdateQuoteModal({invoice, invoice_products}) {
     const customerID = formData?.customer.CustomerID
     const invoiceID = invoice[0].Naturali_Invoice
     const SellerID = user[0].SellerID
-
+    
     useEffect(() => {
       if(!customers.length){
         dispatch(getCustomers('',''))
@@ -89,7 +87,7 @@ export default function UpdateQuoteModal({invoice, invoice_products}) {
       dispatch(getCustomerProjects(invoice[0].CustomerID))
       dispatch(getAllProductsNewQuote('', '', ''))
     }, [])
-
+ 
     useEffect(()=>{
         setFormData({
           customer: {
@@ -127,19 +125,6 @@ export default function UpdateQuoteModal({invoice, invoice_products}) {
           } 
         })
     }, [invoice, invoice_products])
-
-
-    const validateAuthFlag = (objetos) => {
-      for (const id in objetos) {
-        if (objetos.hasOwnProperty(id)) {
-          if (objetos[id].authFlag) {
-            return true;
-          }
-        }
-      }
-      return false;
-    }
-    let authFlag = validateAuthFlag(formData?.products)
 
     const handleSubmit = async () => {
       if(progress === 60 || (component === "Project" && progress === 20)){
@@ -204,6 +189,19 @@ export default function UpdateQuoteModal({invoice, invoice_products}) {
     const handleNextButton = () =>{
       setErrorsCustomer({})
       if(progress === 40){
+        if(invoice[0].CustomerID !== formData.customer.CustomerID){
+          setFormData({
+            ...formData,
+            project: {
+              ProjectName: '',
+              idProjects: '',
+              Shipping_State: '',
+              Shipping_ZipCode: '',
+              Shipping_City: '',
+              Shipping_Address: ''
+            },
+          });
+        };
         let newErrors = validateEmptyInputsCreateQuote(formData.customer)
         setErrorsCustomer(newErrors)
         if(Object.entries(newErrors).length){
@@ -315,7 +313,7 @@ export default function UpdateQuoteModal({invoice, invoice_products}) {
             }
             {
               component === 'Customer' && progress == 60 &&(
-                <CreateQuoteCustomerProjets formData={formData} setFormData={setFormData} setDisable={setDisable} update={update}  invoice={invoice}/>
+                <CreateQuoteCustomerProjets formData={formData} setFormData={setFormData} setDisable={setDisable} update={update} invoice={invoice}/>
               )
             }
             {

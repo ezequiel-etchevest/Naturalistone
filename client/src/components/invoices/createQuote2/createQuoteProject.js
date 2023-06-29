@@ -17,7 +17,7 @@ import '../../../assets/styleSheet.css'
 const CreateQuoteCustomerProjets = ({ formData, setFormData, setDisable, update, invoice }) => {
 
   const projects = useSelector(state => state.projects_by_customer_id)
-
+  
   const handleChange = (e) => {
     const { name, value } = e.target;
   
@@ -29,13 +29,16 @@ const CreateQuoteCustomerProjets = ({ formData, setFormData, setDisable, update,
       },
     });
   };
-  
+
   useEffect(() => {
-    if(formData.variables.shipVia && formData.variables.method && formData.variables.paymentTerms && formData.variables.estDelivDate && formData.project.ProjectName){
-      setDisable(false)
-    } else { 
-      setDisable(true)}
-}, [formData.variables, formData.project]);
+    if(!Array.isArray(projects)) setDisable(true) 
+    else {
+      if(!formData.variables.shipVia.length || !formData.variables.method.length || !formData.variables.paymentTerms.length || !formData.variables.estDelivDate.length || !formData.project.ProjectName.length){
+        setDisable(true)
+      } else { 
+        setDisable(false)}
+    }
+  }, [formData.variables, formData.project, projects]);
 
   return(
 
