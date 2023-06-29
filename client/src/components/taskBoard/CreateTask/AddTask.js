@@ -1,6 +1,6 @@
 import { ButtonGroup, IconButton, Progress, Button, useToast, useDisclosure, FormLabel, Modal, ModalBody, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalFooter, Text, Box, Input, FormControl, Textarea } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import { BiTask } from 'react-icons/bi';
+import { FaTasks } from 'react-icons/fa';
 import { useDispatch } from 'react-redux'
 import { AddTaskInfo } from "./AddTaskInfo";
 import AddTaskCustomer  from "./AddTaskCustomer";
@@ -113,7 +113,7 @@ export const AddTask = ({ user, filters, setFilters}) => {
         onClick={onOpen}
         variant={'unstyled'}           
         fontSize={'xl'}
-         icon={<BiTask/>}
+         icon={<FaTasks/>}
         />
         <Button
         onClick={onOpen}

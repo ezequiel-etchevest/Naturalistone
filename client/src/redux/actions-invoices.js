@@ -210,3 +210,17 @@ export function updateQuote(quoteID, formData, SellerID){
         }
     }
 }
+
+export function cleanInvoiceDetail(){
+
+    return async function(dispatch){
+        try{
+              dispatch(
+              {
+                  type: CLEAN_INVOICE_DETAIL,
+              })
+  
+        }catch(error){
+            console.log({error})           
+        }}
+      }

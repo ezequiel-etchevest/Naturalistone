@@ -1,5 +1,5 @@
 import { ButtonGroup, IconButton, Button, useToast, useDisclosure, Modal, ModalBody, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalFooter, Text} from "@chakra-ui/react";
-import { BiCommentAdd } from 'react-icons/bi';
+import { BiCheckSquare } from 'react-icons/bi';
 import { useDispatch } from 'react-redux'
 import { changeTaskStatus } from "../../../redux/actions-tasks";
 
@@ -33,7 +33,7 @@ export const ChangeTaskStatusModal = ({user, activeCard, setActiveCard}) => {
         onClick={onOpen}
         variant={'unstyled'}           
         fontSize={'xl'}
-        icon={<BiCommentAdd/>}
+        icon={<BiCheckSquare/>}
         disabled={activeCard ? activeCard.Status === 'todo' ? false : true : true}/>
         <Button
         onClick={onOpen}
