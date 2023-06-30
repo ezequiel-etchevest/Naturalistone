@@ -111,6 +111,11 @@ import {
 import {
   GET_PROFORMAS
 } from './actions-proformas';
+import {
+  GET_SAMPLES,
+  POST_SAMPLES,
+  GET_SAMPLES_PRODUCTS,
+} from './actions-samples';
 
 const intialState = {
     employees: [],
@@ -158,6 +163,8 @@ const intialState = {
     proformas: [],
     freight: {},
     freights_factory: [],
+    samples: [],
+    samples_products: []
 }
 
 function rootReducer (state = intialState, action) {
@@ -530,11 +537,6 @@ function rootReducer (state = intialState, action) {
             freight: {},
             freights_factory: [],
           }
-          case SEND_EMAIL_CLIENT:
-            return{
-              ...state,
-              send_email_client: action.payload
-            }
           case GET_ALL_TASKS:
             return{
               ...state,
@@ -586,7 +588,21 @@ function rootReducer (state = intialState, action) {
               ...state,
               tasks: action.payload
             }
-
+          case GET_SAMPLES:
+            return {
+              ...state,
+              samples: action.payload
+            }
+          case POST_SAMPLES:
+            return {
+              ...state,
+              samples: action.payload,
+            }
+          case GET_SAMPLES_PRODUCTS:
+            return {
+              ...state,
+              samples_products: action.payload,
+            }
         default:
             return {
               ...state

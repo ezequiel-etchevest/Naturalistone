@@ -6,8 +6,6 @@ const invoicesPayments = require('../Controllers/invoicesPayments')
 const  { getLimitDateMonth, getCurrentMonth } = require('../Controllers/LastMonth')
 const uniqueFormatNames = require('../Controllers/quotesValues')
 const invoicesFilters = require('../Controllers/invoicesFilters')
-const sendInvoiceEmail = require('../utils/email');
-
 
 
 salesRouter.get('/:id', async function(req, res){
@@ -376,16 +374,6 @@ salesRouter.post('/create-quote/:sellerID', async function(req, res) {
               }, 500);
               return;
             }
-
-            // sendInvoiceEmail(
-            // customer.Email, // se enviara correos desde irina hasta que se termine de configurar
-            // Contact_Name, 
-            // prodSoldValues[0][0], 
-            // "description",
-            // "amount_value",
-            // Value,
-            // InsertDate
-            // ) // faltaria solo el pdf para enviar
 
             console.log('Products inserted successfully');
 
