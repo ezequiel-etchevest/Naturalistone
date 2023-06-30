@@ -15,7 +15,7 @@ const FreightDetailList = ({freight}) => {
         py={'2vw'}
         px={'2vw'}
         h={'44vh'}
-        w={'24vw'}
+        w={'28vw'}
         display={'flex'}
         flexDir={'column'}
         color={'web.text'}
@@ -29,31 +29,27 @@ const FreightDetailList = ({freight}) => {
           display={'flex'} 
           flexDir={'row'} 
           alignItems={'center'}
-          justifyContent={'space-between'}
+          
           >
-          <Box
-           display={'flex'} 
-           flexDir={'row'} 
-           alignItems={'baseline'}>
+          <Text
+            fontSize={'2.3vh'} 
+            color={'web.text2'} 
+            ml={'1vh'}>
+            Freight Details -
+            </Text>
             <Text 
             color={'logo.orange'} 
-            fontSize={'2.8vh'}>
+            fontSize={'2.8vh'}
+            ml={'2vh'}>
               {freight.FreightRefNumber}
             </Text>
-            <Text
-              fontSize={'2.3vh'} 
-              color={'web.text2'} 
-              ml={'1vh'}>
-              Freight Details
-            </Text>
-          </Box>
           {/* <CancerlOrderModal/>   */}
         </Box>
         {/*Descriptions*/}
         <Box display={'flex'} flexDir={'row'} justifyContent={'space-between'} px={'1vh'}>
         <Box
           mt={'1vh'}
-          w={'8vw'}
+          w={'11vw'}
           h={'30vh'}
           display={'flex'}
           flexDir={'column'}
@@ -62,11 +58,11 @@ const FreightDetailList = ({freight}) => {
           <Box>
             <Text 
               color={'web.text2'} 
-              fontSize={'1.6vh'}>
+              fontSize={'sm'}>
                 Invoice Date
             </Text>
             <Text 
-              fontSize={'1.80vh'} 
+              fontSize={'md'} 
               fontWeight={'bold'}>
                 {freight.InvoiceDate ? freight.InvoiceDate.slice(0,10) : '-'}
             </Text>
@@ -74,23 +70,23 @@ const FreightDetailList = ({freight}) => {
           <Box>
             <Text 
               color={'web.text2'} 
-              fontSize={'1.6vh'}>
+              fontSize={'sm'}>
                 Estimated Date
             </Text>
             <Text 
-              fontSize={'1.80vh'} 
+              fontSize={'md'} 
               fontWeight={'bold'}>
                 {freight.EstimatedDate ? freight.EstimatedDate.slice(0,10) : '-'}
             </Text>
           </Box>
           <Box>
             <Text 
-              fontSize={'1.6vh'} 
+              fontSize={'sm'} 
               color={'web.text2'}>
                 Origin
             </Text>
             <Text 
-              fontSize={'1.80vh'}
+              fontSize={'md'}
               fontWeight={'bold'}>
                 {freight.Origin ?? '-'}
             </Text>
@@ -98,11 +94,11 @@ const FreightDetailList = ({freight}) => {
           <Box>
             <Text 
                 color={'web.text2'} 
-                fontSize={'1.6vh'}>
+                fontSize={'sm'}>
                   Destination
               </Text>
               <Text 
-                fontSize={'1.80vh'} 
+                fontSize={'md'} 
                 fontWeight={'bold'}>
                   {freight.Destination ?? '-'}
               </Text>
@@ -110,11 +106,11 @@ const FreightDetailList = ({freight}) => {
           <Box>
           <Text 
             color={'web.text2'} 
-            fontSize={'1.6vh'}>
+            fontSize={'sm'}>
               HBL
           </Text>
           <Text 
-            fontSize={'1.80vh'} 
+            fontSize={'md'} 
             fontWeight={'bold'}>
               {freight.HBL ?? '-'}
           </Text>
@@ -122,7 +118,7 @@ const FreightDetailList = ({freight}) => {
         </Box>
         <Box
           mt={'1vh'}
-          w={'8vw'}
+          w={'11vw'}
           h={'30vh'}
           display={'flex'}
           flexDir={'column'}
@@ -130,40 +126,40 @@ const FreightDetailList = ({freight}) => {
           >
           <Box>
             <Text 
-              fontSize={'1.6vh'}
+              fontSize={'sm'}
               color={'web.text2'}
               >
               Description Of Goods
             </Text>
             <Text
-              fontSize={'1.80vh'}
-              w={'10vw'} 
+              fontSize={'md'}
+              w={'11vw'} 
               fontWeight={'bold'}>
                 {freight.DescriptionOfGoods ?? '-'}
             </Text>
           </Box>       
           <Box>
           <Text 
-            fontSize={'1.6vh'}
+            fontSize={'sm'}
             color={'web.text2'}
             >
             Packages
           </Text>
           <Text
-            fontSize={'1.80vh'}
-            w={'12vw'} 
+            fontSize={'md'}
+            w={'11vw'} 
             fontWeight={'bold'}>
               {freight.Packages ?? '-'}
           </Text>
           </Box>
           <Box>
           <Text 
-            fontSize={'1.6vh'} 
+            fontSize={'sm'} 
             color={'web.text2'}>
               Gross Weight
           </Text>
           <Text 
-            fontSize={'1.80vh'} 
+            fontSize={'md'} 
             fontWeight={'bold'}>
               {freight.GrossWeight ? freight.GrossWeight.toLocaleString('en-us') : '-'}
           </Text>
@@ -171,11 +167,11 @@ const FreightDetailList = ({freight}) => {
           <Box>
           <Text 
             color={'web.text2'} 
-            fontSize={'1.6vh'}>
+            fontSize={'sm'}>
               Total Cost
           </Text>
           <Text 
-            fontSize={'1.80vh'} 
+            fontSize={'md'} 
             fontWeight={'bold'}>
              $ {freight.TotalCost ? freight.TotalCost.toLocaleString('en-US') : '-'}
           </Text>
@@ -183,11 +179,11 @@ const FreightDetailList = ({freight}) => {
           <Box>
           <Text 
             color={'web.text2'} 
-            fontSize={'1.6vh'}>
+            fontSize={'sm'}>
               Invoice Number
           </Text>
           <Text 
-            fontSize={'1.80vh'} 
+            fontSize={'md'} 
             fontWeight={'bold'}>
               {freight.InvoiceNumber ?? '-'}
           </Text>
