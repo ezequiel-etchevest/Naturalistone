@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux'
 import { AddTaskInfo } from "./AddTaskInfo";
 import AddTaskCustomer  from "./AddTaskCustomer";
 import AddTaskProject  from "./AddTaskProject";
-import { getCustomerById, getCustomers } from "../../../redux/actions-customers";
+import { getCustomerById, getCustomerInvoices, getCustomers } from "../../../redux/actions-customers";
 import { useSelector } from "react-redux";
 import { getInvoiceById, getInvoicesBySeller } from "../../../redux/actions-invoices";
 import AddTaskInvoice from "./AddTaskInvoice";
@@ -68,7 +68,11 @@ export const AddTask = ({ user, filters, setFilters}) => {
         if(formData.CustomerID) return setProgress(progress + 20)
         else return setProgress(progress + 40)
       } 
-      if(progress === 60) return setProgress(progress + 20)
+      if(progress === 60){
+        if(formData.CustomerID) dispatch(getCustomerInvoices(formData.CustomerID))
+        return setProgress(progress + 20)
+      }
+       
       if(progress === 80){
         if(formData.CustomerID) dispatch(getCustomerById(formData.CustomerID))
         if(formData.ProjectID) dispatch(getProjectById(formData.ProjectID))

@@ -26,7 +26,6 @@ const productErrors = useSelector((state) => state.products_errors)
 const values = useSelector(state => state.products_new_quote_values)
 
 
-
 const [filters, setFilters] = useState({
   finish:'',
   material: '',

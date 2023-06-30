@@ -442,7 +442,7 @@ salesRouter.get('/project-invoices/:id', async function(req, res){
 salesRouter.get('/customer/:id', async function(req, res){
   const { id } = req.params
 
-  query_ =    `SELECT Sales.* FROM NaturaliStone.Sales
+  query_ =    `SELECT Sales.*, Customers.* FROM NaturaliStone.Sales
               LEFT JOIN NaturaliStone.Projects ON Sales.ProjectID = Projects.idProjects
               LEFT JOIN NaturaliStone.Customers ON Projects.CustomerID = Customers.CustomerID
               WHERE Customers.CustomerID = ${id};`
