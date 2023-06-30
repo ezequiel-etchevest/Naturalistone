@@ -14,10 +14,10 @@ import CreateQuoteProjectList from "./createQuoteProjectList";
 import '../../../assets/styleSheet.css'
 
 
-const CreateQuoteCustomerProjets = ({ formData, setFormData, setDisable }) => {
+const CreateQuoteCustomerProjets = ({ formData, setFormData, setDisable, update, invoice }) => {
 
   const projects = useSelector(state => state.projects_by_customer_id)
-
+  
   const handleChange = (e) => {
     const { name, value } = e.target;
   
@@ -29,30 +29,63 @@ const CreateQuoteCustomerProjets = ({ formData, setFormData, setDisable }) => {
       },
     });
   };
-  
+
   useEffect(() => {
-    if(formData.variables.shipVia && formData.variables.method && formData.variables.paymentTerms && formData.variables.estDelivDate && formData.project.ProjectName){
-      setDisable(false)
-    } else { 
-      setDisable(true)}
-}, [formData.variables, formData.project]);
+    if(!Array.isArray(projects)) setDisable(true) 
+    else {
+      if(!formData.variables.shipVia.length || !formData.variables.method.length || !formData.variables.paymentTerms.length || !formData.variables.estDelivDate.length || !formData.project.ProjectName.length){
+        setDisable(true)
+      } else { 
+        setDisable(false)}
+    }
+  }, [formData.variables, formData.project, projects]);
 
   return(
 
   <>
     <Box color={'web.text2'} display={'flex'} justifyContent={'center'} flexDir={'column'} h={'58vh'}>
-      <Text ml={'2vw'} mt={'2vh'} mb={'5vh'} fontSize={'lg'}w={'16vw'} color={'white'} alignSelf={'flex-start'}>Select Project</Text>
+    {
+        update === 'Update' ?
+        <Box ml={'2vw'} mt={'2vh'} display={'flex'}flexDir={'row'} w={'42vw'}>
+          <Box>
+              <Text fontSize={'md'} color={'white'} alignSelf={'flex-start'}>Previous project </Text>
+            <Box mt={'1vh'} display={'flex'} flexDir={'row'} w={'20vw'}>
+              <Text fontSize={'sm'}>{invoice[0].idProjects } </Text>
+              <Text ml={'2vw'} fontSize={'sm'}> {invoice[0].ProjectName != '-' && invoice[0].ProjectName != null ? invoice[0].ProjectName : ''}</Text>
+            </Box>        
+          </Box>
+          <Box>
+              <Text fontSize={'md'} color={'white'} alignSelf={'flex-start'}>New project </Text>
+            <Box mt={'1vh'} display={'flex'} flexDir={'row'}>
+              <Text fontSize={'sm'}>
+                {
+                  formData.project.idProjects === invoice[0].idProjects ? '' : formData.project.idProjects
+                } 
+              </Text>
+              <Text ml={'2vw'} fontSize={'sm'}> 
+                {
+                  formData.project.ProjectName === invoice[0].ProjectName ? ''
+                  :
+                  formData.project.ProjectName != '-' && formData.project.ProjectName != null ? formData.project.ProjectName : ''
+                }
+              </Text>
+            </Box>        
+          </Box>
+        </Box>
+        :
+        <Text ml={'2vw'} mt={'2vh'} mb={'1vh'} fontSize={'lg'}w={'16vw'} color={'white'} alignSelf={'flex-start'}>Select Project</Text>
+      }
       <HStack
         display={'flex'}
-        justifyContent={'flex-end'}
+        justifyContent={'space-between'}
         h={'6vh'}
         mb={'3vh'}
-        mr={'1.2vw'}
-        ml={'1.4vw'}
-        spacing={'2vw'}
+        mt={'4vh'}
+        mr={'2vw'}
+        ml={'2vw'}
+
         >
         <Input
-          mb={'0.5vh'}
           w={'10vw'}
           minH={'4.5vh'}
           variant="unstyled"
@@ -97,7 +130,7 @@ const CreateQuoteCustomerProjets = ({ formData, setFormData, setDisable }) => {
               borderBottomColor={'web.text2'}
               type={"date"}
               pattern={"\d{4}-\d{2}-\d{2}"}
-              name={"EstDelivDate"}
+              name={"estDelivDate"}
               cursor= {'pointer'}
               onChange={(e)=>handleChange(e)}
               css={{
@@ -105,7 +138,7 @@ const CreateQuoteCustomerProjets = ({ formData, setFormData, setDisable }) => {
                     background: `url(https://cdn3.iconfinder.com/data/icons/linecons-free-vector-icons-pack/32/calendar-16.png) center/90% no-repeat`,    
                     cursor: 'pointer',
                     filter: 'invert(59%) sepia(7%) saturate(31%) hue-rotate(184deg) brightness(97%) contrast(92%)',
-                    left: 94,
+                    marginRight: 7,
                     position: 'absolute',
                     right: 0,
                     top: 5,
@@ -116,7 +149,7 @@ const CreateQuoteCustomerProjets = ({ formData, setFormData, setDisable }) => {
           <Select
               onChange={(e)=>handleChange(e)}
               mb={'0.5vh'}
-              w={'9vw'}
+              w={'10vw'}
               minH={'4.5vh'}
               variant="unstyled"
               textColor={'web.text2'}

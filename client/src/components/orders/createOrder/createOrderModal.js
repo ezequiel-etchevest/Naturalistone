@@ -14,8 +14,14 @@ import { IconButton,
 import { AiOutlineFileAdd } from "react-icons/ai";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import CreateOrderFactory from "./createOrderFactories";
+import CreateOrderFactories from "./createOrderFactories";
 import { getFactories } from "../../../redux/actions-factories";
+import { CreateOrderInfo } from "./createOrderInfo";
+import { getSellers } from "../../../redux/actions-sellers";
+import CreateOrderProducts from "./createOrderProducts";
+import { getAllProductsNewQuote } from "../../../redux/actions-products";
+import CreateOrderReview from "./createOrderReview";
+
 // import { createCustomer } from '../../../redux/actions-customers'
 // import { CustomerInfo } from "./customerInfo";
 // import { BillingInfo } from "./billingInfo";
@@ -23,14 +29,20 @@ import { getFactories } from "../../../redux/actions-factories";
 // import { CompanyInfo } from "./companyInfo";
 // import { validateCompletedInputs, validateEmptyInputs } from "../../../utils/validateForm";
 
-export function CreateOrderModal({orders}) {
+export function CreateOrderModal() {
+
+const factories = useSelector(state => state.factories)
+const sellers = useSelector(state => state.sellers)
+const allProducts = useSelector(state => state.products_new_quote)
 
 const dispatch = useDispatch();
 // const toastId = 'error-toast'
 // const [errors, setErrors] = useState({})
 useEffect(() => {
-  dispatch(getFactories(''))
-}, [])
+  if(!sellers.length) dispatch(getSellers())
+  if(!factories.length)dispatch(getFactories(''))
+  if(!allProducts.length)dispatch(getAllProductsNewQuote('','',''))
+}, [factories])
 
 const [ progress, setProgress ] = useState(25)
 // const toast = useToast()
@@ -45,6 +57,14 @@ const [formData, setFormData] = useState({
     Email: '', 
     WebSite: '', 
     International_Flag: '',
+  },
+  info:{
+    Value:'',
+    InvoiceDate:'',
+    Payment:'',
+    idFreightInvoice:'',
+    Order_By:'',
+    Status:''
   },
   products:{}
 });
@@ -64,7 +84,7 @@ const [formData, setFormData] = useState({
 // );
 // setChangeInput(true)
 // };
-  console.log({formData})
+
 const handleSubmit = () => {
 // setErrors({})
 // let newErrors = validateEmptyInputs(formData, progress)
@@ -86,27 +106,30 @@ const handleSubmit = () => {
 } 
 // }
 const handleClose = () => {
-// setFormData({
-//     Contact_Name: '',
-//     City: '',
-//     Address: '',
-//     State: '',
-//     ZipCode: '',
-//     Phone: '',
-//     Email: '',
-//     Company: '',
-//     Company_Position: '',
-//     DiscountID: 1,
-//     Billing_Address: '',
-//     Billing_ZipCode: '',
-//     Billing_State: '',
-//     Billing_City: '',
-    
-//   })
+setFormData({
+factory: {
+  FactoryID: '', 
+  Reference: '', 
+  Factory_Name: '', 
+  Phone: '', 
+  Email: '', 
+  WebSite: '', 
+  International_Flag: '',
+},
+info:{
+  Value:'',
+  InvoiceDate:'',
+  Payment:'',
+  idFreightInvoice:'',
+  Order_By:'',
+  Status:''
+},
+products:{}
+})
 // setChangeInput(false)
 // setErrors({})
-// setProgress(25)
-// onClose()
+setProgress(25)
+onClose()
 }
 const handleNextButton = () =>{
 // setErrors({})
@@ -125,13 +148,14 @@ const handleNextButton = () =>{
 //       isClosable: true,
 //       }))
 // }}else{
-//   setProgress(progress + 25)
+  setProgress(progress + 25)
 }
 
 // }
 const handlePreviousButton = () => {
-// setProgress(progress - 25)
+setProgress(progress - 25)
 }
+console.log('padre', formData)
 return (
   <>
     <Box w={'80vw'} mt={'2vh'} h={'6vh'} display="flex" justifyContent="flex-end">
@@ -153,7 +177,7 @@ return (
     <Modal 
       isOpen={isOpen} 
       onClose={handleClose}
-      size={'5xl'}
+      size={progress === 50 ? '2xl' : '4xl'}
       motionPreset='slideInRight'
       >
       <ModalOverlay />
@@ -174,11 +198,26 @@ return (
         <ModalBody color={'web.text2'}>
           {
             progress === 25 && (
-              <CreateOrderFactory formData={formData} setFormData={setFormData}/>
+              <CreateOrderFactories formData={formData} setFormData={setFormData} progress={progress} setProgress={setProgress} factories={factories}/>
             )
           }
+          {
+            progress === 50 && (
+              <CreateOrderInfo sellers={sellers} formData={formData} setFormData={setFormData} progress={progress} setProgress={setProgress} factories={factories}/>
+            )  
+          }
+          {
+            progress === 75 && (
+              <CreateOrderProducts formData={formData} setFormData={setFormData} progress={progress} setProgress={setProgress} allProducts={allProducts}/>
+            )  
+          }
+          {
+            progress === 100 && (
+              <CreateOrderReview formData={formData} setFormData={setFormData} progress={progress} setProgress={setProgress}/>
+            )  
+          }
         </ModalBody>
-        <ModalFooter display={'flex'} justifyContent={'space-between'} mt={'2vh'}>
+        <ModalFooter display={'flex'} justifyContent={'space-between'} mt={'2vh'} mb={'2vh'} mr={'1vw'} ml={'1.5vw'}>
           <Button visibility={progress === 25 ? 'hidden' : 'unset'} colorScheme='orange' mr={3} onClick={()=>handlePreviousButton()}>
           Prev
           </Button>

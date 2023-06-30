@@ -11,7 +11,6 @@ import{
 } from '@chakra-ui/react';
 import {AiOutlineMail, AiOutlineInfoCircle} from 'react-icons/ai';
 import { MdOpenInNew } from 'react-icons/md'
-import { FiEdit } from 'react-icons/fi'
 import { BiAddToQueue } from 'react-icons/bi'
 import { AiOutlineDelete } from 'react-icons/ai'
 import ModalStamp from './modalStamp';
@@ -22,6 +21,7 @@ import ModalPDF from './modalPDF';
 import { useNavigate } from 'react-router-dom';
 import { AppearanceCharacteristics } from 'pdf-lib';
 import ApproveQuote from './ApproveQuote';
+import UpdateQuoteModal from '../updateQuote/updateQuoteModal';
 import InvoiceSendEmail from './invoiceSendEmail';
 import { useDispatch, useSelector } from 'react-redux';
 import { getCustomerById } from '../../../redux/actions-customers';
@@ -44,27 +44,7 @@ export const InvoiceDetailToolbar = ({invoice, payments, user, invoice_products,
       <Divider w={'100%'} textColor={'web.border'} />
       <Box pl={'1vh'} pb={'1vh'}>
         <ModalPDF invoice={invoice}/>
-        <ButtonGroup
-         textColor={'web.text2'}
-         h={'5vh'}
-         display={'flex'}
-         spacing={0}
-         _hover={{
-         color: 'logo.orange'
-         }}
-         >
-        <IconButton
-         variant={'unstyled'}           
-         fontSize={'xl'}
-         disabled={true}
-         icon={<FiEdit/>}/>
-         <Button
-         fontSize={'1vw'}
-         variant={'unstyled'}           
-         fontWeight={'normal'}
-         disabled={true}
-         >Edit</Button>       
-        </ButtonGroup>
+        <UpdateQuoteModal invoice={invoice} invoice_products={invoice_products}/>
         <ApproveQuote invoice={invoice} user={user}/>
         <ModalStamp invoice={invoice} payments={payments} />
         <CancelQuote invoice={invoice} user={user} />

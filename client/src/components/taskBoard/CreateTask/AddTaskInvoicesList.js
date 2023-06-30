@@ -104,7 +104,7 @@ import {
                     <Thead h={'6vh'}>
                       <Tr>
                           <Th color={'web.text2'} maxW={'6vw'} textAlign={'center'}>Nº</Th>
-                          <Th color={'web.text2'} maxW={'10vw'} textAlign={'center'}>Custoemr</Th>
+                          <Th color={'web.text2'} maxW={'10vw'} textAlign={'center'}>Customer</Th>
                           <Th color={'web.text2'} maxW={'10vw'} textAlign={'center'}>Company</Th>
                           <Th color={'web.text2'} maxW={'6vw'} textAlign={'center'}>Date</Th>
                         </Tr>

@@ -6,6 +6,10 @@ const invoicesPayments = require('../Controllers/invoicesPayments')
 const  { getLimitDateMonth, getCurrentMonth } = require('../Controllers/LastMonth')
 const uniqueFormatNames = require('../Controllers/quotesValues')
 const invoicesFilters = require('../Controllers/invoicesFilters')
+const sendInvoiceEmail = require('../utils/email');
+const { year, month0, day0 } = require('../todayDate');
+const {updateProducts, buildUpdateValuesQuery} = require('../Controllers/updateProductsSales');
+
 
 
 salesRouter.get('/:id', async function(req, res){
@@ -291,12 +295,12 @@ salesRouter.post('/create-quote/:sellerID', async function(req, res) {
   const { formData, authFlag } = req.body;
   const {customer, project, products, variables} = formData
   
-  const date = new Date().toLocaleDateString();
-  const day = `${date.split('/')[1]}`;
-  const month = `${(date.split('/')[0])}`;
-  const day0 = day.length === 1 ? `0${day}` : day
-  const month0 = month.length === 1 ? `0${month}` : month
-  const year = `${date.split('/')[2]}`;
+  // const date = new Date().toLocaleDateString();
+  // const day = `${date.split('/')[1]}`;
+  // const month = `${(date.split('/')[0])}`;
+  // const day0 = day.length === 1 ? `0${day}` : day
+  // const month0 = month.length === 1 ? `0${month}` : month
+  // const year = `${date.split('/')[2]}`;
   
   const parsedProducts = Object.entries(products)
     .flat()
@@ -307,7 +311,7 @@ salesRouter.post('/create-quote/:sellerID', async function(req, res) {
 
   const ProjectID = project.idProjects;
   const InsertDate = `${year}-${month0}-${day0}`
-  console.log(InsertDate)
+
   const EstDelivery_Date = variables.estDelivDate;
   let Naturali_Invoice = 0
 
@@ -428,7 +432,7 @@ salesRouter.get('/project-invoices/:id', async function(req, res){
 salesRouter.get('/customer/:id', async function(req, res){
   const { id } = req.params
 
-  query_ =    `SELECT Sales.* FROM NaturaliStone.Sales
+  query_ =    `SELECT Sales.*, Customers.* FROM NaturaliStone.Sales
               LEFT JOIN NaturaliStone.Projects ON Sales.ProjectID = Projects.idProjects
               LEFT JOIN NaturaliStone.Customers ON Projects.CustomerID = Customers.CustomerID
               WHERE Customers.CustomerID = ${id};`
@@ -451,5 +455,351 @@ salesRouter.get('/customer/:id', async function(req, res){
 
 
 
+salesRouter.patch('/sales-update-products/:id', async function(req, res) {
+  const { id } = req.params;
+  const { products } = req.body.formData;
+
+  const parsedProducts = Object.entries(products)
+    .flat()
+    .filter((element) => typeof element === 'object')
+    .map((product, index) => ({ variableName: `${index + 1}`, ...product }));
+
+  const Value = parsedProducts.reduce((acc, curr) => acc + curr.quantity * curr.price, 0);
+
+  mysqlConnection.beginTransaction(function(err) {
+    if (err) {
+      console.log('Error starting transaction: ' + err);
+      throw err;
+    }
+
+    const prodSoldQuery = `SELECT * FROM ProdSold WHERE ProdSold.SaleID = ${id}`;
+
+    mysqlConnection.query(prodSoldQuery, async function(error, prodSoldResult, fields) {
+      if (error) {
+        console.log('Error retrieving ProdSold data: ' + error);
+        return mysqlConnection.rollback(function() {
+          throw error;
+        });
+      }
+
+      const queryProducts = updateProducts(prodSoldResult, parsedProducts);
+
+      if (queryProducts.updateQuantity.length) {
+        const updateQuantityStatements = queryProducts.updateQuantity.map((product) => {
+          const { quantity, prodID } = product;
+          return `UPDATE ProdSold SET Quantity = ${quantity} WHERE ProdID = ${prodID} AND SaleID = ${id}`;
+        });
+
+        updateQuantityStatements.forEach((updateStatement) => {
+          mysqlConnection.query(updateStatement, function(error, updateResult, fields) {
+            if (error) {
+              console.log('Error updating product: ' + error);
+              return mysqlConnection.rollback(function() {
+                throw error;
+              });
+            }
+            console.log('Updated product successfully 1');
+          });
+        });
+      }
+
+      if (queryProducts.updateStatusQuantity.length) {
+        const updateStatusQuantityStatements = queryProducts.updateStatusQuantity.map((product) => {
+          const { quantity, prodID } = product;
+          return `UPDATE ProdSold SET Quantity = ${quantity}, Status = "Pending" WHERE ProdID = ${prodID} AND SaleID = ${id}`;
+        });
+
+        updateStatusQuantityStatements.forEach((updateStatement) => {
+          mysqlConnection.query(updateStatement, function(error, updateResult, fields) {
+            if (error) {
+              console.log('Error updating product: ' + error);
+              return mysqlConnection.rollback(function() {
+                throw error;
+              });
+            }
+            console.log('Updated product successfully 2');
+          });
+        });
+      }
+
+      if (queryProducts.updateStatus.length) {
+        const updateStatusStatements = queryProducts.updateStatus.map((product) => {
+          const { prodID } = product;
+          return `UPDATE ProdSold SET Status = "Pending" WHERE ProdID = ${prodID} AND SaleID = ${id}`;
+        });
+
+        updateStatusStatements.forEach((updateStatement) => {
+          mysqlConnection.query(updateStatement, function(error, updateResult, fields) {
+            if (error) {
+              console.log('Error updating product: ' + error);
+              return mysqlConnection.rollback(function() {
+                throw error;
+              });
+            }
+            console.log('Updated product successfully 3');
+          });
+        });
+      }
+
+      if (queryProducts.cancelStatus.length) {
+        const cancelStatusStatements = queryProducts.cancelStatus.map((product) => {
+          const { ProdID } = product;
+          return `UPDATE ProdSold SET Status = "Canceled" WHERE ProdID = ${ProdID} AND SaleID = ${id}`;
+        });
+
+        cancelStatusStatements.forEach((updateStatement) => {
+          mysqlConnection.query(updateStatement, function(error, updateResult, fields) {
+            if (error) {
+              console.log('Error updating product: ' + error);
+              return mysqlConnection.rollback(function() {
+                throw error;
+              });
+            }
+            console.log('Updated product Status(Canceled) successfully 4');
+          });
+        });
+      }
+
+      if (queryProducts.insert.length) {
+        queryProducts.insert.forEach((product) => {
+          const { prodID, quantity, price } = product;
+          const insertQuery = `INSERT INTO ProdSold (SaleID, ProdID, Quantity, SalePrice, Status) VALUES (${id}, ${prodID}, ${quantity}, ${price}, 'Pending')`;
+
+          mysqlConnection.query(insertQuery, function(error, insertResult, fields) {
+            if (error) {
+              console.log('Error inserting new product: ' + error);
+              return mysqlConnection.rollback(function() {
+                throw error;
+              });
+            }
+            console.log('Inserted new product successfully');
+          });
+        });
+      }
+
+      // Agregar la consulta de actualización de Sales
+      const updateSalesQuery = `UPDATE Sales SET Value = ${Value} WHERE Sales.Naturali_Invoice = ${id}`;
+
+      mysqlConnection.query(updateSalesQuery, function(error, updateSalesResult, fields) {
+        if (error) {
+          console.log('Error updating Sales: ' + error);
+          return mysqlConnection.rollback(function() {
+            throw error;
+          });
+        }
+        console.log('Updated Sales successfully');
+      });
+
+      mysqlConnection.commit(function(commitErr) {
+        if (commitErr) {
+          console.log('Error committing transaction: ' + commitErr);
+          return mysqlConnection.rollback(function() {
+            throw commitErr;
+          });
+        }
+        console.log('Transaction committed successfully');
+        res.status(200).send('Update products ok');
+      });
+    });
+  });
+});
+
+
+salesRouter.patch('/sales-update/:id', async function(req, res) {
+  const { id } = req.params
+  const { SellerID } = req.body
+  const { variables, products, project } = req.body.formData
+  const { idProjects } = project
+  const { estDelivDate, shipVia, paymentTerms, method } = variables
+  const LastInsertDate = `${year}-${month0}-${day0}` 
+  const ModificationFlag = true
+
+  const salesQuery = 'UPDATE Sales SET ' + buildUpdateValuesQuery(SellerID, idProjects, LastInsertDate, estDelivDate, shipVia, ModificationFlag, paymentTerms, method) + ` WHERE Naturali_Invoice = ${id}`;
+
+  try {
+
+      mysqlConnection.query(salesQuery, function(error, salesResult, fields) {
+        if (error) {
+          return mysqlConnection.rollback(function() {
+            throw error;
+          });
+        }
+        
+        if (salesResult.affectedRows === 0) {
+          console.log(`Failure updating Sale ${id}`);
+          res.status(200).json('');
+          return mysqlConnection.rollback(function() {
+            throw new Error(`Failure updating Sale ${id}`);
+          });
+        } else {
+            console.log('Updated Sales successfully');
+
+              res.status(200).json(salesResult);
+            }
+          });
+    } catch (error) {
+      res.status(409).send(error);
+    }
+});
+
 
 module.exports = salesRouter;
+
+//   const { id } = req.params;
+//   const { products, project, variables } = req.body.formData;
+//   const { SellerID } = req.body;
+//   const { idProjects } = project;
+//   const { estDelivDate, shipVia, paymentTerms, method } = variables;
+
+//   const LastInsertDate = `${year}-${month0}-${day0}`;
+//   const ModificationFlag = true;
+
+//   const parsedProducts = Object.entries(products)
+//     .flat()
+//     .filter((element) => typeof element === 'object')
+//     .map((product, index) => ({ variableName: `${index + 1}`, ...product }));
+
+//   const Value = parsedProducts.reduce((acc, curr) => acc + curr.quantity * curr.price, 0);
+
+//   const salesQuery = 'UPDATE Sales SET ' + buildUpdateValuesQuery(SellerID, idProjects, LastInsertDate, estDelivDate, shipVia, ModificationFlag, paymentTerms, method, Value) + ` WHERE Naturali_Invoice = ${id}`;
+
+//   const prodSoldQuery = `SELECT * FROM ProdSold WHERE ProdSold.SaleID = ${id}`;
+
+//   try {
+//     mysqlConnection.beginTransaction(function(err) {
+//       if (err) {
+//         throw err;
+//       }
+
+//       mysqlConnection.query(salesQuery, function(error, salesResult, fields) {
+//         if (error) {
+//           return mysqlConnection.rollback(function() {
+//             throw error;
+//           });
+//         }
+
+//         if (salesResult.affectedRows === 0) {
+//           console.log(`Failure updating Sale ${id}`);
+//           res.sendStatus(200);
+//           return mysqlConnection.rollback(function() {
+//             throw new Error(`Failure updating Sale ${id}`);
+//           });
+//         } else {
+//           console.log('Updated Sales successfully');
+
+//           mysqlConnection.query(prodSoldQuery, async function(error, prodSoldResult, fields) {
+//             if (error) {
+//               console.log('Error retrieving ProdSold data: ' + error);
+//               return mysqlConnection.rollback(function() {
+//                 throw error;
+//               });
+//             } else {
+
+//             const queryProducts = updateProducts(prodSoldResult, parsedProducts);
+
+//             if (queryProducts.updateQuantity.length) {
+//               const updateQuantityStatements = queryProducts.updateQuantity.map((product) => {
+//                 const { quantity, prodID } = product;
+//                 return `UPDATE ProdSold SET Quantity = ${quantity} WHERE ProdID = ${prodID} AND SaleID = ${id}`;
+//               });
+
+//               updateQuantityStatements.forEach((updateStatement) => {
+//                 mysqlConnection.query(updateStatement, function(error, updateResult, fields) {
+//                   if (error) {
+//                     console.log('Error updating product: ' + error);
+//                     return mysqlConnection.rollback(function() {
+//                       throw error;
+//                     });
+//                   }
+//                   console.log('Updated product successfully 1');
+//                 });
+//               });
+//             }
+
+//             if (queryProducts.updateStatusQuantity.length) {
+//               const updateStatusQuantityStatements = queryProducts.updateStatusQuantity.map((product) => {
+//                 const { quantity, prodID } = product;
+//                 return `UPDATE ProdSold SET Quantity = ${quantity}, Status = "Pending" WHERE ProdID = ${prodID} AND SaleID = ${id}`;
+//               });
+
+//               updateStatusQuantityStatements.forEach((updateStatement) => {
+//                 mysqlConnection.query(updateStatement, function(error, updateResult, fields) {
+//                   if (error) {
+//                     console.log('Error updating product: ' + error);
+//                     return mysqlConnection.rollback(function() {
+//                       throw error;
+//                     });
+//                   }
+//                   console.log('Updated product successfully 2');
+//                 });
+//               });
+//             }
+
+//             if (queryProducts.updateStatus.length) {
+//               const updateStatusStatements = queryProducts.updateStatus.map((product) => {
+//                 const { prodID } = product;
+//                 return `UPDATE ProdSold SET Status = "Pending" WHERE ProdID = ${prodID} AND SaleID = ${id}`;
+//               });
+
+//               updateStatusStatements.forEach((updateStatement) => {
+//                 mysqlConnection.query(updateStatement, function(error, updateResult, fields) {
+//                   if (error) {
+//                     console.log('Error updating product: ' + error);
+//                     return mysqlConnection.rollback(function() {
+//                       throw error;
+//                     });
+//                   }
+//                   console.log('Updated product successfully 3');
+//                 });
+//               });
+//             }
+
+//             if (queryProducts.cancelStatus.length) {
+//               const cancelStatusStatements = queryProducts.cancelStatus.map((product) => {
+//                 const { ProdID } = product;
+//                 return `UPDATE ProdSold SET Status = "Canceled" WHERE ProdID = ${ProdID} AND SaleID = ${id}`;
+//               });
+
+//               cancelStatusStatements.forEach((updateStatement) => {
+//                 mysqlConnection.query(updateStatement, function(error, updateResult, fields) {
+//                   if (error) {
+//                     console.log('Error updating product: ' + error);
+//                     return mysqlConnection.rollback(function() {
+//                       throw error;
+//                     });
+//                   }
+//                   console.log('Updated product Status(Canceled) successfully 4');
+//                 });
+//               });
+//             }
+
+//             if (queryProducts.insert.length) {
+//               queryProducts.insert.forEach((product) => {
+//                 const { prodID, quantity, price } = product;
+//                 const insertQuery = `INSERT INTO ProdSold (SaleID, ProdID, Quantity, SalePrice, Status) VALUES (${id}, ${prodID}, ${quantity}, ${price}, 'Pending')`;
+
+//                 mysqlConnection.query(insertQuery, function(error, insertResult, fields) {
+//                   if (error) {
+//                     console.log('Error inserting new product: ' + error);
+//                     return mysqlConnection.rollback(function() {
+//                       throw error;
+//                     });
+//                   }
+//                   console.log('Inserted new product successfully');
+//                 });
+//               });
+//             }
+//           }
+
+//             console.log('Updated ProdSold data successfully');
+//           });
+
+//           console.log('Transaction committed successfully');
+//           res.status(200).send('updated');
+//         }
+//       });
+//     });
+//   } catch (error) {
+//     res.status(409).send(error);
+//   }
+// });

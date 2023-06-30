@@ -13,7 +13,7 @@ factoryRouter.get('/', async function(req, res){
         search ? 
         `WHERE (Factory.Factory_Name LIKE LOWER('%${search}%') OR Factory.Email LIKE LOWER('%${search}%'))`
         : (``)
-    }`;
+    }ORDER BY Factory.Factory_Name ASC`;
 
     try{
         mysqlConnection.query(query_, function(error, results, fields){
@@ -33,10 +33,10 @@ factoryRouter.get('/', async function(req, res){
 
 factoryRouter.post('/', async function(req, res){
 
-    const { FactoryID, Reference, Factory_Name, Phone, Email, WebSite, International_Flag } = req.body
+    const { Reference, Factory_Name, Phone, Email, WebSite, International_Flag } = req.body
 
-    query_ = `INSERT INTO Factory (FactoryID, Reference, Factory_Name, Phone, Email, WebSite, International_Flag) 
-    VALUES ("${FactoryID}", "${Reference}", "${Factory_Name}", "${Phone}", "${Email}", "${WebSite}", "${International_Flag}")`;
+    query_ = `INSERT INTO Factory (Reference, Factory_Name, Phone, Email, WebSite, International_Flag) 
+    VALUES ("${Reference}", "${Factory_Name}", "${Phone}", "${Email}", "${WebSite}", "${International_Flag}")`;
     
     try{
          mysqlConnection.query(query_, function(error, results, fields){

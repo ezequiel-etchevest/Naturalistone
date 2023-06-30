@@ -6,7 +6,8 @@ const mysqlConnection = require('../db')
 sellerRouter.get('/', async function(req, res){
     const data = req.body
 
-    query_ = `SELECT * FROM  Seller`;
+    query_ = `SELECT Seller.*, Logins.Secction7Flag FROM NaturaliStone.Seller
+            LEFT JOIN Logins On Logins.SellerID = Seller.SellerID;`;
     try{
          mysqlConnection.query(query_, function(error, results, fields){
             if(error) throw error;

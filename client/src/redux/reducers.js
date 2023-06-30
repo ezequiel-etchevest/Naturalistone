@@ -7,11 +7,14 @@ import {
     GET_INVOICE_BY_ID, 
     GET_INVOICES_BY_SELLER, 
     GET_INVOICE_PRODUCTS,
+    CLEAN_INVOICE_PRODUCTS,
     PATCH_STAMP,
     PATCH_STATUS,
     GET_SELLER_VALUES,
     POST_QUOTE,
     CLEAN_POST_QUOTE,
+    PATCH_QUOTE,
+    PATCH_QUOTE_PRODS,
     CLEAN_INVOICE_DETAIL
 } from './actions-invoices';
 import { 
@@ -278,6 +281,11 @@ function rootReducer (state = intialState, action) {
                 ...state,
                 invoice_products: action.payload
           }
+        case CLEAN_INVOICE_PRODUCTS:
+            return {
+                ...state,
+                invoice_products: []
+          }
         case GET_PAYMENTS_BY_ID:
             return {
               ...state,
@@ -429,7 +437,8 @@ function rootReducer (state = intialState, action) {
         case GET_CUSTOMER_INVOICES:
             return{
               ...state,
-              project_invoices: action.payload
+              project_invoices: action.payload,
+              seller_invoices: action.payload
           }
         case POST_PROJECT:
           return{
@@ -441,6 +450,7 @@ function rootReducer (state = intialState, action) {
             ...state,
             posted_quote: action.payload
           }
+ 
         case CLEAN_POST_QUOTE:
           return{
             ...state,
@@ -510,6 +520,17 @@ function rootReducer (state = intialState, action) {
             ...state,
             factories: action.payload
           }
+        case PATCH_QUOTE_PRODS:
+          return{
+            ...state,
+            invoice_products: action.payload.prods,
+            invoice: action.payload.invoice
+          } 
+        case PATCH_QUOTE:
+          return{
+            ...state,
+            invoice: action.payload
+          } 
         case GET_FREIGHTS:
           return {
             ...state,

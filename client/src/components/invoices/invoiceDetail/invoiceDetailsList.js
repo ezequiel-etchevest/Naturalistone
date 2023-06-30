@@ -1,8 +1,7 @@
 import { Box, Text } from "@chakra-ui/react"
-import { useSelector } from "react-redux"
 
 const InvoiceDetailList = ({invoice, payments}) => {
-  
+
     return(
         <>
         <Box
@@ -14,7 +13,7 @@ const InvoiceDetailList = ({invoice, payments}) => {
           pt={'1.5vw'}
           pb={'1.5vw'}
           h={'44vh'}
-          w={'23vw'}
+          w={'33vw'}
           display={'flex'}
           flexDir={'column'}
           color={'web.text'}
@@ -27,17 +26,22 @@ const InvoiceDetailList = ({invoice, payments}) => {
           display={'flex'} 
           flexDir={'row'} 
           alignItems={'baseline'}
+          justifyContent={'space-between'}
+          w={'19vw'}
+          fontSize={'2.6vh'}
+          mb={'1vh'}
           >
-            <Text 
-            color={'logo.orange'} 
-            fontSize={'1.8vw'}>
-              {invoice[0].Naturali_Invoice}
-             </Text>
             <Text 
               color={'web.text2'} 
               ml={'1vh'}>
               Quote Details
             </Text>
+            <Text 
+            ml={'2vw'}
+            color={'logo.orange'} 
+            >
+              {invoice[0].Naturali_Invoice}
+             </Text>
           </Box>
           <Box 
             mt={'1vh'} 
@@ -50,28 +54,30 @@ const InvoiceDetailList = ({invoice, payments}) => {
               display={'flex'}
               flexDir={'column'}
               justifyContent={'space-around'}
-              w={'10vw'}
+              w={'12vw'}
               >
               <Box >
               <Text 
                 fontSize={'xs'} 
-                color={'web.text2'}>
-                  Customer name
+                color={'web.text2'}
+                mb={'0.5vh'}>
+                  Customer
               </Text>
               <Text 
-                fontSize={'lg'} 
+                fontSize={'sm'} 
                 fontWeight={'bold'}>
-                  {invoice[0].Reference}
+                  {invoice[0].Contact_Name ? invoice[0].Contact_Name : invoice[0].Company}
               </Text>
               </Box>
               <Box>
                 <Text 
                   fontSize={'xs'}  
-                  color={'web.text2'}>
+                  color={'web.text2'}
+                  mb={'0.5vh'}>
                   Shipping Method
                 </Text>
                 <Text 
-                  fontSize={'lg'} 
+                  fontSize={'sm'} 
                   fontWeight={'bold'}>
                     {invoice[0].ShippingMethod}
                 </Text>
@@ -79,11 +85,12 @@ const InvoiceDetailList = ({invoice, payments}) => {
               <Box>
               <Text 
                 color={'web.text2'} 
-                fontSize={'xs'} >
+                fontSize={'xs'} 
+                mb={'0.5vh'}>
                   Amount
                 </Text>
                 <Text 
-                fontSize={'lg'} 
+                fontSize={'sm'} 
                 fontWeight={'bold'}>
                   $ {invoice[0].Value.toLocaleString('en-US')}
                   </Text>
@@ -91,11 +98,12 @@ const InvoiceDetailList = ({invoice, payments}) => {
               <Box>
                 <Text 
                   color={'web.text2'} 
-                  fontSize={'xs'} >
+                  fontSize={'xs'} 
+                  mb={'0.5vh'}>
                   Payment percentage
                 </Text>
                 <Text 
-                  fontSize={'lg'} 
+                  fontSize={'sm'} 
                   fontWeight={'bold'}>
                   { payments.paymentsMath ? (
                     Math.round(payments.paymentsMath.PaymentPercentage)                  
@@ -115,23 +123,32 @@ const InvoiceDetailList = ({invoice, payments}) => {
               <Box>
                 <Text 
                   fontSize={'xs'}  
-                  color={'web.text2'}>
+                  color={'web.text2'}
+                  mb={'0.5vh'}>
                   Project name
                 </Text>
                 <Text 
-                  fontSize={'lg'}  
-                  fontWeight={'bold'}>
+                  fontSize={'sm'}  
+                  fontWeight={'bold'}
+                  // mb={
+                  //   invoice[0].Contact_Name?.length ? 
+                  //   invoice[0].Contact_Name?.length > 16 ? '2.6vh' : '0.5vh'
+                  //   :
+                  //   invoice[0].Company?.length > 16 ? '2.6vh' : '0.5vh'
+                  // }
+                  mb={'0.5vh'}>
                   {invoice[0].ProjectName}
                 </Text>
               </Box>
               <Box>
               <Text 
                   fontSize={'xs'}  
-                  color={'web.text2'}>
+                  color={'web.text2'}
+                  mb={'0.5vh'}>
                   Status
                 </Text>
                 <Text 
-                  fontSize={'lg'}
+                  fontSize={'sm'}
                   textColor={invoice[0].Status === 'Pending_Approval' ? 'logo.orange' : 'unset'} 
                   fontWeight={'bold'}>
                   {invoice[0].Status}
@@ -140,11 +157,12 @@ const InvoiceDetailList = ({invoice, payments}) => {
               <Box>
               <Text 
                 color={'web.text2'} 
-                fontSize={'xs'} >
+                fontSize={'xs'} 
+                mb={'0.5vh'}>
                   Date
               </Text>
               <Text 
-              fontSize={'lg'} 
+              fontSize={'sm'} 
               fontWeight={'bold'}>
                 {invoice[0].InvoiceDate.split('T')[0]}
                 </Text>
@@ -152,11 +170,12 @@ const InvoiceDetailList = ({invoice, payments}) => {
               <Box>
                 <Text 
                   color={'web.text2'} 
-                  fontSize={'xs'} >
+                  fontSize={'xs'} 
+                  mb={'0.5vh'}>
                     Pending amount
                 </Text>
                 <Text 
-                  fontSize={'lg'} 
+                  fontSize={'sm'} 
                   fontWeight={'bold'}>
                   $ {payments.paymentsMath  ? (
                    Number(payments?.paymentsMath?.PendingAmount).toLocaleString('en-US')
