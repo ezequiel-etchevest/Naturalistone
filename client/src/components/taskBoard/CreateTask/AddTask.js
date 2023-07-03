@@ -40,6 +40,7 @@ export const AddTask = ({ user, filters, setFilters}) => {
     setProgress(20)
     dispatch(getCustomers(''))
     setFormData({})
+    setInputValueCustomer('')
     onClose()
   }
   const handleChange = (event) => {
@@ -94,6 +95,7 @@ export const AddTask = ({ user, filters, setFilters}) => {
     dispatch(postTask(formData, 'todo'))
     dispatch(getCustomers(''))
     setFormData({})
+    setInputValueCustomer('')
     setFilters({
       ...filters,
       SellerID: formData.SellerID
@@ -158,7 +160,7 @@ export const AddTask = ({ user, filters, setFilters}) => {
           _hover={{
             color: 'web.text'
           }} />
-        <ModalBody color={'web.text2'} p={'2vh'}>
+        <ModalBody color={'web.text2'} p={'2vh'} maxH={'40vh'} minH={'60vh'}>
           {
             progress === 20 && (
               <AddTaskInfo handleChange={handleChange} formData={formData} setFormData={setFormData} user={user}/>

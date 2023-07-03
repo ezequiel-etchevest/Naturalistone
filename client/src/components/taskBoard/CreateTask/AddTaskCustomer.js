@@ -42,7 +42,6 @@ import {
         mt={'2vh'}
         mb={'2vh'}
         >
-        
         <Box display={'flex'} flexDir={'row'} h={'6vh'} w={'18vw'} justifyContent={'space-around'}>
           <Box>
             <Input
@@ -77,7 +76,7 @@ import {
           <Divider orientation={'vertical'} h={'6vh'} />
           <CreateCustomerModal customer={customer} setCustomer={setCustomer}/>
           </Box>
-        </HStack>
+      </HStack>
         { 
         customers.length ?
           Array.isArray(customers) ?

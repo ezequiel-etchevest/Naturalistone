@@ -85,6 +85,7 @@ export const AddTaskCustomerList = ({customers, setFormData, formData}) => {
       display={'flex'}
       justifyContent={'center'}
       maxH={'40vh'}
+      minH={'40vh'}
       ml={'1vh'}
       w={'96%'}
       >
