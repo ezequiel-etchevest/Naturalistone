@@ -16,11 +16,9 @@ import {
   import { getCustomers } from "../../../redux/actions-customers";
   import { AddTaskCustomerList } from "./AddTaskCustomerList";
 
-  const AddTaskCustomer = ({customers, setFormData, formData, setDisable}) =>{
-  
+  const AddTaskCustomer = ({customers, setFormData, formData, setDisable, inputValue, setInputValue}) =>{
   
   const dispatch = useDispatch()
-  const [inputValue, setInputValue] = useState('')
   const [customer, setCustomer] = useState('')
   
   const handleInput = (e) =>  {

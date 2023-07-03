@@ -16,10 +16,18 @@ import {
   const ModelTr = ({e, setFormData, formData}) => {
 
     const handleClick = () => {
-      setFormData({
-        ...formData,
-        InvoiceID: e.Naturali_Invoice,
-      })
+      if(formData.InvoiceID === e.Naturali_Invoice){
+        setFormData({
+          ...formData,
+          InvoiceID:'',
+        })
+      }else {
+        setFormData({
+          ...formData,
+          InvoiceID: e.Naturali_Invoice,
+        })
+      }
+
     }
   
     return(
