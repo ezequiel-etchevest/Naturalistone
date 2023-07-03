@@ -31,7 +31,7 @@ const LoadPdf = ({idpdf, stamp, status}) => {
         }
       }
     }
-
+    
 
     const modifyPdf = async () => {
       
