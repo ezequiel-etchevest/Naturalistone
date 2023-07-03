@@ -59,8 +59,6 @@ s3Router.get('/all-images/:folder/:fileName', (req, res) => {
   });
 });
 
-
-
 s3Router.get('/pdf/:id', (req, res) => {
   const { id } = req.params;
 
@@ -119,6 +117,100 @@ s3Router.post('/uploadPdf/:invoiceID', upload.single('pdf'), async (req, res) =>
     res.status(500).send('Error al subir el archivo a S3');
   }
 });
+
+s3Router.get('/pdf', (req, res) => {
+  const prefix = 'Invoice Naturali/'; // Prefijo de la carpeta en S3
+  const params = {
+    Bucket: 'naturali-parseddocuments',
+    Prefix: prefix,
+  };
+
+  s3.listObjectsV2(params, (err, data) => {
+    if (err) {
+      console.error(err);
+      return res.status(404).send('Error al obtener los archivos PDF de S3');
+    }
+
+    const files = data.Contents.map((file) => ({
+      key: file.Key,
+      contentType: file.ContentType,
+      contentLength: file.ContentLength,
+    }));
+
+    res.status(200).json(files);
+  });
+});
+
+s3Router.get('/pdf/search/:searchTerm', (req, res) => {
+
+  const { searchTerm } = req.params;
+  const prefix = 'Invoice Naturali/'; // Prefijo de la carpeta en S3
+  const params = {
+    Bucket: 'naturali-parseddocuments',
+    Prefix: prefix,
+  };
+
+  s3.listObjectsV2(params, (err, data) => {
+    if (err) {
+      console.error(err);
+      return res.status(404).send('Error al obtener los archivos PDF de S3');
+    }
+
+    const files = data.Contents.filter((file) => {
+      const key = file.Key;
+      const fileParts = key.split('/');
+      const fileName = fileParts[fileParts.length - 1];
+      return fileName.includes(searchTerm);
+    });
+
+    if (files.length === 0) {
+      return res.status(404).send('No se encontraron archivos PDF con ese término de búsqueda');
+    }
+
+    const fileNames = files.map((file) => {
+      const key = file.Key;
+      const fileParts = key.split('/');
+      const fileName = fileParts[fileParts.length - 1];
+      return fileName;
+    });
+
+    let highestVersion = -1;
+    let highestVersionFileName = '';
+    let highestVersionFileUrl = '';
+
+    fileNames.forEach((fileName, index) => {
+      const versionMatch = fileName.match(/v(\d+)\./);
+      if (versionMatch) {
+        const version = parseInt(versionMatch[1]);
+        if (version > highestVersion) {
+          highestVersion = version;
+          highestVersionFileName = fileName.split(".")[0];
+          highestVersionFileUrl = `https://naturali-parseddocuments.s3.amazonaws.com/${encodeURIComponent(files[index].Key)}`;
+        }
+      } else if (!fileName.includes("v")) {
+        const version = 0;
+        if (version > highestVersion) {
+          highestVersion = version;
+          highestVersionFileName = fileName.split(".")[0];
+          highestVersionFileUrl = `https://naturali-parseddocuments.s3.amazonaws.com/${encodeURIComponent(files[index].Key)}`;
+        }
+      }
+    });
+
+    if (highestVersionFileUrl === '') {
+      return res.status(404).send('No se encontró el PDF correspondiente');
+    }
+
+    const response = {
+      version: highestVersion,
+      fileName: highestVersionFileName,
+      fileUrl: highestVersionFileUrl
+    };
+
+    res.status(200).json(response);
+  });
+});
+
 
 
 

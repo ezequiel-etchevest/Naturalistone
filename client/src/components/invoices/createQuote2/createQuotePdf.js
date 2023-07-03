@@ -3,9 +3,9 @@ import { useSelector } from 'react-redux';
 import { PDFDocument, rgb, degrees } from 'pdf-lib';
 import { Box, Center, Spinner, Button, Flex } from '@chakra-ui/react';
 import axios from 'axios';
-import pending_approval from '../../../assets/pending_approval.png'
 
-const CreatedQuotePdf = ({formData, user, authFlag}) => {
+
+const CreatedQuotePdf = ({formData, user}) => {
 
   const {variables, customer, project} = formData
   // console.log({variables, user, customer, project, authFlag})
@@ -92,20 +92,7 @@ const CreatedQuotePdf = ({formData, user, authFlag}) => {
   page.drawText(`${deliveryMethod}`, { x: 439, y: 508, size: 10 }) 
   page.drawText(`${paymentTerms}`, { x: 524, y: 508, size: 10 }) 
 
-  if(authFlag === true ) {
-    const pngImageBytes = await fetch(pending_approval).then((res) => res.arrayBuffer())
-    const pngImage = await pdfDoc.embedPng(pngImageBytes)
-    const pngDims = pngImage.scale(0.5)
-    
-   
-    page.drawImage(pngImage, {
-      x: page.getWidth() / 2 - pngDims.width / 3 + 50,
-      y: page.getHeight() / 7 - pngDims.height + 250,
-      width: pngDims.width,
-      height: pngDims.height,
-      rotate: degrees(30)
-    })
-  }
+
 
 // //This line uses the forEach method to iterate over each key-value pair in the array created by Object.
 // //entries. For each iteration, the key (variableName) and value (element) are destructured from the pair and
@@ -144,12 +131,13 @@ mappedProducts.forEach((product, index) => {
   async function savePdfOnServer(pdfBytes, invoiceID) {
     try {
       const formData = new FormData();
-      if(authFlag === true ) {
-        formData.append('pdf', new Blob([pdfBytes], { type: 'application/pdf' }), `${invoiceID}PA.pdf`)
-        }
-      else {
-        formData.append('pdf', new Blob([pdfBytes], { type: 'application/pdf' }), `${invoiceID}.pdf`)  
-        }
+
+      const version = await axios.get(`/s3/pdf/search/${invoiceID}`)
+
+      const newVersion = version.data.version + 1
+
+      formData.append('pdf', new Blob([pdfBytes], { type: 'application/pdf' }), `${invoiceID}v${newVersion}.pdf`)  
+      
       const config = {
         headers: {
           'Content-Type': 'multipart/form-data'
