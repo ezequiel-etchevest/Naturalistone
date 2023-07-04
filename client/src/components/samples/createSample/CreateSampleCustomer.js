@@ -34,7 +34,7 @@ const handleInput = (e) =>  {
   }
 }
 
-console.log('soy customers', customers)
+
 
 return(
   <>

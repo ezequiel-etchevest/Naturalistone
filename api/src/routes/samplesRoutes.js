@@ -71,12 +71,63 @@ samplesRoutes.post('/', function(req, res) {
       if (err) {
         return res.status(400).json({success: false, msg:'error in post /sample' + err})
       }
-      
-      const query_ = `INSERT INTO Samples (CustomerID, ProjectID, TrackingNumber)
+
+      const clausulasWhere = [];
+
+    // Recorrer el array de valores y construir las cláusulas WHERE
+     parsedProducts.forEach(valores => {
+     const clausula = `Material = '${valores.type}' AND Type = 'Sample' AND Finish = '${valores.finish}'`;
+     clausulasWhere.push(clausula);
+    });
+
+// Construir la consulta SELECT
+    const sqlSelect = `SELECT * FROM Dimension WHERE ${clausulasWhere.join(' OR ')}`;
+    
+    mysqlConnection.query(sqlSelect, function(err, results, fields) {
+      if (err) {
+        res.status(400).json({ success: false, msg: 'error in create samples in post /sample' });
+        return mysqlConnection.rollback(function() {
+          throw err;
+        });
+      }
+        // Obtener los valores existentes en la tabla
+  const valoresExistente = results.map(result => ({
+    material: result.Material,
+    type: result.Type,
+    finish: result.Finish,
+  }));
+
+  // Filtrar los valores existentes
+  const valoresNoExistentes = parsedProducts.filter(valores => {
+    return !valoresExistente.some(existente =>
+      existente.material === valores.type &&
+      existente.finish === valores.finish
+    );
+  });
+
+  // Verificar si hay valores no existentes
+  if (valoresNoExistentes.length > 0) {
+    // Construir la consulta INSERT
+    const sqlInserts = valoresNoExistentes.map(valores => {
+      return `INSERT INTO NaturaliStone.Dimension (Material, Type, Finish) VALUES ('${valores.type}', 'Sample', '${valores.finish}')`;
+    });
+
+    sqlInserts.forEach(sqlInsert => {
+      mysqlConnection.query(sqlInsert, function(err, result) {
+        if (err) {
+          return mysqlConnection.rollback(function() {
+            throw err;
+          });
+        }
+      })
+    })
+  }
+
+
+      const query_1 = `INSERT INTO Samples (CustomerID, ProjectID, TrackingNumber)
       VALUES (${customer.CustomerID}, ${project.idProjects}, ${variables.trackingNumber})`
 
-      mysqlConnection.query(query_, function(err, results, field) {
-    console.log('aqui entre', results)
+      mysqlConnection.query(query_1, function(err, results, field) {
 
         if(err) {
           res.status(400).json({success: false, msg:'error in create samples in post /sample'})
@@ -89,16 +140,16 @@ samplesRoutes.post('/', function(req, res) {
 
         console.log(parsedProducts)
 
-        const query_1 = `INSERT INTO Samples_Products (SampleID, ProdID, Quantity) Values ?`
+        const query_2 = `INSERT INTO Samples_Products (SampleID, ProdID, Quantity) Values ?`
         const sampleProductsValue = parsedProducts.map((elem) => [sampleID, elem.prodID, elem.quantity])
         
-        mysqlConnection.query(query_1, sampleProductsValue, async function(error, results, fields){
+        mysqlConnection.query(query_2, sampleProductsValue, async function(error, results, fields){
           if (error) {
             console.log('Error in sampleroutes.post /samples ' + error);
             console.log('Retrying ProdSold insert after 0.5 seconds...');
             
             setTimeout(() => {
-              mysqlConnection.query(query_1, [sampleProductsValue], async function(error, prodSoldResult, fields) {
+              mysqlConnection.query(query_2, [sampleProductsValue], async function(error, prodSoldResult, fields) {
                 if (error) {
                   console.log('Error in sampleroutes.post /samples ' + error);
                   res.status(500).json('Failed to insert ProdSold');
@@ -120,6 +171,7 @@ samplesRoutes.post('/', function(req, res) {
         })
     })
   })
+})
     
   } catch (error) {
     return res.status(400).json({success: false, msg: 'Error in samples routes post /samples' + error})

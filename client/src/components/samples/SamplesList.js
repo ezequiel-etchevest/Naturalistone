@@ -102,7 +102,7 @@ import { getSamplesProducts } from '../../redux/actions-samples';
       w={'80vw'}
       >
       {
-        samples.length ? (
+        samples?.length ? (
           <TableContainer  maxW={'80vw'}>
             <Table color={'web.text'}variant={'simple'} size={'sm'}>
               <Thead h={'6vh'}>
@@ -115,7 +115,7 @@ import { getSamplesProducts } from '../../redux/actions-samples';
                 </Thead>
                 <Tbody >
                 { 
-                  samples.slice(0, loadedCount).map((e, i) => {
+                  samples?.slice(0, loadedCount).map((e, i) => {
                     return (<ModelTr key={i} e={e} user={user}/> )
                   })
                 }

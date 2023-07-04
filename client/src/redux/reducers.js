@@ -39,6 +39,7 @@ import {
     GET_PRODUCT_IMAGE,
     CLEAN_PRODUCT_DETAIL,
     GET_PRODUCTS_NEW_QUOTE,
+    GET_PRODUCTS_NEW_SAMPLES,
      } from './actions-products';
 import { 
   GET_CURRENT_MONTH,
@@ -167,7 +168,10 @@ const intialState = {
     freight: {},
     freights_factory: [],
     samples: [],
-    samples_products: []
+    samples_products: [],
+    products_new_samples: [],
+    products_new_samples_values: [],
+    products_new_samples_errors: {},
 }
 
 function rootReducer (state = intialState, action) {
@@ -624,6 +628,13 @@ function rootReducer (state = intialState, action) {
               ...state,
               samples_products: action.payload,
             }
+          case GET_PRODUCTS_NEW_SAMPLES:
+            return {
+              ...state,
+              products_new_samples: action.payload.results,
+              products_new_samples_values: action.payload.filteredValues,
+              products_new_samples_errors: action.payload.errorSearch
+              }
         default:
             return {
               ...state

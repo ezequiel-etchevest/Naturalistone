@@ -5,6 +5,7 @@ const filterProducts = require('../Controllers/productFiltersController')
 const { prodValues, findMaxMinPrice, getSqftMaxMin } = require('../Controllers/productValues')
 const objetosFiltrados = require('../Controllers/inventoryController')
 const {getImage} = require('../Controllers/oneDriveProductImages')
+const { productsNotEqual } = require('../Controllers/productsNotRepeat')
 
 productsRouter.get('/', async function(req, res){
     
@@ -97,6 +98,53 @@ productsRouter.get('/new_quote', async function(req, res){
   }
 });
 
+productsRouter.get('/new_samples', async function(req, res){
+  let { finish, material, search } = req.query;
+  console.log('entre')
+  const query = `
+  SELECT
+    ProdNames.Naturali_ProdName AS ProductName,
+    ProdNames.Material,
+    Dimension.Finish,
+    Products.ProdID
+  FROM Products
+  INNER JOIN ProdNames ON ProdNames.ProdNameID = Products.ProdNameID
+  INNER JOIN Dimension ON Dimension.DimensionID = Products.DimensionID
+  INNER JOIN Inventory ON Inventory.ProdID = Products.ProdID
+  ${
+    material.length ? (`AND (ProdNames.Material = "${material}")`) : (``)
+  }
+  ${
+    finish.length ? (`AND (Dimension.Finish = "${finish}")`) : (``)
+  }
+  ${
+    search.length ? (
+      `AND (LOWER(ProdNames.Naturali_ProdName) LIKE LOWER('%${search}%'))`
+    ) : (``)
+  }
+  ORDER BY ProdNames.Naturali_ProdName ASC
+  `;
+
+  try {
+    mysqlConnection.query(query, function(error, results, fields) {
+      if (error) throw error;
+      if (results.length == 0) {
+        let filteredValues = prodValues(results, search)
+        console.log('Error en productsRoutes.get /new_samples');
+        res.status(200).json({results, errorSearch: 'No products found', filteredValues});
+
+      } else {
+        results = productsNotEqual(results)
+        let filteredValues = prodValues(results, search)
+        let errorSearch = {}
+        res.status(200).json({results, errorSearch, filteredValues});
+
+      }
+    });            
+  } catch(error) {
+    res.status(409).send(error);
+  }
+});
 
 productsRouter.get('/id/:id', async function(req, res){
     const {id} = req.params

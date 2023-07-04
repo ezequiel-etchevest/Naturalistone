@@ -10,6 +10,7 @@ export const GET_PRODUCT_IMAGES = 'GET_PRODUCT_IMAGES';
 export const GET_PRODUCT_IMAGE = 'GET_PRODUCT_IMAGE';
 export const CLEAN_PRODUCT_DETAIL = 'CLEAN_PRODUCT_DETAIL';
 export const GET_PRODUCTS_NEW_QUOTE = 'GET_PRODUCTS_NEW_QUOTE';
+export const GET_PRODUCTS_NEW_SAMPLES = 'GET_PRODUCTS_NEW_SAMPLES';
 
 export function getAllProducts(){
     return async function(dispatch){
@@ -30,7 +31,6 @@ export function getAllProductsNewQuote(finish, material, search){
     return async function(dispatch){
         try{ 
             let {data} = await axios.get(`/products/new_quote?finish=${finish}&material=${material}&search=${search}`)
-
             dispatch(
             {
                 type: GET_PRODUCTS_NEW_QUOTE,
@@ -42,6 +42,23 @@ export function getAllProductsNewQuote(finish, material, search){
         }
     }
 }
+
+export function getAllProductsNewSamples(finish, material, search){
+    return async function(dispatch){
+        try{ 
+            let {data} = await axios.get(`/products/new_samples?finish=${finish}&material=${material}&search=${search}`)
+            dispatch(
+            {
+                type: GET_PRODUCTS_NEW_SAMPLES,
+                payload: data
+            })
+        }catch(error){
+            console.log({error})           
+
+        }
+    }
+}
+
 export function getFiltered(finish, size, thickness, material, search, sqft, type){
     console.log(search)
     return async function(dispatch){

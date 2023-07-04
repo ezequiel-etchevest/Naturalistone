@@ -10,7 +10,7 @@ import {
 } from "@chakra-ui/react"
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllProductsNewQuote } from "../../../redux/actions-products";
+import { getAllProductsNewQuote, getAllProductsNewSamples } from "../../../redux/actions-products";
 import {BiSearch} from 'react-icons/bi'
 import {AiOutlineClear} from 'react-icons/ai';
 import '../../../assets/styleSheet.css'
@@ -20,10 +20,9 @@ import CreateSampleProductsList from "./CreateSampleProductsList";
   
   const dispatch = useDispatch()
   const toast = useToast()
-  const allProducts = useSelector(state => state.products_new_quote)
-  const allProductsErrors = useSelector(state => state.products_new_quote_errors)
-  const productErrors = useSelector((state) => state.products_errors)
-  const values = useSelector(state => state.products_new_quote_values)
+  const allProducts = useSelector(state => state.products_new_samples)
+  const values = useSelector(state => state.products_new_samples_values)
+  console.log('allpropducts', allProducts)
   
   const [filters, setFilters] = useState({
     finish:'',
@@ -36,7 +35,7 @@ import CreateSampleProductsList from "./CreateSampleProductsList";
       ...filters,
       finish: e.target.value
     })
-    dispatch(getAllProductsNewQuote(e.target.value, filters.material, filters.search))
+    dispatch(getAllProductsNewSamples(e.target.value, filters.material, filters.search))
   }
   
   const handleMaterial = (e) => {
@@ -44,7 +43,7 @@ import CreateSampleProductsList from "./CreateSampleProductsList";
       ...filters,
       material: e.target.value
     })
-    dispatch(getAllProductsNewQuote(filters.finish, e.target.value, filters.search))
+    dispatch(getAllProductsNewSamples(filters.finish, e.target.value, filters.search))
   }
   
   const handleChangeProductName = (e) => {
@@ -52,7 +51,7 @@ import CreateSampleProductsList from "./CreateSampleProductsList";
       ...filters,
       search: e.target.value
     })
-    dispatch(getAllProductsNewQuote(filters.finish, filters.material, e.target.value))
+    dispatch(getAllProductsNewSamples(filters.finish, filters.material, e.target.value))
   }
   
   const handleClear = () => {
@@ -61,9 +60,12 @@ import CreateSampleProductsList from "./CreateSampleProductsList";
       material:'',
       search:''
       }) 
-      dispatch(getAllProductsNewQuote( '','',''))
+      dispatch(getAllProductsNewSamples( '','',''))
   }
-  
+
+  useEffect(() => {
+    getAllProductsNewSamples('', '', '')
+  },[])
   
   return(
   <>
@@ -120,7 +122,7 @@ import CreateSampleProductsList from "./CreateSampleProductsList";
           _hover={{borderColor: 'web.border'}}
           cursor={'pointer'}
           name={'finish'}
-          value={filters.finishfinish}
+          value={filters.finish}
         >
         <option value='' className="options">Finish</option>
         {
@@ -183,7 +185,7 @@ import CreateSampleProductsList from "./CreateSampleProductsList";
         </IconButton>
     </Tooltip> 
       </Box>          
-      <CreateSampleProductsList allProducts={allProducts} allProductsErrors={allProductsErrors} formData={formData} setFormData={setFormData}/>
+      <CreateSampleProductsList allProducts={allProducts} formData={formData} setFormData={setFormData}/>
     </Box> 
   </>
   )}

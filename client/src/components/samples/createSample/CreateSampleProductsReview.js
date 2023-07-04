@@ -48,7 +48,6 @@ const CreateSampleProductsReview = ({ formData, setFormData }) => {
       <Table color={'web.text'} variant={'simple'} size={'sm'}>
         <Thead h={'6vh'}>
           <Tr>  
-            <Th color={'web.text2'} fontSize={'sm'} textAlign={'center'}>Quantities</Th>
             <Th color={'web.text2'} fontSize={'sm'} w={'16vw'} >Product Name</Th>
             <Th color={'web.text2'} fontSize={'sm'} textAlign={'center'}>Type</Th>
             <Th color={'web.text2'} fontSize={'sm'} textAlign={'center'}>Size</Th>
@@ -67,7 +66,6 @@ const CreateSampleProductsReview = ({ formData, setFormData }) => {
               bg: 'web.navBar',
               color: 'logo.orange'
             }}>
-              <Td fontSize={'xs'} textAlign={'center'}>{e[1].quantity}</Td>
               <Td fontSize={'xs'} w={'16vw'} textAlign={'center'}>{e[1].prodName}</Td>
               <Td fontSize={'xs'} textAlign={'center'}>{e[1].type}</Td>
               <Td fontSize={'xs'} textAlign={'center'}>{e[1].size}</Td>

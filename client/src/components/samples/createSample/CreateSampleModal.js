@@ -21,7 +21,7 @@ import {
 import { validateEmptyInputsCreateQuote, validateInPutTrackingNumber } from "../../../utils/validateForm";
 import { getCustomers, updateCustomer } from "../../../redux/actions-customers";
 import { getCustomerProjects } from "../../../redux/actions-projects";
-import { getAllProductsNewQuote } from "../../../redux/actions-products";
+import { getAllProductsNewQuote, getAllProductsNewSamples } from "../../../redux/actions-products";
 import { createQuote } from "../../../redux/actions-invoices";
 import CreateSampleCustomer from "./CreateSampleCustomer";
 import CreateSampleCustomerReview from "./CreateSampleCustomerReview";
@@ -199,7 +199,7 @@ import { postSamples } from "../../../redux/actions-samples";
               isClosable: true,
             }))
           }} 
-          dispatch(getAllProductsNewQuote('', '', ''))
+          dispatch(getAllProductsNewSamples('', '', ''))
           setProgress(progress + 20) 
       } else {
         setProgress(progress + 20) 
