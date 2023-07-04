@@ -27,6 +27,7 @@ import CreateQuoteCustomerReview from "../createQuote2/createQuoteCustomerReview
 import { UpdateQuoteSelection } from "./updateQuoteSelection";
 import CreateQuoteProducts from "../createQuote2/createQuoteProducts";
 import { formatProducts } from "../../../utils/formatedProducts";
+import updateQuotePdf from "./updateQuotePdf";
 
 export default function UpdateQuoteModal({invoice, invoice_products}) {
 
@@ -149,6 +150,7 @@ export default function UpdateQuoteModal({invoice, invoice_products}) {
          dispatch(updateQuoteProds(invoiceID, formData, SellerID))
          dispatch(cleanInvoiceProducts())
       }
+      updateQuotePdf(formData, user, invoice)
       setSubmited(true)
       handleClose()
     }

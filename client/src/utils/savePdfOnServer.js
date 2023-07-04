@@ -2,12 +2,14 @@ import axios from "axios";
 
 
 export async function savePdfOnServer(pdfBytes, invoiceID) {
+
     try {
       const formData = new FormData();
 
       const version = await axios.get(`/s3/pdf/search/${invoiceID}`)
-
-      const newVersion = version.data.version + 1
+      
+      const newVersion = (typeof version.data  !== "string" ?  (version.data.version + 1) : 0)
+      
 
       formData.append('pdf', new Blob([pdfBytes], { type: 'application/pdf' }), `${invoiceID}v${newVersion}.pdf`)  
       

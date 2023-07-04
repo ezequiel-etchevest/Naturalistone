@@ -1,13 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
-import { PDFDocument, rgb } from 'pdf-lib';
+import { PDFDocument, rgb, degrees } from 'pdf-lib';
 import { Box, Center, Spinner, Button, Flex } from '@chakra-ui/react';
+import axios from 'axios';
 import { savePdfOnServer } from '../../../utils/savePdfOnServer';
 
 
 const CreatedQuotePdf = ({formData, user}) => {
 
-    const {variables, customer, project} = formData
+  const {variables, customer, project} = formData
 
     const posted_quote = useSelector(state => state.posted_quote)
  
@@ -127,7 +128,6 @@ mappedProducts.forEach((product, index) => {
   savePdfOnServer(pdfBytes, invoiceID);
 
   };
-
   
   return (
   <>

@@ -164,7 +164,7 @@ s3Router.get('/pdf/search/:searchTerm', (req, res) => {
     });
 
     if (files.length === 0) {
-      return res.status(404).send('No se encontraron archivos PDF con ese término de búsqueda');
+      return res.status(200).send('No se encontraron archivos PDF con ese término de búsqueda');
     }
 
     const fileNames = files.map((file) => {
