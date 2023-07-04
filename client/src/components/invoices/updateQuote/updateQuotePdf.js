@@ -1,26 +1,19 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { useSelector } from 'react-redux';
 import { PDFDocument, rgb, degrees } from 'pdf-lib';
-import { Box, Center, Spinner, Button, Flex } from '@chakra-ui/react';
-import axios from 'axios';
 import { savePdfOnServer } from '../../../utils/savePdfOnServer';
 
+export default function updateQuotePdf (formData, user, invoice){
+  console.log({formData})
+  const {variables, customer, project, products} = formData
 
-const CreatedQuotePdf = ({formData, user}) => {
-
-  const {variables, customer, project} = formData
-
-    const posted_quote = useSelector(state => state.posted_quote)
+  const parsedProducts = Object.entries(products)
+    .flat()
+    .filter((element) => typeof element === 'object')
+    .map((product, index) => ({ variableName: `${index + 1}`, ...product }));
  
-    let invoiceID = posted_quote.Naturali_Invoice
-    const date = posted_quote.InsertDate
-    const [pdfInfo, setPdfInfo] = useState([]);
-    const viewer = useRef(null);
-    const mappedProducts =  posted_quote.parsedProducts
+    let invoiceID = invoice[0].Naturali_Invoice
+    const date = invoice[0].InvoiceDate.split('T')[0]
 
-    useEffect(() => {
-        CreateForm();
-    }, [posted_quote]);
+    const mappedProducts = parsedProducts
 
     async function waitUntilMappedProductsExists() { //esta promesa espera que se llene el estado de 
       return new Promise((resolve) => {              //posted_quote para poder captar los productos correctamente
@@ -36,7 +29,7 @@ const CreatedQuotePdf = ({formData, user}) => {
       });
     }
 
- async function CreateForm() {
+    async function createForm() {
 
   const url = `/Quote/quote-blank.pdf`
   const existingPdfBytes = await fetch(url).then((res) => res.arrayBuffer());
@@ -94,11 +87,6 @@ const CreatedQuotePdf = ({formData, user}) => {
   page.drawText(`${paymentTerms}`, { x: 524, y: 508, size: 10 }) 
 
 
-
-// //This line uses the forEach method to iterate over each key-value pair in the array created by Object.
-// //entries. For each iteration, the key (variableName) and value (element) are destructured from the pair and
-// //passed as arguments to the callback function.
-
 await waitUntilMappedProductsExists();
 
 mappedProducts.forEach((product, index) => {
@@ -122,50 +110,9 @@ mappedProducts.forEach((product, index) => {
 
   const pdfBytes = await pdfDoc.save();
   const blob = new Blob([pdfBytes], { type: 'application/pdf' });
-  
-  setPdfInfo(URL.createObjectURL(blob));
 
   savePdfOnServer(pdfBytes, invoiceID);
-
-  };
   
-  return (
-  <>
-    {
-      Object.entries(posted_quote).length ?
-        posted_quote.Naturali_Invoice && posted_quote.InsertDate ?
-        <Box h={'85vh'} w={'58vw'}>
-          <Flex h="100%" flexDir="row">
-            <Box
-              as="object"
-              data={pdfInfo}
-              type="application/pdf"
-              width="82%"
-              height="98%"
-              position="relative"
-            />
-            <Box
-              position="absolute"
-              bottom="3vh"
-              right="2vw"
-              display={'flex'}
-            >
-              <Button>SEND EMAIL</Button>
-            </Box>
-          </Flex>
-        </Box>
-       :
-        <Center>
-          <Spinner thickness={'4px'} size={'xl'} color={'logo.orange'}/>
-        </Center>
-      :
-      <Center>
-        <Spinner thickness={'4px'} size={'xl'} color={'logo.orange'}/>
-      </Center>
-    }
-  </>
-  )
+    };
+    return createForm()
   };
-
-
-export default CreatedQuotePdf

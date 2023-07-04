@@ -3,6 +3,7 @@ import { PDFDocument, degrees } from 'pdf-lib';
 import paidPic from '../../../assets/paidPic.png'
 import { Box, Center, Spinner, Text } from '@chakra-ui/react';
 import axios from 'axios'
+import pending_approval from '../../../assets/pending_approval.png'
 
 const LoadPdf = ({idpdf, stamp, status}) => {
 
@@ -10,7 +11,8 @@ const LoadPdf = ({idpdf, stamp, status}) => {
     const [err, setError] = useState([]);
     const viewer = useRef(null);
     const filename = idpdf
- 
+
+
     useEffect(() => {
       setError('')
       modifyPdf();
@@ -19,18 +21,18 @@ const LoadPdf = ({idpdf, stamp, status}) => {
     function getpdf(filename) {
       return async function () {
         try {
-          if(status === "Pending_Approval"){
-            const response = await axios.get(`/s3/pdf/${filename}PA`, { responseType: 'arraybuffer' });
+            const pdfName = await axios.get(`/s3/pdf/search/${filename}`);
+
+            const response = await axios.get(`/s3/pdf/${pdfName.data.fileName}`, { responseType: 'arraybuffer' });
             return response;
-          } else{
-            const response = await axios.get(`/s3/pdf/${filename}`, { responseType: 'arraybuffer' });
-            return response;
-          }
+          
           } catch (error) {
           setError(error)
         }
       }
     }
+    
+
     const modifyPdf = async () => {
       
       const response = await getpdf(filename)();
@@ -59,7 +61,20 @@ const LoadPdf = ({idpdf, stamp, status}) => {
             rotate: degrees(55)
           })
         }
+          if(status === "Pending_Approval" ) {
+            const pngImageBytes = await fetch(pending_approval).then((res) => res.arrayBuffer())
+            const pngImage = await pdfDoc.embedPng(pngImageBytes)
+            const pngDims = pngImage.scale(0.5)
 
+
+            firstPage.drawImage(pngImage, {
+              x: firstPage.getWidth() / 2 - pngDims.width / 3 + 50,
+              y: firstPage.getHeight() / 7 - pngDims.height + 250,
+              width: pngDims.width,
+              height: pngDims.height,
+              rotate: degrees(30)
+            })
+          }
         const pdfBytes = await pdfDoc.save();
         const docUrl = URL.createObjectURL(
         new Blob([pdfBytes], { type: "application/pdf" })
