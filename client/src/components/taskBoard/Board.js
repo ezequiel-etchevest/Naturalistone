@@ -13,7 +13,7 @@ const Board = ({setActiveCard, activeCard, user, filters, setFilters}) => {
   const tasks = useSelector(state => state.tasks)
   const sellers = useSelector(state => state.sellers)
   const dispatch = useDispatch()
-  console.log(filters)
+
 
   useEffect(()=>{},[tasks])
   useEffect(()=>{

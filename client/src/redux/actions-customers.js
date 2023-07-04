@@ -64,7 +64,6 @@ export function getCustomerInvoices(id){
   return async function(dispatch){
     try{ 
       let {data} = await axios.get(`sales/customer/${id}`)
-      console.log({data})
         dispatch(
           {
             type: GET_CUSTOMER_INVOICES,

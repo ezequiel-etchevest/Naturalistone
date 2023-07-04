@@ -17,6 +17,7 @@ export const AddTask = ({ user, filters, setFilters}) => {
   
 
   const customers = useSelector(state => state.customers)
+  const [inputValueCustomer, setInputValueCustomer] = useState('')
   const seller_invoices = useSelector(state => state.seller_invoices)
   const dispatch = useDispatch();
   const toastId = 'error-toast'
@@ -37,7 +38,9 @@ export const AddTask = ({ user, filters, setFilters}) => {
 
   const handleClose = () => {
     setProgress(20)
+    dispatch(getCustomers(''))
     setFormData({})
+    setInputValueCustomer('')
     onClose()
   }
   const handleChange = (event) => {
@@ -69,7 +72,7 @@ export const AddTask = ({ user, filters, setFilters}) => {
         else return setProgress(progress + 40)
       } 
       if(progress === 60){
-        if(formData.CustomerID) dispatch(getCustomerInvoices(formData.CustomerID))
+        if(formData.CustomerID && !formData.ProjectID ) dispatch(getCustomerInvoices(formData.CustomerID))
         return setProgress(progress + 20)
       }
        
@@ -90,7 +93,9 @@ export const AddTask = ({ user, filters, setFilters}) => {
   const handleSubmit = () => {
     if(!formData.SellerID) setFormData({...formData, SellerID: user[0].SellerID})
     dispatch(postTask(formData, 'todo'))
+    dispatch(getCustomers(''))
     setFormData({})
+    setInputValueCustomer('')
     setFilters({
       ...filters,
       SellerID: formData.SellerID
@@ -155,7 +160,7 @@ export const AddTask = ({ user, filters, setFilters}) => {
           _hover={{
             color: 'web.text'
           }} />
-        <ModalBody color={'web.text2'} p={'2vh'}>
+        <ModalBody color={'web.text2'} p={'2vh'} maxH={'40vh'} minH={'60vh'}>
           {
             progress === 20 && (
               <AddTaskInfo handleChange={handleChange} formData={formData} setFormData={setFormData} user={user}/>
@@ -163,7 +168,7 @@ export const AddTask = ({ user, filters, setFilters}) => {
           }
           {
             progress === 40 && (
-              <AddTaskCustomer customers={customers} formData={formData} setFormData={setFormData} user={user}/>
+              <AddTaskCustomer inputValue={inputValueCustomer} setInputValue={setInputValueCustomer} customers={customers} formData={formData} setFormData={setFormData} user={user}/>
             )
           }
           {

@@ -13,7 +13,7 @@ const TaskBoardContainer = ({user}) => {
       SellerID: Number(user[0].SellerID),
       Status: 'todo'
     })
-    console.log(filters)
+
     const dispatch = useDispatch()
     const tasks = useSelector(state => state.tasks)
     useEffect(()=>{

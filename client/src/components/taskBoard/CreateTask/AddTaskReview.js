@@ -100,7 +100,7 @@ const AddTaskReview = ({formData}) => {
           <Text 
             fontSize={'xs'}  
             color={'web.text2'}>
-            Invoice
+            Quote
           </Text>
           <Text 
             fontSize={'md'} 

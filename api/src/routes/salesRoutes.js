@@ -408,6 +408,7 @@ salesRouter.post('/create-quote/:sellerID', async function(req, res) {
 
 
 salesRouter.get('/project-invoices/:id', async function(req, res){
+  
   const { id } = req.params
 
   query_ =    `SELECT * FROM NaturaliStone.Sales
@@ -418,7 +419,7 @@ salesRouter.get('/project-invoices/:id', async function(req, res){
           if(error) throw error;
           if(results.length == 0) {
               console.log('No invoices linked to this project')
-              res.status(200).json({ estado: false, data: []});
+              res.status(200).json('No invoices linked to this project');
           } else {
               console.log('Data OK')
               res.status(200).json(results);
@@ -442,7 +443,7 @@ salesRouter.get('/customer/:id', async function(req, res){
           if(error) throw error;
           if(results.length == 0) {
               console.log('Error en salesRoutes.get /invoice/:id')
-              res.status(400).json({ estado: false, data: {}});
+              res.status(200).json('No invoices linked to this customer');
           } else {
               console.log('Data OK')
               res.status(200).json(results);

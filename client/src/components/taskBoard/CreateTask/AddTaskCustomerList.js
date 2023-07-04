@@ -11,20 +11,32 @@ import {
   Center,
   } from '@chakra-ui/react'
 import { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { getCustomerProjects } from '../../../redux/actions-projects';
+import { useDispatch, useSelector } from 'react-redux';
+import { cleanProjectDetail, getCustomerProjects } from '../../../redux/actions-projects';
+import { getInvoicesBySeller } from '../../../redux/actions-invoices';
 
 
 
 const ModelTr = ({e, setFormData, formData}) => {
+  const user = useSelector(state => state.user)
   const dispatch = useDispatch()
 
   const handleClick = () => {
-    setFormData({
-      ...formData,
-      CustomerID: e.CustomerID,
-    })
-    dispatch(getCustomerProjects(e.CustomerID))
+    if(formData.CustomerID === e.CustomerID){
+      setFormData({
+        ...formData,
+        CustomerID: '',
+      })
+      dispatch(cleanProjectDetail())
+      dispatch(getInvoicesBySeller(user[0].SellerID,{inputName:'',inputNumber:'',selectSeller:'',timeFilter:''}))
+
+    }else{
+      setFormData({
+        ...formData,
+        CustomerID: e.CustomerID,
+      })
+      dispatch(getCustomerProjects(e.CustomerID))
+    }
   }
 
   return(
@@ -73,6 +85,7 @@ export const AddTaskCustomerList = ({customers, setFormData, formData}) => {
       display={'flex'}
       justifyContent={'center'}
       maxH={'40vh'}
+      minH={'40vh'}
       ml={'1vh'}
       w={'96%'}
       >

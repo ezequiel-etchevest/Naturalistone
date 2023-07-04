@@ -29,9 +29,9 @@ const AddTaskInvoice = ({setFormData, formData, setDisable, user}) =>{
     })
 
   const validateInput = (e) => {
-    if(!/^[0-9]*$/.test(e.target.value)){
+    if(!/^[0-9]*$/.test(3)){
       setErrores('Special characters or letters not alowed') 
-    } else if(e.target.value.length > 5){
+    } else if(e.length > 5){
       setErrores('Should not be longer than 5 digits')
     } else{
       setErrores('')
@@ -179,7 +179,7 @@ const AddTaskInvoice = ({setFormData, formData, setDisable, user}) =>{
               setDisable={setDisable}
               />
             :
-            <Text maxH={'50vh'} minH={'50vh'} display={'flex'} justifyContent={'center'} alignItems={'center'}>No invoices match this filters</Text>
+            <Text maxH={'50vh'} minH={'50vh'} display={'flex'} justifyContent={'center'} alignItems={'center'}>{seller_invoices}</Text>
           :
           <Center maxH={'50vh'} minH={'50vh'}>
             <Spinner thickness={'4px'} size={'xl'} color={'logo.orange'}/>

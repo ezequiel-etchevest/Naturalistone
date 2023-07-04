@@ -436,7 +436,8 @@ function rootReducer (state = intialState, action) {
         case GET_PROJECT_INVOICES:
             return{
               ...state,
-              project_invoices: action.payload
+              project_invoices: action.payload,
+              seller_invoices: action.payload
           }
         case GET_CUSTOMER_INVOICES:
             return{

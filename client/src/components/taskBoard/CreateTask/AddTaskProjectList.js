@@ -11,15 +11,30 @@ import {
   Center,
   } from '@chakra-ui/react'
 import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { getProjectInvoices } from '../../../redux/actions-projects';
+import { getCustomerInvoices } from '../../../redux/actions-customers';
 
 
 
 const ModelTr = ({e, setFormData, formData}) => {
+  const user = useSelector(state => state.user)
+  const dispatch = useDispatch()
+
   const handleClick = () => {
-    setFormData({
-      ...formData,
-      ProjectID: e.idProjects,
-    })
+    if(formData.ProjectID === e.idProjects){
+      setFormData({
+        ...formData,
+        ProjectID: '',
+      })
+      dispatch(getCustomerInvoices(formData.CustomerID))
+    }else{
+      dispatch(getProjectInvoices(e.idProjects))
+      setFormData({
+        ...formData,
+        ProjectID: e.idProjects,
+      })
+    }
   }
 
   return(
@@ -42,7 +57,7 @@ const ModelTr = ({e, setFormData, formData}) => {
 }
 
 export const AddTaskProjectList = ({projects, setFormData, formData}) => {
-    console.log(projects)
+
   const [initialCount] = useState(20);
   const [batchCount] = useState(15);
   const [loadedCount, setLoadedCount] = useState(initialCount);

@@ -82,6 +82,8 @@ export function getProjectInvoices(idProject){
         try{ 
           
             let {data} = await axios.get(`/sales/project-invoices/${idProject}`)
+            console.log({data})
+            console.log({idProject})
             dispatch(
             {
                 type: GET_PROJECT_INVOICES,

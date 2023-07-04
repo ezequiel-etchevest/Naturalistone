@@ -32,6 +32,9 @@ import { getCustomerById } from "../../../redux/actions-customers";
         mt={'2vh'}
         mb={'2vh'}
         >
+          <Box placeSelf={'end'}mr={'2vw'} display={'flex'} flexDir={'row'}>
+              <CreateNewProject customer={customer}/>
+          </Box>
         </HStack>
         { 
         projects.length ?
@@ -39,9 +42,6 @@ import { getCustomerById } from "../../../redux/actions-customers";
           Array.isArray(projects) ?
           <>
             <Box display={'flex'} flexDir={'column'} >
-            <Box placeSelf={'end'}mr={'2vw'} display={'flex'} flexDir={'row'}>
-              <CreateNewProject customer={customer}/>
-            </Box>
             <AddTaskProjectList 
               projects={projects} 
               setFormData={setFormData}
