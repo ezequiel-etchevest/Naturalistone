@@ -74,7 +74,7 @@ return(
         <Text ml={'2vw'} fontSize={'lg'} w={'16vw'} color={'white'} alignSelf={'flex-start'}>Select customer</Text>
         
       }
-      <Box display={'flex'} flexDir={'row'} h={'6vh'} w={'18vw'} justifyContent={'space-around'}>
+      <Box display={'flex'} flexDir={'row'} justifyContent={'space-around'}>
         <Box>
           <Input
             mb={'0.5vh'}

@@ -4,7 +4,6 @@ import {
     Modal, 
     ModalOverlay, 
     ModalContent, 
-    Box, 
     ModalBody, 
     ModalFooter, 
     Button,
@@ -14,7 +13,7 @@ import {
     useToast,
     Tooltip, 
     ModalCloseButton} from "@chakra-ui/react"
-  import { useState, useEffect } from "react";
+  import { useState } from "react";
   import { useDispatch, useSelector } from "react-redux";
   import { day0, month0, year } from "../../../utils/todayDate";
   import {AiOutlineFileAdd} from 'react-icons/ai';  
@@ -232,6 +231,7 @@ import CreatedQuotePdf from "./createQuotePdf";
           >
           <ModalOverlay />
           <ModalContent 
+            minW={'50vw'}
             bg={'web.sideBar'}
             border={'1px solid'}
             borderColor={'web.border'}
@@ -245,7 +245,7 @@ import CreatedQuotePdf from "./createQuotePdf";
               borderTopLeftRadius={'md'}
               />
             <ModalCloseButton color={'web.text2'} mt={'2vh'} mr={'0.5vw'} position={'absolute'}/>
-            <ModalBody color={'web.text2'} display={'flex'} justifyContent={'center'} flexDir={'column'} minH={!submited ? '64vh' : '80vh'}  maxH={!submited ? '64vh' : '80vh'}>
+            <ModalBody color={'web.text2'} display={'flex'} justifyContent={'center'} flexDir={'column'} minH={!submited ? '64vh' : '80vh'}  maxH={!submited ? '64vh' : '80vh'} >
             {
               progress == 20 &&(
                 <CreateQuoteCustomer customers={customers} setFormData={setFormData} formData={formData} setDisable={setDisable}/>

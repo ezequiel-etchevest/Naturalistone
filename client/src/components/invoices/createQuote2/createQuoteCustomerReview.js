@@ -140,18 +140,18 @@ function EditableControls(name, value) {
 
   return(
 
-<>
+    <>
       <Box 
         color={'web.text2'} 
         display={'flex'} 
         flexDir={'column'} 
         h={'65vh'} 
         alignItems={'center'}>
-        <Card w={'46vw'} mb={'3vh'}>
+        <Card minW={'50vw'} mb={'3vh'}>
           <CardHeader ml={'1vw'} mt={'2vh'} textColor={'web.text'}>Customer review</CardHeader>
           <CardBody display={'flex'} flexDir={'row'} justifyContent={'space-around'} mt={'1vh'}>
             <Stack divider={<StackDivider />}>
-              <Box pt='2' w={'20vw'} h={'8vh'}>
+              <Box pt='1vw' w={'20vw'} h={'8vh'}>
                 <Text fontSize='sm' fontWeight={'semisemibold'}> Name </Text>
                 <Editable
                   value={inputs.Contact_Name}
@@ -160,8 +160,8 @@ function EditableControls(name, value) {
                   isPreviewFocusable={false}
                   display={'flex'}
                   flexDir={'row'}
-                  pl='2'
-                  pt='1'
+                  pl='1vw'
+                  pt='1vh'
                   justifyContent={'space-between'}
                   w={'19vw'}
                 >
@@ -191,7 +191,7 @@ function EditableControls(name, value) {
                     </Text>
                 )}
               </Box>
-              <Box pt='2' w={'20vw'} h={'8vh'} mt={'0.5vh'}>
+              <Box pt='1vw' w={'20vw'} h={'8vh'} mt={'0.5vh'}>
                 <Text fontSize='sm' fontWeight={'semibold'}> Email </Text>
                 <Editable
                   value={inputs.Email}
@@ -200,8 +200,8 @@ function EditableControls(name, value) {
                   isPreviewFocusable={false}
                   display={'flex'}
                   flexDir={'row'}
-                  pl='2'
-                  pt='1'
+                  pl='1vw'
+                  pt='1vh'
                   justifyContent={'space-between'}
                   w={'19vw'}
                 >
@@ -229,7 +229,7 @@ function EditableControls(name, value) {
                     </Text>
                 )}
               </Box>
-              <Box pt='2' w={'20vw'} h={'8vh'} mt={'0.5vh'}>
+              <Box pt='1vw' w={'20vw'} h={'8vh'} mt={'0.5vh'}>
                 <Text fontSize='sm' fontWeight={'semibold'}> Phone </Text>
                 <Editable
                   value={inputs.Phone}
@@ -238,8 +238,8 @@ function EditableControls(name, value) {
                   isPreviewFocusable={false}
                   display={'flex'}
                   flexDir={'row'}
-                  pl='2'
-                  pt='1'
+                  pl='1vw'
+                  pt='1vh'
                   justifyContent={'space-between'}
                   w={'19vw'}
                 >
@@ -270,7 +270,7 @@ function EditableControls(name, value) {
               <Box></Box>
             </Stack>
             <Stack divider={<StackDivider />}>
-              <Box pt='2' w={'20vw'} h={'8vh'}>
+              <Box pt='1vw' w={'20vw'} h={'8vh'}>
                 <Text fontSize='sm' fontWeight={'semibold'}> Company </Text>
                 <Editable
                   value={inputs.Company}
@@ -279,8 +279,8 @@ function EditableControls(name, value) {
                   isPreviewFocusable={false}
                   display={'flex'}
                   flexDir={'row'}
-                  pt='1'
-                  pl='2' 
+                  pl='1vw'
+                  pt='1vh'
                   justifyContent={'space-between'}
                   w={'19vw'}
                 >
@@ -308,7 +308,7 @@ function EditableControls(name, value) {
                     </Text>
                 )}
               </Box>
-              <Box pt='2' w={'20vw'} h={'8vh'} mt={'0.5vh'}>
+              <Box pt='1vw' w={'20vw'} h={'8vh'} mt={'0.5vh'}>
                 <Text fontSize='sm' fontWeight={'semibold'}> Company position </Text>
                 <Editable
                   value={inputs.Company_Position}
@@ -317,8 +317,8 @@ function EditableControls(name, value) {
                   isPreviewFocusable={false}
                   display={'flex'}
                   flexDir={'row'}
-                  pt='1'
-                  pl='2' 
+                  pl='1vw'
+                  pt='1vh'
                   justifyContent={'space-between'}
                   w={'19vw'}
                 >
@@ -346,7 +346,7 @@ function EditableControls(name, value) {
                     </Text>
                 )}
               </Box>
-              <Box pt='2' w={'20vw'} h={'8vh'} mt={'0.5vh'}>
+              <Box pt='1vw' w={'20vw'} h={'8vh'} mt={'0.5vh'}>
                 <Text fontSize='sm' fontWeight={'semibold'}> Discount </Text>
                 <Editable
                   value={inputs.DiscountRate}
@@ -355,8 +355,8 @@ function EditableControls(name, value) {
                   isPreviewFocusable={false}
                   display={'flex'}
                   flexDir={'row'}
-                  pt='1'
-                  pl='2' 
+                  pl='1vw'
+                  pt='1vh'
                   justifyContent={'space-between'}
                   w={'19vw'}
                 >
@@ -393,7 +393,7 @@ function EditableControls(name, value) {
           <CardBody display={'flex'} flexDir={'row'} justifyContent={'space-around'} alignContent={'center'} mt={'1vh'}>
             <Stack divider={<StackDivider />} display={'flex'} flexDir={'column'}>
               <Box w={'20vw'}>
-                <Text pt='1' fontSize='sm' fontWeight={'semibold'}> Address </Text>
+                <Text pt='1vw' fontSize='sm' fontWeight={'semibold'}> Address </Text>
                 <Editable
                   value= {inputs.Billing_Address}
                   fontSize='sm'
@@ -401,8 +401,8 @@ function EditableControls(name, value) {
                   isPreviewFocusable={false}
                   display={'flex'}
                   flexDir={'row'}
-                  pt='1'
-                  pl='2' 
+                  pl='1vw'
+                  pt='1vh'
                   justifyContent={'space-between'}
                   w={'19vw'}
                 >
@@ -431,7 +431,7 @@ function EditableControls(name, value) {
                 )}
               </Box>
               <Box w={'20vw'} mt={'0.5vh'}>
-                <Text pt='1' fontSize='sm' fontWeight={'semibold'}> City </Text>
+                <Text pt='1vw' fontSize='sm' fontWeight={'semibold'}> City </Text>
                 <Editable
                   value= {inputs.Billing_City}
                   fontSize='sm'
@@ -439,8 +439,8 @@ function EditableControls(name, value) {
                   isPreviewFocusable={false}
                   display={'flex'}
                   flexDir={'row'}
-                  pt='1'
-                  pl='2' 
+                  pl='1vw'
+                  pt='1vh'
                   justifyContent={'space-between'}
                   w={'19vw'}
                 >
@@ -472,7 +472,7 @@ function EditableControls(name, value) {
             </Stack>
             <Stack divider={<StackDivider />} display={'flex'} flexDir={'column'}>
             <Box w={'20vw'}>
-                <Text pt='1' fontSize='sm' fontWeight={'semibold'}> ZipCode </Text>
+                <Text pt='1vw' fontSize='sm' fontWeight={'semibold'}> ZipCode </Text>
                 <Editable
                   value= {inputs.Billing_ZipCode}
                   fontSize='sm'
@@ -480,8 +480,8 @@ function EditableControls(name, value) {
                   isPreviewFocusable={false}
                   display={'flex'}
                   flexDir={'row'}
-                  pt='1'
-                  pl='2' 
+                  pl='1vw'
+                  pt='1vh'
                   justifyContent={'space-between'}
                   w={'19vw'}
                 >
@@ -510,7 +510,7 @@ function EditableControls(name, value) {
                 )}
               </Box>
               <Box w={'20vw'} mt={'0.5vh'}>
-                <Text pt='1' fontSize='sm' fontWeight={'semibold'}> State </Text>
+                <Text pt='1vw' fontSize='sm' fontWeight={'semibold'}> State </Text>
                 <Editable
                   value= {inputs.Billing_State}
                   fontSize='sm'
@@ -518,11 +518,11 @@ function EditableControls(name, value) {
                   isPreviewFocusable={false}
                   display={'flex'}
                   flexDir={'row'}
-                  pt='1'
-                  pl='2' 
+                  pl='1vw'
+                  pt='1vh'
                   justifyContent={'space-between'}
                   w={'19vw'}
-                >
+                  >
                   <EditablePreview />
                   <Input as={EditableInput}
                     name={'Billing_State'}
