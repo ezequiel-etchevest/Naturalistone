@@ -374,16 +374,6 @@ salesRouter.post('/create-quote/:sellerID', async function(req, res) {
               return;
             }
 
-            // sendInvoiceEmail(
-            // customer.Email, // se enviara correos desde irina hasta que se termine de configurar
-            // Contact_Name, 
-            // prodSoldValues[0][0], 
-            // "description",
-            // "amount_value",
-            // Value,
-            // InsertDate
-            // ) // faltaria solo el pdf para enviar
-
             console.log('Products inserted successfully');
 
             commitTransaction();
@@ -614,7 +604,7 @@ salesRouter.patch('/sales-update-products/:id', async function(req, res) {
 salesRouter.patch('/sales-update/:id', async function(req, res) {
   const { id } = req.params
   const { SellerID } = req.body
-  const { variables, products, project } = req.body.formData
+  const { variables, project } = req.body.formData
   const { idProjects } = project
   const { estDelivDate, shipVia, paymentTerms, method } = variables
   const LastInsertDate = `${year}-${month0}-${day0}` 
