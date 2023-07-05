@@ -35,6 +35,7 @@ const handleInput = () => {
               thickness:e.Thickness,
               finish:e.Finish,
               price: e.Price,
+              prodNameID: e.ProdNameID
             },
           },
         }));

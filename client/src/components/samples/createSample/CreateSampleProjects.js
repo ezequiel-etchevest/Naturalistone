@@ -70,6 +70,7 @@ const CreateSampleProjects = ({ formData, setFormData, setDisable, errorsTrackin
       </Box>
       <Box display={'flex'} alignItems={'end'} h={'10vh'}>
       <Text ml={'2vw'} mt={'5vh'} mb={'5vh'} fontSize={'lg'}w={'16vw'} color={'white'} alignSelf={'flex-start'}>Select Project</Text>
+      {/* <CreateNewProject customer={formData.customer} /> */}
       </Box>
         <CreateSampleProjectList projects={ projects } formData={formData} setFormData={setFormData} setDisable={setDisable}/>
     </Box>

@@ -105,6 +105,7 @@ productsRouter.get('/new_samples', async function(req, res){
   SELECT
     ProdNames.Naturali_ProdName AS ProductName,
     ProdNames.Material,
+    ProdNames.ProdNameID,
     Dimension.Finish,
     Products.ProdID
   FROM Products
