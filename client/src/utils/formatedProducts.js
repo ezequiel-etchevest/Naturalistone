@@ -1,4 +1,7 @@
 export function formatProducts(array) {
+  if (!Array.isArray(array)) {
+    return []; // Retorna un array vacío si no se recibe un array
+  }
   const propertyMapping = {
     Quantity: "quantity",
     ProdID: "prodID",

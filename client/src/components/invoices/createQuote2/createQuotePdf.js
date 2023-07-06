@@ -3,11 +3,12 @@ import { useSelector } from "react-redux";
 import { PDFDocument, rgb, degrees } from "pdf-lib";
 import { Box, Center, Spinner, Button, Flex } from "@chakra-ui/react";
 import axios from "axios";
+import { savePdfOnServer } from "../../../utils/savePdfOnServer";
 import pending_approval from "../../../assets/pending_approval.png";
 
-const CreatedQuotePdf = ({ formData, user, authFlag, handleChangeEmail }) => {
+const CreatedQuotePdf = ({ formData, user, handleChangeEmail }) => {
   const { variables, customer, project } = formData;
-  // console.log({variables, user, customer, project, authFlag})
+
   const posted_quote = useSelector((state) => state.posted_quote);
 
   let invoiceID = posted_quote.Naturali_Invoice;
@@ -96,22 +97,6 @@ const CreatedQuotePdf = ({ formData, user, authFlag, handleChangeEmail }) => {
     page.drawText(`${deliveryMethod}`, { x: 439, y: 508, size: 10 });
     page.drawText(`${paymentTerms}`, { x: 524, y: 508, size: 10 });
 
-    if (authFlag === true) {
-      const pngImageBytes = await fetch(pending_approval).then((res) =>
-        res.arrayBuffer()
-      );
-      const pngImage = await pdfDoc.embedPng(pngImageBytes);
-      const pngDims = pngImage.scale(0.5);
-
-      page.drawImage(pngImage, {
-        x: page.getWidth() / 2 - pngDims.width / 3 + 50,
-        y: page.getHeight() / 7 - pngDims.height + 250,
-        width: pngDims.width,
-        height: pngDims.height,
-        rotate: degrees(30),
-      });
-    }
-
     // //This line uses the forEach method to iterate over each key-value pair in the array created by Object.
     // //entries. For each iteration, the key (variableName) and value (element) are destructured from the pair and
     // //passed as arguments to the callback function.
@@ -159,45 +144,6 @@ const CreatedQuotePdf = ({ formData, user, authFlag, handleChangeEmail }) => {
     setPdfInfo(URL.createObjectURL(blob));
 
     savePdfOnServer(pdfBytes, invoiceID);
-  }
-
-  async function savePdfOnServer(pdfBytes, invoiceID) {
-    try {
-      const formData = new FormData();
-      if (authFlag === true) {
-        formData.append(
-          "pdf",
-          new Blob([pdfBytes], { type: "application/pdf" }),
-          `${invoiceID}PA.pdf`
-        );
-      } else {
-        formData.append(
-          "pdf",
-          new Blob([pdfBytes], { type: "application/pdf" }),
-          `${invoiceID}.pdf`
-        );
-      }
-      const config = {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      };
-
-      const response = await axios.post(
-        `/s3/uploadPdf/${invoiceID}`,
-        formData,
-        config
-      );
-
-      if (response.status === 200) {
-        console.log("PDF guardado en S3 correctamente.");
-        // Realizar cualquier acción adicional después de guardar el PDF en S3
-      } else {
-        console.error("Error al guardar el PDF en S3.");
-      }
-    } catch (error) {
-      console.error("Error al realizar la solicitud al backend:", error);
-    }
   }
 
   return (

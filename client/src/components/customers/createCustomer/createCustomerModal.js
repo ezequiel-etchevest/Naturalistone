@@ -8,7 +8,8 @@ import { IconButton,
         ModalFooter, 
         Button, 
         useToast, 
-        Progress } from "@chakra-ui/react";
+        Progress, 
+        Box} from "@chakra-ui/react";
 import { HiUserAdd } from "react-icons/hi";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
@@ -131,7 +132,8 @@ export function CreateCustomerModal() {
   return (
     <>
       <IconButton
-      size={'lg'}
+       h={'6vh'}
+       size={'lg'}
       icon={ <HiUserAdd/>}
       variant={'unstyled'} 
       display={'flex'} 

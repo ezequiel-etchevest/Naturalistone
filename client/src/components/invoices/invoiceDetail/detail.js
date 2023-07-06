@@ -1,4 +1,4 @@
-import { Box, Text, Center, Spinner } from '@chakra-ui/react';
+import { Box, Text } from '@chakra-ui/react';
 import InvoiceProductList from './invoiceProductList';
 import InvoiceDetailList from './invoiceDetailsList';
 import PaymentList from './PaymentList';
@@ -71,15 +71,7 @@ const Detail = ({invoice, payments, invoice_products, user, deliveries, windowWi
           h={'40vh'}
           w={'65vw'}
           >
-          {
-            invoice_products.length ? (
-              <InvoiceProductList invoice_products={invoice_products} invoice={invoice} />
-            ) : (
-              <Center h={'35vh'}>
-                <Spinner thickness={'4px'} size={'xl'} color={'logo.orange'}/>
-              </Center>
-            )
-          }
+          <InvoiceProductList invoice_products={invoice_products} invoice={invoice} />
         </Box>
         </Box>
         <Box>

@@ -7,7 +7,9 @@ import {
     Th,
     Td,
     TableContainer,
-    Text
+    Text,
+    Center, 
+    Spinner
   } from '@chakra-ui/react'
   import { useNavigate } from 'react-router-dom'
 
@@ -68,8 +70,11 @@ const InvoiceProductList = ({invoice_products, invoice}) => {
             >
             <Text fontSize={'1.6vw'} color={'web.text2'}>Products Details</Text>
             <TableContainer w={'60vw'} >
-                <Table mt={'2vh'} color={'web.text'} variant={'simple'} size={'sm'} >
-                  <Thead h={'6vh'}>
+            { 
+              invoice_products ? (
+                  Array.isArray(invoice_products) ? ( 
+                  <Table mt={'2vh'} color={'web.text'} variant={'simple'} size={'sm'} >
+                    <Thead h={'6vh'}>
                     <Tr>
                       <Th fontSize={'1.3vh'} color={'web.text2'}textAlign={'center'}>Product <br/> Name</Th>
                       <Th fontSize={'1.3vh'} color={'web.text2'}textAlign={'center'}>Quantity</Th>
@@ -84,14 +89,23 @@ const InvoiceProductList = ({invoice_products, invoice}) => {
                     </Tr>
                   </Thead>
                   <Tbody >
-                    { 
+                    {
                       invoice_products?.map((p, i) =>{
-                            return(
-                              <ModelTr p={p} key={i}/>
-                            )})
+                        return(
+                          <ModelTr p={p} key={i}/>
+                        )})
                     }
-                  </Tbody>
-                </Table>
+                    </Tbody>
+                  </Table>
+                    ) : (
+                    <Center h={'26vh'} > <Text color={'web.border'}>{invoice_products}</Text> </Center> 
+                    )) : (
+                    <Center h={'26vh'}>
+                      <Spinner thickness={'4px'} size={'xl'} color={'logo.orange'}/>
+                    </Center> 
+                    )
+                    }
+
             </TableContainer> 
             </Box> 
         </Box>

@@ -18,10 +18,9 @@ import {
     Center,
     Spinner 
     } from "@chakra-ui/react"
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useDispatch } from "react-redux";
 import SelectCustomerModalList from './selectCustomerModalList'
-import { CreateCustomer } from "./createCustomerModal";
 import { getCustomers } from "../../../redux/actions-customers";
 import {BiSearch} from 'react-icons/bi'
 import '../../../assets/styleSheet.css'
@@ -32,7 +31,6 @@ const SelectCustomerModal = ({userId, isOpen1, onClose1, customers}) => {
   const { isOpen: isOpen2, onOpen: onOpen2, onClose: onClose2 } = useDisclosure()
 
   const dispatch = useDispatch()
-  const id = userId
   const [inputValue, setInputValue] = useState('')
   const [customer, setCustomer] = useState('')
 
@@ -61,66 +59,66 @@ const SelectCustomerModal = ({userId, isOpen1, onClose1, customers}) => {
 
 
   return(
-<>
-  <Modal 
+  <>
+    <Modal 
     isOpen={isOpen1} 
     onClose={handleClose}
     size={'3xl'}
     motionPreset='slideInRight'
     >
-    <ModalOverlay />
-    <ModalContent 
-      bg={'web.sideBar'}
-      border={'1px solid'}
-      borderColor={'web.border'}
-      >
-      <Progress value={20} 
-        colorScheme={"orange"} 
-        mb={'2vh'} 
-        background={'web.border'} 
-        size={'sm'} 
-        borderTopRightRadius={'md'}
-        borderTopLeftRadius={'md'}
-        />
-      <ModalBody color={'web.text2'} display={'flex'} justifyContent={'center'} flexDir={'column'} h={'58vh'}>
-      <HStack
-        display={'flex'}
-        justifyContent={'space-between'}
-        h={'6vh'}
-        mr={'1.2vw'}
-        mt={'2vh'}
-        mb={'2vh'}
+      <ModalOverlay />
+      <ModalContent 
+        bg={'web.sideBar'}
+        border={'1px solid'}
+        borderColor={'web.border'}
         >
-        <Text ml={'2vw'} fontSize={'lg'} w={'16vw'} color={'white'} alignSelf={'flex-start'}>Select customer</Text>
-        <Box display={'flex'} flexDir={'row'} h={'6vh'} w={'18vw'} justifyContent={'space-around'}>
-          <Box>
-            <Input
-              mb={'0.5vh'}
-              w={'10vw'}
-              minH={'4.5vh'}
-              variant="unstyled"
-              placeholder={'Customer name'}
-              textColor={'web.text2'}
-              _placeholder={{ fontFamily: 'body', fontWeight: 'thin' }}
-              size={"sm"}
-              borderBottomWidth={"2px"}
-              borderBottomColor={'web.text2'}
-              value={inputValue}
-              onChange={(e)=> handleInput(e)}
-              />
-            <IconButton
-              color={'web.text2'}
-              aria-label="Search database"
-              bgColor={'web.sideBar'}
-              ml={'-0.5vw'}
-              icon={<BiSearch />}
-              size={'lg'}
-              _hover={{
-                color: 'orange.500',
-              }}
-              boxSize={'auto'}
-              mt={'1.5vh'}
-              _active={{ color: 'gray.800'}}
+        <Progress value={20} 
+          colorScheme={"orange"} 
+          mb={'2vh'} 
+          background={'web.border'} 
+          size={'sm'} 
+          borderTopRightRadius={'md'}
+          borderTopLeftRadius={'md'}
+          />
+        <ModalBody color={'web.text2'} display={'flex'} justifyContent={'center'} flexDir={'column'} h={'58vh'}>
+        <HStack
+          display={'flex'}
+          justifyContent={'space-between'}
+          h={'6vh'}
+          mr={'1.2vw'}
+          mt={'2vh'}
+          mb={'2vh'}
+          >
+          <Text ml={'2vw'} fontSize={'lg'} w={'16vw'} color={'white'} alignSelf={'flex-start'}>Select customer</Text>
+          <Box display={'flex'} flexDir={'row'} h={'6vh'} justifyContent={'space-around'}>
+            <Box>
+              <Input
+                mb={'0.5vh'}
+                w={'10vw'}
+                minH={'4.5vh'}
+                variant="unstyled"
+                placeholder={'Customer name'}
+                textColor={'web.text2'}
+                _placeholder={{ fontFamily: 'body', fontWeight: 'thin' }}
+                size={"sm"}
+                borderBottomWidth={"2px"}
+                borderBottomColor={'web.text2'}
+                value={inputValue}
+                onChange={(e)=> handleInput(e)}
+                />
+              <IconButton
+                color={'web.text2'}
+                aria-label="Search database"
+                bgColor={'web.sideBar'}
+                ml={'-0.5vw'}
+                icon={<BiSearch />}
+                size={'lg'}
+                _hover={{
+                  color: 'orange.500',
+                }}
+                boxSize={'auto'}
+                mt={'1.5vh'}
+                _active={{ color: 'gray.800'}}
             />
           </Box>
           <Divider orientation={'vertical'} h={'6vh'} />

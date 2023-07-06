@@ -120,7 +120,7 @@ import {
       >
       {
         customers.length ? (
-          <TableContainer w={'46vw'}>
+          <TableContainer minW={'40vw'} w={'40vh'}>
             <Table color={'web.text'}variant={'simple'} size={'sm'}>
               <Thead h={'3vh'}>
                 <Tr>

@@ -4,7 +4,6 @@ import {
   Modal,
   ModalOverlay,
   ModalContent,
-  Box,
   ModalBody,
   ModalFooter,
   Button,
@@ -15,7 +14,7 @@ import {
   Tooltip,
   ModalCloseButton,
 } from "@chakra-ui/react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { day0, month0, year } from "../../../utils/todayDate";
 import { AiOutlineFileAdd } from "react-icons/ai";
@@ -39,7 +38,6 @@ export function CreateQuote({ customers }) {
   const [disable, setDisable] = useState(true);
   const [progress, setProgress] = useState(20);
   const [submited, setSubmited] = useState(false);
-  const invoice_products = useSelector((state) => state.products_new_quote);
   const [formData, setFormData] = useState({
     customer: {
       Contact_Name: "",
@@ -237,6 +235,7 @@ export function CreateQuote({ customers }) {
       >
         <ModalOverlay />
         <ModalContent
+          minW={"50vw"}
           bg={"web.sideBar"}
           border={"1px solid"}
           borderColor={"web.border"}
@@ -291,7 +290,6 @@ export function CreateQuote({ customers }) {
               <CreateQuoteProducts
                 formData={formData}
                 setFormData={setFormData}
-                invoice_products={invoice_products}
                 setDisable={setDisable}
               />
             )}
