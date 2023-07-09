@@ -17,8 +17,7 @@ import {
 } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { day0, month0, year } from "../../../utils/todayDate";
-import { HiUserAdd } from "react-icons/hi";
+import { HiSquaresPlus } from "react-icons/hi2";
 import {
   validateEmptyInputsCreateQuote,
   validateInPutTrackingNumber,
@@ -26,10 +25,8 @@ import {
 import { getCustomers, updateCustomer } from "../../../redux/actions-customers";
 import { getCustomerProjects } from "../../../redux/actions-projects";
 import {
-  getAllProductsNewQuote,
   getAllProductsNewSamples,
 } from "../../../redux/actions-products";
-import { createQuote } from "../../../redux/actions-invoices";
 import CreateSampleCustomer from "./CreateSampleCustomer";
 import CreateSampleCustomerReview from "./CreateSampleCustomerReview";
 import CreateSampleProjects from "./CreateSampleProjects";
@@ -246,7 +243,7 @@ export function CreateSampleModal({ customers }) {
           fontWeight={"hairline"}
         >
           <IconButton
-            icon={<HiUserAdd />}
+            icon={<HiSquaresPlus />}
             variant={"unstyled"}
             display={"flex"}
             borderRadius={"sm"}

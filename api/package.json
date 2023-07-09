@@ -15,9 +15,6 @@
     "npm": ">=6.14.6"
   },
   "dependencies": {
-    "@azure/msal-node": "^1.16.0",
-    "@microsoft/microsoft-graph-client": "^3.0.5",
-    "@railway/cli": "^2.0.13",
     "aws-sdk": "^2.1396.0",
     "axios": "^0.27.2",
     "body-parser": "^1.19.0",
