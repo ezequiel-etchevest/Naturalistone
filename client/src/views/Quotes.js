@@ -7,7 +7,7 @@ import { getCustomers } from '../redux/actions-customers';
 import { getInvoicesBySeller, getSellerValues } from '../redux/actions-invoices';
 import Redirect from "./RedirectPage";
 import { Text } from "@chakra-ui/react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 
 
@@ -25,7 +25,7 @@ const Quotes = ({focus, setFocus}) => {
   const getParamsSeller = url.get('seller')
   const getParamsName = url.get('name')
   const getParamsNumber = url.get('number')
-
+  console.log('seller', seller_invoices)
 
   const [focusFilter, setFocusFilter] = useState('All')
   const userLocal = JSON.parse(localStorage.getItem('user'))
