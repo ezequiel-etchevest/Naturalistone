@@ -19,6 +19,7 @@ const freightRouter = require('./freightRoutes')
 const factoryRouter = require('./factoriesRoutes');
 const emailInvoiceRouter = require('./sendInvoiceEmail')
 const proformasRoutes = require('./proformasRoutes')
+const samplesRoutes = require('./samplesRoutes')
 
 mainRouter.use('/api/login', loginRouter);
 mainRouter.use('/api/seller', sellerRouter);
@@ -39,6 +40,6 @@ mainRouter.use('/api/factories', factoryRouter)
 mainRouter.use('/api/freight', freightRouter)
 mainRouter.use('/api/invoiceEmail', emailInvoiceRouter)
 mainRouter.use('/api/proformas', proformasRoutes)
-
+mainRouter.use('/api/samples', samplesRoutes)
 
 module.exports = mainRouter

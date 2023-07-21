@@ -9,6 +9,7 @@ import naturalipic from '../assets/naturalistonefav.png'
 import { useNavigate } from 'react-router';
 import { useDispatch } from 'react-redux';
 import { logOut } from '../redux/actions-employees';
+import { MdFeaturedPlayList } from 'react-icons/md'
 
 
 const LinkItems = [
@@ -20,6 +21,7 @@ const LinkItems = [
   { name: 'Customers', icon: HiUsers },
   { name: 'Task-Board', icon: FaTasks },
   { name: 'Freights', icon: GiCargoShip },
+  { name: 'Samples', icon: MdFeaturedPlayList },
   { name: 'Log Out', icon: CgLogOut },
   ];
 
@@ -37,7 +39,7 @@ const SideBar = ({user, focus, setFocus}) => {
       borderRightWidth={'0.2vh'}
       borderColor={'web.border'}
 	    > 
-    <Box w={'13vw'} display={'flex'} alignItems={'center'} justifyContent={'space-evenly'} mt={'10vh'} mb={'3vh'}>
+    <Box w={'13vw'} display={'flex'} alignItems={'center'} justifyContent={'space-evenly'} mt={'5vh'}>
       <Avatar
         boxSize={'2vw'}
         src={naturalipic}
@@ -106,6 +108,8 @@ const SideBar = ({user, focus, setFocus}) => {
         bg={'none'}
         fontSize={'1.05vw'}
         style={{ textDecoration: 'none' }}
+        display={'flex'}
+        alignItems={'flex-start'}
         _focus={{ boxShadow: 'none' }}
         onClick={link.name === 'Log Out' ? ()=> {handleLogOut()} : ()=>{handleClick()}}
         >

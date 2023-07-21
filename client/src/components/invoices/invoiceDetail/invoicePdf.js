@@ -84,7 +84,7 @@ const LoadPdf = ({idpdf, stamp, status}) => {
     };
 
   if(err){
-    return <Center h={'85vh'}><Text>PDF Not found</Text></Center>
+    return <Center h={'85vh'}><Text color={'web.border'}>PDF Not found</Text></Center>
   } else{
     return (
       pdfInfo.length ?

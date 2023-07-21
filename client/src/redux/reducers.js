@@ -38,7 +38,8 @@ import {
     GET_PRODUCT_IMAGES,
     GET_PRODUCT_IMAGE,
     CLEAN_PRODUCT_DETAIL,
-    GET_PRODUCTS_NEW_QUOTE
+    GET_PRODUCTS_NEW_QUOTE,
+    GET_PRODUCTS_NEW_SAMPLES,
      } from './actions-products';
 import { 
   GET_CURRENT_MONTH,
@@ -114,6 +115,11 @@ import {
 import {
   GET_PROFORMAS
 } from './actions-proformas';
+import {
+  GET_SAMPLES,
+  POST_SAMPLES,
+  GET_SAMPLES_PRODUCTS,
+} from './actions-samples';
 
 const intialState = {
     employees: [],
@@ -161,6 +167,11 @@ const intialState = {
     proformas: [],
     freight: {},
     freights_factory: [],
+    samples: [],
+    samples_products: [],
+    products_new_samples: [],
+    products_new_samples_values: [],
+    products_new_samples_errors: {},
 }
 
 function rootReducer (state = intialState, action) {
@@ -552,11 +563,6 @@ function rootReducer (state = intialState, action) {
             freight: {},
             freights_factory: [],
           }
-          case SEND_EMAIL_CLIENT:
-            return{
-              ...state,
-              send_email_client: action.payload
-            }
           case GET_ALL_TASKS:
             return{
               ...state,
@@ -608,7 +614,28 @@ function rootReducer (state = intialState, action) {
               ...state,
               tasks: action.payload
             }
-
+          case GET_SAMPLES:
+            return {
+              ...state,
+              samples: action.payload
+            }
+          case POST_SAMPLES:
+            return {
+              ...state,
+              samples: action.payload,
+            }
+          case GET_SAMPLES_PRODUCTS:
+            return {
+              ...state,
+              samples_products: action.payload,
+            }
+          case GET_PRODUCTS_NEW_SAMPLES:
+            return {
+              ...state,
+              products_new_samples: action.payload.results,
+              products_new_samples_values: action.payload.filteredValues,
+              products_new_samples_errors: action.payload.errorSearch
+              }
         default:
             return {
               ...state

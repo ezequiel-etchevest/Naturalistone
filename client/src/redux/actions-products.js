@@ -10,7 +10,7 @@ export const GET_PRODUCT_IMAGES = 'GET_PRODUCT_IMAGES';
 export const GET_PRODUCT_IMAGE = 'GET_PRODUCT_IMAGE';
 export const CLEAN_PRODUCT_DETAIL = 'CLEAN_PRODUCT_DETAIL';
 export const GET_PRODUCTS_NEW_QUOTE = 'GET_PRODUCTS_NEW_QUOTE';
-
+export const GET_PRODUCTS_NEW_SAMPLES = 'GET_PRODUCTS_NEW_SAMPLES';
 
 export function getAllProducts(){
     return async function(dispatch){
@@ -31,7 +31,6 @@ export function getAllProductsNewQuote(finish, material, search){
     return async function(dispatch){
         try{ 
             let {data} = await axios.get(`/products/new_quote?finish=${finish}&material=${material}&search=${search}`)
-
             dispatch(
             {
                 type: GET_PRODUCTS_NEW_QUOTE,
@@ -43,12 +42,29 @@ export function getAllProductsNewQuote(finish, material, search){
         }
     }
 }
-export function getFiltered(finish, size, thickness, material, search, price){
-    return async function(dispatch){
 
+export function getAllProductsNewSamples(finish, material, search){
+    return async function(dispatch){
+        try{ 
+            let {data} = await axios.get(`/products/new_samples?finish=${finish}&material=${material}&search=${search}`)
+            dispatch(
+            {
+                type: GET_PRODUCTS_NEW_SAMPLES,
+                payload: data
+            })
+        }catch(error){
+            console.log({error})           
+
+        }
+    }
+}
+
+export function getFiltered(finish, size, thickness, material, search, sqft, type){
+    console.log(search)
+    return async function(dispatch){
         try{
             
-            let {data} = await axios.get(`/products/filtered?finish=${finish}&size=${size}&thickness=${thickness}&material=${material}&search=${search}&price1=${price[0] ? price[0] : ''}&price2=${price[1]? price[1] : ''}`)
+            let {data} = await axios.get(`/products/filtered?finish=${finish}&size=${size}&thickness=${thickness}&material=${material}&search=${search}&type=${type}&sqft1=${sqft[0] ? sqft[0] : ''}&sqft2=${sqft[1]? sqft[1] : ''}`)
             dispatch(
             {
                 type: GET_FILTERED_PRODUCTS,
@@ -176,7 +192,6 @@ export function getProductImage(prodName, material, prodID) {
       }
     };
   }
-  
 
 // export function getProductImage(prodName, material, prodID){
 

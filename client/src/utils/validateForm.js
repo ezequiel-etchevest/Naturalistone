@@ -397,3 +397,17 @@ export const validateCompletedInputsFactory = (formData) =>{
 
   return errors
 }
+
+export function validateInPutTrackingNumber(formData) {
+  let errors = {}
+  const regexNumber = /^\d+$/
+  console.log('soy formddaata validate', formData)
+  if (formData.trackingNumber !== '') {
+    if (!regexNumber.test(formData.trackingNumber)) {
+      console.log('aqui entre')
+      errors.trackingNumber = 'Please insert a valid Tracking number'
+      console.log('soy errors', errors)
+    }
+  }
+  return errors
+}

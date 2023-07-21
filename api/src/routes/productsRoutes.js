@@ -2,9 +2,10 @@ const express = require('express')
 const productsRouter = express.Router()
 const mysqlConnection = require('../db')
 const filterProducts = require('../Controllers/productFiltersController')
-const { prodValues, findMaxMinPrice } = require('../Controllers/productValues')
+const { prodValues, findMaxMinPrice, getSqftMaxMin } = require('../Controllers/productValues')
 const objetosFiltrados = require('../Controllers/inventoryController')
 const {getImage} = require('../Controllers/oneDriveProductImages')
+const { productsNotEqual } = require('../Controllers/productsNotRepeat')
 
 productsRouter.get('/', async function(req, res){
     
@@ -97,6 +98,54 @@ productsRouter.get('/new_quote', async function(req, res){
   }
 });
 
+productsRouter.get('/new_samples', async function(req, res){
+  let { finish, material, search } = req.query;
+  console.log('entre')
+  const query = `
+  SELECT
+    ProdNames.Naturali_ProdName AS ProductName,
+    ProdNames.Material,
+    ProdNames.ProdNameID,
+    Dimension.Finish,
+    Products.ProdID
+  FROM Products
+  INNER JOIN ProdNames ON ProdNames.ProdNameID = Products.ProdNameID
+  INNER JOIN Dimension ON Dimension.DimensionID = Products.DimensionID
+  INNER JOIN Inventory ON Inventory.ProdID = Products.ProdID
+  ${
+    material.length ? (`AND (ProdNames.Material = "${material}")`) : (``)
+  }
+  ${
+    finish.length ? (`AND (Dimension.Finish = "${finish}")`) : (``)
+  }
+  ${
+    search.length ? (
+      `AND (LOWER(ProdNames.Naturali_ProdName) LIKE LOWER('%${search}%'))`
+    ) : (``)
+  }
+  ORDER BY ProdNames.Naturali_ProdName ASC
+  `;
+
+  try {
+    mysqlConnection.query(query, function(error, results, fields) {
+      if (error) throw error;
+      if (results.length == 0) {
+        let filteredValues = prodValues(results, search)
+        console.log('Error en productsRoutes.get /new_samples');
+        res.status(200).json({results, errorSearch: 'No products found', filteredValues});
+
+      } else {
+        results = productsNotEqual(results)
+        let filteredValues = prodValues(results, search)
+        let errorSearch = {}
+        res.status(200).json({results, errorSearch, filteredValues});
+
+      }
+    });            
+  } catch(error) {
+    res.status(409).send(error);
+  }
+});
 
 productsRouter.get('/id/:id', async function(req, res){
     const {id} = req.params
@@ -136,9 +185,9 @@ productsRouter.get('/id/:id', async function(req, res){
 });
 
 productsRouter.get('/filtered', async function(req, res){
-    let { finish, size, thickness, material, search, price1, price2 } = req.query;
-    const min = price1 === '' ? 0 : price1
-    const max = price2 === '' ? 99999999 : price2
+    let { finish, size, thickness, material, search, sqft1, sqft2, type} = req.query;
+    const sqftMin = sqft1 === '' ? 0 : sqft1
+    const sqftMax = sqft2 === '' ? 99999999 : sqft2
 
     const query = `
     SELECT    
@@ -148,9 +197,14 @@ productsRouter.get('/filtered', async function(req, res){
       Dimension.Size,
       Dimension.Finish,
       Dimension.Thickness,
+      Dimension.SQFT_per_Slab,
       Products.SalePrice AS Price,
       Products.ProdID,
-      Inventory.*
+      Inventory.*,
+    CASE
+      WHEN Dimension.Type = 'Tile' THEN Inventory.InStock_Available + Inventory.InComing_Available
+      WHEN Dimension.Type = 'Slab' THEN (Inventory.InStock_Available + Inventory.InComing_Available) * Dimension.SQFT_per_Slab
+    END AS sqft
     FROM Products
     INNER JOIN ProdNames ON ProdNames.ProdNameID = Products.ProdNameID
     INNER JOIN Dimension ON Dimension.DimensionID = Products.DimensionID
@@ -159,6 +213,9 @@ productsRouter.get('/filtered', async function(req, res){
     
     ${
       material.length ? (`AND (ProdNames.Material = "${material}")`) : (``)
+    }
+    ${
+      type.length ? (`AND (Dimension.Type = "${type}")`) : (``)
     }
     ${
       finish.length ? (`AND (Dimension.Finish = "${finish}")`) : (``)
@@ -174,14 +231,6 @@ productsRouter.get('/filtered', async function(req, res){
         `AND (LOWER(ProdNames.Naturali_ProdName) LIKE LOWER('%${search}%'))`
       ) : (``)
     }
-    ${
-      (price1 === '' && price2 === '') ? (``) : (
-        `AND (
-          (Products.SalePrice IS NULL) OR
-          (Products.SalePrice >= ${min} AND Products.SalePrice <= ${max})
-        )`
-      )
-    }
     ORDER BY ProdNames.Naturali_ProdName ASC
     `;
   
@@ -189,18 +238,36 @@ productsRouter.get('/filtered', async function(req, res){
       mysqlConnection.query(query, function(error, results, fields) {
         if (error) throw error;
         if (results.length == 0) {
-
+          const sqftMinMax = getSqftMaxMin(results)
           let price = findMaxMinPrice(results);
-          let filteredValues = prodValues(results, search, price)
+          let filteredValues = prodValues(results, search, price, sqftMinMax)
           console.log('Error en productsRoutes.get /filtered');
+          results = results.sort((a, b) => {
+            const nameA = a.ProductName.toUpperCase();
+            const nameB = b.ProductName.toUpperCase();
+            if (nameA < nameB) return -1;
+            if (nameA > nameB) return 1;
+            return 0;
+          }) 
           res.status(200).json({results, errorSearch: 'No products found', filteredValues});
 
         } else {
-
+          const sqftMinMax = getSqftMaxMin(results)
           let price = findMaxMinPrice(results);
-          let filteredValues = prodValues(results, search, price)
+          let filteredValues = prodValues(results, search, price, sqftMinMax, sqftMin, sqftMax)
           let errorSearch = {}
-
+          if(sqftMin > 0 || sqftMax < 99999999) {
+            results = results.filter(item => item.sqft > sqftMin && item.sqft < sqftMax)
+          }
+          results = results.sort((a, b) => {
+            const nameA = a.ProductName.toUpperCase();
+            const nameB = b.ProductName.toUpperCase();
+            if (nameA < nameB) return -1;
+            if (nameA > nameB) return 1;
+            return 0;
+          }) 
+          console.log('soy results', results)
+          console.log('filters', filteredValues)
           res.status(200).json({results, errorSearch, filteredValues});
 
         }

@@ -21,6 +21,7 @@ import Redirect from './views/RedirectPage';
 import { Box } from '@chakra-ui/react';
 import Freights from './views/Freight';
 import FreightDetailView from './views/FreightsDetailView';
+import Samples from './views/Samples';
 
 function App() {
 
@@ -53,9 +54,9 @@ function App() {
         <Route path="/customers" element={<PrivateRoute><Customers focus={focus} setFocus={setFocus} /></PrivateRoute>}/>
         <Route path="/customers/:id" element={<PrivateRoute><CustomerDetailView focus={focus} setFocus={setFocus} /></PrivateRoute>}/>
         <Route path="/task-board" element={<PrivateRoute><TaskBoardView focus={focus} setFocus={setFocus} /></PrivateRoute>}/>
-        
         <Route path="/freights" element={<PrivateRoute><Freights focus={focus} setFocus={setFocus} /></PrivateRoute>}/>
         <Route path="/freights/:freightRef" element={<PrivateRoute><FreightDetailView focus={focus} setFocus={setFocus} /></PrivateRoute>}/>
+        <Route path="/samples" element={<PrivateRoute><Samples focus={focus} setFocus={setFocus} /></PrivateRoute>}/>
       </Routes> 
     </Box>
     </BrowserRouter>

@@ -7,12 +7,23 @@ import {
     Th,
     TableContainer,
   } from '@chakra-ui/react'
+import { useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
+import { cleanOrderProducts, getOrderProducts, getOrdersByID } from '../../redux/actions-orders'
   
   
   
   
   const ModelTr = ({p}) => {
-    
+    const navigate = useNavigate()
+    const dispatch = useDispatch()
+
+    const handleClick = () => {
+      dispatch(getOrdersByID(p.OrderID, p.FactoryID))
+      dispatch(cleanOrderProducts())
+      dispatch(getOrderProducts(p.OrderID, p.FactoryID))
+      navigate(`/orders/${p.OrderID}/${p.FactoryID}`)
+    }
       return(
         <Tr 
           cursor={'pointer'}
@@ -21,6 +32,7 @@ import {
             bg: 'web.navBar',
             color: 'logo.orange'
           }}
+          onClick={() => handleClick()}
           >
           <Td textAlign={'center'} w={'6vw'} fontSize={'1.6vh'}>{p.Factory_Name}</Td>
           <Td textAlign={'center'} w={'6vw'} fontSize={'1.6vh'}>{p.OrderID}</Td>
@@ -34,7 +46,8 @@ import {
   
   
   const TableFreightList = ({freights_factory}) => {
-    
+    console.log('fregi', freights_factory)
+
   return(  
     <TableContainer w={'74vw'}>
       <Table mt={'2vh'} color={'web.text'} variant={'simple'} size={'sm'} >

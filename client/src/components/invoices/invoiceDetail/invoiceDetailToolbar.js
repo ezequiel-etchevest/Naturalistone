@@ -6,7 +6,8 @@ import{
   Text,
   Divider,
   Box,
-  Modal
+  Modal,
+  useDisclosure
 } from '@chakra-ui/react';
 import {AiOutlineMail, AiOutlineInfoCircle} from 'react-icons/ai';
 import { MdOpenInNew } from 'react-icons/md'
@@ -21,11 +22,21 @@ import { useNavigate } from 'react-router-dom';
 import { AppearanceCharacteristics } from 'pdf-lib';
 import ApproveQuote from './ApproveQuote';
 import UpdateQuoteModal from '../updateQuote/updateQuoteModal';
-
-
+import InvoiceSendEmail from './invoiceSendEmail';
+import { useDispatch, useSelector } from 'react-redux';
+import { getCustomerById } from '../../../redux/actions-customers';
+import { useEffect } from 'react';
 
 export const InvoiceDetailToolbar = ({invoice, payments, user, invoice_products, deliveries}) => {
+  const dispatch = useDispatch()
   const navigate = useNavigate()
+  const { onOpen, onClose, isOpen } = useDisclosure()
+  const customer = useSelector(state => state.customer_by_id)
+  
+  useEffect(() => {
+    dispatch(getCustomerById(invoice[0].CustomerID))
+  },[])
+  console.log('soy invoice', invoice)
 
   return(
     <VStack mt={'3vh'} mb={'3vh'} w={'13vw'} alignItems={'flex-start'} pt={'2vh'}>
@@ -77,15 +88,17 @@ export const InvoiceDetailToolbar = ({invoice, payments, user, invoice_products,
          disabled={true}
          icon={<AiOutlineMail/>}/>
          <Button
+         onClick={onOpen}
          fontSize={'1vw'}
          display={'flex'}
          alignSelf={'flex-start'}
          variant={'unstyled'}           
          fontWeight={'normal'}
-         disabled={true}
+         disabled={false}
          >Contact Customer
         </Button>            
         </ButtonGroup>
+         <InvoiceSendEmail isOpen={isOpen} onOpen={onOpen} onClose={onClose} customer={customer}/>
       </Box>
       <Text fontSize={'xs'} textColor={'web.text2'} w={'100%'}>Products</Text>
       <Divider w={'100%'}  textColor={'web.border'}/>

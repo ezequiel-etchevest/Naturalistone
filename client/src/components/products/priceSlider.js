@@ -5,20 +5,23 @@ import {
     RangeSliderThumb,
     Tooltip,
 		Center,
+    Text,
 } from '@chakra-ui/react';
 import { useDispatch } from 'react-redux'
 import { getFiltered }  from "../../redux/actions-products";
 import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 
 let PriceSlider = ({setFilters, filters, limit, setLimit, values}) =>{
     
     const dispatch = useDispatch()
     const searchParams = new URLSearchParams()
     const navigate = useNavigate()
+    const [valueMax, setValueMax] = useState(values?.sqftMinMax?.max)
 
     const handlePrice = (e) => {
-      searchParams.set('priceMin', e[0])
-      searchParams.set('priceMax', e[1])
+      searchParams.set('sqftMin', e[0])
+      searchParams.set('sqftMax', e[1])
       searchParams.set('finish', filters.finish)
       searchParams.set('size', filters.size)
       searchParams.set('thickness', filters.thickness)
@@ -28,9 +31,13 @@ let PriceSlider = ({setFilters, filters, limit, setLimit, values}) =>{
         setLimit(e);
         setFilters({
           ...filters,
-          price: e
+          sqft: e
         })  
       }
+
+      useEffect(() => {
+        setValueMax(values?.sqftMinMax.max)
+      },[values])
     
     return(
 			<Center
@@ -43,14 +50,14 @@ let PriceSlider = ({setFilters, filters, limit, setLimit, values}) =>{
         <RangeSlider 
             aria-label={['min', 'max']}
             colorScheme={'orange'}
-            value={filters.price}
+            value={filters.sqft}
             onChangeEnd={(val) => {
-              dispatch(getFiltered(filters.finish, filters.size, filters.thickness,filters.material, filters.search, val))}}
+              dispatch(getFiltered(filters.finish, filters.size, filters.thickness,filters.material, filters.search, val, filters.type))}}
             onChange={(e) => handlePrice(e)}
             w={'15vw'}
-            defaultValue={[values.priceMaxmin.min === null ? 0 : values.priceMaxmin.min, values.priceMaxmin.max]}
-            min={values.priceMaxmin.min === null ? 0 : values.priceMaxmin.min }
-            max={values.priceMaxmin.max}
+            defaultValue={[values?.sqftMinMax?.min === null ? 0 : values?.sqftMinMax?.min, values?.sqftMinMax?.max]}
+            min={values?.sqftMinMax?.min === null ? 0 : values?.sqftMinMax?.min }
+            max={valueMax}
             step={15}
             h={'4vh'}
             >
@@ -58,7 +65,7 @@ let PriceSlider = ({setFilters, filters, limit, setLimit, values}) =>{
               <RangeSliderFilledTrack/>
             </RangeSliderTrack>
             <Tooltip
-              label={`$${limit[0]}`}
+              label={limit[0]}
 							fontWeight={'normal'}
               bg={'web.sideBar'}
               color="web.text2"
@@ -78,7 +85,7 @@ let PriceSlider = ({setFilters, filters, limit, setLimit, values}) =>{
             </Tooltip>
             <Tooltip
 							fontWeight={'normal'}
-              label={`$${limit[1]}`}
+              label={limit[1]}
 							bg={'web.sideBar'}
               color="web.text2"
               placement={'right'}

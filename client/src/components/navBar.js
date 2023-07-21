@@ -2,7 +2,6 @@ import {
 	  Box,
     Image,
     Flex,
-    Spacer
   } from '@chakra-ui/react';
 import logo from '../assets/NaturalistoneLogo.png'
 

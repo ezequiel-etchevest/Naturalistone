@@ -28,7 +28,7 @@ freightRouter.get('/orders/:freightRef', async function(req, res) {
 
   const { freightRef } = req.params
   
-  let query_ = `SELECT Factory.Factory_Name, Orders.OrderID, Orders.Value,
+  let query_ = `SELECT Factory.Factory_Name, Factory.FactoryID, Orders.OrderID, Orders.Value,
   Orders.InvoiceDate, Orders.Status, Updated_Date FROM Orders
   INNER JOIN FreightInvoices ON FreightInvoices.FreightRefNumber = Orders.FreightRefNumber
   INNER JOIN Factory ON Factory.FactoryID = Orders.FactoryID

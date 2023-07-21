@@ -3,6 +3,7 @@ import ProductList from './productsList'
 import ProductsFilters from './productsFilters'
 import { useState } from "react"
 import { Center, Spinner } from "@chakra-ui/react"
+import { useLocation } from "react-router-dom"
 
 const ProductsContainer = ({ allProducts, user, values }) => {
 
@@ -15,8 +16,16 @@ const ProductsContainer = ({ allProducts, user, values }) => {
             bg={'web.bg'}
             > 
             <Box>
-                <ProductsFilters allProducts={allProducts} setFilteredProducts={setFilteredProducts} values={values}/>
-                <ProductList allProducts={allProducts} filteredProducts={filteredProducts} user={user} />
+                <ProductsFilters
+                allProducts={allProducts}
+                setFilteredProducts={setFilteredProducts}
+                values={values}
+                />
+                <ProductList 
+                allProducts={allProducts}
+                filteredProducts={filteredProducts}
+                user={user}
+                />
             </Box>
             </Box>
         )
