@@ -22,7 +22,6 @@ import CreateSampleProductsList from "./CreateSampleProductsList";
   const toast = useToast()
   const allProducts = useSelector(state => state.products_new_samples)
   const values = useSelector(state => state.products_new_samples_values)
-  console.log('allpropducts', allProducts)
   
   const [filters, setFilters] = useState({
     finish:'',
