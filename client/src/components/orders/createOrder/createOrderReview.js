@@ -14,10 +14,10 @@ import {
 import '../../../assets/styleSheet.css'
 
 const CreateOrderReview = ({ formData, setFormData }) => {
-console.log(formData.factory)
+
   return(
-<>
-  <Box 
+  <>  
+    <Box 
     color={'web.text2'} 
     display={'flex'} 
     justifyContent={'center'} 

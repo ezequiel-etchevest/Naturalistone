@@ -35,7 +35,7 @@ samplesRoutes.get("/", function (req, res) {
 samplesRoutes.get("/samplesProducts/:sampleId", function (req, res) {
   const { sampleId } = req.params;
 
-  const query_ = `SELECT  Samples_Products.ProdID, Samples_Products.Quantity, Products.DimensionID, ProdNames.Naturali_ProdName, Dimension.Type, Dimension.Finish 
+  const query_ = `SELECT  Samples_Products.ProdID, Samples_Products.Quantity, Products.DimensionID, ProdNames.Naturali_ProdName, ProdNames.Material, Dimension.Type, Dimension.Finish 
   FROM Samples
   LEFT JOIN Samples_Products ON Samples_Products.sampleID = Samples.idSamples
   LEFT JOIN Products ON Products.ProdID = Samples_Products.ProdID

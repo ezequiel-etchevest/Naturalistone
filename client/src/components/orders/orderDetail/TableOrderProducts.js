@@ -58,7 +58,7 @@ return(
       <Thead h={'6vh'} >
         <Tr>
           <Th color={'web.text2'} w={'14vw'}>Product Name</Th>
-          <Th color={'web.text2'} w={'6vw'} textAlign={'center'} >Type</Th>
+          <Th color={'web.text2'} w={'6vw'} textAlign={'center'} >Material</Th>
           <Th color={'web.text2'} w={'6vw'} textAlign={'center'} >Size</Th>
           <Th color={'web.text2'} w={'6vw'} textAlign={'center'} >Thickness</Th>
           <Th color={'web.text2'} w={'6vw'} textAlign={'center'} >Finish</Th>

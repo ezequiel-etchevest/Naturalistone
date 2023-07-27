@@ -3,12 +3,10 @@ import { IconButton,
     Modal, 
     ModalOverlay, 
     ModalContent, 
-    ModalHeader, 
     ModalBody, 
     ModalFooter,
     ModalCloseButton, 
     Button, 
-    useToast,
     Box, 
     Progress } from "@chakra-ui/react";
 import { AiOutlineFileAdd } from "react-icons/ai";
@@ -42,7 +40,7 @@ useEffect(() => {
   if(!sellers.length) dispatch(getSellers())
   if(!factories.length)dispatch(getFactories(''))
   if(!allProducts.length)dispatch(getAllProductsNewQuote('','',''))
-}, [factories])
+}, [])
 
 const [ progress, setProgress ] = useState(25)
 // const toast = useToast()
@@ -153,9 +151,8 @@ const handleNextButton = () =>{
 
 // }
 const handlePreviousButton = () => {
-setProgress(progress - 25)
-}
-console.log('padre', formData)
+  setProgress(progress - 25)
+  } 
 return (
   <>
     <Box w={'80vw'} mt={'2vh'} h={'6vh'} display="flex" justifyContent="flex-end">
