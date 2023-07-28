@@ -370,12 +370,12 @@ const ProductsFilters = ({setCurrentPage, values}) => {
             </Select>
           </Box>
           <Box display={'flex'} alignItems={'center'} flexDir={'row'} h={'15vh'} >
-            <Box display={'flex'} flexDir={'column'} h={'13vh'}>
+            {/* <Box display={'flex'} flexDir={'column'} h={'13vh'}>
             <Text color={'web.text2'} mb={'10px'}>
               SQFT Available
             </Text>
             <PriceSlider setFilters={setFilters} filters={filters} limit={limit} setLimit={setLimit} values={values}/>
-            </Box>
+            </Box> */}
             <Divider orientation={'vertical'} h={'5vh'} ml={'2vw'}/>
             <Tooltip placement={'bottom-start'} label={'Clear all filters'} fontWeight={'hairline'}>      
             <IconButton
