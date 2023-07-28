@@ -168,7 +168,7 @@ const CreateQuoteCustomerProjets = ({ formData, setFormData, setDisable, update,
             <option value='Pick up' className="options">Pick up</option>
           </Select>
           <Divider orientation={'vertical'} h={'5vh'}/>
-            <CreateNewProject customer={formData.customer} />
+            <CreateNewProject customer={formData.customer}/>
         </HStack>
         <CreateQuoteProjectList projects={ projects } formData={formData} setFormData={setFormData} setDisable={setDisable}/>
     </Box>
