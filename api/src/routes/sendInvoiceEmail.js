@@ -41,11 +41,34 @@ emailInvoiceRouter.post('/quoteDetail', async function(req, res) {
 })
 
 emailInvoiceRouter.post('/samples', async function (req, res) {
-  const { clientName, htmlBody, subject, clientEmail, sellerEmail, ccEmail, date, samplesProducts } = req.body
+  const { clientName, htmlBody, subject, clientEmail, sellerEmail, ccEmail, estimatedDelivery, products, trackingNumber } = req.body
+
+  console.log("req,ody", req.body)
+
+  const valuesProducts = Object.values(products)
+
+  const samplesProducts = valuesProducts.map((el) =>{
+    return {
+      description: el.prodName
+    }
+  })
+
+  console.log("samples", samplesProducts)
+
 
   try {
-    await sendSamplesEmail(sellerEmail, clientEmail, ccEmail, htmlBody, subject, clientName, date, samplesProducts)
-    return res.status(200).json({success: true, msg: "email send successfully"})
+    await sendSamplesEmail(
+      sellerEmail,
+      clientEmail,
+      ccEmail,
+      htmlBody,
+      subject,
+      clientName,
+      estimatedDelivery,
+      samplesProducts,
+      trackingNumber,
+      )
+    return res.status(200).json({success: true, data: "email send successfully"})
   } catch (error) {
     return res.status(400).json({success: false, data: error})
   }

@@ -92,7 +92,7 @@ import {
 } from './actions-stats'
 import {
   SEND_EMAIL_CLIENT
-} from './actions-invoiceEmail'
+} from './actions-email'
 import {
   GET_ALL_TASKS,
   GET_TASK_BY_ID,

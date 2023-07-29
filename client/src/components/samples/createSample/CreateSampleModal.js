@@ -85,8 +85,6 @@ export function CreateSampleModal({ customers }) {
   const toastId = "error-toast";
   const customerID = formData.customer.CustomerID;
 
-  console.log("user", user)
-
   useEffect(() => {
     if (!samples.length) getSamples("");
   }, []);

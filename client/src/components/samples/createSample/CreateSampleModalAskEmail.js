@@ -28,9 +28,6 @@ import SendEmailModal from "./CreateSampleEmailModal"
   
   return(
   <>
-  <Button onClick={onOpen2} onClose={onClose2}>
-    hola
-  </Button>
         <Modal
           isOpen={isOpen2}
           onClose={onClose2}

@@ -113,6 +113,7 @@ function sendSamplesEmail(
   clientName,
   dateValue,
   samplesProducts,
+  trackingNumber,
   ) {
   const optionsEmail = {
     From: fromEmail,
@@ -123,6 +124,7 @@ function sendSamplesEmail(
       name: clientName,
       body: bodyValue,
       date: dateValue,
+      trackingNumber: trackingNumber,
       samples_details: samplesProducts,
       product_name: companyName,
       company_name: companyName,
