@@ -1,5 +1,5 @@
 const express = require('express');
-const { sendEmailClient } = require('../utils/email');
+const { sendEmailClient, sendSamplesEmail } = require('../utils/email');
 const emailInvoiceRouter = express.Router();
 const multer = require('multer')
 const upload = multer();
@@ -38,6 +38,17 @@ emailInvoiceRouter.post('/quoteDetail', async function(req, res) {
       console.log(error)
       res.status(400).json({success: false, msg: 'Error in send email'})
     }
+})
+
+emailInvoiceRouter.post('/samples', async function (req, res) {
+  const { clientName, htmlBody, subject, clientEmail, sellerEmail, ccEmail, date, samplesProducts } = req.body
+
+  try {
+    await sendSamplesEmail(sellerEmail, clientEmail, ccEmail, htmlBody, subject, clientName, date, samplesProducts)
+    return res.status(200).json({success: true, msg: "email send successfully"})
+  } catch (error) {
+    return res.status(400).json({success: false, data: error})
+  }
 })
 
 module.exports = emailInvoiceRouter

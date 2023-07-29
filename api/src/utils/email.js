@@ -104,4 +104,34 @@ function sendEmailClient(
   return client.sendEmailWithTemplate(optionsEmail)
 }
 
-module.exports = { sendInvoiceEmail, sendEmailClient, sendEmailUser }
+function sendSamplesEmail(
+  fromEmail,
+  clientEmail,
+  ccEmail,
+	bodyValue,
+  subjectValue,
+  clientName,
+  dateValue,
+  samplesProducts,
+  ) {
+  const optionsEmail = {
+    From: fromEmail,
+    To: clientEmail,
+    Cc: ccEmail,
+    TemplateId: 31786965,
+    TemplateModel: {
+      name: clientName,
+      body: bodyValue,
+      date: dateValue,
+      samples_details: samplesProducts,
+      product_name: companyName,
+      company_name: companyName,
+      company_address: companyAddress,
+      image: imageNaturaliStone,
+      subject: subjectValue,
+    }
+  }
+  return client.sendEmailWithTemplate(optionsEmail)
+}
+
+module.exports = { sendInvoiceEmail, sendEmailClient, sendEmailUser, sendSamplesEmail }

@@ -36,9 +36,11 @@ import CreateSampleProjects from "./CreateSampleProjects";
 import CreateSampleProducts from "./CreateSampleProducts";
 import CreateSampleProductsReview from "./CreateSampleProductsReview";
 import { getSamples, postSamples } from "../../../redux/actions-samples";
+import CreateSampleModalAskEmail from "./CreateSampleModalAskEmail";
 
 export function CreateSampleModal({ customers }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const { isOpen: isOpen2, onOpen: onOpen2, onClose: onClose2 } = useDisclosure();
   const user = useSelector((state) => state.user);
   const [errorsCustomer, setErrorsCustomer] = useState({});
   const [errorsTrackingNumber, setErrorsTrackingNumber] = useState({});
@@ -86,6 +88,8 @@ export function CreateSampleModal({ customers }) {
   const toastId = "error-toast";
   const customerID = formData.customer.CustomerID;
 
+  console.log("user", user)
+
   useEffect(() => {
     if (!samples.length) getSamples("");
   }, []);
@@ -114,10 +118,10 @@ export function CreateSampleModal({ customers }) {
       });
       onClose();
       dispatch(getSamples(""));
-      handleCleanFormData();
     }
     setSubmited(false);
     setProgress(20);
+    onOpen2()
   };
 
   const handleClose = () => {
@@ -385,6 +389,8 @@ export function CreateSampleModal({ customers }) {
           )}
         </ModalContent>
       </Modal>
+      <CreateSampleModalAskEmail isOpen2={isOpen2} onOpen2={onOpen2} onClose2={onClose2} formData={formData} handleCleanFormData={handleCleanFormData}
+      />
     </>
   );
 }
