@@ -156,6 +156,7 @@ const CreatedQuotePdf = ({ formData, user, handleChangeEmail }) => {
               onClick={handleChangeEmail}
               colorScheme={"orange"}
               mb={"1.5vw"}
+              hidden={true}
             >
               Send Email
             </Button>

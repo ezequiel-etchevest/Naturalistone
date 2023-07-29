@@ -258,7 +258,7 @@ const ProductsFilters = ({setCurrentPage, values}) => {
                   value={filters.material}
                   mr={'15px'}
                 >
-                <option value='' className="options">Material Type</option>
+                <option value='' className="options">Material</option>
                 {
                   values?.materials?.map((v, i) => {
                       return(

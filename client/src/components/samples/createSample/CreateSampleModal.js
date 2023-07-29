@@ -17,19 +17,16 @@ import {
 } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { day0, month0, year } from "../../../utils/todayDate";
-import { HiUserAdd } from "react-icons/hi";
+import { HiSquaresPlus } from "react-icons/hi2";
 import {
   validateEmptyInputsCreateQuote,
-  validateInPutTrackingNumber,
+  validateProject,
 } from "../../../utils/validateForm";
 import { getCustomers, updateCustomer } from "../../../redux/actions-customers";
 import { getCustomerProjects } from "../../../redux/actions-projects";
 import {
-  getAllProductsNewQuote,
   getAllProductsNewSamples,
 } from "../../../redux/actions-products";
-import { createQuote } from "../../../redux/actions-invoices";
 import CreateSampleCustomer from "./CreateSampleCustomer";
 import CreateSampleCustomerReview from "./CreateSampleCustomerReview";
 import CreateSampleProjects from "./CreateSampleProjects";
@@ -93,18 +90,6 @@ export function CreateSampleModal({ customers }) {
   useEffect(() => {
     if (!samples.length) getSamples("");
   }, []);
-
-  const validateAuthFlag = (objetos) => {
-    for (const id in objetos) {
-      if (objetos.hasOwnProperty(id)) {
-        if (objetos[id].authFlag) {
-          return true;
-        }
-      }
-    }
-    return false;
-  };
-  let authFlag = validateAuthFlag(formData.products);
 
   const handleSubmit = () => {
     if (progress === 100) {
@@ -203,13 +188,8 @@ export function CreateSampleModal({ customers }) {
       }
     }
     if (progress === 60) {
-      setErrorsTrackingNumber({});
-      const errorss = validateInPutTrackingNumber(formData.variables);
-      setErrorsTrackingNumber(errorss);
-      if (
-        Object.entries(errorss).length ||
-        !formData.variables.trackingNumber.length
-      ) {
+
+      if (!formData.variables.trackingNumber.length) {
         if (!toast.isActive(toastId)) {
           return toast({
             id: toastId,
@@ -220,11 +200,13 @@ export function CreateSampleModal({ customers }) {
             isClosable: true,
           });
         }
+      }else{
+        dispatch(getAllProductsNewSamples("", "", ""));
+        setProgress(progress + 20);
       }
-      dispatch(getAllProductsNewSamples("", "", ""));
-      setProgress(progress + 20);
     } else {
       setProgress(progress + 20);
+      dispatch(getAllProductsNewSamples("", "", ""));
     }
   };
 
@@ -250,7 +232,7 @@ export function CreateSampleModal({ customers }) {
           fontWeight={"hairline"}
         >
           <IconButton
-            icon={<HiUserAdd />}
+            icon={<HiSquaresPlus />}
             variant={"unstyled"}
             display={"flex"}
             borderRadius={"sm"}

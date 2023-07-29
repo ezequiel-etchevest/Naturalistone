@@ -8,12 +8,7 @@ import {
     Td,
     TableContainer,
     Text,
-    Center,
-    NumberInput,
-    NumberInputField,
-    NumberIncrementStepper,
-    NumberDecrementStepper,
-    NumberInputStepper
+    Center
   } from '@chakra-ui/react';
   import { useEffect, useState } from 'react';
 
@@ -22,27 +17,35 @@ const ModelTr = ({e, formData, setFormData}) => {
   let id = e.ProdID
 
 const handleInput = () => {
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      products: {
-        ...prevFormData.products,
-        [id]: {
-          ...prevFormData.products[id],
-              prodID: e.ProdID,
-              prodName: e.ProductName,
-              type: e.Material,
-              size:e.Size,
-              thickness:e.Thickness,
-              finish:e.Finish,
-              price: e.Price,
-              prodNameID: e.ProdNameID
+    if(!formData.products.hasOwnProperty(e.ProdID)){
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        products: {
+          ...prevFormData.products,
+          [id]: {
+            ...prevFormData.products[id],
+                prodID: e.ProdID,
+                prodName: e.ProductName,
+                type: e.Material,
+                size:e.Size,
+                thickness:e.Thickness,
+                finish:e.Finish,
+                price: e.Price,
+                prodNameID: e.ProdNameID
+              },
             },
-          },
-        }));
+          })); 
+        }else{
+          setFormData((prevFormData) => {
+            const { [id]: value, ...updatedProducts } = prevFormData.products;
+            return {
+              ...prevFormData,
+              products: updatedProducts,
+            };
+          });
+        }
       }
 
-      console.log('formdata', formData)
-    
   return(
     <Tr       
       cursor={'pointer'} 
@@ -52,6 +55,8 @@ const handleInput = () => {
         color: 'logo.orange'
       }} 
       onClick={handleInput} 
+      bg={formData.products.hasOwnProperty(e.ProdID)? 'web.navBar' : 'unset' }
+      color={formData.products.hasOwnProperty(e.ProdID)? 'logo.orange' : 'unset' }
       >
       <Td maxW={'3vw'} fontSize={'xs'} textAlign={'match-parent'}>{e.ProductName}</Td>
       <Td maxW={'6vw'} fontSize={'xs'} textAlign={'center'}>{e.Material}</Td>

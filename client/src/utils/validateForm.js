@@ -398,15 +398,25 @@ export const validateCompletedInputsFactory = (formData) =>{
   return errors
 }
 
-export function validateInPutTrackingNumber(formData) {
+export function validateProject(tracking) {
+
   let errors = {}
   const regexNumber = /^\d+$/
-  console.log('soy formddaata validate', formData)
-  if (formData.trackingNumber !== '') {
-    if (!regexNumber.test(formData.trackingNumber)) {
-      console.log('aqui entre')
+  if (tracking !== '') {
+    if (!regexNumber.test(tracking)) {
       errors.trackingNumber = 'Please insert a valid Tracking number'
-      console.log('soy errors', errors)
+    }
+  if(tracking == '') errors.trackingNumber = 'Please insert a Tracking number'}
+
+  return errors
+}
+
+export function validateInputTracking(input) {
+  let errors = {}
+  const regexNumber = /^\d+$/
+  if (input !== '') {
+    if (!regexNumber.test(input)) {
+      errors.trackingNumber = 'Only numbers allowed'
     }
   }
   return errors

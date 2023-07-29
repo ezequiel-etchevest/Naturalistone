@@ -5,8 +5,10 @@ const mysqlConnection = require('../db')
 
 ordersRouter.get('/', async function(req, res){
 
-    query_ = `SELECT Orders.*, Factory.Factory_Name as FactoryName FROM Orders
-    LEFT JOIN Factory ON  Factory.FactoryID = Orders.FactoryID ORDER BY InvoiceDate DESC`;
+    query_ =    `SELECT Orders.*, Factory.Factory_Name as FactoryName, FreightInvoices.InvoiceNumber FROM Orders
+                LEFT JOIN Factory ON  Factory.FactoryID = Orders.FactoryID
+                LEFT JOIN FreightInvoices ON  Orders.FreightRefNumber = FreightInvoices.FreightRefNumber
+                ORDER BY InvoiceDate DESC`;
     try{
          mysqlConnection.query(query_, function(error, results, fields){
             if(!results.length) {

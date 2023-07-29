@@ -45,7 +45,7 @@ const ProductInformation = ({product}) => {
               w={'10vw'}
               justifyContent={'space-around'}
               alignContent={'center'}>
-                <Text fontSize={'1.6vh'} color={'web.text2'}> Type </Text>
+                <Text fontSize={'1.6vh'} color={'web.text2'}> Material </Text>
                 <Text fontSize={'2.2vh'} fontWeight={'bold'}>{product.Material}</Text>
             </Box>
             <Box 

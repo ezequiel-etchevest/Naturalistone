@@ -23,7 +23,6 @@ const handleChange = (e) => {
     },
   });
 };
-console.log(formData)
 
 const managerSellers = sellers.filter((seller)=> seller.Secction7Flag === 1)
 return (

@@ -12,35 +12,32 @@ import { useEffect } from "react";
 import { CreateNewProject } from "../../customers/customerDetail/createProject";
 import "../../../assets/styleSheet.css";
 import CreateSampleProjectList from "./CreateSampleProjectList";
+import { validateInputTracking } from "../../../utils/validateForm";
 
 const CreateSampleProjects = ({
-  formData,
-  setFormData,
-  setDisable,
-  errorsTrackingNumber,
-  setErrorsTrackingNumber,
-}) => {
+    formData,
+    setFormData,
+    setDisable,
+    errorsTrackingNumber,
+    setErrorsTrackingNumber,
+    }) => {
   const projects = useSelector((state) => state.projects_by_customer_id);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-
-    setFormData({
-      ...formData,
-      variables: {
-        [name]: value,
-      },
-    });
-    console.log(formData.variables.trackingNumber);
+    setErrorsTrackingNumber({})
+    const errors = validateInputTracking(value)
+    if(!Object.entries(errors).length){
+      setFormData({
+        ...formData,
+        variables: {
+          [name]: value,
+        },
+      });
+    }else{
+      setErrorsTrackingNumber(errors)
+    }
   };
-
-  //   useEffect(() => {
-  //     if(formData.variables.shipVia && formData.variables.method && formData.variables.paymentTerms && formData.variables.estDelivDate && formData.project.ProjectName){
-  //       setDisable(false)
-  //     } else {
-  //       setDisable(true)}
-  // }, [formData.variables, formData.project]);
-
   return (
     <>
       <Box

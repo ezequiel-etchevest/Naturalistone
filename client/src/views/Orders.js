@@ -19,8 +19,8 @@ const Orders = ({focus, setFocus}) => {
       }})
 
   useEffect(() => {
-    dispatch(getOrders())
-  }, [])
+    if(!orders.length) dispatch(getOrders())
+  })
 
       if(user.length){
         return(
