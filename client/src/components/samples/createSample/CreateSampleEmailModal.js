@@ -66,6 +66,7 @@ const SendEmailModal = ({ formData, isOpen3, onClose3, handleCleanFormData }) =>
     ccEmail: '',
     })
     handleCleanFormData()
+    onClose3()
   }
   }
 

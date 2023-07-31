@@ -38,6 +38,8 @@ const CreateSampleProjects = ({
       setErrorsTrackingNumber(errors)
     }
   };
+
+  console.log("formdata", formData)
   return (
     <>
       <Box
@@ -47,7 +49,8 @@ const CreateSampleProjects = ({
         flexDir={"column"}
         h={"58vh"}
       >
-        <Box mt={"10px"}>
+        <Box mt={"10px"} bg={"red"} display={"flex"} flexDirection={"row"}>
+          <Box bg={"blue"} w={"50%"}>
           <Text
             ml={"2vw"}
             mt={"2vh"}
@@ -65,7 +68,7 @@ const CreateSampleProjects = ({
           </Text>
           <Input
             mb={"0.5vh"}
-            w={"25vw"}
+            w={"15vw"}
             minH={"4.5vh"}
             variant="unstyled"
             textColor={"web.text2"}
@@ -90,6 +93,55 @@ const CreateSampleProjects = ({
               {errorsTrackingNumber.trackingNumber}
             </Text>
           )}
+          </Box>
+          <Box bg={"green"} w={"50%"}>
+          <Text
+            ml={"2vw"}
+            mt={"2vh"}
+            mb={"2vh"}
+            fontSize={"lg"}
+            w={"16vw"}
+            color={"white"}
+            alignSelf={"flex-start"}
+          >
+            Estimated Delivery
+          </Text>
+          <Text fontSize="sm" fontWeight={"semisemibold"} ml={"4.5vw"}>
+            {" "}
+            Date{" "}
+          </Text>
+          <Tooltip  label="Estimated delivery date" fontWeight={'hairline'} placement='top-start'>
+            <Input
+              ml={"4.5vw"}
+              mb={'0.5vh'}
+              w={'10vw'}
+              minH={'4.5vh'}
+              variant="unstyled"
+              textColor={'web.text2'}
+              _placeholder={{ fontFamily: 'body', fontWeight: 'inherit' }}
+              size={"sm"}
+              value={formData.variables.estDelivDate || ""}
+              borderBottomWidth={"2px"}
+              borderBottomColor={'web.text2'}
+              type={"date"}
+              pattern={"\d{4}-\d{2}-\d{2}"}
+              name={"estDelivDate"}
+              cursor= {'pointer'}
+              onChange={(e)=>handleChange(e)}
+              css={{
+                '::-webkit-calendar-picker-indicator': {   
+                    background: `url(https://cdn3.iconfinder.com/data/icons/linecons-free-vector-icons-pack/32/calendar-16.png) center/90% no-repeat`,    
+                    cursor: 'pointer',
+                    filter: 'invert(59%) sepia(7%) saturate(31%) hue-rotate(184deg) brightness(97%) contrast(92%)',
+                    marginRight: 7,
+                    position: 'absolute',
+                    right: 0,
+                    top: 5,
+                  },  
+              }}
+            />
+          </Tooltip>
+          </Box>
         </Box>
         <Box display={"flex"} alignItems={"end"} h={"10vh"}>
           <Box h={"9vh"}>

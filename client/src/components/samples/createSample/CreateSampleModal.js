@@ -75,6 +75,7 @@ export function CreateSampleModal({ customers }) {
     products: {},
     variables: {
       trackingNumber: "",
+      estDelivDate: "",
     },
     quote: {
       quoteID: "",
@@ -146,6 +147,7 @@ export function CreateSampleModal({ customers }) {
       products: {},
       variables: {
         trackingNumber: "",
+        estDelivDate: "",
       },
       quote: {
         quoteID: "",
