@@ -18,28 +18,30 @@ const CreateSampleProjects = ({
     formData,
     setFormData,
     setDisable,
-    errorsTrackingNumber,
-    setErrorsTrackingNumber,
+    errorsProjectList,
+    setErrorsProjectList,
     }) => {
   const projects = useSelector((state) => state.projects_by_customer_id);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setErrorsTrackingNumber({})
-    const errors = validateInputTracking(value)
-    if(!Object.entries(errors).length){
+    setErrorsProjectList({})
+    const errors = validateInputTracking(formData)
       setFormData({
         ...formData,
         variables: {
+          ...formData.variables,
           [name]: value,
         },
       });
-    }else{
-      setErrorsTrackingNumber(errors)
-    }
+    setErrorsProjectList(errors)
   };
 
-  console.log("formdata", formData)
+  useEffect(() => {
+    setErrorsProjectList(validateInputTracking(formData));
+  }, [formData]);
+
+
   return (
     <>
       <Box
@@ -82,7 +84,7 @@ const CreateSampleProjects = ({
             value={formData.variables.trackingNumber || ""}
             onChange={(e) => handleChange(e)}
           />
-          {errorsTrackingNumber.trackingNumber && (
+          {errorsProjectList.trackingNumber && (
             <Text
               mt={"0.5vh"}
               position={"absolute"}
@@ -90,7 +92,7 @@ const CreateSampleProjects = ({
               fontSize={"xs"}
               ml={"5vw"}
             >
-              {errorsTrackingNumber.trackingNumber}
+              {errorsProjectList.trackingNumber}
             </Text>
           )}
           </Box>
@@ -120,14 +122,14 @@ const CreateSampleProjects = ({
               textColor={'web.text2'}
               _placeholder={{ fontFamily: 'body', fontWeight: 'inherit' }}
               size={"sm"}
-              value={formData.variables.estDelivDate || ""}
+              value={formData.variables.estDelivDate}
               borderBottomWidth={"2px"}
               borderBottomColor={'web.text2'}
               type={"date"}
               pattern={"\d{4}-\d{2}-\d{2}"}
               name={"estDelivDate"}
               cursor= {'pointer'}
-              onChange={handleChange}
+              onChange={(e) => handleChange(e)}
               css={{
                 '::-webkit-calendar-picker-indicator': {   
                     background: `url(https://cdn3.iconfinder.com/data/icons/linecons-free-vector-icons-pack/32/calendar-16.png) center/90% no-repeat`,    
@@ -141,6 +143,17 @@ const CreateSampleProjects = ({
               }}
             />
           </Tooltip>
+            {errorsProjectList.estDelivDate && (
+            <Text
+              mt={"0.5vh"}
+              position={"absolute"}
+              color={"web.error"}
+              fontSize={"xs"}
+              ml={"5vw"}
+            >
+              {errorsProjectList.estDelivDate}
+            </Text>
+          )}
           </Box>
         </Box>
         <Box display={"flex"} alignItems={"end"} h={"10vh"}>
