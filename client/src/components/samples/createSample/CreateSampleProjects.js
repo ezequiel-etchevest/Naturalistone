@@ -49,8 +49,8 @@ const CreateSampleProjects = ({
         flexDir={"column"}
         h={"58vh"}
       >
-        <Box mt={"10px"} bg={"red"} display={"flex"} flexDirection={"row"}>
-          <Box bg={"blue"} w={"50%"}>
+        <Box mt={"10px"} display={"flex"} flexDirection={"row"}>
+          <Box w={"50%"}>
           <Text
             ml={"2vw"}
             mt={"2vh"}
@@ -94,7 +94,7 @@ const CreateSampleProjects = ({
             </Text>
           )}
           </Box>
-          <Box bg={"green"} w={"50%"}>
+          <Box w={"50%"}>
           <Text
             ml={"2vw"}
             mt={"2vh"}
@@ -127,7 +127,7 @@ const CreateSampleProjects = ({
               pattern={"\d{4}-\d{2}-\d{2}"}
               name={"estDelivDate"}
               cursor= {'pointer'}
-              onChange={(e)=>handleChange(e)}
+              onChange={handleChange}
               css={{
                 '::-webkit-calendar-picker-indicator': {   
                     background: `url(https://cdn3.iconfinder.com/data/icons/linecons-free-vector-icons-pack/32/calendar-16.png) center/90% no-repeat`,    

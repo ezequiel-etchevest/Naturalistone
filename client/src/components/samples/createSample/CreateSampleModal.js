@@ -34,6 +34,7 @@ import CreateSampleProducts from "./CreateSampleProducts";
 import CreateSampleProductsReview from "./CreateSampleProductsReview";
 import { getSamples, postSamples } from "../../../redux/actions-samples";
 import CreateSampleModalAskEmail from "./CreateSampleModalAskEmail";
+import { day0, month0, year } from "../../../utils/todayDate";
 
 export function CreateSampleModal({ customers }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -75,7 +76,7 @@ export function CreateSampleModal({ customers }) {
     products: {},
     variables: {
       trackingNumber: "",
-      estDelivDate: "",
+      estDelivDate: `${year}-${month0}-${day0}`,
     },
     quote: {
       quoteID: "",
