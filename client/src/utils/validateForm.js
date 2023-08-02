@@ -411,13 +411,16 @@ export function validateProject(tracking) {
   return errors
 }
 
-export function validateInputTracking(input) {
+export function validateInputTracking(formData) {
   let errors = {}
   const regexNumber = /^\d+$/
-  if (input !== '') {
-    if (!regexNumber.test(input)) {
+  if (formData.variables.trackingNumber !== '') {
+    if (!regexNumber.test(formData.variables.trackingNumber)) {
       errors.trackingNumber = 'Only numbers allowed'
     }
+  }
+  if (formData.variables.estDelivDate === '') {
+    errors.estDelivDate = 'Please insert a date'
   }
   return errors
 }

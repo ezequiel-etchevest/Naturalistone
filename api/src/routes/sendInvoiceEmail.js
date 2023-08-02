@@ -43,8 +43,6 @@ emailInvoiceRouter.post('/quoteDetail', async function(req, res) {
 emailInvoiceRouter.post('/samples', async function (req, res) {
   const { clientName, htmlBody, subject, clientEmail, sellerEmail, ccEmail, estimatedDelivery, products, trackingNumber } = req.body
 
-  console.log("req,ody", req.body)
-
   const valuesProducts = Object.values(products)
 
   const samplesProducts = valuesProducts.map((el) =>{
@@ -53,9 +51,6 @@ emailInvoiceRouter.post('/samples', async function (req, res) {
       finish: el.finish
     }
   })
-
-  console.log("samples", samplesProducts)
-
 
   try {
     await sendSamplesEmail(

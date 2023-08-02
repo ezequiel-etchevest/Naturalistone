@@ -34,12 +34,11 @@ const SendEmailModal = ({ formData, isOpen3, onClose3, handleCleanFormData }) =>
         subject: input.subject,
         clientEmail: "eduardoasm19@gmail.com",
         ccEmail: input.ccEmail,
-        estimatedDelivery: new Date().toLocaleString().slice(0,9),
+        estimatedDelivery: formData.variables.estDelivDate,
         products: formData.products,
         trackingNumber: formData.variables.trackingNumber,
       }
       const response = await sendEmailSamples(email)
-      console.log("soy responsee", response)
       if (response.success === false){
         setIsToastShowing(true)
         return toast({

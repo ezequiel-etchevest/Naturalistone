@@ -50,9 +50,6 @@ const CreateSampleProductsReview = ({ formData, setFormData }) => {
           <Tr>  
             <Th color={'web.text2'} fontSize={'sm'} w={'16vw'} >Product Name</Th>
             <Th color={'web.text2'} fontSize={'sm'} textAlign={'center'}>Type</Th>
-            <Th color={'web.text2'} fontSize={'sm'} textAlign={'center'}>Size</Th>
-            <Th color={'web.text2'} fontSize={'sm'} textAlign={'center'}>Thickness</Th>
-            <Th color={'web.text2'} fontSize={'sm'} textAlign={'center'}>Price</Th>
             <Th color={'web.text2'} fontSize={'sm'} w={'10vw'} textAlign={'center'}>Finish</Th>
           </Tr>
         </Thead>
@@ -66,12 +63,9 @@ const CreateSampleProductsReview = ({ formData, setFormData }) => {
               bg: 'web.navBar',
               color: 'logo.orange'
             }}>
-              <Td fontSize={'xs'} w={'16vw'} textAlign={'center'}>{e[1].prodName}</Td>
-              <Td fontSize={'xs'} textAlign={'center'}>{e[1].type}</Td>
-              <Td fontSize={'xs'} textAlign={'center'}>{e[1].size}</Td>
-              <Td fontSize={'xs'} textAlign={'center'}>{e[1].thickness}</Td>
-              <Td fontSize={'xs'} textAlign={'center'}>{e[1].price}</Td>
-              <Td fontSize={'xs'} textAlign={'center'}>{e[1].finish}</Td>
+              <Td fontSize={'xs'} w={'16vw'}>{e[1].prodName}</Td>
+              <Td fontSize={'xs'} w={'12vw'} textAlign={'center'}>{e[1].type}</Td>
+              <Td fontSize={'xs'} w={'12vw'} textAlign={'center'}>{e[1].finish}</Td>
             </Tr>
           ))
         }

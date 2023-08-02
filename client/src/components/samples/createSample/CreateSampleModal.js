@@ -32,13 +32,14 @@ import CreateSampleProducts from "./CreateSampleProducts";
 import CreateSampleProductsReview from "./CreateSampleProductsReview";
 import { getSamples, postSamples } from "../../../redux/actions-samples";
 import CreateSampleModalAskEmail from "./CreateSampleModalAskEmail";
+import { day0, month0, year } from "../../../utils/todayDate";
 
 export function CreateSampleModal({ customers }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { isOpen: isOpen2, onOpen: onOpen2, onClose: onClose2 } = useDisclosure();
   const user = useSelector((state) => state.user);
   const [errorsCustomer, setErrorsCustomer] = useState({});
-  const [errorsTrackingNumber, setErrorsTrackingNumber] = useState({});
+  const [errorsProjectList, setErrorsProjectList] = useState({});
   const [disable, setDisable] = useState(true);
   const [progress, setProgress] = useState(20);
   const [submited, setSubmited] = useState(false);
@@ -65,7 +66,7 @@ export function CreateSampleModal({ customers }) {
     products: {},
     variables: {
       trackingNumber: "",
-      estDelivDate: "",
+      estDelivDate: `${year}-${month0}-${day0}`,
     },
     quote: {
       quoteID: "",
@@ -129,13 +130,14 @@ export function CreateSampleModal({ customers }) {
       products: {},
       variables: {
         trackingNumber: "",
-        estDelivDate: "",
+        estDelivDate: `${year}-${month0}-${day0}`,
       },
       quote: {
         quoteID: "",
       },
     });
   };
+
 
   const handleNextButton = () => {
     setErrorsCustomer({});
@@ -170,7 +172,9 @@ export function CreateSampleModal({ customers }) {
       }
     }
     if (progress === 60) {
-
+      if (Object.entries(errorsProjectList).length) {
+        return;
+      }
       if (!formData.variables.trackingNumber.length) {
         if (!toast.isActive(toastId)) {
           return toast({
@@ -285,8 +289,8 @@ export function CreateSampleModal({ customers }) {
                 formData={formData}
                 setFormData={setFormData}
                 setDisable={setDisable}
-                errorsTrackingNumber={errorsTrackingNumber}
-                setErrorsTrackingNumber={setErrorsTrackingNumber}
+                errorsProjectList={errorsProjectList}
+                setErrorsProjectList={setErrorsProjectList}
               />
             )}
             {progress == 80 && (
