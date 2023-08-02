@@ -4,7 +4,6 @@ import {
   Modal,
   ModalOverlay,
   ModalContent,
-  Box,
   ModalBody,
   ModalFooter,
   Button,
@@ -20,7 +19,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { HiSquaresPlus } from "react-icons/hi2";
 import {
   validateEmptyInputsCreateQuote,
-  validateProject,
 } from "../../../utils/validateForm";
 import { getCustomers, updateCustomer } from "../../../redux/actions-customers";
 import { getCustomerProjects } from "../../../redux/actions-projects";
@@ -48,20 +46,12 @@ export function CreateSampleModal({ customers }) {
   const [formData, setFormData] = useState({
     customer: {
       Contact_Name: "",
-      City: "",
-      Address: "",
-      State: "",
-      ZipCode: "",
       Company: "",
       Company_Position: "",
       Phone: "",
       Email: "",
       DiscountID: "",
       DiscountRate: "",
-      Billing_Address: "",
-      Billing_City: "",
-      Billing_ZipCode: "",
-      Billing_State: "",
       CustomerID: "",
     },
     project: {
@@ -89,7 +79,7 @@ export function CreateSampleModal({ customers }) {
   useEffect(() => {
     if (!samples.length) getSamples("");
   }, []);
-
+  console.log({formData})
   const handleSubmit = () => {
     if (progress === 100) {
       dispatch(postSamples(formData));
@@ -121,20 +111,12 @@ export function CreateSampleModal({ customers }) {
       //Reincia valores de formData, limpiando todo al cerrar el componente.
       customer: {
         Contact_Name: "",
-        City: "",
-        Address: "",
-        State: "",
-        ZipCode: "",
         Company: "",
         Company_Position: "",
         Phone: "",
         Email: "",
         DiscountID: "",
         DiscountRate: "",
-        Billing_Address: "",
-        Billing_City: "",
-        Billing_ZipCode: "",
-        Billing_State: "",
         CustomerID: "",
       },
       project: {
@@ -250,7 +232,7 @@ export function CreateSampleModal({ customers }) {
       <Modal
         isOpen={isOpen}
         onClose={handleClose}
-        size={"4xl"}
+        size={progress == 40 ? "3xl" : "4xl"}
         motionPreset="slideInRight"
       >
         <ModalOverlay />
@@ -279,7 +261,7 @@ export function CreateSampleModal({ customers }) {
             display={"flex"}
             justifyContent={"center"}
             flexDir={"column"}
-            minH={!submited ? "64vh" : "80vh"}
+            minH={!submited ? "55vh" : "80vh"}
             maxH={!submited ? "64vh" : "80vh"}
           >
             {progress == 20 && (

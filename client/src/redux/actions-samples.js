@@ -3,10 +3,10 @@ export const GET_SAMPLES = 'GET_SAMPLES';
 export const POST_SAMPLES = 'POST_SAMPLES';
 export const GET_SAMPLES_PRODUCTS = 'GET_SAMPLES_PRODUCTS'
 
-export function getSamples(customer){
+export function getSamples(){
   return async function(dispatch){
       try {
-        const { data } = await axios.get(`/samples?customer=${customer}`)
+        const { data } = await axios.get(`/samples`)
         dispatch({
           type: GET_SAMPLES,
           payload: data.data
@@ -39,7 +39,7 @@ export function postSamples(formData){
   return async function(dispatch) {
     try {
         const { data } = await axios.post('/samples', formData)
-
+        console.log({formData})
         return dispatch({
           type: POST_SAMPLES,
           // payload: data

@@ -3,16 +3,10 @@ const samplesRoutes = express.Router();
 const mysqlConnection = require("../db");
 
 samplesRoutes.get("/", function (req, res) {
-  const { customer } = req.query;
 
   const query_ = `SELECT Samples.*, Customers.Company, Projects.ProjectName FROM Samples
   LEFT JOIN Customers ON Customers.CustomerID = Samples.CustomerID
-  LEFT JOIN Projects ON Projects.idProjects = Samples.ProjectID
-  ${
-    customer
-      ? `WHERE (Customers.Company LIKE LOWER('%${customer}%') OR Customers.Contact_Name LIKE LOWER('%${customer}%'))`
-      : ` `
-  }`;
+  LEFT JOIN Projects ON Projects.idProjects = Samples.ProjectID ORDER BY idSamples DESC`;
 
   try {
     mysqlConnection.query(query_, function (errors, results, fields) {

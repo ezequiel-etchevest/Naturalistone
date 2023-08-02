@@ -22,20 +22,10 @@ import {
           ...formData.customer,
           CustomerID: e.CustomerID || '',
           Contact_Name: e.Contact_Name || '',
-          City: e.City || '',
-          Address: e.Address || '',
-          State: e.State || '',
-          ZipCode: e.ZipCode || '',
           Company: e.Company || '',
           Company_Position: e.Company_Position || '',
           Phone: e.Phone || '',
           Email: e.Email || '',
-          DiscountID: e.DiscountID || '',
-          DiscountRate: e.DiscountRate?.toString() || '',
-          Billing_Address: e.Billing_Address || '',
-          Billing_City: e.Billing_City || '',
-          Billing_ZipCode: e.Billing_ZipCode || '',
-          Billing_State: e.Billing_State || '',
         },
       });
       setDisable(false)
@@ -52,10 +42,13 @@ import {
         textColor={e.CustomerID === formData.customer.CustomerID ? 'logo.orange' : 'unset'}
         bg={e.CustomerID === formData.customer.CustomerID ? 'web.navBar' : 'unset'}
         onClick={() => handleClick(e)}
+        w={'54vw'}
       >
-        <Td fontSize={'xs'}  w={'4vw'}>{e.CustomerID}</Td>
-        <Td fontSize={'xs'} textAlign={'center'}>{e.Contact_Name ? e.Contact_Name : '-'}</Td>
-        <Td fontSize={'xs'}  w={'24vw'}>{e.Company}</Td>
+        <Td fontSize={'xs'}>{e.CustomerID}</Td>
+        <Td fontSize={'xs'} maxW={'12vw'} minW={'12vw'} whiteSpace={'nowrap'} overflow={'hidden'} textOverflow={'ellipsis'} textAlign={'center'}>{e.Contact_Name ? e.Contact_Name : '-'}</Td>
+        <Td fontSize={'xs'} maxW={'10vw'} minW={'10vw'} whiteSpace={'nowrap'} overflow={'hidden'}textOverflow={'ellipsis'} textAlign={'center'}>{e.Email}</Td>
+        <Td fontSize={'xs'} maxW={'10vw'} minW={'10vw'} textAlign={'center'}>{e.Phone}</Td>
+        <Td fontSize={'xs'} maxW={'12vw'} minW={'12vw'} whiteSpace={'nowrap'} overflow={'hidden'}textOverflow={'ellipsis'}>{e.Company}</Td>
       </Tr>
     )
   }
@@ -93,7 +86,7 @@ import {
     display={'flex'}
     justifyContent={'center'}
     >
-      <Box
+    <Box
       maxHeight={'50vh'}
       minHeight={'50vh'}
       overflow={'auto'}
@@ -116,13 +109,15 @@ import {
       >
       {
         customers.length ? (
-          <TableContainer w={'46vw'}>
+          <TableContainer w={'54vw'}>
             <Table color={'web.text'}variant={'simple'} size={'sm'}>
               <Thead h={'3vh'}>
                 <Tr>
                     <Th color={'web.text2'} textAlign={'center'} w={'4vw'} fontSize={'x-small'}>IDs</Th>
-                    <Th color={'web.text2'} textAlign={'center'} fontSize={'x-small'}>Full Name</Th>
-                    <Th color={'web.text2'} textAlign={'center'} fontSize={'x-small'} w={'24vw'}>Company</Th>
+                    <Th color={'web.text2'} textAlign={'center'} minW={'12vw'} maxW={'12vw'} fontSize={'x-small'}>Name</Th>
+                    <Th color={'web.text2'} textAlign={'center'} minW={'10vw'} maxW={'10vw'} fontSize={'x-small'}>Email</Th>
+                    <Th color={'web.text2'} textAlign={'center'} minW={'10vw'} maxW={'10vw'} fontSize={'x-small'}>Phone</Th>
+                    <Th color={'web.text2'} textAlign={'center'} minW={'12vw'} maxW={'12vw'} fontSize={'x-small'}>Company</Th>
                   </Tr>
                 </Thead>
                 <Tbody >

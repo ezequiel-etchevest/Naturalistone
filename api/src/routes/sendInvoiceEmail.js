@@ -49,7 +49,8 @@ emailInvoiceRouter.post('/samples', async function (req, res) {
 
   const samplesProducts = valuesProducts.map((el) =>{
     return {
-      description: el.prodName
+      description: el.prodName,
+      finish: el.finish
     }
   })
 
