@@ -53,61 +53,62 @@ import {
   const CreateSampleProjectList = ({ projects, formData, setFormData, setDisable }) => {
 
     return(
-<>
-  <Box
-    display={'flex'}
-    justifyContent={'center'}
-    >
-      <Box
-      maxHeight={'40vh'}
-      minHeight={'40vh'}
-      overflow={'auto'}
-      css={{
-        '&::-webkit-scrollbar': {
-          width: '0.4vw',
-        },
-        '&::-webkit-scrollbar-track': {
-          width: '6px',
-        },
-        '&::-webkit-scrollbar-thumb': {
-          background: '#E47424',
-          borderRadius: '5px',
-        },
-      }}
-      bg={'web.sideBar'} 
-      rounded={'md'} 
-      p={'3vh'}
-      >
-      {
-        projects.length ? (
-          <TableContainer w={'46vw'}>
-            <Table color={'web.text'}variant={'simple'} size={'sm'}>
-              <Thead h={'3vh'}>
-                <Tr>
-                    <Th color={'web.text2'} textAlign={'center'} w={'4vw'} fontSize={'x-small'}>IDs</Th>
-                    <Th color={'web.text2'} textAlign={'center'} w={'14vw'}fontSize={'x-small'}>Project Name</Th>
-                    <Th color={'web.text2'} textAlign={'center'} w={'14vw'}fontSize={'x-small'}>Shipping Address</Th>
-                  </Tr>
-                </Thead>
-                <Tbody >
-                { 
-                  projects.map((e, i) => (  
-                    <ModelTr key={i} e={e} setFormData={setFormData} formData={formData} setDisable={setDisable}/> 
-                  ))
-                }
-                </Tbody>
-              </Table>
-            </TableContainer> 
-            ) : (
-            <Center w={'full'} h={'full'}>
-              <Text userSelect={'none'} fontSize={'2vh'}>No projects register </Text>
-            </Center>
-            )
-        }
-      </Box> 
-    </Box>
-  </>
-  )
-}
+      <>
+        <Box
+          display={'flex'}
+          justifyContent={'center'}
+          >
+          <Box
+          maxHeight={'44vh'}
+          minHeight={'44vh'}
+          w={'700px'}
+          overflow={'auto'}
+          css={{
+            '&::-webkit-scrollbar': {
+              width: '0.2vw',
+            },
+            '&::-webkit-scrollbar-track': {
+              width: '6px',
+            },
+            '&::-webkit-scrollbar-thumb': {
+              background: '#E47424',
+              borderRadius: '5px',
+            },
+          }}
+          bg={'web.sideBar'} 
+          rounded={'md'} 
+          p={'0.5vw'}
+          >
+          {
+            projects.length ? (
+              <TableContainer pr={'0.5vw'}  pl={'0.5vw'}>
+                <Table color={'web.text'}variant={'simple'} size={'sm'}>
+                  <Thead h={'6vh'}>
+                    <Tr>
+                        <Th color={'web.text2'} textAlign={'center'} w={'4vw'} fontSize={'x-small'}>IDs</Th>
+                        <Th color={'web.text2'} textAlign={'center'} w={'14vw'}fontSize={'x-small'}>Project Name</Th>
+                        <Th color={'web.text2'} textAlign={'center'} w={'14vw'}fontSize={'x-small'}>Shipping Address</Th>
+                      </Tr>
+                    </Thead>
+                    <Tbody >
+                    { 
+                      projects.map((e, i) => (  
+                        <ModelTr key={i} e={e} setFormData={setFormData} formData={formData} setDisable={setDisable}/> 
+                      ))
+                    }
+                    </Tbody>
+                  </Table>
+                </TableContainer> 
+                ) : (
+                <Center w={'full'} h={'full'}>
+                  <Text userSelect={'none'} fontSize={'2vh'}>No projects register </Text>
+                </Center>
+                )
+            }
+          </Box> 
+        </Box>
+      </>
+      )
+  }
   export default CreateSampleProjectList;
   

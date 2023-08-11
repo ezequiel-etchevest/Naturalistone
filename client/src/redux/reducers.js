@@ -92,7 +92,7 @@ import {
 } from './actions-stats'
 import {
   SEND_EMAIL_CLIENT
-} from './actions-invoiceEmail'
+} from './actions-email'
 import {
   GET_ALL_TASKS,
   GET_TASK_BY_ID,
@@ -119,6 +119,7 @@ import {
   GET_SAMPLES,
   POST_SAMPLES,
   GET_SAMPLES_PRODUCTS,
+  GET_SAMPLES_TRACKINGNUMBER
 } from './actions-samples';
 
 const intialState = {
@@ -168,6 +169,7 @@ const intialState = {
     freight: {},
     freights_factory: [],
     samples: [],
+    samples_tracking_number_validation:{},
     samples_products: [],
     products_new_samples: [],
     products_new_samples_values: [],
@@ -618,6 +620,11 @@ function rootReducer (state = intialState, action) {
             return {
               ...state,
               samples: action.payload
+            }
+          case GET_SAMPLES_TRACKINGNUMBER:
+            return {
+              ...state,
+              samples_tracking_number_validation: action.payload
             }
           case POST_SAMPLES:
             return {

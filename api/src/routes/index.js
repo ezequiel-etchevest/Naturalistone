@@ -17,7 +17,7 @@ const s3Router = require('./s3Routes')
 const tasksRouter = require('./tasksRoutes')
 const freightRouter = require('./freightRoutes')
 const factoryRouter = require('./factoriesRoutes');
-const emailInvoiceRouter = require('./sendInvoiceEmail')
+const emailInvoiceRouter = require('./sendEmailRoutes')
 const proformasRoutes = require('./proformasRoutes')
 const samplesRoutes = require('./samplesRoutes')
 
@@ -38,7 +38,7 @@ mainRouter.use('/api/s3', s3Router)
 mainRouter.use('/api/tasks', tasksRouter)
 mainRouter.use('/api/factories', factoryRouter)
 mainRouter.use('/api/freight', freightRouter)
-mainRouter.use('/api/invoiceEmail', emailInvoiceRouter)
+mainRouter.use('/api/email', emailInvoiceRouter)
 mainRouter.use('/api/proformas', proformasRoutes)
 mainRouter.use('/api/samples', samplesRoutes)
 

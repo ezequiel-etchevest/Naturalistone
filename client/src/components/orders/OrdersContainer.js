@@ -1,6 +1,6 @@
 import {Box} from '@chakra-ui/react';
 import OrdersList  from './OrdersList'
-import { CreateOrderModal } from './createOrder/createOrderModal';
+//import { CreateOrderModal } from './createOrder/createOrderModal';
 
 const OrdersContainer = ({orders}) => {
 
@@ -9,7 +9,7 @@ const OrdersContainer = ({orders}) => {
     ml={'16vw'}
     bg={'web.bg'}
     userSelect={'none'}> 
-      <CreateOrderModal orders={orders}/>
+      {/* <CreateOrderModal orders={orders}/> */}
       <OrdersList orders={orders}/>
     </Box>
   )

@@ -172,7 +172,7 @@ return (
                   Product Name
                 </Th>
                 <Th fontSize={'0.8vw'} color={'web.text2'} textAlign={'center'}>
-                  Material Type
+                  Material
                 </Th>
                 <Th fontSize={'0.8vw'} color={'web.text2'} textAlign={'center'}>
                   Type

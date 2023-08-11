@@ -26,6 +26,7 @@ const SamplesProducts = ({ isOpenModal, onCloseModal, idSamples }) => {
     dispatch(getSamplesProducts(idSamples));
   }, []);
 
+
   return (
     <>
       <Modal isOpen={isOpenModal} onClose={onCloseModal} size={"3xl"}>
@@ -95,7 +96,7 @@ const SamplesProducts = ({ isOpenModal, onCloseModal, idSamples }) => {
                         textAlign={"center"}
                         fontSize={"x-small"}
                       >
-                        Type
+                        Material
                       </Th>
                       <Th
                         color={"web.text2"}
@@ -122,7 +123,7 @@ const SamplesProducts = ({ isOpenModal, onCloseModal, idSamples }) => {
                         h={"4.5vh"}
                       >
                         <Td textAlign={"center"}>{e.Naturali_ProdName}</Td>
-                        <Td textAlign={"center"}>{e.Type}</Td>
+                        <Td textAlign={"center"}>{e.Material}</Td>
                         <Td textAlign={"center"}>{e.Finish}</Td>
                       </Tr>
                     ))}

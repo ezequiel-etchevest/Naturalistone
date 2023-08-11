@@ -18,18 +18,18 @@ const ModelTr = ({p, totalAmount}) => {
 
     return(
       <Tr
-      h={'4vw'} 
         cursor={'pointer'}
         key={p.ProdID} 
         _hover={{
           bg: 'web.navBar',
           color: 'logo.orange'
         }}
+        
         >
-        <Td textAlign={'center'} fontSize={'1.6vh'}>{p.Date.split('T')[0]}</Td>
-        <Td textAlign={'center'} fontSize={'1.6vh'}>$ {p.Amount.toLocaleString('en-US')} </Td>
-        <Td textAlign={'center'} fontSize={'1.6vh'}>{p.Method}</Td>
-        <Td w={'2vh'} textAlign={'center'} fontSize={'1.6vh'} >{Math.round(per.toFixed(2))} %</Td>
+        <Td textAlign={'center'} fontSize={'1.3vh'}>{p.Date.split('T')[0]}</Td>
+        <Td textAlign={'center'} fontSize={'1.3vh'}>$ {p.Amount.toLocaleString('en-US')} </Td>
+        <Td textAlign={'center'} fontSize={'1.3vh'}>{p.Method}</Td>
+        <Td w={'2vh'} textAlign={'center'} fontSize={'1.3vh'} >{Math.round(per.toFixed(2))} %</Td>
         <Td w={'2vh'}> <PaymentDeleteModal InvoiceID={p.InvoiceID} idPayments={p.idPayments}/>
         </Td>
       </Tr>
@@ -64,7 +64,7 @@ const PaymentList = ({payments, totalAmount, invoice}) => {
           <Text
           mb={'1vh'}
           alignSelf={'center'} 
-          fontSize={'2.6vh'} 
+          fontSize={'1.6vw'}
           color={'web.text2'}
           >Payment Details</Text>
 
@@ -99,10 +99,10 @@ const PaymentList = ({payments, totalAmount, invoice}) => {
             <Table mt={'2vh'} color={'web.text'} variant={'simple'} size={'sm'} >
               <Thead h={'5vh'}>
                 <Tr>
-                  <Th color={'web.text2'} textAlign={'center'} fontSize={'1.3vh'}>Payment Date</Th>
-                  <Th color={'web.text2'} textAlign={'center'} fontSize={'1.3vh'}>Amount</Th>
-                  <Th color={'web.text2'} textAlign={'center'} fontSize={'1.3vh'}>Method</Th>
-                  <Th color={'web.text2'} textAlign={'center'} fontSize={'1.3vh'}>%</Th>
+                  <Th  color={'web.text2'} textAlign={'center'} fontSize={'1.3vh'}>Payment Date</Th>
+                  <Th  color={'web.text2'} textAlign={'center'} fontSize={'1.3vh'}>Amount</Th>
+                  <Th  color={'web.text2'} textAlign={'center'} fontSize={'1.3vh'}>Method</Th>
+                  <Th  color={'web.text2'} textAlign={'center'} fontSize={'1.3vh'}>%</Th>
                   <Th w={'2vh'} color={'web.text2'} textAlign={'center'} fontSize={'1.3vh'}></Th>
                 </Tr>
               </Thead>

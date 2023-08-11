@@ -32,7 +32,7 @@ export default function PaymentDeleteModal({InvoiceID, idPayments}) {
         w={'2vw'}
         variant={'unstyled'}           
         fontWeight={'normal'}
-        fontSize={'sm'}
+        boxSize={'3vh'}
         display={'flex'}
         icon={<AiOutlineDelete/>}           
         onClick={onOpen}

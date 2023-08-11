@@ -100,7 +100,7 @@ productsRouter.get('/new_quote', async function(req, res){
 
 productsRouter.get('/new_samples', async function(req, res){
   let { finish, material, search } = req.query;
-  console.log('entre')
+
   const query = `
   SELECT
     ProdNames.Naturali_ProdName AS ProductName,
@@ -112,6 +112,7 @@ productsRouter.get('/new_samples', async function(req, res){
   INNER JOIN ProdNames ON ProdNames.ProdNameID = Products.ProdNameID
   INNER JOIN Dimension ON Dimension.DimensionID = Products.DimensionID
   INNER JOIN Inventory ON Inventory.ProdID = Products.ProdID
+  WHERE ProdNames.Naturali_ProdName IS NOT NULL AND Dimension.Finish IS NOT NULL
   ${
     material.length ? (`AND (ProdNames.Material = "${material}")`) : (``)
   }
@@ -266,8 +267,6 @@ productsRouter.get('/filtered', async function(req, res){
             if (nameA > nameB) return 1;
             return 0;
           }) 
-          console.log('soy results', results)
-          console.log('filters', filteredValues)
           res.status(200).json({results, errorSearch, filteredValues});
 
         }
