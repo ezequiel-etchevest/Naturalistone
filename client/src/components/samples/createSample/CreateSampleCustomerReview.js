@@ -16,7 +16,7 @@ import { Card, CardBody, CardHeader } from '@chakra-ui/card'
 import { CheckIcon, CloseIcon, EditIcon } from '@chakra-ui/icons'
 import '../../../assets/styleSheet.css'
 import { useState } from "react"
-import { validateCompletedInputs } from "../../../utils/validateForm"
+// import { validateCompletedInputs } from "../../../utils/validateForm"
 
 const CreateSampleCustomerReview = ({setFormData, formData, setErrorsCustomer, errorsCustomer}) => {
 
@@ -26,7 +26,7 @@ const CreateSampleCustomerReview = ({setFormData, formData, setErrorsCustomer, e
     Company_Position: formData.customer.Company_Position,
     Phone: formData.customer.Phone,
     Email: formData.customer.Email,
-    // DiscountID: formData.customer.DiscountID ==! "" ? formData.customer.DiscountID : 1,
+    DiscountID: formData.customer.DiscountID ==! "" ? formData.customer.DiscountID : 1,
     DiscountRate: formData.customer.DiscountRate ? formData.customer.DiscountRate : 0,
     CustomerID: formData.customer.CustomerID 
   }
@@ -60,12 +60,12 @@ const handleChange = (e) =>{
   setInputs({
     ...inputs,
     [name]: value})
-  setErrorsCustomer(
-    validateCompletedInputs({
-      ...inputs,
-      [name]: value,
-    })
-  );
+  // setErrorsCustomer(
+  //   validateCompletedInputs({
+  //     ...inputs,
+  //     [name]: value,
+  //   })
+  // );
 }
 
 function EditableControls(name, value) {
