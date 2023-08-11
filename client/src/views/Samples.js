@@ -16,7 +16,7 @@ const Samples = ({ focus, setFocus }) => {
   const userLocal = JSON.parse(localStorage.getItem("user"));
 
   useEffect(() => {
-    if (samples === undefined) dispatch(getSamples(""));
+    if (samples === undefined) dispatch(getSamples());
     if (userLocal && !user.length) {
       dispatch(getEmployeeById(userLocal.SellerID));
     }
@@ -24,7 +24,7 @@ const Samples = ({ focus, setFocus }) => {
 
   useEffect(() => {
     if (!samples.length) {
-      dispatch(getSamples(""));
+      dispatch(getSamples());
     }
   }, []);
 

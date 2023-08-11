@@ -60,14 +60,13 @@ const handleInput = () => {
       >
       <Td maxW={'3vw'} fontSize={'xs'} textAlign={'match-parent'}>{e.ProductName}</Td>
       <Td maxW={'6vw'} fontSize={'xs'} textAlign={'center'}>{e.Material}</Td>
-      <Td fontSize={'xs'} maxW={'8vw'} textAlign={'center'}> {e.Finish === null ? 'N/A' : e.Finish} </Td>
-      </Tr>
+      <Td maxW={'8vw'} fontSize={'xs'} textAlign={'center'}> {e.Finish === null ? 'N/A' : e.Finish} </Td>
+    </Tr>
   )
 }
 
 const CreateSampleProductsList = ({ allProducts, allProductsErrors, formData, setFormData }) => {
   
-  console.log('all produc', allProducts)
   const [initialCount] = useState(12);
   const [batchCount] = useState(14);
   const [loadedCount, setLoadedCount] = useState(initialCount);
@@ -94,16 +93,17 @@ const CreateSampleProductsList = ({ allProducts, allProductsErrors, formData, se
 
   return(
     <Box
-    display={'flex'}
-    justifyContent={'center'}
+      display={'flex'}
+      justifyContent={'center'}
       >
       <Box
-      maxHeight={'50vh'}
-      minHeight={'50vh'}
+      maxHeight={'44vh'}
+      minHeight={'44vh'}
+      w={'700px'}
       overflow={'auto'}
       css={{
         '&::-webkit-scrollbar': {
-          width: '0.4vw',
+          width: '0.2vw',
         },
         '&::-webkit-scrollbar-track': {
           width: '6px',
@@ -116,17 +116,17 @@ const CreateSampleProductsList = ({ allProducts, allProductsErrors, formData, se
       id={'createQuoteProductList'}
       bg={'web.sideBar'} 
       rounded={'md'} 
-      p={'1vh'}
+      p={'0.5vw'}
       >
         {
         allProducts.length ? 
-        <TableContainer  mr={'0.5vw'}  ml={'0.5vw'} w={'40vw'}>
+        <TableContainer pr={'0.5vw'}  pl={'0.5vw'}>
           <Table color={'web.text'} variant={'simple'} size={'sm'}>
             <Thead h={'6vh'}>
               <Tr>  
-                <Th color={'web.text2'} fontSize={'xs'} w={'5vw'}>Product Name</Th>
-                <Th color={'web.text2'} fontSize={'xs'} w={'5vw'} textAlign={'center'}>Type</Th>
-                <Th color={'web.text2'} fontSize={'xs'} w={'10vw'} textAlign={'center'}>Finish</Th>
+                <Th color={'web.text2'} fontSize={'x-small'} w={'5vw'}>Product Name</Th>
+                <Th color={'web.text2'} fontSize={'x-small'} w={'5vw'} textAlign={'center'}>Type</Th>
+                <Th color={'web.text2'} fontSize={'x-small'} w={'10vw'} textAlign={'center'}>Finish</Th>
               </Tr>
             </Thead>
             <Tbody>

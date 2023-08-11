@@ -11,7 +11,7 @@ import {
   Textarea,
   useToast,
 } from "@chakra-ui/react";
-import { sendEmail } from "../../../redux/actions-invoiceEmail";
+import { sendEmail } from "../../../redux/actions-email";
 import axios from "axios";
 
 const SendEmailModal = ({ handleChangeEmail, customer, pdf }) => {

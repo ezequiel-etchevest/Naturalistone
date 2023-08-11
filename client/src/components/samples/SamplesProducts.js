@@ -25,7 +25,8 @@ const SamplesProducts = ({ isOpenModal, onCloseModal, idSamples }) => {
   useEffect(() => {
     dispatch(getSamplesProducts(idSamples));
   }, []);
-  console.log(samples_products)
+
+
   return (
     <>
       <Modal isOpen={isOpenModal} onClose={onCloseModal} size={"3xl"}>

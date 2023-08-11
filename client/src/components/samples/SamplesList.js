@@ -12,12 +12,10 @@ import {
     Center,
     useDisclosure,
     } from '@chakra-ui/react'
-import { useDispatch, useSelector } from 'react-redux'
 import { useEffect, useState } from 'react';
 import SamplesProducts from './SamplesProducts';
-import { getSamplesProducts } from '../../redux/actions-samples';
   
-  
+
   const ModelTr = ({e}) => {
 
     const { isOpen, onClose, onOpen } = useDisclosure()
@@ -40,7 +38,9 @@ import { getSamplesProducts } from '../../redux/actions-samples';
         <Td fontSize={'xs'} maxW={'6vw'} textAlign={'center'}>{e.idSamples}</Td>
         <Td fontSize={'xs'} maxW={'10vw'} textAlign={'center'}>{e.Company}</Td>
         <Td fontSize={'xs'} maxW={'6vw'} textAlign={'center'}>{e.ProjectName}</Td>
-        <Td fontSize={'xs'} maxW={'3vw'} textAlign={'center'}>{e.TrackingNumber}</Td>
+        <Td fontSize={'xs'} maxW={'6vw'}textAlign={'center'}>{e.TrackingNumber}</Td>
+        <Td fontSize={'xs'} maxW={'6vw'}textAlign={'center'}>{e.InsertDate?.split('T')[0]}</Td>
+        <Td fontSize={'xs'} maxW={'6vw'}textAlign={'center'}>{e.EstDelivery_Date?.split('T')[0]}</Td>
       </Tr>
       { isOpen && <SamplesProducts isOpenModal={isOpen} onCloseModal={onClose} idSamples={e.idSamples}/> }
       </>
@@ -52,8 +52,6 @@ import { getSamplesProducts } from '../../redux/actions-samples';
   const [initialCount] = useState(20);
   const [batchCount] = useState(15);
   const [loadedCount, setLoadedCount] = useState(initialCount);
-  const toast = useToast()
-  const id = 'test-toast'
 
     const handleScroll = () => {
       const container = document.getElementById('scroll-container'); // Reemplaza 'scroll-container' con el ID de tu contenedor de desplazamiento
@@ -64,20 +62,22 @@ import { getSamplesProducts } from '../../redux/actions-samples';
         setLoadedCount(prevCount => prevCount + batchCount);
       }
     };
+
   useEffect(()=>{
     const container = document.getElementById('scroll-container'); // Reemplaza 'scroll-container' con el ID de tu contenedor de desplazamiento
     container.addEventListener('scroll', handleScroll);
     return () => {
       container.removeEventListener('scroll', handleScroll);
     }}, [batchCount]);
+
     return(
     <Box
-    display={'flex'}
-    justifyContent={'center'}
-    ml={'1vh'}
-    h={'75vh'}
-    w={'82.8vw'} 
-    >
+      display={'flex'}
+      justifyContent={'center'}
+      ml={'1vh'}
+      h={'75vh'}
+      w={'82.8vw'} 
+      >
       <Box
       id='scroll-container'
       maxHeight={'73vh'}
@@ -111,6 +111,8 @@ import { getSamplesProducts } from '../../redux/actions-samples';
                     <Th color={'web.text2'} maxW={'10vw'} textAlign={'center'}>Company / Customer</Th>
                     <Th color={'web.text2'} maxW={'6vw'} textAlign={'center'}>Project</Th>
                     <Th color={'web.text2'} maxW={'6vw'} textAlign={'center'}>Tracking Number</Th>
+                    <Th color={'web.text2'} maxW={'6vw'} textAlign={'center'}>Insert Date</Th>
+                    <Th color={'web.text2'} maxW={'6vw'} textAlign={'center'}>Est Delivery Date</Th>
                   </Tr>
                 </Thead>
                 <Tbody >

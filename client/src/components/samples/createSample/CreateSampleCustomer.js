@@ -22,7 +22,7 @@ const CreateSampleCustomer = ({customers, setFormData, formData, setDisable}) =>
 
 const dispatch = useDispatch()
 const [inputValue, setInputValue] = useState('')
-const [customer, setCustomer] = useState('')
+
 
 const handleInput = (e) =>  {
   if(e.target.value.length) {
@@ -34,8 +34,6 @@ const handleInput = (e) =>  {
   }
 }
 
-
-
 return(
   <>
     <HStack
@@ -46,7 +44,15 @@ return(
       mt={'2vh'}
       mb={'2vh'}
       >
-      <Text ml={'2vw'} fontSize={'lg'} w={'16vw'} color={'white'} alignSelf={'flex-start'}>Select customer</Text>
+      <Box h={"6vh"} mt={'1vh'}>
+        <Text
+          ml={"1vw"}
+          fontSize={"lg"}
+          color={"white"}
+          >
+          Select customer
+        </Text>
+      </Box>
       <Box display={'flex'} flexDir={'row'} h={'6vh'} w={'18vw'} justifyContent={'space-around'}>
         <Box>
           <Input

@@ -15,6 +15,7 @@ AWS.config.update({
 const s3 = new AWS.S3();
 
 s3Router.get('/images/:folder/:fileName', (req, res) => {
+
   
 
   const { folder, fileName } = req.params;
