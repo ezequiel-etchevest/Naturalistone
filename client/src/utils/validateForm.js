@@ -15,11 +15,14 @@ export const validateCompletedInputs = (formData) =>{
       errors.Contact_Name = 'Please enter a valid name'
     } 
   }
-  if(formData.Billing_ZipCode !== ''){
-    if(!regexNumber.test(formData.Billing_ZipCode)) {
-      errors.Billing_ZipCode = 'Please enter a valid zip code'
+
+  if(formData.Billing_ZipCode?.length){
+    if(formData.Billing_ZipCode !== ''){
+      if(!regexNumber.test(formData.Billing_ZipCode)) {
+        errors.Billing_ZipCode = 'Please enter a valid zip code'
+      }
     }
-  }
+}
 
   if(formData.Phone !== ''){
     if(!regexNumberAndPlus.test(formData.Phone)) {
@@ -31,12 +34,14 @@ export const validateCompletedInputs = (formData) =>{
       errors.Email = 'Please enter a valid email'
     }
   }
-
-  if(formData.Billing_State !== ''){
-    if(!USStates.includes(formData.Billing_State)) {
-      errors.Billing_State = 'Please enter a valid state'
+  if(formData.Billing_State?.length){
+    if(formData.Billing_State !== ''){
+      if(!USStates.includes(formData.Billing_State)) {
+        errors.Billing_State = 'Please enter a valid state'
+      }
     }
   }
+
   if(formData.Billing_City !== '') {
     if(!regexNoNumber.test(formData.Billing_City)){
       errors.Billing_City = 'Please enter a valid City'
@@ -423,4 +428,20 @@ export function validateInputTracking(formData) {
     errors.estDelivDate = 'Please insert a date'
   }
   return errors
+}
+
+export const validateEmptyInputsCreateSample = (formData) => {
+  let errors = validateCompletedInputs(formData)
+  
+  if(!formData.Contact_Name){
+    errors.Contact_Name = 'Please enter customer name'
+    }
+  if(!formData.Phone){
+    errors.Phone = 'Please enter phone number'
+  }
+  if(!formData.Email){
+    errors.Email = 'Please enter email address'
+  }
+
+return errors
 }

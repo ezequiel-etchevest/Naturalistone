@@ -27,5 +27,19 @@ export const naturali_theme = extendTheme({
     },
     components: {
         Steps,
+        // Input: {
+        //     baseStyle: {
+        //       field: {
+        //         _autofill: {
+        //           boxShadow: '0 0 0px 1000px #0D1117 inset',
+        //           transition: 'background-color 5000s ease-in-out 0s',
+        //           color: 'white'
+        //         },
+        //         _focus: {
+        //             backgroundColor: 'transparent',
+        //           },
+        //       },
+        //     },
+        //   }
       },
 })

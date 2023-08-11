@@ -59,12 +59,13 @@ import {
           justifyContent={'center'}
           >
           <Box
-          maxHeight={'40vh'}
-          minHeight={'40vh'}
+          maxHeight={'44vh'}
+          minHeight={'44vh'}
+          w={'700px'}
           overflow={'auto'}
           css={{
             '&::-webkit-scrollbar': {
-              width: '0.4vw',
+              width: '0.2vw',
             },
             '&::-webkit-scrollbar-track': {
               width: '6px',
@@ -76,13 +77,13 @@ import {
           }}
           bg={'web.sideBar'} 
           rounded={'md'} 
-          p={'3vh'}
+          p={'0.5vw'}
           >
           {
             projects.length ? (
-              <TableContainer w={'46vw'}>
+              <TableContainer pr={'0.5vw'}  pl={'0.5vw'}>
                 <Table color={'web.text'}variant={'simple'} size={'sm'}>
-                  <Thead h={'3vh'}>
+                  <Thead h={'6vh'}>
                     <Tr>
                         <Th color={'web.text2'} textAlign={'center'} w={'4vw'} fontSize={'x-small'}>IDs</Th>
                         <Th color={'web.text2'} textAlign={'center'} w={'14vw'}fontSize={'x-small'}>Project Name</Th>

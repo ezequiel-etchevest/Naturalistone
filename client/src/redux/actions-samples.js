@@ -2,6 +2,7 @@ import axios from 'axios';
 export const GET_SAMPLES = 'GET_SAMPLES';
 export const POST_SAMPLES = 'POST_SAMPLES';
 export const GET_SAMPLES_PRODUCTS = 'GET_SAMPLES_PRODUCTS'
+export const GET_SAMPLES_TRACKINGNUMBER = 'GET_SAMPLES_TRACKINGNUMBER'
 
 export function getSamples(){
   return async function(dispatch){
@@ -39,11 +40,27 @@ export function postSamples(formData){
   return async function(dispatch) {
     try {
         const { data } = await axios.post('/samples', formData)
-        console.log({formData})
         return dispatch({
           type: POST_SAMPLES,
           // payload: data
         })
+    } catch (error) {
+      console.log('error in post samples')
+    }
+  }
+}
+
+export function validateTrackingNumber(trackingNumber){
+  return async function(dispatch) {
+    try {
+      if(trackingNumber.length){
+        const { data } = await axios.get(`/samples/validation/${trackingNumber}`)
+
+        return dispatch({
+          type: GET_SAMPLES_TRACKINGNUMBER,
+          payload: data
+        })
+      }
     } catch (error) {
       console.log('error in post samples')
     }

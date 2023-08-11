@@ -40,7 +40,7 @@ import SamplesProducts from './SamplesProducts';
         <Td fontSize={'xs'} maxW={'6vw'} textAlign={'center'}>{e.ProjectName}</Td>
         <Td fontSize={'xs'} maxW={'6vw'}textAlign={'center'}>{e.TrackingNumber}</Td>
         <Td fontSize={'xs'} maxW={'6vw'}textAlign={'center'}>{e.InsertDate?.split('T')[0]}</Td>
-        <Td fontSize={'xs'} maxW={'6vw'}textAlign={'center'}>{e.EstDelivery_Date?.split(' ')[0]}</Td>
+        <Td fontSize={'xs'} maxW={'6vw'}textAlign={'center'}>{e.EstDelivery_Date?.split('T')[0]}</Td>
       </Tr>
       { isOpen && <SamplesProducts isOpenModal={isOpen} onCloseModal={onClose} idSamples={e.idSamples}/> }
       </>

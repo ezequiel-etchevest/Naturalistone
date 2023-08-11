@@ -18,7 +18,7 @@ import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { HiSquaresPlus } from "react-icons/hi2";
 import {
-  validateEmptyInputsCreateQuote,
+  validateEmptyInputsCreateSample,
 } from "../../../utils/validateForm";
 import { getCustomers, updateCustomer } from "../../../redux/actions-customers";
 import { getCustomerProjects } from "../../../redux/actions-projects";
@@ -30,7 +30,7 @@ import CreateSampleCustomerReview from "./CreateSampleCustomerReview";
 import CreateSampleProjects from "./CreateSampleProjects";
 import CreateSampleProducts from "./CreateSampleProducts";
 import CreateSampleProductsReview from "./CreateSampleProductsReview";
-import { getSamples, postSamples } from "../../../redux/actions-samples";
+import { getSamples, postSamples, validateTrackingNumber } from "../../../redux/actions-samples";
 import CreateSampleModalAskEmail from "./CreateSampleModalAskEmail";
 import { day0, month0, year } from "../../../utils/todayDate";
 
@@ -44,6 +44,7 @@ export function CreateSampleModal({ customers }) {
   const [progress, setProgress] = useState(20);
   const [submited, setSubmited] = useState(false);
   const samples = useSelector((state) => state.samples);
+  const tracking_number_validation = useSelector((state) => state.samples_tracking_number_validation);
   const [formData, setFormData] = useState({
     customer: {
       Contact_Name: "",
@@ -80,7 +81,7 @@ export function CreateSampleModal({ customers }) {
   useEffect(() => {
     if (!samples.length) getSamples("");
   }, []);
-  console.log({formData})
+
   const handleSubmit = () => {
     if (progress === 100) {
       dispatch(postSamples(formData));
@@ -142,7 +143,8 @@ export function CreateSampleModal({ customers }) {
   const handleNextButton = () => {
     setErrorsCustomer({});
     if (progress === 40) {
-      let newErrors = validateEmptyInputsCreateQuote(formData.customer);
+      let newErrors = validateEmptyInputsCreateSample(formData.customer);
+
       setErrorsCustomer(newErrors);
       if (Object.entries(newErrors).length) {
         if (!toast.isActive(toastId)) {
@@ -187,8 +189,21 @@ export function CreateSampleModal({ customers }) {
           });
         }
       }else{
-        dispatch(getAllProductsNewSamples("", "", ""));
-        setProgress(progress + 20);
+        if(tracking_number_validation.success === true){
+          if (!toast.isActive(toastId)) {
+            return toast({
+              id: toastId,
+              title: "Error",
+              description: `Tracking number registered at Sample-Id: ${tracking_number_validation.data.idSamples}`,
+              status: "error",
+              duration: 5000,
+              isClosable: true,
+            });
+          }
+        } else{
+          dispatch(getAllProductsNewSamples("", "", ""));
+          setProgress(progress + 20);
+        }
       }
     } else {
       setProgress(progress + 20);
@@ -236,7 +251,7 @@ export function CreateSampleModal({ customers }) {
       <Modal
         isOpen={isOpen}
         onClose={handleClose}
-        size={progress == 40 ? "3xl" : "4xl"}
+        size={progress === 20 ? "4xl" : "3xl"}
         motionPreset="slideInRight"
       >
         <ModalOverlay />
@@ -265,7 +280,7 @@ export function CreateSampleModal({ customers }) {
             display={"flex"}
             justifyContent={"center"}
             flexDir={"column"}
-            minH={!submited ? "55vh" : "80vh"}
+            minH={!submited ? "50vh" : "80vh"}
             maxH={!submited ? "64vh" : "80vh"}
           >
             {progress == 20 && (

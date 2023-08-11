@@ -26,6 +26,8 @@ import {
           Company_Position: e.Company_Position || '',
           Phone: e.Phone || '',
           Email: e.Email || '',
+          DiscountID: e.DiscountID || '',
+          DiscountRate: e.DiscountRate || '' 
         },
       });
       setDisable(false)

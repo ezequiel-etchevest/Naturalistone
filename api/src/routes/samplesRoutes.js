@@ -14,9 +14,9 @@ samplesRoutes.get("/", function (req, res) {
         return res
           .status(400)
           .json({ success: false, data: "Error in samplesRoutes /" });
+      } else{
+        return res.status(200).json({ success: true, data: results });
       }
-
-      return res.status(200).json({ success: true, data: results });
     });
   } catch (error) {
     console.log(error);
@@ -52,7 +52,7 @@ samplesRoutes.get("/samplesProducts/:sampleId", function (req, res) {
 
 samplesRoutes.post("/", function (req, res) {
   const { customer, project, products, variables } = req.body;
-
+  
   const parsedProducts = Object.entries(products)
     .flat()
     .filter((element) => typeof element === "object")
@@ -151,8 +151,8 @@ samplesRoutes.post("/", function (req, res) {
 
           prodIds = await prodIdPromises;
 
-          const query_2 = `INSERT INTO Samples (CustomerID, ProjectID, TrackingNumber)
-      VALUES (${customer.CustomerID}, ${project.idProjects}, ${variables.trackingNumber})`;
+          const query_2 = `INSERT INTO Samples (CustomerID, ProjectID, TrackingNumber, EstDelivery_Date)
+      VALUES (${customer.CustomerID}, ${project.idProjects}, ${variables.trackingNumber}, "${variables.estDelivDate}" )`;
 
           mysqlConnection.query(query_2, function (err, results, field) {
             if (err) {
@@ -211,8 +211,8 @@ samplesRoutes.post("/", function (req, res) {
           return;
         }
 
-        const query_4 = `INSERT INTO Samples (CustomerID, ProjectID, TrackingNumber)
-      VALUES (${customer.CustomerID}, ${project.idProjects}, ${variables.trackingNumber})`;
+        const query_4 = `INSERT INTO Samples (CustomerID, ProjectID, TrackingNumber, EstDelivery_Date)
+      VALUES (${customer.CustomerID}, ${project.idProjects}, ${variables.trackingNumber}, "${variables.estDelivDate}")`;
 
         mysqlConnection.query(query_4, function (err, results, field) {
           if (err) {
@@ -294,5 +294,29 @@ samplesRoutes.post("/", function (req, res) {
     });
   }
 });
+
+samplesRoutes.get("/validation/:trackingNumber", function (req, res) {
+
+  const { trackingNumber } = req.params
+
+  const query_ = `SELECT * FROM NaturaliStone.Samples WHERE Samples.TrackingNumber = ${trackingNumber}`;
+
+  try {
+    mysqlConnection.query(query_, function (errors, results, fields) {
+      if (!results.length) {
+        return res
+          .status(200)
+          .json({ success: false });
+      }
+      return res.status(200).json({ success: true, data: results[0] });
+    });
+  } catch (error) {
+    console.log(error);
+    return res
+      .status(200)
+      .json({ success: false });
+  }
+});
+
 
 module.exports = samplesRoutes;

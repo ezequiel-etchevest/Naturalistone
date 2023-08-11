@@ -2,18 +2,15 @@ require('dotenv').config();
 const fs = require('fs')
 const postmark = require("postmark");
 const path = require('path')
-
+const htmlToText = require('html-to-text');
  
 // Send an email:
-const imageNaturaliStone = 'https://drive.google.com/uc?id=1EpYJ-SvGsqGsDVwjRGYO16oZlVea0KDU'
 const client = new postmark.ServerClient(process.env.POSTMARK_API_KEY);
-const companyName = 'NaturaliStone';
+const companyName = 'Naturalistone';
 const companyAddress = '261 NW 71st St, Miami, FL 33150, United States';
-// const fromEmail = "irina@naturalistone.com"
-const imgDrive = 'https://netorg8591642-my.sharepoint.com/:i:/g/personal/irina_naturalistone_com/EUJMsPLT2jBLokqZ-cz1SVMBijZhI9_At-atEYcxV48L7Q?e=46P25n'
-
-const imgPath = path.join(__dirname, '../pictures/NaturalistoneLogo.png'); // Ajusta el nombre del archivo y la ruta según sea necesario
-const file = fs.readFileSync(imgPath);
+const imageSignature = "https://naturali-parseddocuments.s3.amazonaws.com/Invoice+Naturali/assets/bettinasignature.jpg"
+// const imgPath = path.join(__dirname, 'http://localhost:3000/static/media/NaturalistoneLogo.eb5d8e3f95f6979dfe9b.png'); // Ajusta el nombre del archivo y la ruta según sea necesario
+// const file = fs.readFileSync(imgPath);
 
 
 function sendEmailUser() {
@@ -92,12 +89,12 @@ function sendEmailClient(
      },
     ],
     TemplateModel: {
-      product_name: companyName,
+      subject: subject_value,
       body: body_Value,
       company_name: companyName,
       company_address: companyAddress,
       image: imageNaturaliStone,
-      subject: subject_value,
+      imageSignature: imageSignature
     }
   }
 
@@ -108,31 +105,25 @@ function sendSamplesEmail(
   fromEmail,
   clientEmail,
   ccEmail,
-	bodyValue,
+  bodyValue,
   subjectValue,
-  clientName,
-  dateValue,
-  samplesProducts,
-  trackingNumber,
-  ) {
+) {
   const optionsEmail = {
     From: fromEmail,
     To: clientEmail,
     Cc: ccEmail,
     TemplateId: 31786965,
     TemplateModel: {
-      name: clientName,
-      body: bodyValue,
-      date: dateValue,
-      trackingNumber: trackingNumber,
-      samples_details: samplesProducts,
-      product_name: companyName,
+      subject: subjectValue,
+      HtmlBody: bodyValue, // Aquí puedes poner el contenido HTML
       company_name: companyName,
       company_address: companyAddress,
-      image: imageNaturaliStone,
-      subject: subjectValue,
+      image: 'https://naturali-parseddocuments.s3.amazonaws.com/Invoice+Naturali/assets/NaturalistoneLogo.png',
+      imageSignature: imageSignature
+
     }
-  }
+  };
+
   return client.sendEmailWithTemplate(optionsEmail)
 }
 
