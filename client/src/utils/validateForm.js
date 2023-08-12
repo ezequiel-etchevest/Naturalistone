@@ -48,7 +48,7 @@ export const validateCompletedInputs = (formData) =>{
     }
   }
   if(formData.DiscountRate !== '') {
-    const allowedValues = ['0', '5', '10', '15'];
+    const allowedValues = ['0', '5', '10', '15', 0, 5, 10, 15];
     if(!allowedValues.includes(formData.DiscountRate)){
       errors.DiscountRate = 'Valid discounts: 0, 5, 10, 15'
     }
@@ -418,12 +418,12 @@ export function validateProject(tracking) {
 
 export function validateInputTracking(formData) {
   let errors = {}
-  const regexNumber = /^\d+$/
-  if (formData.variables.trackingNumber !== '') {
-    if (!regexNumber.test(formData.variables.trackingNumber)) {
-      errors.trackingNumber = 'Only numbers allowed'
-    }
-  }
+  // const regexNumber = /^\d+$/
+  // if (formData.variables.trackingNumber !== '') {
+  //   if (!regexNumber.test(formData.variables.trackingNumber)) {
+  //     errors.trackingNumber = 'Only numbers allowed'
+  //   }
+  // }
   if (formData.variables.estDelivDate === '') {
     errors.estDelivDate = 'Please insert a date'
   }

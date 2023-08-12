@@ -251,8 +251,8 @@ export function CreateSampleModal({ customers }) {
       <Modal
         isOpen={isOpen}
         onClose={handleClose}
-        size={progress === 20 ? "4xl" : "3xl"}
         motionPreset="slideInRight"
+        size={progress === 20 ? '5xl' : '3xl'}
       >
         <ModalOverlay />
         <ModalContent
@@ -280,8 +280,8 @@ export function CreateSampleModal({ customers }) {
             display={"flex"}
             justifyContent={"center"}
             flexDir={"column"}
-            minH={!submited ? "50vh" : "80vh"}
-            maxH={!submited ? "64vh" : "80vh"}
+            minH={"46vh"}
+            maxH={"64vh"}
           >
             {progress == 20 && (
               <CreateSampleCustomer

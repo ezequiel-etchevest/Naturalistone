@@ -212,7 +212,7 @@ samplesRoutes.post("/", function (req, res) {
         }
 
         const query_4 = `INSERT INTO Samples (CustomerID, ProjectID, TrackingNumber, EstDelivery_Date)
-      VALUES (${customer.CustomerID}, ${project.idProjects}, ${variables.trackingNumber}, "${variables.estDelivDate}")`;
+      VALUES (${customer.CustomerID}, ${project.idProjects}, "${variables.trackingNumber}", "${variables.estDelivDate}")`;
 
         mysqlConnection.query(query_4, function (err, results, field) {
           if (err) {
@@ -299,7 +299,7 @@ samplesRoutes.get("/validation/:trackingNumber", function (req, res) {
 
   const { trackingNumber } = req.params
 
-  const query_ = `SELECT * FROM NaturaliStone.Samples WHERE Samples.TrackingNumber = ${trackingNumber}`;
+  const query_ = `SELECT * FROM NaturaliStone.Samples WHERE Samples.TrackingNumber = "${trackingNumber}"`;
 
   try {
     mysqlConnection.query(query_, function (errors, results, fields) {

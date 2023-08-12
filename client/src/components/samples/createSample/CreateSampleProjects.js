@@ -13,7 +13,7 @@
   import "../../../assets/styleSheet.css";
   import CreateSampleProjectList from "./CreateSampleProjectList";
   import { validateInputTracking } from "../../../utils/validateForm";
-import { validateTrackingNumber } from "../../../redux/actions-samples";
+  import { validateTrackingNumber } from "../../../redux/actions-samples";
 
   const CreateSampleProjects = ({formData, setFormData, setDisable, errorsProjectList, setErrorsProjectList }) => {
     
@@ -37,6 +37,7 @@ import { validateTrackingNumber } from "../../../redux/actions-samples";
     useEffect(() => {
       setErrorsProjectList(validateInputTracking(formData));
       dispatch(validateTrackingNumber(formData.variables.trackingNumber))
+      console.log(formData.variables.trackingNumber)
     }, [formData]);
 
 

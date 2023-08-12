@@ -11,12 +11,13 @@ import {
     IconButton,
     Flex,
     Input,
+    Center,
     } from "@chakra-ui/react"
-import { Card, CardBody, CardHeader } from '@chakra-ui/card'
-import { CheckIcon, CloseIcon, EditIcon } from '@chakra-ui/icons'
+import { Card, CardBody } from '@chakra-ui/card'
+import {  CloseIcon, EditIcon } from '@chakra-ui/icons'
 import '../../../assets/styleSheet.css'
 import { useState } from "react"
-// import { validateCompletedInputs } from "../../../utils/validateForm"
+import { validateCompletedInputs } from "../../../utils/validateForm"
 
 const CreateSampleCustomerReview = ({setFormData, formData, setErrorsCustomer, errorsCustomer}) => {
 
@@ -26,8 +27,8 @@ const CreateSampleCustomerReview = ({setFormData, formData, setErrorsCustomer, e
     Company_Position: formData.customer.Company_Position,
     Phone: formData.customer.Phone,
     Email: formData.customer.Email,
-    DiscountID: formData.customer.DiscountID ==! "" ? formData.customer.DiscountID : 1,
-    DiscountRate: formData.customer.DiscountRate ? formData.customer.DiscountRate : 0,
+    DiscountID: formData.customer.DiscountID !== "" ? formData.customer.DiscountID : 1,
+    DiscountRate: formData.customer.DiscountRate !== null && formData.customer.DiscountRate !== "" ? formData.customer.DiscountRate : "0",
     CustomerID: formData.customer.CustomerID 
   }
  )
@@ -43,7 +44,7 @@ const {name, value} = e
     }
   })
 }
-
+console.log(formData.customer.DiscountRate)
 const handleCancel = (e) => {
 
   const {name} = e
@@ -55,17 +56,26 @@ const handleCancel = (e) => {
   }
 
 const handleChange = (e) =>{
-  setErrorsCustomer({})
   const {name, value} = e.target
-  setInputs({
+
+  setInputs((prevInputs) => ({
+    ...prevInputs,
+    [name]: value,
+  }));
+
+  const updatedErrors = validateCompletedInputs({
     ...inputs,
-    [name]: value})
-  // setErrorsCustomer(
-  //   validateCompletedInputs({
-  //     ...inputs,
-  //     [name]: value,
-  //   })
-  // );
+    [name]: value,
+  });
+
+  setErrorsCustomer((prevErrors) => {
+    const { [name]: removedError, ...restErrors } = prevErrors;
+    return {
+      ...restErrors,
+      ...updatedErrors,
+    };
+  });
+
 }
 
 function EditableControls(name, value) {
@@ -76,10 +86,9 @@ function EditableControls(name, value) {
     getEditButtonProps,
   } = useEditableControls()
 
-  console.log(formData)
   return isEditing ? (
 
-  <Flex justifyContent='center' alignItems={'center'}>
+    <Flex justifyContent='center' alignItems={'center'}>
       <IconButton
         h={'4vh'}
         icon={<CloseIcon />} 
@@ -97,7 +106,7 @@ function EditableControls(name, value) {
         _active={{
         }}
         {...getCancelButtonProps({ onClick: ()=>handleCancel(name, value) })} />
-      </Flex>
+    </Flex>
       ) : (
     <Flex justifyContent='center' alignItems={'center'}>
       <IconButton  
@@ -124,24 +133,25 @@ function EditableControls(name, value) {
   return(
 
 <>
-  <Box 
+  <Center 
     color={'web.text2'} 
     display={'flex'} 
     flexDir={'column'}
     >
-    <Box h={"6vh"}>
+    <Box h={"6vh"} display={'flex'} alignSelf={'flex-start'} ml={'1vw'} >
       <Text
-        ml={"1vw"}
         fontSize={"lg"}
         color={"white"}
+        display={'flex'}
+        textAlign={'left'}
         >
         Customer review
       </Text>
     </Box>
-    <Card w={'46vw'}>
+    <Card w={'46vw'}maxW={'700px'}>
       <CardBody display={'flex'} flexDir={'row'} justifyContent={'space-around'}  alignItems={'center'} mt={'1vh'}>
         <Stack divider={<StackDivider />}>
-          <Box pt='2' w={'20vw'} h={'8vh'}>
+          <Box pt='2' w={'20vw'} h={'8vh'} maxW={'300px'}>
             <Text fontSize='sm' fontWeight={'semisemibold'}> Name </Text>
             <Editable
               value={inputs.Contact_Name}
@@ -154,14 +164,23 @@ function EditableControls(name, value) {
               pt='1'
               justifyContent={'space-between'}
               w={'19vw'}
+              maxW={'280px'}
+              alignItems={'center'}
               onBlur={() => handleCheck({ name: 'Contact_Name', value: inputs.Contact_Name })}
             >
-              <EditablePreview/>
+              <EditablePreview 
+                maxW={'280px'} 
+                css={{
+                whiteSpace: 'nowrap',
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+              }}/>
               <Input
                 name={'Contact_Name'}
                 value={inputs.Contact_Name}
                 as={EditableInput}
                 w={'17vw'}
+                maxW={'280px'}
                 minH={'4vh'}
                 variant="unstyled"
                 textColor={'web.text2'}
@@ -177,12 +196,19 @@ function EditableControls(name, value) {
               <EditableControls name={'Contact_Name'} value={inputs.Contact_Name} />
             </Editable>
             { errorsCustomer.Contact_Name && (
-                <Text mt={'1vh'} position={'absolute'} color={'web.error'} fontSize={'xs'}>
-                  {errorsCustomer.Contact_Name}
-                </Text>
+              <Text
+                h={'3.6vh'}
+                color={'web.error'}
+                fontSize={'xs'}
+                display="flex"
+                flexDirection="column"
+                justifyContent="flex-end"
+              >
+                {errorsCustomer.Contact_Name}
+              </Text>
             )}
           </Box>
-          <Box pt='2' w={'20vw'} h={'8vh'} mt={'0.5vh'}>
+          <Box pt='2' w={'20vw'} h={'8vh'} mt={'0.5vh'} maxW={'300px'}>
             <Text fontSize='sm' fontWeight={'semibold'}> Email </Text>
             <Editable
               value={inputs.Email}
@@ -195,12 +221,20 @@ function EditableControls(name, value) {
               pt='1'
               justifyContent={'space-between'}
               w={'19vw'}
+              maxW={'280px'}
+              alignItems={'center'}
               onBlur={() => handleCheck({ name: 'Email', value: inputs.Email })}
             >
-              <EditablePreview />
+              <EditablePreview 
+              maxW={'280px'} css={{
+                whiteSpace: 'nowrap',
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+              }} />
               <Input as={EditableInput}
                 name={'Email'}
                 w={'17vw'}
+                maxW={'280px'}
                 minH={'4vh'}
                 variant="unstyled"
                 textColor={'web.text2'}
@@ -216,12 +250,19 @@ function EditableControls(name, value) {
               <EditableControls name={'Email'} value={inputs.Email} />
             </Editable>
             { errorsCustomer.Email && (
-                <Text mt={'1vh'} position={'absolute'} color={'web.error'} fontSize={'xs'}>
-                  {errorsCustomer.Email}
-                </Text>
+              <Text
+                h={'3.6vh'}
+                color={'web.error'}
+                fontSize={'xs'}
+                display="flex"
+                flexDirection="column"
+                justifyContent="flex-end"
+              >
+                {errorsCustomer.Email}
+              </Text>
             )}
           </Box>
-          <Box pt='2' w={'20vw'} h={'8vh'} mt={'0.5vh'}>
+          <Box pt='2' w={'20vw'} h={'8vh'} mt={'0.5vh'} maxW={'300px'}>
             <Text fontSize='sm' fontWeight={'semibold'}> Phone </Text>
             <Editable
               value={inputs.Phone}
@@ -234,12 +275,21 @@ function EditableControls(name, value) {
               pt='1'
               justifyContent={'space-between'}
               w={'19vw'}
+              maxW={'280px'}
+              alignItems={'center'}
               onBlur={() => handleCheck({ name: 'Phone', value: inputs.Phone })}
             >
-              <EditablePreview />
+              <EditablePreview 
+                maxW={'280px'} 
+                css={{
+                whiteSpace: 'nowrap',
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+              }}/>
               <Input as={EditableInput}
                 name={'Phone'}
                 w={'17vw'}
+                maxW={'280px'}
                 minH={'4vh'}
                 variant="unstyled"
                 textColor={'web.text2'}
@@ -255,15 +305,22 @@ function EditableControls(name, value) {
               <EditableControls name={'Phone'} value={inputs.Phone}   />
             </Editable>
             { errorsCustomer.Phone && (
-                <Text mt={'1vh'} position={'absolute'} color={'web.error'} fontSize={'xs'}>
-                  {errorsCustomer.Phone}
-                </Text>
+              <Text
+                  h={'3.6vh'}
+                  color={'web.error'}
+                  fontSize={'xs'}
+                  display="flex"
+                  flexDirection="column"
+                  justifyContent="flex-end"
+                >
+                {errorsCustomer.Phone}
+              </Text>
             )}
           </Box>
           <Box></Box>
         </Stack>
         <Stack divider={<StackDivider />}>
-          <Box pt='2' w={'20vw'} h={'8vh'}>
+          <Box pt='2' w={'20vw'} h={'8vh'} maxW={'300px'}>
             <Text fontSize='sm' fontWeight={'semibold'}> Company </Text>
             <Editable
               value={inputs.Company}
@@ -276,12 +333,20 @@ function EditableControls(name, value) {
               pl='2' 
               justifyContent={'space-between'}
               w={'19vw'}
+              maxW={'280px'}
+              alignItems={'center'}
               onBlur={() => handleCheck({ name: 'Company', value: inputs.Company })}
             >
-              <EditablePreview />
+              <EditablePreview 
+              maxW={'280px'} css={{
+                whiteSpace: 'nowrap',
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+              }} />
               <Input as={EditableInput}
                 name={'Company'}
                 w={'15vw'}
+                maxW={'260px'}
                 minH={'4vh'}
                 variant="unstyled"
                 textColor={'web.text2'}
@@ -297,12 +362,19 @@ function EditableControls(name, value) {
               <EditableControls name={'Company'} value={inputs.Company}  />
             </Editable>
             { errorsCustomer.Company && (
-                <Text mt={'1vh'} position={'absolute'} color={'web.error'} fontSize={'xs'}>
-                  {errorsCustomer.Company}
-                </Text>
+              <Text
+                h={'3.6vh'}
+                color={'web.error'}
+                fontSize={'xs'}
+                display="flex"
+                flexDirection="column"
+                justifyContent="flex-end"
+                >
+                {errorsCustomer.Company}
+              </Text>
             )}
           </Box>
-          <Box pt='2' w={'20vw'} h={'8vh'} mt={'0.5vh'}>
+          <Box pt='2' w={'20vw'} h={'8vh'} mt={'0.5vh'} maxW={'300px'}>
             <Text fontSize='sm' fontWeight={'semibold'}> Company position </Text>
             <Editable
               value={inputs.Company_Position}
@@ -315,12 +387,20 @@ function EditableControls(name, value) {
               pl='2' 
               justifyContent={'space-between'}
               w={'19vw'}
+              maxW={'280px'}
+              alignItems={'center'}
               onBlur={() => handleCheck({ name: 'Company_Position', value: inputs.Company_Position })}
             >
-              <EditablePreview />
+              <EditablePreview 
+              maxW={'280px'} css={{
+                whiteSpace: 'nowrap',
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+              }} />
               <Input as={EditableInput}
                 name={'Company_Position'}
                 w={'15vw'}
+                maxW={'280px'}
                 minH={'4vh'}
                 variant="unstyled"
                 textColor={'web.text2'}
@@ -336,12 +416,19 @@ function EditableControls(name, value) {
               <EditableControls name={'Company_Position'} value={inputs.Company_Position}  />
             </Editable>
             { errorsCustomer.Company_Position && (
-                <Text mt={'1vh'} position={'absolute'} color={'web.error'} fontSize={'xs'}>
-                  {errorsCustomer.Company_Position}
-                </Text>
+              <Text
+                h={'3.6vh'}
+                color={'web.error'}
+                fontSize={'xs'}
+                display="flex"
+                flexDirection="column"
+                justifyContent="flex-end"
+                >
+                {errorsCustomer.Company_Position}
+              </Text>
             )}
           </Box>
-          <Box pt='2' w={'20vw'} h={'8vh'} mt={'0.5vh'}>
+          <Box pt='2' w={'20vw'} h={'8vh'} mt={'0.5vh'} maxW={'300px'}>
             <Text fontSize='sm' fontWeight={'semibold'}> Discount </Text>
             <Editable
               value={inputs.DiscountRate}
@@ -354,12 +441,20 @@ function EditableControls(name, value) {
               pl='2' 
               justifyContent={'space-between'}
               w={'19vw'}
+              maxW={'280px'}
+              alignItems={'center'}
               onBlur={() => handleCheck({ name: 'DiscountRate', value: inputs.DiscountRate })}
             >
-              <EditablePreview />
+              <EditablePreview 
+              maxW={'280px'} css={{
+                whiteSpace: 'nowrap',
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+              }} />
               <Input as={EditableInput}
                 name={'DiscountRate'}
                 w={'15vw'}
+                maxW={'280px'}
                 minH={'4vh'}
                 variant="unstyled"
                 textColor={'web.text2'}
@@ -375,16 +470,23 @@ function EditableControls(name, value) {
               <EditableControls name={'DiscountRate'} value={inputs.DiscountRate}  />
             </Editable>
             { errorsCustomer.DiscountRate && (
-                <Text mt={'1vh'} position={'absolute'} color={'web.error'} fontSize={'xs'}>
-                  {errorsCustomer.DiscountRate}
-                </Text>
+              <Text
+                h={'3.6vh'}
+                color={'web.error'}
+                fontSize={'xs'}
+                display="flex"
+                flexDirection="column"
+                justifyContent="flex-end"
+                >
+                {errorsCustomer.DiscountRate}
+              </Text>
             )}
           </Box>
           <Box></Box>
         </Stack>          
       </CardBody>
     </Card>
-    </Box>
+    </Center>
   </>
 )}
 

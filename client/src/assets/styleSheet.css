@@ -20,7 +20,7 @@ body {
   overflow-y: scroll;
   resize: vertical;
   min-height: 220px;
-  max-height: 380px;
+  max-height: 330px;
 }
 .ql-editor::-webkit-scrollbar {
   width: 0.2vw;

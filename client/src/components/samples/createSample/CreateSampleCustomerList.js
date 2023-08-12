@@ -16,6 +16,7 @@ import {
   const ModelTr = ({e, setFormData, formData, setDisable}) => {
     
     const handleClick = (e) => {
+  
       setFormData({
         ...formData,
         customer: {
@@ -26,8 +27,8 @@ import {
           Company_Position: e.Company_Position || '',
           Phone: e.Phone || '',
           Email: e.Email || '',
-          DiscountID: e.DiscountID || '',
-          DiscountRate: e.DiscountRate || '' 
+          DiscountID: e.DiscountID || 1,
+          DiscountRate: e.DiscountRate || 0
         },
       });
       setDisable(false)
@@ -44,13 +45,12 @@ import {
         textColor={e.CustomerID === formData.customer.CustomerID ? 'logo.orange' : 'unset'}
         bg={e.CustomerID === formData.customer.CustomerID ? 'web.navBar' : 'unset'}
         onClick={() => handleClick(e)}
-        w={'54vw'}
       >
-        <Td fontSize={'xs'}>{e.CustomerID}</Td>
-        <Td fontSize={'xs'} maxW={'12vw'} minW={'12vw'} whiteSpace={'nowrap'} overflow={'hidden'} textOverflow={'ellipsis'} textAlign={'center'}>{e.Contact_Name ? e.Contact_Name : '-'}</Td>
-        <Td fontSize={'xs'} maxW={'10vw'} minW={'10vw'} whiteSpace={'nowrap'} overflow={'hidden'}textOverflow={'ellipsis'} textAlign={'center'}>{e.Email}</Td>
-        <Td fontSize={'xs'} maxW={'10vw'} minW={'10vw'} textAlign={'center'}>{e.Phone}</Td>
-        <Td fontSize={'xs'} maxW={'12vw'} minW={'12vw'} whiteSpace={'nowrap'} overflow={'hidden'}textOverflow={'ellipsis'}>{e.Company}</Td>
+        <Td fontSize={'xs'} w={'4vw'} maxW={'4vw'} minW={'4vw'} textAlign={'center'}>{e.CustomerID}</Td>
+        <Td fontSize={'xs'} whiteSpace={'nowrap'} w={'10vw'} maxW={'10vw'} minoverflow={'hidden'} textOverflow={'ellipsis'}>{e.Contact_Name ? e.Contact_Name : '-'}</Td>
+        <Td fontSize={'xs'} whiteSpace={'nowrap'} w={'10vw'} maxW={'10vw'} minW={'10vw'} overflow={'hidden'}textOverflow={'ellipsis'} textAlign={'center'}>{e.Email}</Td>
+        <Td fontSize={'xs'} textAlign={'center'} w={'8vw'} maxW={'8vw'} minW={'8vw'}>{e.Phone}</Td>
+        <Td fontSize={'xs'} w={'12vw'} maxW={'12vw'} minW={'12vw'} overflow={'hidden'}textOverflow={'ellipsis'}>{e.Company}</Td>
       </Tr>
     )
   }
@@ -84,14 +84,11 @@ import {
 
   return(
 <>
-  <Box
-    display={'flex'}
-    justifyContent={'center'}
-    >
     <Box
       maxHeight={'50vh'}
       minHeight={'50vh'}
       overflow={'auto'}
+      
       css={{
         '&::-webkit-scrollbar': {
           width: '0.4vw',
@@ -111,15 +108,15 @@ import {
       >
       {
         customers.length ? (
-          <TableContainer w={'54vw'}>
+          <TableContainer>
             <Table color={'web.text'}variant={'simple'} size={'sm'}>
               <Thead h={'3vh'}>
                 <Tr>
-                    <Th color={'web.text2'} textAlign={'center'} w={'4vw'} fontSize={'x-small'}>IDs</Th>
-                    <Th color={'web.text2'} textAlign={'center'} minW={'12vw'} maxW={'12vw'} fontSize={'x-small'}>Name</Th>
-                    <Th color={'web.text2'} textAlign={'center'} minW={'10vw'} maxW={'10vw'} fontSize={'x-small'}>Email</Th>
-                    <Th color={'web.text2'} textAlign={'center'} minW={'10vw'} maxW={'10vw'} fontSize={'x-small'}>Phone</Th>
-                    <Th color={'web.text2'} textAlign={'center'} minW={'12vw'} maxW={'12vw'} fontSize={'x-small'}>Company</Th>
+                    <Th color={'web.text2'} textAlign={'center'} fontSize={'x-small'}>IDs</Th>
+                    <Th color={'web.text2'} textAlign={'center'} fontSize={'x-small'}>Name</Th>
+                    <Th color={'web.text2'} textAlign={'center'} fontSize={'x-small'}>Email</Th>
+                    <Th color={'web.text2'} textAlign={'center'} fontSize={'x-small'}>Phone</Th>
+                    <Th color={'web.text2'} textAlign={'center'} fontSize={'x-small'}>Company</Th>
                   </Tr>
                 </Thead>
                 <Tbody >
@@ -138,7 +135,6 @@ import {
             )
         }
       </Box> 
-    </Box>
   </>
   )
 }
