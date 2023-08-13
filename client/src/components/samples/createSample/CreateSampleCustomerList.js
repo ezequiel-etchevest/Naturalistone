@@ -16,7 +16,7 @@ import {
   const ModelTr = ({e, setFormData, formData, setDisable}) => {
     
     const handleClick = (e) => {
-  
+     
       setFormData({
         ...formData,
         customer: {
@@ -36,21 +36,27 @@ import {
    
     return(
       <Tr 
-      cursor={'pointer'} 
-      key={e.CustomerID}
-      _hover={{
-        bg: 'web.navBar',
-        color: 'logo.orange'
+        cursor={'pointer'} 
+        key={e.CustomerID}
+        _hover={{
+          bg: 'web.navBar',
+          color: 'logo.orange'
         }}
         textColor={e.CustomerID === formData.customer.CustomerID ? 'logo.orange' : 'unset'}
         bg={e.CustomerID === formData.customer.CustomerID ? 'web.navBar' : 'unset'}
         onClick={() => handleClick(e)}
       >
         <Td fontSize={'xs'} w={'4vw'} maxW={'4vw'} minW={'4vw'} textAlign={'center'}>{e.CustomerID}</Td>
-        <Td fontSize={'xs'} whiteSpace={'nowrap'} w={'10vw'} maxW={'10vw'} minoverflow={'hidden'} textOverflow={'ellipsis'}>{e.Contact_Name ? e.Contact_Name : '-'}</Td>
-        <Td fontSize={'xs'} whiteSpace={'nowrap'} w={'10vw'} maxW={'10vw'} minW={'10vw'} overflow={'hidden'}textOverflow={'ellipsis'} textAlign={'center'}>{e.Email}</Td>
-        <Td fontSize={'xs'} textAlign={'center'} w={'8vw'} maxW={'8vw'} minW={'8vw'}>{e.Phone}</Td>
-        <Td fontSize={'xs'} w={'12vw'} maxW={'12vw'} minW={'12vw'} overflow={'hidden'}textOverflow={'ellipsis'}>{e.Company}</Td>
+        <Td fontSize={'xs'} w={'10vw'} maxW={'10vw'} overflow={'hidden'}>
+          <Text whiteSpace="nowrap" overflow="hidden" textOverflow="ellipsis">{e.Contact_Name && e.Contact_Name !== 'null' ? e.Contact_Name : ''}</Text>
+        </Td>
+        <Td fontSize={'xs'} w={'10vw'} maxW={'10vw'} minW={'10vw'} overflow={'hidden'}textAlign={'center'}>
+          <Text whiteSpace="nowrap" overflow="hidden" textOverflow="ellipsis">{e.Email && e.Email !== 'null' ? e.Email : ''}</Text>
+        </Td>
+        <Td fontSize={'xs'} textAlign={'center'} w={'8vw'} maxW={'8vw'} minW={'8vw'}>{e.Phone && e.Phone !== 'null' ? e.Phone : ''}</Td>
+        <Td fontSize={'xs'} w={'12vw'} maxW={'12vw'} minW={'12vw'} overflow={'hidden'}>
+          <Text whiteSpace="nowrap" overflow="hidden" textOverflow="ellipsis">{e.Company && e.Company !== 'null' ? e.Company : ''}</Text>
+        </Td>
       </Tr>
     )
   }
@@ -91,7 +97,7 @@ import {
       
       css={{
         '&::-webkit-scrollbar': {
-          width: '0.4vw',
+          width: '0.2vw',
         },
         '&::-webkit-scrollbar-track': {
           width: '6px',

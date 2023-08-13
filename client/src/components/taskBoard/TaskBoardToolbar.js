@@ -30,7 +30,7 @@ export const TaskBoardToolbar = ({activeCard, user, setActiveCard, setFilters, f
 
 
   return(
-    <VStack mt={'3vh'} mb={'3vh'} w={'13vw'} alignItems={'flex-start'} pt={'2vh'} mr={'1.5vw'}>
+    <VStack mt={'1vh'} mb={'3vh'} w={'13vw'} alignItems={'flex-start'} pt={'2vh'} mr={'1.5vw'}>
       <Text fontSize={'xs'} textColor={'web.text2'} w={'100%'}>Tasks</Text>
       <Divider w={'100%'} textColor={'web.border'} />
       <Box pl={'1vh'} pb={'1vh'}>

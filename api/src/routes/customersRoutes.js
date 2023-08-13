@@ -20,7 +20,7 @@ customersRouter.get('/', async function(req, res){
     try{
         mysqlConnection.query(query_, function(error, results, fields){
                 console.log('Data OK')
-                if(!results.length) res.status(200).send('No match for this filters')
+                if(results.length == 0) res.status(200).send('No match for this filters')
                 else res.status(200).json(results);
             
         });
@@ -89,7 +89,7 @@ customersRouter.post('/', async function(req, res){
 });
 
 customersRouter.patch('/:id', async function(req, res){
-
+    
     const {id} = req.params
     const {
         Contact_Name,
@@ -108,11 +108,10 @@ customersRouter.patch('/:id', async function(req, res){
         Billing_State,
         DiscountRate
     } = req.body
-    
     const parsedDiscount = () => {
-        if(DiscountRate === '15') return 4
-        else if(DiscountRate === '10') return 3
-        else if(DiscountRate === '5') return 2
+        if(DiscountRate == '15') return 4
+        else if(DiscountRate == '10') return 3
+        else if(DiscountRate == '5') return 2
         else return 1
     } 
     

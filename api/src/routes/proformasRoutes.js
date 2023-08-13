@@ -6,7 +6,7 @@ proformasRoutes.get('/:invoiceId/:factoryId', async function(req, res) {
 
     const { invoiceId, factoryId } = req.params
 
-  let query_ = `SELECT * FROM Proformas WHERE Invoice = ${invoiceId} AND FactoryID = ${factoryId}`
+  let query_ = `SELECT * FROM Proformas WHERE Invoice = "${invoiceId}" AND FactoryID = ${factoryId}`
 
   try {
     mysqlConnection.query(query_, function(error, results) {

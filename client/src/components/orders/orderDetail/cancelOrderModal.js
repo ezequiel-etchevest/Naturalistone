@@ -9,7 +9,8 @@ import {
     IconButton,
     ModalFooter,
     ModalHeader,
-    ModalCloseButton
+    ModalCloseButton,
+    Tooltip
   } from '@chakra-ui/react'
 import { AiOutlineDelete } from 'react-icons/ai';
 import { useDispatch } from 'react-redux';
@@ -30,6 +31,8 @@ export default function CancerlOrderModal({order}) {
   
     return (
       <>
+      <Tooltip
+        placement={'bottom-start'} label={'Cancel order'} fontWeight={'hairline'}>
       <IconButton
         variant={'unstyled'}           
         fontWeight={'normal'}
@@ -42,6 +45,7 @@ export default function CancerlOrderModal({order}) {
         }}
         color={'web.text2'}
       />
+      </Tooltip>
       <Modal 
         isOpen={isOpen} 
         onClose={onClose}

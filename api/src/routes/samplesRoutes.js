@@ -1,6 +1,7 @@
 const express = require("express");
 const samplesRoutes = express.Router();
 const mysqlConnection = require("../db");
+const parseProducts = require("../Controllers/samplesController");
 
 samplesRoutes.get("/", function (req, res) {
 
@@ -53,10 +54,7 @@ samplesRoutes.get("/samplesProducts/:sampleId", function (req, res) {
 samplesRoutes.post("/", function (req, res) {
   const { customer, project, products, variables } = req.body;
   
-  const parsedProducts = Object.entries(products)
-    .flat()
-    .filter((element) => typeof element === "object")
-    .map((product, index) => ({ variableName: `${index + 1}`, ...product }));
+  const parsedProducts = parseProducts(products)
 
   try {
     mysqlConnection.beginTransaction(function (err) {
