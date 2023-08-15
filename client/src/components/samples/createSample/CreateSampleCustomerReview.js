@@ -7,11 +7,11 @@ import {
     EditableInput,
     EditablePreview,
     useEditableControls,
-    ButtonGroup,
     IconButton,
     Flex,
     Input,
     Center,
+    Select,
     } from "@chakra-ui/react"
 import { Card, CardBody } from '@chakra-ui/card'
 import {  CloseIcon, EditIcon } from '@chakra-ui/icons'
@@ -19,45 +19,45 @@ import '../../../assets/styleSheet.css'
 import { useState } from "react"
 import { validateCompletedInputs } from "../../../utils/validateForm"
 
-const CreateSampleCustomerReview = ({setFormData, formData, setErrorsCustomer, errorsCustomer}) => {
+const CreateSampleCustomerReview = ({setFormData, formData, setErrorsCustomer, errorsCustomer, sellers, user}) => {
 
- const [inputs, setInputs] = useState({
-    Contact_Name: formData.customer.Contact_Name,
-    Company: formData.customer.Company,
-    Company_Position: formData.customer.Company_Position,
-    Phone: formData.customer.Phone,
-    Email: formData.customer.Email,
-    DiscountID: formData.customer.DiscountID !== "" ? formData.customer.DiscountID : 1,
-    DiscountRate: formData.customer.DiscountRate !== null && formData.customer.DiscountRate !== "" ? formData.customer.DiscountRate : "0",
-    CustomerID: formData.customer.CustomerID 
-  }
- )
-
-const handleCheck = (e) => {
-
-const {name, value} = e
-  setFormData({
-    ...formData,
-    customer: {
-      ...formData.customer,
-    [name]: value  
-    }
-  })
+const initialState = {
+  Contact_Name: formData.customer.Contact_Name,
+  Company: formData.customer.Company,
+  Company_Position: formData.customer.Company_Position,
+  Phone: formData.customer.Phone,
+  Email: formData.customer.Email,
+  DiscountID: formData.customer.DiscountID !== "" ? formData.customer.DiscountID : 1,
+  DiscountRate: formData.customer.DiscountRate !== null && formData.customer.DiscountRate !== "" ? formData.customer.DiscountRate : "0",
+  CustomerID: formData.customer.CustomerID,
+  Seller:  formData.customer.Seller ? formData.customer.Seller : '',
 }
-console.log(formData.customer.DiscountRate)
+const [inputs, setInputs] = useState(initialState)
+const [originInput, setOriginInput] = useState(initialState)
+
 const handleCancel = (e) => {
 
   const {name} = e
     setInputs({
       ...inputs,
-      [name]: formData.customer[name] 
+      [name]: originInput[name] 
       }
     )
+    setFormData({
+      ...formData,
+      customer: {
+        ...formData.customer,
+      [name]: originInput[name] 
+      }
+    })
+    setErrorsCustomer((prevErrors) => {
+      const { [name]: removedError, ...restErrors } = prevErrors;
+      return restErrors;
+    });
   }
 
 const handleChange = (e) =>{
   const {name, value} = e.target
-
   setInputs((prevInputs) => ({
     ...prevInputs,
     [name]: value,
@@ -75,13 +75,18 @@ const handleChange = (e) =>{
       ...updatedErrors,
     };
   });
-
+  setFormData({
+    ...formData,
+    customer: {
+      ...formData.customer,
+    [name]: value  
+    }
+  })
 }
 
 function EditableControls(name, value) {
   const {
     isEditing,
-    getSubmitButtonProps,
     getCancelButtonProps,
     getEditButtonProps,
   } = useEditableControls()
@@ -150,9 +155,9 @@ function EditableControls(name, value) {
     </Box>
     <Card w={'46vw'}maxW={'700px'}>
       <CardBody display={'flex'} flexDir={'row'} justifyContent={'space-around'}  alignItems={'center'} mt={'1vh'}>
-        <Stack divider={<StackDivider />}>
+        <Stack h={'44vh'} divider={<StackDivider />}>
           <Box pt='2' w={'20vw'} h={'8vh'} maxW={'300px'}>
-            <Text fontSize='sm' fontWeight={'semisemibold'}> Name </Text>
+            <Text fontSize='sm' fontWeight={'semibold'}> Name </Text>
             <Editable
               value={inputs.Contact_Name}
               fontSize='sm'
@@ -166,7 +171,7 @@ function EditableControls(name, value) {
               w={'19vw'}
               maxW={'280px'}
               alignItems={'center'}
-              onBlur={() => handleCheck({ name: 'Contact_Name', value: inputs.Contact_Name })}
+              // onBlur={() => handleCheck({ name: 'Contact_Name', value: inputs.Contact_Name })}
             >
               <EditablePreview 
                 maxW={'280px'} 
@@ -177,6 +182,7 @@ function EditableControls(name, value) {
               }}/>
               <Input
                 name={'Contact_Name'}
+                className="mailInputs"
                 value={inputs.Contact_Name}
                 as={EditableInput}
                 w={'17vw'}
@@ -223,7 +229,7 @@ function EditableControls(name, value) {
               w={'19vw'}
               maxW={'280px'}
               alignItems={'center'}
-              onBlur={() => handleCheck({ name: 'Email', value: inputs.Email })}
+              // onBlur={() => handleCheck({ name: 'Email', value: inputs.Email })}
             >
               <EditablePreview 
               maxW={'280px'} css={{
@@ -233,6 +239,7 @@ function EditableControls(name, value) {
               }} />
               <Input as={EditableInput}
                 name={'Email'}
+                className="mailInputs"
                 w={'17vw'}
                 maxW={'280px'}
                 minH={'4vh'}
@@ -277,7 +284,7 @@ function EditableControls(name, value) {
               w={'19vw'}
               maxW={'280px'}
               alignItems={'center'}
-              onBlur={() => handleCheck({ name: 'Phone', value: inputs.Phone })}
+              // onBlur={() => handleCheck({ name: 'Phone', value: inputs.Phone })}
             >
               <EditablePreview 
                 maxW={'280px'} 
@@ -288,6 +295,7 @@ function EditableControls(name, value) {
               }}/>
               <Input as={EditableInput}
                 name={'Phone'}
+                className="mailInputs"
                 w={'17vw'}
                 maxW={'280px'}
                 minH={'4vh'}
@@ -317,9 +325,38 @@ function EditableControls(name, value) {
               </Text>
             )}
           </Box>
+          <Box pt='2' w={'20vw'} h={'8vh'} mt={'0.5vh'} maxW={'300px'}>
+          <Select
+              onChange={(e)=>handleChange(e)}
+              mb={'0.5vh'}
+              maxW={'280px'}
+              w={'280px'}
+              disabled={ user[0].Secction7Flag === 1 ? false : true}
+              h={'8vh'}
+              variant="unstyled"
+              textColor={'web.text2'}
+              _placeholder={{ fontFamily: 'body', fontWeight: 'inherit', textColor: 'inherit' }}
+              size={"sm"}
+              borderBottomWidth={"0"}
+              value={inputs.Seller}
+              cursor={'pointer'}
+              name="Seller"
+            >
+              <option value='' className="options">Select seller</option>
+              {
+                sellers.length ? (
+                  sellers?.map((e, i) => {
+                      return(
+                        <option key={i} className={'options'} value={e.SellerID}>{e.FirstName} {e.LastName}</option>
+                  )})
+                      
+                  ): ( null)
+              }
+            </Select>
+          </Box>
           <Box></Box>
         </Stack>
-        <Stack divider={<StackDivider />}>
+        <Stack h={'44vh'} divider={<StackDivider />}>
           <Box pt='2' w={'20vw'} h={'8vh'} maxW={'300px'}>
             <Text fontSize='sm' fontWeight={'semibold'}> Company </Text>
             <Editable
@@ -335,7 +372,7 @@ function EditableControls(name, value) {
               w={'19vw'}
               maxW={'280px'}
               alignItems={'center'}
-              onBlur={() => handleCheck({ name: 'Company', value: inputs.Company })}
+              // onBlur={() => handleCheck({ name: 'Company', value: inputs.Company })}
             >
               <EditablePreview 
               maxW={'280px'} css={{
@@ -345,6 +382,7 @@ function EditableControls(name, value) {
               }} />
               <Input as={EditableInput}
                 name={'Company'}
+                className="mailInputs"
                 w={'15vw'}
                 maxW={'260px'}
                 minH={'4vh'}
@@ -389,7 +427,7 @@ function EditableControls(name, value) {
               w={'19vw'}
               maxW={'280px'}
               alignItems={'center'}
-              onBlur={() => handleCheck({ name: 'Company_Position', value: inputs.Company_Position })}
+              // onBlur={() => handleCheck({ name: 'Company_Position', value: inputs.Company_Position })}
             >
               <EditablePreview 
               maxW={'280px'} css={{
@@ -399,6 +437,7 @@ function EditableControls(name, value) {
               }} />
               <Input as={EditableInput}
                 name={'Company_Position'}
+                className="mailInputs"
                 w={'15vw'}
                 maxW={'280px'}
                 minH={'4vh'}
@@ -443,7 +482,7 @@ function EditableControls(name, value) {
               w={'19vw'}
               maxW={'280px'}
               alignItems={'center'}
-              onBlur={() => handleCheck({ name: 'DiscountRate', value: inputs.DiscountRate })}
+              // onBlur={() => handleCheck({ name: 'DiscountRate', value: inputs.DiscountRate })}
             >
               <EditablePreview 
               maxW={'280px'} css={{
@@ -453,6 +492,7 @@ function EditableControls(name, value) {
               }} />
               <Input as={EditableInput}
                 name={'DiscountRate'}
+                className="mailInputs"
                 w={'15vw'}
                 maxW={'280px'}
                 minH={'4vh'}
@@ -482,7 +522,7 @@ function EditableControls(name, value) {
               </Text>
             )}
           </Box>
-          <Box></Box>
+          <Box ></Box>
         </Stack>          
       </CardBody>
     </Card>

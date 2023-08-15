@@ -28,7 +28,8 @@ import {
           Phone: e.Phone || '',
           Email: e.Email || '',
           DiscountID: e.DiscountID || 1,
-          DiscountRate: e.DiscountRate || 0
+          DiscountRate: e.DiscountRate || 0,
+          Seller: e.SellerID || ''
         },
       });
       setDisable(false)
@@ -46,7 +47,7 @@ import {
         bg={e.CustomerID === formData.customer.CustomerID ? 'web.navBar' : 'unset'}
         onClick={() => handleClick(e)}
       >
-        <Td fontSize={'xs'} w={'4vw'} maxW={'4vw'} minW={'4vw'} textAlign={'center'}>{e.CustomerID}</Td>
+        <Td fontSize={'xs'} w={'6vw'} maxW={'6vw'} minW={'6vw'} textAlign={'center'}>{e.CustomerID}</Td>
         <Td fontSize={'xs'} w={'10vw'} maxW={'10vw'} overflow={'hidden'}>
           <Text whiteSpace="nowrap" overflow="hidden" textOverflow="ellipsis">{e.Contact_Name && e.Contact_Name !== 'null' ? e.Contact_Name : ''}</Text>
         </Td>

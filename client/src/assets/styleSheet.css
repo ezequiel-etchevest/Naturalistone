@@ -1,11 +1,11 @@
   select option[class="options"] {
     background: #0D1117;
+    font-size: 0.9rem;
   }
   select option:checked {
     background:#30363D;
     color: #8B949E;
   }
-
 
 .App{
   background: '#010409';

@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import SamplesList from './SamplesList';
 import SamplesFilters from './SamplesFilters';
 
-const SamplesContainer = ({samples, user, focusFilter, setFocusFilter }) => {
+const SamplesContainer = ({samples, user, focusFilter, setFocusFilter, sellers }) => {
 
     const [ spinner, setSpinner ] = useState(false)
 
@@ -23,9 +23,7 @@ const SamplesContainer = ({samples, user, focusFilter, setFocusFilter }) => {
               bg={'web.bg'}> 
                 <SamplesFilters
                   samples={samples}
-                  user={user} 
-                  setFocusFilter={setFocusFilter} 
-                  focusFilter={focusFilter}/>
+                  sellers={sellers}/>
                 <SamplesList 
                   samples={samples}
                   user={user}/>

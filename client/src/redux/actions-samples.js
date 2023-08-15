@@ -4,10 +4,11 @@ export const POST_SAMPLES = 'POST_SAMPLES';
 export const GET_SAMPLES_PRODUCTS = 'GET_SAMPLES_PRODUCTS'
 export const GET_SAMPLES_TRACKINGNUMBER = 'GET_SAMPLES_TRACKINGNUMBER'
 
-export function getSamples(){
+export function getSamples(input){
+  
   return async function(dispatch){
       try {
-        const { data } = await axios.get(`/samples`)
+        const { data } = await axios.get(`/samples/${input}`)
         dispatch({
           type: GET_SAMPLES,
           payload: data.data
@@ -37,12 +38,15 @@ export function getSamplesProducts(idSamples) {
 }
 
 export function postSamples(formData){
+
   return async function(dispatch) {
     try {
-        const { data } = await axios.post('/samples', formData)
+        await axios.post('/samples', formData)
+        const { data } = await axios.get(`/samples`)
+    
         return dispatch({
           type: POST_SAMPLES,
-          // payload: data
+          payload: data.data
         })
     } catch (error) {
       console.log('error in post samples')
@@ -62,7 +66,7 @@ export function validateTrackingNumber(trackingNumber){
         })
       }
     } catch (error) {
-      console.log('error in post samples')
+      console.log('error validating Trackingnumber')
     }
   }
 }

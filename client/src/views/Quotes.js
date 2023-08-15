@@ -25,7 +25,7 @@ const Quotes = ({focus, setFocus}) => {
   const getParamsSeller = url.get('seller')
   const getParamsName = url.get('name')
   const getParamsNumber = url.get('number')
-  console.log('seller', seller_invoices)
+
 
   const [focusFilter, setFocusFilter] = useState('All')
   const userLocal = JSON.parse(localStorage.getItem('user'))

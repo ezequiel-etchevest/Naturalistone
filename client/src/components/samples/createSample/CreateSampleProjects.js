@@ -37,7 +37,6 @@
     useEffect(() => {
       setErrorsProjectList(validateInputTracking(formData));
       dispatch(validateTrackingNumber(formData.variables.trackingNumber))
-      console.log(formData.variables.trackingNumber)
     }, [formData]);
 
 

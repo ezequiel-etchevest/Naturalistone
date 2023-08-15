@@ -7,16 +7,20 @@ import { Center, Spinner, Text } from "@chakra-ui/react";
 import { useLocation } from "react-router-dom";
 import SamplesContainer from "../components/samples/SamplesContainer";
 import { getSamples } from "../redux/actions-samples";
+import { getSellers } from "../redux/actions-sellers";
 
 const Samples = ({ focus, setFocus }) => {
   const dispatch = useDispatch();
   const samples = useSelector((state) => state.samples);
+  const sellers = useSelector((state) => state.sellers);
   const user = useSelector((state) => state.user);
   const [focusFilter, setFocusFilter] = useState("All");
   const userLocal = JSON.parse(localStorage.getItem("user"));
 
   useEffect(() => {
-    if (samples === undefined) dispatch(getSamples());
+    if(!sellers.length){
+      dispatch(getSellers())
+    }
     if (userLocal && !user.length) {
       dispatch(getEmployeeById(userLocal.SellerID));
     }
@@ -24,7 +28,7 @@ const Samples = ({ focus, setFocus }) => {
 
   useEffect(() => {
     if (!samples.length) {
-      dispatch(getSamples());
+      dispatch(getSamples(''));
     }
   }, []);
 
@@ -35,6 +39,7 @@ const Samples = ({ focus, setFocus }) => {
           <SideBar user={user} focus={focus} setFocus={setFocus} />
           <SamplesContainer
             samples={samples}
+            sellers={sellers}
             user={user}
             focusFilter={focusFilter}
             setFocusFilter={setFocusFilter}

@@ -34,17 +34,19 @@ import { getSamples, postSamples, validateTrackingNumber } from "../../../redux/
 import CreateSampleModalAskEmail from "./CreateSampleModalAskEmail";
 import { day0, month0, year } from "../../../utils/todayDate";
 
-export function CreateSampleModal({ customers }) {
+export function CreateSampleModal({ customers, sellers, samples }) {
+
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { isOpen: isOpen2, onOpen: onOpen2, onClose: onClose2 } = useDisclosure();
+
   const user = useSelector((state) => state.user);
+  const tracking_number_validation = useSelector((state) => state.samples_tracking_number_validation);
+
   const [errorsCustomer, setErrorsCustomer] = useState({});
   const [errorsProjectList, setErrorsProjectList] = useState({});
   const [disable, setDisable] = useState(true);
   const [progress, setProgress] = useState(20);
   const [submited, setSubmited] = useState(false);
-  const samples = useSelector((state) => state.samples);
-  const tracking_number_validation = useSelector((state) => state.samples_tracking_number_validation);
   const [formData, setFormData] = useState({
     customer: {
       Contact_Name: "",
@@ -55,6 +57,7 @@ export function CreateSampleModal({ customers }) {
       DiscountID: "",
       DiscountRate: "",
       CustomerID: "",
+      Seller: ""
     },
     project: {
       ProjectName: "",
@@ -73,14 +76,15 @@ export function CreateSampleModal({ customers }) {
       quoteID: "",
     },
   });
+
   const dispatch = useDispatch();
   const toast = useToast();
   const toastId = "error-toast";
   const customerID = formData.customer.CustomerID;
 
-  useEffect(() => {
-    if (!samples.length) getSamples("");
-  }, []);
+  // useEffect(() => {
+  //   if (!samples.length) getSamples("");
+  // }, []);
 
   const handleSubmit = () => {
     if (progress === 100) {
@@ -120,6 +124,7 @@ export function CreateSampleModal({ customers }) {
         DiscountID: "",
         DiscountRate: "",
         CustomerID: "",
+        Seller: ""
       },
       project: {
         ProjectName: "",
@@ -297,6 +302,8 @@ export function CreateSampleModal({ customers }) {
                 setFormData={setFormData}
                 errorsCustomer={errorsCustomer}
                 setErrorsCustomer={setErrorsCustomer}
+                sellers={sellers}
+                user={user}
               />
             )}
             {progress == 60 && (

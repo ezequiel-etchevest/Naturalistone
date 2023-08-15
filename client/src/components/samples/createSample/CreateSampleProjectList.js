@@ -51,7 +51,7 @@ import {
   }
   
   const CreateSampleProjectList = ({ projects, formData, setFormData, setDisable }) => {
-
+    
     return(
       <>
         <Box
@@ -80,7 +80,7 @@ import {
           p={'0.5vw'}
           >
           {
-            projects.length ? (
+            projects.length && projects !== 'No projects related' ? (
               <TableContainer pr={'0.5vw'}  pl={'0.5vw'}>
                 <Table color={'web.text'}variant={'simple'} size={'sm'}>
                   <Thead h={'6vh'}>
@@ -92,7 +92,8 @@ import {
                     </Thead>
                     <Tbody >
                     { 
-                      projects.map((e, i) => (  
+                  
+                    projects.map((e, i) => (  
                         <ModelTr key={i} e={e} setFormData={setFormData} formData={formData} setDisable={setDisable}/> 
                       ))
                     }
