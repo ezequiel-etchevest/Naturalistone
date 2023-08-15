@@ -325,12 +325,12 @@ function EditableControls(name, value) {
               </Text>
             )}
           </Box>
-          <Box pt='2' w={'20vw'} h={'8vh'} mt={'0.5vh'} maxW={'300px'}>
+          <Box pt='2' w={'20vw'}h={'8vh'} mt={'0.5vh'}  maxW={'300px'}>
           <Select
               onChange={(e)=>handleChange(e)}
               mb={'0.5vh'}
+              w={'19vw'}
               maxW={'280px'}
-              w={'280px'}
               disabled={ user[0].Secction7Flag === 1 ? false : true}
               h={'8vh'}
               variant="unstyled"

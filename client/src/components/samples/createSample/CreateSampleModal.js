@@ -82,9 +82,6 @@ export function CreateSampleModal({ customers, sellers, samples }) {
   const toastId = "error-toast";
   const customerID = formData.customer.CustomerID;
 
-  // useEffect(() => {
-  //   if (!samples.length) getSamples("");
-  // }, []);
 
   const handleSubmit = () => {
     if (progress === 100) {
@@ -149,20 +146,19 @@ export function CreateSampleModal({ customers, sellers, samples }) {
     setErrorsCustomer({});
     if (progress === 40) {
       let newErrors = validateEmptyInputsCreateSample(formData.customer);
-
+      console.log(newErrors)
       setErrorsCustomer(newErrors);
       if (Object.entries(newErrors).length) {
-        if (!toast.isActive(toastId)) {
+        // if (!toast.isActive(toastId)) {
           return toast({
             id: toastId,
             title: "Error",
-            description: "All fields must be completed",
+            description: "Name, Email, Phone and Seller fields must be completed",
             status: "error",
             duration: 5000,
             isClosable: true,
           });
-        }
-      } else {
+        } else {
         dispatch(updateCustomer(customerID, formData.customer));
         dispatch(getCustomerProjects(customerID));
         setProgress(progress + 20);
@@ -182,8 +178,8 @@ export function CreateSampleModal({ customers, sellers, samples }) {
       if (Object.entries(errorsProjectList).length) {
         return;
       }
-      if (!formData.variables.trackingNumber.length) {
-        if (!toast.isActive(toastId)) {
+      if (!formData.variables.trackingNumber.length && !formData.project.idProjects.length) {
+        // if (!toast.isActive(toastId)) {
           return toast({
             id: toastId,
             title: "Error",
@@ -192,7 +188,7 @@ export function CreateSampleModal({ customers, sellers, samples }) {
             duration: 5000,
             isClosable: true,
           });
-        }
+        // }
       }else{
         if(tracking_number_validation.success === true){
           if (!toast.isActive(toastId)) {

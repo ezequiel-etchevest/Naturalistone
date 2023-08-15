@@ -3,16 +3,17 @@ const samplesRoutes = express.Router();
 const mysqlConnection = require("../db");
 const parseProducts = require("../Controllers/samplesController");
 
-samplesRoutes.get("/:input?", function (req, res) {
-  const { input } = req.params;
+samplesRoutes.get("/", function (req, res) {
+
+  const { search } = req.query;
 
   let query_;
-
-  if (input && input.length > 0) {
+  
+  if (search !== undefined && search?.length > 0) {
     query_ = `SELECT Samples.*, Customers.Company, Customers.Contact_Name, Projects.ProjectName FROM Samples
       LEFT JOIN Customers ON Customers.CustomerID = Samples.CustomerID
       LEFT JOIN Projects ON Projects.idProjects = Samples.ProjectID 
-      WHERE LOWER(Customers.Company) LIKE "%${input.toLowerCase()}%" OR LOWER(Customers.Contact_Name) LIKE "%${input.toLowerCase()}%" ORDER BY idSamples DESC`;
+      WHERE LOWER(Customers.Company) LIKE "%${search.toLowerCase()}%" OR LOWER(Customers.Contact_Name) LIKE "%${search.toLowerCase()}%" ORDER BY idSamples DESC`;
   } else {
     query_ = `SELECT Samples.*, Customers.Company, Customers.Contact_Name, Projects.ProjectName FROM Samples
       LEFT JOIN Customers ON Customers.CustomerID = Samples.CustomerID
@@ -23,7 +24,7 @@ samplesRoutes.get("/:input?", function (req, res) {
   try {
     mysqlConnection.query(query_, function (errors, results, fields) {
       if (!results.length) {
-        return res.status(400).json({ success: false, data: "Error in samplesRoutes /" });
+        return res.status(200).json({ success: false, data: [], msg: "No samples found" });
       } else {
         return res.status(200).json({ success: true, data: results });
       }

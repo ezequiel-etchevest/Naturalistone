@@ -442,6 +442,9 @@ export const validateEmptyInputsCreateSample = (formData) => {
   if(!formData.Email){
     errors.Email = 'Please enter email address'
   }
+  if(formData.Seller == '' || formData.Seller == null){
+    errors.Seller = 'Please enter a seller'
+  }
 
 return errors
 }

@@ -24,13 +24,11 @@ const Samples = ({ focus, setFocus }) => {
     if (userLocal && !user.length) {
       dispatch(getEmployeeById(userLocal.SellerID));
     }
-  });
-
-  useEffect(() => {
     if (!samples.length) {
       dispatch(getSamples(''));
     }
-  }, []);
+  });
+
 
   if (userLocal) {
     if (user.length) {
