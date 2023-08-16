@@ -331,7 +331,7 @@ function EditableControls(name, value) {
               mb={'0.5vh'}
               w={'19vw'}
               maxW={'280px'}
-              disabled={ user[0].Secction7Flag === 1 ? false : true}
+              disabled={ user[0].Secction7Flag === 1  || user[0].SellerID === 8 ? false : true}
               h={'8vh'}
               variant="unstyled"
               textColor={'web.text2'}

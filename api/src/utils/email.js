@@ -8,7 +8,6 @@ const htmlToText = require('html-to-text');
 const client = new postmark.ServerClient(process.env.POSTMARK_API_KEY);
 const companyName = 'Naturalistone';
 const companyAddress = '261 NW 71st St, Miami, FL 33150, United States';
-const imageSignature = "https://naturali-parseddocuments.s3.amazonaws.com/Invoice+Naturali/assets/bettinasignature.jpg"
 // const imgPath = path.join(__dirname, 'http://localhost:3000/static/media/NaturalistoneLogo.eb5d8e3f95f6979dfe9b.png'); // Ajusta el nombre del archivo y la ruta según sea necesario
 // const file = fs.readFileSync(imgPath);
 
@@ -104,13 +103,16 @@ function sendEmailClient(
 
 
 
-function sendSamplesEmail(
-  fromEmail,
-  clientEmail,
-  ccEmail,
-  bodyValue,
-  subjectValue,
-) {
+function sendSamplesEmail( fromEmail, clientEmail, ccEmail, bodyValue, subjectValue ) {
+
+  let seller = fromEmail.split('@')[0].toLowerCase()
+
+  if (seller === 'samples') {
+    seller = 'ines';
+  }
+
+  const imageSignature = `https://naturali-parseddocuments.s3.amazonaws.com/Invoice+Naturali/assets/${seller}.png`
+
   const optionsEmail = {
     From: fromEmail,
     To: clientEmail,
@@ -126,7 +128,6 @@ function sendSamplesEmail(
 
     }
   };
-
   return client.sendEmailWithTemplate(optionsEmail)
 }
 
