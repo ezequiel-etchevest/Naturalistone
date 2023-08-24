@@ -35,12 +35,17 @@ import SamplesProducts from './SamplesProducts';
         color: 'logo.orange'
         }}
       >
-        <Td fontSize={'xs'} maxW={'6vw'} textAlign={'center'}>{e.idSamples}</Td>
-        <Td fontSize={'xs'} maxW={'10vw'} textAlign={'center'}>{e.Company}</Td>
-        <Td fontSize={'xs'} maxW={'6vw'} textAlign={'center'}>{e.ProjectName}</Td>
-        <Td fontSize={'xs'} maxW={'6vw'}textAlign={'center'}>{e.TrackingNumber}</Td>
-        <Td fontSize={'xs'} maxW={'6vw'}textAlign={'center'}>{e.InsertDate?.split('T')[0]}</Td>
-        <Td fontSize={'xs'} maxW={'6vw'}textAlign={'center'}>{e.EstDelivery_Date?.split('T')[0]}</Td>
+
+        <Td fontSize={'xs'} pl={'2vw'}>{e.idSamples}</Td>
+        <Td fontSize={'xs'} w={'10vw'} maxW={'10vw'} minW={'10vw'} overflow={'hidden'}>
+          <Text whiteSpace="nowrap" overflow="hidden" textOverflow="ellipsis">{e.Company}</Text>
+        </Td>
+        <Td fontSize={'xs'} w={'10vw'} maxW={'10vw'} minW={'10vw'} overflow={'hidden'}>
+          <Text whiteSpace="nowrap" overflow="hidden" textOverflow="ellipsis">{e.ProjectName}</Text>
+        </Td>
+        <Td fontSize={'xs'} w={'8vw'} maxW={'8vw'}textAlign={'center'}>{e.TrackingNumber}</Td>
+        <Td fontSize={'xs'} w={'6vw'} maxW={'6vw'}textAlign={'center'}>{e.InsertDate?.split('T')[0]}</Td>
+        <Td fontSize={'xs'} w={'6vw'} maxW={'6vw'}textAlign={'center'}>{e.EstDelivery_Date?.split('T')[0]}</Td>
       </Tr>
       { isOpen && <SamplesProducts isOpenModal={isOpen} onCloseModal={onClose} idSamples={e.idSamples}/> }
       </>
@@ -107,12 +112,12 @@ import SamplesProducts from './SamplesProducts';
             <Table color={'web.text'}variant={'simple'} size={'sm'}>
               <Thead h={'6vh'}>
                 <Tr>
-                    <Th color={'web.text2'} maxW={'6vw'} textAlign={'center'}>Sample ID</Th>
-                    <Th color={'web.text2'} maxW={'10vw'} textAlign={'center'}>Company / Customer</Th>
-                    <Th color={'web.text2'} maxW={'6vw'} textAlign={'center'}>Project</Th>
-                    <Th color={'web.text2'} maxW={'6vw'} textAlign={'center'}>Tracking Number</Th>
-                    <Th color={'web.text2'} maxW={'6vw'} textAlign={'center'}>Insert Date</Th>
-                    <Th color={'web.text2'} maxW={'6vw'} textAlign={'center'}>Est Delivery Date</Th>
+                    <Th color={'web.text2'} w={'4vw'} maxW={'4vw'} >Sample ID</Th>
+                    <Th color={'web.text2'} w={'10vw'} maxW={'10vw'}>Company / Customer</Th>
+                    <Th color={'web.text2'} w={'10vw'} maxW={'10vw'}>Project</Th>
+                    <Th color={'web.text2'} w={'8vw'} maxW={'8vw'} textAlign={'center'}>Tracking Number</Th>
+                    <Th color={'web.text2'} w={'6vw'} maxW={'6vw'} textAlign={'center'}>Insert Date</Th>
+                    <Th color={'web.text2'} w={'6vw'} maxW={'6vw'} textAlign={'center'}>Est Delivery Date</Th>
                   </Tr>
                 </Thead>
                 <Tbody >
@@ -126,7 +131,7 @@ import SamplesProducts from './SamplesProducts';
             </TableContainer> 
              ) : (
             <Center w={'full'} h={'full'}>
-              <Text userSelect={'none'} fontSize={'2vh'}>No customers found</Text>
+              <Text userSelect={'none'} color={'web.text2'} fontSize={'2vh'}>No samples found</Text>
             </Center>
             )
          } 

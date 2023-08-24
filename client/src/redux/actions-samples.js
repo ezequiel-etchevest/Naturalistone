@@ -4,18 +4,18 @@ export const POST_SAMPLES = 'POST_SAMPLES';
 export const GET_SAMPLES_PRODUCTS = 'GET_SAMPLES_PRODUCTS'
 export const GET_SAMPLES_TRACKINGNUMBER = 'GET_SAMPLES_TRACKINGNUMBER'
 
-export function getSamples(){
+export function getSamples(search){
+  
   return async function(dispatch){
       try {
-        const { data } = await axios.get(`/samples`)
+        const { data } = await axios.get(`/samples?search=${search}`)
         dispatch({
           type: GET_SAMPLES,
           payload: data.data
         })       
       } catch (error) {
-              // Manejar el error según tus necesidades
       console.error('Error al obtener las muestras:', error.message);
-      // Puedes mostrar un mensaje de error al usuario o realizar otra acción
+
     }
       }
   }
@@ -37,12 +37,15 @@ export function getSamplesProducts(idSamples) {
 }
 
 export function postSamples(formData){
+
   return async function(dispatch) {
     try {
-        const { data } = await axios.post('/samples', formData)
+        await axios.post('/samples', formData)
+        const { data } = await axios.get(`/samples`)
+    
         return dispatch({
           type: POST_SAMPLES,
-          // payload: data
+          payload: data.data
         })
     } catch (error) {
       console.log('error in post samples')
@@ -62,7 +65,7 @@ export function validateTrackingNumber(trackingNumber){
         })
       }
     } catch (error) {
-      console.log('error in post samples')
+      console.log('error validating Trackingnumber')
     }
   }
 }

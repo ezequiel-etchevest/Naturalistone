@@ -48,12 +48,7 @@ const EmailTemplate = ({ formData, setInput, input, handleSendEmail}) => {
       <p>
         <br />
         If you have any questions about this samples, simply reply to this email or reach out to our support team for help.
-      </p>
-      <p>
         <br />
-        Cheers,
-        <br />
-        Naturalistone Team
       </p>
     </div>
   );

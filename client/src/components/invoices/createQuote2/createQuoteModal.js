@@ -230,7 +230,7 @@ export function CreateQuote({ customers }) {
       <Modal
         isOpen={isOpen}
         onClose={handleClose}
-        size={"4xl"}
+        size={"5xl"}
         motionPreset="slideInRight"
       >
         <ModalOverlay />

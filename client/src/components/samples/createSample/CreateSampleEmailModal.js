@@ -88,7 +88,7 @@ const SendEmailModal = ({ formData, isOpen3, onClose3, handleCleanFormData }) =>
     <Modal
       isOpen={isOpen3}
       onClose={handleClose}
-      size={"3xl"}
+      size={'3xl'}
       motionPreset="slideInRight"
       isCentered
       >
@@ -97,7 +97,7 @@ const SendEmailModal = ({ formData, isOpen3, onClose3, handleCleanFormData }) =>
         bg={"web.sideBar"}
         border={"1px solid"}
         // maxHeight={'82%'}
-        height={'90vh'}
+        height={'82vh'}
         overflow={'auto'}
         css={{
           '&::-webkit-scrollbar': {

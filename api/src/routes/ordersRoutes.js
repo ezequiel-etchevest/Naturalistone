@@ -29,7 +29,7 @@ ordersRouter.get('/:orderId/:factoryId', async function(req, res){
     const { orderId, factoryId } = req.params
 
     query_ = `SELECT Orders.*, Factory.Factory_Name as FactoryName FROM Orders
-    LEFT JOIN Factory ON  Factory.FactoryID = Orders.FactoryID WHERE OrderID = ${orderId} AND Orders.FactoryID = ${factoryId}
+    LEFT JOIN Factory ON  Factory.FactoryID = Orders.FactoryID WHERE OrderID = "${orderId}" AND Orders.FactoryID = ${factoryId}
     ORDER BY InvoiceDate DESC`;
     try{
          mysqlConnection.query(query_, function(error, results, fields){
@@ -54,7 +54,7 @@ ordersRouter.get('/products/:orderId/:factoryId', async function(req, res){
     INNER JOIN Products ON  ProdOrdered.ProdID = Products.ProdID 
     INNER JOIN ProdNames ON  ProdNames.ProdNameID = Products.ProdNameID
     INNER JOIN Dimension ON Dimension.DimensionID = Products.DimensionID
-    WHERE ProdOrdered.OrderID = ${orderId} AND ProdOrdered.FactoryId = ${factoryId} AND ProdOrdered.Status != 'Canceled'
+    WHERE ProdOrdered.OrderID = "${orderId}" AND ProdOrdered.FactoryId = ${factoryId} AND ProdOrdered.Status != 'Canceled'
     ORDER BY Quantity DESC`;
     
     try{
@@ -76,7 +76,7 @@ ordersRouter.patch('/cancelorder/:id', async function(req, res){
     
     const {id} = req.params
 
-    query_ = `UPDATE Orders SET Status = 'Canceled' WHERE OrderID =${id}`
+    query_ = `UPDATE Orders SET Status = 'Canceled' WHERE OrderID ="${id}"`
 
     try{
        mysqlConnection.query(query_, function(error, results, fields){

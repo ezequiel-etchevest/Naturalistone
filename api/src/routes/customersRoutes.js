@@ -89,7 +89,7 @@ customersRouter.post('/', async function(req, res){
 });
 
 customersRouter.patch('/:id', async function(req, res){
-
+    
     const {id} = req.params
     const {
         Contact_Name,
@@ -101,6 +101,7 @@ customersRouter.patch('/:id', async function(req, res){
         ZipCode,
         State,
         City,
+        Seller,
         DiscountID,
         Billing_Address,
         Billing_City,
@@ -108,11 +109,10 @@ customersRouter.patch('/:id', async function(req, res){
         Billing_State,
         DiscountRate
     } = req.body
-    
     const parsedDiscount = () => {
-        if(DiscountRate === '15') return 4
-        else if(DiscountRate === '10') return 3
-        else if(DiscountRate === '5') return 2
+        if(DiscountRate == '15') return 4
+        else if(DiscountRate == '10') return 3
+        else if(DiscountRate == '5') return 2
         else return 1
     } 
     
@@ -125,6 +125,7 @@ customersRouter.patch('/:id', async function(req, res){
                 ZipCode = "${ZipCode}",
                 State = "${State}",
                 City = "${City}",
+                SellerID= "${Seller}",
                 DiscountID = "${parsedDiscount()}", 
                 Billing_Address = "${Billing_Address}", 
                 Billing_City = "${Billing_City}", 

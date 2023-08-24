@@ -41,6 +41,8 @@ emailInvoiceRouter.post('/quoteDetail', async function(req, res) {
 })
 
 emailInvoiceRouter.post('/samples', async function (req, res) {
+  
+  const { userName } = req.params 
   const { htmlBody, subject, clientEmail, sellerEmail, ccEmail } = req.body
 
 
@@ -50,7 +52,7 @@ emailInvoiceRouter.post('/samples', async function (req, res) {
       clientEmail,
       ccEmail,
       htmlBody,
-      subject
+      subject,
       )
     return res.status(200).json({success: true, data: "email send successfully"})
   } catch (error) {

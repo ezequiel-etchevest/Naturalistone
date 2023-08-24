@@ -1,4 +1,4 @@
-import { Box, Text } from "@chakra-ui/react"
+import { Box, Text, Tooltip } from "@chakra-ui/react"
 import { useEffect } from "react"
 import CancerlOrderModal from './cancelOrderModal'
 
@@ -32,149 +32,119 @@ const OrderDetailList = ({order}) => {
           flexDir={'row'} 
           alignItems={'center'}
           justifyContent={'space-between'}
+          w={'20vw'}
           >
-          <Box
-           display={'flex'} 
-           flexDir={'row'} 
-           alignItems={'baseline'}>
-            <Text 
-            color={'logo.orange'} 
-            fontSize={'3.2vh'}>
-              {order[0].OrderID.includes('.') ? order[0].OrderID.split('.')[0] +'/'+ order[0].OrderID.split('.')[1] : order[0].OrderID}
-            </Text>
-            <Text
-              fontSize={'2.3vh'} 
-              color={'web.text2'} 
-              ml={'1vh'}>
-              Order Details
-            </Text>
-          </Box>
+          <Text 
+            color={'logo.orange'}
+            ml={'0.5vw'} 
+            fontSize={'xl'}>
+            {order[0].OrderID.includes('.') ? order[0].OrderID.split('.')[0] +'/'+ order[0].OrderID.split('.')[1] : order[0].OrderID}
+          </Text>
           <CancerlOrderModal order={order}/>  
         </Box>
         {/*Descriptions*/}
-        <Box display={'flex'} flexDir={'row'} justifyContent={'space-between'} px={'1vh'}>
-        <Box
-          mt={'1vh'}
-          w={'8vw'}
-          h={'30vh'}
-          display={'flex'}
-          flexDir={'column'}
-          justifyContent={'space-between'}>
-          <Box>
+        <Box display={'flex'} flexDir={'column'} justifyContent={'space-between'} px={'1vh'} h={'30vh'} w={'20vw'} mt={'2vh'}>
+          <Box w={'20vw'}>
             <Text 
-            fontSize={'1.6vh'} 
+            fontSize={'0.8rem'} 
             color={'web.text2'}> 
               Factory name
             </Text>
             <Text 
-              fontSize={'2.05vh'} 
+              fontSize={'0.95rem'} 
               fontWeight={'bold'}>
                 {order[0].FactoryName}
             </Text>
           </Box>
-          <Box>
-            <Text 
-              color={'web.text2'} 
-              fontSize={'1.6vh'}>
-                Date
-            </Text>
-            <Text 
-              fontSize={'2.05vh'} 
-              fontWeight={'bold'}>
-                {order[0].InvoiceDate ? order[0].InvoiceDate.split('T')[0] : '-'}
-            </Text>
-          </Box>
-          <Box>
-            <Text 
-              fontSize={'1.6vh'} 
-              color={'web.text2'}>
-                Freight Invoice
-            </Text>
-            <Text 
-              fontSize={'2.05vh'}
-              fontWeight={'bold'}>
-                {order[0].idFreightInvoice == null ? '-' : order[0].idFreightInvoice}
-            </Text>
-          </Box>
-          <Box>
-            <Text 
+          <Box display={'flex'} flexDir={'row'} justifyContent={'space-between'} w={'20vw'}>
+            <Box w={'11vw'}>
+              <Text 
                 color={'web.text2'} 
-                fontSize={'1.6vh'}>
-                  Value
+                fontSize={'0.8rem'}>
+                  Date
               </Text>
               <Text 
-                fontSize={'2.05vh'} 
+                fontSize={'0.95rem'}
+                pl={ order[0].InvoiceDate == null ? '2vw' : null}
                 fontWeight={'bold'}>
-                  $ {order[0].Value.toLocaleString('en-US')}
+                  { order[0].InvoiceDate ? order[0].InvoiceDate.split('T')[0] : '-' }
               </Text>
+            </Box>
+            <Box w={'7vw'}>
+              <Text 
+                fontSize={'0.8rem'}
+                color={'web.text2'}
+                >
+                Ordered by
+              </Text>
+              <Text
+                color={'web.text'}
+                fontSize={'0.95rem'}
+                pl={ order[0].Order_By == null ? '1vw' : null}
+                fontWeight={'bold'}>
+                  { order[0].Order_By ? order[0].Order_By.split('@')[0] : '-' }
+              </Text>
+            </Box>
+          </Box>
+          <Box display={'flex'} flexDir={'row'} justifyContent={'space-between'} w={'20vw'}>
+            <Box w={'11vw'}>
+              <Text 
+                fontSize={'0.8rem'} 
+                color={'web.text2'}>
+                  Freight Invoice
+              </Text>
+              <Text 
+                color={'web.text'}
+                fontSize={'0.95rem'}
+                pl={ order[0].idFreightInvoice == null ? '1vw' : null}
+                fontWeight={'bold'}>
+                { order[0].idFreightInvoice == null ? '-' : order[0].idFreightInvoice }
+              </Text>
+            </Box>
+            <Box w={'7vw'}>
+              <Text 
+                fontSize={'0.8rem'} 
+                color={'web.text2'}>
+                  Status
+              </Text>
+              <Text 
+                color={'web.text'}
+                fontSize={'0.95rem'} 
+                fontWeight={'bold'}>
+                  {order[0].Status}
+              </Text>
+            </Box>
+          </Box>
+          <Box display={'flex'} flexDir={'row'} justifyContent={'space-between'} w={'20vw'}>
+            <Box w={'11vw'}>
+              <Text 
+                  color={'web.text2'} 
+                  fontSize={'0.8rem'}>
+                    Value
+                </Text>
+                <Text 
+                  fontSize={'0.95rem'} 
+                  fontWeight={'bold'}>
+                    $ {order[0].Value.toLocaleString('en-US')}
+                </Text>
+            </Box>
+            <Box w={'7vw'}>
+              <Text 
+                color={'web.text2'} 
+                fontSize={'0.8rem'}>
+                  Payment
+              </Text>
+              <Text 
+                fontSize={'0.95rem'}
+                pl={ order[0].Payment == null ? '1vw' : null} 
+                fontWeight={'bold'}>
+                  { order[0].Payment == null ? '-' : order[0].Payment }
+              </Text>
+            </Box>
           </Box>
         </Box>
-        <Box
-          mt={'1vh'}
-          w={'8vw'}
-          h={'30vh'}
-          display={'flex'}
-          flexDir={'column'}
-          justifyContent={'space-between'}>
-          <Box>
-            <Text 
-              fontSize={'1.6vh'}
-              color={'web.sideBar'}
-              >
-              Ordered By
-            </Text>
-            <Text
-              color={'web.sideBar'}
-              fontSize={'2.05vh'}
-              w={'12vw'} 
-              fontWeight={'bold'}>
-                {order[0].Order_By ? order[0].Order_By.split('@')[0] : '-'}
-            </Text>
-          </Box>       
-          <Box>
-          <Text 
-            fontSize={'1.6vh'}
-            color={'web.text2'}
-            >
-              Ordered By
-          </Text>
-          <Text
-            fontSize={'2.05vh'}
-            w={'12vw'} 
-            fontWeight={'bold'}>
-              {order[0].Order_By ? order[0].Order_By.split('@')[0] : '-'}
-          </Text>
-          </Box>
-          <Box>
-          <Text 
-            fontSize={'1.6vh'} 
-            color={'web.text2'}>
-              Status
-          </Text>
-          <Text 
-            fontSize={'2.05vh'} 
-            fontWeight={'bold'}>
-              {order[0].Status}
-          </Text>
-          </Box>
-          <Box>
-          <Text 
-            color={'web.text2'} 
-            fontSize={'1.6vh'}>
-              Payment
-          </Text>
-          <Text 
-            fontSize={'2.05vh'} 
-            fontWeight={'bold'}>
-              { order[0].Payment == null ? '-' : order[0].Payment }
-          </Text>
-          </Box>
-
-        </Box> 
-        </Box>
-        </Box>
-
-    </>
+      </Box>
+  </>
   )
 }
 

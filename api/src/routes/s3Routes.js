@@ -15,7 +15,9 @@ AWS.config.update({
 const s3 = new AWS.S3();
 
 s3Router.get('/images/:folder/:fileName', (req, res) => {
+
   
+
   const { folder, fileName } = req.params;
   let path = `${folder}/${fileName}/${fileName}_0.jpg`
   const params = {
@@ -37,7 +39,7 @@ s3Router.get('/images/:folder/:fileName', (req, res) => {
 });
 
 s3Router.get('/all-images/:folder/:fileName', (req, res) => {
-
+  
   const { folder, fileName } = req.params;
   const prefix = `${folder}/${fileName}/`;
   const params = {

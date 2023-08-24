@@ -16,10 +16,10 @@ import {
 import { getCustomers } from "../../redux/actions-customers";
 import { getSamples } from "../../redux/actions-samples";
   
-  const SamplesFilters = () => {
+  const SamplesFilters = ({sellers, samples}) => {
   
     const dispatch = useDispatch()
-    const navigate = useNavigate()
+    // const navigate = useNavigate()
     const customers = useSelector(state => state.customers)
 
     useEffect(() => {
@@ -27,38 +27,38 @@ import { getSamples } from "../../redux/actions-samples";
         dispatch(getCustomers('',''))
       }}, [])
 
-    const location = useLocation();
-    const searchParams = new URLSearchParams();
-    const queryString = location.search
-    const url = new URLSearchParams(queryString);
-    const getParamsCustomer = url.get('samples')
-    const [inputValues, setInputValues] = useState(getParamsCustomer ? getParamsCustomer : '')
+    // const location = useLocation();
+    // const searchParams = new URLSearchParams();
+    // const queryString = location.search
+    // // const url = new URLSearchParams(queryString);
+    // const getParamsCustomer = url.get('samples')
+    const [inputValues, setInputValues] = useState('')
   
     const handleInput = (e) => {
-      const samples = e.target.value
-      if(samples.length){
-        searchParams.set('samples', samples)
-        navigate(`?${searchParams.toString()}`)
-        setInputValues(samples)
-        dispatch(getSamples(samples))
+      const input = e.target.value
+      if(input.length){
+        // searchParams.set('samples', samples)
+        setInputValues(input)
+        dispatch(getSamples(input))
       } else {
-        searchParams.delete('samples')
-        navigate(`?${searchParams.toString()}`)
+        // searchParams.delete('samples')
         setInputValues('')
         dispatch(getSamples(''))
       }
+        // navigate(`?${searchParams.toString()}`)
     }
   
-    useEffect(() => {
-      // dispatch(cleanCustomerDetail())
-      dispatch(getCustomers(inputValues))
-    },[])
+    // useEffect(() => {
+    //   // dispatch(cleanCustomerDetail())
+    //   dispatch(getCustomers(inputValues))
+    // },[])
   
     const handleClear = () => {
-      searchParams.delete('samples')
-      navigate(`?${searchParams.toString()}`)
+      // searchParams.delete('samples')
+      // navigate(`?${searchParams.toString()}`)
       setInputValues('')
       dispatch(getCustomers(''))
+      dispatch(getSamples(''))
     }
     
     return (
@@ -97,6 +97,7 @@ import { getSamples } from "../../redux/actions-samples";
               borderBottomColor={'web.text2'}
               value={inputValues}
               onChange={(e)=> handleInput(e)}
+              className="mailInputs"
               />
               <IconButton
               color={'web.text2'}
@@ -119,7 +120,7 @@ import { getSamples } from "../../redux/actions-samples";
           justifyContent={'flex-end'}>  
               
           </Box>
-          <CreateSampleModal customers={customers}/>
+          <CreateSampleModal customers={customers} sellers={sellers} samples={samples}/>
           <Divider orientation={'vertical'} h={'5vh'}/>
           <Tooltip placement={'bottom-start'} label={'Clear all filters'} fontWeight={'hairline'}>      
             <IconButton

@@ -6,7 +6,7 @@ import { getEmployeeById } from '../redux/actions-employees';
 import { getCustomers } from '../redux/actions-customers';
 import { getInvoicesBySeller, getSellerValues } from '../redux/actions-invoices';
 import Redirect from "./RedirectPage";
-import { Text } from "@chakra-ui/react";
+import { Center, Spinner, Text } from "@chakra-ui/react";
 import { useLocation } from "react-router-dom";
 
 
@@ -25,7 +25,7 @@ const Quotes = ({focus, setFocus}) => {
   const getParamsSeller = url.get('seller')
   const getParamsName = url.get('name')
   const getParamsNumber = url.get('number')
-  console.log('seller', seller_invoices)
+
 
   const [focusFilter, setFocusFilter] = useState('All')
   const userLocal = JSON.parse(localStorage.getItem('user'))
@@ -76,12 +76,14 @@ const Quotes = ({focus, setFocus}) => {
                 setFocusFilter={setFocusFilter}
                 customers={customers}/>
             </>)
-        }else{
-          <Text>HOla</Text>
-        }
-        
-        
-    }else return (
+        } else return (
+          <>
+            <Center bg={'web.bg'} h={'80vh'}>
+              <Spinner thickness={'4px'} size={'xl'} color={'logo.orange'}/>
+            </Center>
+          </>
+        )
+    } else return (
       <>
         <Redirect/>
       </>

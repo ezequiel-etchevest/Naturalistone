@@ -1,30 +1,40 @@
 const express = require("express");
 const samplesRoutes = express.Router();
 const mysqlConnection = require("../db");
+const parseProducts = require("../Controllers/samplesController");
 
 samplesRoutes.get("/", function (req, res) {
 
-  const query_ = `SELECT Samples.*, Customers.Company, Projects.ProjectName FROM Samples
-  LEFT JOIN Customers ON Customers.CustomerID = Samples.CustomerID
-  LEFT JOIN Projects ON Projects.idProjects = Samples.ProjectID ORDER BY idSamples DESC`;
+  const { search } = req.query;
+
+  let query_;
+  
+  if (search !== undefined && search?.length > 0) {
+    query_ = `SELECT Samples.*, Customers.Company, Customers.Contact_Name, Projects.ProjectName FROM Samples
+      LEFT JOIN Customers ON Customers.CustomerID = Samples.CustomerID
+      LEFT JOIN Projects ON Projects.idProjects = Samples.ProjectID 
+      WHERE LOWER(Customers.Company) LIKE "%${search.toLowerCase()}%" OR LOWER(Customers.Contact_Name) LIKE "%${search.toLowerCase()}%" ORDER BY idSamples DESC`;
+  } else {
+    query_ = `SELECT Samples.*, Customers.Company, Customers.Contact_Name, Projects.ProjectName FROM Samples
+      LEFT JOIN Customers ON Customers.CustomerID = Samples.CustomerID
+      LEFT JOIN Projects ON Projects.idProjects = Samples.ProjectID 
+      ORDER BY idSamples DESC`;
+  }
 
   try {
     mysqlConnection.query(query_, function (errors, results, fields) {
       if (!results.length) {
-        return res
-          .status(400)
-          .json({ success: false, data: "Error in samplesRoutes /" });
-      } else{
+        return res.status(200).json({ success: false, data: [], msg: "No samples found" });
+      } else {
         return res.status(200).json({ success: true, data: results });
       }
     });
   } catch (error) {
     console.log(error);
-    return res
-      .status(400)
-      .json({ success: false, data: "Error in get data samples /" });
+    return res.status(400).json({ success: false, data: "Error in get data samples /" });
   }
 });
+
 
 samplesRoutes.get("/samplesProducts/:sampleId", function (req, res) {
   const { sampleId } = req.params;
@@ -53,10 +63,7 @@ samplesRoutes.get("/samplesProducts/:sampleId", function (req, res) {
 samplesRoutes.post("/", function (req, res) {
   const { customer, project, products, variables } = req.body;
   
-  const parsedProducts = Object.entries(products)
-    .flat()
-    .filter((element) => typeof element === "object")
-    .map((product, index) => ({ variableName: `${index + 1}`, ...product }));
+  const parsedProducts = parseProducts(products)
 
   try {
     mysqlConnection.beginTransaction(function (err) {
@@ -152,7 +159,7 @@ samplesRoutes.post("/", function (req, res) {
           prodIds = await prodIdPromises;
 
           const query_2 = `INSERT INTO Samples (CustomerID, ProjectID, TrackingNumber, EstDelivery_Date)
-      VALUES (${customer.CustomerID}, ${project.idProjects}, ${variables.trackingNumber}, "${variables.estDelivDate}" )`;
+      VALUES (${customer.CustomerID}, ${project.idProjects}, "${variables.trackingNumber}", "${variables.estDelivDate}" )`;
 
           mysqlConnection.query(query_2, function (err, results, field) {
             if (err) {
@@ -211,8 +218,8 @@ samplesRoutes.post("/", function (req, res) {
           return;
         }
 
-        const query_4 = `INSERT INTO Samples (CustomerID, ProjectID, TrackingNumber, EstDelivery_Date)
-      VALUES (${customer.CustomerID}, ${project.idProjects}, ${variables.trackingNumber}, "${variables.estDelivDate}")`;
+        const query_4 = `INSERT INTO Samples (CustomerID, ProjectID, TrackingNumber, EstDelivery_Date) 
+        VALUES (${customer.CustomerID}, ${project.idProjects}, "${variables.trackingNumber}", "${variables.estDelivDate}")`;
 
         mysqlConnection.query(query_4, function (err, results, field) {
           if (err) {
@@ -299,7 +306,7 @@ samplesRoutes.get("/validation/:trackingNumber", function (req, res) {
 
   const { trackingNumber } = req.params
 
-  const query_ = `SELECT * FROM NaturaliStone.Samples WHERE Samples.TrackingNumber = ${trackingNumber}`;
+  const query_ = `SELECT * FROM NaturaliStone.Samples WHERE Samples.TrackingNumber = "${trackingNumber}"`;
 
   try {
     mysqlConnection.query(query_, function (errors, results, fields) {
