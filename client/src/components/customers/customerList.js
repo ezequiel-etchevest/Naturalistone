@@ -88,6 +88,9 @@ useEffect(()=>{
   return () => {
     container.removeEventListener('scroll', handleScroll);
   }}, [batchCount]);
+  
+  console.log("soy customers", customers)
+  
   return(
   <Box
   display={'flex'}
