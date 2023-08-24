@@ -17,7 +17,7 @@ const s3Router = require('./s3Routes')
 const tasksRouter = require('./tasksRoutes')
 const freightRouter = require('./freightRoutes')
 const factoryRouter = require('./factoriesRoutes');
-const emailInvoiceRouter = require('./sendInvoiceEmail')
+const emailInvoiceRouter = require('./sendEmailRoutes')
 const proformasRoutes = require('./proformasRoutes')
 const samplesRoutes = require('./samplesRoutes')
 

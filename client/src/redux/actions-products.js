@@ -161,7 +161,6 @@ export function getProductImages(prodName, material){
         return async function(dispatch){
             try{
                 let {data} = await axios.get(`/s3/all-images/${material}/${prodName}`)
-                console.log(data)
 
                 dispatch(
                     {

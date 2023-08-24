@@ -15,11 +15,16 @@ export async function sendEmail(email) {
 
 }
 
-export async function sendEmailSamples(formData) {
-    try {
-      const { data } = await axios.post('/email/samples', formData)
-      return data
-    } catch (error) {
-      return error.data
-    }
+export async function sendEmailSamples(email) {
+  try {
+  
+    const response = await axios.post('/email/samples', email, {
+      headers: {
+        'Content-Type': 'application/json', // Tipo de contenido para el cuerpo
+      },
+    });
+    return response.data;
+  } catch (error) {
+    throw new Error('Error sending email: ' + error.message);
+  }
 }

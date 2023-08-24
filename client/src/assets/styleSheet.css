@@ -1,11 +1,3 @@
-/* option{
-    background-color: #0D1117;
-    cursor: pointer;
-}
-option::checked {
-    background-color:#0D1117;
-  } */
-
   select option[class="options"] {
     background: #0D1117;
   }
@@ -13,14 +5,91 @@ option::checked {
     background:#30363D;
     color: #8B949E;
   }
-  /* select option:hover {
-   background-color: #E47424 !important;;
-} */
-/* select option:hover {
-    box-shadow: 0 0 10px 100px #E47424 inset !important;;
-} */
+
 
 .App{
   background: '#010409';
   height: 92vh;
+}
+
+body {
+  background: #f3f1f2;
+  font-family: sans-serif;
+}
+.ql-editor {
+  overflow-y: scroll;
+  resize: vertical;
+  min-height: 220px;
+  max-height: 380px;
+}
+.ql-editor::-webkit-scrollbar {
+  width: 0.2vw;
+}
+
+.ql-editor::-webkit-scrollbar-track {
+  width: 6px;
+}
+
+.ql-editor::-webkit-scrollbar-thumb {
+  background: #E47424;
+  border-radius: 5px;
+}
+
+.ql-container {
+  border-bottom-left-radius: 0.5em;
+  border-bottom-right-radius: 0.5em;
+  border: 1px solid #30363D !important;
+}
+
+.ql-toolbar.ql-snow {
+  border: 1px solid #30363D !important;
+  box-sizing: border-box;
+  font-family: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+  padding-left: 8px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  display: flex;
+  justify-content: space-around;
+  border-top-left-radius: 0.5em;
+  border-top-right-radius: 0.5em;
+}
+
+.ql-sendEmail::before {
+  content: url(https://ejemplo.com/email-icon.svg);
+}
+
+.ql-send {
+  display: flex; /* Centra verticalmente los elementos dentro del contenedor */
+  color: #504e4e;
+  margin-left: 100px;
+
+}
+
+.mailInputs {
+  box-shadow: none;
+  color: #F0F6FC;
+  background-color: #0D1117;
+  caret-color: white;
+  transition-property: none;
+  transition-duration:none;
+  border-radius: 0;
+}
+
+.mailInputs:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.mailInputs:focus-visible {
+  outline: none;
+  box-shadow: none !important;
+}
+
+.mailInputs:-webkit-autofill,
+.mailInputs:-webkit-autofill:hover,
+.mailInputs:-webkit-autofill:focus,
+.mailInputs:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0px 1000px #0D1117 inset !important;
+  -webkit-text-fill-color: #F0F6FC !important;
+  border-radius: 0;
 }

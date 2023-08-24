@@ -15,22 +15,28 @@ const CreateSampleProductsReview = ({ formData, setFormData }) => {
 
   return(
 <>
-  <Box 
-    color={'web.text2'} 
-    display={'flex'} 
-    justifyContent={'center'} 
-    flexDir={'column'} 
-    h={'58vh'}
-    alignItems={'center'}>
-    <Text ml={'2vw'} mt={'2vw'} fontSize={'lg'} w={'16vw'} color={'white'} alignSelf={'flex-start'}>Products review</Text>
+<Box
+  color={"web.text2"}
+  display={"flex"}
+  flexDir={"column"}
+  h={"58vh"}
+  >
+    <Box h={"6vh"} mt={'1vh'}>
+      <Text
+        ml={"1vw"}
+        fontSize={"lg"}
+        color={"white"}
+        >
+        Sample products review
+      </Text>
+    </Box>
     <TableContainer
-      mt={'3vh'}
       mr={'0.5vw'}  
       ml={'0.5vw'}
       bg={'web.sideBar'} 
       rounded={'md'}
-      maxHeight={'50vh'}
-      minHeight={'50vh'}
+      maxHeight={'42vh'}
+      minHeight={'42vh'}
       overflow={'auto'}
       css={{
         '&::-webkit-scrollbar': {
@@ -44,13 +50,14 @@ const CreateSampleProductsReview = ({ formData, setFormData }) => {
           borderRadius: '5px',
         },
       }} 
-      p={'3vh'}>
+      px={'1vw'}
+      py={'2vh'}>
       <Table color={'web.text'} variant={'simple'} size={'sm'}>
         <Thead h={'6vh'}>
           <Tr>  
-            <Th color={'web.text2'} fontSize={'sm'} w={'16vw'} >Product Name</Th>
-            <Th color={'web.text2'} fontSize={'sm'} textAlign={'center'}>Type</Th>
-            <Th color={'web.text2'} fontSize={'sm'} w={'10vw'} textAlign={'center'}>Finish</Th>
+            <Th color={'web.text2'} fontSize={'x-small'} w={'16vw'} >Product Name</Th>
+            <Th color={'web.text2'} fontSize={'x-small'} textAlign={'center'}>Type</Th>
+            <Th color={'web.text2'} fontSize={'x-small'} w={'10vw'} textAlign={'center'}>Finish</Th>
           </Tr>
         </Thead>
         <Tbody>

@@ -68,20 +68,36 @@ import CreateSampleProductsList from "./CreateSampleProductsList";
   
   return(
   <>
-  <Box color={'web.text2'} display={'flex'} justifyContent={'center'} flexDir={'column'} h={'58vh'}>
-    <Text ml={'2vw'} mt={'2vh'} fontSize={'lg'} w={'14vw'} color={'white'} alignSelf={'flex-start'}>Select products</Text>
+  <Box color={'web.text2'} 
+    display={'flex'} 
+    justifyContent={'center'} 
+    flexDir={'column'} 
+    h={'58vh'}
+    >
+    <Box h={"6vh"} mt={'1vh'}>
+      <Text
+        ml={"1vw"}
+        fontSize={"lg"}
+        color={"white"}
+        >
+        Select products
+      </Text>
+    </Box>
       <Box
         display={'flex'}
-        justifyContent={'flex-end'}
+        justifyContent={'center'}
         h={'6vh'}
-        mb={'2vh'}
+        mb={'3vh'}
+        ml={'1vw'}
+        pl={'1vw'}
         mr={'1.2vw'}
+        minW={'650px'}
         >
         <Select
           onChange={(e)=>handleMaterial(e)}
           mb={'0.5vh'}
           mr={'2vw'}
-          w={'9vw'}             
+          w={'160px'}             
           minH={'5.5vh'}
           variant="unstyled"
           textColor={'web.text2'}
@@ -94,7 +110,7 @@ import CreateSampleProductsList from "./CreateSampleProductsList";
           name={'material'}
           value={filters.material}
         >
-        <option value='' className="options">Type</option>
+        <option value='' className="options">Material</option>
         {
           Object.entries(values).length ?
           values?.materials.map((v, i) => {
@@ -109,7 +125,7 @@ import CreateSampleProductsList from "./CreateSampleProductsList";
         <Select
           onChange={(e)=>handleFinish(e)}
           mb={'0.5vh'}
-          w={'10vw'}
+          w={'160px'}
           minH={'5.5vh'}
           mr={'2vw'}
           variant="unstyled"
@@ -137,7 +153,7 @@ import CreateSampleProductsList from "./CreateSampleProductsList";
         </Select>
         <Input
           mb={'0.5vh'}
-          w={'10vw'}
+          w={'160px'}
           minH={'4.5vh'}
           variant="unstyled"
           placeholder={'Product name'}
@@ -164,12 +180,13 @@ import CreateSampleProductsList from "./CreateSampleProductsList";
           mt={'3.3vh'}
           _active={{ color: 'gray.800'}}
         />
-        <Divider orientation={'vertical'} h={'5vh'} ml={'1vw'}mr={'1vw'}/>
+        <Divider orientation={'vertical'} h={'5vh'} ml={'2vw'}mr={'1vw'} alignSelf={'flex-end'}/>
         <Tooltip placement={'bottom-start'} label={'Clear all filters'} fontWeight={'hairline'}>      
         <IconButton
           icon={ <AiOutlineClear/>}
           variant={'unstyled'} 
           display={'flex'} 
+          alignSelf={'flex-end'}
           borderRadius={'sm'} 
           placeContent={'center'}
           alignItems={'center'}
