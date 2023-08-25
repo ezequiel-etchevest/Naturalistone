@@ -51,13 +51,11 @@ const Customers = ({focus, setFocus}) => {
             focusFilter={focusFilter} 
             setFocusFilter={setFocusFilter}/>
         </>)
-        }else{
-          <Text>HOla</Text>
-        }      
-  }else return (
-    <>
-      <Redirect/>
-    </>
+        }
+      }else return (
+        <>
+          <Redirect/>
+        </>
     )
   }
  

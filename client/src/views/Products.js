@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import SideBar from "../components/sideBar";
-import { Center, Spinner } from "@chakra-ui/react";
+import { Center, Spinner, Text } from "@chakra-ui/react";
 import ProductsContainer from "../components/products/productsContainer";
 import { useDispatch, useSelector } from "react-redux";
 import { cleanProductValue, getFiltered, getProductImage } from '../redux/actions-products';
@@ -39,8 +39,6 @@ const Products = ({focus, setFocus}) => {
     sqft: [sqftMin, sqftMax],
     type: getParamsType ? getParamsType : ''
   })
-
-  
   
   useEffect(()=>{
       if(userLocal && !user.length){
@@ -58,28 +56,22 @@ const Products = ({focus, setFocus}) => {
             filters.sqft,
             filters.type,
             ))
-        },[allProducts, values, filters])
+        },[filters])
 
-    if(user){
-      if(user.length && values && allProducts){
+        if(user){
+          if(user.length){
+          return(
+            <>
+              <SideBar user={user} focus={focus} setFocus={setFocus}/>
+              <ProductsContainer allProducts={allProducts} user={user} values={values}/>
+            </>
+            )
+        }
+      } else {
         return(
-          <>
-            <SideBar user={user} focus={focus} setFocus={setFocus}/>
-            <ProductsContainer allProducts={allProducts} user={user} values={values}/>
-          </>
-        )
-    }else return (
-      <Center  bg={'web.bg'} h={'92vh'}>
-        <Spinner thickness={'4px'} ml={'0.5vw'} size={'xl'} color={'logo.orange'}/>
-      </Center>
-    )
-    }else{
-      return(
-        <Redirect/>
+          <Redirect/>
       )
     }
-      
-  }
- 
+}
 
 export default Products

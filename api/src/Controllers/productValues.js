@@ -23,7 +23,6 @@ const typesValues = (arr) => {
   return [...new Set(types)]
 }
 
-
   let finishValues = getUniqueFinishes(arr)
   let priceMaxmin = price
   let sqftMinMax = sqft
@@ -56,7 +55,7 @@ function findMaxMinPrice(arr) {
 }
 
 function getSqftMaxMin(products) {
-  const sqft = products.sort((a, b) => a.sqft - b.sqft)
+  const sqft = products.filter((products)=> products.sqft !== null).sort((a, b) => a.sqft - b.sqft)
   return {
     min: sqft[0].sqft,
     max: sqft[sqft.length -1].sqft

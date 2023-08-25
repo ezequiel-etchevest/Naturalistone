@@ -49,17 +49,17 @@ const ProductsFilters = ({setCurrentPage, values}) => {
   const handleFinish = (e) => {
     const finish = e.target.value
     searchParams.set('finish', finish)
-    searchParams.set('size', filters.size)
-    searchParams.set('thickness', filters.thickness)
-    searchParams.set('material', filters.material)
-    searchParams.set('search', filters.search)
-    searchParams.set('type', filters.type)
+    searchParams.set('size', filters?.size)
+    searchParams.set('thickness', filters?.thickness)
+    searchParams.set('material', filters?.material)
+    searchParams.set('search', filters?.search)
+    searchParams.set('type', filters?.type)
     navigate(`?${searchParams.toString()}`)
     setFilters({
       ...filters,
       finish
     })
-    setCurrentPage(1)
+    // setCurrentPage(1)
     dispatch(getFiltered(finish, filters.size, filters.thickness, filters.material, filters.search, filters.sqft, filters.type))
   }
 
@@ -76,7 +76,7 @@ const ProductsFilters = ({setCurrentPage, values}) => {
       ...filters, 
       size
     })
-    setCurrentPage(1)
+    // setCurrentPage(1)
     dispatch(getFiltered(filters.finish, size, filters.thickness, filters.material, filters.search, filters.sqft, filters.type))
   }
 
@@ -93,7 +93,7 @@ const ProductsFilters = ({setCurrentPage, values}) => {
       ...filters,
       thickness
     })
-    setCurrentPage(1)
+    // setCurrentPage(1)
     dispatch(getFiltered(filters.finish, filters.size, thickness, filters.material, filters.search, filters.sqft, filters.type))
   }
 
@@ -110,7 +110,7 @@ const ProductsFilters = ({setCurrentPage, values}) => {
       ...filters,
       material
     })
-    setCurrentPage(1)
+    // setCurrentPage(1)
     dispatch(getFiltered(filters.finish, filters.size, filters.thickness, material, filters.search, filters.sqft, filters.type))
   }
 
@@ -127,7 +127,7 @@ const ProductsFilters = ({setCurrentPage, values}) => {
       ...filters,
       type
     })
-    setCurrentPage(1)
+    // setCurrentPage(1)
     dispatch(getFiltered(filters.finish, filters.size, filters.thickness, filters.material, filters.search, filters.sqft, type))
   }
 
@@ -151,7 +151,7 @@ const ProductsFilters = ({setCurrentPage, values}) => {
       type: '',
       sqft: [values?.sqftMinMax?.min, values?.sqftMinMax?.max]
       })
-    setCurrentPage(1)
+    // setCurrentPage(1)
     dispatch(getFiltered('','','','', '','',''))
     setLimit([values?.sqftMinMax?.min, values?.sqftMinMax?.max])
   }
@@ -169,7 +169,7 @@ const ProductsFilters = ({setCurrentPage, values}) => {
         ...filters,
         search: e.target.value
       })
-    setCurrentPage(1)
+    // setCurrentPage(1)
     dispatch(getFiltered(filters.finish, filters.size, filters.thickness, filters.material, e.target.value, filters.sqft, filters.type))
     }
   useEffect(()=>{
@@ -260,7 +260,7 @@ const ProductsFilters = ({setCurrentPage, values}) => {
                 >
                 <option value='' className="options">Material</option>
                 {
-                  values?.materials?.map((v, i) => {
+                  values?.materials && values?.materials?.map((v, i) => {
                       return(
                         <option value={`${v}`} key={i} className={'options'}>{`${v}`}</option>
                       )
@@ -285,7 +285,7 @@ const ProductsFilters = ({setCurrentPage, values}) => {
                 >
                 <option value='' className="options">Type</option>
                 {
-                  values?.types?.map((v, i) => {
+                  values?.types && values?.types?.map((v, i) => {
                       return(
                         <option value={`${v}`} key={i} className={'options'}>{`${v}`}</option>
                       )
@@ -310,7 +310,7 @@ const ProductsFilters = ({setCurrentPage, values}) => {
                 >
                 <option value='' className="options">Size</option>
                 {
-                  values.sizes?.map((v, i) => {
+                  values?.sizes && values?.sizes.map((v, i) => {
                     return(
                       <option value={`${v}`} key={i} className={'options'}>{`${v}`}</option>
                     )
@@ -336,7 +336,7 @@ const ProductsFilters = ({setCurrentPage, values}) => {
                 >
               <option value='' className="options">Thickness</option>
               {   
-                  values?.thickness?.map((v, i) => {
+                  values?.thickness && values?.thickness?.map((v, i) => {
                     return(
                       <option value={`${v}`} key={i} className={'options'}>{`${v}`}</option>
                     )
@@ -361,7 +361,7 @@ const ProductsFilters = ({setCurrentPage, values}) => {
                 >
                 <option value='' className="options">Finish</option>
                 {
-                  values?.finishValues?.map((v, i )=> {
+                  values?.finishValues && values?.finishValues?.map((v, i )=> {
                     return(
                       <option value={`${v}`} key={i} className={'options'}>{`${v}`}</option>
                     )
@@ -370,12 +370,12 @@ const ProductsFilters = ({setCurrentPage, values}) => {
             </Select>
           </Box>
           <Box display={'flex'} alignItems={'center'} flexDir={'row'} h={'15vh'} >
-            {/* <Box display={'flex'} flexDir={'column'} h={'13vh'}>
+            <Box display={'flex'} flexDir={'column'} h={'13vh'}>
             <Text color={'web.text2'} mb={'10px'}>
               SQFT Available
             </Text>
             <PriceSlider setFilters={setFilters} filters={filters} limit={limit} setLimit={setLimit} values={values}/>
-            </Box> */}
+            </Box>
             <Divider orientation={'vertical'} h={'5vh'} ml={'2vw'}/>
             <Tooltip placement={'bottom-start'} label={'Clear all filters'} fontWeight={'hairline'}>      
             <IconButton

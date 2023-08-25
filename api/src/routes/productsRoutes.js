@@ -26,7 +26,6 @@ productsRouter.get('/', async function(req, res){
                   INNER JOIN Inventory ON Inventory.ProdID = Products.ProdID`
     try{
         mysqlConnection.query(query_, function(error, results, fields){   
-
             if(error) throw error;
             if(results.length == 0) {
                 console.log('Error en productRoutes.get /')
@@ -187,8 +186,9 @@ productsRouter.get('/id/:id', async function(req, res){
 
 productsRouter.get('/filtered', async function(req, res){
     let { finish, size, thickness, material, search, sqft1, sqft2, type} = req.query;
-    const sqftMin = sqft1 === '' ? 0 : sqft1
-    const sqftMax = sqft2 === '' ? 99999999 : sqft2
+    const sqftMin = sqft1 === "" ? 0 : sqft1
+    const sqftMax = sqft2 === ""  ? 99999999 : sqft2
+
 
     const query = `
     SELECT    
@@ -239,19 +239,8 @@ productsRouter.get('/filtered', async function(req, res){
       mysqlConnection.query(query, function(error, results, fields) {
         if (error) throw error;
         if (results.length == 0) {
-          const sqftMinMax = getSqftMaxMin(results)
-          let price = findMaxMinPrice(results);
-          let filteredValues = prodValues(results, search, price, sqftMinMax)
-          console.log('Error en productsRoutes.get /filtered');
-          results = results.sort((a, b) => {
-            const nameA = a.ProductName.toUpperCase();
-            const nameB = b.ProductName.toUpperCase();
-            if (nameA < nameB) return -1;
-            if (nameA > nameB) return 1;
-            return 0;
-          }) 
-          res.status(200).json({results, errorSearch: 'No products found', filteredValues});
-
+          res.status(200).json({results, errorSearch: []});
+          //se elimino codigo que estaba demas al no traer length el result
         } else {
           const sqftMinMax = getSqftMaxMin(results)
           let price = findMaxMinPrice(results);

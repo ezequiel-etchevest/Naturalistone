@@ -24,7 +24,6 @@ import { getProductImage } from '../../redux/actions-products';
 
 const ModelTr = ({e, user, allProducts, loadedCount}) => {
 
-
 const a = e.Discontinued_Flag === 'True' ? true : false 
 const [flag, setFlag] = useState(a)
 const productImage = useSelector(state => state.product_image);
@@ -53,6 +52,7 @@ const handleClickSwitch = () => {
   const urlImg = `https://naturalistone-images.s3.amazonaws.com/${material}/${name}/${name}_0.jpg`
 
   return(
+    <>
   <Tr       
   cursor={'pointer'} 
   key={e.ProdNameID}
@@ -86,6 +86,9 @@ const handleClickSwitch = () => {
     <Td maxH={'6vh'} maxW={'3vw'} onClick={() => handleClickProduct()} fontSize={'xs'} textAlign={'center'}>{e.NextArrival === undefined ? '-' : e.NextArrival}</Td>
     <Td maxH={'6vh'} maxW={'3vw'} pl={'3.5vw'}>{ user[0].Secction7Flag !== 1 ? (e.Discontinued_Flag === 'True' ? <ImCheckboxChecked color='logo.orange'/> : <ImCheckboxUnchecked color='logo.orange'/> ) : (<Switch  onChange={() => handleClickSwitch()} isChecked={flag} colorScheme={'orange'} size={'sm'}/>) }</Td>
     </Tr>
+
+    </>
+
 )
 }
 

@@ -18,6 +18,7 @@ let PriceSlider = ({setFilters, filters, limit, setLimit, values}) =>{
     const searchParams = new URLSearchParams()
     const navigate = useNavigate()
     const [valueMax, setValueMax] = useState(values?.sqftMinMax?.max)
+    const [value, setValue] = useState([0,0])
 
     const handlePrice = (e) => {
       searchParams.set('sqftMin', e[0])
@@ -36,7 +37,7 @@ let PriceSlider = ({setFilters, filters, limit, setLimit, values}) =>{
       }
 
       useEffect(() => {
-        setValueMax(values?.sqftMinMax.max)
+        setValueMax(values?.sqftMinMax?.max)
       },[values])
     
     return(
@@ -55,8 +56,8 @@ let PriceSlider = ({setFilters, filters, limit, setLimit, values}) =>{
               dispatch(getFiltered(filters.finish, filters.size, filters.thickness,filters.material, filters.search, val, filters.type))}}
             onChange={(e) => handlePrice(e)}
             w={'15vw'}
-            defaultValue={[values?.sqftMinMax?.min === null ? 0 : values?.sqftMinMax?.min, values?.sqftMinMax?.max]}
-            min={values?.sqftMinMax?.min === null ? 0 : values?.sqftMinMax?.min }
+            defaultValue={[values?.sqftMinMax?.min === undefined ? 0 : values?.sqftMinMax?.min, values?.sqftMinMax?.max]}
+            min={values?.sqftMinMax?.min === undefined ? 0 : values?.sqftMinMax?.min }
             max={valueMax}
             step={15}
             h={'4vh'}

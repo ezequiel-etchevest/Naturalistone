@@ -11,7 +11,7 @@ const CustomersContainer = ({customers, user, focusFilter, setFocusFilter }) => 
     useEffect(()=>{
         handleSpinner()
       })
-    if(spinner === true){
+    if(spinner){
         return(
             <Box
             userSelect={'none'}

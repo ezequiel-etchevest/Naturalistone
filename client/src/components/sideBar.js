@@ -48,14 +48,14 @@ const SideBar = ({user, focus, setFocus}) => {
       color={'web.text'} 
       fontSize={'1.1vw'}
       pl={'1vw'}> 
-        {user[0].FirstName} {user[0].LastName}
+        {user[0]?.FirstName} {user[0]?.LastName}
       </Text>
     </Box>
     <Box pr={'2vw'} pt={'9vh'}>
       
       {/* In here we need to add other SellerIDs whom will access to Orders View */}
       {
-      user[0].Secction7Flag !== 1  
+      user[0]?.Secction7Flag !== 1  
       ? LinkItems
       .filter(l => l.name !== 'Orders' && l.name !== 'Freights')
       .map((link) => (

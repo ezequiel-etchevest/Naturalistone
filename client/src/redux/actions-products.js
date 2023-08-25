@@ -60,7 +60,6 @@ export function getAllProductsNewSamples(finish, material, search){
 }
 
 export function getFiltered(finish, size, thickness, material, search, sqft, type){
-    console.log(search)
     return async function(dispatch){
         try{
             
