@@ -125,7 +125,7 @@ const OrderDetailList = ({order}) => {
                 <Text 
                   fontSize={'0.95rem'} 
                   fontWeight={'bold'}>
-                    $ {order[0].Value.toLocaleString('en-US')}
+                    {order[0].EURUSD_Flag === 'Y' ? '€' : '$'} {order[0].Value.toLocaleString('en-US')}
                 </Text>
             </Box>
             <Box w={'7vw'}>

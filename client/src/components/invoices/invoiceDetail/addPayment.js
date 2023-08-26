@@ -17,6 +17,8 @@ import {
     NumberInputField, 
     useToast,
     Tooltip,
+    Input,
+    Text,
     } from "@chakra-ui/react"
 import { SiAddthis } from 'react-icons/si';
 import { useEffect, useState } from "react";
@@ -41,7 +43,8 @@ const AddPayment = ({pendingAmount, cardPaymentAmount, totalAmount}) => {
   totalAmount = Number(totalAmount)
     const [input, setInput] = useState({
       Method : '',
-      Amount: 0.00
+      Amount: 0.00,
+      paymentDate: '',
     })
 
   useEffect(() => {
@@ -167,20 +170,39 @@ const AddPayment = ({pendingAmount, cardPaymentAmount, totalAmount}) => {
       dispatch(patchPaymentMethod(id, input, user[0].SellerID))
       setInput({
         Method : '',
-        Amount: 0 })
+        Amount: 0,
+        paymentDate: ''
+      })
       setError({msg: ''})
       setIsOptionDisabled(false)
       onClose()
     }
   }
 
+  const handleChange = (event) => {
+    setInput({
+      ...input,
+      [event.target.name]: event.target.value
+    })
+  }
+
   const handleClose = ()=>{
     setInput({
       Method : '',
-      Amount: 0 })
+      Amount: 0,
+      date: ''
+    })
     setError({msg: ''})
     setIsOptionDisabled(false)
     onClose()
+  }
+
+  const disabled = () => {
+    if (input.Method === '' || input.Amount === '' || input.Amount === 0.00 || input.paymentDate === '') {
+      return true
+    } else {
+      return false
+    }
   }
  
   return(
@@ -221,6 +243,44 @@ const AddPayment = ({pendingAmount, cardPaymentAmount, totalAmount}) => {
               color: 'web.text'
             }} />
           <ModalBody>
+          <FormControl mt={'2vh'} isRequired display={"flex"} w={"50%"} flexDir={"column"} h={"100px"}>
+            {/* <Box > */}
+              <FormLabel color={'web.text'}>
+                Payment Date
+              </FormLabel>
+              <Tooltip  label="Payment date" fontWeight={'hairline'} placement='top-start'>
+                <Input
+                  isRequired
+                  mb={'0.5vh'}
+                  w={'10vw'}
+                  minH={'4.5vh'}
+                  variant="unstyled"
+                  textColor={'web.text2'}
+                  _placeholder={{ fontFamily: 'body', fontWeight: 'inherit' }}
+                  size={"sm"}
+                  value={input.date}
+                  borderBottomWidth={"2px"}
+                  borderBottomColor={'web.text2'}
+                  type={"date"}
+                  pattern={"\d{4}-\d{2}-\d{2}"}
+                  name={"paymentDate"}
+                  cursor= {'pointer'}
+                  onChange={(e)=>handleChange(e)}
+                  css={{
+                   '::-webkit-calendar-picker-indicator': {   
+                   background: `url(https://cdn3.iconfinder.com/data/icons/linecons-free-vector-icons-pack/32/calendar-16.png) center/90% no-repeat`,    
+                   cursor: 'pointer',
+                   filter: 'invert(59%) sepia(7%) saturate(31%) hue-rotate(184deg) brightness(97%) contrast(92%)',
+                   marginRight: 7,
+                   position: 'absolute',
+                   right: 0,
+                   top: 5,
+                 },  
+                  }}
+                />
+              </Tooltip>
+                {/* </Box> */}
+            </ FormControl>
           <FormControl isRequired>
             <FormLabel color={'web.text'}>
               Select payment method
@@ -268,12 +328,10 @@ const AddPayment = ({pendingAmount, cardPaymentAmount, totalAmount}) => {
               }} />
               </NumberInput>
             </FormControl>
-              <Box 
-                display={'flex'} 
-                justifyContent={'flex-start'} 
-                width={'100%'}
-                mt={2}
-              >
+                <Box
+                display={"flex"}
+                w={"50%"}
+                >
                 <Button
                 onClick={(e)=>handleClickPercentageButtons(e)}
                 name={'0'}
@@ -326,7 +384,7 @@ const AddPayment = ({pendingAmount, cardPaymentAmount, totalAmount}) => {
             <Button
               colorScheme={'orange'} 
               mr={3}
-              disabled={input.Method == '' || input.Amount == '' || input.Amount == 0.00 ? true : false} 
+              disabled={disabled()} 
               onClick={()=>handleSubmit()}
               >
               Submit

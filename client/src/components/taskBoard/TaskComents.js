@@ -7,7 +7,7 @@ const TaskComentCard = ({e,i}) => {
 
   return(
     <>
-      <Box key={i}>
+      <Box key={i} >
         <Box size='xs' display={'flex'} flexDir={'row'} alignContent={'baseline'} >
           <Text
             fontSize={'xs'}  
@@ -17,8 +17,13 @@ const TaskComentCard = ({e,i}) => {
         </Box>
         <Text
             fontSize={'md'}  
-            color={'web.text2'}>{FirstName}{' '}{LastName}</Text>
-        <Text fontSize='sm'>
+            color={'web.text2'}>
+              {FirstName}{' '}{LastName}
+        </Text>
+        <Text 
+            fontSize='sm'
+            whiteSpace={"pre-line"}
+            >
          {Description}
         </Text>
       </Box>

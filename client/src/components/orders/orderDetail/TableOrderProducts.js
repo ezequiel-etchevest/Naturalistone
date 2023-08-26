@@ -37,14 +37,7 @@ const ModelTr = ({p}) => {
         <Td textAlign={'center'} w={'6vw'} fontSize={'1.6vh'}>{p.Finish}</Td>
         <Td textAlign={'center'} w={'6vw'} fontSize={'1.6vh'}>{p.FactoryProductName}</Td>
         <Td textAlign={'center'} w={'6vw'}> {p.Quantity} </Td>
-        <Td textAlign={'center'} w={'6vw'}> ${p.PurchasePrice}</Td>
-        {/* <IconButton 
-            display={'flex'}
-            variant={'unstyled'}
-            fontSize={'3vh'}           
-            fontWeight={'normal'}
-            icon={<BiEditAlt/>}
-            /> */}
+        <Td textAlign={'center'} w={'6vw'}>{p.EURUSD_Flag === 'Y' ? '€' : '$'}  {p.PurchasePrice}</Td>
       </Tr>
     )
 }

@@ -39,7 +39,7 @@ const ModelTr = ({o}) => {
         >
         <Td textAlign={'center'}>{o.OrderID.includes('.') ? (o.OrderID.split('.')[0]) + '/' + (o.OrderID.split('.')[1]) : o.OrderID}</Td>
         <Td textAlign={'-moz-initial'}>{o.FactoryName}</Td>
-        <Td textAlign={'center'}>$ {o.Value.toLocaleString('en-US')}</Td>
+        <Td textAlign={'center'}>{o.EURUSD_Flag === 'Y' ? '€' : '$'} {o.Value.toLocaleString('en-US')}</Td>
         <Td textAlign={'center'}>{o.InvoiceDate !== null ? o.InvoiceDate.split('T')[0] :  '-'}</Td>
         <Td textAlign={'center'}>{o.InvoiceNumber !== null ? (o.InvoiceNumber):('-')} </Td>
         <Td textAlign={'center'}>{o.Status}</Td>
@@ -49,7 +49,6 @@ const ModelTr = ({o}) => {
 
 const OrdersList = ({orders}) => {
 
-  
     return(
         <Box
           display={'flex'}

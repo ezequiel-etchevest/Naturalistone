@@ -14,8 +14,6 @@ export function formatProducts(array) {
     authFlag: "authFlag",
   };
 
-  console.log("soy array", array);
-
   const invoiceProductsMap = array.reduce((result, product) => {
     const productData = {};
 

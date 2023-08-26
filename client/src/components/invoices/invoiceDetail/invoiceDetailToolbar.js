@@ -36,7 +36,6 @@ export const InvoiceDetailToolbar = ({invoice, payments, user, invoice_products,
   useEffect(() => {
     dispatch(getCustomerById(invoice[0].CustomerID))
   },[])
-  console.log('soy invoice', invoice)
 
   return(
     <VStack mt={'3vh'} mb={'3vh'} w={'13vw'} alignItems={'flex-start'} pt={'2vh'}>

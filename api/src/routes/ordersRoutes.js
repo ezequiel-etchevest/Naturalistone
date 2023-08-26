@@ -5,9 +5,9 @@ const mysqlConnection = require('../db')
 
 ordersRouter.get('/', async function(req, res){
 
-    query_ =    `SELECT Orders.*, Factory.Factory_Name as FactoryName, FreightInvoices.InvoiceNumber FROM Orders
-                LEFT JOIN Factory ON  Factory.FactoryID = Orders.FactoryID
-                LEFT JOIN FreightInvoices ON  Orders.FreightRefNumber = FreightInvoices.FreightRefNumber
+    query_ =    `SELECT Orders.*, Factory.Factory_Name as FactoryName, Factory.EURUSD_Flag, FreightInvoices.InvoiceNumber FROM Orders
+                LEFT JOIN Factory ON Orders.FactoryID = Factory.FactoryID
+                LEFT JOIN FreightInvoices ON Orders.FreightRefNumber = FreightInvoices.FreightRefNumber
                 ORDER BY InvoiceDate DESC`;
     try{
          mysqlConnection.query(query_, function(error, results, fields){
@@ -28,7 +28,7 @@ ordersRouter.get('/:orderId/:factoryId', async function(req, res){
 
     const { orderId, factoryId } = req.params
 
-    query_ = `SELECT Orders.*, Factory.Factory_Name as FactoryName FROM Orders
+    query_ = `SELECT Orders.*, Factory.Factory_Name as FactoryName, Factory.EURUSD_Flag FROM Orders
     LEFT JOIN Factory ON  Factory.FactoryID = Orders.FactoryID WHERE OrderID = "${orderId}" AND Orders.FactoryID = ${factoryId}
     ORDER BY InvoiceDate DESC`;
     try{
@@ -50,10 +50,12 @@ ordersRouter.get('/products/:orderId/:factoryId', async function(req, res){
 
     const { orderId, factoryId } = req.params
     
-    query_ = `SELECT ProdOrdered.*, Products.*, Dimension.*,ProdNames.Material, ProdNames.Naturali_ProdName as ProductName, ProdNames.Factory_ProdName as FactoryProductName FROM ProdOrdered
+    query_ = `SELECT ProdOrdered.*, Products.*, Dimension.*,ProdNames.Material, ProdNames.Naturali_ProdName as ProductName,
+    ProdNames.Factory_ProdName as FactoryProductName, Factory.EURUSD_Flag FROM ProdOrdered
     INNER JOIN Products ON  ProdOrdered.ProdID = Products.ProdID 
     INNER JOIN ProdNames ON  ProdNames.ProdNameID = Products.ProdNameID
     INNER JOIN Dimension ON Dimension.DimensionID = Products.DimensionID
+    INNER JOIN Factory ON ProdOrdered.FactoryID = Factory.FactoryID
     WHERE ProdOrdered.OrderID = "${orderId}" AND ProdOrdered.FactoryId = ${factoryId} AND ProdOrdered.Status != 'Canceled'
     ORDER BY Quantity DESC`;
     

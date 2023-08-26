@@ -41,9 +41,8 @@ PaymentRouter.post('/invoice/:id', async function(req, res){
     
     const { id } = req.params
     const {input, seller} = req.body
-    const today = new Date().toISOString()
 
-    query_ = `INSERT INTO Payments (Method, Date, Amount, InvoiceID, \`By\`) VALUES ("${input.Method}","${today}","${input.Amount}","${id}","${seller}")`;
+    query_ = `INSERT INTO Payments (Method, Date, Amount, InvoiceID, \`By\`) VALUES ("${input.Method}","${input.paymentDate}","${input.Amount}","${id}","${seller}")`;
 
     try{
          mysqlConnection.query(query_, function(error, results, fields){
