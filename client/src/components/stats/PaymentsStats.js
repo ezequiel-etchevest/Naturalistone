@@ -21,7 +21,7 @@ function StatsCard(props) {
     onClose: onClose1,
   } = useDisclosure();
 
-  const { title, stat, icon, visibility } = props;
+  const { title, stat, icon, visibility, info } = props;
 
   return (
     <>
@@ -54,7 +54,11 @@ function StatsCard(props) {
           </Box>
         </Flex>
       </Stat>
-      <PaymentsMadeModal isOpenModal={isOpen1} onCloseModal={onClose1} />
+      {info ? (
+        <PaymentsMadeModal isOpenModal={isOpen1} onCloseModal={onClose1} />
+      ) : (
+        <></>
+      )}
     </>
   );
 }
@@ -71,16 +75,19 @@ export default function PaymentsStats({ stats, filters }) {
               : Number(stats.TotalAmount.toFixed(2))
           }
           icon={<MdOutlinePayments size={"3em"} />}
+          info={true}
         />
         <StatsCard
           title={"Tasks Todo / Done"}
           stat={`${stats.tasks[0].total_todo} / ${stats.tasks[0].total_done}`}
           icon={<BiTask size={"3em"} />}
+          info={false}
         />
         <StatsCard
           title={"Samples"}
           stat={stats.samples[0].total_samples}
           icon={<FaRegClipboard size={"3em"} />}
+          info={false}
         />
       </HStack>
     </Box>

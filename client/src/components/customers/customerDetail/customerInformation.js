@@ -6,9 +6,9 @@ const CustomerInformation = ({customer}) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
 
   const normalizeValue = (value) => {
-    return value === null || value === "null" || value === '' ? "-" : value;
+    return value === undefined || value === "undefined" || value === null || value === "null" || value === '' ? "-" : value;
   };
-  
+
   return(
     <>
       <Box
@@ -146,7 +146,7 @@ const CustomerInformation = ({customer}) => {
               justifyContent={'space-around'}
               alignContent={'center'}>
               <Text fontSize={'1.6vh'} color={'web.text2'}>Discount</Text>
-              <Text fontSize={'2.05vh'} fontWeight={'bold'}>{normalizeValue(customer.DiscountID)}</Text>
+              <Text fontSize={'2.05vh'} fontWeight={'bold'}>{normalizeValue(customer.DiscountRate)}</Text>
             </Box>
           </Box>
         </Box>

@@ -7,7 +7,6 @@ import {
   Th,
   Td,
   TableContainer,
-  useToast,
   Text,
   Center,
   } from '@chakra-ui/react'
@@ -49,7 +48,7 @@ const ModelTr = ({e}) => {
         )
       }
       
-      <Td fontSize={'xs'} maxW={'3vw'} textAlign={'center'}>{e.DiscountID ? e.DiscountID :'-'}</Td>
+      <Td fontSize={'xs'} maxW={'3vw'} textAlign={'center'}>{e.DiscountRate ? e.DiscountRate :'-'}</Td>
     </Tr>
   )
 }
@@ -59,20 +58,7 @@ const CustomerList = ({customers, user}) => {
 const [initialCount] = useState(20);
 const [batchCount] = useState(15);
 const [loadedCount, setLoadedCount] = useState(initialCount);
-const toast = useToast()
-const id = 'test-toast'
-const validateResults = () => {
-  // if(result === 'no_results'){
-  //   if (!toast.isActive(id)) {
-  //   toast({
-  //     id,
-  //     title: 'No results found',
-  //     status: 'warning',
-  //     duration: 2000,
-  //     isClosable: true,
-  //   });
-  // }}
-}
+
   const handleScroll = () => {
     const container = document.getElementById('scroll-container'); // Reemplaza 'scroll-container' con el ID de tu contenedor de desplazamiento
     const { scrollTop, clientHeight, scrollHeight } = container;
@@ -88,8 +74,6 @@ useEffect(()=>{
   return () => {
     container.removeEventListener('scroll', handleScroll);
   }}, [batchCount]);
-  
-  console.log("soy customers", customers)
   
   return(
   <Box

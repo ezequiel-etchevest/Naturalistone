@@ -73,7 +73,8 @@ import {
   POST_CUSTOMER,
   GET_CUSTOMER_INVOICES,
   CLEAN_CUSTOMER_DETAIL,
-  PATCH_CUSTOMER
+  PATCH_CUSTOMER,
+  POST_CUSTOMER_RELATIONSHIP
 } from './actions-customers'
 import {
   GET_MONTH
@@ -643,6 +644,11 @@ function rootReducer (state = intialState, action) {
               products_new_samples_values: action.payload.filteredValues,
               products_new_samples_errors: action.payload.errorSearch
               }
+          case POST_CUSTOMER_RELATIONSHIP:
+            return {
+              ...state,
+              
+            }
         default:
             return {
               ...state

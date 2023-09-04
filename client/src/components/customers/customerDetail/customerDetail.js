@@ -3,6 +3,7 @@ import CustomerInformation from './customerInformation';
 import ProjectList from "./projectList";
 import InvoiceList from "./invoiceList";
 import { useState } from "react";
+import { CustomerRelationShip } from "./CustomerRelationShip";
 
 const CustomerDetail = ({user, customer, projects_by_customer_id}) => {
 
@@ -28,6 +29,9 @@ const CustomerDetail = ({user, customer, projects_by_customer_id}) => {
             <CustomerInformation customer={customer}/>
           </Box>
         {/*Boxes */}
+        <Box
+        display={"flex"}
+        flexDir={"column"}>
           <Box
             mx={'1vw'}
             h={'41.5vh'}
@@ -55,7 +59,25 @@ const CustomerDetail = ({user, customer, projects_by_customer_id}) => {
                 <InvoiceList/> 
 
               </Box>
-          </Box>     
+          </Box> 
+          <Box
+            mx={'1vw'}
+            mt={"20px"}
+            h={'15.5vh'}
+            display={'flex'}
+            userSelect={'none'}
+            px={'1.5vw'}
+            py={'3vh'}
+            w={'20vw'}
+            flexDir={'column'}
+            color={'web.text'}
+            bg={'web.sideBar'}
+            border={'1px solid'} 
+            rounded={'md'} 
+            borderColor={'web.border'}>
+              <CustomerRelationShip user={user} customer={customer}/>
+              </Box>
+        </Box>
         {/*Boxes*/}
         <Box 
         ml={'1vw'} 

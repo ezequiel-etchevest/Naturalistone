@@ -26,6 +26,7 @@ import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from "react-redux";
 import { patchPaymentMethod } from "../../../redux/actions-payments";
 import '../../../assets/styleSheet.css'
+import { day0, month0, year } from "../../../utils/todayDate";
 
 const AddPayment = ({pendingAmount, cardPaymentAmount, totalAmount}) => {
 
@@ -44,7 +45,7 @@ const AddPayment = ({pendingAmount, cardPaymentAmount, totalAmount}) => {
     const [input, setInput] = useState({
       Method : '',
       Amount: 0.00,
-      paymentDate: '',
+      paymentDate: `${year}-${month0}-${day0}`,
     })
 
   useEffect(() => {
@@ -171,7 +172,7 @@ const AddPayment = ({pendingAmount, cardPaymentAmount, totalAmount}) => {
       setInput({
         Method : '',
         Amount: 0,
-        paymentDate: ''
+        paymentDate: `${year}-${month0}-${day0}`
       })
       setError({msg: ''})
       setIsOptionDisabled(false)
@@ -190,7 +191,7 @@ const AddPayment = ({pendingAmount, cardPaymentAmount, totalAmount}) => {
     setInput({
       Method : '',
       Amount: 0,
-      date: ''
+      paymentDate: `${year}-${month0}-${day0}`
     })
     setError({msg: ''})
     setIsOptionDisabled(false)
@@ -258,7 +259,7 @@ const AddPayment = ({pendingAmount, cardPaymentAmount, totalAmount}) => {
                   textColor={'web.text2'}
                   _placeholder={{ fontFamily: 'body', fontWeight: 'inherit' }}
                   size={"sm"}
-                  value={input.date}
+                  value={input.paymentDate}
                   borderBottomWidth={"2px"}
                   borderBottomColor={'web.text2'}
                   type={"date"}

@@ -33,7 +33,10 @@ customersRouter.get('/:id', async function(req, res){
 
     const {id} = req.params
 
-    query_ = `SELECT * FROM  Customers WHERE CustomerID = ${id}`;
+    query_ = `SELECT NaturaliStone.Customers.*, Discount.Rate As DiscountRate 
+        FROM Customers
+        LEFT JOIN Discount ON Discount.DiscountID = Customers.DiscountID 
+        WHERE CustomerID = ${id}`;
     try{
          mysqlConnection.query(query_, function(error, results, fields){
             if(!results.length) {
@@ -148,5 +151,40 @@ customersRouter.patch('/:id', async function(req, res){
         res.status(409).send(error);
     }
 });
+
+customersRouter.post('/relationship', async function(req, res){
+
+    const {
+        Date,
+        Action,
+        Comment,
+    } = req.body
+
+    console.log(req.body)
+
+    const { SellerID, CustomerID } = req.query
+
+    console.log(req.query)
+
+    query_ = `INSERT INTO Customer_Relationship (CustomerID, Action, Comment, SellerID) 
+    VALUES ("${CustomerID}", "${Action}", "${Comment}", "${SellerID}")`;
+    
+    try{
+         mysqlConnection.query(query_, function(error, results, fields){
+            if(error) throw error;
+            if(results.length == 0) {
+                console.log('Error en salesRoutes.post /create-customerRelationship')
+                res.status(200).json('');
+            } else {
+                console.log('Customer relationship created successfully')
+                res.status(200).json({success: true, msg: 'Customer relationship created successfully', data: results });
+            }
+            });
+    } catch(error){
+        res.status(409).send(error);
+    }
+});
+
+
 
 module.exports = customersRouter;
