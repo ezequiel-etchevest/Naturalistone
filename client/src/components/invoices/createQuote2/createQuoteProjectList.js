@@ -66,8 +66,8 @@ import { useState } from 'react';
     justifyContent={'center'}
     >
       <Box
-      maxHeight={'40vh'}
-      minHeight={'40vh'}
+      maxHeight={'42vh'}
+      minHeight={'42vh'}
       overflow={'auto'}
       css={{
         '&::-webkit-scrollbar': {

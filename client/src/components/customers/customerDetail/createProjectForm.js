@@ -79,7 +79,7 @@ import {
         </Box>
         <Box w={'22vw'} display={'flex'} flexDir={'row'}  justifyContent={'space-between'}>
           <FormControl>
-          <FormLabel textColor={'web.text2'} fontSize={'sm'} fontWeight={'normal'}>City</FormLabel>
+          <FormLabel textColor={'web.text2'} fontSize={'sm'} fontWeight={'normal'}>Shipping City</FormLabel>
             <Input
               mb={'0.5vh'}
               variant="unstyled"
@@ -102,7 +102,7 @@ import {
         </Box>
         <Box w={'22vw'} display={'flex'} flexDir={'row'} justifyContent={'space-between'}>
         <FormControl>
-          <FormLabel textColor={'web.text2'} fontSize={'sm'}>State</FormLabel>
+          <FormLabel textColor={'web.text2'} fontSize={'sm'}>Shipping State</FormLabel>
             <AutocompleteState 
               formData={formData}
               setFormData={setFormData}
@@ -115,7 +115,7 @@ import {
         </Box>
         <Box w={'22vw'} display={'flex'} flexDir={'row'} justifyContent={'space-between'}>
           <FormControl>
-          <FormLabel textColor={'web.text2'} fontSize={'sm'}>Zip Code</FormLabel>
+          <FormLabel textColor={'web.text2'} fontSize={'sm'}>Shipping Zip Code</FormLabel>
             <Input
               mb={'0.5vh'}
               variant="unstyled"

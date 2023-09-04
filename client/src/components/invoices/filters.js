@@ -18,7 +18,7 @@ import {AiOutlineClear} from 'react-icons/ai';
 import { useLocation, useNavigate } from "react-router-dom";
 import CreateQuote from "./createQuote2/createQuoteModal";
 
-const Filters = ({user, seller_invoices, setFocusFilter, seller_values, customers, inputValues, setInputValues, setLoading}) => {
+const Filters = ({user, seller_invoices, sellers, setFocusFilter, seller_values, customers, inputValues, setInputValues, setLoading}) => {
 
   const dispatch = useDispatch()
   const [ disabled, setDisabled ] = useState(false)
@@ -383,7 +383,7 @@ const Filters = ({user, seller_invoices, setFocusFilter, seller_values, customer
                   ): ( null)
               }
             </Select>
-              <Select
+            <Select
                 onChange={(e)=>handleTimeSelect(e)}
                 mb={'0.5vh'}
                 w={'8vw'}
@@ -445,7 +445,7 @@ const Filters = ({user, seller_invoices, setFocusFilter, seller_values, customer
             </IconButton>
           </Tooltip>
         {/* <CreateInvoiceButton user={user} customers={customers}/> */}
-        <CreateQuote customers={customers}/>
+        <CreateQuote customers={customers} sellers={sellers}/>
         </HStack>
 
 

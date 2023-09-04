@@ -17,12 +17,12 @@ export const validateCompletedInputs = (formData) =>{
   }
 
   if(formData.Billing_ZipCode?.length){
-    if(formData.Billing_ZipCode !== ''){
+    if(formData.Billing_ZipCode !== '' && formData.Billing_ZipCode !== "undefined"){
       if(!regexNumber.test(formData.Billing_ZipCode)) {
         errors.Billing_ZipCode = 'Please enter a valid zip code'
       }
     }
-}
+  }
 
   if(formData.Phone !== ''){
     if(!regexNumberAndPlus.test(formData.Phone)) {
@@ -35,24 +35,25 @@ export const validateCompletedInputs = (formData) =>{
     }
   }
   if(formData.Billing_State?.length){
-    if(formData.Billing_State !== ''){
+    if(formData.Billing_State !== '' && formData.Billing_State != "undefined"){
       if(!USStates.includes(formData.Billing_State)) {
         errors.Billing_State = 'Please enter a valid state'
       }
     }
   }
-
-  if(formData.Billing_City !== '') {
-    if(!regexNoNumber.test(formData.Billing_City)){
-      errors.Billing_City = 'Please enter a valid City'
+  if(formData.Billing_City?.length){
+    if(formData.Billing_City !== '' && formData.Billing_City != "undefined") {
+      if(!regexNoNumber.test(formData.Billing_City)){
+        errors.Billing_City = 'Please enter a valid City'
+      }
     }
   }
-  if(formData.DiscountRate !== '') {
-    const allowedValues = ['0', '5', '10', '15', 0, 5, 10, 15];
-    if(!allowedValues.includes(formData.DiscountRate)){
-      errors.DiscountRate = 'Valid discounts: 0, 5, 10, 15'
-    }
-  }
+  // if(formData.DiscountRate !== '') {
+  //   const allowedValues = ['0', '5', '10', '15', 0, 5, 10, 15];
+  //   if(!allowedValues.includes(formData.DiscountRate)){
+  //     errors.DiscountRate = 'Valid discounts: 0, 5, 10, 15'
+  //   }
+  // }
 
   return errors
 }
@@ -60,34 +61,31 @@ export const validateCompletedInputs = (formData) =>{
 export const validateEmptyInputsCreateQuote = (formData) => {
   let errors = validateCompletedInputs(formData)
   
-  if(!formData.Contact_Name){
+  if(!formData.Contact_Name || formData.Contact_Name == "undefined"){
     errors.Contact_Name = 'Please enter customer name'
     }
-  if(!formData.Phone){
+  if(!formData.Phone || formData.Phone == "undefined"){
     errors.Phone = 'Please enter phone number'
   }
-  if(!formData.Email){
+  if(!formData.Email || formData.Email == "undefined"){
     errors.Email = 'Please enter email address'
   }
-  if(!formData.Billing_Address){
+  if(!formData.Billing_Address || formData.Billing_Address == "undefined"){
     errors.Billing_Address = 'Please enter an address'
   }
-  if(!formData.Billing_ZipCode){
+  if(!formData.Billing_ZipCode || formData.Billing_ZipCode == "undefined"){
     errors.Billing_ZipCode = 'Please enter a zip code'
   } 
-  if(!formData.Billing_City){
+  if(!formData.Billing_City || formData.Billing_City == "undefined"){
     errors.Billing_City = 'Please enter a city'
   }
-  if(!formData.Billing_State) {
+  if(!formData.Billing_State || formData.Billing_State == "undefined") {
     errors.Billing_State = 'Please enter a state'
   }
-  if(!formData.DiscountRate){
-    errors.DiscountRate = 'Please enter discount rate'
-    }
-  if(!formData.Company){
+  if(!formData.Company || formData.Company == "undefined"){
     errors.Company = 'Please enter customer company name'
   }
-  if(!formData.Company_Position){
+  if(!formData.Company_Position || formData.Company_Position == "undefined"){
     errors.Company_Position = 'Please enter customer company position'
   }
 return errors
