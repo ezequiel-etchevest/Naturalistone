@@ -40,7 +40,7 @@ export function deletePayment(invoiceID, paymentID, seller){
         try{
             let { response } = await axios.delete(`/payments/invoice/${paymentID}/${seller}`)
             let { data } = await axios.get(`/payments/${invoiceID}`)
-            console.log(response)
+
             dispatch(
             {
                 type: DELETE_PAYMENT_METHOD,

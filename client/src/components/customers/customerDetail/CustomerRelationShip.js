@@ -5,9 +5,6 @@ import { createCustomerRelationship } from '../../../redux/actions-customers'
 
 export function CustomerRelationShip({ user, customer }) {
 
-  console.log("soiy user", user)
-  console.log("soiy customer", customer)
-
   const { isOpen, onOpen, onClose } = useDisclosure()
   const dispatch = useDispatch()
 
@@ -38,7 +35,6 @@ export function CustomerRelationShip({ user, customer }) {
     dispatch(createCustomerRelationship(formData, user.SellerID, customer.CustomerID))
   }
 
-  console.log("formdata", formData)
 
   return(
       <>
