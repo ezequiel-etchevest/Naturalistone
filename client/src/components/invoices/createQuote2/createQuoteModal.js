@@ -42,6 +42,7 @@ export function CreateQuote({ customers, sellers }) {
   const [disable, setDisable] = useState(true);
   const [progress, setProgress] = useState(20);
   const [submited, setSubmited] = useState(false);
+  const [updated, setUpdated] = useState(false);
   const [formData, setFormData] = useState({
     customer: {
       Contact_Name: "",
@@ -98,6 +99,12 @@ export function CreateQuote({ customers, sellers }) {
       dispatch(getAllProductsNewQuote('', '', ''))
     }}, []);
 
+    useEffect(() => {
+      if(progress === 40){
+        const areCustomerFieldCompleted = Object.values(formData.customer).every((value) => value.length !== 0)
+        setDisable(!areCustomerFieldCompleted);
+    }}, [formData.customer]);
+    
   const validateAuthFlag = (objetos) => {
     for (const id in objetos) {
       if (objetos.hasOwnProperty(id)) {
@@ -178,6 +185,11 @@ export function CreateQuote({ customers, sellers }) {
   };
 
   const handleNextButton = () => {
+    if(progress === 20){
+      const areCustomerFieldCompleted = Object.values(formData.customer).every((value) => value.length !== 0 && value !== 'undefined')
+      console.log(formData)
+      setDisable(!areCustomerFieldCompleted);
+    }
     if (progress === 40) {
       let newErrors = validateEmptyInputsCreateQuote(formData.customer);
       setErrorsCustomer(newErrors);
@@ -194,18 +206,19 @@ export function CreateQuote({ customers, sellers }) {
           });
         }
         return; // No avanza si hay errores
-      }
-  
-      dispatch(updateCustomer(customerID, formData.customer));
-      dispatch(getCustomerProjects(customerID));
-      setProgress(progress + 20);
+      } else {
+        if(updated){
+          dispatch(updateCustomer(customerID, formData.customer));
+        }
+        dispatch(getCustomerProjects(customerID));
+        setProgress(progress + 20);
       
       const areVariablesAndProjectNameCompleted =
         Object.values(formData.variables).every((value) => value.length !== 0) &&
         formData.project.ProjectName.length !== 0;
   
       setDisable(!areVariablesAndProjectNameCompleted);
-    }
+    }}
   
     if (progress === 60) {
       dispatch(getAllProductsNewQuote("", "", ""));
@@ -304,6 +317,7 @@ export function CreateQuote({ customers, sellers }) {
                 setFormData={setFormData}
                 errorsCustomer={errorsCustomer}
                 setErrorsCustomer={setErrorsCustomer}
+                setUpdated={setUpdated}
                 sellers={sellers}
                 user={user}
               />

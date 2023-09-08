@@ -19,7 +19,7 @@ import '../../../assets/styleSheet.css'
 import { useState } from "react"
 import { validateCompletedInputs } from "../../../utils/validateForm"
 
-const CreateSampleCustomerReview = ({setFormData, formData, setErrorsCustomer, errorsCustomer, sellers, user}) => {
+const CreateSampleCustomerReview = ({setFormData, formData, setErrorsCustomer, errorsCustomer, sellers, setUpdated}) => {
 
 const initialState = {
   Contact_Name: formData.customer.Contact_Name,
@@ -83,6 +83,7 @@ const handleChange = (e) =>{
     [name]: value  
     }
   })
+  setUpdated(true)
 }
 
 function EditableControls(name, value) {

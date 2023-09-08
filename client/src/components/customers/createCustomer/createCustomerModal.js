@@ -109,7 +109,7 @@ export function CreateCustomerModal() {
     setErrors({})
     let newErrors = validateEmptyInputs(formData, progress)
     setErrors(newErrors)
-    console.log({errors})
+
     if(Object.entries(newErrors).length){
       console.log({newErrors})
       if(!toast.isActive(toastId)){
