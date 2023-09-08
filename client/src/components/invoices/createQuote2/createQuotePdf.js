@@ -156,6 +156,7 @@ const CreatedQuotePdf = ({ formData, user, handleChangeEmail }) => {
     console.log(x)
     return x; 
   }
+  
   async function CreateForm() {
     const url = `/Quote/quote-blank.pdf`;
     const existingPdfBytes = await fetch(url).then((res) => res.arrayBuffer());
