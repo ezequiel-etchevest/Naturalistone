@@ -77,18 +77,18 @@ samplesRoutes.post("/", function (req, res) {
 
       // Recorrer el array de valores y construir las cláusulas WHERE
       parsedProducts.forEach((valores) => {
-        const clausula = `Dimension.Material = '${valores.type}' AND Dimension.Type = 'Sample' 
-     AND Dimension.Finish = '${valores.finish}' AND ProdNames.ProdNameID = ${valores.prodNameID}`;
+        const clausula = `ProdNames.Material = '${valores.type}' AND Dimension.Type = 'Sample' 
+      AND Dimension.Finish = '${valores.finish}' AND ProdNames.ProdNameID = ${valores.prodNameID}`;
         clausulasWhere.push(clausula);
       });
-
+      
       // Construir la consulta SELECT
-      const sqlSelect = `SELECT Products.ProdID, Products.ProdNameID, Dimension.Material, Dimension.Type, 
-    Dimension.Finish FROM Products
-    LEFT JOIN Dimension ON Dimension.DimensionID = Products.DimensionID
-    LEFT JOIN ProdNames ON ProdNames.ProdNameID = Products.ProdNameID
-    WHERE ${clausulasWhere.join(" OR ")}`;
-      // const sqlSelect = `SELECT * FROM Dimension WHERE ${clausulasWhere.join(' OR ')}`;
+      
+      const sqlSelect = `SELECT Products.ProdID, Products.ProdNameID, ProdNames.Material, Dimension.Type, 
+      Dimension.Finish FROM Products
+      LEFT JOIN Dimension ON Dimension.DimensionID = Products.DimensionID
+      LEFT JOIN ProdNames ON ProdNames.ProdNameID = Products.ProdNameID
+      WHERE ${clausulasWhere.join(" OR ")}`;
 
       mysqlConnection.query(sqlSelect, async function (err, results, fields) {
         if (err) {
@@ -100,7 +100,9 @@ samplesRoutes.post("/", function (req, res) {
             throw err;
           });
         }
+
         // Obtener los valores existentes en la tabla
+
         const valoresExistente = results.map((result) => ({
           prodId: result.ProdID,
           material: result.Material,
@@ -109,6 +111,7 @@ samplesRoutes.post("/", function (req, res) {
         }));
 
         // Filtrar los valores existentes
+
         const valoresNoExistentes = parsedProducts.filter((valores) => {
           return !valoresExistente.some(
             (existente) =>
@@ -116,13 +119,15 @@ samplesRoutes.post("/", function (req, res) {
               existente.finish === valores.finish
           );
         });
-
         let prodIds;
 
+
         // Verificar si hay valores no existentes
+      
+         
         if (valoresNoExistentes.length > 0) {
           const sqlInserts = valoresNoExistentes.map((valores) => {
-            const query_ = `INSERT INTO Dimension (Material, Type, Finish) Values ('${valores.type}', 'Sample', '${valores.finish}')`;
+            const query_ = `Select Dimension.* FROM Dimension where Dimension.Type = 'Sample' AND Dimension.Finish = '${valores.finish}' LIMIT 1;`;
 
             return new Promise((resolve, reject) => {
               mysqlConnection.query(query_, function (err, results, field) {
@@ -133,7 +138,7 @@ samplesRoutes.post("/", function (req, res) {
                   });
                 }
 
-                const newDimensionId = results.insertId;
+                const newDimensionId = results[0].DimensionID;
 
                 const query_1 = `INSERT INTO Products (ProdNameID, DimensionID) Values ('${valores.prodNameID}', '${newDimensionId}')`;
 
@@ -159,7 +164,7 @@ samplesRoutes.post("/", function (req, res) {
           prodIds = await prodIdPromises;
 
           const query_2 = `INSERT INTO Samples (CustomerID, ProjectID, TrackingNumber, EstDelivery_Date)
-      VALUES (${customer.CustomerID}, ${project.idProjects}, "${variables.trackingNumber}", "${variables.estDelivDate}" )`;
+          VALUES (${customer.CustomerID}, ${project.idProjects}, "${variables.trackingNumber}", "${variables.estDelivDate}" )`;
 
           mysqlConnection.query(query_2, function (err, results, field) {
             if (err) {
@@ -222,6 +227,7 @@ samplesRoutes.post("/", function (req, res) {
         VALUES (${customer.CustomerID}, ${project.idProjects}, "${variables.trackingNumber}", "${variables.estDelivDate}")`;
 
         mysqlConnection.query(query_4, function (err, results, field) {
+
           if (err) {
             res.status(400).json({
               success: false,
