@@ -44,7 +44,7 @@ const TaskBoardContainer = ({user}) => {
             borderColor={'web.border'}
             bg={'web.sideBar'}
             >
-                <Text color={'web.text2'}>Please click on a task to see its details</Text>
+              <Text color={'web.text2'}>Please click on a task to see its details</Text>
             </Center>
         )
        }

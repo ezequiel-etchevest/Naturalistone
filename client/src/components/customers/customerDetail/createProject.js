@@ -8,7 +8,7 @@ import { validateCompletedInputsProject, validateEmptyInputsProjects } from "../
 import { useToast } from "@chakra-ui/react";
 
 
-export function CreateNewProject({customer}) {
+export function CreateNewProject({customer, custID}) {
 
   const toast = useToast()
   const toastId = 'error-toast'
@@ -17,7 +17,7 @@ export function CreateNewProject({customer}) {
   const [changeInput, setChangeInput] = useState(false)
   const [formData, setFormData] = useState({
     ProjectName: '',
-    CustomerID: customer.CustomerID,
+    CustomerID: customer.CustomerID || custID,
     Shipping_State: '',
     Shipping_ZipCode: '',
     Shipping_City: '',
@@ -52,7 +52,7 @@ export function CreateNewProject({customer}) {
   const handleClose = () => {
     setFormData({
         ProjectName: '',
-        CustomerID: customer.CustomerID,
+        CustomerID: customer.CustomerID || custID,
         Shipping_State: '',
         Shipping_ZipCode: '',
         Shipping_City: '',

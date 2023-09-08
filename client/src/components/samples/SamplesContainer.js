@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import SamplesList from './SamplesList';
 import SamplesFilters from './SamplesFilters';
 
-const SamplesContainer = ({samples, user, focusFilter, setFocusFilter, sellers }) => {
+const SamplesContainer = ({samples, user, sellers }) => {
 
     const [ spinner, setSpinner ] = useState(false)
 

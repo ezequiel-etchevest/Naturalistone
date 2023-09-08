@@ -70,6 +70,7 @@ productsRouter.get('/new_quote', async function(req, res){
       `AND (LOWER(ProdNames.Naturali_ProdName) LIKE LOWER('%${search}%'))`
     ) : (``)
   }
+  WHERE ProdNames.Naturali_ProdName IS NOT NULL AND Dimension.Finish IS NOT NULL AND Dimension.Size IS NOT NULL AND Dimension.Thickness IS NOT NULL 
   ORDER BY ProdNames.Naturali_ProdName ASC
   `;
 

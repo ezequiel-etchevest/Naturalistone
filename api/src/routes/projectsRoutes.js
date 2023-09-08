@@ -70,7 +70,7 @@ projectsRouter.post('/:customerID', async function(req, res){
 
     const { customerID } = req.params
     const { ProjectName, Shipping_State, Shipping_ZipCode, Shipping_City, Shipping_Address } = req.body
-   
+    console.log(customerID)
     query_ = `INSERT INTO Projects (ProjectName, CustomerID, Shipping_State, Shipping_ZipCode, Shipping_City, Shipping_Address ) VALUES ("${ProjectName}", ${customerID}, "${Shipping_State}", "${Shipping_ZipCode}", "${Shipping_City}", "${Shipping_Address}")`
             
     try{

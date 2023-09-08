@@ -73,7 +73,7 @@ const CreateQuoteCustomerProjets = ({ formData, setFormData, setDisable, update,
           </Box>
         </Box>
         :
-        <Text ml={'2vw'} mt={'2vh'} mb={'1vh'} fontSize={'lg'}w={'16vw'} color={'white'} alignSelf={'flex-start'}>Select Project</Text>
+        <Text ml={'2vw'} mt={'1vh'} mb={'1vh'} fontSize={'lg'}w={'16vw'} color={'white'} alignSelf={'flex-start'}>Select Project</Text>
       }
       <HStack
         display={'flex'}
@@ -83,10 +83,10 @@ const CreateQuoteCustomerProjets = ({ formData, setFormData, setDisable, update,
         mt={'4vh'}
         mr={'2vw'}
         ml={'2vw'}
-
         >
         <Input
           w={'10vw'}
+          minW={'120px'}
           minH={'4.5vh'}
           variant="unstyled"
           textColor={'web.text2'}
@@ -99,10 +99,12 @@ const CreateQuoteCustomerProjets = ({ formData, setFormData, setDisable, update,
           name={"method"}
           value={formData.variables.method || ""}
           onChange={(e)=>handleChange(e)}
+          className="mailInputs"
           />  
         <Input
           mb={'0.5vh'}
           w={'10vw'}
+          minW={'120px'}
           minH={'4.5vh'}
           variant="unstyled"
           textColor={'web.text2'}
@@ -115,12 +117,14 @@ const CreateQuoteCustomerProjets = ({ formData, setFormData, setDisable, update,
           name={"paymentTerms"}
           value={formData.variables.paymentTerms || ""}
           onChange={(e)=>handleChange(e)}
+          className="mailInputs"
           />
           <Tooltip  label="Estimated delivery date" fontWeight={'hairline'} placement='top-start'>
             <Input
               mb={'0.5vh'}
               w={'10vw'}
               minH={'4.5vh'}
+              minW={'120px'}
               variant="unstyled"
               textColor={'web.text2'}
               _placeholder={{ fontFamily: 'body', fontWeight: 'inherit' }}
@@ -133,6 +137,7 @@ const CreateQuoteCustomerProjets = ({ formData, setFormData, setDisable, update,
               name={"estDelivDate"}
               cursor= {'pointer'}
               onChange={(e)=>handleChange(e)}
+              className="mailInputs"
               css={{
                 '::-webkit-calendar-picker-indicator': {   
                     background: `url(https://cdn3.iconfinder.com/data/icons/linecons-free-vector-icons-pack/32/calendar-16.png) center/90% no-repeat`,    
@@ -150,6 +155,7 @@ const CreateQuoteCustomerProjets = ({ formData, setFormData, setDisable, update,
               onChange={(e)=>handleChange(e)}
               mb={'0.5vh'}
               w={'10vw'}
+              minW={'120px'}
               minH={'4.5vh'}
               variant="unstyled"
               textColor={'web.text2'}

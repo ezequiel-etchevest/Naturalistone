@@ -59,6 +59,7 @@ const CreateQuoteProductsReview = ({ formData, setFormData }) => {
         </Thead>
         <Tbody>
         {
+        Object.entries(formData.products).length ?
           Object.entries(formData.products).map((e, i) => (
             <Tr
             cursor={'pointer'} 
@@ -75,7 +76,27 @@ const CreateQuoteProductsReview = ({ formData, setFormData }) => {
               <Td fontSize={'xs'} textAlign={'center'}>{e[1].price}</Td>
               <Td fontSize={'xs'} textAlign={'center'}>{e[1].finish}</Td>
             </Tr>
-          ))
+          )) : null
+        }
+        {
+        Object.entries(formData.specialProducts).length ?
+          Object.entries(formData.specialProducts).map((e, i) => (
+            <Tr
+            cursor={'pointer'} 
+            key={i}
+            _hover={{
+              bg: 'web.navBar',
+              color: 'logo.orange'
+            }}>
+              <Td fontSize={'xs'} textAlign={'center'}>{e[1].quantity}</Td>
+              <Td fontSize={'xs'} w={'16vw'} textAlign={'center'}>{e[1].prodName}</Td>
+              <Td fontSize={'xs'} textAlign={'center'}>{e[1].type}</Td>
+              <Td fontSize={'xs'} textAlign={'center'}>{e[1].size}</Td>
+              <Td fontSize={'xs'} textAlign={'center'}>{e[1].thickness}</Td>
+              <Td fontSize={'xs'} textAlign={'center'}>{e[1].price}</Td>
+              <Td fontSize={'xs'} textAlign={'center'}>{e[1].finish}</Td>
+            </Tr>
+          )) : null
         }
         </Tbody>
       </Table>

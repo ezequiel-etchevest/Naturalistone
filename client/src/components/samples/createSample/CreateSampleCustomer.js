@@ -8,7 +8,7 @@ import {
   Center,
   Spinner 
   } from "@chakra-ui/react"
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useDispatch } from "react-redux";
 import {BiSearch} from 'react-icons/bi'
 import '../../../assets/styleSheet.css'

@@ -8,7 +8,7 @@ import {
   Center,
   Spinner 
   } from "@chakra-ui/react"
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useDispatch } from "react-redux";
 import {BiSearch} from 'react-icons/bi'
 import '../../../assets/styleSheet.css'
@@ -16,7 +16,7 @@ import { CreateCustomerModal } from "../../customers/createCustomer/createCustom
 import { getCustomers } from "../../../redux/actions-customers";
 import CreateQuoteCustomerList from "./createQuoteCustomerList";
 
-const CreateQuoteCustomer = ({customers, setFormData, formData, setDisable, update, invoice}) =>{
+const CreateQuoteCustomer = ({customers, setFormData, formData, setDisable, update, invoice, user}) =>{
 
 
 const dispatch = useDispatch()
@@ -74,7 +74,7 @@ return(
         <Text ml={'2vw'} fontSize={'lg'} w={'16vw'} color={'white'} alignSelf={'flex-start'}>Select customer</Text>
         
       }
-      <Box display={'flex'} flexDir={'row'} justifyContent={'space-around'}>
+      <Box display={'flex'} flexDir={'row'} h={'6vh'} w={'18vw'} justifyContent={'space-around'}>
         <Box>
           <Input
             mb={'0.5vh'}
@@ -104,9 +104,9 @@ return(
             mt={'1.5vh'}
             _active={{ color: 'gray.800'}}
           />
-        </Box>
-        <Divider orientation={'vertical'} h={'6vh'} />
-        <CreateCustomerModal/>
+          </Box>
+          <Divider orientation={'vertical'} h={'6vh'} />
+          <CreateCustomerModal/>
         </Box>
       </HStack>
       { 
@@ -118,6 +118,7 @@ return(
             setFormData={setFormData}
             formData={formData}
             setDisable={setDisable}
+            user={user}
             />
           :
           <Text maxH={'50vh'} minH={'50vh'} display={'flex'} justifyContent={'center'} alignItems={'center'}>No customers match this filters</Text>
