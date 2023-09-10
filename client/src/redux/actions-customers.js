@@ -7,6 +7,7 @@ export const GET_CUSTOMER_INVOICES = 'GET_CUSTOMER_INVOICES';
 export const CLEAN_CUSTOMER_DETAIL = 'CLEAN_CUSTOMER_DETAIL'
 export const PATCH_CUSTOMER = 'PATCH_CUSTOMER'
 export const POST_CUSTOMER_RELATIONSHIP = 'POST_CUSTOMER_RELATIONSHIP'
+export const GET_CUSTOMER_RELATIONSHIP = 'GET_CUSTOMER_RELATIONSHIP'
 
 export function getCustomers(search){
     
@@ -104,12 +105,25 @@ export function createCustomerRelationship(relationshipDetails, user, customer){
   return async function(dispatch){
       try{
           let { } = await axios.post(`/customers/relationship?SellerID=${user}&CustomerID=${customer}`, relationshipDetails)
-          // let {data} = await axios.get(`/customers?name=${''}&Company=${''}`)
-
               dispatch(
               {
                   type: POST_CUSTOMER_RELATIONSHIP,
-                  // payload: data
+              })
+
+      }catch(error){
+          console.log({error})           
+      }}
+}
+
+export function getCustomerRelationship(customerId){
+
+  return async function(dispatch){
+      try{
+          let { data } = await axios.get(`/customers/relationship?customerId=${customerId}`)
+              dispatch(
+              {
+                  type: GET_CUSTOMER_RELATIONSHIP,
+                  payload: data.data
               })
 
       }catch(error){

@@ -74,7 +74,8 @@ import {
   GET_CUSTOMER_INVOICES,
   CLEAN_CUSTOMER_DETAIL,
   PATCH_CUSTOMER,
-  POST_CUSTOMER_RELATIONSHIP
+  POST_CUSTOMER_RELATIONSHIP,
+  GET_CUSTOMER_RELATIONSHIP
 } from './actions-customers'
 import {
   GET_MONTH
@@ -175,6 +176,7 @@ const intialState = {
     products_new_samples: [],
     products_new_samples_values: [],
     products_new_samples_errors: {},
+    customer_relationship: []
 }
 
 function rootReducer (state = intialState, action) {
@@ -647,7 +649,11 @@ function rootReducer (state = intialState, action) {
           case POST_CUSTOMER_RELATIONSHIP:
             return {
               ...state,
-              
+            }
+          case GET_CUSTOMER_RELATIONSHIP:
+            return {
+              ...state,
+              customer_relationship: action.payload
             }
         default:
             return {

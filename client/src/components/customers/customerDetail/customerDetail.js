@@ -1,12 +1,20 @@
 import { Box, HStack, Text } from "@chakra-ui/react";
 import CustomerInformation from './customerInformation';
+import CustomerRelationshipList from "./CustomerRelationshipList";
+import { CustomerRelationship } from "./CustomerRelationship";
 import ProjectList from "./projectList";
 import InvoiceList from "./invoiceList";
-import { useState } from "react";
-import { CustomerRelationShip } from "./CustomerRelationShip";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getCustomerRelationship } from "../../../redux/actions-customers";
 
-const CustomerDetail = ({user, customer, projects_by_customer_id}) => {
+const CustomerDetail = ({user, customer, projects_by_customer_id }) => {
 
+  const customer_relationship = useSelector(state => state.customer_relationship)
+  const dispatch = useDispatch()
+  useEffect(() => {
+    dispatch(getCustomerRelationship(customer.CustomerID))
+  },[])
 
   return(
     <>     
@@ -63,19 +71,20 @@ const CustomerDetail = ({user, customer, projects_by_customer_id}) => {
           <Box
             mx={'1vw'}
             mt={"20px"}
-            h={'15.5vh'}
+            h={'41.5vh'}
             display={'flex'}
             userSelect={'none'}
             px={'1.5vw'}
             py={'3vh'}
-            w={'20vw'}
+            w={'60vw'}
             flexDir={'column'}
             color={'web.text'}
             bg={'web.sideBar'}
             border={'1px solid'} 
             rounded={'md'} 
             borderColor={'web.border'}>
-              <CustomerRelationShip user={user} customer={customer}/>
+              <CustomerRelationship user={user} customer={customer}/>
+              <CustomerRelationshipList customer_relationship={customer_relationship}/>
               </Box>
         </Box>
         {/*Boxes*/}

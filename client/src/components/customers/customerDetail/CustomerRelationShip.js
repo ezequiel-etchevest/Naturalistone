@@ -1,17 +1,19 @@
-import { Box, Button, FormControl, FormLabel, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, NumberInput, NumberInputField, Select, Text, Textarea, useDisclosure } from '@chakra-ui/react'
+import { Box, Button, FormControl, FormLabel, IconButton, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, NumberInput, NumberInputField, Select, Text, Textarea, useDisclosure } from '@chakra-ui/react'
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { createCustomerRelationship } from '../../../redux/actions-customers'
+import { createCustomerRelationship, getCustomerRelationship } from '../../../redux/actions-customers'
+import { BsFillPlusSquareFill } from "react-icons/bs";
 
-export function CustomerRelationShip({ user, customer }) {
-
-  console.log("soiy user", user)
-  console.log("soiy customer", customer)
+export function CustomerRelationship({ user, customer }) {
 
   const { isOpen, onOpen, onClose } = useDisclosure()
   const dispatch = useDispatch()
 
   const handleClose = () => {
+    setFormData({
+      Action: "",
+      Comment: "",
+    })
     onClose()
   }
 
@@ -35,25 +37,39 @@ export function CustomerRelationShip({ user, customer }) {
   }
 
   const handleSubmit = (event) => {
+    if (formData.Action === "" || formData.Comment === "") {
+      return;
+    }
     dispatch(createCustomerRelationship(formData, user.SellerID, customer.CustomerID))
+    dispatch(getCustomerRelationship(customer.CustomerID))
+    setFormData({
+      Action: "",
+      Comment: "",
+    })
+    onClose()
   }
-
-  console.log("formdata", formData)
 
   return(
       <>
-        <Box display={"flex"} justifyContent={"center"} alignItems={"center"} flexDir={"column"}>
+        <Box display={"flex"} justifyContent={"center"} alignItems={"center"} flexDir={"row"}>
           <Text>
             Customer Relationship
           </Text>
-          <Button 
-          onClick={onOpen} 
-          colorScheme={'orange'}
-          mt={"10px"}
-          h={"20px"}
-          >
-            Create
-          </Button>
+            <IconButton
+              size={'lg'}
+              icon={ <BsFillPlusSquareFill/>}
+              variant={'unstyled'} 
+              display={'flex'} 
+              placeContent={'center'}
+              alignItems={'center'}
+              color={'web.text2'} 
+              _hover={{
+                color: 'logo.orange'
+              }}
+              _active={{
+              }}
+              onClick={onOpen}
+            />
           <Modal 
             isOpen={isOpen} 
           >

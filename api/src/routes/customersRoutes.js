@@ -29,6 +29,33 @@ customersRouter.get('/', async function(req, res){
     }
 });
 
+customersRouter.get("/relationship", async function(req, res) {
+
+  const { customerId } = req.query
+
+  try {
+      const getCustomerRelationshipQuery = `SELECT Customer_Relationship.*, Seller.FirstName AS SellerName FROM Customer_Relationship
+      LEFT JOIN Seller ON Seller.SellerID = Customer_Relationship.SellerID
+      WHERE CustomerID = ${customerId}`
+
+      mysqlConnection.query(getCustomerRelationshipQuery, function(err, results) {
+        if (err) {
+            return res.status(400).json({success:false, msg:"Error in get customer relationship"})
+          }
+
+        if (results.length === 0) {
+          return res.status(200).json({success: true, msg:"No customers relationship", data: results})
+        }
+
+          return res.status(200).json({success: true, msg:"Customer relationship get successful", data: results})
+      })
+  } catch (error) {
+    return res.status(500).json({success: false, msg:"General error in get customer relationship", data: results})
+      
+  }
+})
+
+
 customersRouter.get('/:id', async function(req, res){
 
     const {id} = req.params
@@ -160,11 +187,7 @@ customersRouter.post('/relationship', async function(req, res){
         Comment,
     } = req.body
 
-    console.log(req.body)
-
     const { SellerID, CustomerID } = req.query
-
-    console.log(req.query)
 
     query_ = `INSERT INTO Customer_Relationship (CustomerID, Action, Comment, SellerID) 
     VALUES ("${CustomerID}", "${Action}", "${Comment}", "${SellerID}")`;
@@ -184,7 +207,6 @@ customersRouter.post('/relationship', async function(req, res){
         res.status(409).send(error);
     }
 });
-
 
 
 module.exports = customersRouter;
