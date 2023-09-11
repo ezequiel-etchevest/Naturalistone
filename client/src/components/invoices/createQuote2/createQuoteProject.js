@@ -33,7 +33,7 @@ const CreateQuoteCustomerProjets = ({ formData, setFormData, setDisable, update,
   useEffect(() => {
     if(!Array.isArray(projects)) setDisable(true) 
     else {
-      if(!formData.variables.shipVia.length || !formData.variables.method.length || !formData.variables.paymentTerms.length || !formData.variables.estDelivDate.length || !formData.project.ProjectName.length){
+      if(!formData.variables.shipVia.length || !formData.variables.paymentTerms.length || !formData.variables.estDelivDate.length || !formData.project.ProjectName.length){
         setDisable(true)
       } else { 
         setDisable(false)}

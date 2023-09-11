@@ -156,7 +156,7 @@ const CreatedQuotePdf = ({ formData, user, handleChangeEmail }) => {
     console.log(x)
     return x; 
   }
-  
+
   async function CreateForm() {
     const url = `/Quote/quote-blank.pdf`;
     const existingPdfBytes = await fetch(url).then((res) => res.arrayBuffer());
@@ -183,7 +183,7 @@ const CreatedQuotePdf = ({ formData, user, handleChangeEmail }) => {
     const state = project.Shipping_State;
     const zipCode = project.Shipping_ZipCode;
     const company = customer.Company;
-    const PO = variables.method;
+    const PO = variables.method ? variables.method : '';
     const ref = user[0].SellerReference;
     const tax = 7;
     const estDate = variables.estDelivDate;
@@ -320,7 +320,7 @@ const CreatedQuotePdf = ({ formData, user, handleChangeEmail }) => {
         size: 9,
       });
       const text = `Special Order: ${product.material} ${product.type} ${product.prodName} ${product.finish} ${formatSize(product.size)}x${parseThickness(product.thickness)}`
-      const maxLength = 52;
+      const maxLength = 53;
 
       if (text.length > maxLength) {
         const firstPart = text.substring(0, maxLength);

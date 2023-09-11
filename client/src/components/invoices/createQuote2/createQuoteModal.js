@@ -124,7 +124,7 @@ export function CreateQuote({ customers, sellers }) {
   }
 
   let authFlag = validateAuthFlag(formData.products);
-
+  console.log(formData)
   const handleSubmit = async () => {
     if (progress === 100) {
       await dispatch(createQuote(user[0].SellerID, { formData, authFlag }));
@@ -186,8 +186,8 @@ export function CreateQuote({ customers, sellers }) {
 
   const handleNextButton = () => {
     if(progress === 20){
-      const areCustomerFieldCompleted = Object.values(formData.customer).every((value) => value.length !== 0 && value !== 'undefined')
-      console.log(formData)
+      const areCustomerFieldCompleted = Object.values(formData.customer).every((value) => value.length !== 0)
+      
       setDisable(!areCustomerFieldCompleted);
     }
     if (progress === 40) {
@@ -213,11 +213,11 @@ export function CreateQuote({ customers, sellers }) {
         dispatch(getCustomerProjects(customerID));
         setProgress(progress + 20);
       
-      const areVariablesAndProjectNameCompleted =
-        Object.values(formData.variables).every((value) => value.length !== 0) &&
-        formData.project.ProjectName.length !== 0;
-  
-      setDisable(!areVariablesAndProjectNameCompleted);
+      // const areVariablesAndProjectNameCompleted =
+      //   Object.values(formData.variables).every((value) => value.length !== 0) &&
+      //   formData.project.ProjectName.length !== 0;
+        
+      // setDisable(!areVariablesAndProjectNameCompleted);
     }}
   
     if (progress === 60) {
