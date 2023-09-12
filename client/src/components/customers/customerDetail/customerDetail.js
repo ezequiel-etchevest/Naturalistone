@@ -1,10 +1,10 @@
-import { Box, HStack, Text } from "@chakra-ui/react";
+import { Box, Text } from "@chakra-ui/react";
 import CustomerInformation from './customerInformation';
 import CustomerRelationshipList from "./CustomerRelationshipList";
 import { CustomerRelationship } from "./CustomerRelationship";
 import ProjectList from "./projectList";
 import InvoiceList from "./invoiceList";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getCustomerRelationship } from "../../../redux/actions-customers";
 
@@ -82,7 +82,8 @@ const CustomerDetail = ({user, customer, projects_by_customer_id }) => {
             bg={'web.sideBar'}
             border={'1px solid'} 
             rounded={'md'} 
-            borderColor={'web.border'}>
+            borderColor={'web.border'}
+            >
               <CustomerRelationship user={user} customer={customer}/>
               <CustomerRelationshipList customer_relationship={customer_relationship}/>
               </Box>

@@ -34,7 +34,8 @@ customersRouter.get("/relationship", async function(req, res) {
   const { customerId } = req.query
 
   try {
-      const getCustomerRelationshipQuery = `SELECT Customer_Relationship.*, Seller.FirstName AS SellerName FROM Customer_Relationship
+      const getCustomerRelationshipQuery = `SELECT Customer_Relationship.*, CONCAT (Seller.FirstName, ' ', Seller.LastName) AS SellerName
+      FROM Customer_Relationship
       LEFT JOIN Seller ON Seller.SellerID = Customer_Relationship.SellerID
       WHERE CustomerID = ${customerId}`
 
@@ -60,9 +61,10 @@ customersRouter.get('/:id', async function(req, res){
 
     const {id} = req.params
 
-    query_ = `SELECT NaturaliStone.Customers.*, Discount.Rate As DiscountRate 
+    query_ = `SELECT NaturaliStone.Customers.*, Discount.Rate As DiscountRate, CONCAT (Seller.FirstName, ' ', Seller.LastName) AS SellerName
         FROM Customers
         LEFT JOIN Discount ON Discount.DiscountID = Customers.DiscountID 
+        LEFT JOIN Seller ON Seller.SellerID = Customers.SellerID
         WHERE CustomerID = ${id}`;
     try{
          mysqlConnection.query(query_, function(error, results, fields){
@@ -182,7 +184,6 @@ customersRouter.patch('/:id', async function(req, res){
 customersRouter.post('/relationship', async function(req, res){
 
     const {
-        Date,
         Action,
         Comment,
     } = req.body

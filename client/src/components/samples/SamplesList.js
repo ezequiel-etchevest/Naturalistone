@@ -7,27 +7,35 @@ import {
     Th,
     Td,
     TableContainer,
-    useToast,
     Text,
     Center,
     useDisclosure,
     } from '@chakra-ui/react'
 import { useEffect, useState } from 'react';
 import SamplesProducts from './SamplesProducts';
+import { AiFillDelete } from "react-icons/ai"
+import { deleteSample, getSamples } from '../../redux/actions-samples';
+import { useDispatch } from 'react-redux';
   
 
   const ModelTr = ({e}) => {
 
     const { isOpen, onClose, onOpen } = useDisclosure()
+
+    const dispatch = useDispatch()
   
     const handleClick = (e) => {
       onOpen()
+    }
+
+    const handleDelete = (idSample) => {
+      dispatch(deleteSample(idSample))
+      dispatch(getSamples())
     }
   
     return(
       <>
       <Tr 
-      onClick={handleClick} 
       cursor={'pointer'} 
       key={e.CustomerID}
       _hover={{
@@ -36,16 +44,17 @@ import SamplesProducts from './SamplesProducts';
         }}
       >
 
-        <Td fontSize={'xs'} pl={'2vw'}>{e.idSamples}</Td>
-        <Td fontSize={'xs'} w={'10vw'} maxW={'10vw'} minW={'10vw'} overflow={'hidden'}>
+        <Td onClick={handleClick} fontSize={'xs'} pl={'2vw'}>{e.idSamples}</Td>
+        <Td onClick={handleClick} fontSize={'xs'} w={'10vw'} maxW={'10vw'} minW={'10vw'} overflow={'hidden'}>
           <Text whiteSpace="nowrap" overflow="hidden" textOverflow="ellipsis">{e.Company}</Text>
         </Td>
-        <Td fontSize={'xs'} w={'10vw'} maxW={'10vw'} minW={'10vw'} overflow={'hidden'}>
+        <Td onClick={handleClick} fontSize={'xs'} w={'10vw'} maxW={'10vw'} minW={'10vw'} overflow={'hidden'}>
           <Text whiteSpace="nowrap" overflow="hidden" textOverflow="ellipsis">{e.ProjectName}</Text>
         </Td>
-        <Td fontSize={'xs'} w={'8vw'} maxW={'8vw'}textAlign={'center'}>{e.TrackingNumber}</Td>
-        <Td fontSize={'xs'} w={'6vw'} maxW={'6vw'}textAlign={'center'}>{e.InsertDate?.split('T')[0]}</Td>
-        <Td fontSize={'xs'} w={'6vw'} maxW={'6vw'}textAlign={'center'}>{e.EstDelivery_Date?.split('T')[0]}</Td>
+        <Td onClick={handleClick} fontSize={'xs'} w={'8vw'} maxW={'8vw'}textAlign={'center'}>{e.TrackingNumber}</Td>
+        <Td onClick={handleClick} fontSize={'xs'} w={'6vw'} maxW={'6vw'}textAlign={'center'}>{e.InsertDate?.split('T')[0]}</Td>
+        <Td onClick={handleClick} fontSize={'xs'} w={'8vw'} maxW={'6vw'}textAlign={'center'}>{e.EstDelivery_Date?.split('T')[0]}</Td>
+        <Td onClick={() => handleDelete(e.idSamples)} fontSize={'xs'} w={'2vw'} maxW={'6vw'}textAlign={'center'}>{<AiFillDelete />}</Td>
       </Tr>
       { isOpen && <SamplesProducts isOpenModal={isOpen} onCloseModal={onClose} idSamples={e.idSamples}/> }
       </>
@@ -118,6 +127,7 @@ import SamplesProducts from './SamplesProducts';
                     <Th color={'web.text2'} w={'8vw'} maxW={'8vw'} textAlign={'center'}>Tracking Number</Th>
                     <Th color={'web.text2'} w={'6vw'} maxW={'6vw'} textAlign={'center'}>Insert Date</Th>
                     <Th color={'web.text2'} w={'6vw'} maxW={'6vw'} textAlign={'center'}>Est Delivery Date</Th>
+                    <Th color={'web.text2'} w={'2vw'} maxW={'6vw'} textAlign={'center'}></Th>
                   </Tr>
                 </Thead>
                 <Tbody >

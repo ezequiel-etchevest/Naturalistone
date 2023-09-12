@@ -48,7 +48,7 @@ const ModelTr = ({e}) => {
         )
       }
       
-      <Td fontSize={'xs'} maxW={'3vw'} textAlign={'center'}>{e.DiscountRate ? e.DiscountRate :'-'}</Td>
+      <Td fontSize={'xs'} maxW={'3vw'} textAlign={'center'}>{e.DiscountRate ? `${e.DiscountRate} %` : '-'}</Td>
     </Tr>
   )
 }

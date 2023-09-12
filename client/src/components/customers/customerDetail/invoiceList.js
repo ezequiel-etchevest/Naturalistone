@@ -42,7 +42,9 @@ const InvoiceList = () => {
               borderRadius: '5px',
             },
           }}> 
-          { project_invoices.length ? (
+          { typeof project_invoices !== "string" 
+          ? 
+          project_invoices.length ? (
               <TableContainer  w={'48vw'} >
                 <Table color={'web.text'} variant={'simple'} size={'sm'} >
                   <Thead h={'4vh'}>
@@ -65,7 +67,12 @@ const InvoiceList = () => {
               <Center w={'30vw'} h={'22vh'} >
                 <Text userSelect={'none'} fontSize={'1.5vh'}>To view the invoices, please choose a project.</Text>
               </Center>
-            )}
+            )
+          :
+              <Center w={'30vw'} h={'22vh'} >
+                <Text userSelect={'none'} fontSize={'1.5vh'}>No invoices to this project.</Text>
+              </Center>
+          }
         </Box> 
       </>
     )}

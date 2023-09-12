@@ -42,8 +42,8 @@ return(
       </Box> 
         <Box
           maxHeight={'27vh'}
-          // maxWidth={'50vw'}
           overflow={'auto'}
+          overflowX={'auto'}
           css={{
             '&::-webkit-scrollbar': {
               width: '0.4vw',
@@ -60,10 +60,10 @@ return(
           <Table color={'web.text'} variant={'simple'} size={'sm'} >
             <Thead h={'4vh'}>
               <Tr>
-                <Th h={'4vh'} color={'web.text2'} textAlign={'center'} fontSize={'1.6vh'}>Date</Th>
-                <Th h={'4vh'} color={'web.text2'} textAlign={'center'} fontSize={'1.6vh'}>Action</Th>
-                <Th h={'4vh'} color={'web.text2'} textAlign={'center'} fontSize={'1.6vh'}>Seller</Th>
-                <Th h={'4vh'} color={'web.text2'} textAlign={'center'} fontSize={'1.6vh'}>Comment</Th>
+                <Th h={'4vh'} w={"10%"} color={'web.text2'} textAlign={'center'} fontSize={'1.6vh'}>Date</Th>
+                <Th h={'4vh'} w={"10%"} color={'web.text2'} textAlign={'center'} fontSize={'1.6vh'}>Action</Th>
+                <Th h={'4vh'} w={"10%"} color={'web.text2'} textAlign={'center'} fontSize={'1.6vh'}>Seller</Th>
+                <Th h={'4vh'} w={"60%"} color={'web.text2'} textAlign={'center'} fontSize={'1.6vh'}>Comment</Th>
               </Tr>
             </Thead>
             <Tbody >

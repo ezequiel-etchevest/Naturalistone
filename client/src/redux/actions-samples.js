@@ -3,6 +3,7 @@ export const GET_SAMPLES = 'GET_SAMPLES';
 export const POST_SAMPLES = 'POST_SAMPLES';
 export const GET_SAMPLES_PRODUCTS = 'GET_SAMPLES_PRODUCTS'
 export const GET_SAMPLES_TRACKINGNUMBER = 'GET_SAMPLES_TRACKINGNUMBER'
+export const DELETE_SAMPLE = 'DELETE_SAMPLE'
 
 export function getSamples(search){
   
@@ -66,6 +67,20 @@ export function validateTrackingNumber(trackingNumber){
       }
     } catch (error) {
       console.log('error validating Trackingnumber')
+    }
+  }
+}
+
+export function deleteSample(idSample) {
+  return async function (dispatch) {
+    try {
+      const {data} = await axios.delete(`/samples/${idSample}`)
+
+      return dispatch({
+        type: DELETE_SAMPLE
+      })
+    } catch (error) {
+      console.log('error in delete sample', error)
     }
   }
 }

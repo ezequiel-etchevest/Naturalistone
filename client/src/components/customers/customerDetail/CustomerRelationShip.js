@@ -1,4 +1,4 @@
-import { Box, Button, FormControl, FormLabel, IconButton, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, NumberInput, NumberInputField, Select, Text, Textarea, useDisclosure } from '@chakra-ui/react'
+import { Box, Button, FormControl, FormLabel, IconButton, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Select, Text, Textarea, useDisclosure } from '@chakra-ui/react'
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { createCustomerRelationship, getCustomerRelationship } from '../../../redux/actions-customers'
@@ -36,7 +36,7 @@ export function CustomerRelationship({ user, customer }) {
     })
   }
 
-  const handleSubmit = (event) => {
+  const handleSubmit = () => {
     if (formData.Action === "" || formData.Comment === "") {
       return;
     }
@@ -51,8 +51,11 @@ export function CustomerRelationship({ user, customer }) {
 
   return(
       <>
-        <Box display={"flex"} justifyContent={"center"} alignItems={"center"} flexDir={"row"}>
-          <Text>
+        <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} flexDir={"row"}>
+          <Text
+            mb={'1vh'} 
+            fontSize={'2.6vh'} 
+            color={'web.text2'}>
             Customer Relationship
           </Text>
             <IconButton
@@ -62,6 +65,7 @@ export function CustomerRelationship({ user, customer }) {
               display={'flex'} 
               placeContent={'center'}
               alignItems={'center'}
+              pr={"40px"}
               color={'web.text2'} 
               _hover={{
                 color: 'logo.orange'
@@ -127,13 +131,14 @@ export function CustomerRelationship({ user, customer }) {
               variant="unstyled"
               textColor={'web.text'}
               placeholder="Write your comment here..."
-              _placeholder={{ fontFamily: 'body', fontWeight: 'inherit', fontStyle:'italic', pl:'1vw' }}
+              _placeholder={{ fontFamily: 'body', fontWeight: 'inherit', fontStyle:'italic' }}
               size={"sm"}
               border={'1px solid'}
               borderColor={'web.border'}
               type={"text"}
               value={formData.Comment}
               onChange={handleChange}
+              p={"1vw"}
               />
             </FormControl>
           </ModalBody>
@@ -141,7 +146,6 @@ export function CustomerRelationship({ user, customer }) {
             <Button
               colorScheme={'orange'} 
               mr={3}
-              // disabled={disabled()} 
               onClick={()=>handleSubmit()}
               >
               Submit

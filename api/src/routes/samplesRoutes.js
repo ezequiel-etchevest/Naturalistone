@@ -331,5 +331,23 @@ samplesRoutes.get("/validation/:trackingNumber", function (req, res) {
   }
 });
 
+samplesRoutes.delete("/:sampleId", function(req, res) {
+  const { sampleId } = req.params;
+
+  try {
+    const deleteSampleQuery = `Delete FROM Samples WHERE idSamples = ${sampleId}`
+
+    mysqlConnection.query(deleteSampleQuery, function(err, results) {
+      if (err) {
+        return res.status(400).json({success: false, msg: "Error in delete sample", error: err})
+      }
+      console.log("Delete sample successful")
+      return res.status(200).json({success: true, msg:"Delete sample successful"})
+    })
+  } catch (error) {
+      return res.status(500).json({success: true, msg:"General error in delete sample"})
+  }
+})
+
 
 module.exports = samplesRoutes;

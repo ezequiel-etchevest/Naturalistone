@@ -134,7 +134,7 @@ const CustomerInformation = ({customer}) => {
               justifyContent={'space-around'}
               alignContent={'center'}>
               <Text fontSize={'1.6vh'} color={'web.text2'}>Seller</Text>
-              <Text fontSize={'2.05vh'} fontWeight={'bold'}>{normalizeValue(customer.SellerID)}</Text>
+              <Text fontSize={'2.05vh'} fontWeight={'bold'}>{normalizeValue(customer.SellerName)}</Text>
             </Box>
           </Box>
           {/*Discount*/} 
@@ -146,7 +146,7 @@ const CustomerInformation = ({customer}) => {
               justifyContent={'space-around'}
               alignContent={'center'}>
               <Text fontSize={'1.6vh'} color={'web.text2'}>Discount</Text>
-              <Text fontSize={'2.05vh'} fontWeight={'bold'}>{normalizeValue(customer.DiscountRate)}</Text>
+              <Text fontSize={'2.05vh'} fontWeight={'bold'}>{`${normalizeValue(customer.DiscountRate)} %`}</Text>
             </Box>
           </Box>
         </Box>
