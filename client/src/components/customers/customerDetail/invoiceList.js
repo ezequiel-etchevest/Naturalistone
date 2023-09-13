@@ -1,5 +1,5 @@
-import { Text, Box, TableContainer, Table, Thead, Tr, Th, Tbody, Td, Center, border } from "@chakra-ui/react";
-import { useSelector, useDispatch } from "react-redux";
+import { Text, Box, TableContainer, Table, Thead, Tr, Th, Tbody, Td, Center } from "@chakra-ui/react";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 const ModelTr = ({invoice}) => {
@@ -70,7 +70,7 @@ const InvoiceList = () => {
             )
           :
               <Center w={'30vw'} h={'22vh'} >
-                <Text userSelect={'none'} fontSize={'1.5vh'}>No invoices to this project.</Text>
+                <Text userSelect={'none'} fontSize={'1.5vh'}>No associated sales to this project.</Text>
               </Center>
           }
         </Box> 

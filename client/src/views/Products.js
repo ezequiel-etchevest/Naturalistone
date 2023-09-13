@@ -46,7 +46,8 @@ const Products = ({focus, setFocus}) => {
       }},[dispatch, userLocal, user])
 
     useEffect(()=>{
-        if(!allProducts?.length && !Object.entries(productsErrors)?.length) dispatch(
+        // if(!allProducts?.length && !Object.entries(productsErrors)?.length) 
+        dispatch(
           getFiltered(
             filters.finish,
             filters.size,

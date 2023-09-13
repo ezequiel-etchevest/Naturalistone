@@ -12,7 +12,7 @@ prodSoldRouter.get('/:id', async function(req, res){
                   Dimension.Type,
                   Dimension.Size,
                   Dimension.Finish,
-                  Dimension.Material,
+                  ProdNames.Material,
                   Dimension.Thickness FROM Products
                   INNER JOIN ProdNames ON ProdNames.ProdNameID = Products.ProdNameID
                   INNER JOIN ProdSold ON ProdSold.ProdID = Products.ProdID

@@ -160,7 +160,9 @@ productsRouter.get('/id/:id', async function(req, res){
                   Products.SalePrice AS Price,
                   Products.ProdID,
                   Products.Notes,
-                  Inventory.*
+                  Inventory.*,
+                  Products.Sale_Flag,
+                  Products.Sale_Rate
                 FROM Products
                 INNER JOIN ProdNames ON ProdNames.ProdNameID = Products.ProdNameID
                 INNER JOIN Dimension ON Dimension.DimensionID = Products.DimensionID
@@ -202,6 +204,7 @@ productsRouter.get('/filtered', async function(req, res){
       Products.SalePrice AS Price,
       Products.ProdID,
       Inventory.*,
+      Products.Discontinued_Flag,
     CASE
       WHEN Dimension.Type = 'Tile' THEN Inventory.InStock_Available + Inventory.InComing_Available
       WHEN Dimension.Type = 'Slab' THEN (Inventory.InStock_Available + Inventory.InComing_Available) * Dimension.SQFT_per_Slab
@@ -266,23 +269,33 @@ productsRouter.get('/filtered', async function(req, res){
   });
   
 
-productsRouter.patch('/discontinued/:id', async function(req, res){
-    
+  productsRouter.patch('/product/:id', async function(req, res){
+
     const {id} = req.params
-    const {flag} = req.body
-    const val = flag === true ? 'False' : 'True'
+    const { product } = req.body
+    const val = product.flag === undefined ? null : product.flag === true ? 'False' : 'True'
+    const valSale = product.saleFlag === undefined ? null : product.saleFlag  === true ? 'False' : 'True'
+    const updateColumnProduct = []
+
+    if(valSale && valSale !== undefined) updateColumnProduct.push(`Sale_Flag = "${valSale}"`)
+
+    if(val && val !== undefined) updateColumnProduct.push(`Discontinued_Flag = "${val}"`)
+
+    if(product.productRate) updateColumnProduct.push(`Sale_Rate = ${product.productRate}`)
     
-    query_ = `UPDATE Products SET Discontinued_Flag = "${val}" WHERE ProdID =${id}`
+    const updateColumnProductString = updateColumnProduct.join(', ')
+
+    query_ = `UPDATE Products SET ${updateColumnProductString} WHERE ProdID = ${id}`
 
     try{
        mysqlConnection.query(query_, function(error, results, fields){
 
             if(error) throw error;
             if(results.length == 0) {
-                console.log(`Failure updating Discontinued on prod ${id}`)
+                console.log(`Failure updating prodcut ${id}`)
                 res.status(200).json('');
             } else {
-                console.log('discontinued OK')
+                console.log('updating OK')
                 res.status(200).json(results);
             }
         });

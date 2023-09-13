@@ -101,13 +101,14 @@ export const AddCommentModal = ({task, user, activeCard}) => {
               variant="unstyled"
               textColor={'web.text'}
               placeholder="Write your comment here..."
-              _placeholder={{ fontFamily: 'body', fontWeight: 'inherit', fontStyle:'italic', pl:'1vw' }}
+              _placeholder={{ fontFamily: 'body', fontWeight: 'inherit', fontStyle:'italic' }}
               size={"sm"}
               border={'1px solid'}
               borderColor={'web.border'}
               type={"text"}
               value={task_comment.Description}
               onChange={handleChange}
+              p={'1vw'}
               />
           </FormControl>
         </Box>

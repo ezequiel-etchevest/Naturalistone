@@ -14,22 +14,20 @@ import {
 } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { getProductById } from '../../redux/actions-products';
+import { getFiltered, getProductById } from '../../redux/actions-products';
 import { useEffect, useState } from 'react';
 import{ ImCheckboxChecked, ImCheckboxUnchecked } from 'react-icons/im';
-import { patchDiscontinued } from '../../redux/actions-products';
+import { patchProduct } from '../../redux/actions-products';
 import '../../assets/styleImgs.css';
 import { getProductImage } from '../../redux/actions-products';
 
 
 const ModelTr = ({e, user, allProducts, loadedCount}) => {
-
 const a = e.Discontinued_Flag === 'True' ? true : false 
 const [flag, setFlag] = useState(a)
 const productImage = useSelector(state => state.product_image);
 const navigate = useNavigate()
 const dispatch = useDispatch()
-
 
 const handleClickProduct = () => {
   dispatch(getProductById(e.ProdID))
@@ -38,7 +36,10 @@ const handleClickProduct = () => {
   }
 const handleClickSwitch = () => {
   setFlag(flag === true ? false : true)
-  dispatch(patchDiscontinued(e.ProdID, flag))
+  const bodyUpdate = {
+    flag
+  }
+  dispatch(patchProduct(e.ProdID, bodyUpdate))
   }
 
   // useEffect(() => {

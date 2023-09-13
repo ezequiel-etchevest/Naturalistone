@@ -23,7 +23,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getProductById } from '../../redux/actions-products';
 import { useEffect, useState } from 'react';
 import{ ImCheckboxChecked, ImCheckboxUnchecked } from 'react-icons/im';
-import { patchDiscontinued } from '../../redux/actions-products';
+import { patchProduct } from '../../redux/actions-products';
 
 
 const ModelTr = ({e, setProducts, products}) => {

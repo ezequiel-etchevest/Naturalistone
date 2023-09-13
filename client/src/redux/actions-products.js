@@ -136,12 +136,11 @@ export function updateProductNotes(input, idProduct){
             }
         }
 }
-export function patchDiscontinued(idProduct, flag){
+export function patchProduct(idProduct, product){
 
     return async function(dispatch){
         try{
-            console.log({flag})
-            let {response} = await axios.patch(`/products/discontinued/${idProduct}`, {flag})
+            let {response} = await axios.patch(`/products/product/${idProduct}`, {product})
             
             let {data} = await axios.get(`/products`)
             

@@ -10,27 +10,19 @@ import {
     Text,
     Center,
     useDisclosure,
+    Spinner,
     } from '@chakra-ui/react'
 import { useEffect, useState } from 'react';
 import SamplesProducts from './SamplesProducts';
-import { AiFillDelete } from "react-icons/ai"
-import { deleteSample, getSamples } from '../../redux/actions-samples';
-import { useDispatch } from 'react-redux';
+import SampleDeleteModal from './SampleDeleteModal';
   
 
-  const ModelTr = ({e}) => {
+  const ModelTr = ({e, setLoader}) => {
 
     const { isOpen, onClose, onOpen } = useDisclosure()
 
-    const dispatch = useDispatch()
-  
     const handleClick = (e) => {
       onOpen()
-    }
-
-    const handleDelete = (idSample) => {
-      dispatch(deleteSample(idSample))
-      dispatch(getSamples())
     }
   
     return(
@@ -54,7 +46,7 @@ import { useDispatch } from 'react-redux';
         <Td onClick={handleClick} fontSize={'xs'} w={'8vw'} maxW={'8vw'}textAlign={'center'}>{e.TrackingNumber}</Td>
         <Td onClick={handleClick} fontSize={'xs'} w={'6vw'} maxW={'6vw'}textAlign={'center'}>{e.InsertDate?.split('T')[0]}</Td>
         <Td onClick={handleClick} fontSize={'xs'} w={'8vw'} maxW={'6vw'}textAlign={'center'}>{e.EstDelivery_Date?.split('T')[0]}</Td>
-        <Td onClick={() => handleDelete(e.idSamples)} fontSize={'xs'} w={'2vw'} maxW={'6vw'}textAlign={'center'}>{<AiFillDelete />}</Td>
+        <Td fontSize={'xs'} w={'2vw'} maxW={'6vw'}textAlign={'center'}>{<SampleDeleteModal idSample={e.idSamples}/>}</Td>
       </Tr>
       { isOpen && <SamplesProducts isOpenModal={isOpen} onCloseModal={onClose} idSamples={e.idSamples}/> }
       </>
@@ -141,7 +133,7 @@ import { useDispatch } from 'react-redux';
             </TableContainer> 
              ) : (
             <Center w={'full'} h={'full'}>
-              <Text userSelect={'none'} color={'web.text2'} fontSize={'2vh'}>No samples found</Text>
+              <Spinner thickness={'4px'} size={'xl'} color={'logo.orange'}>No samples found</Spinner>
             </Center>
             )
          } 
