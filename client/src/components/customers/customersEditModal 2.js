@@ -299,7 +299,7 @@ return (
                     cursor={'pointer'}
                     name="Company_Position"
                   >
-                <option value='' className="options">Select Role</option>
+                <option value='' className="options" disabled>Select Role</option>
                 {
                   companyRole.length ? (
                     companyRole?.map((role, i) => {

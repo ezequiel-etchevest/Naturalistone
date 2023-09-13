@@ -34,7 +34,7 @@ import { getSamples, postSamples, validateTrackingNumber } from "../../../redux/
 import CreateSampleModalAskEmail from "./CreateSampleModalAskEmail";
 import { day0, month0, year } from "../../../utils/todayDate";
 
-export function CreateSampleModal({ customers, sellers, samples }) {
+export function CreateSampleModal({ customers, sellers }) {
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { isOpen: isOpen2, onOpen: onOpen2, onClose: onClose2 } = useDisclosure();
@@ -47,6 +47,7 @@ export function CreateSampleModal({ customers, sellers, samples }) {
   const [disable, setDisable] = useState(true);
   const [progress, setProgress] = useState(20);
   const [submited, setSubmited] = useState(false);
+  const [updated, setUpdated] = useState(false);
   const [formData, setFormData] = useState({
     customer: {
       Contact_Name: "",
@@ -140,40 +141,49 @@ export function CreateSampleModal({ customers, sellers, samples }) {
       },
     });
   };
-
+  
+  
+  useEffect(() => {
+    if(progress === 40){
+      const areCustomerFieldCompleted = Object.values(formData.customer).every((value) => value.length !== 0)
+      setDisable(!areCustomerFieldCompleted);
+  }}, [formData.customer]);
 
   const handleNextButton = () => {
+    if(progress === 20){
+      const areCustomerFieldCompleted = Object.values(formData.customer).every((value) => value.length !== 0)
+      setDisable(!areCustomerFieldCompleted);
+    }
     setErrorsCustomer({});
     if (progress === 40) {
       let newErrors = validateEmptyInputsCreateSample(formData.customer);
-      console.log(newErrors)
+
       setErrorsCustomer(newErrors);
-      if (Object.entries(newErrors).length) {
-        // if (!toast.isActive(toastId)) {
-          return toast({
+      if (Object.entries(newErrors).length > 0) {
+        if (!toast.isActive(toastId)) {
+          toast({
             id: toastId,
             title: "Error",
-            description: "Name, Email, Phone and Seller fields must be completed",
+            description: "All fields must be completed",
             status: "error",
             duration: 5000,
             isClosable: true,
           });
-        } else {
-        dispatch(updateCustomer(customerID, formData.customer));
+        }
+        return; // No avanza si hay errores
+      } else {
+        if(updated){
+          dispatch(updateCustomer(customerID, formData.customer));
+        }
         dispatch(getCustomerProjects(customerID));
         setProgress(progress + 20);
-        if (
-          Object.values(formData.variables).every(
-            (value) => value.length !== 0
-          ) &&
-          formData.project.ProjectName.length !== 0
-        ) {
-          setDisable(false);
-        } else {
-          setDisable(true);
-        }
-      }
-    }
+
+        const areVariablesAndProjectNameCompleted = Object.values(formData.variables).every((value) => value.length !== 0) &&
+        formData.project.ProjectName.length !== 0;
+  
+        setDisable(!areVariablesAndProjectNameCompleted);
+      }}
+
     if (progress === 60) {
       if (Object.entries(errorsProjectList).length) {
         return;
@@ -298,6 +308,7 @@ export function CreateSampleModal({ customers, sellers, samples }) {
                 setFormData={setFormData}
                 errorsCustomer={errorsCustomer}
                 setErrorsCustomer={setErrorsCustomer}
+                setUpdated={setUpdated}
                 sellers={sellers}
                 user={user}
               />

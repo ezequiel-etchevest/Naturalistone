@@ -4,7 +4,7 @@ import Filters from './filters';
 import { useEffect, useState } from 'react';
 import { useLocation } from "react-router-dom";
 
-const InfoContainer = ({seller_invoices, user, focusFilter, setFocusFilter, seller_values, customers}) => {
+const InfoContainer = ({seller_invoices, user, sellers, focusFilter, setFocusFilter, seller_values, customers}) => {
 
   const [loading, setLoading] = useState(false)
   const location = useLocation()
@@ -44,6 +44,7 @@ const InfoContainer = ({seller_invoices, user, focusFilter, setFocusFilter, sell
               seller_values={seller_values}
               seller_invoices={seller_invoices}
               user={user}
+              sellers={sellers}
               setFocusFilter={setFocusFilter}
               focusFilter={focusFilter}
               customers={customers}

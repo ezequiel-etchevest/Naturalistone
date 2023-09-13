@@ -14,7 +14,7 @@ import {
   Tooltip,
   ModalCloseButton,
 } from "@chakra-ui/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { day0, month0, year } from "../../../utils/todayDate";
 import { AiOutlineFileAdd } from "react-icons/ai";
@@ -27,17 +27,22 @@ import CreateQuoteCustomerProjets from "./createQuoteProject";
 import CreateQuoteProducts from "./createQuoteProducts";
 import { getAllProductsNewQuote } from "../../../redux/actions-products";
 import CreateQuoteProductsReview from "./createQuoteProductsReview";
-import { createQuote } from "../../../redux/actions-invoices";
-import CreatedQuotePdf from "./createQuotePdf";
+import { cleanCreatedQuote, createQuote } from "../../../redux/actions-invoices";
 import QuotePdfModal from "../createQuote/quotePdfModal";
+import { addSpecialProducts } from "../../../redux/actions-sp-1";
 
-export function CreateQuote({ customers }) {
+export function CreateQuote({ customers, sellers }) {
+
   const { isOpen, onOpen, onClose } = useDisclosure();
   const user = useSelector((state) => state.user);
+  const values = useSelector(state => state.products_new_quote_values)
+  const posted_quote = useSelector((state) => state.posted_quote);
+
   const [errorsCustomer, setErrorsCustomer] = useState({});
   const [disable, setDisable] = useState(true);
   const [progress, setProgress] = useState(20);
   const [submited, setSubmited] = useState(false);
+  const [updated, setUpdated] = useState(false);
   const [formData, setFormData] = useState({
     customer: {
       Contact_Name: "",
@@ -56,6 +61,7 @@ export function CreateQuote({ customers }) {
       Billing_ZipCode: "",
       Billing_State: "",
       CustomerID: "",
+      Seller: ""
     },
     project: {
       ProjectName: "",
@@ -66,6 +72,7 @@ export function CreateQuote({ customers }) {
       Shipping_Address: "",
     },
     products: {},
+    specialProducts:[],
     variables: {
       shipVia: "",
       method: "",
@@ -76,11 +83,28 @@ export function CreateQuote({ customers }) {
       quoteID: "",
     },
   });
+
   const dispatch = useDispatch();
   const toast = useToast();
   const toastId = "error-toast";
   const customerID = formData.customer.CustomerID;
+ 
+  useEffect(() => {
+    if(Object.entries(posted_quote).length){
+    sp1PostBack()
+  }}, [posted_quote]);
 
+  useEffect(() => {
+    if(!values.length){
+      dispatch(getAllProductsNewQuote('', '', ''))
+    }}, []);
+
+    useEffect(() => {
+      if(progress === 40){
+        const areCustomerFieldCompleted = Object.values(formData.customer).every((value) => value.length !== 0)
+        setDisable(!areCustomerFieldCompleted);
+    }}, [formData.customer]);
+    
   const validateAuthFlag = (objetos) => {
     for (const id in objetos) {
       if (objetos.hasOwnProperty(id)) {
@@ -91,11 +115,18 @@ export function CreateQuote({ customers }) {
     }
     return false;
   };
-  let authFlag = validateAuthFlag(formData.products);
+  
+  const sp1PostBack = () => {
+    if(formData.specialProducts.length && Object.entries(posted_quote).length){
+      let invoiceID = posted_quote.Naturali_Invoice;
+       dispatch(addSpecialProducts(invoiceID,  formData.specialProducts))
+    }
+  }
 
-  const handleSubmit = () => {
+  let authFlag = validateAuthFlag(formData.products);
+  const handleSubmit = async () => {
     if (progress === 100) {
-      dispatch(createQuote(user[0].SellerID, { formData, authFlag }));
+      await dispatch(createQuote(user[0].SellerID, { formData, authFlag }));
     }
     setSubmited(true);
   };
@@ -107,6 +138,7 @@ export function CreateQuote({ customers }) {
     setDisable(true);
     setProgress(20);
     setSubmited(false);
+    dispatch(cleanCreatedQuote())
   };
 
   const handleCleanFormData = () => {
@@ -138,6 +170,7 @@ export function CreateQuote({ customers }) {
         Shipping_Address: "",
       },
       products: {},
+      specialProducts:[],
       variables: {
         shipVia: "",
         method: "",
@@ -151,13 +184,18 @@ export function CreateQuote({ customers }) {
   };
 
   const handleNextButton = () => {
-    setErrorsCustomer({});
+    if(progress === 20){
+      const areCustomerFieldCompleted = Object.values(formData.customer).every((value) => value.length !== 0)
+      
+      setDisable(!areCustomerFieldCompleted);
+    }
     if (progress === 40) {
       let newErrors = validateEmptyInputsCreateQuote(formData.customer);
       setErrorsCustomer(newErrors);
-      if (Object.entries(newErrors).length) {
+      
+      if (Object.entries(newErrors).length > 0) {
         if (!toast.isActive(toastId)) {
-          return toast({
+          toast({
             id: toastId,
             title: "Error",
             description: "All fields must be completed",
@@ -166,22 +204,21 @@ export function CreateQuote({ customers }) {
             isClosable: true,
           });
         }
+        return; // No avanza si hay errores
       } else {
-        dispatch(updateCustomer(customerID, formData.customer));
+        if(updated){
+          dispatch(updateCustomer(customerID, formData.customer));
+        }
         dispatch(getCustomerProjects(customerID));
         setProgress(progress + 20);
-        if (
-          Object.values(formData.variables).every(
-            (value) => value.length !== 0
-          ) &&
-          formData.project.ProjectName.length !== 0
-        ) {
-          setDisable(false);
-        } else {
-          setDisable(true);
-        }
-      }
-    }
+      
+      // const areVariablesAndProjectNameCompleted =
+      //   Object.values(formData.variables).every((value) => value.length !== 0) &&
+      //   formData.project.ProjectName.length !== 0;
+        
+      // setDisable(!areVariablesAndProjectNameCompleted);
+    }}
+  
     if (progress === 60) {
       dispatch(getAllProductsNewQuote("", "", ""));
       setProgress(progress + 20);
@@ -189,6 +226,7 @@ export function CreateQuote({ customers }) {
       setProgress(progress + 20);
     }
   };
+  
 
   const handlePreviousButton = () => {
     if (progress == 40) {
@@ -202,7 +240,6 @@ export function CreateQuote({ customers }) {
     }
     setProgress(progress - 20);
   };
-
   return (
     <>
       <ButtonGroup onClick={onOpen} display={"flex"} spacing={0}>
@@ -230,12 +267,13 @@ export function CreateQuote({ customers }) {
       <Modal
         isOpen={isOpen}
         onClose={handleClose}
-        size={"5xl"}
+        size={!submited ? "5xl" : 'full'}
         motionPreset="slideInRight"
       >
         <ModalOverlay />
         <ModalContent
           minW={"50vw"}
+          maxW={'70vw'}
           bg={"web.sideBar"}
           border={"1px solid"}
           borderColor={"web.border"}
@@ -260,8 +298,8 @@ export function CreateQuote({ customers }) {
             display={"flex"}
             justifyContent={"center"}
             flexDir={"column"}
-            minH={!submited ? "64vh" : "80vh"}
-            maxH={!submited ? "64vh" : "80vh"}
+            minH={!submited ? "64vh" : "100%"}
+            maxH={!submited ? "64vh" : "100%"}
           >
             {progress == 20 && (
               <CreateQuoteCustomer
@@ -269,6 +307,7 @@ export function CreateQuote({ customers }) {
                 setFormData={setFormData}
                 formData={formData}
                 setDisable={setDisable}
+                user={user}
               />
             )}
             {progress == 40 && (
@@ -277,6 +316,9 @@ export function CreateQuote({ customers }) {
                 setFormData={setFormData}
                 errorsCustomer={errorsCustomer}
                 setErrorsCustomer={setErrorsCustomer}
+                setUpdated={setUpdated}
+                sellers={sellers}
+                user={user}
               />
             )}
             {progress == 60 && (
@@ -291,11 +333,12 @@ export function CreateQuote({ customers }) {
                 formData={formData}
                 setFormData={setFormData}
                 setDisable={setDisable}
+                values={values}
               />
             )}
             {!submited &&
               progress == 100 &&
-              (Object.entries(formData.products).length ? (
+              (Object.entries(formData.products).length || Object.entries(formData.specialProducts).length  ? (
                 <CreateQuoteProductsReview
                   formData={formData}
                   setFormData={setFormData}

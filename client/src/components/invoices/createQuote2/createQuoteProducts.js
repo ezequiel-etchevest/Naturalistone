@@ -8,23 +8,22 @@ import {
   Divider,
   Tooltip,
   } from "@chakra-ui/react"
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllProductsNewQuote } from "../../../redux/actions-products";
 import {BiSearch} from 'react-icons/bi'
 import {AiOutlineClear} from 'react-icons/ai';
 import '../../../assets/styleSheet.css'
 import CreateQuoteProductsList from "./createQuoteProductsList";
+import AddSpecialProduct from "./createQuoteAddSpecialProd";
 
-const CreateQuoteProducts = ({formData, setFormData, invoice_products, setDisable}) => {
+const CreateQuoteProducts = ({formData, setFormData, invoice_products, setDisable, values}) => {
 
 const dispatch = useDispatch()
-const toast = useToast()
 const allProducts = useSelector(state => state.products_new_quote)
 const allProductsErrors = useSelector(state => state.products_new_quote_errors)
 const productErrors = useSelector((state) => state.products_errors)
-const values = useSelector(state => state.products_new_quote_values)
-
+const [allMaterials, setAllMaterials] = useState(values?.materials)
 
 const [filters, setFilters] = useState({
   finish:'',
@@ -66,7 +65,7 @@ const handleClear = () => {
     })
 
   setFilterProducts('All')   
-    dispatch(getAllProductsNewQuote( '','',''))
+  dispatch(getAllProductsNewQuote( '','',''))
 }
 
 const handleProducts = (e) => {
@@ -121,7 +120,7 @@ return(
         name={'material'}
         value={filters.material}
       >
-      <option value='' className="options">Type</option>
+      <option value='' className="options">Material</option>
       {
         Object.entries(values).length ?
         values?.materials.map((v, i) => {
@@ -192,25 +191,26 @@ return(
         _active={{ color: 'gray.800'}}
       />
       <Divider orientation={'vertical'} h={'5vh'} ml={'1vw'}mr={'1vw'} pt={'2vh'}/>
+      <AddSpecialProduct values={values} allMaterials={allMaterials} formData={formData} setFormData={setFormData}/>
       <Tooltip placement={'bottom-start'} label={'Clear all filters'} fontWeight={'hairline'}>      
-      <IconButton
-        icon={ <AiOutlineClear/>}
-        pt={'2.2vh'}
-        variant={'unstyled'} 
-        display={'flex'} 
-        borderRadius={'sm'} 
-        placeContent={'center'}
-        alignItems={'center'}
-        color={'web.text2'} 
-        _hover={{
-           color: 'logo.orange'
-           }}
-        _active={{
-        }}
-        onClick={(e) => handleClear(e)}
-        >
-      </IconButton>
-  </Tooltip> 
+        <IconButton
+          icon={ <AiOutlineClear/>}
+          pt={'2.2vh'}
+          variant={'unstyled'} 
+          display={'flex'} 
+          borderRadius={'sm'} 
+          placeContent={'center'}
+          alignItems={'center'}
+          color={'web.text2'} 
+          _hover={{
+             color: 'logo.orange'
+             }}
+          _active={{
+          }}
+          onClick={(e) => handleClear(e)}
+          >
+        </IconButton>
+      </Tooltip> 
     </Box>          
     <CreateQuoteProductsList allProducts={allProducts} allProductsErrors={allProductsErrors} formData={formData} setFormData={setFormData} filterProducts={filterProducts} invoice_products={invoice_products} setDisable={setDisable}/>
   </Box> 

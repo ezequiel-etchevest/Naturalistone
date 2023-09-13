@@ -41,7 +41,8 @@ const ModelTr = ({ e, formData, setFormData, setDisable }) => {
             quantity: event,
             prodID: e.ProdID,
             prodName: e.ProductName,
-            type: e.Material,
+            type: e.Type,
+            material: e.Material,
             size: e.Size,
             thickness: e.Thickness,
             finish: e.Finish,
@@ -114,6 +115,10 @@ const ModelTr = ({ e, formData, setFormData, setDisable }) => {
         {" "}
         {e.Thickness === null ? "N/A" : e.Thickness}{" "}
       </Td>
+      <Td maxW={"2vw"} fontSize={"2xs"} textAlign={"center"}>
+        {" "}
+        {e.Type === null ? "N/A" : e.Type}{" "}
+      </Td>
       <Td fontSize={"2xs"} maxW={"8vw"} textAlign={"center"}>
         {" "}
         {e.Finish === null ? "N/A" : e.Finish}{" "}
@@ -180,6 +185,7 @@ const CreateQuoteProductsList = ({
       <Box
         maxHeight={"50vh"}
         minHeight={"50vh"}
+        w={'98%'}
         overflow={"auto"}
         css={{
           "&::-webkit-scrollbar": {
@@ -204,62 +210,16 @@ const CreateQuoteProductsList = ({
               <Table color={"web.text"} variant={"simple"} size={"sm"}>
                 <Thead h={"6vh"}>
                   <Tr>
-                    <Th
-                      color={"web.text2"}
-                      fontSize={"2xs"}
-                      textAlign={"center"}
-                    >
-                      Quantities
-                    </Th>
-                    <Th color={"web.text2"} fontSize={"2xs"}>
-                      Product Name
-                    </Th>
-                    <Th
-                      color={"web.text2"}
-                      fontSize={"2xs"}
-                      textAlign={"center"}
-                    >
-                      Type
-                    </Th>
-                    <Th
-                      color={"web.text2"}
-                      fontSize={"2xs"}
-                      textAlign={"center"}
-                    >
-                      Size
-                    </Th>
-                    <Th
-                      color={"web.text2"}
-                      fontSize={"2xs"}
-                      textAlign={"center"}
-                    >
-                      Thickness
-                    </Th>
-                    <Th
-                      color={"web.text2"}
-                      fontSize={"2xs"}
-                      w={"10vw"}
-                      textAlign={"center"}
-                    >
-                      Finish
-                    </Th>
-                    <Th color={"web.text2"} fontSize={"2xs"} isNumeric>
-                      Price
-                    </Th>
-                    <Th
-                      color={"web.text2"}
-                      fontSize={"2xs"}
-                      textAlign={"center"}
-                    >
-                      In Stock
-                    </Th>
-                    <Th
-                      color={"web.text2"}
-                      fontSize={"2xs"}
-                      textAlign={"center"}
-                    >
-                      Incoming
-                    </Th>
+                    <Th color={"web.text2"} fontSize={"2xs"} textAlign={"center"}> Quantities </Th>
+                    <Th color={"web.text2"} fontSize={"2xs"} textAlign={"center"}> Product Name </Th>
+                    <Th color={"web.text2"} fontSize={"2xs"} textAlign={"center"}> Material </Th>
+                    <Th color={"web.text2"} fontSize={"2xs"} textAlign={"center"}> Size </Th>
+                    <Th color={"web.text2"} fontSize={"2xs"} textAlign={"center"}> Thickness </Th>
+                    <Th color={"web.text2"} fontSize={"2xs"} textAlign={"center"}> Type </Th>
+                    <Th color={"web.text2"} fontSize={"2xs"} textAlign={"center"}> Finish </Th>
+                    <Th color={"web.text2"} fontSize={"2xs"} isNumeric> Price </Th>
+                    <Th color={"web.text2"} fontSize={"2xs"} textAlign={"center"}> In Stock </Th>
+                    <Th color={"web.text2"} fontSize={"2xs"} textAlign={"center"}> Incoming </Th>
                   </Tr>
                 </Thead>
                 <Tbody>
@@ -277,71 +237,27 @@ const CreateQuoteProductsList = ({
                 </Tbody>
               </Table>
             </TableContainer>
-          ) : Object.entries(formData.products).length ? (
+          ) : Object.entries(formData.products).length || formData.specialProducts.length ? (
             <TableContainer mr={"0.5vw"} ml={"0.5vw"}>
               <Table color={"web.text"} variant={"simple"} size={"sm"}>
-                <Thead h={"6vh"}>
+              <Thead h={"6vh"}>
                   <Tr>
-                    <Th
-                      color={"web.text2"}
-                      fontSize={"2xs"}
-                      textAlign={"center"}
-                    >
-                      Quantities
-                    </Th>
-                    <Th color={"web.text2"} fontSize={"2xs"}>
-                      Product Name
-                    </Th>
-                    <Th
-                      color={"web.text2"}
-                      fontSize={"2xs"}
-                      textAlign={"center"}
-                    >
-                      Type
-                    </Th>
-                    <Th
-                      color={"web.text2"}
-                      fontSize={"2xs"}
-                      textAlign={"center"}
-                    >
-                      Size
-                    </Th>
-                    <Th
-                      color={"web.text2"}
-                      fontSize={"2xs"}
-                      textAlign={"center"}
-                    >
-                      Thickness
-                    </Th>
-                    <Th
-                      color={"web.text2"}
-                      fontSize={"2xs"}
-                      w={"10vw"}
-                      textAlign={"center"}
-                    >
-                      Finish
-                    </Th>
-                    <Th color={"web.text2"} fontSize={"2xs"} isNumeric>
-                      Price
-                    </Th>
-                    <Th
-                      color={"web.text2"}
-                      fontSize={"2xs"}
-                      textAlign={"center"}
-                    >
-                      In Stock
-                    </Th>
-                    <Th
-                      color={"web.text2"}
-                      fontSize={"2xs"}
-                      textAlign={"center"}
-                    >
-                      Incoming
-                    </Th>
+                    <Th color={"web.text2"} fontSize={"2xs"} textAlign={"center"}> Quantities </Th>
+                    <Th color={"web.text2"} fontSize={"2xs"} textAlign={"center"}> Product Name </Th>
+                    <Th color={"web.text2"} fontSize={"2xs"} textAlign={"center"}> Material </Th>
+                    <Th color={"web.text2"} fontSize={"2xs"} textAlign={"center"}> Size </Th>
+                    <Th color={"web.text2"} fontSize={"2xs"} textAlign={"center"}> Thickness </Th>
+                    <Th color={"web.text2"} fontSize={"2xs"} textAlign={"center"}> Type </Th>
+                    <Th color={"web.text2"} fontSize={"2xs"} textAlign={"center"}> Finish </Th>
+                    <Th color={"web.text2"} fontSize={"2xs"} isNumeric> Price </Th>
+                    <Th color={"web.text2"} fontSize={"2xs"} textAlign={"center"}> In Stock </Th>
+                    <Th color={"web.text2"} fontSize={"2xs"} textAlign={"center"}> Incoming </Th>
                   </Tr>
                 </Thead>
                 <Tbody>
-                  {filteredProducts.map((e, i) => {
+                  {
+                  filteredProducts.length ? 
+                  filteredProducts.map((e, i) => {
                     return (
                       <ModelTr
                         key={i}
@@ -351,7 +267,33 @@ const CreateQuoteProductsList = ({
                         setDisable={setDisable}
                       />
                     );
-                  })}
+                  })
+                  : null
+                  } 
+                  { 
+                  formData.specialProducts.length ?
+                    formData.specialProducts.map((e, i) => (
+                      <Tr
+                      cursor={'pointer'} 
+                      key={i}
+                      _hover={{
+                        bg: 'web.navBar',
+                        color: 'logo.orange'
+                      }}>
+                        <Td fontSize={'2xs'} textAlign={'center'}>{e.quantity}</Td>
+                        <Td fontSize={'2xs'} w={'16vw'} textAlign={'center'}>{e.prodName}</Td>
+                        <Td fontSize={'2xs'} textAlign={'center'}>{e.material}</Td>
+                        <Td fontSize={'2xs'} textAlign={'center'}>{e.size}</Td>
+                        <Td fontSize={'2xs'} textAlign={'center'}>{e.thickness}</Td>
+                        <Td fontSize={'2xs'} textAlign={'center'}>{e.type}</Td>
+                        <Td fontSize={'2xs'} textAlign={'center'}>{e.finish}</Td>
+                        <Td fontSize={'2xs'} textAlign={'center'}>$ {e.price ? e.price.toLocaleString("en-US") : "-"}</Td>
+                        <Td fontSize={'2xs'} textAlign={'center'}> - </Td>
+                        <Td fontSize={'2xs'} textAlign={'center'}> - </Td>
+                      </Tr>
+                    ))
+                  : null
+                }
                 </Tbody>
               </Table>
             </TableContainer>

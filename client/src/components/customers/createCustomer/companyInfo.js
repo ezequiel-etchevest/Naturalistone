@@ -46,10 +46,11 @@ export function CompanyInfo({formData, setFormData, validate, errors, setErrors,
             </Box>
             <Box w={'22vw'} display={'flex'} flexDir={'row'} justifyContent={'space-between'}>
               <FormControl>
+                <FormLabel textColor={'web.text2'} fontSize={'sm'} name={'companyrole'} fontWeight={'normal'}>Company Role</FormLabel>
                 <Select
                   onChange={(e)=>handleChange(e)}
                   mb={'0.5vh'}
-                  h={'8vh'}
+                  h={'5vh'}
                   variant="unstyled"
                   borderBottomWidth={"2px"}
                   borderBottomColor={'web.text2'}

@@ -20,7 +20,7 @@ import { useState } from "react"
 import { validateCompletedInputs } from "../../../utils/validateForm"
 import { companyRole } from "../../../utils/arrayCompanyRole"
 
-const CreateSampleCustomerReview = ({setFormData, formData, setErrorsCustomer, errorsCustomer, sellers, user}) => {
+const CreateSampleCustomerReview = ({setFormData, formData, setErrorsCustomer, errorsCustomer, sellers, setUpdated}) => {
 
 const initialState = {
   Contact_Name: formData.customer.Contact_Name,
@@ -35,6 +35,7 @@ const initialState = {
 }
 const [inputs, setInputs] = useState(initialState)
 const [originInput, setOriginInput] = useState(initialState)
+const discountRates = [0, 5, 10, 15]
 
 const handleCancel = (e) => {
 
@@ -84,7 +85,7 @@ const handleChange = (e) =>{
     [name]: value  
     }
   })
-
+  setUpdated(true)
 }
 
 
@@ -330,13 +331,14 @@ function EditableControls(name, value) {
             )}
           </Box>
           <Box pt='2' w={'20vw'}h={'8vh'} mt={'0.5vh'}  maxW={'300px'}>
-          <Select
+          <Text fontSize='sm' fontWeight={'semibold'}> Seller reference </Text>
+            <Select
               onChange={(e)=>handleChange(e)}
-              mb={'0.5vh'}
               w={'19vw'}
               maxW={'280px'}
-              disabled={ user[0].Secction7Flag === 1  || user[0].SellerID === 8 ? false : true}
-              h={'8vh'}
+              pl={'2'}
+              // disabled={ user[0].Secction7Flag === 1  || user[0].SellerID === 8 ? false : true}
+              minH={'5vh'}
               variant="unstyled"
               textColor={'web.text2'}
               _placeholder={{ fontFamily: 'body', fontWeight: 'inherit', textColor: 'inherit' }}
@@ -445,67 +447,66 @@ function EditableControls(name, value) {
               }
             </Select>
           </Box>
-          <Box pt='2' w={'20vw'} h={'8vh'} mt={'0.5vh'} maxW={'300px'}>
+          <Box pt='2' w={'16vw'}h={'8vh'} mt={'0.5vh'}  maxW={'300px'}>
             <Text fontSize='sm' fontWeight={'semibold'}> Discount </Text>
-            <Editable
-              value={inputs.DiscountRate}
-              fontSize='sm'
-              fontWeight={'hairline'}
-              isPreviewFocusable={false}
-              display={'flex'}
-              flexDir={'row'}
-              pt='1'
-              pl='2' 
-              justifyContent={'space-between'}
-              w={'19vw'}
-              maxW={'280px'}
-              alignItems={'center'}
-              // onBlur={() => handleCheck({ name: 'DiscountRate', value: inputs.DiscountRate })}
-            >
-              <EditablePreview 
-              maxW={'280px'} css={{
-                whiteSpace: 'nowrap',
-                overflow: 'hidden',
-                textOverflow: 'ellipsis',
-              }} />
-              <Input as={EditableInput}
-                name={'DiscountRate'}
-                className="mailInputs"
-                w={'15vw'}
+            <Select
+                onChange={(e)=>handleChange(e)}
+                mb={'0.5vh'}
+                w={'19vw'}
                 maxW={'280px'}
-                minH={'4vh'}
+                minH={'5vh'}
+                pl={'2'}
                 variant="unstyled"
                 textColor={'web.text2'}
-                _placeholder={{ fontFamily: 'body', fontWeight: 'inherit' }}
+                _placeholder={{ fontFamily: 'body', fontWeight: 'inherit', textColor: 'inherit' }}
                 size={"sm"}
-                type={"text"}
-                _focus={{
-                  outline: 'none',
-                  boxShadow: 'none',
-               }} 
-                onChange={(e) =>{handleChange(e)}}
-              /> 
-              <EditableControls name={'DiscountRate'} value={inputs.DiscountRate}  />
-            </Editable>
-            { errorsCustomer.DiscountRate && (
-              <Text
-                h={'3.6vh'}
-                color={'web.error'}
-                fontSize={'xs'}
-                display="flex"
-                flexDirection="column"
-                justifyContent="flex-end"
-                >
-                {errorsCustomer.DiscountRate}
-              </Text>
-            )}
+                borderBottomWidth={"0"}
+                value={inputs.DiscountRate}
+                cursor={'pointer'}
+                name="DiscountRate"
+              >
+                <option value='' className="options">Select discount</option>
+                {
+                  discountRates.map((e, i) => {
+                      return(
+                        <option key={i} className={'options'} value={e}>{e}</option>
+                  )})
+                }
+            </Select>
+          </Box>
+          <Box pt='2' w={'20vw'}h={'8vh'} mt={'0.5vh'}  maxW={'300px'}>
+          <Text fontSize='sm' fontWeight={'semibold'}> Discount </Text>
+          <Select
+                onChange={(e)=>handleChange(e)}
+                mb={'0.5vh'}
+                w={'19vw'}
+                maxW={'280px'}
+                minH={'5vh'}
+                pl={'2'}
+                variant="unstyled"
+                textColor={'web.text2'}
+                _placeholder={{ fontFamily: 'body', fontWeight: 'inherit', textColor: 'inherit' }}
+                size={"sm"}
+                borderBottomWidth={"0"}
+                value={inputs.DiscountRate}
+                cursor={'pointer'}
+                name="DiscountRate"
+              >
+                <option value='' className="options">Select discount</option>
+                {
+                  discountRates.map((e, i) => {
+                      return(
+                        <option key={i} className={'options'} value={e}>{e}</option>
+                  )})
+                }
+            </Select>
           </Box>
           <Box ></Box>
         </Stack>          
       </CardBody>
     </Card>
-    </Center>
-  </>
+  </Center>
+</>
 )}
 
 export default CreateSampleCustomerReview

@@ -8,6 +8,7 @@ import { getInvoicesBySeller, getSellerValues } from '../redux/actions-invoices'
 import Redirect from "./RedirectPage";
 import { Center, Spinner, Text } from "@chakra-ui/react";
 import { useLocation } from "react-router-dom";
+import { getSellers } from "../redux/actions-sellers";
 
 
 
@@ -16,6 +17,7 @@ const Quotes = ({focus, setFocus}) => {
   const dispatch = useDispatch()
   const seller_invoices = useSelector(state => state.seller_invoices)
   const user = useSelector(state => state.user)
+  const sellers = useSelector(state => state.sellers)
   const seller_values = useSelector(state => state.seller_values)
   const customers = useSelector(state => state.customers)
   const location = useLocation()
@@ -34,6 +36,9 @@ const Quotes = ({focus, setFocus}) => {
         if(seller_values === undefined) dispatch(getSellerValues())
         if(userLocal && !user.length){
           dispatch(getEmployeeById(userLocal.SellerID))
+        }
+        if(!sellers.length){
+          dispatch(getSellers())
         }})
 
       useEffect(() => {
@@ -44,24 +49,28 @@ const Quotes = ({focus, setFocus}) => {
             selectSeller: getParamsSeller ? getParamsSeller : '',
             timeFilter: getParamsTimeFilter ? getParamsTimeFilter : 'All'
           }))
-      }}, [dispatch, user])
+        }
+        if(user.length && !customers.length){
+          dispatch(getCustomers('',''))
+        }
+    }, [dispatch, user])
 
-      useEffect(() => {
-        if(user.length){
-          dispatch(getInvoicesBySeller(user[0].SellerID, {
-            inputName: getParamsName ? getParamsName : '',
-            inputNumber: getParamsNumber ? getParamsNumber : '',
-            selectSeller: getParamsSeller ? getParamsSeller : '',
-            timeFilter: getParamsTimeFilter ? getParamsTimeFilter : 'All'
-          }))
-      }
-    }
-, [])
+//       useEffect(() => {
+//         if(user.length){
+//           dispatch(getInvoicesBySeller(user[0].SellerID, {
+//             inputName: getParamsName ? getParamsName : '',
+//             inputNumber: getParamsNumber ? getParamsNumber : '',
+//             selectSeller: getParamsSeller ? getParamsSeller : '',
+//             timeFilter: getParamsTimeFilter ? getParamsTimeFilter : 'All'
+//           }))
+//       }
+//     }
+// , [])
 
-    useEffect(() => {
-      if(user.length && !customers.length){
-        dispatch(getCustomers('',''))
-      }}, [dispatch, user])
+//     useEffect(() => {
+//       if(user.length && !customers.length){
+//         dispatch(getCustomers('',''))
+//       }}, [dispatch, user])
 
       if(userLocal){
         if(user.length){
@@ -72,6 +81,7 @@ const Quotes = ({focus, setFocus}) => {
                 seller_values={seller_values}
                 seller_invoices={seller_invoices} 
                 user={user} 
+                sellers={sellers} 
                 focusFilter={focusFilter} 
                 setFocusFilter={setFocusFilter}
                 customers={customers}/>
