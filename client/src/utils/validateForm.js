@@ -53,6 +53,9 @@ export const validateCompletedInputs = (formData) =>{
       errors.DiscountRate = 'Valid discounts: 0, 5, 10, 15'
     }
   }
+    if(formData.Company_Position === '') {
+    errors.Company_Position = 'Please enter a position'
+  }
 
   return errors
 }
@@ -300,6 +303,9 @@ export const validateCompletedInputsEditCustomer = (formData) =>{
     if(!regexOnlySting.test(formData.Company_Position)){
       errors.Company_Position = 'Please enter a valid Company position'
     }
+  }
+  if(formData.Company_Position === ''){
+      errors.Company_Position = 'Please enter a company position'
   }
   if(formData.DiscountRate !== '') {
     const allowedValues = [0, 5, 10, 15];

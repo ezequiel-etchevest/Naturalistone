@@ -11,12 +11,14 @@ import {
     IconButton,
     Flex,
     Input,
+    Select,
     } from "@chakra-ui/react"
 import { Card, CardBody, CardHeader } from '@chakra-ui/card'
 import { CheckIcon, CloseIcon, EditIcon } from '@chakra-ui/icons'
 import '../../../assets/styleSheet.css'
 import { useState } from "react"
 import { validateCompletedInputs } from "../../../utils/validateForm"
+import { companyRole } from "../../../utils/arrayCompanyRole"
 
 const CreateQuoteCustomerReview = ({setFormData, formData, setErrorsCustomer, errorsCustomer}) => {
 
@@ -310,36 +312,29 @@ function EditableControls(name, value) {
               </Box>
               <Box pt='1vw' w={'20vw'} h={'8vh'} mt={'0.5vh'}>
                 <Text fontSize='sm' fontWeight={'semibold'}> Company position </Text>
-                <Editable
-                  value={inputs.Company_Position}
-                  fontSize='sm'
-                  fontWeight={'hairline'}
-                  isPreviewFocusable={false}
-                  display={'flex'}
-                  flexDir={'row'}
-                  pl='1vw'
-                  pt='1vh'
-                  justifyContent={'space-between'}
-                  w={'19vw'}
-                >
-                  <EditablePreview />
-                  <Input as={EditableInput}
-                    name={'Company_Position'}
-                    w={'15vw'}
-                    minH={'4vh'}
+                  <Select
+                    onChange={(e)=>handleChange(e)}
+                    mb={'0.5vh'}
+                    h={'4vh'}
                     variant="unstyled"
                     textColor={'web.text2'}
-                    _placeholder={{ fontFamily: 'body', fontWeight: 'inherit' }}
+                    _placeholder={{ fontFamily: 'body', fontWeight: 'inherit', textColor: 'inherit' }}
                     size={"sm"}
-                    type={"text"}
-                    _focus={{
-                      outline: 'none',
-                      boxShadow: 'none',
-                   }} 
-                    onChange={(e) =>{handleChange(e)}}
-                  /> 
-                  <EditableControls name={'Company_Position'} value={inputs.Company_Position}  />
-                </Editable>
+                    value={inputs.Company_Position}
+                    cursor={'pointer'}
+                    name="Company_Position"
+                  >
+                <option value='' className="options">Select Role</option>
+                {
+                  companyRole.length ? (
+                    companyRole?.map((role, i) => {
+                      return(
+                        <option key={i} className={'options'} value={role}>{role}</option>
+                  )})
+                      
+                  ): ( null)
+              }
+                </Select>
                 { errorsCustomer.Company_Position && (
                     <Text mt={'1vh'} position={'absolute'} color={'web.error'} fontSize={'xs'}>
                       {errorsCustomer.Company_Position}

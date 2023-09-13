@@ -18,6 +18,7 @@ import {  CloseIcon, EditIcon } from '@chakra-ui/icons'
 import '../../../assets/styleSheet.css'
 import { useState } from "react"
 import { validateCompletedInputs } from "../../../utils/validateForm"
+import { companyRole } from "../../../utils/arrayCompanyRole"
 
 const CreateSampleCustomerReview = ({setFormData, formData, setErrorsCustomer, errorsCustomer, sellers, user}) => {
 
@@ -63,6 +64,7 @@ const handleChange = (e) =>{
     [name]: value,
   }));
 
+
   const updatedErrors = validateCompletedInputs({
     ...inputs,
     [name]: value,
@@ -82,7 +84,9 @@ const handleChange = (e) =>{
     [name]: value  
     }
   })
+
 }
+
 
 function EditableControls(name, value) {
   const {
@@ -414,58 +418,32 @@ function EditableControls(name, value) {
           </Box>
           <Box pt='2' w={'20vw'} h={'8vh'} mt={'0.5vh'} maxW={'300px'}>
             <Text fontSize='sm' fontWeight={'semibold'}> Company position </Text>
-            <Editable
-              value={inputs.Company_Position}
-              fontSize='sm'
-              fontWeight={'hairline'}
-              isPreviewFocusable={false}
-              display={'flex'}
-              flexDir={'row'}
-              pt='1'
-              pl='2' 
-              justifyContent={'space-between'}
+            <Select
+              onChange={(e)=>handleChange(e)}
+              mb={'0.5vh'}
               w={'19vw'}
               maxW={'280px'}
-              alignItems={'center'}
-              // onBlur={() => handleCheck({ name: 'Company_Position', value: inputs.Company_Position })}
+              h={'5vh'}
+              variant="unstyled"
+              textColor={'web.text2'}
+              _placeholder={{ fontFamily: 'body', fontWeight: 'inherit', textColor: 'inherit' }}
+              size={"sm"}
+              borderBottomWidth={"0"}
+              value={inputs.Company_Position}
+              cursor={'pointer'}
+              name="Company_Position"
             >
-              <EditablePreview 
-              maxW={'280px'} css={{
-                whiteSpace: 'nowrap',
-                overflow: 'hidden',
-                textOverflow: 'ellipsis',
-              }} />
-              <Input as={EditableInput}
-                name={'Company_Position'}
-                className="mailInputs"
-                w={'15vw'}
-                maxW={'280px'}
-                minH={'4vh'}
-                variant="unstyled"
-                textColor={'web.text2'}
-                _placeholder={{ fontFamily: 'body', fontWeight: 'inherit' }}
-                size={"sm"}
-                type={"text"}
-                _focus={{
-                  outline: 'none',
-                  boxShadow: 'none',
-               }} 
-                onChange={(e) =>{handleChange(e)}}
-              /> 
-              <EditableControls name={'Company_Position'} value={inputs.Company_Position}  />
-            </Editable>
-            { errorsCustomer.Company_Position && (
-              <Text
-                h={'3.6vh'}
-                color={'web.error'}
-                fontSize={'xs'}
-                display="flex"
-                flexDirection="column"
-                justifyContent="flex-end"
-                >
-                {errorsCustomer.Company_Position}
-              </Text>
-            )}
+              <option value='' className="options" disabled>Select Role</option>
+              {
+                companyRole.length ? (
+                  companyRole?.map((role, i) => {
+                      return(
+                        <option key={i} className={'options'} value={role}>{role}</option>
+                  )})
+                      
+                  ): ( null)
+              }
+            </Select>
           </Box>
           <Box pt='2' w={'20vw'} h={'8vh'} mt={'0.5vh'} maxW={'300px'}>
             <Text fontSize='sm' fontWeight={'semibold'}> Discount </Text>

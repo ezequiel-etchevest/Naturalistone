@@ -1,6 +1,7 @@
-import { VStack, Box, FormControl, Input, Text, FormLabel, RadioGroup, HStack, Radio} from "@chakra-ui/react";
+import { VStack, Box, FormControl, Input, Text, FormLabel, RadioGroup, HStack, Radio, Select} from "@chakra-ui/react";
 import '../../../assets/styleSheet.css'
 import { useState } from "react";
+import { companyRole } from "../../../utils/arrayCompanyRole";
 
 
 export function CompanyInfo({formData, setFormData, validate, errors, setErrors, setChangeInput, handleChange}) {
@@ -45,25 +46,36 @@ export function CompanyInfo({formData, setFormData, validate, errors, setErrors,
             </Box>
             <Box w={'22vw'} display={'flex'} flexDir={'row'} justifyContent={'space-between'}>
               <FormControl>
-                <FormLabel textColor={'web.text2'} name={'companyrole'}  fontSize={'sm'}>Company Role</FormLabel>
-                  <Input
+                <Select
+                  onChange={(e)=>handleChange(e)}
                   mb={'0.5vh'}
+                  h={'8vh'}
                   variant="unstyled"
-                  textColor={'web.text'}
-                  _placeholder={{ fontFamily: 'body', fontWeight: 'inherit' }}
-                  size={"sm"}
                   borderBottomWidth={"2px"}
                   borderBottomColor={'web.text2'}
-                  type={"text"}
-                  name={"Company_Position"}
+                  textColor={'web.text2'}
+                  _placeholder={{ fontFamily: 'body', fontWeight: 'inherit', textColor: 'inherit' }}
+                  size={"sm"}
                   value={formData.Company_Position}
-                  onChange={handleChange}
-                  />
-                  { errors.Company_Position && (
-                    <Text position={'absolute'} color={'web.error'} fontSize={'xs'}>
-                      {errors.Company_Position}
-                    </Text>
-                  )}
+                  cursor={'pointer'}
+                  name="Company_Position"
+                >
+                <option value='' className="options">Select Role</option>
+                {
+                  companyRole.length ? (
+                    companyRole?.map((role, i) => {
+                      return(
+                        <option key={i} className={'options'} value={role}>{role}</option>
+                  )})
+                      
+                  ): ( null)
+              }
+                </Select>
+            { errors.Company_Position && (
+                <Text position={'absolute'} color={'web.error'} fontSize={'xs'}>
+                   {errors.Company_Position}
+                 </Text>
+               )}
               </FormControl>
             </Box>
             <Box w={'22vw'} display={'flex'} flexDir={'row'} justifyContent={'space-between'}>
