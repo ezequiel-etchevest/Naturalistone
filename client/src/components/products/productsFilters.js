@@ -15,9 +15,12 @@ import { useDispatch } from 'react-redux';
 import {AiOutlineClear} from 'react-icons/ai';
 import PriceSlider from "./priceSlider";
 import { useLocation, useNavigate } from "react-router-dom";
+import CreateProduct from "./createProduct";
 
 
-const ProductsFilters = ({setCurrentPage, values}) => {
+const ProductsFilters = ({setCurrentPage, values, factories}) => {
+
+  console.log("factories", factories)
 
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -200,10 +203,11 @@ const ProductsFilters = ({setCurrentPage, values}) => {
           justifyContent={'center'}
         >
           {/* -------------------- SEARCH INPUT ------------------------------ */}
-        <Box ml={'2vh'} w={'15vw'} mt={'8vh'} display={'flex'} alignSelf={'flex-start'} >
+        <Box ml={'2vh'} w={'20vw'} mt={'8vh'} display={'flex'} alignSelf={'flex-start'} flexDir={"row"} justifyContent={"spa"}>
+          <Box w={"full"}>
           <Input
             mb={'3vh'}
-            w={'80%'}
+            w={'60%'}
             minH={'4.5vh'}
             variant="unstyled"
             placeholder={'Product name'}
@@ -227,6 +231,8 @@ const ProductsFilters = ({setCurrentPage, values}) => {
               }}
               _active={{ color: 'gray.800'}}
             />
+            </Box>
+            <CreateProduct values={values} factories={factories} />
         </Box>
 {/* --------------------BOX SELECTS, SLIDER AND CLEAR BUTTON ------------------------------ */}
         <Box 

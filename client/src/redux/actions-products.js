@@ -11,6 +11,7 @@ export const GET_PRODUCT_IMAGE = 'GET_PRODUCT_IMAGE';
 export const CLEAN_PRODUCT_DETAIL = 'CLEAN_PRODUCT_DETAIL';
 export const GET_PRODUCTS_NEW_QUOTE = 'GET_PRODUCTS_NEW_QUOTE';
 export const GET_PRODUCTS_NEW_SAMPLES = 'GET_PRODUCTS_NEW_SAMPLES';
+export const POST_PRODUCT = 'POST_PRODUCT';
 
 export function getAllProducts(){
     return async function(dispatch){
@@ -226,4 +227,21 @@ export function cleanProductDetail(){
     }
 }
                 
+export function postProduct(product){
+
+    return async function(dispatch){
+        try{
+            let {response} = await axios.post('/', {product})
             
+            let {data} = await axios.get(`/products`)
+            
+            dispatch(
+                {
+                    type: POST_PRODUCT,
+                    payload: data
+                })
+            }catch(error){
+                console.log({error})     
+            }
+        }
+}

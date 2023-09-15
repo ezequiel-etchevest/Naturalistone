@@ -5,7 +5,7 @@ import { useEffect, useState } from "react"
 import { Center, Spinner } from "@chakra-ui/react"
 import { useLocation } from "react-router-dom"
 
-const ProductsContainer = ({ allProducts, user, values }) => {
+const ProductsContainer = ({ allProducts, user, values, factories }) => {
 
     const [filteredProducts, setFilteredProducts] = useState([])
 
@@ -28,6 +28,7 @@ const ProductsContainer = ({ allProducts, user, values }) => {
                 allProducts={allProducts}
                 setFilteredProducts={setFilteredProducts}
                 values={values}
+                factories={factories}
                 />
                 <ProductList 
                 allProducts={allProducts}

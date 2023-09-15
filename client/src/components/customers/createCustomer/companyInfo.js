@@ -54,6 +54,7 @@ export function CompanyInfo({formData, setFormData, validate, errors, setErrors,
                   variant="unstyled"
                   borderBottomWidth={"2px"}
                   borderBottomColor={'web.text2'}
+                  color={'web.text2'}
                   textColor={'web.text2'}
                   _placeholder={{ fontFamily: 'body', fontWeight: 'inherit', textColor: 'inherit' }}
                   size={"sm"}

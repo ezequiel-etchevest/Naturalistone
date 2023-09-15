@@ -7,6 +7,7 @@ import { cleanProductValue, getFiltered, getProductImage } from '../redux/action
 import { getEmployeeById } from "../redux/actions-employees";
 import Redirect from "./RedirectPage";
 import { useLocation } from "react-router-dom";
+import { getFactories } from "../redux/actions-factories";
 
 
 const Products = ({focus, setFocus}) => {
@@ -16,6 +17,7 @@ const Products = ({focus, setFocus}) => {
   const allProducts = useSelector(state => state.all_products)
   const productsErrors = useSelector(state => state.products_errors)
   const values = useSelector(state => state.product_values)
+  const factories = useSelector(state => state.factories)
   const userLocal = JSON.parse(localStorage.getItem('user'))
   const location = useLocation();
   const queryString = location.search;
@@ -58,13 +60,19 @@ const Products = ({focus, setFocus}) => {
             filters.type,
             ))
         },[filters])
+      
+      useEffect(() => {
+        if(factories.length === 0) {
+          dispatch(getFactories(''))
+        }
+      },[])
 
         if(user){
           if(user.length){
           return(
             <>
               <SideBar user={user} focus={focus} setFocus={setFocus}/>
-              <ProductsContainer allProducts={allProducts} user={user} values={values}/>
+              <ProductsContainer allProducts={allProducts} user={user} values={values} factories={factories}/>
             </>
             )
         }

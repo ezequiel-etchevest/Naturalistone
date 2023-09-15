@@ -8,8 +8,6 @@ import Redirect from "./RedirectPage";
 import { Text } from "@chakra-ui/react";
 import { useLocation } from "react-router-dom";
 
-
-
 const Customers = ({focus, setFocus}) => {
   
   const dispatch = useDispatch()

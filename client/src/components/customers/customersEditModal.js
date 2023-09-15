@@ -290,8 +290,11 @@ return (
                   <Select
                     onChange={(e)=>handleChange(e)}
                     mb={'0.5vh'}
-                    h={'4vh'}
+                    h={'5vh'}
+                    w={'19vw'}
+                    maxW={'300px'}
                     variant="unstyled"
+                    color={'web.text2'}
                     textColor={'web.text2'}
                     _placeholder={{ fontFamily: 'body', fontWeight: 'inherit', textColor: 'inherit' }}
                     size={"sm"}

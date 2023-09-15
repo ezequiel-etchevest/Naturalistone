@@ -40,6 +40,7 @@ import {
     CLEAN_PRODUCT_DETAIL,
     GET_PRODUCTS_NEW_QUOTE,
     GET_PRODUCTS_NEW_SAMPLES,
+    POST_PRODUCT,
      } from './actions-products';
 import { 
   GET_CURRENT_MONTH,
@@ -654,6 +655,10 @@ function rootReducer (state = intialState, action) {
             return {
               ...state,
               customer_relationship: action.payload
+            }
+          case POST_PRODUCT:
+            return {
+              ...state,
             }
         default:
             return {

@@ -8,7 +8,7 @@ const ProductSale = ({product}) => {
   const productFlag = product.Sale_Flag === 'True' ? true : false
   const [saleFlag, setSaleFlag] = useState(productFlag)
   const dispatch = useDispatch()
-  const rate = [0, 10, 15, 20]
+  const rate = [10, 15, 20]
   const productRateNumber = product.Sale_Rate ? product.Sale_Rate : 0
   const [productRate, setProductRate] = useState(productRateNumber)
 
@@ -52,11 +52,11 @@ const ProductSale = ({product}) => {
           >
           <Text color={'web.text2'} fontSize={'2.2vh'}>Product Sale</Text>
             <Box display={"flex"} w={"full"} h={"full"} pt={"4vh"} justifyContent={"space-between"}>
-                <Text>Product in sale</Text>
+                <Text>Product in Sale</Text>
                 <Switch onChange={() => handleClickSwitch()} isChecked={saleFlag} colorScheme={'orange'} size={'md'}/>
             </Box>
             <Box display={"flex"} w={"full"} h={"full"} justifyContent={"space-between"} >
-                <Text>Sale rate</Text>
+                <Text>Discount Rate</Text>
                 <Select
                   onChange={(e)=>handleChange(e)}
                   w={'5vw'}
@@ -71,7 +71,6 @@ const ProductSale = ({product}) => {
                   cursor={'pointer'}
                   name="Seller"
                 >
-                  <option value='' className="options" disabled>Select rate</option>
                   {
                     rate.length && rate.map((rate, i) => {
                       return(
