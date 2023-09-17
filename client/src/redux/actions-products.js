@@ -231,7 +231,7 @@ export function postProduct(product){
 
     return async function(dispatch){
         try{
-            let {response} = await axios.post('/', {product})
+            let { response } = await axios.post('/products', {product})
             
             let {data} = await axios.get(`/products`)
             
@@ -240,8 +240,11 @@ export function postProduct(product){
                     type: POST_PRODUCT,
                     payload: data
                 })
+                console.log("responmse", response)
+                return response
             }catch(error){
-                console.log({error})     
+                console.log('soy err', error)
+                return error
             }
         }
 }

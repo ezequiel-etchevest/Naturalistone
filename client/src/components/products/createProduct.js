@@ -16,29 +16,33 @@ import {
   TableContainer,
   Tbody,
   Td,
+  Text,
   Th,
   Thead,
   Tooltip,
   Tr,
   useDisclosure,
+  useToast,
   } from "@chakra-ui/react"
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AiOutlineFire, AiOutlinePlus } from 'react-icons/ai';
 import { BsFillPlusSquareFill } from "react-icons/bs"
 import { InputsCreateProduct } from "./createProductInputs";
+import { useDispatch } from "react-redux";
+import { postProduct } from "../../redux/actions-products";
 
 const CreateProduct = ({values, factories}) => {
   
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const dispatch = useDispatch();
+  const toast = useToast();
   const [products, setProducts] = useState({
     prodName:'',
     material: '',
     factoryProdName:'',
     factory: '',
     dimensions: [{
-          um: 'Units',
-          prodName: '',
-          material: 'Marble',
+          um: 'Sqft',
           size: '',
           thickness: '',
           type:'Tile',
@@ -48,14 +52,15 @@ const CreateProduct = ({values, factories}) => {
     });
   
   const addProduct = () => {
-    setProducts([...products.dimensions, {
-      um: 'Units',
+    setProducts({...products,
+      dimensions:[...products.dimensions, {
+      um: 'Sqft',
       size: '',
       thickness: '',
       type:'Tile',
       finish:'Honed',
       price:0
-    }]) 
+    }]}) 
   }
 
   const handleChangeProductName = (event) => {
@@ -67,11 +72,35 @@ const CreateProduct = ({values, factories}) => {
   }
 
   const handleChange = (e, field, index) => {
-
+    const value = e.target.value;
+    
     const updated = {...products.dimensions[index]};
 
-    const value = e.target.value;
-   
+   if (field === 'type') {
+    if (value === "Tile" || value === "Mosaic") {
+    setProducts(prev => {
+      const newProducts = {
+        ...prev,
+        dimensions: [...prev.dimensions]
+      };
+      newProducts.dimensions[index].um = 'Sqft';
+      
+      return newProducts; 
+    });
+      updated['um'] = 'Sqft'
+    } else {
+    setProducts(prev => {
+      const newProducts = {
+        ...prev,
+        dimensions: [...prev.dimensions]
+      };
+      newProducts.dimensions[index].um = 'Units';
+      
+      return newProducts; 
+    });
+      updated['um'] = 'Units'
+    }
+   }
     if(field === 'price') {
   
       const regex = /^\d+(\.\d{1,2})?$|^$/;
@@ -92,17 +121,19 @@ const CreateProduct = ({values, factories}) => {
       }
   
     } else {
-  
       updated[field] = value;
   
     }
   
     setProducts(prev => {
+      console.log("soy prev", prev)
       // Actualizar producto en estado
-      const newProducts = [...prev.dimensions];
-      console.log("newproduxct", newProducts)
-      newProducts[index] = updated;
-      console.log("neeeee", newProducts)
+      const newProducts = {
+        ...prev,
+        dimensions: [...prev.dimensions]
+      };
+      newProducts.dimensions[index] = updated;
+      
       return newProducts; 
     });
   }
@@ -110,10 +141,21 @@ const CreateProduct = ({values, factories}) => {
   const handleDelete = (index) => {
     const newProducts = [...products.dimensions];
     newProducts.splice(index, 1);
-    setProducts(newProducts);
+    setProducts({
+      ...products,
+      dimensions:newProducts
+    });
   }
 
+  console.log("products", products)
+
   const isValid = () => {
+    if (
+      products.prodName === ''||
+      products.factory === '' ||
+      products.factoryProdName === '' ||
+      products.material === ''
+      ) return false
     return products.dimensions.every(product => {
       const requiredFields = ['price'];
   
@@ -127,18 +169,41 @@ const CreateProduct = ({values, factories}) => {
     });
   }
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!isValid()) {
       alert('Please fill all fields');
       return;
     } else {
-
+      const { response } = await dispatch(postProduct(products))
+      console.log("soy response", response)
+      if (!response.data.success) {
+      if(!toast.isActive("toastProduct")){
+        return toast(({
+          id: "toastProduct",
+          title: "Error",
+          description: `${response.data.msg}`,
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+          }))
+      } else {
+        toast(({
+          id: "toastProduct",
+          title: "Success",
+          description: `${response.data.msg}`,
+          status: "success",
+          duration: 5000,
+          isClosable: true,
+          }))
+        onClose()
+      }
+      }
     }
-
-    onClose()
   }
 
-  console.log("valuyes", products)
+  useEffect(() => {
+
+  },[products])
 
   return(
     <Box>
@@ -267,6 +332,8 @@ const CreateProduct = ({values, factories}) => {
 }
 
 const ModelTr = ({product, handleChange, handleDelete, index, values}) => {
+
+  
   
   return (
     <Tr
@@ -299,24 +366,14 @@ const ModelTr = ({product, handleChange, handleDelete, index, values}) => {
           <option value='Mosaic' className="options">Mosaic</option>
         </Select>
       </Td>
-      {/* <Td  pl={'3.5vw'} maxW={'6vw'}>
-        <Select
-          onChange={e => handleChange(e, 'um', index)}
-          w={'5vw'}         
-          minH={'5.5vh'}
-          variant="unstyled"
+      <Td  pl={'3.5vw'} maxW={'6vw'}>
+        <Text
+          id="um"
           textColor={'web.text2'}
-          _placeholder={{ fontFamily: 'body', fontWeight: 'inherit', textColor: 'inherit' }}
-          size={"sm"}
-          borderBottomColor={'web.text2'}
           _hover={{borderColor: 'web.border'}}
-          cursor={'pointer'}
-          name={'um'}
-          value={product.um}
           >
-          <option value='Units'className="options">Units</option>
-          <option value='Sqft' className="options">Sqft</option>
-        </Select>
+      {product.um}
+</ Text>
       </Td>
       <Td pl={'3.5vw'} maxW={'6vw'} minW={'6vw'}>
         <Input
@@ -419,7 +476,7 @@ const ModelTr = ({product, handleChange, handleDelete, index, values}) => {
           }}
           onClick={() => handleDelete(index)}
         />
-      </Td> */}
+      </Td>
     </Tr>
   )
 }

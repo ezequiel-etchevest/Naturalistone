@@ -20,8 +20,6 @@ import CreateProduct from "./createProduct";
 
 const ProductsFilters = ({setCurrentPage, values, factories}) => {
 
-  console.log("factories", factories)
-
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const location = useLocation();

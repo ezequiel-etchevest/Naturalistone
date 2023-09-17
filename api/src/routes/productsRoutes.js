@@ -148,6 +148,119 @@ productsRouter.get('/new_samples', async function(req, res){
   }
 });
 
+productsRouter.post('/', async function(req, res) {
+  const { prodName, factoryProdName, material, factory, dimensions } = req.body.product;
+
+  const numberFactory = Number(factory)
+
+  // dimension: [{type, size, thickness, finish}]
+  console.log("soy bodty", req.body)
+
+  try {
+    mysqlConnection.beginTransaction(function(err) {
+      if (err) {
+        console.log(`error in start transaction ${err}`)
+          return res
+          .status(400)
+          .json({ success: false, msg: "Error in create product" + err });
+      } 
+
+      const getProductNameQuery = `SELECT * FROM ProdNames WHERE Naturali_ProdName = "${prodName}" `
+
+      mysqlConnection.query(getProductNameQuery, function(err, resultProductName) {
+        if (err) {
+          console.log('Error in get product name')
+          res.status(400).json({success: false, msg:"Error in get product name"})
+          return mysqlConnection.rollback(function(err) {
+            throw err
+          })
+        }
+        if (resultProductName.length) {
+          console.log('product name already exists')
+          return res.status(400).json({success: false, msg: "Product name already exists"})
+        }
+      const postProductNameQuery = `INSERT INTO ProdNames (Naturali_ProdName, Factory_ProdName, FactoryID, Material)
+                                    VALUES ("${prodName}", "${factoryProdName}", ${numberFactory}, "${material}")`
+
+      mysqlConnection.query(postProductNameQuery, async function(err, postProductNameResult) {
+        if(err) {
+          console.log(`Error in create product name: ${err}`)
+          return mysqlConnection.rollback(function(error) {
+            throw error
+          })
+        }
+
+        const prodNameID = postProductNameResult.insertId;
+
+        const postProducts = dimensions.map((dimension) => {
+          
+          const getDimensionProductQuery = `SELECT * FROM Dimension
+          WHERE Type = "${dimension.type}" AND Size = "${dimension.size}" AND Thickness = "${dimension.thickness}" AND Finish = "${dimension.finish}"`
+
+          return new Promise((resolve, reject) => {
+            mysqlConnection.query(getDimensionProductQuery, function(err, getDimensionResult) {
+            if(err) {
+              console.log(`Error in get dimension product: ${err}`)
+              reject(err)
+              return mysqlConnection.rollback(function(err) {
+                return res.status(500).json({success: false, msg: "Error in get dimension product", error: err})
+              })
+            }
+            if (getDimensionResult.length === 0) {
+              console.log("no product with dimension found")
+              return res.status(400).json({success: false, msg:"Product dimension not exists", error: err})
+            }
+            console.log("soy get,", getDimensionResult)
+
+            resolve(getDimensionResult)
+            const dimensionID = getDimensionResult[0].DimensionID;
+
+            const postProductQuery = `INSERT INTO Products (ProdNameID, DimensionID, SalePrice)
+                                      VALUES (${prodNameID}, ${dimensionID}, ${dimension.price})`;
+
+            mysqlConnection.query(postProductQuery, function(err, postProductResult) {
+              if (err) {
+                reject(err)
+                console.log(`Error in post product: ${err}`)
+                return mysqlConnection.rollback(function(err) {
+                  return res.status(500).json({success: false, msg: "Error in post product", error: err})
+                })
+              }
+
+              console.log(`Create product successful productId:${postProductResult.insertId}`)
+              return resolve(postProductResult)
+            })
+            })
+          })
+        })
+
+        await Promise.all(postProducts)
+
+        mysqlConnection.commit(function(err) {
+          if(err) {
+            console.log(`Error in commit transaction post product: ${err}`)
+            res.status(500).json({success: false, msg: "Error in post product commit", error: err})
+            mysqlConnection.rollback(function(err){
+            throw err
+            })
+          }
+           console.log("Commit transaction post product successful")
+          return res.status(200).json({success: true, msg: "Create product successful"})
+              })
+
+      })
+    })
+  })
+
+  } catch (error) {
+    console.log(`General Error`)
+    res.status(400).json({msg:"General error in create products"})
+    mysqlConnection.rollback(function(err) {
+      throw 'General error' + err
+    })
+  }
+})
+
 productsRouter.get('/id/:id', async function(req, res){
     const {id} = req.params
 
@@ -305,116 +418,6 @@ productsRouter.get('/filtered', async function(req, res){
     }
 });
 
-productsRouter.post('/', async function(req, res) {
-  const { prodName, factoryProdName, material, factory, dimensions } = req.body;
-
-  // dimension: [{type, size, thickness, finish}]
-  console.log("soy bodty", req.body)
-
-  try {
-    mysqlConnection.beginTransaction(function(err) {
-      if (err) {
-        console.log(`error in start transaction ${err}`)
-          return res
-          .status(400)
-          .json({ success: false, msg: "error in post /sample" + err });
-      } 
-
-      const getProductNameQuery = `SELECT * FROM ProdNames WHERE Naturali_ProdName = "${prodName}" `
-
-      mysqlConnection.query(getProductNameQuery, function(err, resultProductName) {
-        if (err) {
-          console.log('Error in get product name')
-          res.status(400).json({msg:"Error in get product name"})
-          return mysqlConnection.rollback(function(err) {
-            throw err
-          })
-        }
-        if (resultProductName.length) {
-          console.log('product name already exists')
-          return res.status(400).json({msg: "Product name already exists"})
-        }
-      const postProductNameQuery = `INSERT INTO ProdNames (Naturali_ProdName, Factory_ProdName, FactoryID, Material)
-                                    VALUES ("${prodName}", "${factoryProdName}", ${factory}, "${material}")`
-
-      mysqlConnection.query(postProductNameQuery, async function(err, postProductNameResult) {
-        if(err) {
-          console.log(`Error in create product name: ${err}`)
-          return mysqlConnection.rollback(function(error) {
-            throw error
-          })
-        }
-
-        const prodNameID = postProductNameResult.insertId;
-
-        const postProducts = dimensions.map((dimension) => {
-          
-          const getDimensionProductQuery = `SELECT * FROM Dimension
-          WHERE Type = "${dimension.type}" AND Size = "${dimension.size}" AND Thickness = "${dimension.thickness}" AND Finish = "${dimension.finish}"`
-
-          return new Promise((resolve, reject) => {
-            mysqlConnection.query(getDimensionProductQuery, function(err, getDimensionResult) {
-            if(err) {
-              console.log(`Error in get dimension product: ${err}`)
-              reject(err)
-              return mysqlConnection.rollback(function(err) {
-                throw err
-              })
-            }
-            if (getDimensionResult === 0) {
-              console.log("no product with dimension found")
-              return res.status(400).json({msg:"no product with dimension", error: err})
-            }
-
-            resolve(getDimensionResult)
-            console.log(getDimensionResult)
-            const dimensionID = getDimensionResult[0].DimensionID;
-
-            const postProductQuery = `INSERT INTO Products (ProdNameID, DimensionID, SalePrice)
-                                      VALUES (${prodNameID}, ${dimensionID}, ${dimension.price})`;
-
-            mysqlConnection.query(postProductQuery, function(err, postProductResult) {
-              if (err) {
-                reject(err)
-                console.log(`Error in post product: ${err}`)
-                return mysqlConnection.rollback(function(err) {
-                  throw err
-                })
-              }
-
-              console.log(`Create product successful productId:${postProductResult.insertId}`)
-              return resolve(postProductResult)
-            })
-            })
-          })
-        })
-
-        await Promise.all(postProducts)
-
-        mysqlConnection.commit(function(err) {
-          if(err) {
-            console.log(`Error in commit transaction post product: ${err}`)
-            res.status(500).json({msg: "Error in post product commit", error: err})
-            mysqlConnection.rollback(function(err){
-            throw err
-            })
-          }
-           console.log("Commit transaction post product successful")
-          return res.status(200).json({ msg: "Create product successful"})
-              })
-
-      })
-    })
-  })
-
-  } catch (error) {
-    console.log(`General Error`)
-    res.status(400).json({msg:"General error in create products"})
-    mysqlConnection.rollback(function(err) {
-      throw 'General error' + err
-    })
-  }
-})
 
 
 

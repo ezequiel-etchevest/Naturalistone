@@ -52,7 +52,7 @@ let PriceSlider = ({setFilters, filters, limit, setLimit, values}) =>{
             aria-label={['min', 'max']}
             colorScheme={'orange'}
             value={filters.sqft}
-            zIndex={2}
+            // zIndex={2}
             onChangeEnd={(val) => {
               dispatch(getFiltered(filters.finish, filters.size, filters.thickness,filters.material, filters.search, val, filters.type))}}
             onChange={(e) => handlePrice(e)}
