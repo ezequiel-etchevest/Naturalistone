@@ -208,9 +208,10 @@ productsRouter.post('/', async function(req, res) {
             }
             if (getDimensionResult.length === 0) {
               console.log("no product with dimension found")
-              return res.status(400).json({success: false, msg:"Product dimension not exists", error: err})
+              return mysqlConnection.rollback(function(err) {
+                return res.status(400).json({success: false, msg: "Dimension not exists", error: err})
+              })
             }
-            console.log("soy get,", getDimensionResult)
 
             resolve(getDimensionResult)
             const dimensionID = getDimensionResult[0].DimensionID;

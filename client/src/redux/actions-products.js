@@ -231,7 +231,7 @@ export function postProduct(product){
 
     return async function(dispatch){
         try{
-            let { response } = await axios.post('/products', {product})
+            let response = await axios.post('/products', {product})
             
             let {data} = await axios.get(`/products`)
             
@@ -244,7 +244,7 @@ export function postProduct(product){
                 return response
             }catch(error){
                 console.log('soy err', error)
-                return error
+                return error.response
             }
         }
 }

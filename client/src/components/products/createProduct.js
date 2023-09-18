@@ -126,7 +126,6 @@ const CreateProduct = ({values, factories}) => {
     }
   
     setProducts(prev => {
-      console.log("soy prev", prev)
       // Actualizar producto en estado
       const newProducts = {
         ...prev,
@@ -146,8 +145,6 @@ const CreateProduct = ({values, factories}) => {
       dimensions:newProducts
     });
   }
-
-  console.log("products", products)
 
   const isValid = () => {
     if (
@@ -174,16 +171,15 @@ const CreateProduct = ({values, factories}) => {
       alert('Please fill all fields');
       return;
     } else {
-      const { response } = await dispatch(postProduct(products))
-      console.log("soy response", response)
-      if (!response.data.success) {
       if(!toast.isActive("toastProduct")){
+      const response = await dispatch(postProduct(products))
+      if (!response.data.success) {
         return toast(({
           id: "toastProduct",
           title: "Error",
           description: `${response.data.msg}`,
           status: "error",
-          duration: 5000,
+          duration: 3000,
           isClosable: true,
           }))
       } else {
@@ -192,18 +188,14 @@ const CreateProduct = ({values, factories}) => {
           title: "Success",
           description: `${response.data.msg}`,
           status: "success",
-          duration: 5000,
+          duration: 3000,
           isClosable: true,
-          }))
-        onClose()
-      }
+        }))
       }
     }
+    onClose()
+    }
   }
-
-  useEffect(() => {
-
-  },[products])
 
   return(
     <Box>
