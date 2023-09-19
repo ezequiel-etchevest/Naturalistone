@@ -211,8 +211,8 @@ const CreateProduct = ({ values, factories, materials }) => {
             duration: 3000,
             isClosable: true,
           });
-          // handleClear()
-          // onClose()
+          handleClear();
+          onClose();
         }
       }
     }
@@ -292,7 +292,7 @@ const CreateProduct = ({ values, factories, materials }) => {
               />
               <Box display={"flex"} flexDir={"row"}>
                 <Button
-                  rightIcon={<AiOutlinePlus />}
+                  leftIcon={<AiOutlinePlus />}
                   variant={"unstyled"}
                   display={"flex"}
                   alignSelf={"flex-end"}

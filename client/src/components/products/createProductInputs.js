@@ -7,7 +7,6 @@ export function InputsCreateProduct({
   factories,
   materials,
 }) {
-  console.log("soy products", products);
   return (
     <>
       <Box display={"flex"} w={"full"} flexDir={"row"} pl={"5vw"} gap={"1vw"}>
