@@ -149,16 +149,17 @@ productsRouter.post("/", async function (req, res) {
 
   const date = new Date();
 
-  // dimension: [{type, size, thickness, finish}]
   console.log("soy bodty", req.body);
 
   try {
     mysqlConnection.beginTransaction(function (err) {
       if (err) {
-        console.log(`error in start transaction ${err}`);
+        mysqlConnection.rollback(() => {
+          console.error("Error in start transaction");
+        });
         return res
-          .status(400)
-          .json({ success: false, msg: "Error in create product" + err });
+          .status(500)
+          .json({ success: false, msg: "Error in start transaction" });
       }
 
       const getProductNameQuery = `SELECT * FROM ProdNames WHERE Naturali_ProdName = "${prodName}" `;
@@ -167,19 +168,21 @@ productsRouter.post("/", async function (req, res) {
         getProductNameQuery,
         function (err, resultProductName) {
           if (err) {
-            console.log("Error in get product name");
-            res
-              .status(400)
-              .json({ success: false, msg: "Error in get product name" });
-            return mysqlConnection.rollback(function (err) {
-              throw err;
+            mysqlConnection.rollback(() => {
+              console.error("Error in get product name");
             });
-          }
-          if (resultProductName.length) {
-            console.log("product name already exists");
             return res
               .status(400)
-              .json({ success: false, msg: "Product name already exists" });
+              .json({ success: false, msg: "Error in get product name" });
+          }
+          if (resultProductName.length) {
+            mysqlConnection.rollback(() => {
+              console.error("Product name already exists");
+            });
+            return res.status(400).json({
+              success: false,
+              msg: "Product name already exists",
+            });
           }
           const postProductNameQuery = `INSERT INTO ProdNames (Naturali_ProdName, Factory_ProdName, FactoryID, Material)
                                     VALUES ("${prodName}", "${factoryProdName}", ${numberFactory}, "${material}")`;
@@ -188,9 +191,12 @@ productsRouter.post("/", async function (req, res) {
             postProductNameQuery,
             async function (err, postProductNameResult) {
               if (err) {
-                console.log(`Error in create product name: ${err}`);
-                return mysqlConnection.rollback(function (error) {
-                  throw error;
+                mysqlConnection.rollback(() => {
+                  console.error("Error in create product name");
+                });
+                return res.status(400).json({
+                  success: false,
+                  msg: "Error in create product",
                 });
               }
               console.log(
@@ -209,36 +215,39 @@ productsRouter.post("/", async function (req, res) {
                     getDimensionProductQuery,
                     function (err, getDimensionResult) {
                       if (err) {
-                        console.log(`Error in get dimension product: ${err}`);
                         reject(err);
-                        return mysqlConnection.rollback(function () {
-                          throw err;
+                        mysqlConnection.rollback(() => {
+                          console.error("Error in get dimensions");
+                        });
+                        return res.status(400).json({
+                          success: false,
+                          msg: "Error in get dimensions",
                         });
                       }
                       resolve(getDimensionResult);
 
                       if (getDimensionResult.length === 0) {
-                        const postDimensionQuery = `INSERT INTO Dimension (Type, Size, Thickness, Finish)
-                                      VALUES ("${dimension.type}", "${dimension.size}", "${dimension.thickness}", "${dimension.finish}")`;
+                        const postDimension = `INSERT INTO Dimension (Type, Size, Thickness, Finish)
+                                               Values ("${dimension.type}", "${dimension.size}", "${dimension.thickness}", "${dimension.finish}")`;
 
                         mysqlConnection.query(
-                          postDimensionQuery,
+                          postDimension,
                           function (err, postDimensionResult) {
                             if (err) {
-                              console.log(
-                                `Error in get dimension product: ${err}`
-                              );
                               reject(err);
-                              return mysqlConnection.rollback(function () {
-                                throw err;
+                              mysqlConnection.rollback(() => {
+                                console.error("Error in create dimension");
+                              });
+                              return res.status(400).json({
+                                success: false,
+                                msg: "Error in create dimensions",
                               });
                             }
-
                             resolve(postDimensionResult);
                             const dimensionID = postDimensionResult.insertId;
 
-                            const postProductQuery = `INSERT INTO Products (ProdNameID, DimensionID, SalePrice, Updated_Product)
-                                      VALUES (${prodNameID}, ${dimensionID}, ${dimension.price}, ${date})`;
+                            const postProductQuery = `INSERT INTO Products (ProdNameID, DimensionID, SalePrice)
+                                      VALUES (${prodNameID}, ${dimensionID}, ${dimension.price})`;
 
                             mysqlConnection.query(
                               postProductQuery,
@@ -252,11 +261,10 @@ productsRouter.post("/", async function (req, res) {
                                     throw err;
                                   });
                                 }
-
+                                resolve(postProductResult);
                                 console.log(
                                   `Create product successful productId:${postProductResult.insertId}`
                                 );
-                                resolve(postProductResult);
                               }
                             );
                           }
@@ -264,8 +272,8 @@ productsRouter.post("/", async function (req, res) {
                       } else {
                         const dimensionID = getDimensionResult[0].DimensionID;
 
-                        const postProductQuery = `INSERT INTO Products (ProdNameID, DimensionID, SalePrice, Updated_Product)
-                                      VALUES (${prodNameID}, ${dimensionID}, ${dimension.price}, ${date})`;
+                        const postProductQuery = `INSERT INTO Products (ProdNameID, DimensionID, SalePrice)
+                                      VALUES (${prodNameID}, ${dimensionID}, ${dimension.price})`;
 
                         mysqlConnection.query(
                           postProductQuery,
@@ -277,11 +285,11 @@ productsRouter.post("/", async function (req, res) {
                                 throw err;
                               });
                             }
+                            resolve(postProductResult);
 
                             console.log(
                               `Create product successful productId:${postProductResult.insertId}`
                             );
-                            resolve(postProductResult);
                           }
                         );
                       }
