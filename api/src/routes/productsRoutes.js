@@ -149,7 +149,11 @@ productsRouter.post("/", async function (req, res) {
 
   const date = new Date();
 
-  console.log("soy bodty", req.body);
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+
+  const formattedDate = `${year}-${month}-${day}`;
 
   try {
     mysqlConnection.beginTransaction(function (err) {
@@ -246,8 +250,8 @@ productsRouter.post("/", async function (req, res) {
                             resolve(postDimensionResult);
                             const dimensionID = postDimensionResult.insertId;
 
-                            const postProductQuery = `INSERT INTO Products (ProdNameID, DimensionID, SalePrice)
-                                      VALUES (${prodNameID}, ${dimensionID}, ${dimension.price})`;
+                            const postProductQuery = `INSERT INTO Products (ProdNameID, DimensionID, SalePrice, Updated_Date)
+                                      VALUES (${prodNameID}, ${dimensionID}, ${dimension.price}, "${formattedDate}")`;
 
                             mysqlConnection.query(
                               postProductQuery,
@@ -272,8 +276,8 @@ productsRouter.post("/", async function (req, res) {
                       } else {
                         const dimensionID = getDimensionResult[0].DimensionID;
 
-                        const postProductQuery = `INSERT INTO Products (ProdNameID, DimensionID, SalePrice)
-                                      VALUES (${prodNameID}, ${dimensionID}, ${dimension.price})`;
+                        const postProductQuery = `INSERT INTO Products (ProdNameID, DimensionID, SalePrice, Updated_Date)
+                                      VALUES (${prodNameID}, ${dimensionID}, ${dimension.price}, "${formattedDate}")`;
 
                         mysqlConnection.query(
                           postProductQuery,
