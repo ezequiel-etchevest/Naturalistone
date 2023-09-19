@@ -247,7 +247,6 @@ const CreateProduct = ({ values, factories, materials }) => {
         isOpen={isOpen}
         onClose={onClose}
         motionPreset="slideInRight"
-        zIndex={20}
       >
         <ModalOverlay />
         <ModalContent
@@ -256,6 +255,8 @@ const CreateProduct = ({ values, factories, materials }) => {
           bg={"web.sideBar"}
           border={"1px solid"}
           borderColor={"web.border"}
+          position={"relative"}
+          zIndex={100}
         >
           <ModalCloseButton
             color={"web.text2"}
@@ -276,7 +277,7 @@ const CreateProduct = ({ values, factories, materials }) => {
             Create Product
           </ModalHeader>
           <ModalBody
-            zIndex={20}
+            position={"relative"}
             color={"web.text2"}
             display={"flex"}
             justifyContent={"space-between"}

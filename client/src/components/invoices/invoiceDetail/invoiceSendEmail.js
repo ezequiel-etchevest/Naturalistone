@@ -22,7 +22,6 @@ const InvoiceSendEmail = ({customer, pdf, isOpen, onClose}) => {
 
   const user = useSelector((state) => state.user)
   const [isToastShowing, setIsToastShowing] = useState(false)
-  console.log(customer)
 
   const dispatch = useDispatch()
   const [ input, setInput ] = useState({

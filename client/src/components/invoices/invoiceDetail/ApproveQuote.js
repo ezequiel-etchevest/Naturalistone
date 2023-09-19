@@ -16,31 +16,22 @@ import {
 import { useParams } from 'react-router-dom';
 import { useDispatch } from "react-redux";
 import { BsFileEarmarkCheck } from 'react-icons/bs'
-import { changeStatus } from "../../../redux/actions-invoices";
+import { changeStatus, getInvoiceById } from "../../../redux/actions-invoices";
 import '../../../assets/styleSheet.css';
+import { useEffect, useState } from "react";
 
+const ApproveQuote= ({invoice, user, handleDisabled}) => {
 
-
-const ApproveQuote= ({invoice, user}) => {
-
+  const { isOpen, onOpen, onClose } = useDisclosure()
   const dispatch = useDispatch()
   const {id} = useParams()
-  const { isOpen, onOpen, onClose } = useDisclosure()
+
   const handleSubmit = () => {
     dispatch(changeStatus(id, 'Pending'))
+    dispatch(getInvoiceById(invoice[0].Naturali_Invoice))
     onClose()
   }
-
-  const handleDisabled = () => {
-    if(invoice[0].Status === 'Canceled') return true
-    if(invoice[0].Status === 'Pending') return true
-    else{
-        if(user.Secction7Flag === 1) return false
-        else return true
-    }
-  }
-  let d = handleDisabled()
-
+  
     return(
         <>
           <ButtonGroup

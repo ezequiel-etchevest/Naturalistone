@@ -104,11 +104,11 @@ const FilterStats = ({user, setFilters, filters, years, setSpinner}) => {
       },1500)
     }
     }
-
+    
     const handleClear = () => {
       dispatch(cleanStats())
       setFilters({
-        SellerID: 3,
+        SellerID: user[0].SellerID,
         Month: currentMonth,
         Year: currentYear,
       })

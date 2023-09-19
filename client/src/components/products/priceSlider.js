@@ -47,12 +47,15 @@ let PriceSlider = ({setFilters, filters, limit, setLimit, values}) =>{
 				border={'1px solid'} 
 				borderColor={'web.border'}
 				w={'26vw'}
+        position={"relative"}
+        zIndex={2}
         >
         <RangeSlider 
             aria-label={['min', 'max']}
             colorScheme={'orange'}
             value={filters.sqft}
-            // zIndex={2}
+            position={"relative"}
+            zIndex={2}
             onChangeEnd={(val) => {
               dispatch(getFiltered(filters.finish, filters.size, filters.thickness,filters.material, filters.search, val, filters.type))}}
             onChange={(e) => handlePrice(e)}
@@ -72,12 +75,15 @@ let PriceSlider = ({setFilters, filters, limit, setLimit, values}) =>{
               bg={'web.sideBar'}
               color="web.text2"
               placement={'left'}
+              position={"relative"}
+              index={2}   
               isOpen
 							fontSize={'0.9vw'}
               >
               <RangeSliderThumb
 								boxSize={'1.4vh'} 
                 bg={'logo.orange'} 
+                position={"relative"}
                 index={0}           
                 _focus={{
                   borderColor: 'logo.orange',

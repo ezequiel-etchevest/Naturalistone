@@ -18,24 +18,40 @@ import CancelQuote from './modalStatus';
 import CreateDeliveryButton from '../../deliveryQuotes/CreateDeliveryButton';
 import DeliveryNotesListButton from '../../deliveryQuotes/DeliveryNotesListButton';
 import ModalPDF from './modalPDF';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { AppearanceCharacteristics } from 'pdf-lib';
 import ApproveQuote from './ApproveQuote';
 import UpdateQuoteModal from '../updateQuote/updateQuoteModal';
 import InvoiceSendEmail from './invoiceSendEmail';
 import { useDispatch, useSelector } from 'react-redux';
 import { getCustomerById } from '../../../redux/actions-customers';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { changeStatus, getInvoiceById } from '../../../redux/actions-invoices';
+import InvoiceButton from './InvoiceButton';
 
 export const InvoiceDetailToolbar = ({invoice, payments, user, invoice_products, deliveries}) => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const { onOpen, onClose, isOpen } = useDisclosure()
   const customer = useSelector(state => state.customer_by_id)
-  
+  const invoiceStatus = invoice[0].Status === 'Pending_Approval' ? false : true
+  const [invoiceButton, setInvoiceButton] = useState(invoiceStatus);
+
+  const handleDisabled = () => {
+      if(!invoiceButton && user.Secction7Flag === 1) return false
+      else return true
+  }
+
   useEffect(() => {
     dispatch(getCustomerById(invoice[0].CustomerID))
+    dispatch(getInvoiceById(invoice[0].Naturali_Invoice))
   },[])
+  
+  useEffect(() => {
+    invoice[0].Status === 'Pending_Approval' ? setInvoiceButton(false) : setInvoiceButton(true)
+  },[invoice])
+
+  handleDisabled()
 
   return(
     <VStack mt={'3vh'} mb={'3vh'} w={'13vw'} alignItems={'flex-start'} pt={'2vh'}>
@@ -44,7 +60,11 @@ export const InvoiceDetailToolbar = ({invoice, payments, user, invoice_products,
       <Box pl={'1vh'} pb={'1vh'}>
         <ModalPDF invoice={invoice}/>
         <UpdateQuoteModal invoice={invoice} invoice_products={invoice_products}/>
-        <ApproveQuote invoice={invoice} user={user}/>
+        {
+          invoiceButton
+          ? <InvoiceButton invoice={invoice} user={user} handleDisabled={handleDisabled}/>
+          : <ApproveQuote invoice={invoice} user={user} handleDisabled={handleDisabled}/>
+        }
         <ModalStamp invoice={invoice} payments={payments} />
         <CancelQuote invoice={invoice} user={user} />
       </Box>
