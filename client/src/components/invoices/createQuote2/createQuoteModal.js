@@ -27,7 +27,7 @@ import CreateQuoteCustomerProjets from "./createQuoteProject";
 import CreateQuoteProducts from "./createQuoteProducts";
 import { getAllProductsNewQuote } from "../../../redux/actions-products";
 import CreateQuoteProductsReview from "./createQuoteProductsReview";
-import { cleanCreatedQuote, createQuote } from "../../../redux/actions-invoices";
+import { cleanCreatedQuote, createQuote, getInvoicesBySeller } from "../../../redux/actions-invoices";
 import QuotePdfModal from "../createQuote/quotePdfModal";
 import { addSpecialProducts } from "../../../redux/actions-sp-1";
 
@@ -123,10 +123,12 @@ export function CreateQuote({ customers, sellers }) {
     }
   }
 
-  let authFlag = validateAuthFlag(formData.products);
+  let authFlag = validateAuthFlag(formData.products)
+  ;
   const handleSubmit = async () => {
     if (progress === 100) {
       await dispatch(createQuote(user[0].SellerID, { formData, authFlag }));
+      dispatch(getInvoicesBySeller(user[0].SellerID, {inputName: '', inputNumber: '', selectSeller: '', timeFilter: ''}))
     }
     setSubmited(true);
   };

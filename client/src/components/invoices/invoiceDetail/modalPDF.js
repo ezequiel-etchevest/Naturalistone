@@ -38,7 +38,7 @@ export default function ModalPDF({invoice}) {
          fontSize={'1vw'}
          variant={'unstyled'}           
          fontWeight={'normal'}
-         >Open</Button>       
+         >Quote</Button>       
         </ButtonGroup>
       <Modal isOpen={isOpen} onClose={onClose} size={'6xl'}>
         <ModalOverlay />

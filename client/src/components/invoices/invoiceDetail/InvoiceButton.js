@@ -4,7 +4,7 @@ import {
     IconButton,
     useDisclosure,
     } from "@chakra-ui/react"
-import { TbFileInvoice } from 'react-icons/tb'
+import { MdOpenInNew } from 'react-icons/md'
 import '../../../assets/styleSheet.css';
 import { InvoiceModal } from "./InvoiceModal";
 
@@ -26,10 +26,10 @@ const InvoiceButton = ({invoice, user, handleDisabled}) => {
             }}
             >
           <IconButton
-            fontSize={'2xl'}
+            fontSize={'xl'}
             variant={'unstyled'}           
             fontWeight={'normal'}
-            icon={<TbFileInvoice/>}/>
+            icon={<MdOpenInNew/>}/>
               <Button
                 variant={'unstyled'}           
                 fontWeight={'normal'}
