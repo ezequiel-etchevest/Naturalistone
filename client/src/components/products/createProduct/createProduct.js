@@ -29,7 +29,7 @@ import { AiOutlineClear, AiOutlinePlus } from "react-icons/ai";
 import { BsFillPlusSquareFill } from "react-icons/bs";
 import { InputsCreateProduct } from "./createProductInputs";
 import { useDispatch } from "react-redux";
-import { postProduct } from "../../redux/actions-products";
+import { postProduct } from "../../../redux/actions-products";
 
 const CreateProduct = ({ values, factories, materials }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -225,23 +225,24 @@ const CreateProduct = ({ values, factories, materials }) => {
         label={"Create Product"}
         fontWeight={"hairline"}
       >
-        <IconButton
-          icon={<BsFillPlusSquareFill />}
-          //   pt={'1.2vh'}
-          mr={"0.5vw"}
-          variant={"unstyled"}
-          display={"flex"}
-          borderRadius={"full"}
-          size={"lg"}
-          placeContent={"center"}
-          alignItems={"center"}
-          color={"web.text2"}
-          _hover={{
-            color: "logo.orange",
+        <Button
+         leftIcon={<AiOutlinePlus />}
+         variant={"unstyled"}
+         display={"flex"}
+         alignSelf={"flex-end"}
+         mr={"1vw"}
+         alignItems={"center"}
+         fontSize={"sm"}
+         color={"web.text2"}
+         fontWeight={"normal"}
+         _hover={{
+           color: "logo.orange",
           }}
-          _active={{}}
-          onClick={onOpen}
-        ></IconButton>
+         _active={{}}
+         onClick={onOpen}
+        >
+         New Product
+       </Button>
       </Tooltip>
       <Modal
         isOpen={isOpen}

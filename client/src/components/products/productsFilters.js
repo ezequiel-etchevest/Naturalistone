@@ -15,7 +15,8 @@ import { useDispatch } from "react-redux";
 import { AiOutlineClear } from "react-icons/ai";
 import PriceSlider from "./priceSlider";
 import { useLocation, useNavigate } from "react-router-dom";
-import CreateProduct from "./createProduct";
+import CreateProduct from "./createProduct/createProduct";
+import CreateProductDimension from "./createProductDimension/modalCreateProductDimension";
 
 const ProductsFilters = ({ setCurrentPage, values, factories, materials }) => {
   const dispatch = useDispatch();
@@ -231,6 +232,7 @@ const ProductsFilters = ({ setCurrentPage, values, factories, materials }) => {
       )
     );
   };
+  
   useEffect(() => {
     dispatch(
       getFiltered(
@@ -262,7 +264,7 @@ const ProductsFilters = ({ setCurrentPage, values, factories, materials }) => {
         {/* -------------------- SEARCH INPUT ------------------------------ */}
         <Box
           ml={"2vh"}
-          w={"20vw"}
+          w={"35vw"}
           mt={"8vh"}
           display={"flex"}
           alignSelf={"flex-start"}
@@ -300,6 +302,10 @@ const ProductsFilters = ({ setCurrentPage, values, factories, materials }) => {
           <CreateProduct
             values={values}
             factories={factories}
+            materials={materials}
+          />
+          <CreateProductDimension 
+            values={values}
             materials={materials}
           />
         </Box>
