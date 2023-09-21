@@ -81,13 +81,6 @@ const CreateProductDimension = ({ values, factories, materials }) => {
 
 
   const isValid = () => {
-    if (
-      products.prodName === "" ||
-      products.factory === "" ||
-      products.factoryProdName === "" ||
-      products.material === ""
-    )
-      return false;
     return products.dimensions.every((product) => {
       const requiredFields = ["price"];
 
@@ -103,10 +96,9 @@ const CreateProductDimension = ({ values, factories, materials }) => {
 
   const handleClear = () => {
     setProducts({
-      prodName: "",
-      material: "",
-      factoryProdName: "",
-      factory: "",
+    idProduct: "",
+    idProductName: "",
+    searchProduct: "",
       dimensions: [
         {
           um: "Sqft",

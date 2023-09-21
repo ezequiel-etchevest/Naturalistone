@@ -55,7 +55,6 @@ let PriceSlider = ({setFilters, filters, limit, setLimit, values}) =>{
             colorScheme={'orange'}
             value={filters.sqft}
             position={"relative"}
-            zIndex={2}
             onChangeEnd={(val) => {
               dispatch(getFiltered(filters.finish, filters.size, filters.thickness,filters.material, filters.search, val, filters.type))}}
             onChange={(e) => handlePrice(e)}
@@ -79,11 +78,11 @@ let PriceSlider = ({setFilters, filters, limit, setLimit, values}) =>{
               index={2}   
               isOpen
 							fontSize={'0.9vw'}
+              zIndex={0}
               >
               <RangeSliderThumb
 								boxSize={'1.4vh'} 
                 bg={'logo.orange'} 
-                position={"relative"}
                 index={0}           
                 _focus={{
                   borderColor: 'logo.orange',
@@ -99,6 +98,8 @@ let PriceSlider = ({setFilters, filters, limit, setLimit, values}) =>{
               placement={'right'}
               isOpen
               fontSize={'0.9vw'}
+              position={"relative"}
+              zIndex={0}
               >
               <RangeSliderThumb 
                 index={1}
