@@ -76,6 +76,7 @@ export function CustomerRelationship({ user, customer }) {
             />
           <Modal 
             isOpen={isOpen} 
+            onClose={handleClose}
           >
           <ModalOverlay/>
           <ModalContent 
@@ -110,11 +111,9 @@ export function CustomerRelationship({ user, customer }) {
             value={formData.Action}
             >
               <option value='' className="options" >Select Option</option>
-              <option value='value1' className="options" >value1</option>
-              <option value='value2' className="options" >value2</option>
-              <option value='value3' className="options" >value3</option>
-              <option value='value4' className="options" >value4</option>
-              <option value='value5' className="options" >value5</option>
+              <option value='Call' className="options" >Call</option>
+              <option value='Email' className="options" >Email</option>
+              <option value='Showroom visit' className="options" >Showroom visit</option>
           </Select>
             </FormControl>
             <FormControl mt={'2vh'} isRequired>

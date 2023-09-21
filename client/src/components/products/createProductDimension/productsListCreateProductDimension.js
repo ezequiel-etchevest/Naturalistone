@@ -27,21 +27,6 @@ const handleClick = (event) => {
     })
 }
 
-// const handleClickProduct = () => {
-//   dispatch(getProductById(e.ProdID))
-//   if(e.ProdID !== undefined)
-//   navigate(`/products/${e.ProdID}`)
-//   }
-// const handleClickSwitch = () => {
-//   setFlag(flag === true ? false : true)
-//   const bodyUpdate = {
-//     flag
-//   }
-//   dispatch(patchProduct(e.ProdID, bodyUpdate))
-//   }
-
-
-
   return(
     <>
         <Tr       
@@ -109,7 +94,7 @@ useEffect(() => {
 }, [allProducts]);
 
 return (
-  <Box userSelect={'none'} display={'flex'} justifyContent={'center'} h={'30vh'} w={'20vw'} ml={'1vh'}>
+  <Box userSelect={'none'} display={'flex'} justifyContent={'center'} h={'30vh'} w={'20vw'}>
     <Box
       id='scroll-create-product-container'
       maxHeight={'67vh'}
@@ -129,17 +114,15 @@ return (
       borderColor={'web.border'}
       bg={'web.sideBar'}
       rounded={'md'}
-      p={'3vh'}
       w={'82vw'}
     >
       {
       allProducts.length ? (
-        <TableContainer mr={'1vw'}>
+        <TableContainer mr={'1.5vw'}>
           <Table color={'web.text'} variant={'simple'} size={'sm'} alignItems={"center"}>
-            <Thead h={'6vh'} textAlign={"center"}>
+            <Thead textAlign={"center"}>
               <Tr>
                 <Th fontSize={'0.8vw'} color={'web.text2'} textAlign={"center"}>
-                  Product Name
                 </Th>
               </Tr>
             </Thead>

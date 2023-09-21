@@ -156,7 +156,7 @@ const CreateProductDimension = ({ values, factories, materials }) => {
     <Box>
       <Tooltip
         placement={"bottom-start"}
-        label={"Create Product"}
+        label={"Create product dimension"}
         fontWeight={"hairline"}
       >
         <Button
@@ -175,19 +175,18 @@ const CreateProductDimension = ({ values, factories, materials }) => {
          _active={{}}
          onClick={onOpen}
         >
-         New Dimension Product
+         New Product Dimension 
        </Button>
       </Tooltip>
       <Modal
         isOpen={isOpen}
         onClose={onClose}
         motionPreset="slideInRight"
-        size={progress === 100 ? '6xl' : 'xl'}
       >
         <ModalOverlay />
         <ModalContent
-          // minW={"50vw"}
-          // maxW={"78vw"}
+          minW={progress === 100 ? "50vw" : null}
+          maxW={progress === 100 ? "78vw" : null}
           bg={"web.sideBar"}
           border={"1px solid"}
           borderColor={"web.border"}
