@@ -30,12 +30,8 @@ const CreateSampleProductsReview = ({ formData, setFormData }) => {
         Sample products review
       </Text>
     </Box>
-    <TableContainer
-      mr={'0.5vw'}  
-      ml={'0.5vw'}
-      bg={'web.sideBar'} 
-      rounded={'md'}
-      maxHeight={'42vh'}
+    <Box 
+      maxHeight={'48vh'}
       minHeight={'42vh'}
       overflow={'auto'}
       css={{
@@ -49,39 +45,55 @@ const CreateSampleProductsReview = ({ formData, setFormData }) => {
           background: '#E47424',
           borderRadius: '5px',
         },
-      }} 
-      px={'1vw'}
-      py={'2vh'}>
-      <Table color={'web.text'} variant={'simple'} size={'sm'}>
-        <Thead h={'6vh'}>
-          <Tr>  
-            <Th color={'web.text2'} fontSize={'x-small'} w={'16vw'} >Product Name</Th>
-            <Th color={'web.text2'} fontSize={'x-small'} textAlign={'center'}>Type</Th>
-            <Th color={'web.text2'} fontSize={'x-small'} w={'10vw'} textAlign={'center'}>Finish</Th>
-          </Tr>
-        </Thead>
-        <Tbody>
-        {
-          Object.entries(formData.products).map((e, i) => (
-            <Tr
-            cursor={'pointer'} 
-            key={i}
-            _hover={{
-              bg: 'web.navBar',
-              color: 'logo.orange'
-            }}>
-              <Td fontSize={'xs'} w={'16vw'}>{e[1].prodName}</Td>
-              <Td fontSize={'xs'} w={'12vw'} textAlign={'center'}>{e[1].type}</Td>
-              <Td fontSize={'xs'} w={'12vw'} textAlign={'center'}>{e[1].finish}</Td>
+      }} >
+      <TableContainer
+        mr={'0.5vw'}  
+        ml={'0.5vw'}
+        bg={'web.sideBar'} 
+        rounded={'md'}
+        px={'1vw'}
+        py={'2vh'}>
+        <Table color={'web.text'} variant={'simple'} size={'sm'}>
+          <Thead h={'6vh'}>
+            <Tr>  
+              <Th color={'web.text2'} fontSize={'x-small'} w={'16vw'} >Product Name</Th>
+              <Th color={'web.text2'} fontSize={'x-small'} textAlign={'center'}>Type</Th>
+              <Th color={'web.text2'} fontSize={'x-small'} w={'10vw'} textAlign={'center'}>Finish</Th>
             </Tr>
-          ))
-        }
-        </Tbody>
-      </Table>
-    </TableContainer>
+          </Thead>
+          <Tbody>
+            {
+              console.log("Number of products to render:", Object.keys(formData.products).length)
+            }
+            {
+            Object.keys(formData.products).map((key, i) => (  
+              <Tr
+                cursor={"pointer"}
+                key={i}
+                _hover={{
+                  bg: "web.navBar",
+                  color: "logo.orange"
+                }}
+              >
+                <Td fontSize={"xs"} w={"16vw"}>
+                  {formData.products[key].prodName}
+                </Td>
+                <Td fontSize={"xs"} w={"12vw"} textAlign={"center"}>
+                  {formData.products[key].type}
+                </Td>
+                <Td fontSize={"xs"} w={"12vw"} textAlign={"center"}>
+                  {formData.products[key].finish}
+                </Td>
+              </Tr>
+            ))}
+          </Tbody>
+        </Table>
+      </TableContainer>
+    </Box>
   </Box>
 </>
-)}
+);
+}; 
 
 export default CreateSampleProductsReview
 
