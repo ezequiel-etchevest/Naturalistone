@@ -29,7 +29,7 @@ const Products = ({ focus, setFocus }) => {
   const getParamsType = searchParams.get("type");
   const sqftMin = getParamsSqftMin ? getParamsSqftMin : values?.sqftMinMax?.min;
   const sqftMax = getParamsSqftMax ? getParamsSqftMax : values?.sqftMinMax?.max;
-  const [filters, setFilters] = useState({
+  const [filters] = useState({
     finish: getParamsFinish ? getParamsFinish : "",
     size: getParamsSize ? getParamsSize : "",
     thickness: getParamsThickness ? getParamsThickness : "",

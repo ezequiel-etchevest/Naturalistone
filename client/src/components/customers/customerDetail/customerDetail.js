@@ -1,7 +1,7 @@
 import { Box, Text } from "@chakra-ui/react";
 import CustomerInformation from './customerInformation';
 import CustomerRelationshipList from "./CustomerRelationshipList";
-import { CustomerRelationship } from "./CustomerRelationship";
+import { CustomerRelationship } from "./CustomerRelationShip";
 import ProjectList from "./projectList";
 import InvoiceList from "./invoiceList";
 import { useEffect } from "react";

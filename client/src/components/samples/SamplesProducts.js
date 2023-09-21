@@ -54,7 +54,6 @@ const SamplesProducts = ({ isOpenModal, onCloseModal, idSamples }) => {
             onClick={onCloseModal}
           />
           <ModalBody
-            color={"web.text2"}
             display={"flex"}
             justifyContent={"flex-start"}
             flexDir={"column"}
@@ -81,7 +80,7 @@ const SamplesProducts = ({ isOpenModal, onCloseModal, idSamples }) => {
               p={"3vh"}
             >
               <TableContainer>
-                <Table color={"web.text"} variant={"simple"} size={"sm"}>
+                <Table color={"web.text"} variant={"simple"} size={"xs"}>
                   <Thead h={"6vh"}>
                     <Tr h={"6vh"}>
                       <Th
@@ -122,7 +121,7 @@ const SamplesProducts = ({ isOpenModal, onCloseModal, idSamples }) => {
                         fontWeight={"hairline"}
                         h={"4.5vh"}
                       >
-                        <Td textAlign={"center"}>{e.Naturali_ProdName}</Td>
+                        <Td textAlign={"center"} >{e.Naturali_ProdName}</Td>
                         <Td textAlign={"center"}>{e.Material}</Td>
                         <Td textAlign={"center"}>{e.Finish}</Td>
                       </Tr>
