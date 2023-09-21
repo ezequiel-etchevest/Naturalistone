@@ -24,12 +24,11 @@ import {
   useDisclosure,
   useToast,
 } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { AiOutlineClear, AiOutlinePlus } from "react-icons/ai";
-import { BsFillPlusSquareFill } from "react-icons/bs";
 import { InputsCreateProduct } from "./createProductInputs";
 import { useDispatch } from "react-redux";
-import { postProduct } from "../../../redux/actions-products";
+import { getFiltered, postProduct } from "../../../redux/actions-products";
 
 const CreateProduct = ({ values, factories, materials }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -211,6 +210,7 @@ const CreateProduct = ({ values, factories, materials }) => {
             duration: 3000,
             isClosable: true,
           });
+          dispatch(getFiltered("","","","","","",""))
           handleClear();
           onClose();
         }

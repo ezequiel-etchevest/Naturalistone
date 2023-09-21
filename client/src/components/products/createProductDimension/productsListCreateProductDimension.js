@@ -11,36 +11,19 @@ import {
   Text,
   Center
 } from '@chakra-ui/react';
-import { useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 
 
 const ModelTr = ({ e, products, setProducts }) => {
 
 const handleClick = (event) => {
-    console.log("event",event)
     setProducts({
         ...products,
         idProduct: event.ProdID,
-        productSelect: event.ProductName
+        idProductName: event.ProdNameID,
     })
 }
-
-// const handleClickProduct = () => {
-//   dispatch(getProductById(e.ProdID))
-//   if(e.ProdID !== undefined)
-//   navigate(`/products/${e.ProdID}`)
-//   }
-// const handleClickSwitch = () => {
-//   setFlag(flag === true ? false : true)
-//   const bodyUpdate = {
-//     flag
-//   }
-//   dispatch(patchProduct(e.ProdID, bodyUpdate))
-//   }
-
-
 
   return(
     <>
@@ -61,7 +44,7 @@ const handleClick = (event) => {
 )
 }
 
-const ProductListCreateProductDimension = ({ allProducts, products, setProducts }) => {
+const ProductListCreateProductDimension = ({ all_products_search, products, setProducts }) => {
 
 const productErrors = useSelector((state) => state.products_errors);
 const toast = useToast();
@@ -106,7 +89,7 @@ useEffect(() => {
 
 useEffect(() => {
   validateToast();
-}, [allProducts]);
+}, [all_products_search]);
 
 return (
   <Box userSelect={'none'} display={'flex'} justifyContent={'center'} h={'30vh'} w={'20vw'} ml={'1vh'}>
@@ -133,7 +116,7 @@ return (
       w={'82vw'}
     >
       {
-      allProducts.length ? (
+      all_products_search.length ? (
         <TableContainer mr={'1vw'}>
           <Table color={'web.text'} variant={'simple'} size={'sm'} alignItems={"center"}>
             <Thead h={'6vh'} textAlign={"center"}>
@@ -144,12 +127,12 @@ return (
               </Tr>
             </Thead>
             <Tbody >
-              {allProducts.slice(0, loadedCount).map((e, i) => {
+              {all_products_search.slice(0, loadedCount).map((e, i) => {
                 return <ModelTr
                 key={i}
                 e={e}
                 products={products}
-                allProducts={allProducts}
+                all_products_search={all_products_search}
                 loadedCount={loadedCount}
                 setProducts={setProducts}
                 />;

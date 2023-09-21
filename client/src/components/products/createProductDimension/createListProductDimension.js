@@ -1,10 +1,23 @@
 import { DeleteIcon } from "@chakra-ui/icons";
-import { Box, Button, IconButton, Input, Select, Table, TableContainer, Tbody, Td, Text, Th, Thead, Tooltip, Tr } from "@chakra-ui/react";
+import { Box,
+  Button,
+  IconButton,
+  Input,
+  Select,
+  Table,
+  TableContainer,
+  Tbody,
+  Td,
+  Text,
+  Th,
+  Thead,
+  Tooltip,
+  Tr
+} from "@chakra-ui/react";
 import React from "react";
 import { AiOutlineClear, AiOutlinePlus } from "react-icons/ai";
 
 const CreateListProductDimension = ({ values, setProducts, products, handleClear }) => {
-
 
     const handleChange = (e, field, index) => {
     const value = e.target.value;
@@ -219,14 +232,7 @@ const CreateListProductDimension = ({ values, setProducts, products, handleClear
                 </Tbody>
               </Table>
             </TableContainer>
-            {/* <Button
-              colorScheme="orange"
-              mr={3}
-              disabled={!isValid()}
-              onClick={handleSubmit}
-            >
-              Submit
-            </Button> */}
+
     </Box>
   );
 };

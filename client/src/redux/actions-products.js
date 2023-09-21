@@ -13,6 +13,7 @@ export const GET_PRODUCTS_NEW_QUOTE = "GET_PRODUCTS_NEW_QUOTE";
 export const GET_PRODUCTS_NEW_SAMPLES = "GET_PRODUCTS_NEW_SAMPLES";
 export const POST_PRODUCT = "POST_PRODUCT";
 export const GET_MATERIALS = "GET_MATERIALS";
+export const GET_FILTERED_PRODUCTS_SEARCH = "GET_FILTERED_PRODUCTS_SEARCH";
 
 export function getAllProducts() {
   return async function (dispatch) {
@@ -260,6 +261,32 @@ export function getMaterials() {
     } catch (error) {
       console.log("soy err", error);
       return error.response;
+    }
+  };
+}
+
+export function getFilteredSearch(
+  finish,
+  size,
+  thickness,
+  material,
+  search,
+  sqft,
+  type
+) {
+  return async function (dispatch) {
+    try {
+      let { data } = await axios.get(
+        `/products/filtered?finish=${finish}&size=${size}&thickness=${thickness}&material=${material}&search=${search}&type=${type}&sqft1=${
+          sqft[0] ? sqft[0] : ""
+        }&sqft2=${sqft[1] ? sqft[1] : ""}`
+      );
+      dispatch({
+        type: GET_FILTERED_PRODUCTS_SEARCH,
+        payload: data,
+      });
+    } catch (error) {
+      console.log({ error });
     }
   };
 }
