@@ -29,13 +29,12 @@ import { getFilteredSearch, postProduct } from "../../../redux/actions-products"
 import { SearchProduct } from "./searchProduct";
 import CreateListProductDimension from "./createListProductDimension";
 
-const CreateProductDimension = ({ values, factories, materials }) => {
+const CreateProductDimension = ({ values, materials }) => {
   const all_products_search = useSelector((state) => state.all_products_search);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const dispatch = useDispatch();
   const toast = useToast();
   const [progress, setProgress] = useState(50)
-  const [disabled, setDisabled] = useState(false)
   const [products, setProducts] = useState({
     idProduct: "",
     idProductName: "",
@@ -81,13 +80,6 @@ const CreateProductDimension = ({ values, factories, materials }) => {
 
 
   const isValid = () => {
-    if (
-      products.prodName === "" ||
-      products.factory === "" ||
-      products.factoryProdName === "" ||
-      products.material === ""
-    )
-      return false;
     return products.dimensions.every((product) => {
       const requiredFields = ["price"];
 
@@ -102,11 +94,11 @@ const CreateProductDimension = ({ values, factories, materials }) => {
   };
 
   const handleClear = () => {
+    setProgress(50)
     setProducts({
-      prodName: "",
-      material: "",
-      factoryProdName: "",
-      factory: "",
+    idProduct: "",
+    idProductName: "",
+    searchProduct: "",
       dimensions: [
         {
           um: "Sqft",
@@ -182,12 +174,11 @@ const CreateProductDimension = ({ values, factories, materials }) => {
         isOpen={isOpen}
         onClose={onClose}
         motionPreset="slideInRight"
-        size={progress === 100 ? '6xl' : 'xl'}
       >
         <ModalOverlay />
         <ModalContent
-          // minW={"50vw"}
-          // maxW={"78vw"}
+          minW={progress === 100 ? "50vw" : null}
+          maxW={progress === 100 ? "78vw" : null}
           bg={"web.sideBar"}
           border={"1px solid"}
           borderColor={"web.border"}
@@ -265,7 +256,7 @@ const CreateProductDimension = ({ values, factories, materials }) => {
               <Button
               colorScheme="orange"
               mr={3}
-              disabled={products.productSelect === "" ? true : false}
+              disabled={products.idProductName === "" ? true : false}
               onClick={handleNextButton}>
                 Next
               </Button>
