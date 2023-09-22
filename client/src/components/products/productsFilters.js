@@ -10,7 +10,7 @@ import {
 import { useEffect, useState } from "react";
 import { SearchIcon } from "@chakra-ui/icons";
 import "../../assets/styleSheet.css";
-import { cleanProductValue, getFiltered } from "../../redux/actions-products";
+import { cleanProductValue, getFiltered, getFilteredSearch } from "../../redux/actions-products";
 import { useDispatch } from "react-redux";
 import { AiOutlineClear } from "react-icons/ai";
 import PriceSlider from "./priceSlider";
@@ -247,6 +247,19 @@ const ProductsFilters = ({ setCurrentPage, values, factories, materials }) => {
       )
     );
   }, [filters]);
+
+  useEffect(() => {
+    dispatch(getFilteredSearch(
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+        // filters.price
+      ))
+  },[])
 
   return (
     <>

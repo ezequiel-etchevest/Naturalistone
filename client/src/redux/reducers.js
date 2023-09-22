@@ -43,6 +43,7 @@ import {
   GET_PRODUCTS_NEW_SAMPLES,
   POST_PRODUCT,
   GET_MATERIALS,
+  GET_FILTERED_PRODUCTS_SEARCH,
 } from "./actions-products";
 import { GET_CURRENT_MONTH, CLEAN_STATS } from "./actions-statsByMonth";
 import {
@@ -161,6 +162,7 @@ const intialState = {
   products_new_samples_errors: {},
   customer_relationship: [],
   materials: [],
+  all_products_search: [],
 };
 
 function rootReducer(state = intialState, action) {
@@ -647,6 +649,11 @@ function rootReducer(state = intialState, action) {
         ...state,
         materials: action.payload,
       };
+    case GET_FILTERED_PRODUCTS_SEARCH:
+      return {
+        ...state,
+        all_products_search: action.payload.results,
+      }
     default:
       return {
         ...state,

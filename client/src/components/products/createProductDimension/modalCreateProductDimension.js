@@ -22,24 +22,23 @@ import {
   useDisclosure,
   useToast,
 } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
-import { AiOutlineClear, AiOutlinePlus } from "react-icons/ai";
+import { useState } from "react";
+import { AiOutlinePlus } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
-import { getFiltered, postProduct } from "../../../redux/actions-products";
+import { getFilteredSearch, postProduct } from "../../../redux/actions-products";
 import { SearchProduct } from "./searchProduct";
 import CreateListProductDimension from "./createListProductDimension";
 
-const CreateProductDimension = ({ values, factories, materials }) => {
-  const allProducts = useSelector((state) => state.all_products);
+const CreateProductDimension = ({ values, materials }) => {
+  const all_products_search = useSelector((state) => state.all_products_search);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const dispatch = useDispatch();
   const toast = useToast();
   const [progress, setProgress] = useState(50)
-  const [disabled, setDisabled] = useState(false)
   const [products, setProducts] = useState({
     idProduct: "",
+    idProductName: "",
     searchProduct: "",
-    productSelect: "",
     dimensions: [
       {
         um: "Sqft",
@@ -63,7 +62,7 @@ const CreateProductDimension = ({ values, factories, materials }) => {
       [name]: value,
     });
     dispatch(
-      getFiltered(
+      getFilteredSearch(
         "",
         "",
         "",
@@ -95,6 +94,7 @@ const CreateProductDimension = ({ values, factories, materials }) => {
   };
 
   const handleClear = () => {
+    setProgress(50)
     setProducts({
     idProduct: "",
     idProductName: "",
@@ -223,7 +223,7 @@ const CreateProductDimension = ({ values, factories, materials }) => {
             {
               progress === 50 && (
                 <SearchProduct
-                allProducts={allProducts}
+                all_products_search={all_products_search}
                 handleChangeProductName={handleChangeProductName}
                 products={products}
                 setProducts={setProducts}
@@ -256,7 +256,7 @@ const CreateProductDimension = ({ values, factories, materials }) => {
               <Button
               colorScheme="orange"
               mr={3}
-              disabled={products.productSelect === "" ? true : false}
+              disabled={products.idProductName === "" ? true : false}
               onClick={handleNextButton}>
                 Next
               </Button>
