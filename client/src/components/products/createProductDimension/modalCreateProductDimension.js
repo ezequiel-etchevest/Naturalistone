@@ -94,7 +94,6 @@ const CreateProductDimension = ({ values, materials }) => {
   };
 
   const handleClear = () => {
-    setProgress(50)
     setProducts({
     idProduct: "",
     idProductName: "",
@@ -139,6 +138,7 @@ const CreateProductDimension = ({ values, materials }) => {
           });
           handleClear();
           onClose();
+          setProgress(50)
         }
       }
     }

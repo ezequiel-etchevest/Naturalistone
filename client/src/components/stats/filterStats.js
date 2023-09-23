@@ -134,10 +134,10 @@ const FilterStats = ({user, setFilters, filters, years, setSpinner}) => {
       >
       {/*Selects */}
         <Box 
-        w={user[0].Secction7Flag === 1 ? '30vw':'15vw'} 
+        w={user[0].Secction7Flag === 1 ? '30vw':'17vw'} 
         display={'flex'}
-        justifyContent={user[0].Secction7Flag === 1 ? 'space-between' : 'flex-end'}
-        mr={'1vw'} 
+        mr={'1vw'}
+        gap={"1vw"}
         >
         {/*Filter by seller */}
         {

@@ -354,7 +354,9 @@ const Filters = ({user, seller_invoices, sellers, setFocusFilter, seller_values,
           <Box 
             w={'30vw'} 
             display={'flex'} 
-            justifyContent={validateSeller() === true ? 'space-between' : 'flex-end'}>  
+            gap={"1vw"}
+            justifyContent={'flex-end'}
+            >  
             <Select
               onChange={(e)=>handleSellerSelect(e)}
               display={validateSeller() === true ? 'unset' : 'none' }

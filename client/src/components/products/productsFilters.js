@@ -233,20 +233,20 @@ const ProductsFilters = ({ setCurrentPage, values, factories, materials }) => {
     );
   };
   
-  useEffect(() => {
-    dispatch(
-      getFiltered(
-        filters.finish,
-        filters.size,
-        filters.thickness,
-        filters.material,
-        filters.search,
-        filters.sqft,
-        filters.type
-        // filters.price
-      )
-    );
-  }, [filters]);
+  // useEffect(() => {
+  //   dispatch(
+  //     getFiltered(
+  //       filters.finish,
+  //       filters.size,
+  //       filters.thickness,
+  //       filters.material,
+  //       filters.search,
+  //       filters.sqft,
+  //       filters.type
+  //       // filters.price
+  //     )
+  //   );
+  // }, [filters]);
 
   useEffect(() => {
     dispatch(getFilteredSearch(
