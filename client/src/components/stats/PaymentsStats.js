@@ -64,6 +64,7 @@ function StatsCard(props) {
 }
 
 export default function PaymentsStats({ stats, filters }) {
+
   return (
     <Box h={"92vh"} px={"4vw"} bg={"web.bg"}>
       <HStack columns={{ base: 1, md: 3 }} spacing={{ base: 5, lg: 8 }}>
