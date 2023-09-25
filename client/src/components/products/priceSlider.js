@@ -28,6 +28,7 @@ let PriceSlider = ({setFilters, filters, limit, setLimit, values}) =>{
       searchParams.set('thickness', filters.thickness)
       searchParams.set('material', filters.material)
       searchParams.set('search', filters.search)
+      console.log("soy eeeeeeeee", e)
       navigate(`?${searchParams.toString()}`)
         setLimit(e);
         setFilters({
@@ -36,8 +37,11 @@ let PriceSlider = ({setFilters, filters, limit, setLimit, values}) =>{
         })  
       }
 
+      console.log("soy limit", limit)
+
       useEffect(() => {
         setValueMax(values?.sqftMinMax?.max)
+        setLimit([values?.sqftMinMax?.min, values?.sqftMinMax?.max])
       },[values])
     
     return(

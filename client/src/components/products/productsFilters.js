@@ -73,86 +73,86 @@ const ProductsFilters = ({ setCurrentPage, values, factories, materials }) => {
     );
   };
 
-  const handleSize = (e) => {
-    const size = e.target.value;
-    searchParams.set("size", size);
-    searchParams.set("finish", filters.finish);
-    searchParams.set("thickness", filters.thickness);
-    searchParams.set("material", filters.material);
-    searchParams.set("search", filters.search);
-    searchParams.set("type", filters.type);
-    navigate(`?${searchParams.toString()}`);
-    setFilters({
-      ...filters,
-      size,
-    });
-    // setCurrentPage(1)
-    dispatch(
-      getFiltered(
-        filters.finish,
-        size,
-        filters.thickness,
-        filters.material,
-        filters.search,
-        filters.sqft,
-        filters.type
-      )
-    );
-  };
+  // const handleSize = (e) => {
+  //   const size = e.target.value;
+  //   searchParams.set("size", size);
+  //   searchParams.set("finish", filters.finish);
+  //   searchParams.set("thickness", filters.thickness);
+  //   searchParams.set("material", filters.material);
+  //   searchParams.set("search", filters.search);
+  //   searchParams.set("type", filters.type);
+  //   navigate(`?${searchParams.toString()}`);
+  //   setFilters({
+  //     ...filters,
+  //     size,
+  //   });
+  //   // setCurrentPage(1)
+  //   dispatch(
+  //     getFiltered(
+  //       filters.finish,
+  //       size,
+  //       filters.thickness,
+  //       filters.material,
+  //       filters.search,
+  //       filters.sqft,
+  //       filters.type
+  //     )
+  //   );
+  // };
 
-  const handleThickness = (e) => {
-    const thickness = e.target.value;
-    searchParams.set("thickness", thickness);
-    searchParams.set("size", filters.size);
-    searchParams.set("finish", filters.finish);
-    searchParams.set("material", filters.material);
-    searchParams.set("type", filters.type);
-    searchParams.set("search", filters.search);
-    navigate(`?${searchParams.toString()}`);
-    setFilters({
-      ...filters,
-      thickness,
-    });
-    // setCurrentPage(1)
-    dispatch(
-      getFiltered(
-        filters.finish,
-        filters.size,
-        thickness,
-        filters.material,
-        filters.search,
-        filters.sqft,
-        filters.type
-      )
-    );
-  };
+  // const handleThickness = (e) => {
+  //   const thickness = e.target.value;
+  //   searchParams.set("thickness", thickness);
+  //   searchParams.set("size", filters.size);
+  //   searchParams.set("finish", filters.finish);
+  //   searchParams.set("material", filters.material);
+  //   searchParams.set("type", filters.type);
+  //   searchParams.set("search", filters.search);
+  //   navigate(`?${searchParams.toString()}`);
+  //   setFilters({
+  //     ...filters,
+  //     thickness,
+  //   });
+  //   // setCurrentPage(1)
+  //   dispatch(
+  //     getFiltered(
+  //       filters.finish,
+  //       filters.size,
+  //       thickness,
+  //       filters.material,
+  //       filters.search,
+  //       filters.sqft,
+  //       filters.type
+  //     )
+  //   );
+  // };
 
-  const handleMaterial = (e) => {
-    const material = e.target.value;
-    searchParams.set("material", material);
-    searchParams.set("size", filters.size);
-    searchParams.set("finish", filters.finish);
-    searchParams.set("thickness", filters.thickness);
-    searchParams.set("search", filters.search);
-    searchParams.set("type", filters.type);
-    navigate(`?${searchParams.toString()}`);
-    setFilters({
-      ...filters,
-      material,
-    });
-    // setCurrentPage(1)
-    dispatch(
-      getFiltered(
-        filters.finish,
-        filters.size,
-        filters.thickness,
-        material,
-        filters.search,
-        filters.sqft,
-        filters.type
-      )
-    );
-  };
+  // const handleMaterial = (e) => {
+  //   const material = e.target.value;
+  //   searchParams.set("material", material);
+  //   searchParams.set("size", filters.size);
+  //   searchParams.set("finish", filters.finish);
+  //   searchParams.set("thickness", filters.thickness);
+  //   searchParams.set("search", filters.search);
+  //   searchParams.set("type", filters.type);
+  //   navigate(`?${searchParams.toString()}`);
+  //   setFilters({
+  //     ...filters,
+  //     material,
+  //   });
+  //   // setCurrentPage(1)
+  //   dispatch(
+  //     getFiltered(
+  //       filters.finish,
+  //       filters.size,
+  //       filters.thickness,
+  //       material,
+  //       filters.search,
+  //       filters.sqft,
+  //       filters.type
+  //     )
+  //   );
+  // };
 
   const handleType = (e) => {
     const type = e.target.value;
@@ -199,39 +199,43 @@ const ProductsFilters = ({ setCurrentPage, values, factories, materials }) => {
       material: "",
       search: "",
       type: "",
-      sqft: [values?.sqftMinMax?.min, values?.sqftMinMax?.max],
+      // sqft: [values?.sqftMinMax?.min, values?.sqftMinMax?.max],
     });
     // setCurrentPage(1)
     dispatch(getFiltered("", "", "", "", "", "", ""));
-    setLimit([values?.sqftMinMax?.min, values?.sqftMinMax?.max]);
+    // setLimit([values?.sqftMinMax?.min, values?.sqftMinMax?.max]);
   };
 
-  const handleChangeProductName = (e) => {
-    const search = e.target.value;
-    searchParams.set("search", search);
-    searchParams.set("size", filters.size);
-    searchParams.set("finish", filters.finish);
-    searchParams.set("material", filters.material);
-    searchParams.set("thickness", filters.thickness);
-    searchParams.set("type", filters.type);
-    navigate(`?${searchParams.toString()}`);
-    setFilters({
-      ...filters,
-      search: e.target.value,
-    });
-    // setCurrentPage(1)
-    dispatch(
-      getFiltered(
-        filters.finish,
-        filters.size,
-        filters.thickness,
-        filters.material,
-        e.target.value,
-        filters.sqft,
-        filters.type
-      )
-    );
-  };
+  useEffect(() => {
+    setLimit([sqftMin, sqftMax])
+  }, [values])
+
+  // const handleChangeProductName = (e) => {
+  //   const search = e.target.value;
+  //   searchParams.set("search", search);
+  //   searchParams.set("size", filters.size);
+  //   searchParams.set("finish", filters.finish);
+  //   searchParams.set("material", filters.material);
+  //   searchParams.set("thickness", filters.thickness);
+  //   searchParams.set("type", filters.type);
+  //   navigate(`?${searchParams.toString()}`);
+  //   setFilters({
+  //     ...filters,
+  //     search: e.target.value,
+  //   });
+  //   // setCurrentPage(1)
+  //   dispatch(
+  //     getFiltered(
+  //       filters.finish,
+  //       filters.size,
+  //       filters.thickness,
+  //       filters.material,
+  //       e.target.value,
+  //       filters.sqft,
+  //       filters.type
+  //     )
+  //   );
+  // };
   
   // useEffect(() => {
   //   dispatch(
@@ -297,7 +301,7 @@ const ProductsFilters = ({ setCurrentPage, values, factories, materials }) => {
               value={filters.search}
               borderBottomWidth={"2px"}
               borderBottomColor={"web.text2"}
-              onChange={(e) => handleChangeProductName(e)}
+              // onChange={(e) => handleChangeProductName(e)}
             />
             <IconButton
               color={"web.text2"}
@@ -338,7 +342,7 @@ const ProductsFilters = ({ setCurrentPage, values, factories, materials }) => {
             justifyContent={"space-between"}
           >
             <Select
-              onChange={(e) => handleMaterial(e)}
+              // onChange={(e) => handleMaterial(e)}
               mb={"0.5vh"}
               w={"9vw"}
               minH={"4.5vh"}
@@ -406,7 +410,7 @@ const ProductsFilters = ({ setCurrentPage, values, factories, materials }) => {
                 })}
             </Select>
             <Select
-              onChange={(e) => handleSize(e)}
+              // onChange={(e) => handleSize(e)}
               mb={"0.5vh"}
               w={"9vw"}
               minH={"4.5vh"}
@@ -440,7 +444,7 @@ const ProductsFilters = ({ setCurrentPage, values, factories, materials }) => {
                 })}
             </Select>
             <Select
-              onChange={(e) => handleThickness(e)}
+              // onChange={(e) => handleThickness(e)}
               mb={"0.5vh"}
               w={"9vw"}
               minH={"4.5vh"}
