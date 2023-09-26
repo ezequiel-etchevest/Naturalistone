@@ -17,8 +17,8 @@ import SamplesProducts from './SamplesProducts';
 import SampleDeleteModal from './SampleDeleteModal';
   
 
-  const ModelTr = ({e, setLoader}) => {
-
+  const ModelTr = ({e, user}) => {
+    console.log("user", user)
     const { isOpen, onClose, onOpen } = useDisclosure()
 
     const handleClick = (e) => {
@@ -46,14 +46,16 @@ import SampleDeleteModal from './SampleDeleteModal';
         <Td onClick={handleClick} fontSize={'xs'} w={'8vw'} maxW={'8vw'}textAlign={'center'}>{e.TrackingNumber}</Td>
         <Td onClick={handleClick} fontSize={'xs'} w={'6vw'} maxW={'6vw'}textAlign={'center'}>{e.InsertDate?.split('T')[0]}</Td>
         <Td onClick={handleClick} fontSize={'xs'} w={'8vw'} maxW={'6vw'}textAlign={'center'}>{e.EstDelivery_Date?.split('T')[0]}</Td>
-        <Td fontSize={'xs'} w={'2vw'} maxW={'6vw'}textAlign={'center'}>{<SampleDeleteModal idSample={e.idSamples}/>}</Td>
+        {
+          user[0].Secction7Flag === 1 ? <Td fontSize={'xs'} w={'2vw'} maxW={'6vw'}textAlign={'center'}>{<SampleDeleteModal idSample={e.idSamples}/>}</Td> : ''
+        }
       </Tr>
       { isOpen && <SamplesProducts isOpenModal={isOpen} onCloseModal={onClose} idSamples={e.idSamples}/> }
       </>
     )
   }
   
-  const SamplesList = ({ samples, user }) => {
+  const SamplesList = ({ samples, user, loading }) => {
   
   const [initialCount] = useState(20);
   const [batchCount] = useState(15);
@@ -108,6 +110,7 @@ import SampleDeleteModal from './SampleDeleteModal';
       w={'80vw'}
       >
       {
+        !loading ? 
         samples?.length ? (
           <TableContainer  maxW={'80vw'}>
             <Table color={'web.text'}variant={'simple'} size={'sm'}>
@@ -119,7 +122,9 @@ import SampleDeleteModal from './SampleDeleteModal';
                     <Th color={'web.text2'} w={'8vw'} maxW={'8vw'} textAlign={'center'}>Tracking Number</Th>
                     <Th color={'web.text2'} w={'6vw'} maxW={'6vw'} textAlign={'center'}>Insert Date</Th>
                     <Th color={'web.text2'} w={'6vw'} maxW={'6vw'} textAlign={'center'}>Est Delivery Date</Th>
-                    <Th color={'web.text2'} w={'2vw'} maxW={'6vw'} textAlign={'center'}></Th>
+                    {
+                      user[0].Secction7Flag === 1 ? <Th color={'web.text2'} w={'2vw'} maxW={'6vw'} textAlign={'center'}></Th> : ''
+                    }
                   </Tr>
                 </Thead>
                 <Tbody >
@@ -133,10 +138,14 @@ import SampleDeleteModal from './SampleDeleteModal';
             </TableContainer> 
              ) : (
             <Center w={'full'} h={'full'}>
-              <Spinner thickness={'4px'} size={'xl'} color={'logo.orange'}>No samples found</Spinner>
+              No samples found
             </Center>
             )
-         } 
+            :
+            <Center w={'full'} h={'full'}>
+                <Spinner thickness={'4px'} size={'xl'} color={'logo.orange'}/>
+            </Center>
+           } 
       </Box> 
     </Box>
       )

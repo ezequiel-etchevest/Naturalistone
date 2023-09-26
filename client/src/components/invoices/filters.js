@@ -356,7 +356,7 @@ const Filters = ({user, seller_invoices, sellers, setFocusFilter, seller_values,
             display={'flex'} 
             gap={"1vw"}
             justifyContent={'flex-end'}
-            >  
+            >
             <Select
               onChange={(e)=>handleSellerSelect(e)}
               display={validateSeller() === true ? 'unset' : 'none' }

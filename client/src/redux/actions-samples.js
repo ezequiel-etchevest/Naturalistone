@@ -4,12 +4,13 @@ export const POST_SAMPLES = 'POST_SAMPLES';
 export const GET_SAMPLES_PRODUCTS = 'GET_SAMPLES_PRODUCTS'
 export const GET_SAMPLES_TRACKINGNUMBER = 'GET_SAMPLES_TRACKINGNUMBER'
 export const DELETE_SAMPLE = 'DELETE_SAMPLE'
+export const CLEAR_SAMPLES = 'CLEAR_SAMPLES'
 
-export function getSamples(search){
+export function getSamples(search, sellerId){
   
   return async function(dispatch){
       try {
-        const { data } = await axios.get(`/samples?search=${search}`)
+        const { data } = await axios.get(`/samples?search=${search}&sellerId=${sellerId}`)
         dispatch({
           type: GET_SAMPLES,
           payload: data.data
@@ -81,6 +82,20 @@ export function deleteSample(idSample) {
       })
     } catch (error) {
       console.log('error in delete sample', error)
+    }
+  }
+}
+
+export function clearSamples() {
+  return async function (dispatch) {
+    try {
+
+      return dispatch({
+        type: CLEAR_SAMPLES,
+        payload: {},
+      })
+    } catch (error) {
+      console.log('error clear samples', error)
     }
   }
 }

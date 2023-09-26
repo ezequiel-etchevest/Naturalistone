@@ -5,24 +5,35 @@ const parseProducts = require("../Controllers/samplesController");
 
 samplesRoutes.get("/", function (req, res) {
 
-  const { search } = req.query;
+  const { search, sellerId } = req.query;
 
-  let query_;
-  
-  if (search !== undefined && search?.length > 0) {
-    query_ = `SELECT Samples.*, Customers.Company, Customers.Contact_Name, Projects.ProjectName FROM Samples
-      LEFT JOIN Customers ON Customers.CustomerID = Samples.CustomerID
-      LEFT JOIN Projects ON Projects.idProjects = Samples.ProjectID 
-      WHERE LOWER(Customers.Company) LIKE "%${search.toLowerCase()}%" OR LOWER(Customers.Contact_Name) LIKE "%${search.toLowerCase()}%" ORDER BY idSamples DESC`;
-  } else {
-    query_ = `SELECT Samples.*, Customers.Company, Customers.Contact_Name, Projects.ProjectName FROM Samples
-      LEFT JOIN Customers ON Customers.CustomerID = Samples.CustomerID
-      LEFT JOIN Projects ON Projects.idProjects = Samples.ProjectID 
-      ORDER BY idSamples DESC`;
+  let query = `SELECT Samples.*, Customers.Company, Customers.Contact_Name, Customers.SellerID, Projects.ProjectName 
+    FROM Samples
+    LEFT JOIN Customers ON Customers.CustomerID = Samples.CustomerID
+    LEFT JOIN Projects ON Projects.idProjects = Samples.ProjectID`;
+
+  const queryParams = [];
+
+  if (sellerId !== '3') {
+    query += ` WHERE Customers.SellerID = ?`;
+    queryParams.push(sellerId);
   }
 
+  if (search) {
+    if (queryParams.length > 0) {
+      query += ` AND `;
+    } else {
+      query += ` WHERE `;
+    }
+    query += ` (LOWER(Customers.Company) LIKE ? OR LOWER(Customers.Contact_Name) LIKE ?)`;
+    queryParams.push(`%${search.toLowerCase()}%`, `%${search.toLowerCase()}%`);
+  }
+
+  // Agregar ordenamiento
+  query += ` ORDER BY idSamples DESC`;
+
   try {
-    mysqlConnection.query(query_, function (errors, results, fields) {
+    mysqlConnection.query(query, queryParams, function (errors, results, fields) {
       if (!results.length) {
         return res.status(200).json({ success: false, data: [], msg: "No samples found" });
       } else {

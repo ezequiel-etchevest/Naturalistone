@@ -8,12 +8,18 @@ const SamplesContainer = ({samples, user, sellers }) => {
     const [ spinner, setSpinner ] = useState(false)
 
     const handleSpinner = () => {
-        setTimeout(()=>{ setSpinner(true)}, 500)
+        setTimeout(()=>{ setSpinner(true)}, 1000)
       }
+
+    const [loading, setLoading] = useState(false)
 
     useEffect(()=>{
         handleSpinner()
-      })
+      }, [spinner])
+
+    useEffect(() => {
+      setTimeout(()=>{ setLoading(false)}, 1000)
+    },[loading])
 
     if(spinner === true){
         return(
@@ -23,10 +29,15 @@ const SamplesContainer = ({samples, user, sellers }) => {
               bg={'web.bg'}> 
                 <SamplesFilters
                   samples={samples}
-                  sellers={sellers}/>
+                  sellers={sellers}
+                  user={user}
+                  setLoading={setLoading}
+                  />
                 <SamplesList 
                   samples={samples}
-                  user={user}/>
+                  user={user}
+                  loading={loading}
+                  />
             </Box>
         )}else{
             return(

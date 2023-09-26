@@ -106,6 +106,7 @@ import {
   POST_SAMPLES,
   GET_SAMPLES_PRODUCTS,
   GET_SAMPLES_TRACKINGNUMBER,
+  CLEAR_SAMPLES
 } from "./actions-samples";
 
 const intialState = {
@@ -653,6 +654,11 @@ function rootReducer(state = intialState, action) {
       return {
         ...state,
         all_products_search: action.payload.results,
+      }
+    case CLEAR_SAMPLES:
+      return {
+        ...state,
+        samples: action.payload,
       }
     default:
       return {

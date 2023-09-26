@@ -5,6 +5,7 @@ import {
     IconButton,
     Divider,
     Tooltip,
+    Select,
     } from "@chakra-ui/react";
   import { SearchIcon } from '@chakra-ui/icons';
   import { useDispatch, useSelector } from 'react-redux'
@@ -16,7 +17,16 @@ import {
 import { getCustomers } from "../../redux/actions-customers";
 import { getSamples } from "../../redux/actions-samples";
   
-  const SamplesFilters = ({sellers, samples}) => {
+  const SamplesFilters = ({sellers, samples, user, setLoading}) => {
+    console.log("soy samples", samples)
+    const sellerDinamic = user[0].Secction7Flag === 1 ? '3' : user[0].SellerID
+
+    const [inputValues, setInputValues] = useState({
+      searchSample: '',
+      selectSeller: sellerDinamic
+    })
+
+    console.log("soy input", inputValues)
   
     const dispatch = useDispatch()
     // const navigate = useNavigate()
@@ -25,27 +35,51 @@ import { getSamples } from "../../redux/actions-samples";
     useEffect(() => {
       if(!customers.length){
         dispatch(getCustomers('',''))
-      }}, [])
+      }
+    },[])
 
     // const location = useLocation();
     // const searchParams = new URLSearchParams();
     // const queryString = location.search
     // // const url = new URLSearchParams(queryString);
-    // const getParamsCustomer = url.get('samples')
-    const [inputValues, setInputValues] = useState('')
-  
+    // const getParamsCustomer = url.get('samples')  
     const handleInput = (e) => {
-      const input = e.target.value
-      if(input.length){
+      setLoading(true)
+      const { name, value } = e.target
+      if(value.length){
         // searchParams.set('samples', samples)
-        setInputValues(input)
-        dispatch(getSamples(input))
+        setInputValues({
+          ...inputValues,
+          [name]: value
+        })
+        dispatch(getSamples(value, inputValues.selectSeller))
+      setLoading(false)
       } else {
+      setLoading(true)
         // searchParams.delete('samples')
-        setInputValues('')
-        dispatch(getSamples(''))
+        setInputValues({
+          searchSample: '',
+          selectSeller: inputValues.selectSeller
+        })
+        dispatch(getSamples(inputValues.searchSample, inputValues.selectSeller))
       }
         // navigate(`?${searchParams.toString()}`)
+    }
+
+    const validateSeller = () => {
+      if(user[0].Secction7Flag === 1) return true
+      else return false
+    }
+
+    const handleSellerSelect = (e) => {
+      setLoading(true)
+      const { name, value } = e.target
+      setInputValues({
+        ...inputValues,
+        [name]: value
+      }
+      )
+      dispatch(getSamples(inputValues.searchSample || '', value))
     }
   
     // useEffect(() => {
@@ -54,12 +88,20 @@ import { getSamples } from "../../redux/actions-samples";
     // },[])
   
     const handleClear = () => {
+      setLoading(true)
       // searchParams.delete('samples')
       // navigate(`?${searchParams.toString()}`)
-      setInputValues('')
+      setInputValues({
+        searchSample: '',
+        selectSeller: sellerDinamic
+      })
       dispatch(getCustomers(''))
-      dispatch(getSamples(''))
+      dispatch(getSamples('', sellerDinamic))
     }
+
+    useEffect(() => {
+      dispatch(getSamples(inputValues.searchSample || '', inputValues.selectSeller))
+    }, [inputValues])
     
     return (
       <Box>
@@ -91,11 +133,12 @@ import { getSamples } from "../../redux/actions-samples";
               variant="unstyled"
               placeholder={'Search by name/company'}
               textColor={'web.text2'}
+              name={"searchSample"}
               _placeholder={{ fontFamily: 'body', fontWeight: 'thin' }}
               size={"sm"}
               borderBottomWidth={"2px"}
               borderBottomColor={'web.text2'}
-              value={inputValues}
+              value={inputValues.searchSample}
               onChange={(e)=> handleInput(e)}
               className="mailInputs"
               />
@@ -118,7 +161,34 @@ import { getSamples } from "../../redux/actions-samples";
           w={'28vw'} 
           display={'flex'} 
           justifyContent={'flex-end'}>  
-              
+            <Select
+              onChange={(e)=>handleSellerSelect(e)}
+              display={validateSeller() === true ? 'unset' : 'none' }
+              mb={'0.5vh'}
+              w={'10vw'}
+              name={"selectSeller"}
+              minH={'4.5vh'}
+              variant="unstyled"
+              textColor={'web.text2'}
+              _placeholder={{ fontFamily: 'body', fontWeight: 'inherit', textColor: 'inherit' }}
+              size={"sm"}
+              borderBottomWidth={"2px"}
+              borderBottomColor={'web.text2'}
+              _hover={{borderColor: 'web.border'}}
+              value={inputValues.selectSeller}
+              cursor={'pointer'}
+            >
+              <option value='3' className="options">All seller</option>
+              {  
+                  sellers?.map((e, i) => {
+                    if(e.SellerID !== 3){
+                      return(
+                        <option key={i} className={'options'} value={e.SellerID}>{e.FirstName} {e.LastName}</option>
+                        )
+                    }
+                     })
+              }
+            </Select>
           </Box>
           <CreateSampleModal customers={customers} sellers={sellers} samples={samples}/>
           <Divider orientation={'vertical'} h={'5vh'}/>

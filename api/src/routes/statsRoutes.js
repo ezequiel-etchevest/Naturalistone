@@ -59,9 +59,10 @@ statsRouter.get("/", async function (req, res) {
             SUM(CASE WHEN status = 'done' THEN 1 ELSE 0 END) AS total_done
             FROM Tasks
             WHERE SellerID = ${sellerID} AND Tasks.Created BETWEEN "${startDate}" AND "${endDate}"`;
-  query_9 = `SELECT COUNT(*) AS total_samples 
+  query_9 = `SELECT COUNT(*) AS total_samples, Customers.SellerID
             FROM Samples 
-            WHERE InsertDate BETWEEN "${startDate}" AND "${endDate}"`;
+            LEFT JOIN Customers ON Samples.CustomerID = Customers.CustomerID
+            WHERE Customers.SellerID = '${sellerID}' AND InsertDate BETWEEN "${startDate}" AND "${endDate}"`;
 
   let promisesA = [
     query_1A,

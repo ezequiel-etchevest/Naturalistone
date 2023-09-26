@@ -6,7 +6,7 @@ import Redirect from "./RedirectPage";
 import { Center, Spinner, Text } from "@chakra-ui/react";
 import { useLocation } from "react-router-dom";
 import SamplesContainer from "../components/samples/SamplesContainer";
-import { getSamples } from "../redux/actions-samples";
+import { clearSamples, getSamples } from "../redux/actions-samples";
 import { getSellers } from "../redux/actions-sellers";
 
 const Samples = ({ focus, setFocus }) => {
@@ -25,10 +25,13 @@ const Samples = ({ focus, setFocus }) => {
       dispatch(getEmployeeById(userLocal.SellerID));
     }
     if (!samples.length) {
-      dispatch(getSamples(''));
+      dispatch(getSamples('', ''));
     }
-  });
 
+    return(() => {
+      dispatch(clearSamples())
+    })
+  }, []);
 
   if (userLocal) {
     if (user.length) {
