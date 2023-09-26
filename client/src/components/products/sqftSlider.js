@@ -12,7 +12,7 @@ import { getFiltered }  from "../../redux/actions-products";
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
-let PriceSlider = ({setFilters, filters, limit, setLimit, values}) =>{
+let SqftSlider = ({setFilters, filters, limit, setLimit, values}) =>{
     
     const dispatch = useDispatch()
     const searchParams = new URLSearchParams()
@@ -115,4 +115,4 @@ let PriceSlider = ({setFilters, filters, limit, setLimit, values}) =>{
     )
 }
 
-export default PriceSlider
+export default SqftSlider

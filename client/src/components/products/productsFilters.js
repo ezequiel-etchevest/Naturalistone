@@ -10,10 +10,10 @@ import {
 import { useEffect, useState } from "react";
 import { SearchIcon } from "@chakra-ui/icons";
 import "../../assets/styleSheet.css";
-import { cleanProductValue, getFiltered, getFilteredSearch } from "../../redux/actions-products";
+import {  getFiltered, getFilteredSearch } from "../../redux/actions-products";
 import { useDispatch } from "react-redux";
 import { AiOutlineClear } from "react-icons/ai";
-import PriceSlider from "./priceSlider";
+import SqftSlider from "./sqftSlider";
 import { useLocation, useNavigate } from "react-router-dom";
 import CreateProduct from "./createProduct/createProduct";
 import CreateProductDimension from "./createProductDimension/modalCreateProductDimension";
@@ -518,7 +518,7 @@ const ProductsFilters = ({ setCurrentPage, values, factories, materials }) => {
               <Text color={"web.text2"} mb={"10px"}>
                 SQFT Available
               </Text>
-              <PriceSlider
+              <SqftSlider
                 setFilters={setFilters}
                 filters={filters}
                 limit={limit}
