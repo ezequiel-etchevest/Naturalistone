@@ -18,7 +18,6 @@ import { getCustomers } from "../../redux/actions-customers";
 import { getSamples } from "../../redux/actions-samples";
   
   const SamplesFilters = ({sellers, samples, user, setLoading}) => {
-    console.log("soy samples", samples)
     const sellerDinamic = user[0].Secction7Flag === 1 ? '3' : user[0].SellerID
 
     const [inputValues, setInputValues] = useState({
@@ -26,8 +25,6 @@ import { getSamples } from "../../redux/actions-samples";
       selectSeller: sellerDinamic
     })
 
-    console.log("soy input", inputValues)
-  
     const dispatch = useDispatch()
     // const navigate = useNavigate()
     const customers = useSelector(state => state.customers)
