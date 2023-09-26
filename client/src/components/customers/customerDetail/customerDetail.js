@@ -1,7 +1,7 @@
 import { Box, Text } from "@chakra-ui/react";
 import CustomerInformation from './customerInformation';
-import CustomerRelationshipList from "./CustomerRelationshipList";
-import { CustomerRelationship } from "./CustomerRelationship";
+import CustomerRelationShipList from "./CustomerRelationShipList";
+import { CustomerRelationShip } from "./CustomerRelationShip";
 import ProjectList from "./projectList";
 import InvoiceList from "./invoiceList";
 import { useEffect } from "react";
@@ -84,8 +84,8 @@ const CustomerDetail = ({user, customer, projects_by_customer_id }) => {
             rounded={'md'} 
             borderColor={'web.border'}
             >
-              <CustomerRelationship user={user} customer={customer}/>
-              <CustomerRelationshipList customer_relationship={customer_relationship}/>
+              <CustomerRelationShip user={user} customer={customer}/>
+              <CustomerRelationShipList customer_relationship={customer_relationship}/>
               </Box>
         </Box>
         {/*Boxes*/}

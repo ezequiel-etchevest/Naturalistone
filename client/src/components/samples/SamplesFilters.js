@@ -18,15 +18,13 @@ import { getCustomers } from "../../redux/actions-customers";
 import { getSamples } from "../../redux/actions-samples";
   
   const SamplesFilters = ({sellers, samples, user, setLoading}) => {
-    console.log("soy samples", samples)
+    
     const sellerDinamic = user[0].Secction7Flag === 1 ? '3' : user[0].SellerID
 
     const [inputValues, setInputValues] = useState({
       searchSample: '',
       selectSeller: sellerDinamic
     })
-
-    console.log("soy input", inputValues)
   
     const dispatch = useDispatch()
     // const navigate = useNavigate()
@@ -82,15 +80,8 @@ import { getSamples } from "../../redux/actions-samples";
       dispatch(getSamples(inputValues.searchSample || '', value))
     }
   
-    // useEffect(() => {
-    //   // dispatch(cleanCustomerDetail())
-    //   dispatch(getCustomers(inputValues))
-    // },[])
-  
     const handleClear = () => {
       setLoading(true)
-      // searchParams.delete('samples')
-      // navigate(`?${searchParams.toString()}`)
       setInputValues({
         searchSample: '',
         selectSeller: sellerDinamic
@@ -155,12 +146,6 @@ import { getSamples } from "../../redux/actions-samples";
               _active={{ color: 'gray.800'}}
               />
             </Box>
-          </Box>
-          {/*Selects */}
-          <Box 
-          w={'28vw'} 
-          display={'flex'} 
-          justifyContent={'flex-end'}>  
             <Select
               onChange={(e)=>handleSellerSelect(e)}
               display={validateSeller() === true ? 'unset' : 'none' }
@@ -190,26 +175,32 @@ import { getSamples } from "../../redux/actions-samples";
               }
             </Select>
           </Box>
-          <CreateSampleModal customers={customers} sellers={sellers} samples={samples}/>
-          <Divider orientation={'vertical'} h={'5vh'}/>
-          <Tooltip placement={'bottom-start'} label={'Clear all filters'} fontWeight={'hairline'}>      
-            <IconButton
-            icon={ <AiOutlineClear/>}
-            variant={'unstyled'} 
-            display={'flex'} 
-            borderRadius={'sm'} 
-            placeContent={'center'}
-            alignItems={'center'}
-            color={'web.text2'} 
-            _hover={{
-               color: 'logo.orange'
-               }}
-            _active={{
-            }}
-            onClick={(e) => handleClear(e)}
-            >
-            </IconButton>
-          </Tooltip>     
+          <Box 
+          w={'28vw'} 
+          display={'flex'} 
+          justifyContent={'flex-end'}
+          >  
+            <CreateSampleModal customers={customers} sellers={sellers} samples={samples}/>
+            <Divider orientation={'vertical'} h={'5vh'}/>
+            <Tooltip placement={'bottom-start'} label={'Clear all filters'} fontWeight={'hairline'}>      
+              <IconButton
+              icon={ <AiOutlineClear/>}
+              variant={'unstyled'} 
+              display={'flex'} 
+              borderRadius={'sm'} 
+              placeContent={'center'}
+              alignItems={'center'}
+              color={'web.text2'} 
+              _hover={{
+                 color: 'logo.orange'
+                 }}
+              _active={{
+              }}
+              onClick={(e) => handleClear(e)}
+              >
+              </IconButton>
+            </Tooltip> 
+          </Box>    
         </HStack>
       </Box>
       )
