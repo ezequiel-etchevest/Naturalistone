@@ -6,6 +6,8 @@ import {
     Tooltip,
 		Center,
     Text,
+    SliderMark,
+    RangeSliderMark,
 } from '@chakra-ui/react';
 import { useDispatch } from 'react-redux'
 import { getFiltered }  from "../../redux/actions-products";
@@ -17,18 +19,9 @@ let SqftSlider = ({setFilters, filters, limit, setLimit, values}) =>{
     const dispatch = useDispatch()
     const searchParams = new URLSearchParams()
     const navigate = useNavigate()
-    const [valueMax, setValueMax] = useState(values?.sqftMinMax?.max)
-    const [value, setValue] = useState([0,0])
+    const [valueMax, setValueMax] = useState(values?.sqftMinMax?.max) 
 
     const handlePrice = (e) => {
-      searchParams.set('sqftMin', e[0])
-      searchParams.set('sqftMax', e[1])
-      searchParams.set('finish', filters.finish)
-      searchParams.set('size', filters.size)
-      searchParams.set('thickness', filters.thickness)
-      searchParams.set('material', filters.material)
-      searchParams.set('search', filters.search)
-      navigate(`?${searchParams.toString()}`)
         setLimit(e);
         setFilters({
           ...filters,
@@ -55,8 +48,7 @@ let SqftSlider = ({setFilters, filters, limit, setLimit, values}) =>{
             colorScheme={'orange'}
             value={filters.sqft}
             position={"relative"}
-            zIndex={2}
-            onChangeEnd={(val) => {
+            onMouseUp={(val) => {
               dispatch(getFiltered(filters.finish, filters.size, filters.thickness,filters.material, filters.search, val, filters.type))}}
             onChange={(e) => handlePrice(e)}
             w={'15vw'}
@@ -69,7 +61,8 @@ let SqftSlider = ({setFilters, filters, limit, setLimit, values}) =>{
             <RangeSliderTrack bg={'web.text2'} h={'0.3vh'}>
               <RangeSliderFilledTrack/>
             </RangeSliderTrack>
-            <Tooltip
+              
+            {/* <Tooltip
               label={limit[0]}
 							fontWeight={'normal'}
               bg={'web.sideBar'}
@@ -79,19 +72,32 @@ let SqftSlider = ({setFilters, filters, limit, setLimit, values}) =>{
               index={2}   
               isOpen
 							fontSize={'0.9vw'}
-              >
+              zIndex={0}
+              > */}
               <RangeSliderThumb
 								boxSize={'1.4vh'} 
                 bg={'logo.orange'} 
-                position={"relative"}
                 index={0}           
                 _focus={{
                   borderColor: 'logo.orange',
                   boxShadow: '0 0.5px 0.5px rgba(229, 103, 23, 0.075)inset, 0 0 5px rgba(255,144,0,0.6)'
                 }}
-                />
-            </Tooltip>
-            <Tooltip
+                >
+            <RangeSliderMark
+              fontWeight={'normal'}
+              bg={'web.sideBar'}
+              color="web.text2"
+              isOpen
+              fontSize={'0.8vw'}
+              ml="-62px"
+              w={'45px'}
+              textAlign={'center'}
+              value={limit[0]}
+              >{limit[0]}
+            </RangeSliderMark>
+            </RangeSliderThumb>
+            {/* </Tooltip> */}
+            {/* <Tooltip
 							fontWeight={'normal'}
               label={limit[1]}
 							bg={'web.sideBar'}
@@ -99,7 +105,9 @@ let SqftSlider = ({setFilters, filters, limit, setLimit, values}) =>{
               placement={'right'}
               isOpen
               fontSize={'0.9vw'}
-              >
+              position={"relative"}
+              zIndex={0}
+              > */}
               <RangeSliderThumb 
                 index={1}
 								boxSize={'1.4vh'}  
@@ -108,8 +116,21 @@ let SqftSlider = ({setFilters, filters, limit, setLimit, values}) =>{
                   borderColor: 'logo.orange',
                   boxShadow: '0 0.5px 0.5px rgba(229, 103, 23, 0.075)inset, 0 0 5px rgba(255,144,0,0.6)'
                 }}  
-                />
-            </Tooltip>
+                >
+              <RangeSliderMark
+                fontWeight={'normal'}
+                bg={'web.sideBar'}
+                color="web.text2"
+                isOpen
+                fontSize={'0.8vw'}
+                ml="22px"
+                w={'45px'}
+                textAlign={'center'}
+                value={limit[1]}
+                >{limit[1]}
+              </RangeSliderMark>
+            </RangeSliderThumb>
+            {/* </Tooltip> */}
           </RangeSlider>
 					</Center>
     )
