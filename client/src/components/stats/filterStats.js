@@ -90,7 +90,6 @@ const FilterStats = ({user, setFilters, filters, years, setSpinner}) => {
       
       dispatch(getStats({...filters, SellerID: e.target.value}))
 
-
     }
     }
     

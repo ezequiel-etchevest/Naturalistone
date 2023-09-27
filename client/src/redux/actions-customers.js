@@ -104,14 +104,15 @@ export function createCustomerRelationship(relationshipDetails, user, customer){
 
   return async function(dispatch){
       try{
-          let { } = await axios.post(`/customers/relationship?SellerID=${user}&CustomerID=${customer}`, relationshipDetails)
+          const response = await axios.post(`/customers/relationship?SellerID=${user}&CustomerID=${customer}`, relationshipDetails)
               dispatch(
               {
                   type: POST_CUSTOMER_RELATIONSHIP,
               })
-
+          return response.data
       }catch(error){
-          console.log({error})           
+          console.log({error})
+          return error.response       
       }}
 }
 

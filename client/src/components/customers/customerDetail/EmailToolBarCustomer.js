@@ -20,7 +20,7 @@ const [editorContent, setEditorContent] = useState("");
   return (
         <Box w={'100%'} p={'10px'}>
           <QuillToolbar handleSendEmail={handleSendEmail} />
-          <ReactQuill modules={modules} formats={formats} bounds={'.app'} theme="snow" onChange={handleBodyChange} value={editorContent} placeholder="Write your email here..."/>
+          <ReactQuill className='quill-container' modules={modules} formats={formats} bounds={'.app'} theme="snow" onChange={handleBodyChange} value={editorContent} placeholder="Write your email here..."/>
         </Box>
   );
 };

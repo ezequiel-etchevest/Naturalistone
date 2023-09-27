@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import {  useSelector } from 'react-redux';
+import {  useDispatch, useSelector } from 'react-redux';
 import {
     Box,
     Button,
@@ -18,17 +18,18 @@ import {
     useDisclosure,
     useToast
 } from '@chakra-ui/react';
-import EmailTemplate from '../../samples/createSample/EmailToolbar';
 import '../../../assets/styleSheet.css'
 import { AiOutlineMail } from 'react-icons/ai';
 import EmailTemplateCustomer from './EmailToolBarCustomer';
 import { sendEmailCustomer } from '../../../api/sendEmai';
+import { createCustomerRelationship } from '../../../redux/actions-customers';
 
 const SendEmailModalCustomer = ({ customer }) => {
 
   const { onClose, onOpen, isOpen } = useDisclosure()
   const user = useSelector((state) => state.user)
   const [isToastShowing, setIsToastShowing] = useState(false)
+  const dispatch = useDispatch();
 
   const [ input, setInput ] = useState({
     subject: '',
@@ -64,21 +65,26 @@ const SendEmailModalCustomer = ({ customer }) => {
       [name]: value
     })
   }
-
   const handleSendEmail = async () => {
     if (!isToastShowing) {
       const email = {
         sellerEmail: user[0].Username,
         htmlBody: input.htmlBody,
         subject: input.subject,
-        clientEmail: "eduardoasm19@gmail.com",
+        clientEmail: customer.Email,
         ccEmail: input.ccEmail,
       };
+
+      const relationShip = {
+        Action: "Email",
+        Comment: input.htmlBody 
+      }
       
       try {
         const response = await sendEmailCustomer(email);
-        if (response.success === false) {
-          showErrorToast('The email was not sent correctly');
+        const responseRelationShip = await dispatch(createCustomerRelationship(relationShip, user[0].SellerID, customer.CustomerID))
+        if (!response.success || !responseRelationShip.success) {
+          showErrorToast(response.msg ?? responseRelationShip.msg);
         } else {
           showSuccessToast('The email was sent correctly');
           setInput({
@@ -89,7 +95,7 @@ const SendEmailModalCustomer = ({ customer }) => {
           handleClose();
         }
       } catch (error) {
-        showErrorToast('Error sending email: ' + error.message);
+        showErrorToast(error.message);
       } finally {
         setIsToastShowing(false);
       }
@@ -102,7 +108,6 @@ const SendEmailModalCustomer = ({ customer }) => {
       htmlBody: '',
       ccEmail: ''
     })
-    // handleCleanFormData()
     onClose()
   }
   // const image = 'C:\Users\Keki\Desktop\Naturalistone\Naturalistone\client\src\assets\NaturalistoneLogo.png'
@@ -172,7 +177,7 @@ const SendEmailModalCustomer = ({ customer }) => {
           <Divider borderColor={'web.border'} w={'100%'} />
           <Flex flexDir={'row'} justifyContent={'flex-start'} alignItems={'center'} h={'5vh'}>
             <Text color={'web.text2'} w={'8%'} fontSize={'sm'}>To:</Text>
-            <Input w={'92%'} maxW={'300px'} fontSize={'sm'} border={'none'} type="text" readOnly={true} name={'clientEmail'} className='mailInputs' defaultValue={"eduardoasm19@gmail.com"} />
+            <Input w={'92%'} maxW={'300px'} fontSize={'sm'} border={'none'} type="text" readOnly={true} name={'clientEmail'} className='mailInputs' defaultValue={customer.Email} />
           </Flex>
           <Divider borderColor={'web.border'} w={'100%'} />
           <Flex flexDir={'row'} justifyContent={'flex-start'} alignItems={'center'} h={'5vh'}>

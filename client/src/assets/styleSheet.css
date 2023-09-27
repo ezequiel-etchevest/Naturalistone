@@ -94,3 +94,7 @@ body {
   -webkit-text-fill-color: #F0F6FC !important;
   border-radius: 0;
 }
+
+.quill-container {
+  height: 300px;
+}
