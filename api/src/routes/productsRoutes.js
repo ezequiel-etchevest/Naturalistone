@@ -293,14 +293,11 @@ productsRouter.get("/filtered", async function (req, res) {
         //se elimino codigo que estaba demas al no traer length el result
       } else {
         const sqftMinMax = getSqftMaxMin(results);
-        let price = findMaxMinPrice(results);
+        // let price = findMaxMinPrice(results);
         let filteredValues = prodValues(
           results,
           search,
-          price,
-          sqftMinMax,
-          sqftMin,
-          sqftMax
+          sqftMinMax
         );
         let errorSearch = {};
         if (sqftMin > 0 || sqftMax < 99999999) {

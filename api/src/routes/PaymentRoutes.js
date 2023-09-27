@@ -6,7 +6,8 @@ const payments = require('../Controllers/payments')
 
 PaymentRouter.get('/:id', async function(req, res){
     const { id } = req.params
-    query_ = `SELECT * FROM Payments WHERE Payments.InvoiceID = ${id}`
+    query_ = `SELECT *, CONVERT_TZ(Date, 'UTC', 'America/New_York') + INTERVAL 1 DAY AS Date FROM Payments
+              WHERE Payments.InvoiceID = ${id};`
 
     query_2 = `SELECT * from Sales WHERE Sales.Naturali_Invoice = ${id}`;
 
@@ -61,8 +62,6 @@ PaymentRouter.post('/invoice/:id', async function(req, res){
 PaymentRouter.delete('/invoice/:id/:seller', async function(req, res){
   const { id, seller } = req.params
 
-  console.log('so y sller', seller)
-
   try{
     mysqlConnection.beginTransaction(function(error){
       if(error) {
@@ -81,9 +80,6 @@ PaymentRouter.delete('/invoice/:id/:seller', async function(req, res){
             throw error
           })
         }
-
-        console.log('soy seller en query', seller)
-        console.log('Update payment completed', results)
 
         query_1 = `DELETE FROM Payments WHERE idPayments = ${id}`
 

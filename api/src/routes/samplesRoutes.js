@@ -7,7 +7,7 @@ samplesRoutes.get("/", function (req, res) {
 
   const { search, sellerId } = req.query;
 
-  let query = `SELECT Samples.*, Customers.Company, Customers.Contact_Name, Customers.SellerID, Projects.ProjectName 
+  let query = `SELECT Samples.*, CONVERT_TZ(EstDelivery_Date, 'UTC', 'America/New_York') + INTERVAL 1 DAY AS EstDelivery_Date, Customers.Company, Customers.Contact_Name, Customers.SellerID, Projects.ProjectName 
     FROM Samples
     LEFT JOIN Customers ON Customers.CustomerID = Samples.CustomerID
     LEFT JOIN Projects ON Projects.idProjects = Samples.ProjectID`;

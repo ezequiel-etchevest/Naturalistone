@@ -18,7 +18,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import CreateProduct from "./createProduct/createProduct";
 import CreateProductDimension from "./createProductDimension/modalCreateProductDimension";
 
-const ProductsFilters = ({ setCurrentPage, values, factories, materials }) => {
+const ProductsFilters = ({ values, factories, materials }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
@@ -32,7 +32,7 @@ const ProductsFilters = ({ setCurrentPage, values, factories, materials }) => {
   const getParamsSqftMin = searchParams.get("sqftMin");
   const getParamsSqftMax = searchParams.get("sqftMax");
   const getParamsType = searchParams.get("type");
-  const sqftMin = getParamsSqftMin ? getParamsSqftMin : values?.sqftMinMax?.min;
+  const sqftMin = getParamsSqftMin ? getParamsSqftMin : 0;
   const sqftMax = getParamsSqftMax ? getParamsSqftMax : values?.sqftMinMax?.max;
 
   const [filters, setFilters] = useState({
@@ -45,6 +45,7 @@ const ProductsFilters = ({ setCurrentPage, values, factories, materials }) => {
     sqft: [sqftMin, sqftMax],
   });
   const [limit, setLimit] = useState([sqftMin, sqftMax]);
+  const [valueDefault, setValueDefault] = useState([0 , values?.sqftMinMax?.max]) 
 
   const handleFinish = (e) => {
     const finish = e.target.value;
@@ -59,7 +60,7 @@ const ProductsFilters = ({ setCurrentPage, values, factories, materials }) => {
       ...filters,
       finish,
     });
-    // setCurrentPage(1)
+
     dispatch(
       getFiltered(
         finish,
@@ -113,7 +114,7 @@ const ProductsFilters = ({ setCurrentPage, values, factories, materials }) => {
       ...filters,
       thickness,
     });
-    // setCurrentPage(1)
+
     dispatch(
       getFiltered(
         filters.finish,
@@ -140,7 +141,7 @@ const ProductsFilters = ({ setCurrentPage, values, factories, materials }) => {
       ...filters,
       material,
     });
-    // setCurrentPage(1)
+
     dispatch(
       getFiltered(
         filters.finish,
@@ -167,7 +168,7 @@ const ProductsFilters = ({ setCurrentPage, values, factories, materials }) => {
       ...filters,
       type,
     });
-    // setCurrentPage(1)
+
     dispatch(
       getFiltered(
         filters.finish,
@@ -199,11 +200,11 @@ const ProductsFilters = ({ setCurrentPage, values, factories, materials }) => {
       material: "",
       search: "",
       type: "",
-      sqft: [values?.sqftMinMax?.min, values?.sqftMinMax?.max],
+      sqft: [valueDefault[0], valueDefault[1]],
     });
     // setCurrentPage(1)
     dispatch(getFiltered("", "", "", "", "", "", ""));
-    setLimit([values?.sqftMinMax?.min, values?.sqftMinMax?.max]);
+    setLimit([valueDefault[0], valueDefault[1]]);
   };
 
   const handleChangeProductName = (e) => {
@@ -219,46 +220,14 @@ const ProductsFilters = ({ setCurrentPage, values, factories, materials }) => {
       ...filters,
       search: e.target.value,
     });
-    // setCurrentPage(1)
     dispatch(
-      getFiltered(
-        filters.finish,
-        filters.size,
-        filters.thickness,
-        filters.material,
-        e.target.value,
-        filters.sqft,
-        filters.type
+      getFiltered(filters.finish, filters.size, filters.thickness, filters.material, e.target.value, filters.sqft, filters.type
       )
     );
   };
   
-  // useEffect(() => {
-  //   dispatch(
-  //     getFiltered(
-  //       filters.finish,
-  //       filters.size,
-  //       filters.thickness,
-  //       filters.material,
-  //       filters.search,
-  //       filters.sqft,
-  //       filters.type
-  //       // filters.price
-  //     )
-  //   );
-  // }, [filters]);
-
   useEffect(() => {
-    dispatch(getFilteredSearch(
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        ""
-        // filters.price
-      ))
+    dispatch(getFilteredSearch( "", "", "", "", "", "", "" ))
   },[])
 
   return (
@@ -524,6 +493,8 @@ const ProductsFilters = ({ setCurrentPage, values, factories, materials }) => {
                 limit={limit}
                 setLimit={setLimit}
                 values={values}
+                valueDefault={valueDefault}
+                setValueDefault={setValueDefault}
               />
             </Box>
             <Divider orientation={"vertical"} h={"5vh"} ml={"2vw"} />

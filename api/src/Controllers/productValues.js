@@ -1,4 +1,4 @@
-const prodValues = (arr, search, price, sqft, sqftMin, sqftMax) => {
+const prodValues = (arr, search, price, sqft) => {
 
 function getUniqueFinishes(arr) {
     let finishes = arr.map(obj => obj.Finish === null ? obj.Finish = 'N/A' : obj.Finish);
@@ -30,10 +30,9 @@ const typesValues = (arr) => {
   let thickness = thicknessValues(arr)
   let materials = materialsValues(arr)
   let types = typesValues(arr)
-
+  
   return {finishValues, priceMaxmin, sizes, thickness, materials, search, types, sqftMinMax}
 }
-
 function findMaxMinPrice(arr) {
   let minPrice = Infinity;
   let maxPrice = -Infinity;
@@ -54,6 +53,14 @@ function findMaxMinPrice(arr) {
   }
 }
 
+function getSqftMaxMin(products) {
+  const sqft = products.filter((products)=> products.sqft !== null).sort((a, b) => a.sqft - b.sqft)
+  console.log({sqft})
+  return {
+    min: sqft[0].sqft,
+    max: sqft[sqft.length -1].sqft
+  }
+}
 function getSqftMaxMin(products) {
   const sqft = products.filter((products)=> products.sqft !== null).sort((a, b) => a.sqft - b.sqft)
   return {
