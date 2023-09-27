@@ -36,7 +36,17 @@ const HomeContainer = ({user}) => {
       dispatch(getStats(filters))
     }
     return ()=>{cleanStats()}
-  }, [user, stats])
+  }, [])
+
+  useEffect(() => {
+    if(Object.entries(stats).length > 0) {
+      setSpinner(false)
+    } else {
+      setSpinner(true)
+    }
+  },[stats])
+
+
     return(
     <>
       <Box userSelect={'none'} h={'92vh'} ml={'16vw'} bg={'web.bg'} display={'flex'} flexDir={'column'}>

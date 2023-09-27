@@ -1,5 +1,6 @@
 import { Box, Text, HStack, IconButton, useDisclosure } from "@chakra-ui/react"
 import CustomerEdit from "../customerEdit"
+import SendEmailModalCustomer from "./SendEmailModal";
 
 const CustomerInformation = ({customer}) => {
 
@@ -51,7 +52,10 @@ const CustomerInformation = ({customer}) => {
               >
               - {normalizeValue(customer.Contact_Name)}  
             </Text>
+            <Box display={"flex"} flexDir={"column"} justifyContent={"center"} alignItems={"center"}>
           <CustomerEdit customer={customer} onOpen={onOpen} onClose={onClose} isOpen={isOpen}/>
+          <SendEmailModalCustomer customer={customer}/>
+            </Box>
           </Box>
           {/*Phone */} 
           <Box display={'flex'} flexDir={'row'} px={'1vw'} mt={'1.5vh'}>

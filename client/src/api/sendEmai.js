@@ -28,3 +28,17 @@ export async function sendEmailSamples(email) {
     throw new Error('Error sending email: ' + error.message);
   }
 }
+
+export async function sendEmailCustomer(email) {
+  try {
+  
+    const response = await axios.post('/email/customer', email, {
+      headers: {
+        'Content-Type': 'application/json', // Tipo de contenido para el cuerpo
+      },
+    });
+    return response.data;
+  } catch (error) {
+    throw new Error('Error sending email: ' + error.message);
+  }
+}

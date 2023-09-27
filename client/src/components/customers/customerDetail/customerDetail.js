@@ -7,6 +7,7 @@ import InvoiceList from "./invoiceList";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getCustomerRelationship } from "../../../redux/actions-customers";
+import SendEmailModalCustomer from "./SendEmailModal";
 
 const CustomerDetail = ({user, customer, projects_by_customer_id }) => {
 

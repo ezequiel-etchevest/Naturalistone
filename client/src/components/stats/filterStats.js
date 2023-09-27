@@ -26,7 +26,7 @@ const FilterStats = ({user, setFilters, filters, years, setSpinner}) => {
   const currentYear = new Date().getFullYear();
 
   const handleSelectMonth = (e) =>{
-    setSpinner(true)
+    dispatch(cleanStats())
     const selectedMonth = e.target.value
     setFilters({
       ...filters,
@@ -39,17 +39,12 @@ const FilterStats = ({user, setFilters, filters, years, setSpinner}) => {
 
     navigate(`?${searchParams.toString()}`);
 
-    dispatch(cleanStats())
-
     dispatch(getStats({...filters, Month: selectedMonth}))
 
-    setTimeout(() => {
-      setSpinner(false)
-    }, 1500)
   }
 
   const handleSelectYear = (e) => {
-    setSpinner(true)
+    dispatch(cleanStats())
     const selectedYear = e.target.value
     setFilters({
       ...filters,
@@ -62,18 +57,13 @@ const FilterStats = ({user, setFilters, filters, years, setSpinner}) => {
 
     navigate(`?${searchParams.toString()}`);
 
-    dispatch(cleanStats())
-
     dispatch(getStats({...filters, Year: selectedYear}))
 
-    setTimeout(() => {
-      setSpinner(false)
-    }, 1500)
   }
 
 
   const handleSelectSeller = (e) => {
-    setSpinner(true)
+    dispatch(cleanStats())
     const selectedSeller = e.target.value
     if(e.target.value === 'all') {
       setFilters({
@@ -84,16 +74,11 @@ const FilterStats = ({user, setFilters, filters, years, setSpinner}) => {
       searchParams.set('Year', filters.Year)
       navigate(`?${searchParams.toString()}`);
 
-      dispatch(cleanStats())
-
       dispatch(getStats({...filters, SellerID: 3 }))
 
-    setTimeout(() => {
-      setSpinner(false)
-    }, 1500)
     }
     else { 
-    setSpinner(true)
+    dispatch(cleanStats())
       setFilters({
         ...filters,
         SellerID: selectedSeller
@@ -102,20 +87,14 @@ const FilterStats = ({user, setFilters, filters, years, setSpinner}) => {
       searchParams.set('Month', filters.Month)
       searchParams.set('Year', filters.Year)
       navigate(`?${searchParams.toString()}`);
-
-      dispatch(cleanStats())
       
       dispatch(getStats({...filters, SellerID: e.target.value}))
 
-    setTimeout(() => {
-      setSpinner(false)
-    }, 1500)
 
     }
     }
     
     const handleClear = () => {
-      setSpinner(true)
       dispatch(cleanStats())
       setFilters({
         SellerID: user[0].SellerID,
@@ -126,9 +105,6 @@ const FilterStats = ({user, setFilters, filters, years, setSpinner}) => {
       searchParams.delete('Month')
       searchParams.delete('Year')
       navigate(`?${searchParams.toString()}`);
-    setTimeout(() => {
-      setSpinner(false)
-    }, 1500)
     }
 
       
