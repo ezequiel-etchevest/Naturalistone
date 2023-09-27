@@ -6,9 +6,14 @@ const paymentStats = require("../Controllers/paymentStats");
 statsRouter.get("/", async function (req, res) {
   const { sellerID, month, year } = req.query;
 
-  const startDate = `${year}-${month}-01`;
-  const endDate = new Date(year, month, 0).toISOString().split("T")[0];
-  const today = new Date().toISOString().split("T")[0];
+  // const lastDay = new Date(year, month, 0).getDate();
+  
+  const endMonth = Number(month) + 1
+  const formattedMonth = month < 10 ? `0${month}` : `${month}`;
+  const formattedEndMonth = month < 10 ? `0${endMonth}` : `${endMonth}`;
+  
+  const startDate = `${year}-${formattedMonth}-01`;
+  const endDate = `${year}-${formattedEndMonth}-01`;
 
   query_1A = `SELECT ROUND(SUM(Value), 2) AS TotalValue FROM Sales WHERE InvoiceDate BETWEEN "${startDate}" AND "${endDate}" AND Status != "Canceled" AND Sales.Status != 'Pending_Approval' `;
   query_2A = `SELECT COUNT(*) AS InvoicesNumber FROM Sales WHERE InvoiceDate BETWEEN "${startDate}" AND "${endDate}" AND Status != "Canceled" AND Sales.Status != 'Pending_Approval' `;

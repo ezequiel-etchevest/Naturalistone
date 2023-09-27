@@ -5,7 +5,6 @@ export const GET_STATS = 'GET_STATS'
 export function getStats(filters){
 
     const { Month, Year, SellerID } = filters
-
     return async function(dispatch){
         try{
             let {data} = await axios.get(`/stats?sellerID=${SellerID}&month=${Month}&year=${Year}`)

@@ -148,7 +148,7 @@ const CreateProductDimension = ({ values, materials }) => {
     <Box>
       <Tooltip
         placement={"bottom-start"}
-        label={"Create Product"}
+        label={"Create product dimension"}
         fontWeight={"hairline"}
       >
         <Button
@@ -167,7 +167,7 @@ const CreateProductDimension = ({ values, materials }) => {
          _active={{}}
          onClick={onOpen}
         >
-         New Dimension Product
+         New Product Dimension 
        </Button>
       </Tooltip>
       <Modal

@@ -6,13 +6,12 @@ import ProductListCreateProductDimension from "./productsListCreateProductDimens
 export function SearchProduct({ all_products_search, handleChangeProductName, products, setProducts }) {
   
   return (
-    <>
-      <Text pl={"2vw"} pb={"1vh"}>Search Product</Text>    
+    <>   
       <Box w={"full"} h={"full"} display={"flex"} justifyContent={"center"} alignItems={"center"} flexDir={"column"}>      
-        <Box w={"full"} display={"flex"} justifyContent={"center"} alignItems={"center"}>
+        <Box w={"full"} display={"flex"} alignItems={"center"} mb={'3vh'}>
           <Input
-            mb={"3vh"}
-            w={"60%"}
+            w={"40%"}
+            ml={'1vw'}
             minH={"4.5vh"}
             variant="unstyled"
             name={"searchProduct"}
@@ -28,9 +27,8 @@ export function SearchProduct({ all_products_search, handleChangeProductName, pr
           <IconButton
             color={"web.text2"}
             borderRadius={2}
-            mb={"2vh"}
             aria-label="Search database"
-            bgColor={"web.bg"}
+            bgColor={"web.sideBar"}
             size={"sm"}
             ml={1}
             icon={<SearchIcon />}

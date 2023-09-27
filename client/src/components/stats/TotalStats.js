@@ -79,6 +79,7 @@ export default function TotalStats({stats, filters}) {
         <StatsCard
         title={'Closing Days (Avg)'}
         stat={stats.ClosingDaysAvg}
+        ariaHidden ={true}
         icon={<HiReceiptPercent size={'3em'} />}
         filters={filters}/>
       </HStack>
