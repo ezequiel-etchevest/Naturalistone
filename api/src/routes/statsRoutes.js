@@ -15,9 +15,6 @@ statsRouter.get("/", async function (req, res) {
   const startDate = `${year}-${formattedMonth}-01`;
   const endDate = `${year}-${formattedEndMonth}-01`;
 
-  console.log(startDate)
-  console.log(endDate) 
-
   query_1A = `SELECT ROUND(SUM(Value), 2) AS TotalValue FROM Sales WHERE InvoiceDate BETWEEN "${startDate}" AND "${endDate}" AND Status != "Canceled" AND Sales.Status != 'Pending_Approval' `;
   query_2A = `SELECT COUNT(*) AS InvoicesNumber FROM Sales WHERE InvoiceDate BETWEEN "${startDate}" AND "${endDate}" AND Status != "Canceled" AND Sales.Status != 'Pending_Approval' `;
   query_3A = `SELECT ROUND(AVG(Value), 2) AS AvgValue FROM Sales WHERE InvoiceDate BETWEEN "${startDate}" AND "${endDate}" AND Status != "Canceled" AND Sales.Status != 'Pending_Approval' `;
