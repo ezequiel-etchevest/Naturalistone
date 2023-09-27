@@ -37,7 +37,6 @@ const HomeContainer = ({user}) => {
     }
     return ()=>{cleanStats()}
   }, [user, stats])
-  
     return(
     <>
       <Box userSelect={'none'} h={'92vh'} ml={'16vw'} bg={'web.bg'} display={'flex'} flexDir={'column'}>

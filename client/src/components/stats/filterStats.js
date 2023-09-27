@@ -39,11 +39,13 @@ const FilterStats = ({user, setFilters, filters, years, setSpinner}) => {
 
     navigate(`?${searchParams.toString()}`);
 
+    dispatch(cleanStats())
+
     dispatch(getStats({...filters, Month: selectedMonth}))
 
     setTimeout(() => {
       setSpinner(false)
-    },1500)
+    }, 1500)
   }
 
   const handleSelectYear = (e) => {
@@ -60,11 +62,13 @@ const FilterStats = ({user, setFilters, filters, years, setSpinner}) => {
 
     navigate(`?${searchParams.toString()}`);
 
+    dispatch(cleanStats())
+
     dispatch(getStats({...filters, Year: selectedYear}))
 
     setTimeout(() => {
       setSpinner(false)
-    },1500)
+    }, 1500)
   }
 
 
@@ -80,14 +84,16 @@ const FilterStats = ({user, setFilters, filters, years, setSpinner}) => {
       searchParams.set('Year', filters.Year)
       navigate(`?${searchParams.toString()}`);
 
+      dispatch(cleanStats())
+
       dispatch(getStats({...filters, SellerID: 3 }))
 
-      setTimeout(() => {
-        setSpinner(false)
-      },1500)
+    setTimeout(() => {
+      setSpinner(false)
+    }, 1500)
     }
-    else {      
-      setSpinner(true)
+    else { 
+    setSpinner(true)
       setFilters({
         ...filters,
         SellerID: selectedSeller
@@ -96,16 +102,20 @@ const FilterStats = ({user, setFilters, filters, years, setSpinner}) => {
       searchParams.set('Month', filters.Month)
       searchParams.set('Year', filters.Year)
       navigate(`?${searchParams.toString()}`);
+
+      dispatch(cleanStats())
       
       dispatch(getStats({...filters, SellerID: e.target.value}))
 
-      setTimeout(() => {
-        setSpinner(false)
-      },1500)
+    setTimeout(() => {
+      setSpinner(false)
+    }, 1500)
+
     }
     }
     
     const handleClear = () => {
+      setSpinner(true)
       dispatch(cleanStats())
       setFilters({
         SellerID: user[0].SellerID,
@@ -116,6 +126,9 @@ const FilterStats = ({user, setFilters, filters, years, setSpinner}) => {
       searchParams.delete('Month')
       searchParams.delete('Year')
       navigate(`?${searchParams.toString()}`);
+    setTimeout(() => {
+      setSpinner(false)
+    }, 1500)
     }
 
       

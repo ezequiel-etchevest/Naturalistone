@@ -28,12 +28,11 @@ const Quotes = ({focus, setFocus}) => {
   const getParamsName = url.get('name')
   const getParamsNumber = url.get('number')
 
-
   const [focusFilter, setFocusFilter] = useState('All')
   const userLocal = JSON.parse(localStorage.getItem('user'))
 
     useEffect(()=>{
-        if(seller_values === undefined) dispatch(getSellerValues())
+        if(seller_values === undefined || seller_values.length === 0) dispatch(getSellerValues())
         if(userLocal && !user.length){
           dispatch(getEmployeeById(userLocal.SellerID))
         }
