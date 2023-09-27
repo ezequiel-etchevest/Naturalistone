@@ -30,7 +30,7 @@ return(
 )
 }
 
-const CustomerRelationshipList = ({customer_relationship}) => {
+const CustomerRelationShipList = ({customer_relationship}) => {
 return(
 <>
   <Box w={'full'}>
@@ -81,4 +81,4 @@ return(
     )}
 
 
-export default CustomerRelationshipList;
+export default CustomerRelationShipList;

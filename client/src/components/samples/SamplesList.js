@@ -18,7 +18,7 @@ import SampleDeleteModal from './SampleDeleteModal';
   
 
   const ModelTr = ({e, user}) => {
-    console.log("user", user)
+
     const { isOpen, onClose, onOpen } = useDisclosure()
 
     const handleClick = (e) => {
