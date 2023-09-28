@@ -17,12 +17,13 @@ body {
   background: #f3f1f2;
   font-family: sans-serif;
 }
+
 .ql-editor {
   overflow-y: scroll;
   resize: vertical;
-  min-height: 220px;
-  max-height: 330px;
+  height: 300px !important;
 }
+
 .ql-editor::-webkit-scrollbar {
   width: 0.2vw;
 }
@@ -93,8 +94,4 @@ body {
   -webkit-box-shadow: 0 0 0px 1000px #0D1117 inset !important;
   -webkit-text-fill-color: #F0F6FC !important;
   border-radius: 0;
-}
-
-.quill-container {
-  height: 300px;
 }

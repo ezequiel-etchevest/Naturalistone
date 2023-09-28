@@ -22,7 +22,7 @@ import '../../../assets/styleSheet.css'
 import { AiOutlineMail } from 'react-icons/ai';
 import EmailTemplateCustomer from './EmailToolBarCustomer';
 import { sendEmailCustomer } from '../../../api/sendEmai';
-import { createCustomerRelationship } from '../../../redux/actions-customers';
+import { createCustomerRelationship, getCustomerRelationship } from '../../../redux/actions-customers';
 
 const SendEmailModalCustomer = ({ customer }) => {
 
@@ -35,7 +35,9 @@ const SendEmailModalCustomer = ({ customer }) => {
     subject: '',
     htmlBody: '',
     ccEmail: '',
+    plainTextBody: ''
   })
+  
   const toast = useToast()
 
   const showSuccessToast = (message) => {
@@ -77,7 +79,7 @@ const SendEmailModalCustomer = ({ customer }) => {
 
       const relationShip = {
         Action: "Email",
-        Comment: input.htmlBody 
+        Comment: input.plainTextBody 
       }
       
       try {
@@ -86,6 +88,7 @@ const SendEmailModalCustomer = ({ customer }) => {
         if (!response.success || !responseRelationShip.success) {
           showErrorToast(response.msg ?? responseRelationShip.msg);
         } else {
+          dispatch(getCustomerRelationship(customer.CustomerID))
           showSuccessToast('The email was sent correctly');
           setInput({
             subject: '',

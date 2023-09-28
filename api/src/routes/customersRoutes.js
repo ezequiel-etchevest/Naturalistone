@@ -1,7 +1,15 @@
 const express = require('express')
 const customersRouter = express.Router()
 const mysqlConnection = require('../db');
-const CustomerFilters = require('../Controllers/customerController');
+const {
+  CustomerFilters,
+  createCustomer,
+  updateCustomerAddress,
+} = require('../Controllers/customerController');
+const { 
+  createAddress
+} = require('../Controllers/adressController')
+
 
 customersRouter.get('/', async function(req, res){
 
@@ -83,7 +91,6 @@ customersRouter.get('/:id', async function(req, res){
 
 customersRouter.post('/', async function(req, res){
 
-    //hay que agregar el sellerID, el vendedor encargado de cargar al cliente.
     const {
         Company,
         Phone,
@@ -91,32 +98,49 @@ customersRouter.post('/', async function(req, res){
         DiscountID,
         Contact_Name,
         Address,
+        Address2,
         Billing_Address,
         ZipCode, 
         State, 
         Billing_City, 
+        Billing_Address2,
         Billing_ZipCode,
         Billing_State,
+        Billing_Nickname,
         Company_Position,
-        City
+        City,
+        Nickname,
+        ShippingAddressInBilling
     } = req.body
 
-    query_ = `INSERT INTO Customers (Company, Phone, Email, DiscountID, Contact_Name, Address, Billing_Address, ZipCode, State, Billing_City, Billing_ZipCode, Billing_State, Company_Position, City) 
-    VALUES ("${Company}", "${Phone}", "${Email}", "${DiscountID}", "${Contact_Name}", "${Address}", "${Billing_Address}", "${ZipCode}", "${State}", "${Billing_City}", "${Billing_ZipCode}", "${Billing_State}", "${Company_Position}", "${City}")`;
-    
     try{
-         mysqlConnection.query(query_, function(error, results, fields){
-            if(error) throw error;
-            if(results.length == 0) {
-                console.log('Error en salesRoutes.get /create-customer')
-                res.status(200).json('');
-            } else {
-                console.log('Customer created successfully')
-                res.status(200).json(results);
-            }
-            });
+      mysqlConnection.beginTransaction();
+
+      const customer = await createCustomer(Company, Phone, Email, DiscountID, Contact_Name, Company_Position)
+      const shippingAddress = await createAddress(customer.insertId, Address, Address2, City, State, ZipCode, Nickname)
+
+      let billingAddress;
+
+      if (!ShippingAddressInBilling) {
+          billingAddress = await createAddress(customer.insertId, Billing_Address, Billing_Address2, Billing_City, Billing_State, Billing_ZipCode, Billing_Nickname)
+      }
+
+      await updateCustomerAddress('shipping_address_id', shippingAddress.insertId, customer.insertId)
+
+      await updateCustomerAddress(
+        'billing_address_id',
+        billingAddress?.insertId ??
+        shippingAddress.insertId,
+        customer.insertId
+        )
+
+      mysqlConnection.commit()
+
+      res.status(200).json({success: true, msg:"Create customer successful"});
     } catch(error){
-        res.status(409).send(error);
+      console.log('General error:' + error)
+      mysqlConnection.rollback();
+      res.status(400).send({success: false, msg: "Error in create customer:" + error, error: error});
     }
 });
 
