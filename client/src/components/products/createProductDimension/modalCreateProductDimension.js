@@ -2,8 +2,6 @@ import { DeleteIcon } from "@chakra-ui/icons";
 import {
   Box,
   Button,
-  IconButton,
-  Input,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -12,13 +10,6 @@ import {
   ModalHeader,
   ModalOverlay,
   Progress,
-  Select,
-  Td,
-  Text,
-  Th,
-  Thead,
-  Tooltip,
-  Tr,
   useDisclosure,
   useToast,
 } from "@chakra-ui/react";
