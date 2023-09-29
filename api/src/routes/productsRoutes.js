@@ -245,45 +245,42 @@ productsRouter.get("/id/:id", async function (req, res) {
 productsRouter.get("/filtered", async function (req, res) {
   let { finish, size, thickness, material, search, sqft1, sqft2, type } =
     req.query;
-  const sqftMin = sqft1 === "" ? 0 : sqft1;
-  const sqftMax = sqft2 === "" ? 99999999 : sqft2;
+  
+  const sqftMin = sqft1 === undefined ? 0 : sqft1;
+  const sqftMax = sqft2 === undefined ? 99999999 : sqft2;
 
   const query = `
     SELECT    
-      ProdNames.Naturali_ProdName AS ProductName,
-      ProdNames.ProdNameID,
-      ProdNames.Material,
-      Dimension.Type,
-      Dimension.Size,
-      Dimension.Finish,
-      Dimension.Thickness,
-      Dimension.SQFT_per_Slab,
-      Products.SalePrice AS Price,
-      Products.ProdID,
-      Inventory.*,
-      Products.Discontinued_Flag,
-    CASE
-      WHEN Dimension.Type = 'Tile' THEN Inventory.InStock_Available + Inventory.InComing_Available
-      WHEN Dimension.Type = 'Slab' THEN (Inventory.InStock_Available + Inventory.InComing_Available) * Dimension.SQFT_per_Slab
-    END AS sqft
+    ProdNames.Naturali_ProdName AS ProductName,
+    ProdNames.ProdNameID,
+    ProdNames.Material,
+    Dimension.Type,
+    Dimension.Size,
+    Dimension.Finish,
+    Dimension.Thickness,
+    Dimension.SQFT_per_Slab,
+    Products.SalePrice AS Price,
+    Products.ProdID,
+    Inventory.*,
+    Products.Discontinued_Flag,
+      CASE
+          WHEN Dimension.Type = 'Tile' THEN Inventory.InStock_Available + Inventory.Incoming_Available
+          WHEN Dimension.Type = 'Mosaic' THEN Inventory.InStock_Available + Inventory.Incoming_Available
+          WHEN Dimension.Type = 'Slab' THEN (Inventory.InStock_Available + Inventory.Incoming_Available) * Dimension.SQFT_per_Slab
+      END AS sqft
     FROM Products
     INNER JOIN ProdNames ON ProdNames.ProdNameID = Products.ProdNameID
     INNER JOIN Dimension ON Dimension.DimensionID = Products.DimensionID
     INNER JOIN Inventory ON Inventory.ProdID = Products.ProdID 
     WHERE (Inventory.InStock_Available > 0 OR Inventory.Incoming_Available > 0)
-    
-    ${material.length ? `AND (ProdNames.Material = "${material}")` : ``}
-    ${type.length ? `AND (Dimension.Type = "${type}")` : ``}
-    ${finish.length ? `AND (Dimension.Finish = "${finish}")` : ``}
-    ${size.length ? ` AND (Dimension.Size = "${size}")` : ``}
-    ${thickness.length ? `AND (Dimension.Thickness = "${thickness}")` : ``}
-    ${
-      search.length
-        ? `AND (LOWER(ProdNames.Naturali_ProdName) LIKE LOWER('%${search}%'))`
-        : ``
-    }
-    ORDER BY ProdNames.Naturali_ProdName ASC
-    `;
+      ${material.length ? `AND (ProdNames.Material = "${material}")` : ``}
+      ${type.length ? `AND (Dimension.Type = "${type}")` : ``}
+      ${finish.length ? `AND (Dimension.Finish = "${finish}")` : ``}
+      ${size.length ? `AND (Dimension.Size = "${size}")` : ``}
+      ${thickness.length ? `AND (Dimension.Thickness = "${thickness}")` : ``}
+      ${search.length ? `AND (LOWER(ProdNames.Naturali_ProdName) LIKE LOWER('%${search}%'))` : ``}
+  
+  ORDER BY ProdNames.Naturali_ProdName ASC;`;
 
   try {
     mysqlConnection.query(query, function (error, results, fields) {
@@ -292,19 +289,23 @@ productsRouter.get("/filtered", async function (req, res) {
         res.status(200).json({ results, errorSearch: [] });
         //se elimino codigo que estaba demas al no traer length el result
       } else {
+
         const sqftMinMax = getSqftMaxMin(results);
-        // let price = findMaxMinPrice(results);
+
+        if (sqftMin >= 0 || sqftMax < 99999999) {
+          results = results.filter(
+            (item) => item.sqft >= sqftMin && item.sqft <= sqftMax
+          );
+        }
+
+        let price = findMaxMinPrice(results);
+        let errorSearch = {};
         let filteredValues = prodValues(
           results,
           search,
+          price,
           sqftMinMax
         );
-        let errorSearch = {};
-        if (sqftMin > 0 || sqftMax < 99999999) {
-          results = results.filter(
-            (item) => item.sqft > sqftMin && item.sqft < sqftMax
-          );
-        }
         results = results.sort((a, b) => {
           const nameA = a.ProductName.toUpperCase();
           const nameB = b.ProductName.toUpperCase();
