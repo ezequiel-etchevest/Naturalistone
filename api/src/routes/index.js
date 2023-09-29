@@ -21,7 +21,7 @@ const emailInvoiceRouter = require('./sendEmailRoutes')
 const proformasRoutes = require('./proformasRoutes')
 const samplesRoutes = require('./samplesRoutes');
 const specialProductsRouter = require('./specialProductsRoutes');
-const adressRouter = require('./addressRoutes');
+const addressRouter = require('./addressRoutes');
 
 mainRouter.use('/api/login', loginRouter);
 mainRouter.use('/api/seller', sellerRouter);
@@ -44,6 +44,6 @@ mainRouter.use('/api/email', emailInvoiceRouter)
 mainRouter.use('/api/proformas', proformasRoutes)
 mainRouter.use('/api/samples', samplesRoutes)
 mainRouter.use('/api/sp-1prods', specialProductsRouter)
-mainRouter.use('/api/address', adressRouter)
+mainRouter.use('/api/address', addressRouter)
 
 module.exports = mainRouter
