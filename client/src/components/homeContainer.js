@@ -37,7 +37,7 @@ const HomeContainer = ({user}) => {
     }
     return ()=>{cleanStats()}
   }, [])
-  
+
   useEffect(() => {
     if(Object.entries(stats).length > 0) {
       setSpinner(false)
@@ -45,6 +45,7 @@ const HomeContainer = ({user}) => {
       setSpinner(true)
     }
   },[stats])
+
 
     return(
     <>

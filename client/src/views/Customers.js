@@ -33,7 +33,7 @@ const Customers = ({focus, setFocus}) => {
   useEffect(() => {
     return () => {
       dispatch(getCustomers(getParamsCustomer ? getParamsCustomer : ''))
-    }
+      }
     },[])
   
   

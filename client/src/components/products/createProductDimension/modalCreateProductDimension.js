@@ -287,4 +287,5 @@ const CreateProductDimension = ({ values, materials }) => {
     </Box>
   );
 };
+
 export default CreateProductDimension;

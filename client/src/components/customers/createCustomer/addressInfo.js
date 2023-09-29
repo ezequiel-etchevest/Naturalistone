@@ -15,6 +15,9 @@ export function AddressInfo({formData, setFormData, validate, errors, setErrors,
         Billing_ZipCode: formData.ZipCode,
         Billing_State: formData.State,
         Billing_City: formData.City,
+        Billing_Address2: formData.Address2,
+        Billing_Nickname: formData.Nickname,
+        ShippingAddressInBilling: true
       })
     }
     if( e.target.checked === false ) {
@@ -24,19 +27,24 @@ export function AddressInfo({formData, setFormData, validate, errors, setErrors,
         Billing_ZipCode: '',
         Billing_State: '',
         Billing_City: '',
+        Billing_Address2: '',
+        Billing_Nickname: '',
+        ShippingAddressInBilling: false
       })
     }
   }
+
   return (
     <>
       <form>
-      <VStack h={'40vh'}>
-        <Box w={'22vw'} display={'flex'} pt={'2vh'} flexDir={'row'} justifyContent={'space-between'}>
+        <Box display={"flex"} flexDir={"row"}>
+      <VStack h={'20vh'} pr={"2vw"}>
+        <Box w={'22vw'} display={'flex'} flexDir={'row'} justifyContent={'space-between'} >
           <Text alignSelf={'flex-start'} textColor={'web.text2'} fontWeight={'bold'} >Address Info</Text>
         </Box>
         <Box w={'22vw'} display={'flex'} flexDir={'row'} justifyContent={'space-between'}>
           <FormControl>
-          <FormLabel textColor={'web.text2'} fontSize={'sm'} name={'address'}  fontWeight={'normal'}>Address</FormLabel>
+          <FormLabel textColor={'web.text2'} fontSize={'sm'} name={'address'} pt={"1.5vh"} fontWeight={'normal'}>Address</FormLabel>
             <Input
               mb={'0.5vh'}
               variant="unstyled"
@@ -59,7 +67,25 @@ export function AddressInfo({formData, setFormData, validate, errors, setErrors,
         </Box>
         <Box w={'22vw'} display={'flex'} flexDir={'row'} justifyContent={'space-between'}>
           <FormControl>
-          <FormLabel textColor={'web.text2'} name={'city'} fontSize={'sm'}>City</FormLabel>
+          <FormLabel textColor={'web.text2'} fontSize={'sm'} name={'address2'} pt={"1.5vh"} fontWeight={'normal'}>Address 2</FormLabel>
+            <Input
+              mb={'0.5vh'}
+              variant="unstyled"
+              textColor={'web.text'}
+              _placeholder={{ fontFamily: 'body', fontWeight: 'inherit' }}
+              size={"sm"}
+              borderBottomWidth={"2px"}
+              borderBottomColor={'web.text2'}
+              type={"text"}
+              name={"Address2"}
+              value={formData.Address2}
+              onChange={handleChange}
+              />
+          </FormControl>
+        </Box>
+        <Box w={'22vw'} display={'flex'} flexDir={'row'} justifyContent={'space-between'}>
+          <FormControl>
+          <FormLabel textColor={'web.text2'} name={'city'} fontSize={'sm'} pt={"1.5vh"}>City</FormLabel>
             <Input
               mb={'0.5vh'}
               variant="unstyled"
@@ -74,15 +100,17 @@ export function AddressInfo({formData, setFormData, validate, errors, setErrors,
               onChange={handleChange}
               />
               { errors.City && (
-                <Text position={'absolute'} color={'web.error'} fontSize={'xs'}>
+                <Text position={'absolute'} color={'web.error'} fontSize={'xs'} mb={"5px"}>
                   {errors.City}
                 </Text>
               )}
           </FormControl>
         </Box>
+      </VStack>
+      <VStack h={'20vh'} pt={"4.2vh"}>
         <Box w={'22vw'} display={'flex'} flexDir={'row'} justifyContent={'space-between'}>
         <FormControl>
-          <FormLabel textColor={'web.text2'} name={'state'}  fontSize={'sm'}>State</FormLabel>
+          <FormLabel textColor={'web.text2'} name={'state'}  fontSize={'sm'} pt={"1.5vh"}>State</FormLabel>
             <AutocompleteState 
               formData={formData}
               setFormData={setFormData}
@@ -95,7 +123,7 @@ export function AddressInfo({formData, setFormData, validate, errors, setErrors,
         </Box>
         <Box w={'22vw'} display={'flex'} flexDir={'row'} justifyContent={'space-between'}>
           <FormControl>
-          <FormLabel textColor={'web.text2'} name={'zipcode'}  fontSize={'sm'}>Zip Code</FormLabel>
+          <FormLabel textColor={'web.text2'} name={'zipcode'} pt={"1.5vh"} fontSize={'sm'}>Zip Code</FormLabel>
             <Input
               mb={'0.5vh'}
               variant="unstyled"
@@ -116,6 +144,24 @@ export function AddressInfo({formData, setFormData, validate, errors, setErrors,
               )}
           </FormControl>
         </Box>
+        <Box w={'22vw'} display={'flex'} flexDir={'row'} justifyContent={'space-between'}>
+          <FormControl>
+          <FormLabel textColor={'web.text2'} fontSize={'sm'} pt={"1.5vh"} name={'Nickname'}  fontWeight={'normal'}>Nickname</FormLabel>
+            <Input
+              mb={'0.5vh'}
+              variant="unstyled"
+              textColor={'web.text'}
+              _placeholder={{ fontFamily: 'body', fontWeight: 'inherit' }}
+              size={"sm"}
+              borderBottomWidth={"2px"}
+              borderBottomColor={'web.text2'}
+              type={"text"}
+              name={"Nickname"}
+              value={formData.Nickname}
+              onChange={handleChange}
+              />
+          </FormControl>
+        </Box>
         <Box w={'22vw'} display={'flex'} flexDir={'row'} justifyContent={'space-between'} pr={'1vw'}>
           <Text 
           alignSelf={'flex-start'} 
@@ -125,8 +171,8 @@ export function AddressInfo({formData, setFormData, validate, errors, setErrors,
           fontSize={'sm'}>Set this adress as billing address?</Text>
           <Switch id='billing_adress' onChange={(e)=>handleBillingAdress(e)}  colorScheme={'orange'} size={'sm'}/>
         </Box>
-
-      </VStack>
+      </VStack> 
+      </Box>
     </form>
   </>
       )

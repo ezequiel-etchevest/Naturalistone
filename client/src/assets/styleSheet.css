@@ -17,12 +17,13 @@ body {
   background: #f3f1f2;
   font-family: sans-serif;
 }
+
 .ql-editor {
   overflow-y: scroll;
   resize: vertical;
-  min-height: 220px;
-  max-height: 330px;
+  height: 300px !important;
 }
+
 .ql-editor::-webkit-scrollbar {
   width: 0.2vw;
 }

@@ -60,4 +60,22 @@ emailInvoiceRouter.post('/samples', async function (req, res) {
   }
 })
 
+emailInvoiceRouter.post('/customer', async function (req, res) {
+  
+  const { htmlBody, subject, clientEmail, sellerEmail, ccEmail } = req.body
+
+  try {
+    await sendSamplesEmail(
+      sellerEmail,
+      clientEmail,
+      ccEmail,
+      htmlBody,
+      subject,
+      )
+    return res.status(200).json({success: true, data: "email send successfully"})
+  } catch (error) {
+    return res.status(400).json({success: false, data: error})
+  }
+})
+
 module.exports = emailInvoiceRouter

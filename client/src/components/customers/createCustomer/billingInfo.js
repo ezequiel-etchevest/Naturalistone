@@ -7,13 +7,14 @@ export function BillingInfo({formData, setFormData, validate, errors, setErrors,
   return (
     <>
       <form>
-      <VStack  h={'40vh'}>
-        <Box w={'22vw'} display={'flex'} pt={'2vh'} flexDir={'row'} justifyContent={'space-between'}>
+        <Box display={"flex"} flexDir={"row"} gap={"2vw"}>
+          <VStack h={'20vh'} >
+            <Box w={'22vw'} display={'flex'} flexDir={'row'} justifyContent={'space-between'}>
           <Text alignSelf={'flex-start'} textColor={'web.text2'} fontWeight={'bold'} >Billing Address Info</Text>
-        </Box>
-        <Box w={'22vw'} display={'flex'} flexDir={'row'} justifyContent={'space-between'}>
+            </Box>
+            <Box w={'22vw'} display={'flex'} flexDir={'row'} justifyContent={'space-between'}>
           <FormControl>
-          <FormLabel textColor={'web.text2'} fontSize={'sm'} name={'billingaddress'} fontWeight={'normal'}>Billing Address</FormLabel>
+          <FormLabel textColor={'web.text2'} fontSize={'sm'} pt={"1.5vh"} name={'billingaddress'} fontWeight={'normal'}>Billing Address</FormLabel>
             <Input
               mb={'0.5vh'}
               variant="unstyled"
@@ -33,10 +34,28 @@ export function BillingInfo({formData, setFormData, validate, errors, setErrors,
                 </Text>
               )}
           </FormControl>
-        </Box>
-        <Box w={'22vw'} display={'flex'} flexDir={'row'} justifyContent={'space-between'}>
+            </Box>
+            <Box w={'22vw'} display={'flex'} flexDir={'row'} justifyContent={'space-between'}>
           <FormControl>
-          <FormLabel textColor={'web.text2'} name={'billingcity'} fontSize={'sm'}>City</FormLabel>
+          <FormLabel textColor={'web.text2'} fontSize={'sm'} pt={"1.5vh"} name={'Billing_Address2'} fontWeight={'normal'}>Billing Address 2</FormLabel>
+            <Input
+              mb={'0.5vh'}
+              variant="unstyled"
+              textColor={'web.text'}
+              _placeholder={{ fontFamily: 'body', fontWeight: 'inherit' }}
+              size={"sm"}
+              borderBottomWidth={"2px"}
+              borderBottomColor={'web.text2'}
+              type={"text"}
+              name={"Billing_Address2"}
+              value={formData.Billing_Address2}
+              onChange={handleChange}
+              />
+          </FormControl>
+            </Box>
+            <Box w={'22vw'} display={'flex'} flexDir={'row'} justifyContent={'space-between'}>
+          <FormControl>
+          <FormLabel textColor={'web.text2'} name={'billingcity'} pt={"1.5vh"} fontSize={'sm'}>City</FormLabel>
             <Input
               mb={'0.5vh'}
               variant="unstyled"
@@ -56,10 +75,12 @@ export function BillingInfo({formData, setFormData, validate, errors, setErrors,
                 </Text>
               )}
           </FormControl>
-        </Box>
-        <Box w={'22vw'} display={'flex'} flexDir={'row'} justifyContent={'space-between'}>
+            </Box>
+          </VStack>
+          <VStack h={'20vh'}  pt={"4.2vh"}>
+            <Box w={'22vw'} display={'flex'} flexDir={'row'} justifyContent={'space-between'}>
         <FormControl>
-          <FormLabel textColor={'web.text2'} name={'billingstate'} fontSize={'sm'}>State</FormLabel>
+          <FormLabel textColor={'web.text2'} name={'billingstate'} pt={"1.5vh"} fontSize={'sm'}>State</FormLabel>
             <AutocompleteState 
               formData={formData}
               setFormData={setFormData}
@@ -69,10 +90,10 @@ export function BillingInfo({formData, setFormData, validate, errors, setErrors,
               name={'Billing_State'}
             />
           </FormControl>
-        </Box>
-        <Box w={'22vw'} display={'flex'} flexDir={'row'} justifyContent={'space-between'}>
+            </Box>
+            <Box w={'22vw'} display={'flex'} flexDir={'row'} justifyContent={'space-between'}>
           <FormControl>
-          <FormLabel textColor={'web.text2'} name={'billingzipcode'} fontSize={'sm'}>Zip Code</FormLabel>
+          <FormLabel textColor={'web.text2'} name={'billingzipcode'} pt={"1.5vh"} fontSize={'sm'}>Zip Code</FormLabel>
             <Input
               mb={'0.5vh'}
               variant="unstyled"
@@ -92,10 +113,28 @@ export function BillingInfo({formData, setFormData, validate, errors, setErrors,
                 </Text>
               )}
           </FormControl>
-        </Box>
-        
-      </VStack>
-    </form>
-  </>
-      )
-    }
+            </Box>
+            <Box w={'22vw'} display={'flex'} flexDir={'row'} justifyContent={'space-between'}>
+          <FormControl>
+          <FormLabel textColor={'web.text2'} fontSize={'sm'} pt={"1.5vh"} name={'Billing_Nickname'}  fontWeight={'normal'}>Billing Nickname</FormLabel>
+            <Input
+              mb={'0.5vh'}
+              variant="unstyled"
+              textColor={'web.text'}
+              _placeholder={{ fontFamily: 'body', fontWeight: 'inherit' }}
+              size={"sm"}
+              borderBottomWidth={"2px"}
+              borderBottomColor={'web.text2'}
+              type={"text"}
+              name={"Billing_Nickname"}
+              value={formData.Billing_Nickname}
+              onChange={handleChange}
+              />
+          </FormControl>
+            </Box>
+          </VStack>
+        </Box>    
+      </form>
+    </>
+    )
+  }

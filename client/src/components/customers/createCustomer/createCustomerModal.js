@@ -33,17 +33,22 @@ export function CreateCustomerModal() {
     Contact_Name: '',
     City: '',
     Address: '',
+    Address2: '',
     State: '',
     ZipCode: '',
     Phone: '',
     Email: '',
+    Nickname: '',
     Company: '',
     Company_Position: '',
     DiscountID: 1,
     Billing_Address: '',
+    Billing_Address2: '',
     Billing_ZipCode: '',
     Billing_State: '',
-    Billing_City: '',  
+    Billing_City: '',
+    Billing_NickName: '',
+    ShippingAddressInBilling: false
   });
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -147,12 +152,18 @@ export function CreateCustomerModal() {
         }}
       onClick={onOpen}
       />
-      <Modal size={'xl'} isOpen={isOpen} onClose={()=>handleClose()} >
+      <Modal
+      isOpen={isOpen}
+      onClose={()=>handleClose()}
+      >
         <ModalOverlay/>
         <ModalContent
         bg={'web.sideBar'}
         border={'1px solid'}
-        borderColor={'web.border'}>
+        borderColor={'web.border'}
+        minH={progress === 50 || progress === 100 ? "70vh" : ''}
+        minW={progress === 50 || progress === 100 ? '50vw' : '35vw'}
+        >
         <Progress
         value={progress} 
         colorScheme={"orange"} 

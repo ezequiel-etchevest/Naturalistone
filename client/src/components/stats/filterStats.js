@@ -26,6 +26,7 @@ const FilterStats = ({user, setFilters, filters, years, setSpinner}) => {
   const currentYear = new Date().getFullYear();
 
   const handleSelectMonth = (e) =>{
+    dispatch(cleanStats())
     const selectedMonth = e.target.value
     setFilters({
       ...filters,
@@ -38,12 +39,12 @@ const FilterStats = ({user, setFilters, filters, years, setSpinner}) => {
 
     navigate(`?${searchParams.toString()}`);
 
-    dispatch(cleanStats())
-
     dispatch(getStats({...filters, Month: selectedMonth}))
+
   }
 
   const handleSelectYear = (e) => {
+    dispatch(cleanStats())
     const selectedYear = e.target.value
     setFilters({
       ...filters,
@@ -56,13 +57,13 @@ const FilterStats = ({user, setFilters, filters, years, setSpinner}) => {
 
     navigate(`?${searchParams.toString()}`);
 
-    dispatch(cleanStats())
-
     dispatch(getStats({...filters, Year: selectedYear}))
+
   }
 
 
   const handleSelectSeller = (e) => {
+    dispatch(cleanStats())
     const selectedSeller = e.target.value
     if(e.target.value === 'all') {
       setFilters({
@@ -73,11 +74,11 @@ const FilterStats = ({user, setFilters, filters, years, setSpinner}) => {
       searchParams.set('Year', filters.Year)
       navigate(`?${searchParams.toString()}`);
 
-      dispatch(cleanStats())
-
       dispatch(getStats({...filters, SellerID: 3 }))
+
     }
     else { 
+    dispatch(cleanStats())
       setFilters({
         ...filters,
         SellerID: selectedSeller
@@ -86,15 +87,13 @@ const FilterStats = ({user, setFilters, filters, years, setSpinner}) => {
       searchParams.set('Month', filters.Month)
       searchParams.set('Year', filters.Year)
       navigate(`?${searchParams.toString()}`);
-
-      dispatch(cleanStats())
       
       dispatch(getStats({...filters, SellerID: e.target.value}))
+
     }
     }
     
     const handleClear = () => {
-
       dispatch(cleanStats())
       setFilters({
         SellerID: user[0].SellerID,
