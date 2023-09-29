@@ -107,7 +107,7 @@ const CreateListProductDimension = ({ values, setProducts, products, handleClear
 
   return (
     <Box>
-        <Box display={"flex"} justifyContent={"flex-end"} flexDir={"row"}pr={'2vw'}>
+        <Box display={"flex"} justifyContent={"flex-end"} gap={'2vw'} flexDir={"row"}pr={'2vw'}>
           <Button
             leftIcon={<AiOutlinePlus />}
             variant={"unstyled"}
