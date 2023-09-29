@@ -8,7 +8,7 @@ const {
   getSqftMaxMin,
 } = require("../Controllers/productValues");
 const objetosFiltrados = require("../Controllers/inventoryController");
-const { getImage } = require("../Controllers/oneDriveProductImages");
+// const { getImage } = require("../Controllers/oneDriveProductImages");
 const { productsNotEqual } = require("../Controllers/productsNotRepeat");
 const {
   getFormattedDate,
