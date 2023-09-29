@@ -146,11 +146,11 @@ const CreateProductDimension = ({ values, materials }) => {
 
   return (
     <Box>
-      <Tooltip
+      {/* <Tooltip
         placement={"bottom-start"}
         label={"Create product dimension"}
         fontWeight={"hairline"}
-      >
+      > */}
         <Button
          leftIcon={<AiOutlinePlus />}
          variant={"unstyled"}
@@ -167,9 +167,9 @@ const CreateProductDimension = ({ values, materials }) => {
          _active={{}}
          onClick={onOpen}
         >
-         New Product Dimension 
+         Add dimension 
        </Button>
-      </Tooltip>
+      {/* </Tooltip> */}
       <Modal
         isOpen={isOpen}
         onClose={onClose}
@@ -210,7 +210,7 @@ const CreateProductDimension = ({ values, materials }) => {
             alignItems={"center"}
             color={"web.text"}
           >
-            Create Product Dimension
+            Create product dimension
           </ModalHeader>
           <ModalBody
             position={"relative"}

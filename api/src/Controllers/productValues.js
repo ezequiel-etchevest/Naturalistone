@@ -55,7 +55,7 @@ function findMaxMinPrice(arr) {
 
 function getSqftMaxMin(products) {
   const sqft = products.filter((products)=> products.sqft !== null).sort((a, b) => a.sqft - b.sqft)
-  console.log({sqft})
+
   return {
     min: sqft[0].sqft,
     max: sqft[sqft.length -1].sqft
