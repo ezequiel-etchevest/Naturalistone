@@ -243,17 +243,17 @@ const ProductsFilters = ({ values, factories, materials }) => {
         w={"80vw"}
         justifyContent={"center"}
       >
-        {/* -------------------- SEARCH INPUT ------------------------------ */}
+        {/* -------------------- SEARCH INPUT and CREATE PRODUCT/DIMENSION------------------------------ */}
         <Box
-          ml={"2vh"}
-          w={"35vw"}
+          ml={"1vh"}
           mt={"8vh"}
           display={"flex"}
+          w={"full"}
           alignSelf={"flex-start"}
           flexDir={"row"}
-          justifyContent={"spa"}
+          justifyContent={"space-between"}
         >
-          <Box w={"full"}>
+          <Box w={"25vw"}>
             <Input
               mb={"3vh"}
               w={"60%"}
@@ -281,15 +281,17 @@ const ProductsFilters = ({ values, factories, materials }) => {
               _active={{ color: "gray.800" }}
             />
           </Box>
-          <CreateProduct
-            values={values}
-            factories={factories}
-            materials={materials}
+          <Box display={'flex'} flexDir={'row'} h={'6vh'} justifyContent={'center'} alignItems={'center'} gap={'3vw'} pr={"1vw"}>
+            <CreateProduct
+              values={values}
+              factories={factories}
+              materials={materials}
+            />
+            <CreateProductDimension 
+              values={values}
+              materials={materials}
           />
-          <CreateProductDimension 
-            values={values}
-            materials={materials}
-          />
+          </Box>
         </Box>
         {/* --------------------BOX SELECTS, SLIDER AND CLEAR BUTTON ------------------------------ */}
         <Box
@@ -297,6 +299,7 @@ const ProductsFilters = ({ values, factories, materials }) => {
           flexDir={"row"}
           justifyContent={"space-between"}
           alignItems={"center"}
+          h={'10vh'}
           w={"80vw"}
           ml={"1vw"}
         >
@@ -481,12 +484,8 @@ const ProductsFilters = ({ values, factories, materials }) => {
             display={"flex"}
             alignItems={"center"}
             flexDir={"row"}
-            h={"15vh"}
           >
-            <Box display={"flex"} flexDir={"column"} h={"13vh"}>
-              <Text color={"web.text2"} mb={"10px"}>
-                SQFT Available
-              </Text>
+            <Box display={"flex"} flexDir={"column"}>
               <SqftSlider
                 setFilters={setFilters}
                 filters={filters}

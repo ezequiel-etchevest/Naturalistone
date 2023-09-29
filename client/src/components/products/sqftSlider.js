@@ -22,7 +22,7 @@ let SqftSlider = ({setFilters, filters, limit, setLimit, valueDefault, setValueD
         })  
       }
       // useEffect(() => {
-      //   setValueDefault(valueDefault[1])
+      //   setValueDefault(valueDefault)
       // },[values])
 
     return(
@@ -45,7 +45,7 @@ let SqftSlider = ({setFilters, filters, limit, setLimit, valueDefault, setValueD
             onChange={(e) => handleSqft(e)}
             w={'15vw'}
             defaultValue={valueDefault}
-            min={0}
+            min={valueDefault[0]}
             max={valueDefault[1]}
             step={15}
             h={'4vh'}

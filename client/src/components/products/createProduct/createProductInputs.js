@@ -1,4 +1,5 @@
-import { Box, Input, Select, Text } from "@chakra-ui/react";
+import { Box, Button, IconButton, Input, Select, Text, Tooltip } from "@chakra-ui/react";
+import { AiOutlineClear, AiOutlinePlus } from "react-icons/ai";
 import React from "react";
 
 export function InputsCreateProduct({
@@ -6,15 +7,18 @@ export function InputsCreateProduct({
   handleChangeProductName,
   factories,
   materials,
+  addProduct,
+  handleClear
 }) {
   return (
     <>
-      <Box display={"flex"} w={"full"} flexDir={"row"} pl={"5vw"} gap={"1vw"}>
+      <Box display={"flex"} w={"full"} flexDir={"row"} justifyContent={'space-between'} ml={'2vw'} mr={'1vw'}>
+        <Box display={"flex"} w={"80%"} flexDir={"row"} gap={"1vw"}>
         <Box display={"flex"} flexDir={"column"} w={"23%"}>
-          <Text>Product Name</Text>
+          <Text fontSize={'0.7rem'}>Product name</Text>
           <Input
             mb={"3vh"}
-            w={"70%"}
+            w={"80%"}
             minH={"4.5vh"}
             variant="unstyled"
             placeholder={"Product name"}
@@ -29,11 +33,11 @@ export function InputsCreateProduct({
           />
         </Box>
         <Box display={"flex"} flexDir={"column"} w={"23%"}>
-          <Text>Material</Text>
+          <Text fontSize={'0.7rem'}>Material</Text>
           <Select
             onChange={(e) => handleChangeProductName(e)}
             mb={"0.5vh"}
-            w={"9vw"}
+            w={"80%"}
             minH={"4.5vh"}
             name={"material"}
             variant="unstyled"
@@ -67,11 +71,11 @@ export function InputsCreateProduct({
           </Select>
         </Box>
         <Box display={"flex"} flexDir={"column"} w={"23%"}>
-          <Text>Factory Name</Text>
+          <Text fontSize={'0.7rem'}>Factory Name</Text>
           <Select
             onChange={(e) => handleChangeProductName(e)}
             mb={"0.5vh"}
-            w={"9vw"}
+            w={"80%"}
             minH={"4.5vh"}
             name={"factory"}
             variant="unstyled"
@@ -105,10 +109,10 @@ export function InputsCreateProduct({
           </Select>
         </Box>
         <Box display={"flex"} flexDir={"column"} w={"23%"}>
-          <Text>Factory Product Name</Text>
+          <Text fontSize={'0.7rem'}>Factory product name</Text>
           <Input
             mb={"3vh"}
-            w={"70%"}
+            w={"80%"}
             minH={"4.5vh"}
             variant="unstyled"
             name={"factoryProdName"}
@@ -121,6 +125,43 @@ export function InputsCreateProduct({
             borderBottomColor={"web.text2"}
             onChange={(e) => handleChangeProductName(e)}
           />
+        </Box>
+        </Box>
+        <Box display={"flex"} flexDir={"row"} alignItems={'center'} w={'10vw'} justifyContent={'space-between'}>
+          <Button
+            leftIcon={<AiOutlinePlus />}
+            variant={"unstyled"}
+            display={"flex"}
+            mr={"1vw"}
+            alignItems={"center"}
+            fontSize={"sm"}
+            color={"web.text2"}
+            fontWeight={"normal"}
+            _hover={{
+              color: "logo.orange",
+            }}
+            _active={{}}
+            onClick={addProduct}
+          >
+            Add row
+          </Button>
+          <Tooltip
+            placement={"bottom-start"}
+            label={"Clear all"}
+            fontWeight={"hairline"}
+          >
+            <IconButton
+              icon={<AiOutlineClear />}
+              variant={"unstyled"}
+              display={"flex"}
+              borderRadius={"sm"}
+              color={"web.text2"}
+              _hover={{
+                color: "logo.orange",
+              }}
+              onClick={(e) => handleClear(e)}
+            ></IconButton>
+          </Tooltip>
         </Box>
       </Box>
     </>

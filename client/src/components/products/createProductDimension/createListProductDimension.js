@@ -107,132 +107,71 @@ const CreateListProductDimension = ({ values, setProducts, products, handleClear
 
   return (
     <Box>
-              <Box display={"flex"} justifyContent={"flex-end"} flexDir={"row"}>
-                <Button
-                  leftIcon={<AiOutlinePlus />}
-                  variant={"unstyled"}
-                  display={"flex"}
-                  alignSelf={"flex-end"}
-                  mr={"1vw"}
-                  alignItems={"center"}
-                  fontSize={"sm"}
-                  color={"web.text2"}
-                  fontWeight={"normal"}
-                  _hover={{
-                    color: "logo.orange",
-                  }}
-                  _active={{}}
-                  onClick={addProduct}
-                >
-                  New Dimension
-                </Button>
-                <Tooltip
-                  placement={"bottom-start"}
-                  label={"Clear all"}
-                  fontWeight={"hairline"}
-                >
-                  <IconButton
-                    icon={<AiOutlineClear />}
-                    variant={"unstyled"}
-                    display={"flex"}
-                    borderRadius={"sm"}
-                    alignSelf={"flex-end"}
-                    color={"web.text2"}
-                    _hover={{
-                      color: "logo.orange",
-                    }}
-                    onClick={(e) => handleClear(e)}
-                  ></IconButton>
-                </Tooltip>
-              </Box>
-            <TableContainer
-              mr={"0.5vw"}
-              ml={"0.5vw"}
-              mt={"1vh"}
-              w={"70vw"}
-            >
-              <Table
-                color={"web.text"}
-                variant={"simple"}
-                size={"sm"}
-                w={"70vw"}
-                maxW={"70vw"}
-                minW={"70vw"}
-              >
-                <Thead h={"6vh"}>
-                  <Tr>
-                    <Th
-                      color={"web.text2"}
-                      fontSize={"2xs"}
-                      textAlign={"center"}
-                    >
-                      {" "}
-                      Type{" "}
-                    </Th>
-                    <Th
-                      color={"web.text2"}
-                      fontSize={"2xs"}
-                      textAlign={"center"}
-                    >
-                      {" "}
-                      U/M{" "}
-                    </Th>
-                    <Th
-                      color={"web.text2"}
-                      fontSize={"2xs"}
-                      textAlign={"center"}
-                    >
-                      {" "}
-                      Size{" "}
-                    </Th>
-                    <Th
-                      color={"web.text2"}
-                      fontSize={"2xs"}
-                      textAlign={"center"}
-                    >
-                      {" "}
-                      Thickness{" "}
-                    </Th>
-                    <Th
-                      color={"web.text2"}
-                      fontSize={"2xs"}
-                      textAlign={"center"}
-                    >
-                      {" "}
-                      Finish{" "}
-                    </Th>
-                    <Th
-                      color={"web.text2"}
-                      fontSize={"2xs"}
-                      textAlign={"center"}
-                    >
-                      {" "}
-                      Price{" "}
-                    </Th>
-                    <Th
-                      color={"web.text2"}
-                      fontSize={"2xs"}
-                      textAlign={"center"}
-                    >
-                      {" "}
-                    </Th>
-                  </Tr>
-                </Thead>
-                <Tbody>
-                  {products.dimensions.map((product, index) => (
-                    <ModelTr
-                      key={index}
-                      index={index}
-                      handleChange={handleChange}
-                      handleDelete={handleDelete}
-                      product={product}
-                      values={values}
-                    />
-                  ))}
-                </Tbody>
-              </Table>
-            </TableContainer>
-
+        <Box display={"flex"} justifyContent={"flex-end"} flexDir={"row"}pr={'2vw'}>
+          <Button
+            leftIcon={<AiOutlinePlus />}
+            variant={"unstyled"}
+            display={"flex"}
+            alignSelf={"flex-end"}
+            mr={"1vw"}
+            alignItems={"center"}
+            fontSize={"sm"}
+            color={"web.text2"}
+            fontWeight={"normal"}
+            _hover={{
+              color: "logo.orange",
+            }}
+            _active={{}}
+            onClick={addProduct}
+          >
+            Add dimension
+          </Button>
+          <Tooltip
+            placement={"bottom-start"}
+            label={"Clear all"}
+            fontWeight={"hairline"}
+          >
+            <IconButton
+              icon={<AiOutlineClear />}
+              variant={"unstyled"}
+              display={"flex"}
+              borderRadius={"sm"}
+              alignSelf={"flex-end"}
+              color={"web.text2"}
+              _hover={{
+                color: "logo.orange",
+              }}
+              onClick={(e) => handleClear(e)}
+            />
+          </Tooltip>
+        </Box>
+      <TableContainer mr={"0.5vw"} ml={"0.5vw"} mt={'1vh'} w={'75vw'} maxW={'75vw'} minW={'75vw'}>
+         <Table color={"web.text"} variant={"simple"} size={"sm"}w={'74vw'} maxW={'74vw'} minW={'74vw'}>
+          <Thead h={"6vh"}>
+            <Tr>
+              <Th color={"web.text2"} fontSize={"2xs"} textAlign={"center"} w={'6vw'} > Type </Th>
+              <Th color={"web.text2"} fontSize={"2xs"} textAlign={"center"} w={'6vw'}> U/M </Th>
+              <Th color={"web.text2"} fontSize={"2xs"} textAlign={"center"} w={'10vw'}> Size </Th>
+              <Th color={"web.text2"} fontSize={"2xs"} textAlign={"center"} w={'10vw'} > Thickness </Th>
+              <Th color={"web.text2"} fontSize={"2xs"} textAlign={"center"} w={'10vw'} > Finish </Th>
+              <Th color={"web.text2"} fontSize={"2xs"} textAlign={"center"} w={'10vw'} > Price </Th>
+              <Th color={"web.text2"} fontSize={"2xs"} textAlign={"center"} w={'6vw'}> </Th>
+            </Tr>
+          </Thead>
+          <Tbody>
+            {products.dimensions.map((product, index) => (
+              <ModelTr
+                key={index}
+                index={index}
+                handleChange={handleChange}
+                handleDelete={handleDelete}
+                product={product}
+                values={values}
+              />
+            ))}
+          </Tbody>
+        </Table>
+      </TableContainer>
     </Box>
   );
 };
@@ -247,7 +186,7 @@ const ModelTr = ({ product, handleChange, handleDelete, index, values }) => {
         color: "logo.orange",
       }}
     >
-      <Td pl={"3.5vw"} maxW={"6vw"}>
+      <Td maxW={"6vw"} minW={'6vw'} pl={'2vw'}>
         <Select
           onChange={(e) => handleChange(e, "type", index)}
           mb={"0.5vh"}
@@ -279,7 +218,7 @@ const ModelTr = ({ product, handleChange, handleDelete, index, values }) => {
           </option>
         </Select>
       </Td>
-      <Td pl={"3.5vw"} maxW={"6vw"}>
+      <Td maxW={"6vw"} pl={'3vw'} >
         <Text
           id="um"
           textColor={"web.text2"}
@@ -288,7 +227,7 @@ const ModelTr = ({ product, handleChange, handleDelete, index, values }) => {
           {product.um}
         </Text>
       </Td>
-      <Td pl={"3.5vw"} maxW={"6vw"} minW={"6vw"}>
+      <Td maxW={"6vw"} minW={"6vw"} pl={'4.5vw'} >
         <Input
           w={"5vw"}
           minH={"4.5vh"}
@@ -303,7 +242,7 @@ const ModelTr = ({ product, handleChange, handleDelete, index, values }) => {
           onChange={(e) => handleChange(e, "size", index)}
         />
       </Td>
-      <Td pl={"3vw"} maxW={"6vw"} minW={"6vw"}>
+      <Td maxW={"6vw"} minW={"6vw"} pl={'4vw'} >
         <Input
           w={"5vw"}
           minH={"4.5vh"}
@@ -318,7 +257,7 @@ const ModelTr = ({ product, handleChange, handleDelete, index, values }) => {
           onChange={(e) => handleChange(e, "thickness", index)}
         />
       </Td>
-      <Td pl={"3.5vw"} maxW={"8vw"} minW={"8vw"}>
+      <Td maxW={"8vw"} minW={"8vw"} pl={'3.5vw'} >
         <Select
           onChange={(e) => handleChange(e, "finish", index)}
           mb={"0.5vh"}
@@ -351,7 +290,7 @@ const ModelTr = ({ product, handleChange, handleDelete, index, values }) => {
             })}
         </Select>
       </Td>
-      <Td pl={"3vw"} maxW={"6vw"} minW={"6vw"}>
+      <Td maxW={"6vw"} minW={"6vw"} pl={'4vw'} >
         <Input
           borderColor={"web.border"}
           color={"web.text2"}
@@ -378,7 +317,7 @@ const ModelTr = ({ product, handleChange, handleDelete, index, values }) => {
           }}
         ></Input>
       </Td>
-      <Td pl={"4vw"} maxW={"3vw"} minW={"3vw"}>
+      <Td maxW={"4vw"} minW={"4vw"}pl={'2vw'} >
         <IconButton
           icon={<DeleteIcon />}
           variant={"unstyled"}

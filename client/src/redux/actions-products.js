@@ -73,9 +73,9 @@ export function getFiltered(
     try {
       let { data } = await axios.get(
         `/products/filtered?finish=${finish}&size=${size}&thickness=${thickness}&material=${material}&search=${search}&type=${type}&sqft1=${
-          sqft[0] ? sqft[0] : ""
-        }&sqft2=${sqft[1] ? sqft[1] : ""}`
+sqft[0]}&sqft2=${sqft[1]}`
       );
+
       dispatch({
         type: GET_FILTERED_PRODUCTS,
         payload: data,
@@ -277,9 +277,7 @@ export function getFilteredSearch(
   return async function (dispatch) {
     try {
       let { data } = await axios.get(
-        `/products/filtered?finish=${finish}&size=${size}&thickness=${thickness}&material=${material}&search=${search}&type=${type}&sqft1=${
-          sqft[0] ? sqft[0] : ""
-        }&sqft2=${sqft[1] ? sqft[1] : ""}`
+        `/products/filtered?finish=${finish}&size=${size}&thickness=${thickness}&material=${material}&search=${search}&type=${type}&sqft1=${sqft[0]}&sqft2=${sqft[1]}`
       );
       dispatch({
         type: GET_FILTERED_PRODUCTS_SEARCH,
