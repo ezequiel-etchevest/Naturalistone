@@ -2,10 +2,11 @@
 import Slider from 'react-slick';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { Box, useDisclosure, Modal, ModalOverlay, ModalContent, ModalCloseButton, ModalBody } from '@chakra-ui/react';
+import { Box, useDisclosure, Modal, ModalOverlay, ModalContent, ModalCloseButton, ModalBody, Text, Center } from '@chakra-ui/react';
 import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import img1 from '../../../assets/ProductPicture/354-1.jpg'
+import AddImages from './addNewImagesModal';
 
 
 const CarouselProduct = () => {
@@ -43,7 +44,8 @@ const CarouselProduct = () => {
   
   return (
     <>
-    <Box px="1vh">
+    <Box display={"flex"} h={"full"} w={"full"} flexDir={"column"}>
+    <Box display={"flex"} h={"90%"} w={"full"} px="1vh">
       <Slider 
       {...settings}>
         {
@@ -62,7 +64,10 @@ const CarouselProduct = () => {
           ))
        }
       </Slider>
-
+    </Box>
+      <Center >
+        <AddImages />
+      </Center>
     </Box>
           <Modal isOpen={isOpen} onClose={onClose}  size={'6xl'}>
           <ModalOverlay />
@@ -92,7 +97,6 @@ const CarouselProduct = () => {
                       ))
                     }
                   </Slider>
-
               </Box>
             </ModalBody>
           </ModalContent>

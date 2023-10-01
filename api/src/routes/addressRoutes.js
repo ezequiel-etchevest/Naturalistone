@@ -29,7 +29,7 @@ addressRouter.post('/', async function(req, res) {
   } = req.body
 
   try {
-    await createAddress(CustomerID, Address, Address2, City, State, ZipCode, Nickname)
+    await createAddress(CustomerID, Address, Address2 ?? '', City, State, ZipCode, Nickname ?? '')
 
     return res.status(200).json({success: true, msg:"Create address successful"})
   } catch (error) {
@@ -46,7 +46,7 @@ addressRouter.patch('/:id', async function(req, res) {
   const addressId = Number(id)
 
   try {
-    await patchAddress(addressId, address, address2, city, state, zip_code, nickname)
+    await patchAddress(addressId, address, address2 ?? '', city, state, zip_code, nickname ?? '')
 
     return res.status(200).json({ success: true, msg: "Update address successful" })
   } catch (error) {
