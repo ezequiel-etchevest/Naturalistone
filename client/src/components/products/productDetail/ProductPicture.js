@@ -30,7 +30,7 @@ const ProductPicture = ({product}) => {
           rounded={'md'} 
           borderColor={'web.border'}
           >
-            <CarouselProduct/>
+            <CarouselProduct product={product}/>
         </Box>
       </>
     )

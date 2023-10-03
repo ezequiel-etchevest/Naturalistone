@@ -1,8 +1,9 @@
 // https://github.com/transloadit/uppy
 // npm install @uppy/react
 
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import Uppy from "@uppy/core";
+import XHRUpload from "@uppy/xhr-upload"
 import Tus from "@uppy/tus";
 import { DragDrop } from "@uppy/react";
 import { Dashboard } from "@uppy/react";
@@ -13,43 +14,55 @@ import { Box, Button, Modal, ModalBody, ModalCloseButton, ModalContent, ModalOve
 import { AiOutlinePlus } from "react-icons/ai";
 // import "../../../assets/uppyCustom.css"
 
-const uppy = new Uppy({
-  meta: { type: "avatar" },
-  restrictions: { maxNumberOfFiles: 3 },
-  autoProceed: false
-});
+const AddImages = ({ product }) => {
+  const { isOpen, onOpen, onClose } = useDisclosure()
+  const [ infoImages, setInfoImages ] = useState({
+    site: "imagesProduct",
+    prodId: product.ProdID,
+    prodName: product.ProductName,
+    data: []
+  })
 
-  // uppy.use(Tus, { endpoint: "http://localhost:5000/api/customers" });
-
-  uppy.on("complete", (result) => {
-    console.log("sreulst", result)
-    const url = result.successful[0].uploadURL;
-    // store.dispatch({
-    //   type: 'SET_USER_AVATAR_URL',
-    //   payload: { url },
-    // })
-    console.log(url);
-  });
-
-console.log("soyu ppy afuera", uppy)
-
-const AddImages = (props) => {
-
- const uppy = useMemo(() => {
+  const uppy = useMemo(() => {
     return new Uppy({
       restrictions: { maxNumberOfFiles: 3 },
       autoProceed: false
     });
   }, []);
 
-  // React.useEffect(() => {
-  //   return () => uppy.close();
-  // }, []);
+
+//   uppy.on('file-added', (file) => {
+//   // 'file' contiene la información del archivo seleccionado
+//   const fileData = {
+//     data: file.data,
+//     id: file.id
+//   }
+//   setInfoImages({
+//     ...infoImages,
+//     data: [...infoImages.data, fileData]
+//   })
+// });
 
 
+// 
+// uppy.on("upload", (result) => {
+//   console.log("soy resut", result)
+//   const fileData = {
+//     data: result[0].data,
+//     id: result[0].id
+//   }
+//   setInfoImages({
+//     ...infoImages,
+//     data: [...infoImages.data, fileData]
+//   })
+//   console.log('hola', infoImages);
+// });
 
-
-  const { isOpen, onOpen, onClose } = useDisclosure()
+  // uppy.on('file-removed', (file, reason) => {
+  //   if (reason === 'removed-by-user') {
+  //     infoImages.data.filter((elem) => elem.id !== file.id)
+  //   }
+  // });
 
   return (
     <>
@@ -91,8 +104,6 @@ const AddImages = (props) => {
             <Dashboard
             uppy={uppy}
             plugins={["DragDrop"]}
-
-            {...props}
             />
           </ModalBody>
         </ModalContent>

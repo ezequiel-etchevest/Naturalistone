@@ -9,7 +9,7 @@ import img1 from '../../../assets/ProductPicture/354-1.jpg'
 import AddImages from './addNewImagesModal';
 
 
-const CarouselProduct = () => {
+const CarouselProduct = ({ product }) => {
 
   const { isOpen, onOpen, onClose } = useDisclosure()
   const productImages = useSelector(state => state.product_images);
@@ -66,7 +66,7 @@ const CarouselProduct = () => {
       </Slider>
     </Box>
       <Center >
-        <AddImages />
+        <AddImages product={product} />
       </Center>
     </Box>
           <Modal isOpen={isOpen} onClose={onClose}  size={'6xl'}>

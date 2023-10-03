@@ -241,6 +241,13 @@ s3Router.get('/pdf/search/:searchTerm', (req, res) => {
   });
 });
 
+s3Router.post('/product_images', function(req, res) {
+  console.log("soy req", req)
+
+  if(req.file) return res.json({ msg: "good job uploand img"})
+
+  res.send('Image uploaded failed')
+})
 
 
 
