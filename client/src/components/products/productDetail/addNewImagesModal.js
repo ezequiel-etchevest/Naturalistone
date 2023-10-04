@@ -32,7 +32,7 @@ const AddFiles = ({ product, allowedFileTypes, title, fieldName, url}) => {
       maxFileSize: null,
     },
   })
-    uppy.use(XHR, { endpoint: `http://localhost:5000/api/s3${url}`, fieldName, formData: true });
+    uppy.use(XHR, { endpoint: `http://localhost:5000/api${url}`, fieldName, formData: true });
 
   return (
     <>

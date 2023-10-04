@@ -71,7 +71,7 @@ const CarouselProduct = ({ product }) => {
         allowedFileTypes={['image/jpeg', 'image/png']}
         title={"Add new images"}
         fieldName={'image'}
-        url={'/uploadPdf/image'}
+        url={'/s3/uploadPdf/image'}
         />
       </Center>
     </Box>
