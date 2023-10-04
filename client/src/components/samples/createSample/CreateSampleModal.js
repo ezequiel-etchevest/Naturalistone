@@ -34,7 +34,7 @@ import { getSamples, postSamples, validateTrackingNumber } from "../../../redux/
 import CreateSampleModalAskEmail from "./CreateSampleModalAskEmail";
 import { day0, month0, year } from "../../../utils/todayDate";
 
-export function CreateSampleModal({ customers, sellers }) {
+export function CreateSampleModal({ customers, sellers, sellerDinamic}) {
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { isOpen: isOpen2, onOpen: onOpen2, onClose: onClose2 } = useDisclosure();
@@ -83,10 +83,9 @@ export function CreateSampleModal({ customers, sellers }) {
   const toastId = "error-toast";
   const customerID = formData.customer.CustomerID;
 
-
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (progress === 100) {
-      dispatch(postSamples(formData));
+      await dispatch(postSamples(formData));
       toast({
         title: "Update Successful",
         description: "The update was successful",
@@ -94,8 +93,8 @@ export function CreateSampleModal({ customers, sellers }) {
         duration: 9000,
         isClosable: true,
       });
+      await dispatch(getSamples("", sellerDinamic))
       onClose();
-      dispatch(getSamples(""));
     }
     setSubmited(false);
     setProgress(20);

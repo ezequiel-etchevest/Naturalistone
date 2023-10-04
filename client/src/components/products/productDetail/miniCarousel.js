@@ -6,7 +6,7 @@ import { Box, useDisclosure, Modal, ModalOverlay, ModalContent, ModalCloseButton
 import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import img1 from '../../../assets/ProductPicture/354-1.jpg'
-import AddImages from './addNewImagesModal';
+import AddFiles from './addNewImagesModal';
 
 
 const CarouselProduct = ({ product }) => {
@@ -66,7 +66,13 @@ const CarouselProduct = ({ product }) => {
       </Slider>
     </Box>
       <Center >
-        <AddImages product={product} />
+        <AddFiles
+        product={product}
+        allowedFileTypes={['image/jpeg', 'image/png']}
+        title={"Add new images"}
+        fieldName={'image'}
+        url={'/uploadPdf/image'}
+        />
       </Center>
     </Box>
           <Modal isOpen={isOpen} onClose={onClose}  size={'6xl'}>

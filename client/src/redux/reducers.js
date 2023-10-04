@@ -618,7 +618,6 @@ function rootReducer(state = intialState, action) {
     case POST_SAMPLES:
       return {
         ...state,
-        samples: action.payload,
       };
     case GET_SAMPLES_PRODUCTS:
       return {

@@ -15,14 +15,15 @@ import { AiOutlineDelete } from 'react-icons/ai';
 import { useDispatch } from 'react-redux';
 import { deleteSample, getSamples } from '../../redux/actions-samples';
 
-export default function SampleDeleteModal({idSample}) {
+export default function SampleDeleteModal({idSample, sellerDinamic}) {
     
   const { isOpen, onOpen, onClose } = useDisclosure()
   const dispatch = useDispatch()
 
   const handleSubmit = () => {
     dispatch(deleteSample(idSample))
-    dispatch(getSamples())
+    dispatch(getSamples("", sellerDinamic))
+    onClose();
   }
   
     return (

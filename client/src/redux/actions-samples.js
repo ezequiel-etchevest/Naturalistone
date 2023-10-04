@@ -43,11 +43,9 @@ export function postSamples(formData){
   return async function(dispatch) {
     try {
         await axios.post('/samples', formData)
-        const { data } = await axios.get(`/samples`)
     
         return dispatch({
           type: POST_SAMPLES,
-          payload: data.data
         })
     } catch (error) {
       console.log('error in post samples')

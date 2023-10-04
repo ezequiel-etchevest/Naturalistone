@@ -3,9 +3,12 @@
 
 import React, { useMemo, useState } from "react";
 import Uppy from "@uppy/core";
-import XHRUpload from "@uppy/xhr-upload"
+// import XHRUpload from "@uppy/xhr-upload"
 import Tus from "@uppy/tus";
-import { DragDrop } from "@uppy/react";
+import XHR from '@uppy/xhr-upload';
+
+// import { DragDrop } from "@uppy/react";
+import AwsS3 from '@uppy/aws-s3';
 import { Dashboard } from "@uppy/react";
 import "@uppy/core/dist/style.css";
 import "@uppy/dashboard/dist/style.css";
@@ -14,7 +17,7 @@ import { Box, Button, Modal, ModalBody, ModalCloseButton, ModalContent, ModalOve
 import { AiOutlinePlus } from "react-icons/ai";
 // import "../../../assets/uppyCustom.css"
 
-const AddImages = ({ product }) => {
+const AddFiles = ({ product, allowedFileTypes, title, fieldName, url}) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [ infoImages, setInfoImages ] = useState({
     site: "imagesProduct",
@@ -23,46 +26,13 @@ const AddImages = ({ product }) => {
     data: []
   })
 
-  const uppy = useMemo(() => {
-    return new Uppy({
-      restrictions: { maxNumberOfFiles: 3 },
-      autoProceed: false
-    });
-  }, []);
-
-
-//   uppy.on('file-added', (file) => {
-//   // 'file' contiene la información del archivo seleccionado
-//   const fileData = {
-//     data: file.data,
-//     id: file.id
-//   }
-//   setInfoImages({
-//     ...infoImages,
-//     data: [...infoImages.data, fileData]
-//   })
-// });
-
-
-// 
-// uppy.on("upload", (result) => {
-//   console.log("soy resut", result)
-//   const fileData = {
-//     data: result[0].data,
-//     id: result[0].id
-//   }
-//   setInfoImages({
-//     ...infoImages,
-//     data: [...infoImages.data, fileData]
-//   })
-//   console.log('hola', infoImages);
-// });
-
-  // uppy.on('file-removed', (file, reason) => {
-  //   if (reason === 'removed-by-user') {
-  //     infoImages.data.filter((elem) => elem.id !== file.id)
-  //   }
-  // });
+  const uppy = new Uppy({
+    restrictions: {
+      allowedFileTypes,
+      maxFileSize: null,
+    },
+  })
+    uppy.use(XHR, { endpoint: `http://localhost:5000/api/s3${url}`, fieldName, formData: true });
 
   return (
     <>
@@ -83,7 +53,7 @@ const AddImages = ({ product }) => {
          _active={{}}
          onClick={onOpen}
         >
-         Add new images
+         {title}
         </Button>
       </Box>
       <Modal isOpen={isOpen} onClose={onClose}  size={'6xl'}>
@@ -112,4 +82,4 @@ const AddImages = ({ product }) => {
   );
 };
 
-export default AddImages;
+export default AddFiles;

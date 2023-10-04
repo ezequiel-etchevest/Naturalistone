@@ -61,7 +61,7 @@ const ProductSale = ({product}) => {
                   onChange={(e)=>handleChange(e)}
                   w={'5vw'}
                   maxW={'280px'}
-                  disabled={ product.Sale_Flag === 'False' ? true : false}
+                  disabled={!saleFlag}
                   variant="unstyled"
                   textColor={'web.text2'}
                   _placeholder={{ fontFamily: 'body', fontWeight: 'inherit', textColor: 'inherit' }}

@@ -25,7 +25,7 @@ const Samples = ({ focus, setFocus }) => {
       dispatch(getEmployeeById(userLocal.SellerID));
     }
     if (!samples.length) {
-      dispatch(getSamples('', ''));
+      dispatch(getSamples(''));
     }
 
     return(() => {

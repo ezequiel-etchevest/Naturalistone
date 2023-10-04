@@ -63,9 +63,6 @@ const CreateSampleProductsReview = ({ formData, setFormData }) => {
           </Thead>
           <Tbody>
             {
-              console.log("Number of products to render:", Object.keys(formData.products).length)
-            }
-            {
             Object.keys(formData.products).map((key, i) => (  
               <Tr
                 cursor={"pointer"}

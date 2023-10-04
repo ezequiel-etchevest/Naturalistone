@@ -4,6 +4,7 @@ import SamplesList from './SamplesList';
 import SamplesFilters from './SamplesFilters';
 
 const SamplesContainer = ({samples, user, sellers }) => {
+    const sellerDinamic = user[0].Secction7Flag === 1 ? '3' : user[0].SellerID
 
     const [ spinner, setSpinner ] = useState(false)
 
@@ -32,11 +33,13 @@ const SamplesContainer = ({samples, user, sellers }) => {
                   sellers={sellers}
                   user={user}
                   setLoading={setLoading}
+                  sellerDinamic={sellerDinamic}
                   />
                 <SamplesList 
                   samples={samples}
                   user={user}
                   loading={loading}
+                  sellerDinamic={sellerDinamic}
                   />
             </Box>
         )}else{

@@ -17,7 +17,7 @@ import SamplesProducts from './SamplesProducts';
 import SampleDeleteModal from './SampleDeleteModal';
   
 
-  const ModelTr = ({e, user}) => {
+  const ModelTr = ({e, user, sellerDinamic}) => {
 
     const { isOpen, onClose, onOpen } = useDisclosure()
 
@@ -47,7 +47,7 @@ import SampleDeleteModal from './SampleDeleteModal';
         <Td onClick={handleClick} fontSize={'xs'} w={'6vw'} maxW={'6vw'}textAlign={'center'}>{e.InsertDate?.split('T')[0]}</Td>
         <Td onClick={handleClick} fontSize={'xs'} w={'8vw'} maxW={'6vw'}textAlign={'center'}>{e.EstDelivery_Date?.split('T')[0]}</Td>
         {
-          user[0].Secction7Flag === 1 ? <Td fontSize={'xs'} w={'2vw'} maxW={'6vw'}textAlign={'center'}>{<SampleDeleteModal idSample={e.idSamples}/>}</Td> : ''
+          user[0].Secction7Flag === 1 ? <Td fontSize={'xs'} w={'2vw'} maxW={'6vw'}textAlign={'center'}>{<SampleDeleteModal idSample={e.idSamples} sellerDinamic={sellerDinamic}/>}</Td> : ''
         }
       </Tr>
       { isOpen && <SamplesProducts isOpenModal={isOpen} onCloseModal={onClose} idSamples={e.idSamples}/> }
@@ -55,7 +55,7 @@ import SampleDeleteModal from './SampleDeleteModal';
     )
   }
   
-  const SamplesList = ({ samples, user, loading }) => {
+  const SamplesList = ({ samples, user, loading, sellerDinamic }) => {
   
   const [initialCount] = useState(20);
   const [batchCount] = useState(15);
@@ -130,7 +130,7 @@ import SampleDeleteModal from './SampleDeleteModal';
                 <Tbody >
                 { 
                   samples?.slice(0, loadedCount).map((e, i) => {
-                    return (<ModelTr key={i} e={e} user={user}/> )
+                    return (<ModelTr key={i} e={e} user={user} sellerDinamic={sellerDinamic}/> )
                   })
                 }
                 </Tbody>

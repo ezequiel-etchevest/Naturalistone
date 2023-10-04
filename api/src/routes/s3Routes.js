@@ -14,6 +14,52 @@ AWS.config.update({
 
 const s3 = new AWS.S3();
 
+const uploadPdfAndImages = multer({
+  storage: multerS3({
+    s3: s3,
+    bucket: 'naturali-parseddocuments', // Nombre de tu bucket en S3
+    metadata: function (req, file, cb) {
+      cb(null, { fieldName: file.originalname });
+    },
+    key: function (req, file, cb) {
+      const folder = 'TEST'
+      const fileName = file.originalname;
+      const key = `${folder}/${fileName}`;
+      cb(null, key);
+    },
+    fileFilter: function (req, file, cb) {
+      cb(null, true); // Permitir todos los archivos
+    },
+    shouldTransform: function (req, file, cb) {
+      cb(null, false); // No transformar el archivo
+    }
+  })
+});
+
+s3Router.post('/uploadPdf/image', uploadPdfAndImages.array('image'), async (req, res) => {
+  try {
+    console.log('Imagen guardado en S3');
+    // Aquí puedes realizar cualquier acción adicional después de guardar el PDF en S3
+
+    res.status(200).send('Imagen subida exitosamente');
+  } catch (error) {
+    console.error('Error al subir el archivo a S3:', error);
+    res.status(500).send('Error al subir el archivo a S3');
+  }
+});
+
+s3Router.post('/uploadPdf/quote/:InvoiceID', uploadPdfAndImages.single('pdf'), async (req, res) => {
+  try {
+    console.log('Archivo guardado en S3');
+    // Aquí puedes realizar cualquier acción adicional después de guardar el PDF en S3
+
+    res.status(200).send('Archivo subido exitosamente');
+  } catch (error) {
+    console.error('Error al subir el archivo a S3:', error);
+    res.status(500).send('Error al subir el archivo a S3');
+  }
+});
+
 s3Router.get('/images/:folder/:fileName', (req, res) => {
 
   
@@ -240,20 +286,6 @@ s3Router.get('/pdf/search/:searchTerm', (req, res) => {
     res.status(200).json(response);
   });
 });
-
-s3Router.post('/product_images', function(req, res) {
-  console.log("soy req", req)
-
-  if(req.file) return res.json({ msg: "good job uploand img"})
-
-  res.send('Image uploaded failed')
-})
-
-
-
-
-
-
 
 
   module.exports = s3Router;

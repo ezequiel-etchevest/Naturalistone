@@ -17,10 +17,8 @@ import {
 import { getCustomers } from "../../redux/actions-customers";
 import { getSamples } from "../../redux/actions-samples";
   
-  const SamplesFilters = ({sellers, samples, user, setLoading}) => {
+  const SamplesFilters = ({sellers, samples, user, setLoading, sellerDinamic}) => {
     
-    const sellerDinamic = user[0].Secction7Flag === 1 ? '3' : user[0].SellerID
-
     const [inputValues, setInputValues] = useState({
       searchSample: '',
       selectSeller: sellerDinamic
@@ -180,7 +178,7 @@ import { getSamples } from "../../redux/actions-samples";
           display={'flex'} 
           justifyContent={'flex-end'}
           >  
-            <CreateSampleModal customers={customers} sellers={sellers} samples={samples}/>
+            <CreateSampleModal customers={customers} sellers={sellers} samples={samples} sellerDinamic={sellerDinamic}/>
             <Divider orientation={'vertical'} h={'5vh'}/>
             <Tooltip placement={'bottom-start'} label={'Clear all filters'} fontWeight={'hairline'}>      
               <IconButton
