@@ -23,7 +23,8 @@ const uploadPdfAndImages = multer({
     },
     key: function (req, file, cb) {
       const folder = 'TEST'
-      const fileName = file.originalname;
+      const fileName = `${file.originalname}_1`;
+      // logica para cambiar el name
       const key = `${folder}/${fileName}`;
       cb(null, key);
     },
@@ -36,7 +37,7 @@ const uploadPdfAndImages = multer({
   })
 });
 
-s3Router.post('/uploadPdf/image', uploadPdfAndImages.array('image'), async (req, res) => {
+s3Router.post('/upload/image', uploadPdfAndImages.array('image'), async (req, res) => {
   try {
     console.log('Imagen guardado en S3');
     // Aquí puedes realizar cualquier acción adicional después de guardar el PDF en S3
@@ -48,7 +49,19 @@ s3Router.post('/uploadPdf/image', uploadPdfAndImages.array('image'), async (req,
   }
 });
 
-s3Router.post('/uploadPdf/quote/:InvoiceID', uploadPdfAndImages.single('pdf'), async (req, res) => {
+s3Router.post('/upload/quote/:InvoiceID', uploadPdfAndImages.single('pdf'), async (req, res) => {
+  try {
+    console.log('Archivo guardado en S3');
+    // Aquí puedes realizar cualquier acción adicional después de guardar el PDF en S3
+
+    res.status(200).send('Archivo subido exitosamente');
+  } catch (error) {
+    console.error('Error al subir el archivo a S3:', error);
+    res.status(500).send('Error al subir el archivo a S3');
+  }
+});
+
+s3Router.post('/upload/customer/:CustomerID', uploadPdfAndImages.single('pdf'), async (req, res) => {
   try {
     console.log('Archivo guardado en S3');
     // Aquí puedes realizar cualquier acción adicional después de guardar el PDF en S3

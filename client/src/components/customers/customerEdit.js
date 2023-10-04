@@ -8,7 +8,8 @@ import { IconButton,
     ModalFooter, 
     Button, 
     useToast, 
-    Progress } from "@chakra-ui/react";
+    Progress, 
+    Tooltip} from "@chakra-ui/react";
 import { HiUserAdd } from "react-icons/hi";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
@@ -142,6 +143,7 @@ const handleSubmit = () => {
 
 return (
 <>
+  <Tooltip label={"Edit Customer"} placement={'bottom-start'} fontWeight={'hairline'}>
   <IconButton
   size={'lg'}
   icon={ <FiEdit/>}
@@ -157,6 +159,7 @@ return (
     }}
   onClick={onOpen}
   />
+  </ Tooltip>
   <Modal size={'xl'} isOpen={isOpen} onClose={()=>handleClose()} >
     <ModalOverlay/>
     <ModalContent

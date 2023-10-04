@@ -121,7 +121,6 @@ const SendEmailModalCustomer = ({ customer }) => {
     <IconButton
       fontSize={'xl'}
       icon={ <AiOutlineMail/>}
-      h={"2vh"}
       variant={'unstyled'} 
       label={"Contact Customer"}
       display={'flex'} 

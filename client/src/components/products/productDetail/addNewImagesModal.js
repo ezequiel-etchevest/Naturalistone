@@ -13,18 +13,13 @@ import { Dashboard } from "@uppy/react";
 import "@uppy/core/dist/style.css";
 import "@uppy/dashboard/dist/style.css";
 import "@uppy/drag-drop/dist/style.css";
-import { Box, Button, Modal, ModalBody, ModalCloseButton, ModalContent, ModalOverlay, useDisclosure } from "@chakra-ui/react";
+import { Box, Button, ButtonGroup, IconButton, Modal, ModalBody, ModalCloseButton, ModalContent, ModalOverlay, Tooltip, useDisclosure } from "@chakra-ui/react";
 import { AiOutlinePlus } from "react-icons/ai";
+import { BiAddToQueue } from "react-icons/bi";
 // import "../../../assets/uppyCustom.css"
 
-const AddFiles = ({ product, allowedFileTypes, title, fieldName, url}) => {
+const AddFiles = ({ product, allowedFileTypes, title, fieldName, url, pxButton, tooltip}) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
-  const [ infoImages, setInfoImages ] = useState({
-    site: "imagesProduct",
-    prodId: product.ProdID,
-    prodName: product.ProductName,
-    data: []
-  })
 
   const uppy = new Uppy({
     restrictions: {
@@ -36,26 +31,31 @@ const AddFiles = ({ product, allowedFileTypes, title, fieldName, url}) => {
 
   return (
     <>
-      <Box px="1vh">
-        <Button
-         leftIcon={<AiOutlinePlus />}
-         variant={"unstyled"}
-         display={"flex"}
-         alignSelf={"flex-end"}
-         mr={"1vw"}
-         alignItems={"center"}
-         fontSize={"sm"}
-         color={"web.text2"}
-         fontWeight={"normal"}
-         _hover={{
-           color: "logo.orange",
+      <Tooltip label={tooltip} placement={'bottom-start'} fontWeight={'hairline'}>
+        <Box px={pxButton}>
+          <ButtonGroup
+          textColor={'web.text2'}
+          h={'5vh'}
+          display={'flex'}
+          spacing={0}
+          _hover={{
+          color: 'logo.orange'
           }}
-         _active={{}}
-         onClick={onOpen}
-        >
-         {title}
-        </Button>
+          >
+            <IconButton
+            variant={'unstyled'}           
+            fontSize={'xl'}
+            onClick={onOpen}
+            icon={<BiAddToQueue/>}/>
+            <Button
+            fontSize={'1vw'}
+            variant={'unstyled'} 
+            onClick={onOpen}
+            fontWeight={'normal'}
+            >{title}</Button>       
+          </ButtonGroup>
       </Box>
+        </Tooltip>
       <Modal isOpen={isOpen} onClose={onClose}  size={'6xl'}>
         <ModalOverlay />
         <ModalContent

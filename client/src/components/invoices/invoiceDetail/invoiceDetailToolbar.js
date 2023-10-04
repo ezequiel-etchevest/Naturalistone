@@ -28,6 +28,7 @@ import { getCustomerById } from '../../../redux/actions-customers';
 import { useEffect, useState } from 'react';
 import { changeStatus, getInvoiceById } from '../../../redux/actions-invoices';
 import InvoiceButton from './InvoiceButton';
+import AddFiles from '../../products/productDetail/addNewImagesModal';
 
 export const InvoiceDetailToolbar = ({invoice, payments, user, invoice_products, deliveries}) => {
   const dispatch = useDispatch()
@@ -50,7 +51,7 @@ export const InvoiceDetailToolbar = ({invoice, payments, user, invoice_products,
   useEffect(() => {
     invoice[0].Status === 'Pending_Approval' ? setInvoiceButton(false) : setInvoiceButton(true)
   },[invoice])
-
+  
   handleDisabled()
 
   return(
@@ -149,27 +150,13 @@ export const InvoiceDetailToolbar = ({invoice, payments, user, invoice_products,
          disabled={true}
          >Open</Button>       
         </ButtonGroup>
-        <ButtonGroup
-         textColor={'web.text2'}
-         h={'5vh'}
-         display={'flex'}
-         spacing={0}
-         _hover={{
-         color: 'logo.orange'
-         }}
-         >
-        <IconButton
-         variant={'unstyled'}           
-         fontSize={'xl'}
-         disabled={true}
-         icon={<BiAddToQueue/>}/>
-         <Button
-         fontSize={'1vw'}
-         variant={'unstyled'}           
-         fontWeight={'normal'}
-         disabled={true}
-         >Add</Button>       
-        </ButtonGroup>
+        <AddFiles
+        allowedFileTypes={['application/pdf']}
+        fieldName={'pdf'}
+        title={'Add'}
+        url={`/upload/quote/${invoice[0].Naturali_Invoice}`}
+        pxButton={""}
+        />
         <ButtonGroup
          textColor={'web.text2'}
          h={'5vh'}

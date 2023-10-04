@@ -1,6 +1,7 @@
 import { Box, Text, HStack, IconButton, useDisclosure } from "@chakra-ui/react"
 import CustomerEdit from "../customerEdit"
 import SendEmailModalCustomer from "./SendEmailModal";
+import AddFiles from "../../products/productDetail/addNewImagesModal";
 
 const CustomerInformation = ({customer}) => {
 
@@ -33,11 +34,12 @@ const CustomerInformation = ({customer}) => {
           {/*CustomerID & fullname */}  
           <Box
             display={'flex'}
-            flexDirection={'row'}
+            flexDirection={'column'}
             justifyContent={'flex-start'}
             w={'15vw'}
             alignItems={'baseline'}
             >
+            <Box display={"flex"} flexDir={"row"}>
             <Text
               fontSize={'3vh'} 
               pt={'1vh'} 
@@ -52,9 +54,17 @@ const CustomerInformation = ({customer}) => {
               >
               - {normalizeValue(customer.Contact_Name)}  
             </Text>
-            <Box display={"flex"} flexDir={"column"} justifyContent={"center"} alignItems={"center"}>
+            </Box>
+            <Box display={"flex"} flexDir={"row"} justifyContent={"center"} alignItems={"center"} h={"3vh"} gap={"2vw"}>
           <CustomerEdit customer={customer} onOpen={onOpen} onClose={onClose} isOpen={isOpen}/>
           <SendEmailModalCustomer customer={customer}/>
+          <AddFiles
+          allowedFileTypes={['application/pdf']}
+          fieldName={'pdf'}
+          url={`/upload/customer/${customer.CustomerID}`}
+          pxButton={"1vw"}
+          tooltip={"Add files"}
+          />
             </Box>
           </Box>
           {/*Phone */} 
