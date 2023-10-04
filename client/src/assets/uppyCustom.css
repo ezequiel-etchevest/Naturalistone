@@ -1,0 +1,77 @@
+.uppy-Dashboard-inner {
+  background-color: #0D1117;
+}
+
+.uppy-Dashboard-AddFiles-title {
+  color: #F0F6FC;
+}
+
+.uppy-DashboardContent-bar {
+  background-color: #0D1117;
+  color: #F0F6FC;
+}
+
+.uppy-StatusBar-actions {
+  background: #0D1117 !important
+}
+
+.uppy-Dashboard-files {
+  background-color: #0D1117;
+}
+
+.uppy-StatusBar-actionBtn--upload {
+  background-color: #E47424 !important
+}
+
+.uppy-DashboardContent-addMore {
+  color: #F0F6FC;
+}
+
+.uppy-DashboardContent-back {
+  color: #F0F6FC;
+}
+
+.uppy-DashboardContent-back:hover {
+  color: #E47424 ;
+}
+
+.uppy-Dashboard-AddFilesPanel {
+  background-color: #0D1117 !important;
+  background: #0D1117;
+}
+
+.uppy-Dashboard-AddFiles {
+  background-color: #0D1117 !important;
+}
+
+.uppy-StatusBar {
+  background-color: #0D1117 !important
+}
+
+.uppy-StatusBar-actions {
+  margin-top: 3px;
+}
+
+.uppy-StatusBar-actionBtn {
+  color: #F0F6FC;
+}
+
+.uppy-Dashboard-Item-fileName {
+  color: #F0F6FC;
+}
+
+.uppy-Dashboard-Item-fileName {
+  color: #F0F6FC !important
+}
+
+.uppy-StatusBar-statusPrimary {
+  color: #F0F6FC;
+}
+
+.uppy-StatusBar-actionBtn--done {
+  background-color: #0D1117;
+}
+
+.uppy-size--md .uppy-StatusBar-actionBtn--done {
+  background-color: #0D1117;
+}

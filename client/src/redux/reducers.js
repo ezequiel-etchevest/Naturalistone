@@ -106,7 +106,8 @@ import {
   POST_SAMPLES,
   GET_SAMPLES_PRODUCTS,
   GET_SAMPLES_TRACKINGNUMBER,
-  CLEAR_SAMPLES
+  CLEAR_SAMPLES,
+  FETCH_DATA_START
 } from "./actions-samples";
 
 const intialState = {
@@ -164,6 +165,7 @@ const intialState = {
   customer_relationship: [],
   materials: [],
   all_products_search: [],
+  loading: false,
 };
 
 function rootReducer(state = intialState, action) {
@@ -605,9 +607,15 @@ function rootReducer(state = intialState, action) {
         ...state,
         tasks: action.payload,
       };
+    case FETCH_DATA_START: 
+      return {
+        ...state,
+        loading: true,
+    };
     case GET_SAMPLES:
       return {
         ...state,
+        loading: false,
         samples: action.payload,
       };
     case GET_SAMPLES_TRACKINGNUMBER:

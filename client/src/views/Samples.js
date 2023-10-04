@@ -16,6 +16,7 @@ const Samples = ({ focus, setFocus }) => {
   const user = useSelector((state) => state.user);
   const [focusFilter, setFocusFilter] = useState("All");
   const userLocal = JSON.parse(localStorage.getItem("user"));
+  const loading = useSelector((state) => state.loading);
 
   useEffect(() => {
     if(!sellers.length){
@@ -24,14 +25,17 @@ const Samples = ({ focus, setFocus }) => {
     if (userLocal && !user.length) {
       dispatch(getEmployeeById(userLocal.SellerID));
     }
-    if (!samples.length) {
-      dispatch(getSamples(''));
+    if (user.length) {
+      const sellerDinamic = user[0].Secction7Flag === 1 ? '3' : user[0].SellerID
+      if (!samples.length) {
+      dispatch(getSamples('', sellerDinamic));
     }
+  }
 
     return(() => {
       dispatch(clearSamples())
     })
-  }, []);
+  }, [user]);
 
   if (userLocal) {
     if (user.length) {
@@ -44,6 +48,7 @@ const Samples = ({ focus, setFocus }) => {
             user={user}
             focusFilter={focusFilter}
             setFocusFilter={setFocusFilter}
+            loading={loading}
           />
         </>
       );

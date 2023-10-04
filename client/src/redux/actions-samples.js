@@ -5,12 +5,16 @@ export const GET_SAMPLES_PRODUCTS = 'GET_SAMPLES_PRODUCTS'
 export const GET_SAMPLES_TRACKINGNUMBER = 'GET_SAMPLES_TRACKINGNUMBER'
 export const DELETE_SAMPLE = 'DELETE_SAMPLE'
 export const CLEAR_SAMPLES = 'CLEAR_SAMPLES'
+export const FETCH_DATA_START = 'FETCH_DATA_START';
 
 export function getSamples(search, sellerId){
   
   return async function(dispatch){
       try {
+        dispatch({ type: FETCH_DATA_START });
+        
         const { data } = await axios.get(`/samples?search=${search}&sellerId=${sellerId}`)
+
         dispatch({
           type: GET_SAMPLES,
           payload: data.data

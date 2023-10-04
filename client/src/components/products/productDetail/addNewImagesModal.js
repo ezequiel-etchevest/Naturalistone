@@ -14,9 +14,8 @@ import "@uppy/core/dist/style.css";
 import "@uppy/dashboard/dist/style.css";
 import "@uppy/drag-drop/dist/style.css";
 import { Box, Button, ButtonGroup, IconButton, Modal, ModalBody, ModalCloseButton, ModalContent, ModalOverlay, Tooltip, useDisclosure } from "@chakra-ui/react";
-import { AiOutlinePlus } from "react-icons/ai";
 import { BiAddToQueue } from "react-icons/bi";
-// import "../../../assets/uppyCustom.css"
+import "../../../assets/uppyCustom.css"
 
 const AddFiles = ({ product, allowedFileTypes, title, fieldName, url, pxButton, tooltip}) => {
   const { isOpen, onOpen, onClose } = useDisclosure()

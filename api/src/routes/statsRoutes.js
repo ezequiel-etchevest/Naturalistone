@@ -37,7 +37,7 @@ statsRouter.get("/", async function (req, res) {
                 SUM(CASE WHEN status = 'todo' THEN 1 ELSE 0 END) AS total_todo, 
                 SUM(CASE WHEN status = 'done' THEN 1 ELSE 0 END) AS total_done
                 FROM Tasks
-                WHERE Tasks.Created BETWEEN "${startDate}" AND "${endDate}"`;
+                WHERE Tasks.DueDate BETWEEN "${startDate}" AND "${endDate}"`;
   query_9A = `SELECT COUNT(*) AS total_samples 
              FROM Samples 
              WHERE InsertDate BETWEEN "${startDate}" AND "${endDate}"`;
@@ -63,7 +63,7 @@ statsRouter.get("/", async function (req, res) {
             SUM(CASE WHEN status = 'todo' THEN 1 ELSE 0 END) AS total_todo, 
             SUM(CASE WHEN status = 'done' THEN 1 ELSE 0 END) AS total_done
             FROM Tasks
-            WHERE SellerID = ${sellerID} AND Tasks.Created BETWEEN "${startDate}" AND "${endDate}"`;
+            WHERE SellerID = ${sellerID} AND Tasks.DueDate BETWEEN "${startDate}" AND "${endDate}"`;
   query_9 = `SELECT COUNT(*) AS total_samples, Customers.SellerID
             FROM Samples 
             LEFT JOIN Customers ON Samples.CustomerID = Customers.CustomerID

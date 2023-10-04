@@ -25,7 +25,6 @@ import { getSamples } from "../../redux/actions-samples";
     })
   
     const dispatch = useDispatch()
-    // const navigate = useNavigate()
     const customers = useSelector(state => state.customers)
 
     useEffect(() => {
@@ -34,32 +33,22 @@ import { getSamples } from "../../redux/actions-samples";
       }
     },[])
 
-    // const location = useLocation();
-    // const searchParams = new URLSearchParams();
-    // const queryString = location.search
-    // // const url = new URLSearchParams(queryString);
-    // const getParamsCustomer = url.get('samples')  
+
     const handleInput = (e) => {
-      setLoading(true)
       const { name, value } = e.target
       if(value.length){
-        // searchParams.set('samples', samples)
         setInputValues({
           ...inputValues,
           [name]: value
         })
         dispatch(getSamples(value, inputValues.selectSeller))
-      setLoading(false)
       } else {
-      setLoading(true)
-        // searchParams.delete('samples')
         setInputValues({
           searchSample: '',
           selectSeller: inputValues.selectSeller
         })
         dispatch(getSamples(inputValues.searchSample, inputValues.selectSeller))
       }
-        // navigate(`?${searchParams.toString()}`)
     }
 
     const validateSeller = () => {
@@ -68,7 +57,6 @@ import { getSamples } from "../../redux/actions-samples";
     }
 
     const handleSellerSelect = (e) => {
-      setLoading(true)
       const { name, value } = e.target
       setInputValues({
         ...inputValues,
@@ -79,7 +67,6 @@ import { getSamples } from "../../redux/actions-samples";
     }
   
     const handleClear = () => {
-      setLoading(true)
       setInputValues({
         searchSample: '',
         selectSeller: sellerDinamic
