@@ -37,7 +37,7 @@ const uploadPdfAndImages = multer({
   })
 });
 
-s3Router.post('/upload/image', uploadPdfAndImages.array('image'), async (req, res) => {
+s3Router.post('/upload/image/:productnameid', uploadPdfAndImages.array('image'), async (req, res) => {
   try {
     console.log('Imagen guardado en S3');
     // Aquí puedes realizar cualquier acción adicional después de guardar el PDF en S3

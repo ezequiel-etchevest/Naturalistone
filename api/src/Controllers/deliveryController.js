@@ -23,7 +23,7 @@ async function generateDeliveryID() {
 
 
 function paymentsValidation(quantities, payments) {
-
+  console.log("soy payments", payments)
   if(payments[0].Payments === payments[0].Value) return true
   else{
 
@@ -50,7 +50,60 @@ function paymentsValidation(quantities, payments) {
   }
 }
 
+async function getPayments(id) {
+  try {
+  const query_getPayments = `SELECT InvoiceID, SUM(Amount) as Payments, Sales.Value FROM Payments 
+  LEFT JOIN Sales ON Sales.Naturali_Invoice = Payments.InvoiceID 
+  WHERE InvoiceID = ${id} GROUP BY InvoiceID;`
 
+  return new Promise((resolve, reject) => {
+    mysqlConnection.query(query_getPayments, function(err, results) {
+      if(err) {
+        reject('Error in get payments')
+      }
+      resolve(results)
+    })
+  })
+  } catch (error) {
+    console.log('Error in get payments')
+    throw error
+  }
+}
+
+async function createDelivery(deliveryID, id) {
+  try {
+    const query_createDelivery = `INSERT INTO Deliveries (DeliveryNumber, SaleID) VALUES (${deliveryID}, ${id});`
+    return new Promise((resolve, reject) => {
+      mysqlConnection.query(query_createDelivery, function(err, results) {
+        if(err) {
+          reject('Error in create delivery')
+        }
+        resolve(results)
+      })
+    })
+  } catch (error) {
+    console.log('Error in create delivery')
+    throw error
+  }
+}
+
+async function createDeliveriesProducts(deliveryID, element) {
+  try {
+    const query_createDeliveriesProducts = `INSERT INTO Deliveries_Products (DeliveryNumber, ProdID, Quantity) VALUES (${deliveryID}, ${element.prodID}, ${element.quantity});`
+
+    return new Promise((resolve, reject) => {
+      mysqlConnection.query(query_createDeliveriesProducts, function(err, results) {
+        if(err) {
+          reject(err)
+        }
+        resolve(results)
+      })
+    })
+  } catch (error) {
+    console.log('Error in create deliveries product')
+    throw error
+  }
+}
 
   // function paymentsValidation(quantities, payments) {
   //   if (payments[0].Payments === payments[0].Value) {
@@ -100,5 +153,11 @@ function paymentsValidation(quantities, payments) {
   // }
 
 
-  module.exports = {generateDeliveryID, paymentsValidation}
+  module.exports = {
+    generateDeliveryID,
+    paymentsValidation,
+    getPayments,
+    createDelivery,
+    createDeliveriesProducts
+  }
   

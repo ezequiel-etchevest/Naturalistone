@@ -265,20 +265,13 @@ export function getMaterials() {
   };
 }
 
-export function getFilteredSearch(
-  finish,
-  size,
-  thickness,
-  material,
-  search,
-  sqft,
-  type
-) {
+export function getFilteredSearch(search) {
   return async function (dispatch) {
     try {
       let { data } = await axios.get(
-        `/products/filtered?finish=${finish}&size=${size}&thickness=${thickness}&material=${material}&search=${search}&type=${type}&sqft1=${sqft[0]}&sqft2=${sqft[1]}`
+        `/products/search_prodname?search=${search}`
       );
+      
       dispatch({
         type: GET_FILTERED_PRODUCTS_SEARCH,
         payload: data,

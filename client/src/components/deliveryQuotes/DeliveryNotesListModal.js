@@ -16,7 +16,7 @@ import {
 import DeliveryNotePdf from "./DeliveryPDf"
 import DeliveriesList from "./DeliveriesList"
 import { SearchIcon } from '@chakra-ui/icons';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 
 const DeliveryNotesListModal = ({isOpen, onClose, invoice, user, deliveries}) => {
@@ -25,6 +25,7 @@ const id = invoice[0].Naturali_Invoice
 
 const [input, setInput] = useState([])
 const [deliveryID, setDeliveryID]= useState('')
+const [pdfInfo, setPdfInfo] = useState([]);
 
 const { isOpen: isSecondModalOpen, onOpen: onSecondModalOpen, onClose: onSecondModalClose } = useDisclosure()
 
@@ -41,6 +42,9 @@ const handleSearchInput = (e) => {
     setInput([])
   }
 }
+
+useEffect(() => {
+}, [pdfInfo])
 
   return(
 <>
@@ -128,7 +132,7 @@ const handleSearchInput = (e) => {
       >
       <ModalHeader/>
       <ModalBody color={'web.text2'} w={'100%'} h={'100%'}>
-        <DeliveryNotePdf/>
+        <DeliveryNotePdf pdfInfo={pdfInfo} setPdfInfo={setPdfInfo}/>
         {/* idDeliveryNote={idDeliveryNote} */}
       </ModalBody>
       <ModalFooter/>

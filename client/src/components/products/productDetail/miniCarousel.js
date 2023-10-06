@@ -41,7 +41,6 @@ const CarouselProduct = ({ product }) => {
     initialSlide: imageIndex,
   };
   
-  
   return (
     <>
     <Box display={"flex"} h={"full"} w={"full"} flexDir={"column"}>
@@ -71,7 +70,7 @@ const CarouselProduct = ({ product }) => {
         allowedFileTypes={['image/jpeg', 'image/png']}
         title={"Add new images"}
         fieldName={'image'}
-        url={'/s3/upload/image'}
+        url={`/s3/upload/image/${product.ProductName}`}
         pxButton={"1vw"}
         />
       </Center>

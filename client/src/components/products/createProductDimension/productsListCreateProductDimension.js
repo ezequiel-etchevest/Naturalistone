@@ -15,12 +15,11 @@ import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 
 
-const ModelTr = ({ e, products, setProducts }) => {
+const ModelTr = ({ e, products, setProducts, index }) => {
 
 const handleClick = (event) => {
     setProducts({
         ...products,
-        idProduct: event.ProdID,
         idProductName: event.ProdNameID,
     })
 }
@@ -35,9 +34,10 @@ const handleClick = (event) => {
         color: 'logo.orange'
         }}
         onClick={() => handleClick(e)}
-        color={e.ProdID === products.idProduct ? 'logo.orange' : 'unset'}
+        color={e.ProdNameID === products.idProductName ? 'logo.orange' : 'unset'}
         > 
         <Td maxH={'6vh'} maxW={'3vw'} fontSize={'xs'} textAlign={'center'}>{e.ProductName}</Td>
+        <Td maxH={'6vh'} maxW={'3vw'} fontSize={'xs'} textAlign={'center'}>{e.Material}</Td>
         </Tr>
     </>
 
@@ -121,6 +121,10 @@ return (
             <Thead textAlign={"center"}>
               <Tr>
                 <Th fontSize={'0.8vw'} color={'web.text2'} textAlign={"center"}>
+                  Product name
+                </Th>
+                <Th fontSize={'0.8vw'} color={'web.text2'} textAlign={"center"}>
+                  Material
                 </Th>
               </Tr>
             </Thead>
@@ -128,6 +132,7 @@ return (
               {all_products_search.slice(0, loadedCount).map((e, i) => {
                 return <ModelTr
                 key={i}
+                index={i}
                 e={e}
                 products={products}
                 all_products_search={all_products_search}

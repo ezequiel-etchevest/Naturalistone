@@ -227,7 +227,7 @@ const ProductsFilters = ({ values, factories, materials }) => {
   };
   
   useEffect(() => {
-    dispatch(getFilteredSearch( "", "", "", "", "", "", "" ))
+    dispatch(getFilteredSearch(''))
   },[])
 
   return (

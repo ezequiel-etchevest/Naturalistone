@@ -4,15 +4,14 @@ import { Box } from '@chakra-ui/react';
 import { useSelector } from 'react-redux';
 
 
-const DeliveryNotePdf = () => {
+const DeliveryNotePdf = ({ pdfInfo, setPdfInfo }) => {
   
     const delivery = useSelector(state => state.delivery_by_id)
 
-    const [pdfInfo, setPdfInfo] = useState([]);
     const viewer = useRef(null);
    console.log('delivery', delivery)
     useEffect(() => {
-        CreateForm();
+      CreateForm();
     }, []);
 
     const products = {};
@@ -22,7 +21,6 @@ const DeliveryNotePdf = () => {
       products[variableName] = product;
     });
 
-    
 async function CreateForm() {
 
   const url = `/DeliveryNote/DemoDeliveryNote.pdf`
@@ -84,7 +82,10 @@ async function CreateForm() {
   
   setPdfInfo(URL.createObjectURL(blob));
   
+    console.log("pdfinfio", pdfInfo)
   };
+
+
   return (
   <Box h={'85vh'} >
     {<iframe width={'100%'} height={'100%'} title="test-frame" src={pdfInfo} ref={viewer} type="application/pdf" />}

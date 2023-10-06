@@ -18,6 +18,36 @@ const {
   createProductEntry
 } = require("../Controllers/productsController");
 
+productsRouter.get("/search_prodname", async function (req, res) {
+  let { search } = req.query;
+  
+  const query = `
+    SELECT
+    ProdNames.Naturali_ProdName AS ProductName,
+    ProdNames.ProdNameID,
+    ProdNames.Material
+    FROM NaturaliStone.ProdNames
+    WHERE ProdNames.Naturali_ProdName IS NOT NULL
+      ${search.length ? `AND (LOWER(ProdNames.Naturali_ProdName) LIKE LOWER('%${search}%'))` : ``}
+    ORDER BY ProdNames.Naturali_ProdName ASC`;
+
+  try {
+    mysqlConnection.query(query, function (error, results, fields) {
+      if (error) throw error;
+      if (results.length == 0) {
+        res.status(200).json({ results, errorSearch: [] });
+        //se elimino codigo que estaba demas al no traer length el result
+      } else {
+
+        res.status(200).json({ results });
+      }
+    });
+  } catch (error) {
+    res.status(409).send(error);
+  }
+});
+
+
 productsRouter.get("/", async function (req, res) {
 
   query_ = `SELECT    
@@ -366,5 +396,6 @@ productsRouter.patch("/product/:id", async function (req, res) {
     res.status(409).send(error);
   }
 });
+
 
 module.exports = productsRouter;

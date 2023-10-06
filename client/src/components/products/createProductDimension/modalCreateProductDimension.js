@@ -36,7 +36,6 @@ const CreateProductDimension = ({ values, materials }) => {
   const toast = useToast();
   const [progress, setProgress] = useState(50)
   const [products, setProducts] = useState({
-    idProduct: "",
     idProductName: "",
     searchProduct: "",
     dimensions: [
@@ -63,13 +62,7 @@ const CreateProductDimension = ({ values, materials }) => {
     });
     dispatch(
       getFilteredSearch(
-        "",
-        "",
-        "",
-        "",
         event.target.value,
-        "",
-        ""
       )
     );
   };
@@ -146,11 +139,6 @@ const CreateProductDimension = ({ values, materials }) => {
 
   return (
     <Box>
-      {/* <Tooltip
-        placement={"bottom-start"}
-        label={"Create product dimension"}
-        fontWeight={"hairline"}
-      > */}
         <Button
          leftIcon={<AiOutlinePlus />}
          variant={"unstyled"}
@@ -169,7 +157,6 @@ const CreateProductDimension = ({ values, materials }) => {
         >
          Add dimension 
        </Button>
-      {/* </Tooltip> */}
       <Modal
         isOpen={isOpen}
         onClose={onClose}
