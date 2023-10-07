@@ -53,8 +53,9 @@ export function CustomerRelationShip({ user, customer }) {
       <>
         <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} flexDir={"row"}>
           <Text
-            mb={'1vh'} 
-            fontSize={'2.6vh'} 
+            mb={'1vh'}
+            pl={'0.5vw'} 
+            fontSize={'1.3rem'} 
             color={'web.text2'}>
             Customer Relationship
           </Text>

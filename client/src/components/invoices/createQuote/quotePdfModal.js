@@ -1,5 +1,5 @@
 
-import CreatedQuotePdf from "../createQuote2/createQuotePdf";
+import CreatedQuotePdf from "./createQuotePdf";
 import { useState } from "react";
 import SendEmailModal from "./createSendEmailQuote";
 

@@ -21,7 +21,7 @@ body {
 .ql-editor {
   overflow-y: scroll;
   resize: vertical;
-  height: 300px !important;
+  /* height: 300px !important; */
 }
 
 .ql-editor::-webkit-scrollbar {

@@ -49,8 +49,8 @@ const InvoiceList = () => {
                 <Table color={'web.text'} variant={'simple'} size={'sm'} >
                   <Thead h={'4vh'}>
                     <Tr>
-                      <Th h={'4vh'} color={'web.text2'} textAlign={'center'} fontSize={'1.6vh'}>Invoice Number</Th>
-                      <Th h={'4vh'} color={'web.text2'} textAlign={'center'} fontSize={'1.6vh'}>Amount</Th>
+                      <Th h={'4vh'} pb={'3vh'} color={'web.text2'} textAlign={'center'} fontSize={'0.8rem'}>Invoice Number</Th>
+                      <Th h={'4vh'} pb={'3vh'} color={'web.text2'} textAlign={'center'} fontSize={'0.8rem'}>Amount</Th>
                     </Tr>
                   </Thead>
                   <Tbody>
@@ -65,7 +65,7 @@ const InvoiceList = () => {
               </TableContainer>
             ):(
               <Center w={'30vw'} h={'22vh'} >
-                <Text userSelect={'none'} fontSize={'1.5vh'}>To view the invoices, please choose a project.</Text>
+                <Text color={'web.border'} userSelect={'none'} fontSize={'1rem'}>To view the invoices, please choose a project.</Text>
               </Center>
             )
           :

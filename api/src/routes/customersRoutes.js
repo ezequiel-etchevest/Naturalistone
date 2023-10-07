@@ -2,13 +2,15 @@ const express = require('express')
 const customersRouter = express.Router()
 const mysqlConnection = require('../db');
 const {
-  CustomerFilters,
   createCustomer,
   updateCustomerAddress,
 } = require('../Controllers/customerController');
 const { 
   createAddress
-} = require('../Controllers/adressController')
+} = require('../Controllers/adressController');
+const { executeQueries } = require('../Controllers/customerRelationship');
+
+
 
 
 customersRouter.get('/', async function(req, res){
@@ -37,32 +39,87 @@ customersRouter.get('/', async function(req, res){
     }
 });
 
-customersRouter.get("/relationship", async function(req, res) {
+// customersRouter.get("/relationship", async function(req, res) {
 
-  const { customerId } = req.query
+//   const { customerId } = req.query
 
-  try {
-      const getCustomerRelationshipQuery = `SELECT Customer_Relationship.*, CONCAT (Seller.FirstName, ' ', Seller.LastName) AS SellerName
-      FROM Customer_Relationship
-      LEFT JOIN Seller ON Seller.SellerID = Customer_Relationship.SellerID
-      WHERE CustomerID = ${customerId}`
+//   try {
+//       const getCustomerRelationshipQuery = `SELECT Customer_Relationship.*, CONCAT (Seller.FirstName, ' ', Seller.LastName) AS SellerName
+//       FROM Customer_Relationship
+//       LEFT JOIN Seller ON Seller.SellerID = Customer_Relationship.SellerID
+//       WHERE CustomerID = ${customerId}`
+    
+//       mysqlConnection.query(relationshipQuery, function(err, results) {
+//         if (err) {
+//             return res.status(400).json({success:false, msg:"Error in get customer relationship"})
+//           }
 
-      mysqlConnection.query(getCustomerRelationshipQuery, function(err, results) {
-        if (err) {
-            return res.status(400).json({success:false, msg:"Error in get customer relationship"})
-          }
+//         if (results.length === 0) {
+//           return res.status(200).json({success: true, msg:"No customers relationship", data: results})
+//         }
 
-        if (results.length === 0) {
-          return res.status(200).json({success: true, msg:"No customers relationship", data: results})
-        }
-
-          return res.status(200).json({success: true, msg:"Customer relationship get successful", data: results})
-      })
-  } catch (error) {
-    return res.status(500).json({success: false, msg:"General error in get customer relationship", data: results})
+//           return res.status(200).json({success: true, msg:"Customer relationship get successful", data: results})
+//       })
+//   } catch (error) {
+//     return res.status(500).json({success: false, msg:"General error in get customer relationship", data: results})
       
-  }
-})
+//   }
+// })
+
+
+customersRouter.get("/relationship", async function(req, res) {
+    try {  
+      const { customerId } = req.query
+
+        await executeQueries(mysqlConnection)
+        const selectAllDataQuery = `
+        SELECT 
+            Date, Type, 
+            CASE WHEN ProjectName = '' THEN NULL ELSE ProjectName END AS ProjectName, 
+            Description, 
+            CASE WHEN User = '' THEN NULL ELSE User END AS User, 
+            CustomerID
+          FROM 
+            (
+                SELECT * FROM Temp_Task_Created WHERE CustomerID = ${customerId}
+                UNION 
+                SELECT * FROM Temp_Task_Completed WHERE CustomerID = ${customerId}
+                UNION
+                SELECT * FROM Temp_Task_Comments WHERE CustomerID = ${customerId}
+                UNION
+                SELECT * FROM Temp_Quote_Created WHERE CustomerID = ${customerId}
+                UNION
+                SELECT * FROM Temp_Quote_Modified WHERE CustomerID = ${customerId}
+                UNION
+                SELECT * FROM Temp_Quote_Status_Updated WHERE CustomerID = ${customerId}
+                UNION
+                SELECT * FROM Temp_Quote_Status_Canceled WHERE CustomerID = ${customerId}
+                UNION
+                SELECT * FROM Temp_Payments WHERE CustomerID = ${customerId}
+                UNION
+                SELECT * FROM Temp_Samples WHERE CustomerID = ${customerId}
+                UNION
+                SELECT * FROM Actions WHERE CustomerID = ${customerId}
+            ) Unions 
+        ORDER BY \`Date\` DESC;
+    `;
+    
+        mysqlConnection.query(selectAllDataQuery, function(err, results) {
+          if (err) {
+            console.log(err)
+            return res.status(400).json({ success: false, msg: "Error in get customer relationship" });
+          }
+  
+          if (results.length === 0) {
+            return res.status(200).json({ success: true, msg: "No customers relationship", data: [] });
+          }
+  
+          return res.status(200).json({ success: true, msg: "Customer relationship get successful", data: results });
+        });
+      } catch (error) {
+      return res.status(500).json({ success: false, msg: "General error in get customer relationship" });
+    }
+  })
 
 
 customersRouter.get('/:id', async function(req, res){

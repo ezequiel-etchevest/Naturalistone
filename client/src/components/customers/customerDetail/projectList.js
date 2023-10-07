@@ -33,7 +33,7 @@ return(
     }}
     onClick={handleClickProject}
     >
-    <Td textAlign={'center'} fontSize={'1.6vh'}>{project.ProjectName}</Td>
+    <Td textAlign={'center'} fontSize={'0.9rem'}>{project.ProjectName}</Td>
   </Tr>
 )
 }
@@ -55,7 +55,7 @@ return(
           overflow={'auto'}
           css={{
             '&::-webkit-scrollbar': {
-              width: '0.4vw',
+              width: '0.2vw',
             },
             '&::-webkit-scrollbar-track': {
               width: '6px',
@@ -65,14 +65,14 @@ return(
               borderRadius: '5px',
             },
           }}> 
-        <TableContainer  w={'48vw'} >
-          <Table color={'web.text'} variant={'simple'} size={'sm'} >
+        <TableContainer  w={'48vw'}>
+          <Table color={'web.text'} variant={'simple'} size={'sm'}>
             <Thead h={'4vh'}>
               <Tr>
-                <Th h={'4vh'} color={'web.text2'} textAlign={'center'} fontSize={'1.6vh'}>Project Name</Th>
+                <Th h={'4vh'} pb={'3vh'} color={'web.text2'} textAlign={'center'} fontSize={'0.8rem'}>Project Name</Th>
               </Tr>
             </Thead>
-            <Tbody >
+            <Tbody>
               { 
                 projects_by_customer_id?.length ? (
                   Array.isArray(projects_by_customer_id) ? (
@@ -97,7 +97,12 @@ return(
                     bg: 'web.navBar',
                     color: 'logo.orange'
                       }}>
-                        <Td display={'flex'} placeContent={'center'}><CreateNewProject customer={customer}/></Td></Tr>
+                        <Td 
+                          display={'flex'} placeContent={'center'}
+                          >
+                            <CreateNewProject customer={customer}/>
+                        </Td>
+                </Tr>
                 </Tbody>
               </Table>
           </TableContainer>

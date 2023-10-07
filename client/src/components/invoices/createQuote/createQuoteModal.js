@@ -28,7 +28,7 @@ import CreateQuoteProducts from "./createQuoteProducts";
 import { getAllProductsNewQuote } from "../../../redux/actions-products";
 import CreateQuoteProductsReview from "./createQuoteProductsReview";
 import { cleanCreatedQuote, createQuote, getInvoicesBySeller } from "../../../redux/actions-invoices";
-import QuotePdfModal from "../createQuote/quotePdfModal";
+import QuotePdfModal from "./quotePdfModal";
 import { addSpecialProducts } from "../../../redux/actions-sp-1";
 
 export function CreateQuote({ customers, sellers }) {

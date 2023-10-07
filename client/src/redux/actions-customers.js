@@ -8,6 +8,8 @@ export const CLEAN_CUSTOMER_DETAIL = 'CLEAN_CUSTOMER_DETAIL'
 export const PATCH_CUSTOMER = 'PATCH_CUSTOMER'
 export const POST_CUSTOMER_RELATIONSHIP = 'POST_CUSTOMER_RELATIONSHIP'
 export const GET_CUSTOMER_RELATIONSHIP = 'GET_CUSTOMER_RELATIONSHIP'
+export const CLEAN_CUSTOMER_RELATIONSHIP = 'CLEAN_CUSTOMER_RELATIONSHIP'
+
 
 export function getCustomers(search){
     
@@ -130,4 +132,13 @@ export function getCustomerRelationship(customerId){
       }catch(error){
           console.log({error})           
       }}
+}
+
+export function cleanCustomerRelationship(){
+  return async function(dispatch){
+    dispatch({
+      type: CLEAN_CUSTOMER_RELATIONSHIP,
+      payload: ''
+    })
+  }
 }
