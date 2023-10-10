@@ -21,7 +21,7 @@ import { AiOutlineFileAdd } from "react-icons/ai";
 import CreateQuoteCustomer from "./createQuoteCustomer";
 import CreateQuoteCustomerReview from "./createQuoteCustomerReview";
 import { validateEmptyInputsCreateQuote } from "../../../utils/validateForm";
-import { getCustomers, updateCustomer } from "../../../redux/actions-customers";
+import { createAddressCustomer, getCustomers, updateCustomer } from "../../../redux/actions-customers";
 import { getCustomerProjects } from "../../../redux/actions-projects";
 import CreateQuoteCustomerProjets from "./createQuoteProject";
 import CreateQuoteProducts from "./createQuoteProducts";
@@ -30,6 +30,7 @@ import CreateQuoteProductsReview from "./createQuoteProductsReview";
 import { cleanCreatedQuote, createQuote, getInvoicesBySeller } from "../../../redux/actions-invoices";
 import QuotePdfModal from "../createQuote/quotePdfModal";
 import { addSpecialProducts } from "../../../redux/actions-sp-1";
+import { updateAddress } from "../../../redux/actions-address";
 
 export function CreateQuote({ customers, sellers }) {
 
@@ -37,7 +38,6 @@ export function CreateQuote({ customers, sellers }) {
   const user = useSelector((state) => state.user);
   const values = useSelector(state => state.products_new_quote_values)
   const posted_quote = useSelector((state) => state.posted_quote);
-
   const [errorsCustomer, setErrorsCustomer] = useState({});
   const [disable, setDisable] = useState(true);
   const [progress, setProgress] = useState(20);
@@ -61,7 +61,9 @@ export function CreateQuote({ customers, sellers }) {
       Billing_ZipCode: "",
       Billing_State: "",
       CustomerID: "",
-      Seller: ""
+      Seller: "",
+      billing_address_id: "",
+      shipping_address_id: ""
     },
     project: {
       ProjectName: "",
@@ -101,9 +103,24 @@ export function CreateQuote({ customers, sellers }) {
 
     useEffect(() => {
       if(progress === 40){
-        const areCustomerFieldCompleted = Object.values(formData.customer).every((value) => value.length !== 0)
-        setDisable(!areCustomerFieldCompleted);
-    }}, [formData.customer]);
+        const data = formData.customer
+        if(data.Billing_Address.length !== 0 &&
+          data.Billing_City.length !== 0 &&
+          data.Billing_State.length !== 0 &&
+          data.Billing_ZipCode.length !== 0 &&
+          data.Company.length !== 0 &&
+          data.Company_Position.length !== 0 &&
+          data.Contact_Name.length !== 0 &&
+          data.DiscountRate.length !== 0 &&
+          data.Email.length !== 0 &&
+          data.Phone.length !== 0 &&
+          data.Seller.length !== 0
+          ) {
+            setDisable(false);
+        } else {
+          setDisable(true)
+        }
+    }}, [formData.customer, progress]);
     
   const validateAuthFlag = (objetos) => {
     for (const id in objetos) {
@@ -163,6 +180,8 @@ export function CreateQuote({ customers, sellers }) {
         Billing_ZipCode: "",
         Billing_State: "",
         CustomerID: "",
+        billing_address_id: "",
+        shipping_address_id: ""
       },
       project: {
         ProjectName: "",
@@ -185,7 +204,7 @@ export function CreateQuote({ customers, sellers }) {
     });
   };
 
-  const handleNextButton = () => {
+  const handleNextButton = async () => {
     if(progress === 20){
       const areCustomerFieldCompleted = Object.values(formData.customer).every((value) => value.length !== 0)
       
@@ -194,7 +213,6 @@ export function CreateQuote({ customers, sellers }) {
     if (progress === 40) {
       let newErrors = validateEmptyInputsCreateQuote(formData.customer);
       setErrorsCustomer(newErrors);
-      
       if (Object.entries(newErrors).length > 0) {
         if (!toast.isActive(toastId)) {
           toast({
@@ -209,16 +227,23 @@ export function CreateQuote({ customers, sellers }) {
         return; // No avanza si hay errores
       } else {
         if(updated){
-          dispatch(updateCustomer(customerID, formData.customer));
-        }
+          await dispatch(updateCustomer(customerID, formData.customer));
+          if(formData.customer.billing_address_id) {
+            await dispatch(updateAddress(formData.customer.billing_address_id, 
+              {
+                address: formData.customer.Billing_Address, city: formData.customer.Billing_City, state: formData.customer.Billing_State, zip_code: formData.customer.Billing_ZipCode
+              }
+          ))
+          } else {
+            await dispatch(createAddressCustomer(formData.customer.CustomerID, 
+          {
+            Address: formData.customer.Billing_Address, City: formData.customer.Billing_City, State: formData.customer.Billing_State, ZipCode: formData.customer.Billing_ZipCode, AddressInShipping: false
+          }
+            ))
+          }
+          }
         dispatch(getCustomerProjects(customerID));
         setProgress(progress + 20);
-      
-      // const areVariablesAndProjectNameCompleted =
-      //   Object.values(formData.variables).every((value) => value.length !== 0) &&
-      //   formData.project.ProjectName.length !== 0;
-        
-      // setDisable(!areVariablesAndProjectNameCompleted);
     }}
   
     if (progress === 60) {
@@ -229,7 +254,6 @@ export function CreateQuote({ customers, sellers }) {
     }
   };
   
-
   const handlePreviousButton = () => {
     if (progress == 40) {
       setErrorsCustomer({});

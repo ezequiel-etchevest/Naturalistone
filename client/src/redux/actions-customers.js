@@ -8,6 +8,8 @@ export const CLEAN_CUSTOMER_DETAIL = 'CLEAN_CUSTOMER_DETAIL'
 export const PATCH_CUSTOMER = 'PATCH_CUSTOMER'
 export const POST_CUSTOMER_RELATIONSHIP = 'POST_CUSTOMER_RELATIONSHIP'
 export const GET_CUSTOMER_RELATIONSHIP = 'GET_CUSTOMER_RELATIONSHIP'
+export const UPDATE_ADDRESS_CUSTOMER = 'UPDATE_ADDRESS_CUSTOMER'
+
 
 export function getCustomers(search){
     
@@ -33,7 +35,7 @@ export function getCustomerById(customerId){
         dispatch(
           {
             type: GET_CUSTOMER_BY_ID,
-            payload: data
+            payload: data.data
           })
       }catch(error){
         console.log({error})
@@ -130,4 +132,21 @@ export function getCustomerRelationship(customerId){
       }catch(error){
           console.log({error})           
       }}
+}
+
+export function createAddressCustomer(customerId, address){
+
+  return async function(dispatch){
+    try{ 
+      let {data} = await axios.patch(`/customers/createAddress/${customerId}`, address)
+        dispatch(
+          {
+            type: UPDATE_ADDRESS_CUSTOMER,
+          })
+          return data.data
+      }catch(error){
+        console.log({error})
+        return error.msg
+      }
+    }
 }

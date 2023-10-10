@@ -343,7 +343,7 @@ return (
                     textColor={'web.text2'}
                     _placeholder={{ fontFamily: 'body', fontWeight: 'inherit' }}
                     size={"sm"}
-                    type={"text"}
+                    type={"number"}
                     _focus={{
                       outline: 'none',
                       boxShadow: 'none',

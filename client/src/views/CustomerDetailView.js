@@ -31,8 +31,10 @@ const CustomerDetailView = ({focus, setFocus}) => {
   useEffect(()=> {
     return()=>dispatch(cleanCustomerDetail())
   },[])
-
   
+  useEffect(() => {
+  },[customer])
+
   if(userLocal) {
     if(user.length){
       return(

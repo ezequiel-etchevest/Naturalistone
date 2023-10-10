@@ -12,33 +12,35 @@ import {
 import { useDispatch } from 'react-redux';
 import { getProjectInvoices } from '../../../redux/actions-projects';
 import { CreateNewProject } from './createProject';
+import { useState } from 'react';
 
-const ModelTr = ({project}) => {
-
+const ModelTr = ({project, highlight, sethighlight}) => {
 
 const dispatch = useDispatch()
 
-const handleClickProject = () => {
+const handleClickProject = (event) => {
   if(project.ProjectName !== 'No projects related'){
-  dispatch(getProjectInvoices(project.idProjects))}
+    dispatch(getProjectInvoices(project.idProjects))}
+    sethighlight(event.idProjects);
 }
-
 return(
   <Tr
     h={'5vh'} 
+    key={project.idProjects}
     cursor={'pointer'}
     _hover={{
       bg: 'web.navBar',
       color: 'logo.orange'
     }}
-    onClick={handleClickProject}
+    onClick={() => handleClickProject(project)}
+    textColor={project.idProjects === highlight ? 'logo.orange' : 'unset'}
     >
     <Td textAlign={'center'} fontSize={'1.6vh'}>{project.ProjectName}</Td>
   </Tr>
 )
 }
 
-const ProjectList = ({projects_by_customer_id, customer}) => {
+const ProjectList = ({projects_by_customer_id, customer, highlight, sethighlight}) => {
 
 return(
 <>
@@ -78,7 +80,7 @@ return(
                   Array.isArray(projects_by_customer_id) ? (
                   projects_by_customer_id?.map((project, i) =>{
                     return(
-                      <ModelTr key={i} project={project}/>
+                      <ModelTr key={i} project={project} highlight={highlight} sethighlight={sethighlight}/>
                     )})):(
                       <Tr
                       h={'5vh'} 

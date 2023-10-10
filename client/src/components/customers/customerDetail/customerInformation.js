@@ -112,7 +112,9 @@ const CustomerInformation = ({customer}) => {
               justifyContent={'space-around'}
               alignContent={'center'}>
               <Text fontSize={'1.6vh'} color={'web.text2'}>Billing Address</Text>
-              <Text fontSize={'2.05vh'} fontWeight={'bold'}>{normalizeValue(customer.Billing_Address)}</Text>
+              <Text fontSize={'2.05vh'} fontWeight={'bold'}>
+                {normalizeValue(customer.billing_address_id ? customer.billing_address : customer.Billing_Address)}
+              </Text>
             </Box>
           </Box>
           {/*ZipCode */} 
@@ -124,7 +126,9 @@ const CustomerInformation = ({customer}) => {
               justifyContent={'space-around'}
               alignContent={'center'}>
               <Text fontSize={'1.6vh'} color={'web.text2'}>Zip Code</Text>
-              <Text fontSize={'2.05vh'} fontWeight={'bold'}>{normalizeValue(customer.ZipCode)}</Text>
+              <Text fontSize={'2.05vh'} fontWeight={'bold'}>
+                {normalizeValue(customer.billing_address_id ? customer.billing_zip_code : customer.ZipCode)}
+              </Text>
             </Box>
           </Box>
           {/*State */} 
@@ -136,7 +140,9 @@ const CustomerInformation = ({customer}) => {
               justifyContent={'space-around'}
               alignContent={'center'}>
               <Text fontSize={'1.6vh'} color={'web.text2'}>State</Text>
-              <Text fontSize={'2.05vh'} fontWeight={'bold'}>{normalizeValue(customer.State)}</Text>
+              <Text fontSize={'2.05vh'} fontWeight={'bold'}>
+                {normalizeValue(customer.billing_address_id ? customer.billing_state : customer.State)}
+              </Text>
             </Box>
           </Box>
           {/*Seller ID */} 

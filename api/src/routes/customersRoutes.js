@@ -5,6 +5,7 @@ const {
   CustomerFilters,
   createCustomer,
   updateCustomerAddress,
+  getCustomer
 } = require('../Controllers/customerController');
 const { 
   createAddress
@@ -16,9 +17,24 @@ customersRouter.get('/', async function(req, res){
     const { search } = req.query
 
     let query_ = `
-        SELECT NaturaliStone.Customers.*, Discount.Rate As DiscountRate 
-        FROM Customers
-        LEFT JOIN Discount ON Discount.DiscountID = Customers.DiscountID
+        SELECT NaturaliStone.Customers.*, Discount.Rate As DiscountRate,
+              shipping_address.address AS shipping_address,
+              shipping_address.address2 AS shipping_address2,
+              shipping_address.city AS shipping_city,
+              shipping_address.state AS shipping_state,
+              shipping_address.zip_code AS shipping_zip_code,
+              shipping_address.nickname AS shipping_nickname,
+              billing_address.address AS billing_address,
+              billing_address.address2 AS billing_address2,
+              billing_address.city AS billing_city,
+              billing_address.state AS billing_state,
+              billing_address.zip_code AS billing_zip_code,
+              billing_address.nickname AS billing_nickname
+            FROM Customers
+            LEFT JOIN Discount ON Discount.DiscountID = Customers.DiscountID
+            LEFT JOIN Seller ON Seller.SellerID = Customers.SellerID
+            LEFT JOIN Address AS shipping_address ON shipping_address.address_id = Customers.shipping_address_id
+            LEFT JOIN Address AS billing_address ON billing_address.address_id = Customers.billing_address_id
         ${
             search ? 
             `WHERE (Customers.Company LIKE LOWER('%${search}%') OR Customers.Contact_Name LIKE LOWER('%${search}%'))`
@@ -64,29 +80,19 @@ customersRouter.get("/relationship", async function(req, res) {
   }
 })
 
-
 customersRouter.get('/:id', async function(req, res){
 
-    const {id} = req.params
+  const {id} = req.params;
 
-    query_ = `SELECT NaturaliStone.Customers.*, Discount.Rate As DiscountRate, CONCAT (Seller.FirstName, ' ', Seller.LastName) AS SellerName
-        FROM Customers
-        LEFT JOIN Discount ON Discount.DiscountID = Customers.DiscountID 
-        LEFT JOIN Seller ON Seller.SellerID = Customers.SellerID
-        WHERE CustomerID = ${id}`;
-    try{
-         mysqlConnection.query(query_, function(error, results, fields){
-            if(!results.length) {
-                console.log('Error al obtener data!')
-                res.status(400).json(error);
-            } else {
-                console.log('Data OK')
-                res.status(200).json(results[0]);
-            }
-        });
-    } catch(error){
-        res.status(409).send(error);
-    }
+  try {
+    const customer = await getCustomer(id);
+    return res.status(200).json({ success: true, msg: 'Get customer successful', data: customer[0]})
+
+  } catch (error) {
+    console.log('General error in get customer')
+    res.status(400).json({ success: false, msg: 'Error in get customer', data: {}})
+    throw error
+  }
 });
 
 customersRouter.post('/', async function(req, res){
@@ -144,67 +150,6 @@ customersRouter.post('/', async function(req, res){
     }
 });
 
-customersRouter.patch('/:id', async function(req, res){
-    
-    const {id} = req.params
-    const {
-        Contact_Name,
-        Company,
-        Company_Position,
-        Phone,
-        Email,
-        Address,
-        ZipCode,
-        State,
-        City,
-        Seller,
-        DiscountID,
-        Billing_Address,
-        Billing_City,
-        Billing_ZipCode,
-        Billing_State,
-        DiscountRate
-    } = req.body
-    const parsedDiscount = () => {
-        if(DiscountRate == '15') return 4
-        else if(DiscountRate == '10') return 3
-        else if(DiscountRate == '5') return 2
-        else return 1
-    } 
-    
-    query_ = `UPDATE Customers SET Contact_Name = "${Contact_Name}", 
-                Company = "${Company}", 
-                Company_Position = "${Company_Position}", 
-                Phone = "${Phone}", 
-                Email = "${Email}", 
-                Address = "${Address}",
-                ZipCode = "${ZipCode}",
-                State = "${State}",
-                City = "${City}",
-                SellerID= "${Seller}",
-                DiscountID = "${parsedDiscount()}", 
-                Billing_Address = "${Billing_Address}", 
-                Billing_City = "${Billing_City}", 
-                Billing_ZipCode = "${Billing_ZipCode}", 
-                Billing_State = "${Billing_State}" 
-                WHERE CustomerID = ${id}`;
-    try{
-      mysqlConnection.query(query_, function(error, results, fields){
-
-           if(error) throw error;
-           if(results.length == 0) {
-               console.log(`Failure updating Customer ${id}`)
-               res.status(200).json('');
-           } else {
-               console.log('Customer Update OK')
-               res.status(200).json(results);
-           }
-       });
-    } catch(error){
-        res.status(409).send(error);
-    }
-});
-
 customersRouter.post('/relationship', async function(req, res){
 
     const {
@@ -233,5 +178,100 @@ customersRouter.post('/relationship', async function(req, res){
     }
 });
 
+customersRouter.patch('/createAddress/:CustomerID', async function(req, res) {
+    const {
+    Address,
+    Address2,
+    City,
+    State,
+    ZipCode,
+    Nickname,
+    AddressInShipping,
+  } = req.body
+
+  const { CustomerID } = req.params;
+
+  try {
+    mysqlConnection.beginTransaction();
+
+    if(AddressInShipping && Address === '' && City === '' && State === '' && ZipCode === '') {
+      return res.status(200).json({success: true, msg: "No data to create address", data: ''})
+    }
+
+    if(AddressInShipping) {
+      const shippingAddress = await createAddress(CustomerID, Address, Address2 ?? '', City, State, ZipCode, Nickname ?? '')
+      if(shippingAddress) {
+        await updateCustomerAddress('shipping_address_id', shippingAddress.insertId, CustomerID)
+        mysqlConnection.commit()
+        return res.status(200).json({success: true, msg:"Create address successful"})
+      } else {
+        mysqlConnection.rollback()
+        return res.status(400).json({success: true, msg:"Error in create address"})
+      }
+
+    }
+
+    const billingAddress = await createAddress(CustomerID, Address, Address2 ?? '', City, State, ZipCode, Nickname ?? '')
+    if(billingAddress) {
+      await updateCustomerAddress('billing_address_id', billingAddress.insertId, CustomerID)
+      mysqlConnection.commit();
+      return res.status(200).json({success: true, msg:"Create address successful"})
+    } else {
+      mysqlConnection.rollback();
+      return res.status(400).json({success: true, msg:"Error in create address"})
+    }
+
+  } catch (error) {
+    console.log('Error in route / post address')
+    mysqlConnection.rollback()
+    return res.status(400).json({success: false, msg:"Error in create address"})
+  }
+})
+
+customersRouter.patch('/:id', async function(req, res){
+    
+    const {id} = req.params
+    const {
+        Contact_Name,
+        Company,
+        Company_Position,
+        Phone,
+        Email,
+        Seller,
+        DiscountID,
+        DiscountRate
+    } = req.body
+
+    const parsedDiscount = () => {
+        if(DiscountRate == '15') return 4
+        else if(DiscountRate == '10') return 3
+        else if(DiscountRate == '5') return 2
+        else return 1
+    } 
+    
+    query_ = `UPDATE Customers SET Contact_Name = "${Contact_Name}", 
+                Company = "${Company}", 
+                Company_Position = "${Company_Position}", 
+                Phone = "${Phone}", 
+                Email = "${Email}", 
+                SellerID= "${Seller}",
+                DiscountID = "${parsedDiscount()}"
+              WHERE CustomerID = ${id}`;
+    try{
+      mysqlConnection.query(query_, function(error, results, fields){
+
+           if(error) throw error;
+           if(results.length == 0) {
+               console.log(`Failure updating Customer ${id}`)
+               res.status(200).json('');
+           } else {
+               console.log('Customer Update OK')
+               res.status(200).json(results);
+           }
+       });
+    } catch(error){
+        res.status(409).send(error);
+    }
+});
 
 module.exports = customersRouter;

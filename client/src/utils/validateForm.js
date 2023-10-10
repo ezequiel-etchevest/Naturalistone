@@ -64,31 +64,31 @@ export const validateCompletedInputs = (formData) =>{
 export const validateEmptyInputsCreateQuote = (formData) => {
   let errors = validateCompletedInputs(formData)
   
-  if(!formData.Contact_Name || formData.Contact_Name == "undefined"){
+  if(!formData.Contact_Name || formData.Contact_Name === "undefined"){
     errors.Contact_Name = 'Please enter customer name'
     }
-  if(!formData.Phone || formData.Phone == "undefined"){
+  if(!formData.Phone || formData.Phone === "undefined"){
     errors.Phone = 'Please enter phone number'
   }
-  if(!formData.Email || formData.Email == "undefined"){
+  if(!formData.Email || formData.Email === "undefined"){
     errors.Email = 'Please enter email address'
   }
-  if(!formData.Billing_Address || formData.Billing_Address == "undefined"){
+  if(!formData.Billing_Address || formData.Billing_Address === "undefined"){
     errors.Billing_Address = 'Please enter an address'
   }
-  if(!formData.Billing_ZipCode || formData.Billing_ZipCode == "undefined"){
+  if(!formData.Billing_ZipCode || formData.Billing_ZipCode === "undefined"){
     errors.Billing_ZipCode = 'Please enter a zip code'
   } 
-  if(!formData.Billing_City || formData.Billing_City == "undefined"){
+  if(!formData.Billing_City || formData.Billing_City === "undefined"){
     errors.Billing_City = 'Please enter a city'
   }
-  if(!formData.Billing_State || formData.Billing_State == "undefined") {
+  if(!formData.Billing_State || formData.Billing_State === "undefined") {
     errors.Billing_State = 'Please enter a state'
   }
-  if(!formData.Company || formData.Company == "undefined"){
+  if(!formData.Company || formData.Company === "undefined"){
     errors.Company = 'Please enter customer company name'
   }
-  if(!formData.Company_Position || formData.Company_Position == "undefined"){
+  if(!formData.Company_Position || formData.Company_Position === "undefined"){
     errors.Company_Position = 'Please enter customer company position'
   }
 return errors
@@ -283,15 +283,14 @@ export const validateCompletedInputsEditCustomer = (formData) =>{
   const regexOnlySting = /^[a-zA-Z\s]*$/
   const regexNoCaracters = /^[a-zA-Z\s]+$/
 
-  
+  if(formData.Contact_Name === '') errors.Contact_Name = 'Please enter a name'
   if(formData.Contact_Name !== ''){
     if(!regexNoNumber.test(formData.Contact_Name)) {
       errors.Contact_Name = 'Please enter a valid name'
     } 
   }
-  if(formData.Company === ''){
-    errors.Company = 'Please enter a Company'
-  }
+
+  if (formData.Email === '') errors.Email = 'Please enter a email'
   if(formData.Email !== ''){
     if(!regexEmail.test(formData.Email)){
       errors.Email = 'Please enter a valid email'
@@ -305,8 +304,9 @@ export const validateCompletedInputsEditCustomer = (formData) =>{
   if(formData.Company_Position === ''){
       errors.Company_Position = 'Please enter a company position'
   }
-  if(formData.DiscountRate !== '') {
-    const allowedValues = [0, 5, 10, 15];
+
+  if(formData.DiscountRate !== 0 || formData.DiscountRate !== 5 || formData.DiscountRate !== 10 || formData.DiscountRate !== 15) {
+    const allowedValues = ["0", "5", "10", "15"];
     if(!allowedValues.includes(formData.DiscountRate)){
       errors.DiscountRate = 'Valid discounts: 0, 5, 10, 15'
     }
@@ -326,11 +326,12 @@ export const validateCompletedInputsEditCustomer = (formData) =>{
       errors.City = 'Please enter a valid City'
     }
   }
-  if(formData.State !== '' || formData.State === '-') {
-    if(!regexNoNumber.test(formData.State)){
-      errors.State = 'Please enter a valid City'
+  if(formData.State !== '') {
+    if(!USStates.includes(formData.State)) {
+      errors.State = 'Please enter a valid state'
     }
   }
+  if (formData.Billing_ZipCode === '') errors.Billing_ZipCode = 'Please enter a zip code'
   if(formData.Billing_ZipCode !== ''){
     if(!regexNumber.test(formData.Billing_ZipCode)) {
       errors.Billing_ZipCode = 'Please enter a valid zip code'
@@ -341,19 +342,22 @@ export const validateCompletedInputsEditCustomer = (formData) =>{
       errors.Phone = 'Please enter a valid Phone'
     } 
   }
+  if (formData.Billing_Address === '') errors.Billing_Address = 'Please enter a address'
   if(formData.Billing_Address !== ''){
     if(!regexNoCaracters.test(formData.Billing_Address)) {
-      errors.Billing_Address = 'Please enter a valid state'
+      errors.Billing_Address = 'Please enter a valid address'
     }
   }
+  if (formData.Billing_State === '') errors.Billing_State = 'Please enter a state'
   if(formData.Billing_State !== ''){
     if(!USStates.includes(formData.Billing_State)) {
       errors.Billing_State = 'Please enter a valid state'
     }
   }
+  if (formData.Billing_City === '') errors.Billing_City = 'Please enter a city'
   if(formData.Billing_City !== '') {
     if(!regexNoNumber.test(formData.Billing_City)){
-      errors.Billing_City = 'Please enter a valid City'
+      errors.Billing_City = 'Please enter a valid city'
     }
   }
 

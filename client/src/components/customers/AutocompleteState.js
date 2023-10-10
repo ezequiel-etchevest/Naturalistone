@@ -33,7 +33,6 @@ export default function AutocompleteState({formData, setFormData, errors, valida
         [name]: [value]
       })
     )
-
     // Filtrar los estados que incluyen el valor ingresado
     const filtered = USStates.filter((state) =>
       state.toLowerCase().includes(value.toLowerCase())

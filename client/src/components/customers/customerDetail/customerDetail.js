@@ -4,7 +4,7 @@ import CustomerRelationShipList from "./CustomerRelationShipList";
 import { CustomerRelationShip } from "./CustomerRelationShip";
 import ProjectList from "./projectList";
 import InvoiceList from "./invoiceList";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getCustomerRelationship } from "../../../redux/actions-customers";
 
@@ -15,6 +15,8 @@ const CustomerDetail = ({user, customer, projects_by_customer_id }) => {
   useEffect(() => {
     dispatch(getCustomerRelationship(customer.CustomerID))
   },[])
+
+  const [highlight, sethighlight] = useState('');
 
   return(
     <>     
@@ -63,7 +65,7 @@ const CustomerDetail = ({user, customer, projects_by_customer_id }) => {
                 color={'web.text2'}
                   >Projects & Invoices</Text> 
               <Box display={'flex'} flexDir={'row'}>
-                <ProjectList projects_by_customer_id={projects_by_customer_id} customer={customer}/>
+                <ProjectList projects_by_customer_id={projects_by_customer_id} customer={customer} highlight={highlight} sethighlight={sethighlight}/>
                 <InvoiceList/> 
 
               </Box>

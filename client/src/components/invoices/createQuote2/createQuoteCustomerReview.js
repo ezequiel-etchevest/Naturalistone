@@ -24,24 +24,28 @@ import { companyRole } from "../../../utils/arrayCompanyRole"
 
 const CreateQuoteCustomerReview = ({setFormData, formData, sellers, user, setErrorsCustomer, errorsCustomer, setUpdated}) => {
 
+const normalizeValue = (value) => {
+  return value === null || value === "null" || value === '' || value === 'undefined' ? "" : value;
+};
+
 const initialState = {
-  Contact_Name: formData.customer.Contact_Name,
-  City: formData.customer.City,
-  Address: formData.customer.Address,
-  State: formData.customer.State,
-  ZipCode: formData.customer.ZipCode,
-  Company: formData.customer.Company,
-  Company_Position: formData.customer.Company_Position,
-  Phone: formData.customer.Phone,
-  Email: formData.customer.Email,
-  DiscountID: formData.customer.DiscountID,
-  DiscountRate: formData.customer.DiscountRate,
-  Billing_Address:formData.customer.Billing_Address,
-  Billing_City:formData.customer.Billing_City,
-  Billing_ZipCode:formData.customer.Billing_ZipCode,
-  Billing_State:formData.customer.Billing_State,
-  CustomerID: formData.customer.CustomerID,
-  Seller:  formData.customer.Seller ? formData.customer.Seller : '',
+  Contact_Name: normalizeValue(formData.customer.Contact_Name),
+  City: normalizeValue(formData.customer.City),
+  Address: normalizeValue(formData.customer.Address),
+  State: normalizeValue(formData.customer.State),
+  ZipCode: normalizeValue(formData.customer.ZipCode),
+  Company: normalizeValue(formData.customer.Company),
+  Company_Position: normalizeValue(formData.customer.Company_Position),
+  Phone: normalizeValue(formData.customer.Phone),
+  Email: normalizeValue(formData.customer.Email),
+  DiscountID: normalizeValue(formData.customer.DiscountID),
+  DiscountRate: normalizeValue(formData.customer.DiscountRate),
+  Billing_Address: normalizeValue(formData.customer.Billing_Address),
+  Billing_City: normalizeValue(formData.customer.Billing_City),
+  Billing_ZipCode: normalizeValue(formData.customer.Billing_ZipCode),
+  Billing_State: normalizeValue(formData.customer.Billing_State),
+  CustomerID: normalizeValue(formData.customer.CustomerID),
+  Seller: normalizeValue(formData.customer.Seller) ? normalizeValue(formData.customer.Seller) : '',
 }
 const [inputs, setInputs] = useState(initialState)
 const [originInput, setOriginInput] = useState(initialState)

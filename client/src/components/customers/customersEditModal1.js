@@ -11,27 +11,14 @@ import {
     IconButton,
     Flex,
     Input,
-    Tooltip,
-    useDisclosure,
-    Button,
-    Select,
     } from "@chakra-ui/react"
 import {
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
-  ModalBody,
-  ModalCloseButton,
   useToast
 } from '@chakra-ui/react';
 import { FiEdit } from 'react-icons/fi'
 import { Card, CardBody, CardHeader } from '@chakra-ui/card'
 import { CheckIcon, CloseIcon, EditIcon } from '@chakra-ui/icons'
 // import '../../../assets/styleSheet.css'
-import { useState } from "react"
-import { validateCompletedInputs, validateEmptyInputsCreateQuote } from "../../utils/validateForm"
 import { useDispatch } from "react-redux";
 import { updateCustomer } from "../../redux/actions-customers";
 
@@ -120,13 +107,13 @@ return (
         alignItems={'center'}>
         <Card w={'46vw'} h={'46vh'} >
         <CardHeader mr={'20px'} textColor={'web.text'} fontSize={'xl'}>Edit Customer</CardHeader>
-            <Text textColor={'web.text2'} mt={'5vh'} ml={'20px'}>Customer Address</Text>
+            <Text textColor={'web.text2'} mt={'5vh'} ml={'20px'}>Customer Shipping Address</Text>
           <CardBody display={'flex'} flexDir={'row'} justifyContent={'space-around'} alignContent={'center'} mt={'5vh'}>
             <Stack divider={<StackDivider />} display={'flex'} flexDir={'column'}>
             <Box w={'20vw'} mt={'0.5vh'}>
                 <Text textColor={'web.text2'} fontSize='sm' fontWeight={'semibold'}> Address </Text>
                 <Editable
-                  value={inputs.Address}
+                  value={inputs?.Address}
                   fontSize='sm'
                   fontWeight={'hairline'}
                   isPreviewFocusable={false}

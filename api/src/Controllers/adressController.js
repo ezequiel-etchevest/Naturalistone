@@ -40,22 +40,32 @@ const getAddress = async (address_id) => {
 
 const patchAddress = async (addressId, address1, address2, city, state, zip_code, nickname) => {
 
-  const patchAddressQuery = `UPDATE Address SET address = "${address1}", address2 = "${address2}", city = "${city}", state = "${state}", zip_code = ${zip_code}, nickname = "${nickname}"
+  const itemsUpdate = [];
+
+  if(address1) itemsUpdate.push(`address = "${address1}"`)
+
+  if(address2) itemsUpdate.push(`address2 = "${address2}"`)
+
+  if(city) itemsUpdate.push(`city = "${city}"`)
+
+  if(state) itemsUpdate.push(`state = "${state}"`)
+
+  if(zip_code) itemsUpdate.push(`zip_code = ${zip_code}`)
+
+  if(nickname) itemsUpdate.push(`nickname = "${nickname}"`)
+
+  const queryItemsUpdate = itemsUpdate.join(", ")
+
+  const patchAddressQuery = `UPDATE Address SET ${queryItemsUpdate}
                             WHERE address_id = ${addressId}`
 
   return new Promise((resolve, reject) => {
-    try {
       mysqlConnection.query(patchAddressQuery, function(err, updateAddressResult) {
         if(err) {
-          reject('Error in update address')
+          reject(new Error('Error in update address'))
         }
         resolve(updateAddressResult);
-        return updateAddressResult
       })
-    } catch (error) {
-      console.log('Error in update address')
-      throw error
-    }
   })
 }
 

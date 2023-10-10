@@ -127,7 +127,7 @@ return (
               <Box w={'20vw'} mt={'0.5vh'}>
                 <Text textColor={'web.text2'} fontSize='sm' fontWeight={'semibold'}> Address </Text>
                 <Editable
-                  value= {inputs.Billing_Address}
+                  value= {inputs?.Billing_Address ?? ''}
                   fontSize='sm'
                   fontWeight={'hairline'}
                   isPreviewFocusable={false}

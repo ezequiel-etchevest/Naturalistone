@@ -109,6 +109,10 @@ import {
   CLEAR_SAMPLES,
   FETCH_DATA_START
 } from "./actions-samples";
+import {
+  POST_ADDRESS,
+  PATCH_ADDRESS
+} from "./actions-address";
 
 const intialState = {
   employees: [],
@@ -666,6 +670,14 @@ function rootReducer(state = intialState, action) {
       return {
         ...state,
         samples: action.payload,
+      }
+    case POST_ADDRESS:
+      return {
+        ...state,
+      }
+    case PATCH_ADDRESS:
+      return {
+        ...state,
       }
     default:
       return {

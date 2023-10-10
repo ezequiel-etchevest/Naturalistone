@@ -48,9 +48,9 @@ const createCustomer = async (
 
 }
 
-const updateCustomerAddress = async (address_properties, shipping_address_id, customerId) => {
+const updateCustomerAddress = async (address_properties, address_id, customerId) => {
 
-  postCustomerQuery = `UPDATE Customers SET ${address_properties} = ${shipping_address_id}
+  postCustomerQuery = `UPDATE Customers SET ${address_properties} = ${address_id}
                       WHERE CustomerID = ${customerId}`;
     
   return new Promise((resolve, reject) => {
@@ -72,8 +72,49 @@ const updateCustomerAddress = async (address_properties, shipping_address_id, cu
     })
 }
 
+async function getCustomer(id) {
+  try {
+    const query_get_customer = `
+        SELECT
+        Customers.*,
+        Discount.Rate AS DiscountRate,
+        CONCAT(Seller.FirstName, ' ', Seller.LastName) AS SellerName,
+        shipping_address.address AS shipping_address,
+        shipping_address.address2 AS shipping_address2,
+        shipping_address.city AS shipping_city,
+        shipping_address.state AS shipping_state,
+        shipping_address.zip_code AS shipping_zip_code,
+        shipping_address.nickname AS shipping_nickname,
+        billing_address.address AS billing_address,
+        billing_address.address2 AS billing_address2,
+        billing_address.city AS billing_city,
+        billing_address.state AS billing_state,
+        billing_address.zip_code AS billing_zip_code,
+        billing_address.nickname AS billing_nickname
+      FROM Customers
+      LEFT JOIN Discount ON Discount.DiscountID = Customers.DiscountID
+      LEFT JOIN Seller ON Seller.SellerID = Customers.SellerID
+      LEFT JOIN Address AS shipping_address ON shipping_address.address_id = Customers.shipping_address_id
+      LEFT JOIN Address AS billing_address ON billing_address.address_id = Customers.billing_address_id
+      WHERE Customers.CustomerID = ${id}`;
+
+        return new Promise((resolve, reject) => {
+          mysqlConnection.query(query_get_customer, function(err, customer) {
+            if(err) {
+              reject('Error in get customer')
+            }
+            resolve(customer)
+          })
+        })
+  } catch (error) {
+    console.log('Error in get customer')
+    throw error
+  }
+}
+
 module.exports = {
   CustomerFilters,
   createCustomer,
-  updateCustomerAddress
+  updateCustomerAddress,
+  getCustomer
 } 
