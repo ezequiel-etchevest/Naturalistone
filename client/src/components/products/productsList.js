@@ -28,6 +28,7 @@ const [flag, setFlag] = useState(a)
 const [priceSt, setPrice] = useState(e.Price !== null ? e.Price : '')
 const navigate = useNavigate()
 const dispatch = useDispatch()
+const validUser = user[0].SellerID === 17 ? true : false
 
 const handleClickProduct = () => {
   dispatch(getProductById(e.ProdID))
@@ -41,7 +42,7 @@ const handleClickSwitch = () => {
   }
   dispatch(patchProduct(e.ProdID, bodyUpdate))
   }
-  // let price = ''
+
   const handleChangePrice = (event) => {
     const regex = /^\d+(\.\d{0,2})?$/;  // Modificado para permitir solo dos decimales o números enteros
   
@@ -66,7 +67,7 @@ const handleClickSwitch = () => {
   <>
   <Tr       
   cursor={'pointer'} 
-  h={'5vh'}
+  h={'5.8vh'}
   key={e.ProdNameID}
   _hover={{
     bg: 'web.navBar',
@@ -75,13 +76,13 @@ const handleClickSwitch = () => {
   >
     {
       urlImg ? (
-        <Td maxH={'3vh'} minH={'3vh'} h={'3vh'} w={'4vw'} onClick={() => handleClickProduct()} fontSize={'0.9rem'} textAlign={'match-parent'}>
+        <Td maxH={'3vh'} minH={'3vh'} h={'3vh'} minW={'4vw'} w={'5vw'} onClick={() => handleClickProduct()} fontSize={'0.9rem'} textAlign={'match-parent'}>
         <div className="image-container" >
           <img src={urlImg} className="enlarge-image" alt="" />
         </div>
       </Td>
       ) : (
-         <Td maxH={'3vh'} minH={'3vh'} h={'3vh'} w={'4vw'} onClick={() => handleClickProduct()} fontSize={'0.9rem'} textAlign={'match-parent'}>
+         <Td maxH={'3vh'} minH={'3vh'} h={'3vh'} minW={'4vw'} w={'5vw'} onClick={() => handleClickProduct()} fontSize={'0.9rem'} textAlign={'match-parent'}>
        <div className="image-container" >
         </div>
       </Td>
@@ -92,14 +93,10 @@ const handleClickSwitch = () => {
     <Td maxH={'6vh'} maxW={'3vw'} onClick={() => handleClickProduct()} fontSize={'0.9rem'} textAlign={'center'}>{e.Size}</Td>
     <Td maxH={'6vh'} maxW={'2vw'} onClick={() => handleClickProduct()} fontSize={'0.9rem'} textAlign={'center'}> {e.Thickness === null ? 'N/A' : e.Thickness} </Td>
     <Td maxH={'6vh'} maxW={'3vw'} onClick={() => handleClickProduct()} fontSize={'0.9rem'} textAlign={'center'}> {e.Finish === null ? 'N/A' : e.Finish} </Td>
-    {/* <Td maxH={'6vh'} maxW={'3vw'} onClick={() => handleClickProduct()} fontSize={'0.9rem'} isNumeric>$ { e.Price ? e.Price.toLocaleString('en-US') : '-'}</Td> */}
-    <Td maxH={'6vh'} maxW={'3vw'} fontSize={'0.9rem'} >
-      {/* <Input w={'4vw'}
-        value={e.Price !== null ? e.Price : ''}
-        onChange={(event) => handleChangePrice(e, event)}
-        fontSize={'0.9rem'}>
-      </Input>  */}
-      <Input
+    <Td maxH={'6vh'} maxW={'6vw'} w={'6vw'} fontSize={'0.9rem'} >
+      {
+        validUser === true ? 
+        <Input
           w={'4vw'}
           value={priceSt}
           onChange={(event) => handleChangePrice(event)}
@@ -123,8 +120,11 @@ const handleClickSwitch = () => {
             boxShadow:
               "0 0.5px 0.5px rgba(229, 103, 23, 0.075)inset, 0 0 5px rgba(255,144,0,0.6)",
           }}
-        >
-        </Input>
+          />
+          :
+          <Text textAlign={'center'}>{e.Price}</Text>
+      }
+
     </Td>
     <Td maxH={'6vh'} maxW={'2vw'} onClick={() => handleClickProduct()} fontSize={'0.9rem'} textAlign={'center'}>{e.InStock_Available === null ? 'N/A' : e.InStock_Available}</Td>
     <Td maxH={'6vh'} maxW={'2vw'} onClick={() => handleClickProduct()} fontSize={'0.9rem'} textAlign={'center'}>{e.Incoming_Available === null ? 0 : e.Incoming_Available}</Td>
@@ -234,7 +234,7 @@ return (
                 <Th color={'web.text2'} textAlign={'center'}>
                   Finish
                 </Th>
-                <Th color={'web.text2'} isNumeric>
+                <Th color={'web.text2'} textAlign={'center'}>
                   Price
                 </Th>
                 <Th color={'web.text2'} textAlign={'center'}>
