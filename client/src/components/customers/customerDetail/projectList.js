@@ -13,6 +13,7 @@ import { useDispatch } from 'react-redux';
 import { getProjectInvoices } from '../../../redux/actions-projects';
 import { CreateNewProject } from './createProject';
 import { useState } from 'react';
+import { EditProject } from './editProjectModal';
 
 const ModelTr = ({project, highlight, sethighlight}) => {
 
@@ -99,7 +100,21 @@ return(
                     bg: 'web.navBar',
                     color: 'logo.orange'
                       }}>
-                        <Td display={'flex'} placeContent={'center'}><CreateNewProject customer={customer}/></Td></Tr>
+                    <Td display={'flex'} placeContent={'center'}>
+                        <CreateNewProject customer={customer}/>
+                    </Td>
+                </Tr>
+                <Tr
+                  h={'5vh'} 
+                  cursor={'pointer'}
+                  _hover={{
+                    bg: 'web.navBar',
+                    color: 'logo.orange'
+                      }}>
+                    <Td display={'flex'} placeContent={'center'}>
+                        <EditProject customer={customer} projects_by_customer_id={projects_by_customer_id}/>
+                    </Td>
+                </Tr>
                 </Tbody>
               </Table>
           </TableContainer>

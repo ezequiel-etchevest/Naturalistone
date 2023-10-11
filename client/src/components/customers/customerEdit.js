@@ -10,7 +10,6 @@ import { IconButton,
     useToast, 
     Progress, 
     Tooltip} from "@chakra-ui/react";
-import { HiUserAdd } from "react-icons/hi";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import CustomersEditModal from './customersEditModal';
@@ -19,20 +18,18 @@ import CustomersEditModal2 from './customerEditModal2';
 import { FiEdit } from "react-icons/fi";
 import { createAddressCustomer, getCustomerById, updateCustomer } from "../../redux/actions-customers";
 import { validateCompletedInputsEditCustomer, validateEmptyInputsEditCustomer } from "../../utils/validateForm";
-import { createAddress, updateAddress } from "../../redux/actions-address";
+import { updateAddress } from "../../redux/actions-address";
 import { USStates } from "./AutocompleteState";
 
-export function CustomerEdit({customer}) {
+export function CustomerEdit({user, customer, sellers}) {
 
 const dispatch = useDispatch();
 const [errorsCustomer, setErrorsCustomer] = useState({})
-const [errors, setErrors] = useState({})
 const [ progress, setProgress ] = useState(33.33)
 const toast = useToast()
 const { isOpen, onOpen, onClose } = useDisclosure()
 const [isToastShowing, setIsToastShowing] = useState(false)
 const [disabled, setDisabled] = useState(true)
-const [filteredStates, setFilteredStates] = useState(USStates);
 
 const discount = (discountId) => {
   if(discountId === 4) return 15
@@ -60,7 +57,8 @@ const [inputs, setInputs] = useState({
     Billing_City: normalizeValue(!customer.billing_address_id ? customer.Billing_City : customer.billing_city),
     Billing_ZipCode: normalizeValue(!customer.billing_address_id ? customer.Billing_ZipCode : customer.billing_zip_code),
     Billing_State: normalizeValue(!customer.billing_address_id ? customer.Billing_State : customer.billing_state),
-    CustomerID: normalizeValue(customer.CustomerID)
+    CustomerID: normalizeValue(customer.CustomerID),
+    Seller: normalizeValue(customer.SellerID)
   });
 
 function validateFields() {
@@ -125,12 +123,6 @@ const handleChange = (e) => {
     [name]: updatedErrors[name],
   }));
 
-  if (name === 'Billing_State' || name === 'State') {
-    const filtered = USStates.filter((state) =>
-      state.toLowerCase().includes(value.toLowerCase())
-    );
-    setFilteredStates(filtered);
-  }
 };
 
 const handleClose = () => {
@@ -150,7 +142,9 @@ setInputs({
   Billing_City: normalizeValue(!customer.billing_address_id ? customer.Billing_City : customer.billing_city),
   Billing_ZipCode: normalizeValue(!customer.billing_address_id ? customer.Billing_ZipCode : customer.billing_zip_code),
   Billing_State: normalizeValue(!customer.billing_address_id ? customer.Billing_State : customer.billing_state),
-  CustomerID: normalizeValue(customer.CustomerID)})
+  CustomerID: normalizeValue(customer.CustomerID),
+  Seller: normalizeValue(customer.SellerID)
+})
 setErrorsCustomer({})
 setProgress(33.33)
 onClose()
@@ -159,7 +153,6 @@ onClose()
 const handleNextButton = () =>{
   setErrorsCustomer({})
   setProgress(progress + 33.33)
-  setFilteredStates(USStates)
 }
 
 const handlePreviousButton = () => {
@@ -167,7 +160,6 @@ const handlePreviousButton = () => {
     return
   }
   setProgress(progress - 33.33)
-  setFilteredStates(USStates)
 }
 
 const handleSubmit = async () => {
@@ -269,8 +261,9 @@ useEffect(() => {
   Billing_City: normalizeValue(!customer.billing_address_id ? customer.Billing_City : customer.billing_city),
   Billing_ZipCode: normalizeValue(!customer.billing_address_id ? customer.Billing_ZipCode : customer.billing_zip_code),
   Billing_State: normalizeValue(!customer.billing_address_id ? customer.Billing_State : customer.billing_state),
-  CustomerID: normalizeValue(customer.CustomerID)})
-
+  CustomerID: normalizeValue(customer.CustomerID),
+  Seller: normalizeValue(customer.SellerID)
+})
 },[customer])
 
 
@@ -323,6 +316,8 @@ return (
               handleChange={handleChangeCustomer}
               errorsCustomer={errorsCustomer}
               setErrorsCustomer={setErrorsCustomer}
+              sellers={sellers}
+              user={user}
               />
             )
           }
@@ -339,7 +334,7 @@ return (
               handleChange={handleChange}
               errorsCustomer={errorsCustomer}
               setErrorsCustomer={setErrorsCustomer}
-              filteredStates={filteredStates}
+              USStates={USStates}
               validateCompletedInputsEditCustomer={validateCompletedInputsEditCustomer}
               />
             )
@@ -358,7 +353,7 @@ return (
               handleChange={handleChange}
               errorsCustomer={errorsCustomer}
               setErrorsCustomer={setErrorsCustomer}
-              filteredStates={filteredStates}
+              USStates={USStates}
               />
             )
           }

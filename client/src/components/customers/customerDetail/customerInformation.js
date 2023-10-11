@@ -3,7 +3,7 @@ import CustomerEdit from "../customerEdit"
 import SendEmailModalCustomer from "./SendEmailModal";
 import AddFiles from "../../products/productDetail/addNewImagesModal";
 
-const CustomerInformation = ({customer}) => {
+const CustomerInformation = ({user, customer, sellers}) => {
 
   const { isOpen, onOpen, onClose } = useDisclosure()
 
@@ -56,7 +56,7 @@ const CustomerInformation = ({customer}) => {
             </Text>
             </Box>
             <Box display={"flex"} flexDir={"row"} justifyContent={"center"} alignItems={"center"} h={"3vh"} gap={"2vw"}>
-          <CustomerEdit customer={customer} onOpen={onOpen} onClose={onClose} isOpen={isOpen}/>
+          <CustomerEdit customer={customer} onOpen={onOpen} onClose={onClose} isOpen={isOpen} sellers={sellers} user={user}/>
           <SendEmailModalCustomer customer={customer}/>
           <AddFiles
           allowedFileTypes={['application/pdf']}

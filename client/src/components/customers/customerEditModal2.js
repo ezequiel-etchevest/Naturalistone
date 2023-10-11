@@ -11,34 +11,23 @@ import {
     IconButton,
     Flex,
     Input,
-    Tooltip,
-    useDisclosure,
-    Button,
     Select,
     } from "@chakra-ui/react"
 import {
   useToast
 } from '@chakra-ui/react';
-import { FiEdit } from 'react-icons/fi'
 import { Card, CardBody, CardHeader } from '@chakra-ui/card'
 import { CheckIcon, CloseIcon, EditIcon } from '@chakra-ui/icons'
 // import '../../../assets/styleSheet.css'
-import { useState } from "react"
-import { validateCompletedInputs, validateEmptyInputsCreateQuote } from "../../utils/validateForm"
 import { useDispatch } from "react-redux";
-import { updateCustomer } from "../../redux/actions-customers";
-import AutocompleteState from "./AutocompleteState";
 
 const CustomersEditModal2 = ({
-  customer,
   inputs,
-  setInputs,
   handleChange,
   handleCancel,
   handleCheck,
   errorsCustomer,
-  setErrorsCustomer,
-  filteredStates
+  USStates
 }) => {
 
   const toast = useToast()
@@ -239,11 +228,9 @@ return (
                     </Text>
                 )}
               </Box>
-              <Box w={'20vw'} h={'8vh'} mt={'0.5vh'} pt={"0.5vh"}> 
-                <Text textColor={'web.text2'} fontSize='sm' mb={"1vh"} fontWeight={'semibold'}> State </Text>
-              <Input
-                type="text"
-                list="stateOptions"
+              <Box pt='2' w={'20vw'} h={'8vh'} mt={'0.5vh'}>
+              <Text textColor={'web.text2'} fontSize='sm' fontWeight={'semibold'}> State </Text>
+              <Select
                 onChange={(e)=>handleChange(e)}
                 mb={'0.5vh'}
                 w={'19vw'}
@@ -252,62 +239,35 @@ return (
                 pl={'2'}
                 variant="unstyled"
                 color={'web.text2'}
-                _hover={"unstyled"}
                 textColor={'web.text2'}
                 _placeholder={{ fontFamily: 'body', fontWeight: 'inherit', textColor: 'inherit' }}
+                css={{
+                '&::-webkit-scrollbar': {
+                  width: '0.4vw',
+                },
+                '&::-webkit-scrollbar-track': {
+                  width: '6px',
+                },
+                '&::-webkit-scrollbar-thumb': {
+                   background: '#E47424',
+                  borderRadius: '5px',
+                },
+                }}
                 size={"sm"}
                 borderBottomWidth={"0"}
                 value={inputs.Billing_State}
+                cursor={'pointer'}
                 name="Billing_State"
-              />
-          { errorsCustomer.Billing_State && (
-            <Text position={'absolute'} color={'web.error'} fontSize={'xs'}>
-              {errorsCustomer.Billing_State}
-            </Text>
-              )}
-            <datalist id="stateOptions" onClick={handleChange}>
-          {filteredStates.map((state) => (
-            <option key={state} value={state} />
-            ))}
-        </datalist> 
-                {/* <Text textColor={'web.text2'} pt='1' fontSize='sm' fontWeight={'semibold'}> State </Text>
-                <Editable
-                  value= {inputs.Billing_State}
-                  fontSize='sm'
-                  fontWeight={'hairline'}
-                  isPreviewFocusable={false}
-                  display={'flex'}
-                  flexDir={'row'}
-                  pt='1'
-                  pl='2' 
-                  textColor={'web.text2'}
-                  justifyContent={'space-between'}
-                  w={'19vw'}
-                >
-                  <EditablePreview />
-                  <Input as={EditableInput}
-                    name={'Billing_State'}
-                    w={'15vw'}
-                    minH={'4vh'}
-                    variant="unstyled"
-                    textColor={'web.text2'}
-                    _placeholder={{ fontFamily: 'body', fontWeight: 'inherit' }}
-                    size={"sm"}
-                    type={"text"}
-                    _focus={{
-                      outline: 'none',
-                      boxShadow: 'none',
-                   }} 
-                   onChange={(e) =>{handleChange(e)}}
-                  /> 
-                  <EditableControls name={'Billing_State'} value={inputs.Billing_State} />
-                </Editable>
-                { errorsCustomer.Billing_State && (
-                    <Text mt={'1vh'} position={'absolute'} color={'web.error'} fontSize={'xs'}>
-                      {errorsCustomer.Billing_State}
-                    </Text>
-                )} */}
-              </Box>
+              >
+                <option value='' className="options">Select state</option>
+                {
+                  USStates.map((e, i) => {
+                      return(
+                        <option key={i} className={'options'} value={e}>{e}</option>
+                  )})
+                }
+            </Select>
+          </Box>
               <StackDivider />
             </Stack>
           </CardBody>

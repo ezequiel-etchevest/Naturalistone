@@ -33,7 +33,7 @@ import {
         <VStack spacing={4}>
           <Box w={'22vw'} display={'flex'} flexDir={'row'} pt={'4vh'} justifyContent={'space-between'}>
             <FormControl>
-              <FormLabel textColor={'web.text2'} fontSize={'sm'} fontWeight={'normal'}>Project Name</FormLabel>
+              <FormLabel textColor={'web.text2'} fontSize={'sm'} >Project Name</FormLabel>
                 <Input
                 mb={'0.5vh'}
                 variant="unstyled"
@@ -56,7 +56,7 @@ import {
         </Box>
         <Box w={'22vw'} display={'flex'} flexDir={'row'}  justifyContent={'space-between'}>
           <FormControl>
-          <FormLabel textColor={'web.text2'} fontSize={'sm'} fontWeight={'normal'}>Shipping Address</FormLabel>
+          <FormLabel textColor={'web.text2'} fontSize={'sm'} >Shipping Address</FormLabel>
             <Input
               mb={'0.5vh'}
               variant="unstyled"
@@ -79,7 +79,7 @@ import {
         </Box>
         <Box w={'22vw'} display={'flex'} flexDir={'row'}  justifyContent={'space-between'}>
           <FormControl>
-          <FormLabel textColor={'web.text2'} fontSize={'sm'} fontWeight={'normal'}>Shipping City</FormLabel>
+          <FormLabel textColor={'web.text2'} fontSize={'sm'} >Shipping City</FormLabel>
             <Input
               mb={'0.5vh'}
               variant="unstyled"

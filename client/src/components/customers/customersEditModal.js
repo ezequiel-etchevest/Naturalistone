@@ -11,39 +11,24 @@ import {
     IconButton,
     Flex,
     Input,
-    Tooltip,
-    useDisclosure,
-    Button,
+
     Select,
     } from "@chakra-ui/react"
-import {
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
-  ModalBody,
-  ModalCloseButton,
-  useToast
-} from '@chakra-ui/react';
-import { FiEdit } from 'react-icons/fi'
+import { useToast } from '@chakra-ui/react';
 import { Card, CardBody, CardHeader } from '@chakra-ui/card'
 import { CheckIcon, CloseIcon, EditIcon } from '@chakra-ui/icons'
 // import '../../../assets/styleSheet.css'
-import { useState } from "react"
-import { validateCompletedInputs, validateEmptyInputsCreateQuote } from "../../utils/validateForm"
 import { useDispatch } from "react-redux";
-import { updateCustomer } from "../../redux/actions-customers";
 import { companyRole } from "../../utils/arrayCompanyRole";
 
 const CustomersEditModal = ({
   handleChange,
   inputs,
-  setInputs,
   handleCheck,
   handleCancel,
   errorsCustomer,
-  setErrorsCustomer
+  sellers,
+  user
 }) => {
 
   const toast = useToast()
@@ -244,7 +229,37 @@ return (
                     </Text>
                 )}
               </Box>
-              <Box></Box>
+          <Box pt='2' w={'20vw'} h={'8vh'} mt={'0.5vh'}  maxW={'300px'}>
+          <Text fontSize='sm' fontWeight={'semibold'} textColor={'web.text2'} > Seller reference </Text>
+            <Select
+              onChange={(e)=>handleChange(e)}
+              w={'19vw'}
+              maxW={'280px'}
+              pl={'2'}
+              disabled={ user.Secction7Flag === 1 ? false : true}
+              minH={'5vh'}
+              variant="unstyled"
+              textColor={'web.text2'}
+              _placeholder={{ fontFamily: 'body', fontWeight: 'inherit', textColor: 'inherit' }}
+              size={"sm"}
+              borderBottomWidth={"0"}
+              value={inputs.Seller}
+              cursor={'pointer'}
+              name="Seller"
+            >
+              <option value='' className="options">Select seller</option>
+              {
+                sellers.length ? (
+                  sellers?.map((e, i) => {
+                      return(
+                        <option key={i} className={'options'} value={e.SellerID}>{e.FirstName} {e.LastName}</option>
+                  )})
+                      
+                  ): ( null)
+              }
+            </Select>
+          </Box>
+          <Box></Box>
             </Stack>
             <Stack divider={<StackDivider />}>
               <Box pt='2' w={'20vw'} h={'8vh'}>
@@ -348,45 +363,6 @@ return (
                 }
             </Select>
           </Box>
-              {/* <Box pt='2' w={'20vw'} h={'8vh'} mt={'0.5vh'}>
-                <Text textColor={'web.text2'} fontSize='sm' fontWeight={'semibold'}> Discount </Text>
-                <Editable
-                  value={inputs.DiscountRate}
-                  fontSize='sm'
-                  fontWeight={'hairline'}
-                  isPreviewFocusable={false}
-                  display={'flex'}
-                  flexDir={'row'}
-                  pt='1'
-                  pl='2' 
-                  textColor={'web.text2'}
-                  justifyContent={'space-between'}
-                  w={'19vw'}
-                >
-                  <EditablePreview />
-                  <Input as={EditableInput}
-                    name={'DiscountRate'}
-                    w={'15vw'}
-                    minH={'4vh'}
-                    variant="unstyled"
-                    textColor={'web.text2'}
-                    _placeholder={{ fontFamily: 'body', fontWeight: 'inherit' }}
-                    size={"sm"}
-                    type={"number"}
-                    _focus={{
-                      outline: 'none',
-                      boxShadow: 'none',
-                   }} 
-                    onChange={(e) =>{handleChange(e)}}
-                  /> 
-                  <EditableControls name={'DiscountRate'} value={inputs.DiscountRate}  />
-                </Editable>
-                { errorsCustomer.DiscountRate && (
-                    <Text mt={'1vh'} position={'absolute'} color={'web.error'} fontSize={'xs'}>
-                      {errorsCustomer.DiscountRate}
-                    </Text>
-                )}
-              </Box> */}
               <Box></Box>
             </Stack>       
           </CardBody>

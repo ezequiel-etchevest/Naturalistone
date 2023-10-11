@@ -45,24 +45,46 @@ projectsRouter.get('/id/:ProjectID', async function(req, res){
     }
   });
 
+const getProjectsCustomer = async (idCustomer) => {
+  query_getProjects = 
+    `SELECT
+       Projects.*,
+       shipping_address.address AS shipping_address,
+       shipping_address.address2 AS shipping_address2,
+       shipping_address.city AS shipping_city,
+       shipping_address.state AS shipping_state,
+       shipping_address.zip_code AS shipping_zip_code,
+       shipping_address.nickname AS shipping_nickname,
+       billing_address.address AS billing_address,
+       billing_address.address2 AS billing_address2,
+       billing_address.city AS billing_city,
+       billing_address.state AS billing_state,
+       billing_address.zip_code AS billing_zip_code,
+       billing_address.nickname AS billing_nickname
+    FROM Projects
+      LEFT JOIN Address AS shipping_address ON shipping_address.address_id = Projects.shipping_address_id
+      LEFT JOIN Address AS billing_address ON billing_address.address_id = Projects.billing_address_id
+    WHERE CustomerID = ${idCustomer}`;
+
+  return new Promise((resolve, reject) => {
+      mysqlConnection.query(query_getProjects, function(err, projects) {
+        if(err) {
+          reject('Error in get projects from customer')
+        }
+        resolve(projects)
+      })
+  })
+}
+
 projectsRouter.get('/:idCustomer', async function(req, res){
 
   const {idCustomer} = req.params 
 
-  query_ = `SELECT * FROM  Projects WHERE CustomerID = ${idCustomer}`;
-
   try{
-       mysqlConnection.query(query_, function(error, results, fields){
-          if(!results.length) {
-              console.log('Error al obtener data en get.projects/:idCustomer !')
-              res.status(200).json('No projects related');
-          } else {
-              console.log('Data OK')
-              res.status(200).json(results);
-          }
-      });
+    const projects = await getProjectsCustomer(idCustomer)
+    return res.status(200).json(projects)
   } catch(error){
-      res.status(409).send(error);
+    return res.status(409).send(error);
   }
 });
 

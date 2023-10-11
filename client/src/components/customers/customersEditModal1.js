@@ -11,26 +11,23 @@ import {
     IconButton,
     Flex,
     Input,
+    Select,
     } from "@chakra-ui/react"
 import {
   useToast
 } from '@chakra-ui/react';
-import { FiEdit } from 'react-icons/fi'
 import { Card, CardBody, CardHeader } from '@chakra-ui/card'
 import { CheckIcon, CloseIcon, EditIcon } from '@chakra-ui/icons'
 // import '../../../assets/styleSheet.css'
 import { useDispatch } from "react-redux";
-import { updateCustomer } from "../../redux/actions-customers";
 
 const CustomersEditModal1 = ({
   handleChange,
   inputs,
-  setInputs,
   handleCheck,
   handleCancel,
   errorsCustomer,
-  setErrorsCustomer,
-  filteredStates
+  USStates
 }) => {
 
   const toast = useToast()
@@ -231,11 +228,9 @@ return (
                     </Text>
                 )}
               </Box>
-               <Box w={'20vw'} h={'8vh'} mt={'0.5vh'} pt={"0.5vh"}> 
-                <Text textColor={'web.text2'} fontSize='sm' mb={"1vh"} fontWeight={'semibold'}> State </Text>
-              <Input
-                type="text"
-                list="stateOptions"
+              <Box pt='2' w={'20vw'} h={'8vh'} mt={'0.5vh'}>
+              <Text textColor={'web.text2'} fontSize='sm' fontWeight={'semibold'}> State </Text>
+              <Select
                 onChange={(e)=>handleChange(e)}
                 mb={'0.5vh'}
                 w={'19vw'}
@@ -244,25 +239,35 @@ return (
                 pl={'2'}
                 variant="unstyled"
                 color={'web.text2'}
-                _hover={"unstyled"}
                 textColor={'web.text2'}
                 _placeholder={{ fontFamily: 'body', fontWeight: 'inherit', textColor: 'inherit' }}
+                css={{
+                '&::-webkit-scrollbar': {
+                  width: '0.4vw',
+                },
+                '&::-webkit-scrollbar-track': {
+                  width: '6px',
+                },
+                '&::-webkit-scrollbar-thumb': {
+                   background: '#E47424',
+                  borderRadius: '5px',
+                },
+                }}
                 size={"sm"}
                 borderBottomWidth={"0"}
                 value={inputs.State}
+                cursor={'pointer'}
                 name="State"
-              />
-          { errorsCustomer.State && (
-            <Text position={'absolute'} color={'web.error'} fontSize={'xs'}>
-              {errorsCustomer.State}
-            </Text>
-              )}
-            <datalist id="stateOptions" onClick={handleChange}>
-          {filteredStates.map((state) => (
-            <option key={state} value={state} />
-            ))}
-        </datalist> 
-              </Box>
+              >
+                <option value='' className="options">Select state</option>
+                {
+                  USStates.map((e, i) => {
+                      return(
+                        <option key={i} className={'options'} value={e}>{e}</option>
+                  )})
+                }
+            </Select>
+          </Box>
               <StackDivider />
             </Stack>
           </CardBody>
