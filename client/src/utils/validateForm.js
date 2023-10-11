@@ -172,27 +172,23 @@ export const validateCompletedInputsProject = (formData) =>{
   const regexNumber = /^[0-9]+$/;
   const regexEmail = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
 
-  if(formData.State != ''){
-    const string = formData.State
+  if(formData.Shipping_State !== ''){
+    const string = formData.Shipping_State
     if(typeof string === 'string'){
       const match = USStates.find((item) => item.toLowerCase() === string.toLowerCase() || item.toLowerCase().includes(string.toLowerCase()));
-      console.log(match)
       if(!match) {
-        errors.State = 'Please enter a valid state'
-      }else{
-        errors.State = ''
+        errors.Shipping_State = 'Please enter a valid state'
       }
-
     }
   }
-  if(formData.City != ''){
-    if(!regexNoNumber.test(formData.City)){
-      errors.City = 'Please enter a valid City'
+  if(formData.Shipping_City !== ''){
+    if(!regexNoNumber.test(formData.Shipping_City)){
+      errors.Shipping_City = 'Please enter a valid City'
     }
   }
-  if(formData.ZipCode != ''){
-    if(!regexNumber.test(formData.ZipCode)) {
-      errors.ZipCode = 'Please enter a valid zip code'
+  if(formData.Shipping_ZipCode !== ''){
+    if(!regexNumber.test(formData.Shipping_ZipCode)) {
+      errors.Shipping_ZipCode = 'Please enter a valid zip code'
     }
   }
   return errors
@@ -201,23 +197,37 @@ export const validateCompletedInputsProject = (formData) =>{
 
 export const validateEmptyInputsProjects = (formData) =>{
   let errors = {}
+  const regexNumber = /^\d+[^-]*$/
+  const regexOnlySting = /^[a-zA-Z\s]*$/
+
   if(!formData.Shipping_State) {
     errors.Shipping_State = 'Please enter a valid state'
   }else if(!USStates.includes(formData.Shipping_State)){
     errors.Shipping_State = 'Please enter a valid state'
   }
   if(!formData.ProjectName){
-    errors.ProjectName = 'Please enter a ProjectName'
+    errors.ProjectName = 'Please enter a projectName'
   }
   if(!formData.Shipping_City){
-    errors.City = 'Please enter a City'
+    errors.Shipping_City = 'Please enter a city'
+  }
+  if(formData.Shipping_City !== ''){
+    if(!regexOnlySting.test(formData.Shipping_City)) {
+      errors.Shipping_City = 'Please enter a valid city'
+    }
   } 
   if(!formData.Shipping_Address){
     errors.Shipping_Address = 'Please enter a Shipping_Address'
   }
   if(!formData.Shipping_ZipCode){
-    errors.ZipCode = 'Please enter your zip code'
+    errors.Shipping_ZipCode = 'Please enter your zip code'
   } 
+  if(formData.Shipping_ZipCode !== ''){
+    if(!regexNumber.test(formData.Shipping_ZipCode)) {
+      errors.Shipping_ZipCode = 'Please enter a valid zip code'
+    }
+  }
+
    return errors
 }
 
@@ -278,10 +288,14 @@ export const validateCompletedInputsEditCustomer = (formData) =>{
   let errors = {}
   const regexNoNumber = /^[a-zA-Z\s!"#$%&'()*+,./:;<=>?@\[\\\]^_`{|}~]*$/;
   const regexNumberAndPlus = /^[\d+()\[\]-\s]*$/;
-  const regexNumber = /^\d+[^-]*$/
+  const regexNumber = /^[0-9]+$/;
   const regexEmail = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
   const regexOnlySting = /^[a-zA-Z\s]*$/
   const regexNoCaracters = /^[a-zA-Z\s]+$/
+
+  if(formData.Company_Position !== "Home Owner" && formData.Company === '') {
+    errors.Company = 'Please enter a company';
+  }
 
   if(formData.Contact_Name === '') errors.Contact_Name = 'Please enter a name'
   if(formData.Contact_Name !== ''){

@@ -1,8 +1,8 @@
 const express = require('express')
 const projectsRouter = express.Router()
 const mysqlConnection = require('../db')
-
-
+const { createAddress } = require('../Controllers/adressController');
+const createProject = require('../Controllers/projectController');
 
 projectsRouter.get('/', async function(req, res){
 
@@ -70,22 +70,23 @@ projectsRouter.post('/:customerID', async function(req, res){
 
     const { customerID } = req.params
     const { ProjectName, Shipping_State, Shipping_ZipCode, Shipping_City, Shipping_Address } = req.body
-    console.log(customerID)
-    query_ = `INSERT INTO Projects (ProjectName, CustomerID, Shipping_State, Shipping_ZipCode, Shipping_City, Shipping_Address ) VALUES ("${ProjectName}", ${customerID}, "${Shipping_State}", "${Shipping_ZipCode}", "${Shipping_City}", "${Shipping_Address}")`
-            
+
+    const numberZipCode = parseFloat(Shipping_ZipCode);
+
     try{
-         mysqlConnection.query(query_, function(error, results, fields){
-            if(error) throw error;
-            if(results.length == 0) {
-                console.log('Error en salesRoutes.get /create-project/:customerID')
-                res.status(200).json([]);
-            } else {
-                console.log('Project created successfully')
-                res.status(200).json(results);
-            }
-            });
+      mysqlConnection.beginTransaction();
+
+      const addressProject = await createAddress(customerID, Shipping_Address, '', Shipping_City, Shipping_State, numberZipCode, '')
+
+      await createProject(ProjectName, customerID, addressProject.insertId);
+
+      mysqlConnection.commit();
+
+      return res.status(200).json({ success: true, msg: 'Project create successfully'})
     } catch(error){
-        res.status(409).send(error);
+      console.log('General error in create project' + error)
+      mysqlConnection.rollback();
+      res.status(400).json({success: false, msg: 'Error in create project'});
     }
   });
 

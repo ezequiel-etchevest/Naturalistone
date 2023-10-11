@@ -48,6 +48,7 @@ const CustomersEditModal = ({
 
   const toast = useToast()
   const dispatch = useDispatch()
+  const discountRates = [0, 5, 10, 15]
 
 function EditableControls(name, value) {
   const {
@@ -320,6 +321,34 @@ return (
                 )}
               </Box>
               <Box pt='2' w={'20vw'} h={'8vh'} mt={'0.5vh'}>
+              <Text textColor={'web.text2'} fontSize='sm' fontWeight={'semibold'}> Discount </Text>
+              <Select
+                onChange={(e)=>handleChange(e)}
+                mb={'0.5vh'}
+                w={'19vw'}
+                maxW={'300px'}
+                minH={'5vh'}
+                pl={'2'}
+                variant="unstyled"
+                color={'web.text2'}
+                textColor={'web.text2'}
+                _placeholder={{ fontFamily: 'body', fontWeight: 'inherit', textColor: 'inherit' }}
+                size={"sm"}
+                borderBottomWidth={"0"}
+                value={inputs.DiscountRate}
+                cursor={'pointer'}
+                name="DiscountRate"
+              >
+                <option value='' className="options">Select discount</option>
+                {
+                  discountRates.map((e, i) => {
+                      return(
+                        <option key={i} className={'options'} value={e}>{e}</option>
+                  )})
+                }
+            </Select>
+          </Box>
+              {/* <Box pt='2' w={'20vw'} h={'8vh'} mt={'0.5vh'}>
                 <Text textColor={'web.text2'} fontSize='sm' fontWeight={'semibold'}> Discount </Text>
                 <Editable
                   value={inputs.DiscountRate}
@@ -357,7 +386,7 @@ return (
                       {errorsCustomer.DiscountRate}
                     </Text>
                 )}
-              </Box>
+              </Box> */}
               <Box></Box>
             </Stack>       
           </CardBody>

@@ -1,10 +1,10 @@
 import { useDisclosure, Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, ModalFooter, Button } from "@chakra-ui/react"
 import { TbBuildingCommunity } from "react-icons/tb";
 import CreateProjectForm from "./createProjectForm";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { createProject } from '../../../redux/actions-projects';
-import { validateCompletedInputsProject, validateEmptyInputsProjects } from "../../../utils/validateForm";
+import { validateCompletedInputsProject } from "../../../utils/validateForm";
 import { useToast } from "@chakra-ui/react";
 
 
@@ -15,6 +15,7 @@ export function CreateNewProject({customer, custID}) {
   const [errors, setErrors] = useState({})
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [changeInput, setChangeInput] = useState(false)
+  const [disabled, setDisabled] = useState(true);
   const [formData, setFormData] = useState({
     ProjectName: '',
     CustomerID: customer.CustomerID || custID,
@@ -28,7 +29,7 @@ export function CreateNewProject({customer, custID}) {
 
   const handleSubmit = () => {
     setErrors({})
-    let newErrors = validateEmptyInputsProjects(formData)
+    let newErrors = validateCompletedInputsProject(formData)
     setErrors(newErrors)
     console.log(newErrors)
     if(Object.entries(newErrors).length){
@@ -62,6 +63,14 @@ export function CreateNewProject({customer, custID}) {
     setErrors({})
     onClose()
   }
+  
+  useEffect(() => {
+    setDisabled(!Object.values(formData).every((el) => el.length !== 0 ))
+  }, [formData])
+  
+  useEffect(() => {
+    if(Object.values(errors).length > 0) setDisabled(true)
+  },[errors])
 
   return (
     <>
@@ -94,7 +103,7 @@ export function CreateNewProject({customer, custID}) {
                setErrors={setErrors} validateCompletedInputsProject={validateCompletedInputsProject} setChangeInput={setChangeInput}/>
             </ModalBody>
             <ModalFooter>
-              <Button colorScheme='orange' mr={3} onClick={(e)=>handleSubmit(e)}>
+              <Button colorScheme='orange' mr={3} onClick={(e)=>handleSubmit(e)} disabled={disabled}>
                 Submit
               </Button>
               </ModalFooter>

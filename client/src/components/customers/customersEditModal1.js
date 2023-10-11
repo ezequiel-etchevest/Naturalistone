@@ -29,7 +29,8 @@ const CustomersEditModal1 = ({
   handleCheck,
   handleCancel,
   errorsCustomer,
-  setErrorsCustomer
+  setErrorsCustomer,
+  filteredStates
 }) => {
 
   const toast = useToast()
@@ -230,44 +231,37 @@ return (
                     </Text>
                 )}
               </Box>
-              <Box w={'20vw'} mt={'0.5vh'}>
-                <Text textColor={'web.text2'} pt='1' fontSize='sm' fontWeight={'semibold'}> State </Text>
-                <Editable
-                  value= {inputs.State}
-                  fontSize='sm'
-                  fontWeight={'hairline'}
-                  isPreviewFocusable={false}
-                  display={'flex'}
-                  flexDir={'row'}
-                  pt='1'
-                  pl='2' 
-                  textColor={'web.text2'}
-                  justifyContent={'space-between'}
-                  w={'19vw'}
-                >
-                  <EditablePreview />
-                  <Input as={EditableInput}
-                    name={'State'}
-                    w={'15vw'}
-                    minH={'4vh'}
-                    variant="unstyled"
-                    textColor={'web.text2'}
-                    _placeholder={{ fontFamily: 'body', fontWeight: 'inherit' }}
-                    size={"sm"}
-                    type={"text"}
-                    _focus={{
-                      outline: 'none',
-                      boxShadow: 'none',
-                   }} 
-                   onChange={(e) =>{handleChange(e)}}
-                  /> 
-                  <EditableControls name={'State'} value={inputs.State} />
-                </Editable>
-                { errorsCustomer.State && (
-                    <Text mt={'1vh'} position={'absolute'} color={'web.error'} fontSize={'xs'}>
-                      {errorsCustomer.State}
-                    </Text>
-                )}
+               <Box w={'20vw'} h={'8vh'} mt={'0.5vh'} pt={"0.5vh"}> 
+                <Text textColor={'web.text2'} fontSize='sm' mb={"1vh"} fontWeight={'semibold'}> State </Text>
+              <Input
+                type="text"
+                list="stateOptions"
+                onChange={(e)=>handleChange(e)}
+                mb={'0.5vh'}
+                w={'19vw'}
+                maxW={'300px'}
+                minH={'5vh'}
+                pl={'2'}
+                variant="unstyled"
+                color={'web.text2'}
+                _hover={"unstyled"}
+                textColor={'web.text2'}
+                _placeholder={{ fontFamily: 'body', fontWeight: 'inherit', textColor: 'inherit' }}
+                size={"sm"}
+                borderBottomWidth={"0"}
+                value={inputs.State}
+                name="State"
+              />
+          { errorsCustomer.State && (
+            <Text position={'absolute'} color={'web.error'} fontSize={'xs'}>
+              {errorsCustomer.State}
+            </Text>
+              )}
+            <datalist id="stateOptions" onClick={handleChange}>
+          {filteredStates.map((state) => (
+            <option key={state} value={state} />
+            ))}
+        </datalist> 
               </Box>
               <StackDivider />
             </Stack>

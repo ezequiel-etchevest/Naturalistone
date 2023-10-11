@@ -5,18 +5,17 @@ const createAddress = async (customerId, address, address2, city, state, zip_cod
   VALUES (${customerId}, "${address}", "${address2}", "${city}", "${state}", ${zip_code}, "${nickname}")`
     
   return new Promise((resolve, reject) => {
-    try {
+    // try {
       mysqlConnection.query(postAddressQuery, function(error, result) {
         if (error) {
           reject('Error in create address')
         }
         resolve(result)
-        return result.insertId
       })
-    } catch (error) {
-      console.log('Error in create address')
-      throw error
-    }
+    // } catch (error) {
+    //   console.log('Error in create address')
+    //   throw error
+    // }
  })
 }
 

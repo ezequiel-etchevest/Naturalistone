@@ -17,13 +17,6 @@ import {
     Select,
     } from "@chakra-ui/react"
 import {
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
-  ModalBody,
-  ModalCloseButton,
   useToast
 } from '@chakra-ui/react';
 import { FiEdit } from 'react-icons/fi'
@@ -34,6 +27,7 @@ import { useState } from "react"
 import { validateCompletedInputs, validateEmptyInputsCreateQuote } from "../../utils/validateForm"
 import { useDispatch } from "react-redux";
 import { updateCustomer } from "../../redux/actions-customers";
+import AutocompleteState from "./AutocompleteState";
 
 const CustomersEditModal2 = ({
   customer,
@@ -43,7 +37,8 @@ const CustomersEditModal2 = ({
   handleCancel,
   handleCheck,
   errorsCustomer,
-  setErrorsCustomer
+  setErrorsCustomer,
+  filteredStates
 }) => {
 
   const toast = useToast()
@@ -121,7 +116,7 @@ return (
         alignItems={'center'}>
         <Card w={'46vw'} h={'46vh'} >
         <CardHeader mr={'20px'} textColor={'web.text'} fontSize={'xl'}>Edit Customer</CardHeader>
-          <Text textColor={'web.text2'} mt={'5vh'} ml={'20px'}>Customer Billing Address</Text>
+          <Text textColor={'web.text2'} mt={'5vh'} ml={'20px'}>Billing Address</Text>
           <CardBody display={'flex'} flexDir={'row'} justifyContent={'space-around'} alignContent={'center'} mt={'5vh'}>
             <Stack divider={<StackDivider />} display={'flex'} flexDir={'column'}>
               <Box w={'20vw'} mt={'0.5vh'}>
@@ -244,8 +239,38 @@ return (
                     </Text>
                 )}
               </Box>
-              <Box w={'20vw'} mt={'0.5vh'}>
-                <Text textColor={'web.text2'} pt='1' fontSize='sm' fontWeight={'semibold'}> State </Text>
+              <Box w={'20vw'} h={'8vh'} mt={'0.5vh'} pt={"0.5vh"}> 
+                <Text textColor={'web.text2'} fontSize='sm' mb={"1vh"} fontWeight={'semibold'}> State </Text>
+              <Input
+                type="text"
+                list="stateOptions"
+                onChange={(e)=>handleChange(e)}
+                mb={'0.5vh'}
+                w={'19vw'}
+                maxW={'300px'}
+                minH={'5vh'}
+                pl={'2'}
+                variant="unstyled"
+                color={'web.text2'}
+                _hover={"unstyled"}
+                textColor={'web.text2'}
+                _placeholder={{ fontFamily: 'body', fontWeight: 'inherit', textColor: 'inherit' }}
+                size={"sm"}
+                borderBottomWidth={"0"}
+                value={inputs.Billing_State}
+                name="Billing_State"
+              />
+          { errorsCustomer.Billing_State && (
+            <Text position={'absolute'} color={'web.error'} fontSize={'xs'}>
+              {errorsCustomer.Billing_State}
+            </Text>
+              )}
+            <datalist id="stateOptions" onClick={handleChange}>
+          {filteredStates.map((state) => (
+            <option key={state} value={state} />
+            ))}
+        </datalist> 
+                {/* <Text textColor={'web.text2'} pt='1' fontSize='sm' fontWeight={'semibold'}> State </Text>
                 <Editable
                   value= {inputs.Billing_State}
                   fontSize='sm'
@@ -281,7 +306,7 @@ return (
                     <Text mt={'1vh'} position={'absolute'} color={'web.error'} fontSize={'xs'}>
                       {errorsCustomer.Billing_State}
                     </Text>
-                )}
+                )} */}
               </Box>
               <StackDivider />
             </Stack>

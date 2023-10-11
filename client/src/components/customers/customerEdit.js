@@ -20,6 +20,7 @@ import { FiEdit } from "react-icons/fi";
 import { createAddressCustomer, getCustomerById, updateCustomer } from "../../redux/actions-customers";
 import { validateCompletedInputsEditCustomer, validateEmptyInputsEditCustomer } from "../../utils/validateForm";
 import { createAddress, updateAddress } from "../../redux/actions-address";
+import { USStates } from "./AutocompleteState";
 
 export function CustomerEdit({customer}) {
 
@@ -31,6 +32,7 @@ const toast = useToast()
 const { isOpen, onOpen, onClose } = useDisclosure()
 const [isToastShowing, setIsToastShowing] = useState(false)
 const [disabled, setDisabled] = useState(true)
+const [filteredStates, setFilteredStates] = useState(USStates);
 
 const discount = (discountId) => {
   if(discountId === 4) return 15
@@ -91,6 +93,20 @@ const handleCancel = (e) => {
     )
   }
 
+const handleChangeCustomer = (e) => {
+  const { name, value } = e.target;
+
+  setInputs((prevInputs) => ({
+    ...prevInputs,
+    [name]: value,
+  }));
+
+  setErrorsCustomer(validateCompletedInputsEditCustomer({
+    ...inputs,
+    [name]: value,
+  }));
+};
+
 const handleChange = (e) => {
   const { name, value } = e.target;
 
@@ -108,6 +124,13 @@ const handleChange = (e) => {
     ...prevErrors,
     [name]: updatedErrors[name],
   }));
+
+  if (name === 'Billing_State' || name === 'State') {
+    const filtered = USStates.filter((state) =>
+      state.toLowerCase().includes(value.toLowerCase())
+    );
+    setFilteredStates(filtered);
+  }
 };
 
 const handleClose = () => {
@@ -136,13 +159,15 @@ onClose()
 const handleNextButton = () =>{
   setErrorsCustomer({})
   setProgress(progress + 33.33)
+  setFilteredStates(USStates)
 }
 
 const handlePreviousButton = () => {
   if(progress === 33.33) {
     return
   }
-setProgress(progress - 33.33)
+  setProgress(progress - 33.33)
+  setFilteredStates(USStates)
 }
 
 const handleSubmit = async () => {
@@ -186,8 +211,46 @@ const handleSubmit = async () => {
   }
   await dispatch(getCustomerById(customer.CustomerID))
   onClose()
-  handleClose()
+  setErrorsCustomer({})
+  setProgress(33.33)
 }
+
+useEffect(() => {
+    if(progress === 33.33) {
+    if(
+      (inputs.Contact_Name.length &&
+      inputs.Email.length &&
+      inputs.Company_Position.length &&
+      inputs.Company_Position === 'Home Owner' &&
+      (inputs.Company !== '' ||
+      inputs.Company === '')) ||
+      (inputs.Contact_Name.length &&
+      inputs.Email.length &&
+      inputs.Company_Position.length &&
+      inputs.Company_Position !== 'Home Owner' &&
+      inputs.Company !== '')
+      ) {
+      setDisabled(false)
+    } else {
+      setDisabled(true)
+    }
+    if(errorsCustomer?.Contact_Name?.length || errorsCustomer?.Email?.length || errorsCustomer?.Company_Position?.length || errorsCustomer?.DiscountRate?.length){
+      setDisabled(true)
+    }
+  }
+  if(progress === 66.66) {
+    setDisabled(true)
+    if(inputs.Billing_Address.length > 0 && inputs.Billing_City.length > 0 && inputs.Billing_State.length > 0 && inputs.Billing_ZipCode.length > 0) {
+      setDisabled(false)
+    }
+    if(errorsCustomer?.Billing_Address?.length || errorsCustomer?.Billing_City?.length || errorsCustomer?.Billing_ZipCode?.length || errorsCustomer?.Billing_State?.length){
+      setDisabled(true)
+    }
+  }
+  if (progress === 99.99) {
+    validateFields();
+  }
+},[inputs, errorsCustomer, progress]);
 
 useEffect(() => {
   setInputs({
@@ -207,31 +270,9 @@ useEffect(() => {
   Billing_ZipCode: normalizeValue(!customer.billing_address_id ? customer.Billing_ZipCode : customer.billing_zip_code),
   Billing_State: normalizeValue(!customer.billing_address_id ? customer.Billing_State : customer.billing_state),
   CustomerID: normalizeValue(customer.CustomerID)})
+
 },[customer])
 
-
-useEffect(() => {
-    if(progress === 33.33) {
-    if(inputs.Contact_Name.length && inputs.Email.length && inputs.Company_Position.length) {
-      setDisabled(false)
-    }
-    if(errorsCustomer?.Contact_Name?.length || errorsCustomer?.Email?.length || errorsCustomer?.Company_Position?.length || errorsCustomer?.DiscountRate?.length){
-      setDisabled(true)
-    }
-  }
-  if(progress === 66.66) {
-    setDisabled(true)
-    if(inputs.Billing_Address.length > 0 && inputs.Billing_City.length > 0 && inputs.Billing_State.length > 0 && inputs.Billing_ZipCode.length > 0) {
-      setDisabled(false)
-    }
-    if(errorsCustomer?.Billing_Address?.length || errorsCustomer?.Billing_City?.length || errorsCustomer?.Billing_ZipCode?.length || errorsCustomer?.Billing_State?.length){
-      setDisabled(true)
-    }
-  }
-  if (progress === 99.99) {
-    validateFields();
-  }
-},[inputs, errorsCustomer, progress]);
 
 return (
 <>
@@ -279,12 +320,11 @@ return (
               setIsToastShowing={setIsToastShowing}
               handleCheck={handleCheck}
               handleCancel={handleCancel}
-              handleChange={handleChange}
+              handleChange={handleChangeCustomer}
               errorsCustomer={errorsCustomer}
               setErrorsCustomer={setErrorsCustomer}
               />
             )
-
           }
           {
             progress === 66.66 && (
@@ -299,6 +339,8 @@ return (
               handleChange={handleChange}
               errorsCustomer={errorsCustomer}
               setErrorsCustomer={setErrorsCustomer}
+              filteredStates={filteredStates}
+              validateCompletedInputsEditCustomer={validateCompletedInputsEditCustomer}
               />
             )
 
@@ -316,6 +358,7 @@ return (
               handleChange={handleChange}
               errorsCustomer={errorsCustomer}
               setErrorsCustomer={setErrorsCustomer}
+              filteredStates={filteredStates}
               />
             )
           }
