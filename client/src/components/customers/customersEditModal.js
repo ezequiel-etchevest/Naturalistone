@@ -234,11 +234,12 @@ return (
             <Select
               onChange={(e)=>handleChange(e)}
               w={'19vw'}
-              maxW={'280px'}
+              maxW={'300px'}
               pl={'2'}
               disabled={ user.Secction7Flag === 1 ? false : true}
               minH={'5vh'}
               variant="unstyled"
+              color= {'web.text2'}
               textColor={'web.text2'}
               _placeholder={{ fontFamily: 'body', fontWeight: 'inherit', textColor: 'inherit' }}
               size={"sm"}
@@ -306,6 +307,7 @@ return (
                   <Select
                     onChange={(e)=>handleChange(e)}
                     mb={'0.5vh'}
+                    pl={'2'}
                     h={'5vh'}
                     w={'19vw'}
                     maxW={'300px'}

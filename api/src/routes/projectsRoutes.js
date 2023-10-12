@@ -1,8 +1,12 @@
 const express = require('express')
 const projectsRouter = express.Router()
 const mysqlConnection = require('../db')
-const { createAddress } = require('../Controllers/adressController');
-const createProject = require('../Controllers/projectController');
+const { createAddress, patchAddress } = require('../Controllers/adressController');
+const {
+  createProject,
+  getProjectsCustomer,
+  updateProject
+} = require('../Controllers/projectController');
 
 projectsRouter.get('/', async function(req, res){
 
@@ -43,38 +47,7 @@ projectsRouter.get('/id/:ProjectID', async function(req, res){
     } catch(error){
         res.status(409).send(error);
     }
-  });
-
-const getProjectsCustomer = async (idCustomer) => {
-  query_getProjects = 
-    `SELECT
-       Projects.*,
-       shipping_address.address AS shipping_address,
-       shipping_address.address2 AS shipping_address2,
-       shipping_address.city AS shipping_city,
-       shipping_address.state AS shipping_state,
-       shipping_address.zip_code AS shipping_zip_code,
-       shipping_address.nickname AS shipping_nickname,
-       billing_address.address AS billing_address,
-       billing_address.address2 AS billing_address2,
-       billing_address.city AS billing_city,
-       billing_address.state AS billing_state,
-       billing_address.zip_code AS billing_zip_code,
-       billing_address.nickname AS billing_nickname
-    FROM Projects
-      LEFT JOIN Address AS shipping_address ON shipping_address.address_id = Projects.shipping_address_id
-      LEFT JOIN Address AS billing_address ON billing_address.address_id = Projects.billing_address_id
-    WHERE CustomerID = ${idCustomer}`;
-
-  return new Promise((resolve, reject) => {
-      mysqlConnection.query(query_getProjects, function(err, projects) {
-        if(err) {
-          reject('Error in get projects from customer')
-        }
-        resolve(projects)
-      })
-  })
-}
+});
 
 projectsRouter.get('/:idCustomer', async function(req, res){
 
@@ -110,7 +83,42 @@ projectsRouter.post('/:customerID', async function(req, res){
       mysqlConnection.rollback();
       res.status(400).json({success: false, msg: 'Error in create project'});
     }
-  });
+});
+
+projectsRouter.patch('/:projectId/:customerID', async function(req, res) {
+  const { projectId, customerID } = req.params;
+  const {
+    ProjectName,
+    Shipping_State,
+    Shipping_ZipCode,
+    Shipping_City,
+    Shipping_Address,
+    Shipping_Address_id,
+  } = req.body
+
+  const numberIdProject = Number(projectId)
+  const numberCustomerID = Number(customerID)
+  const numberZipCode = Number(Shipping_ZipCode)
+  try {
+    mysqlConnection.beginTransaction()
+    if (Shipping_Address_id) {
+      await updateProject(numberIdProject, ProjectName, null)
+      await patchAddress(Shipping_Address_id, Shipping_Address, '', Shipping_City, Shipping_State, numberZipCode, '');
+      mysqlConnection.commit();
+      return res.status(200).json({ success: true, msg: 'Edit project successful'});
+    } else {
+      const addressId = await createAddress(numberCustomerID, Shipping_Address, '', Shipping_City, Shipping_State, Shipping_ZipCode, '')
+      await updateProject(numberIdProject, ProjectName, addressId.insertId)
+      mysqlConnection.commit();
+      return res.status(200).json({ success: true, msg: 'Edit project successful'});
+    }
+
+  } catch (error) {
+    mysqlConnection.rollback();
+    console.log('Error in edit project');
+    return res.status(400).json({ success: false, msg:"General error in edit project" + error})
+  }
+})
 
 
   module.exports = projectsRouter;

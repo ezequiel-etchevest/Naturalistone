@@ -1,6 +1,4 @@
-import { USStates } from "../components/customers/AutocompleteState";
-
-
+import { USStates } from "./USStates"; 
 
 // VALIDACIONES CUSTOMER FORM 
 export const validateCompletedInputs = (formData) =>{

@@ -9,26 +9,24 @@ import{
   Modal,
   useDisclosure
 } from '@chakra-ui/react';
-import {AiOutlineMail, AiOutlineInfoCircle} from 'react-icons/ai';
+import {AiOutlineInfoCircle} from 'react-icons/ai';
 import { MdOpenInNew } from 'react-icons/md'
-import { BiAddToQueue } from 'react-icons/bi'
 import { AiOutlineDelete } from 'react-icons/ai'
 import ModalStamp from './modalStamp';
 import CancelQuote from './modalStatus';
 import CreateDeliveryButton from '../../deliveryQuotes/CreateDeliveryButton';
 import DeliveryNotesListButton from '../../deliveryQuotes/DeliveryNotesListButton';
 import ModalPDF from './modalPDF';
-import { useNavigate, useParams } from 'react-router-dom';
-import { AppearanceCharacteristics } from 'pdf-lib';
+import { useNavigate } from 'react-router-dom';
 import ApproveQuote from './ApproveQuote';
 import UpdateQuoteModal from '../updateQuote/updateQuoteModal';
-import InvoiceSendEmail from './invoiceSendEmail';
 import { useDispatch, useSelector } from 'react-redux';
 import { getCustomerById } from '../../../redux/actions-customers';
 import { useEffect, useState } from 'react';
-import { changeStatus, getInvoiceById } from '../../../redux/actions-invoices';
+import { getInvoiceById } from '../../../redux/actions-invoices';
 import InvoiceButton from './InvoiceButton';
 import AddFiles from '../../products/productDetail/addNewImagesModal';
+import SendEmailModalQuote from './sendEmailQuote';
 
 export const InvoiceDetailToolbar = ({invoice, payments, user, invoice_products, deliveries}) => {
   const dispatch = useDispatch()
@@ -101,12 +99,7 @@ export const InvoiceDetailToolbar = ({invoice, payments, user, invoice_products,
            _hover={{
            color: 'logo.orange'
          	}}>
-        <IconButton
-         variant={'unstyled'}           
-         fontWeight={'normal'}
-         fontSize={'xl'}
-         disabled={true}
-         icon={<AiOutlineMail/>}/>
+         <SendEmailModalQuote customer={customer} isOpen={isOpen} onClose={onClose} onOpen={onOpen}/>
          <Button
          onClick={onOpen}
          fontSize={'1vw'}
@@ -114,11 +107,10 @@ export const InvoiceDetailToolbar = ({invoice, payments, user, invoice_products,
          alignSelf={'flex-start'}
          variant={'unstyled'}           
          fontWeight={'normal'}
-         disabled={false}
          >Contact Customer
         </Button>            
         </ButtonGroup>
-         <InvoiceSendEmail isOpen={isOpen} onOpen={onOpen} onClose={onClose} customer={customer}/>
+         {/* <InvoiceSendEmail isOpen={isOpen} onOpen={onOpen} onClose={onClose} customer={customer}/> */}
       </Box>
       <Text fontSize={'xs'} textColor={'web.text2'} w={'100%'}>Products</Text>
       <Divider w={'100%'}  textColor={'web.border'}/>

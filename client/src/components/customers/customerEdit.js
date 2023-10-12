@@ -17,9 +17,9 @@ import CustomersEditModal1 from './customersEditModal1';
 import CustomersEditModal2 from './customerEditModal2';
 import { FiEdit } from "react-icons/fi";
 import { createAddressCustomer, getCustomerById, updateCustomer } from "../../redux/actions-customers";
-import { validateCompletedInputsEditCustomer, validateEmptyInputsEditCustomer } from "../../utils/validateForm";
+import { validateCompletedInputsEditCustomer } from "../../utils/validateForm";
 import { updateAddress } from "../../redux/actions-address";
-import { USStates } from "./AutocompleteState";
+import { USStates } from "../../utils/USStates"; 
 
 export function CustomerEdit({user, customer, sellers}) {
 

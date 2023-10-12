@@ -67,6 +67,7 @@ import {
   GET_PROJECT_INVOICES,
   GET_PROJECTS_BY_ID,
   CLEAN_PROJECT_DETAIL,
+  PATCH_PROJECT
 } from "./actions-projects";
 import {
   GET_CUSTOMERS,
@@ -676,6 +677,10 @@ function rootReducer(state = intialState, action) {
         ...state,
       }
     case PATCH_ADDRESS:
+      return {
+        ...state,
+      }
+    case PATCH_PROJECT:
       return {
         ...state,
       }

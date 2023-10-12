@@ -63,7 +63,6 @@ emailInvoiceRouter.post('/samples', async function (req, res) {
 emailInvoiceRouter.post('/customer', async function (req, res) {
   
   const { htmlBody, subject, clientEmail, sellerEmail, ccEmail } = req.body
-
   try {
     await sendSamplesEmail(
       sellerEmail,

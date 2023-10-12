@@ -7,7 +7,7 @@ import {
     FormLabel,
     Select
   } from '@chakra-ui/react';
-  import AutocompleteState, { USStates } from '../AutocompleteState';
+  import { USStates } from '../../../utils/USStates'; 
   import '../../../assets/styleSheet.css';
  
   
@@ -115,6 +115,7 @@ import {
                 css={{
                 '&::-webkit-scrollbar': {
                   width: '0.4vw',
+                  background: '#0D1117'
                 },
                 '&::-webkit-scrollbar-track': {
                   width: '6px',

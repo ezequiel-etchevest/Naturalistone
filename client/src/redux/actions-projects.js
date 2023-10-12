@@ -7,8 +7,7 @@ export const GET_PROJECT_INVOICES = 'GET_PROJECT_INVOICES';
 export const GET_PROJECT_BY_ID = 'GET_PROJECT_BY_ID';
 export const GET_PROJECTS_BY_CUSTOMER = 'GET_PROJECTS_BY_CUSTOMER';
 export const CLEAN_PROJECT_DETAIL = 'CLEAN_PROJECT_DETAIL';
-
-
+export const PATCH_PROJECT = 'PATCH_PROJECT';
 
 export function getProjects(){
     return async function(dispatch){
@@ -105,4 +104,20 @@ export function cleanProjectDetail(){
             console.log({error})
         }
     }
+}
+
+
+export function patchProject(idProject, customerID, project){
+    return async function(dispatch){
+        try{
+            const data = await axios.patch(`/projects/${idProject}/${customerID}`, project)
+                dispatch(
+                {
+                    type: PATCH_PROJECT,
+                })
+            return data
+        }catch(error){
+            console.log({error})
+            return error.response    
+        }}
 }

@@ -22,11 +22,12 @@ import { normalizeValue } from '../../../utils/normalizeValue'
     const handleClick = (e) => {
       setFormData({
           ProjectName: e.ProjectName || '',
-          idProjects: e.idProjects || '',
+          idProject: e.idProjects || '',
           Shipping_State: normalizeValueState || '',
           Shipping_ZipCode: normalizeValueZipcode || '',
           Shipping_City: normalizeValueCity || '',
-          Shipping_Address: normalizeValueAddress || ''
+          Shipping_Address: normalizeValueAddress || '',
+          Shipping_Address_id: e.shipping_address_id
       })
       setDisable(false)
     }
@@ -39,8 +40,8 @@ import { normalizeValue } from '../../../utils/normalizeValue'
         bg: 'web.navBar',
         color: 'logo.orange'
         }}
-        textColor={ e?.idProjects === formData?.idProjects  ? 'logo.orange' : 'unset'}
-        bg={e?.idProjects === formData?.idProjects ? 'web.navBar' : 'unset'}
+        textColor={ e?.idProjects === formData?.idProject  ? 'logo.orange' : 'unset'}
+        bg={e?.idProjects === formData?.idProject ? 'web.navBar' : 'unset'}
         onClick={() => handleClick(e)}
       >
         <Td fontSize={'xs'} textAlign={'center'} w={'4vw'}>{e?.idProjects}</Td>

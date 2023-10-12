@@ -1,5 +1,5 @@
-import { VStack, Box, FormControl, Input, Text, FormLabel, IconButton, Switch} from "@chakra-ui/react";
-import AutocompleteState from "../AutocompleteState";
+import { VStack, Box, FormControl, Input, Text, FormLabel, IconButton, Switch, Select} from "@chakra-ui/react";
+import { USStates } from "../../../utils/USStates"; 
 import { useState } from "react";
 
 export function AddressInfo({formData, setFormData, validate, errors, setErrors, setChangeInput, handleChange}) {
@@ -110,15 +110,43 @@ export function AddressInfo({formData, setFormData, validate, errors, setErrors,
       <VStack h={'20vh'} pt={"4.2vh"}>
         <Box w={'22vw'} display={'flex'} flexDir={'row'} justifyContent={'space-between'}>
         <FormControl>
-          <FormLabel textColor={'web.text2'} name={'state'}  fontSize={'sm'} pt={"1.5vh"}>State</FormLabel>
-            <AutocompleteState 
-              formData={formData}
-              setFormData={setFormData}
-              errors={errors}
-              validate={validate}
-              setErrors={setErrors}
-              name={'State'}
-            />
+          <FormLabel textColor={'web.text2'} name={'state'}  fontSize={'sm'}>State</FormLabel>
+              <Select
+                onChange={(e)=>handleChange(e)}
+                mb={'0.5vh'}
+                minH={'5vh'}
+                borderBottomWidth={"2px"}
+                borderBottomColor={'web.text2'}
+                variant="unstyled"
+                color={'web.text2'}
+                textColor={'web.text2'}
+                _placeholder={{ fontFamily: 'body', fontWeight: 'inherit', textColor: 'inherit' }}
+                css={{
+                '&::-webkit-scrollbar': {
+                  width: '0.4vw',
+                  background: '#0D1117'
+                },
+                '&::-webkit-scrollbar-track': {
+                  width: '6px',
+                },
+                '&::-webkit-scrollbar-thumb': {
+                   background: '#E47424',
+                  borderRadius: '5px',
+                },
+                }}
+                size={"sm"}
+                value={formData.State}
+                cursor={'pointer'}
+                name="State"
+              >
+                <option value='' className="options">Select state</option>
+                {
+                  USStates.map((e, i) => {
+                      return(
+                        <option key={i} className={'options'} value={e}>{e}</option>
+                  )})
+                }
+            </Select>
           </FormControl>
         </Box>
         <Box w={'22vw'} display={'flex'} flexDir={'row'} justifyContent={'space-between'}>

@@ -1,54 +1,74 @@
-import { useDisclosure, Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, ModalFooter, Button, Progress, Box, Text } from "@chakra-ui/react"
+import { useDisclosure, Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, ModalFooter, Button, Progress, Box, Text, Tooltip } from "@chakra-ui/react"
 import { TbBuildingCommunity } from "react-icons/tb";
 import CreateProjectForm from "./createProjectForm";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { createProject } from '../../../redux/actions-projects';
+import { createProject, getCustomerProjects, patchProject } from '../../../redux/actions-projects';
 import { validateCompletedInputsProject } from "../../../utils/validateForm";
 import { useToast } from "@chakra-ui/react";
 import EditProjectList from "./editProjectList";
 import EditProjectForm from "./editProjectForm";
 import { FiEdit } from "react-icons/fi";
 
-export function EditProject({customer, custID, projects_by_customer_id}) {
-
+export function EditProject({customer, projects_by_customer_id}) {
   const toast = useToast()
   const toastId = 'error-toast'
   const [errors, setErrors] = useState({})
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [ progress, setProgress ] = useState(50)
-  const [changeInput, setChangeInput] = useState(false)
   const [disabled, setDisabled] = useState(true);
   const [formData, setFormData] = useState({
     ProjectName: '',
-    idProjects: '',
-    CustomerID: customer.CustomerID || custID,
+    idProject: '',
+    CustomerID: customer.CustomerID,
     Shipping_State: '',
     Shipping_ZipCode: '',
     Shipping_City: '',
-    Shipping_Address: ''
+    Shipping_Address: '',
+    Shipping_Address_id: ''
   });
 
   const dispatch = useDispatch();
-
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     setErrors({})
     let newErrors = validateCompletedInputsProject(formData)
     setErrors(newErrors)
     if(Object.entries(newErrors).length){
       if(!toast.isActive(toastId)){
-        return toast(({
+        return toast({
           id: toastId,
           title: "Error",
           description: 'All fields must be completed correctly.',
           status: "error",
           duration: 5000,
           isClosable: true,
-          }))
-    }}else{
-      // dispatch(createProject(formData));
-      setErrors({})
-      // handleClose()
+          })
+    }
+    }else{
+      const response = await dispatch(patchProject(formData.idProject, customer.CustomerID, formData));
+      dispatch(getCustomerProjects(customer.CustomerID))
+      if(response.data.success) {
+        toast({
+          id: toastId,
+          title: "Success",
+          description: 'Edit customer successful',
+          status: "success",
+          duration: 5000,
+          isClosable: true,
+          })
+          setErrors({})
+          handleClose()
+          setProgress(50)
+      } else {
+        return toast({
+          id: toastId,
+          title: "Error",
+          description: 'Error in edit customer',
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+          })
+      }
     } 
   }
 
@@ -56,16 +76,17 @@ export function EditProject({customer, custID, projects_by_customer_id}) {
   const handleClose = () => {
     setFormData({
         ProjectName: '',
-        idProjects: '',
-        CustomerID: customer.CustomerID || custID,
+        idProject: '',
+        CustomerID: customer.CustomerID,
         Shipping_State: '',
         Shipping_ZipCode: '',
         Shipping_City: '',
-        Shipping_Address: ''
+        Shipping_Address: '',
+        Shipping_Address_id: ''
     })
-    setChangeInput(false)
     setErrors({})
     onClose()
+    setProgress(50);
   }
 
   const handleNextButton = () =>{
@@ -80,14 +101,17 @@ export function EditProject({customer, custID, projects_by_customer_id}) {
   }
   
   useEffect(() => {
-    setDisabled(!Object.values(formData).every((el) => el.length !== 0 ))
-  }, [formData])
+    if(progress === 100) {
+      setDisabled(!Object.values(formData).every((el) => el?.length !== 0 ))
+    }
+  }, [formData, progress])
   
   useEffect(() => {
-    if(Object.values(errors).length > 0) setDisabled(true)
-  },[errors])
+    if (progress === 100) {
+      if(Object.values(errors).length > 0) setDisabled(true)
+    }
+  },[errors, progress])
 
-console.log("inpts", formData)
 
   return (
     <>
@@ -161,6 +185,11 @@ console.log("inpts", formData)
             </Button>
               {
                 progress === 100 ? (
+                  disabled ? <Tooltip label={"All fields must be completed"} placement={'bottom-start'} fontWeight={'hairline'}>
+                <Button colorScheme='orange' mr={3} onClick={(e)=>handleSubmit(e)} disabled={disabled}>
+                  Submit
+                </Button>
+                  </Tooltip> :
                 <Button colorScheme='orange' mr={3} onClick={(e)=>handleSubmit(e)} disabled={disabled}>
                   Submit
                 </Button>
