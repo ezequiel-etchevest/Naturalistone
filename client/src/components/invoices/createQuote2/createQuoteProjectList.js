@@ -27,10 +27,10 @@ import { useState } from 'react';
           ...formData.project,
           ProjectName: e.ProjectName || '',
           idProjects: e.idProjects || '',
-          Shipping_State: e.Shipping_State || '',
-          Shipping_ZipCode: e.Shipping_ZipCode || '',
-          Shipping_City: e.Shipping_City || '',
-          Shipping_Address: e.Shipping_Address || ''
+          Shipping_State: e.shipping_address_id ? e.shipping_state : e.Shipping_State || '',
+          Shipping_ZipCode: e.shipping_address_id ? e.shipping_zip_code : e.Shipping_ZipCode || '',
+          Shipping_City: e.shipping_address_id ? e.shipping_city : e.Shipping_City || '',
+          Shipping_Address: e.shipping_address_id ? e.shipping_address : e.Shipping_Address || ''
         }
       })
     }
@@ -49,10 +49,10 @@ import { useState } from 'react';
       >
         <Td fontSize={'xs'} textAlign={'center'} w={'4vw'}>{e.idProjects}</Td>
         <Td fontSize={'xs'} textAlign={'center'} w={'14vw'}>{e.ProjectName}</Td>
-        <Td fontSize={'xs'} textAlign={'center'} w={'14vw'}>{e.Shipping_Address}</Td>
-        <Td fontSize={'xs'} textAlign={'center'} w={'14vw'}>{e.Shipping_ZipCode}</Td>
-        <Td fontSize={'xs'} textAlign={'center'} w={'14vw'}>{e.Shipping_City}</Td>
-        <Td fontSize={'xs'} textAlign={'center'} w={'14vw'}>{e.Shipping_State}</Td>
+        <Td fontSize={'xs'} textAlign={'center'} w={'14vw'}>{e.shipping_address_id ? e.shipping_address : e.Shipping_Address}</Td>
+        <Td fontSize={'xs'} textAlign={'center'} w={'14vw'}>{e.shipping_address_id ? e.shipping_zip_code : e.Shipping_ZipCode}</Td>
+        <Td fontSize={'xs'} textAlign={'center'} w={'14vw'}>{e.shipping_address_id ? e.shipping_city : e.Shipping_City}</Td>
+        <Td fontSize={'xs'} textAlign={'center'} w={'14vw'}>{e.shipping_address_id ? e.shipping_state : e.Shipping_State}</Td>
       </Tr>
     )
   }

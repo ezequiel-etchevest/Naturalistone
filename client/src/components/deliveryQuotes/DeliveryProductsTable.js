@@ -61,23 +61,29 @@ const ModelTr = ({p, setQuantities, quantities, errors, setErrors}) => {
 
     if( e > p.InStock_Reserved ){
       setErrors([...errors, p.ProdID])
-      toast({
-        title: 'Invalid amount',
-        description: `Quantity in ${p.ProductName} must be lower than ${p.InStock_Reserved}`,
-        status: 'error',
-        duration: 2000,
-        isClosable: true,
+      if(!toast.isActive('productId')) {
+        toast({
+          title: 'Invalid amount',
+          id: 'productId',
+          description: `Quantity in ${p.ProductName} must be lower than ${p.InStock_Reserved}`,
+          status: 'error',
+          duration: 2000,
+          isClosable: true,
       })
+    }
     }
     if( e < 0 ){
       setErrors([...errors, p.ProdID])
-      toast({
-        title: 'Invalid amount',
-        description: `Quantity in ${p.ProductName} cant be negative`,
-        status: 'error',
-        duration: 2000,
-        isClosable: true,
-      })
+      if(!toast.isActive('productId')) {
+        toast({
+          title: 'Invalid amount',
+          id: 'productId',
+          description: `Quantity in ${p.ProductName} cant be negative`,
+          status: 'error',
+          duration: 2000,
+          isClosable: true,
+        })
+      }
     }
 }
 

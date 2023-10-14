@@ -15,7 +15,6 @@ import PaymentDeleteModal from './PaymentDeleteModal'
 const ModelTr = ({p, totalAmount}) => {
 
     const per = (p.Amount * 100) / totalAmount
-    console.log(p)
     return(
       <Tr
         cursor={'pointer'}

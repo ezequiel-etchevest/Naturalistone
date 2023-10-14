@@ -10,7 +10,7 @@ export function postDeliveryNote(id, quantities){
     return async function(dispatch){
         try{
             let { data } = await axios.post(`/delivery/${id}`, quantities)
-            if(data.val){
+            if(data.success){
                 dispatch(
                 {
                     type: POST_DELIVERY_NOTE,
@@ -23,9 +23,10 @@ export function postDeliveryNote(id, quantities){
                         payload: data.deliveryID
                     })
             }
+            return data
         }catch(error){
             console.log({error})           
-
+            return error.data
         }}}
 
 export function cleanStateDeliveryNoteFail(){

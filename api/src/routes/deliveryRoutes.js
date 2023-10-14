@@ -83,9 +83,12 @@ deliveryRouter.post('/:id', async function(req, res) {
     }
 
     mysqlConnection.commit();
+
+    return res.status(200).json({success: true, msg:"Create delivery successful"})
   } catch (error) {
     console.log("General error in post delivery")
     mysqlConnection.rollback();
+    res.status(400).json({ success: false, msg:"General error in create delivery"})
     throw error
   }
 })

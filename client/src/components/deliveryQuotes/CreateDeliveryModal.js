@@ -70,26 +70,32 @@ const CreateDeliveryModal = ({invoice, user, isOpen, onClose, invoice_products})
   const handleSubmit = async () => {
   if(quantities.length){
     if(!errors.length){
-      await dispatch(postDeliveryNote(id, quantities))
-      await dispatch(getInvoiceProducts(id))      
-      toast({
-        title: 'Delivery note',
-        description:`Delivery note successfully created`,
-        status: 'success',
-        variant:'subtle',
-        duration: 4000,
-        isClosable: true,
-      })
-      onSecondModalOpen()
+      const createDelivery = await dispatch(postDeliveryNote(id, quantities))
+      await dispatch(getInvoiceProducts(id))
+      if (createDelivery.success) {
+        toast({
+          title: 'Delivery note',
+          description:`Delivery note successfully created`,
+          status: 'success',
+          variant:'subtle',
+          duration: 4000,
+          isClosable: true,
+        })
+      onClose();
+    }     
+      // onSecondModalOpen()
     }} else {
-      toast({
-        title: 'Delivery note',
-        description:`No quantities selected for delivery note`,
-        status: 'error',
-        variant:'subtle',
-        duration: 4000,
-        isClosable: true,
-      })
+      if(!toast.isActive('toastId')) {
+        toast({
+          title: 'Delivery note',
+          id: 'toastId',
+          description:`No quantities selected for delivery note`,
+          status: 'error',
+          variant:'subtle',
+          duration: 4000,
+          isClosable: true,
+        })
+      }
     }
   }
 

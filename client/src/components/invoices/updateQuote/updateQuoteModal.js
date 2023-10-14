@@ -138,6 +138,7 @@ export default function UpdateQuoteModal({invoice, invoice_products}) {
       updateQuotePdf(formData, user, invoice)
       setSubmited(true)
       handleClose()
+      handleCleanFormData()
     }
 
     const handleClose = () => {
@@ -146,6 +147,7 @@ export default function UpdateQuoteModal({invoice, invoice_products}) {
       setUpdate('')
       dispatch(getCustomers('', ''))
       onCloseUpdate()
+      handleCleanFormData()
     }
 
     const handleCleanFormData = () => {
