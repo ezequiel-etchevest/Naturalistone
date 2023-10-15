@@ -6,21 +6,27 @@ import { states } from '../../../utils/eeuuStates'
 import { getFontSize, getX, getXForExtPrice, getXForExtTotal, getXForID, getXForPrice, getXForQuantity, getXForUM, getXPO, getXPaymentTerms, parseThickness, parsedNumbers } from "../../../utils/xYfunctionsPdf";
 import { savePdfOnServer } from "../../../utils/savePdfOnServer";
 
-const CreatedQuotePdf = ({ formData, user, handleChangeEmail }) => {
-  const { variables, customer, project } = formData;
+const TESTpdf = ({ formData, user, handleChangeEmail }) => {
+  const { variables, customer, project, products } = formData;
 
   const posted_quote = useSelector((state) => state.posted_quote);
 
-  let invoiceID = posted_quote.Naturali_Invoice;
-  const date = posted_quote.InsertDate;
-
+  // let invoiceID = posted_quote.Naturali_Invoice;
+  // const date = posted_quote.InsertDate;
+  const invoiceID = 'TEST'
+  const date = ""
 
   const [pdfInfo, setPdfInfo] = useState([]);
-  const mappedProducts = posted_quote.parsedProducts;
+  // const mappedProducts = posted_quote.parsedProducts;
+  const mappedProducts = Object.entries(formData.products)
+    .flat()
+    .filter((element) => typeof element === 'object')
+    .map((product, index) => ({ variableName: `${index + 1}`, ...product }));
 
+  console.log(mappedProducts)
   useEffect(() => {
     CreateForm();
-    }, [posted_quote]);
+    }, []);
 
 
   async function waitUntilMappedProductsExists() {
@@ -97,7 +103,7 @@ const CreatedQuotePdf = ({ formData, user, handleChangeEmail }) => {
 
     await waitUntilMappedProductsExists();
 
-  {/*               Here Starts mapping for regular products             */}
+  // {/*               Here Starts mapping for regular products             */}
 
     mappedProducts.forEach((product, index) => {
       let currentPage = (productRows <= 5) ? pages[0] : pages[1]
@@ -140,27 +146,44 @@ const CreatedQuotePdf = ({ formData, user, handleChangeEmail }) => {
       currentPage.drawText(`${discountedPrice.toLocaleString('en-US')}`, { x, y, size: 9 });
       currentPage.drawText(`${(finalPrice)}`, { x: xExtPrice, y, size: 9 });
       const text = `Special Order: ${product.material} ${product.type} ${product.prodName} ${product.finish} ${formatSize(product.size)}x${parseThickness(product.thickness)}`
+      
+      const prod = form.createTextField(`product${index}`);
+      prod.setText(text);
+      prod.addToPage(currentPage, { x: 197, y,
+                              width: 253,
+                              height: 38,
+                              textColor: rgb(0, 0, 0),
+                              borderColor: rgb(0, 0, 0),
+                              borderWidth: 0,
+                              rotate: degrees(0),
+                              font: font,
+                              textAlign: 'left',
+                              verticalAlign: 'top',
+                             });
+      prod.setFontSize(10);
+      prod.enableMultiline();
+      
       const maxLength = 52;
 
-      if (text.length > maxLength) {
-        const firstPart = text.substring(0, maxLength);
-        const secondPart = text.substring(maxLength);
-        currentPage.drawText(firstPart, { x: 198, y, size: 9 });
+      // if (text.length > maxLength) {
+      //   const firstPart = text.substring(0, maxLength);
+      //   const secondPart = text.substring(maxLength);
+      //   currentPage.drawText(firstPart, { x: 198, y, size: 9 });
 
-        y -= 14; // Ajusta el valor de 'y' para dejar espacio entre las partes
+      //   y -= 14; // Ajusta el valor de 'y' para dejar espacio entre las partes
 
-        currentPage.drawText(secondPart, { x: 198, y, size: 9 });
-      } else {
-        currentPage.drawText(text, { x: 198, y, size: 9 });
-      }
+      //   currentPage.drawText(secondPart, { x: 198, y, size: 9 });
+      // } else {
+      //   currentPage.drawText(text, { x: 198, y, size: 9 });
+      // }
       productRows++
       productRowsBis++
-      y -= 18;
+      y -= 40;
     });
 
-  {/*               Here FINISH mapping for regular products             */}
+  // {/*               Here FINISH mapping for regular products             */}
 
-  {/*               Here Starts mapping for Special products             */}
+  // {/*               Here Starts mapping for Special products             */}
 
     formData?.specialProducts.forEach((product, index) => {
       let currentPage = (productRows <= 5) ? pages[0] : pages[1]
@@ -224,12 +247,13 @@ const CreatedQuotePdf = ({ formData, user, handleChangeEmail }) => {
 
     });
 
-  {/*               Here FINISH mapping for regular products             */}
+  // {/*               Here FINISH mapping for regular products             */}
 
 
   currentPage.drawText("Shipping fee:", { x: 198, y, size: 9 });
   currentPage.drawText(parsedNumbers(shippingPrice), { x: getXForExtPrice(parsedNumbers(shippingPrice)), y, size: 9 });
     const taxValue = ((subtotal * tax) / 100)
+
   // este forEach nos permite replicar la informacion comun a todas las paginas del pdf.
     pages.forEach(p => {
       p.drawText(`${date}`, { x: 447, y: 687, size: 10 });
@@ -245,7 +269,7 @@ const CreatedQuotePdf = ({ formData, user, handleChangeEmail }) => {
       p.drawText(`${city}, ${stateNameToAbbreviation(state)} ${zipCode}`, { x: 336, y: 598, size: 10 });
 
       p.drawText(`${company}`, { x: getX(company), y: 507, size: 10 });
-      p.drawText(`${PO}`, { x: getXPO(PO), y: 507, size: getFontSize(PO) });
+      p.drawText(`${PO}`, { x: getXPO(PO), y: 507, size: getFontSize(PO)});
       p.drawText(`${ref}`, { x: 272, y: 507, size: getFontSize(ref) });
       p.drawText(`${estDate}`, { x: 351, y: 507, size: 10 });
       p.drawText(`${deliveryMethod}`, { x: 439, y: 507, size: 10 });
@@ -283,7 +307,6 @@ const CreatedQuotePdf = ({ formData, user, handleChangeEmail }) => {
                              });
       notes.setFontSize(10);
       notes.enableMultiline();
-      notes.enableReadOnly()
     }
                           
     const pdfBytes = await pdfDoc.save();
@@ -291,13 +314,11 @@ const CreatedQuotePdf = ({ formData, user, handleChangeEmail }) => {
 
     setPdfInfo(URL.createObjectURL(blob));
 
-    // savePdfOnServer(pdfBytes, invoiceID);
+  //   // savePdfOnServer(pdfBytes, invoiceID);
   }
 
   return (
     <>
-      {Object.entries(posted_quote).length ? (
-        posted_quote.Naturali_Invoice && posted_quote.InsertDate ? (
           <Box h={"100vh"} w={"100%"}>
             <Button
               size={"sm"}
@@ -320,18 +341,8 @@ const CreatedQuotePdf = ({ formData, user, handleChangeEmail }) => {
               />
             </Flex>
           </Box>
-        ) : (
-          <Center>
-            <Spinner thickness={"4px"} size={"xl"} color={"logo.orange"} />
-          </Center>
-        )
-      ) : (
-        <Center>
-          <Spinner thickness={"4px"} size={"xl"} color={"logo.orange"} />
-        </Center>
-      )}
     </>
   );
 };
 
-export default CreatedQuotePdf;
+export default TESTpdf;

@@ -85,7 +85,7 @@ const ModelTr = ({ e, formData, setFormData, setDisable }) => {
           min={0}
           precision={0}
           key={e.ProdID}
-          value={formData.products[id] ? formData.products[id].quantity : 0}
+          value={formData.products[id] ? (formData.products[id].quantity) : 0}
         >
           <NumberInputField
             fontSize={"2xs"}
@@ -102,7 +102,7 @@ const ModelTr = ({ e, formData, setFormData, setDisable }) => {
           </NumberInputStepper>
         </NumberInput>
       </Td>
-      <Td maxW={"3vw"} fontSize={"2xs"} textAlign={"match-parent"}>
+      <Td maxW={"3vw"} fontSize={"2xs"} textAlign={"center"}>
         {e.ProductName}
       </Td>
       <Td maxW={"6vw"} fontSize={"2xs"} textAlign={"center"}>

@@ -13,7 +13,7 @@ export const getXForExtPrice = (extPrice) => {
     if(length === 6) return 539;
     if(length === 7) return 536;
     if(length === 8) return 531.2;
-    if(length === 9) return 525;
+    if(length === 9) return 526;
     if(length > 9) return 504;
   }
 export const getXForExtTotal = (extPrice) => {
@@ -78,7 +78,34 @@ export  const getX = (text) => {
     
     // Alinear a la izquierda dentro del espacio
     const x = (maxChars * charWidth - textWidth);
+
     return x; 
+  }
+export  const getXPO = (text) => {
+
+    const textWidth = text.length * charWidth;
+    
+    // Alinear a la izquierda dentro del espacio
+    const xpo = (maxChars * charWidth - textWidth);
+
+    return xpo + 35; 
+  }
+export  const getXPaymentTerms = (text) => {
+    const initialCoord = 466
+    const textWidth = text.length * charWidth;
+    
+    // Alinear a la izquierda dentro del espacio
+    const xpo = (maxChars * charWidth - textWidth);
+
+    return  initialCoord + xpo; 
+  }
+export  const getFontSize = (text) => {
+    const textLength = text.length ;
+    
+    // Alinear a la izquierda dentro del espacio
+    const size = textLength > 15 ? 8 : 10;
+
+    return  size; 
   }
 
 export const parseThickness = (thickness) => {
@@ -114,6 +141,6 @@ export const parseThickness = (thickness) => {
       maximumFractionDigits: 2,
     });
     const parsedNumber = formattedPrice.includes('.')
-    ? formattedPrice  : `${formattedPrice}.00`;
+    ? formattedPrice   : `${formattedPrice}.00`;
     return parsedNumber
   }

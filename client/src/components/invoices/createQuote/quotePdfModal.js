@@ -3,7 +3,7 @@ import CreatedQuotePdf from "./createQuotePdf";
 import { useState } from "react";
 import SendEmailModal from "./createSendEmailQuote";
 
-export default function QuotePdfModal({ formData, user, authFlag }) {
+export default function QuotePdfModal({ formData, user, authFlag, setFormData }) {
 
   const [sendEmail, setSendEmail] = useState(false);
   const [pdf, setPdf] = useState(null);
@@ -20,6 +20,7 @@ export default function QuotePdfModal({ formData, user, authFlag }) {
           handleChangeEmail={handleChangeEmail}
           authFlag={authFlag}
           formData={formData}
+          setFormData={setFormData}
         />
       ) : (
         <SendEmailModal
