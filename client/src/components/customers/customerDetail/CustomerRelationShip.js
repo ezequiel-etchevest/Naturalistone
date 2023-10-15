@@ -114,7 +114,7 @@ export function CustomerRelationShip({ user, customer }) {
               <option value='' className="options" >Select Interaction</option>
               <option value='Call' className="options" >Call</option>
               <option value='Email' className="options" >Email</option>
-              <option value='Email' className="options" >Message</option>
+              <option value='Message' className="options" >Message</option>
               <option value='Showroom ' className="options" >Showroom visit</option>
  
           </Select>
