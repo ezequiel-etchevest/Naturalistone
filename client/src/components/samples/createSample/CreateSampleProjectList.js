@@ -43,9 +43,9 @@ import {
         bg={e.idProjects === formData.project.idProjects ? 'web.navBar' : 'unset'}
         onClick={() => handleClick(e)}
       >
-        <Td fontSize={'xs'} textAlign={'center'} w={'4vw'}>{e.idProjects}</Td>
-        <Td fontSize={'xs'} textAlign={'center'} w={'14vw'}>{e.ProjectName}</Td>
-        <Td fontSize={'xs'} textAlign={'center'} w={'14vw'}>{e.Shipping_Address}</Td>
+        <Td fontSize={'0.8rem'} textAlign={'center'} w={'4vw'}>{e.idProjects}</Td>
+        <Td fontSize={'0.8rem'} textAlign={'center'} w={'14vw'}>{e.ProjectName}</Td>
+        <Td fontSize={'0.8rem'} textAlign={'center'} w={'14vw'}>{e.Shipping_Address}</Td>
       </Tr>
     )
   }
@@ -102,7 +102,7 @@ import {
                 </TableContainer> 
                 ) : (
                 <Center w={'full'} h={'full'}>
-                  <Text userSelect={'none'} fontSize={'2vh'}>No projects register </Text>
+                  <Text userSelect={'none'} h={'5vh'} fontSize={'2vh'}>No projects register </Text>
                 </Center>
                 )
             }

@@ -35,6 +35,7 @@ const ModelTr = ({e, validateSeller}) => {
       <Tr 
         onClick={() => handleClick()} 
         cursor={'pointer'} 
+        h={'5vh'}
         key={e.Naturali_Invoice}
         _hover={{
           bg: 'web.navBar',
@@ -42,19 +43,19 @@ const ModelTr = ({e, validateSeller}) => {
         }}
         textColor={e.Status === 'Pending_Approval' ? 'logo.orange' : 'unset'}
         >
-        <Td fontSize={'xs'} textAlign={'center'}>{e.Naturali_Invoice}</Td>
+        <Td fontSize={'0.9rem'}  textAlign={'center'}>{e.Naturali_Invoice}</Td>
         {
           validateSeller() ? (
-          <Td  fontSize={'xs'}textAlign={'center'}>{e.SellerReference}</Td>
+          <Td  fontSize={'0.9rem'} textAlign={'center'}>{e.SellerReference}</Td>
           ):(null)
         }
-        <Td fontSize={'xs'}>{e.ProjectName ? e.ProjectName : '-'}</Td>
-        <Td fontSize={'xs'}>{e.Company ? e.Company : e.Contact_Name}</Td>
-        <Td fontSize={'xs'} textAlign={'center'}>{e.InvoiceDate.split('T')[0]}</Td>
-        <Td fontSize={'xs'} textAlign={'center'}>{e.Status}</Td>
-        <Td fontSize={'xs'} isNumeric textAlign={'center'}>$ {e.Value.toLocaleString('en-US')} </Td>
-        <Td fontSize={'xs'} textAlign={'center'} >{ e.Percentaje ? Math.round(e.Percentaje) : 0 } % </Td>
-        <Td fontSize={'xs'} textAlign={'center'}>{ e.Payments?.length ? e.Payments[0][2] : '-'}</Td>
+        <Td fontSize={'0.9rem'}>{e.ProjectName ? e.ProjectName : '-'}</Td>
+        <Td fontSize={'0.9rem'}>{e.Company ? e.Company : e.Contact_Name}</Td>
+        <Td fontSize={'0.9rem'} textAlign={'center'}>{e.InvoiceDate.split('T')[0]}</Td>
+        <Td fontSize={'0.9rem'} textAlign={'center'}>{e.Status}</Td>
+        <Td fontSize={'0.9rem'} isNumeric textAlign={'center'}>$ {e.Value.toLocaleString('en-US')} </Td>
+        <Td fontSize={'0.9rem'} textAlign={'center'} >{ e.Percentaje ? Math.round(e.Percentaje) : 0 } % </Td>
+        <Td fontSize={'0.9rem'} textAlign={'center'}>{ e.Payments?.length ? e.Payments[0][2] : '-'}</Td>
       </Tr>
     )
 }
@@ -99,7 +100,7 @@ const List = ({seller_invoices, user}) => {
             overflow={'auto'}
             css={{
               '&::-webkit-scrollbar': {
-                width: '0.4vw',
+                width: '0.2vw',
               },
               '&::-webkit-scrollbar-track': {
                 width: '6px',

@@ -53,8 +53,7 @@ specialProductsRouter.post('/:SaleID', async function(req, res){
   const { SaleID } = req.params
   const products  = req.body 
   const InsertDate = `${year}-${month0}-${day0}`
-  console.log(SaleID)
-  console.log(products)
+
 try{
 
   products.forEach(product => {
@@ -69,9 +68,9 @@ try{
         res.status(500).json('Failed to POST sp-1');
         }
         console.log('insert successfully specialProducts')
+        res.status(200).json({success: true}); 
       })
     })
-      res.status(200).json({success: true}); 
   } catch(error){
     res.status(409).send({success: false, results: error});
   }

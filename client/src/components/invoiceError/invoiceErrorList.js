@@ -19,6 +19,7 @@ const ModelTr = ({e, user}) => {
     <Tr
       cursor={'pointer'} 
       key={e.Invoice}
+      h={'5vh'}
       _hover={{
         bg: 'web.navBar',
         color: 'logo.orange'
@@ -26,7 +27,7 @@ const ModelTr = ({e, user}) => {
       overflowX={'auto'}
       css={{
         '&::-webkit-scrollbar': {
-          height: '0.4vw',
+          height: '0.2vw',
           overflowX: 'scroll'
         },
         '&::-webkit-scrollbar-track': {
@@ -39,23 +40,23 @@ const ModelTr = ({e, user}) => {
         },        
       }}
       >
-      <Td fontSize={'xs'} textAlign={'center'} maxW={'7vw'}>{e.Invoice}</Td>
+      <Td fontSize={'0.9rem'} textAlign={'center'} maxW={'7vw'}>{e.Invoice}</Td>
       
       {
         (user[0].Secction7Flag === 1 ) ? (
           e.FirstName ? (
-          <Td fontSize={'xs'}textAlign={'center'}>{e.FirstName[0]}{e.LastName[0]}</Td>
+          <Td fontSize={'0.9rem'}textAlign={'center'}>{e.FirstName[0]}{e.LastName[0]}</Td>
           ):(
-          <Td fontSize={'xs'}textAlign={'center'} maxW={'7vw'}>{'-'}</Td>)
+          <Td fontSize={'0.9rem'}textAlign={'center'} maxW={'7vw'}>{'-'}</Td>)
         ):(null)
       }
       {/*Cuando la tabla Orders este cargada, agregar BY*/}
       {
         
-       (user[0].Secction7Flag === 1) ? ( <Td fontSize={'xs'} textAlign={'center'}>{e.Type}</Td> ) : (null)
+       (user[0].Secction7Flag === 1) ? ( <Td fontSize={'0.9rem'} textAlign={'center'}>{e.Type}</Td> ) : (null)
       }
-      <Td fontSize={'xs'}>{e.Date?.split('T')[0]}</Td>
-      <Td fontSize={'xs'} >{e.Error}</Td>
+      <Td fontSize={'0.9rem'}>{e.Date?.split('T')[0]}</Td>
+      <Td fontSize={'0.9rem'} >{e.Error}</Td>
       </Tr>
     )}  
     
@@ -75,7 +76,7 @@ const  InvoiceErrorList = ({user, invoice_errors}) => {
         overflow={'auto'}
         css={{
           '&::-webkit-scrollbar': {
-            width: '0.4vw',
+            width: '0.2vw',
           },
           '&::-webkit-scrollbar-track': {
             width: '6px',

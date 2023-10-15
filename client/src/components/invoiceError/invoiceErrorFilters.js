@@ -123,12 +123,13 @@ const InvoiceErrorFilters = ({user, sellers}) => {
                 w={'15vw'}
                 variant={"unstyled"}
                 placeholder={'Invoice number'}
-                _placeholder={{ fontFamily: 'body', fontWeight: 'thin' }}
+                _placeholder={{ fontFamily: 'body', fontWeight: 'thin',}}
                 size={"sm"}
                 borderBottomWidth={"2px"}
                 textColor={'web.text'}
                 type={'number'}
                 pattern={"[0-9]{10}"}
+                paddingLeft={'10px'}
                 borderBottomColor={'web.text2'}
                 value={filter.number}
                 

@@ -17,13 +17,13 @@ import { FiEdit } from 'react-icons/fi'
 import { validateEmptyInputsCreateQuote } from "../../../utils/validateForm";
 import { getCustomers, updateCustomer } from "../../../redux/actions-customers";
 import { getCustomerProjects } from "../../../redux/actions-projects";
-import CreateQuoteCustomerProjets from "../createQuote2/createQuoteProject";
+import CreateQuoteCustomerProjets from "../createQuote/createQuoteProject";
 import { getAllProductsNewQuote } from "../../../redux/actions-products";
 import {  cleanInvoiceProducts, updateQuote, updateQuoteProds } from "../../../redux/actions-invoices";
-import CreateQuoteCustomer from "../createQuote2/createQuoteCustomer";
-import CreateQuoteCustomerReview from "../createQuote2/createQuoteCustomerReview";
+import CreateQuoteCustomer from "../createQuote/createQuoteCustomer";
+import CreateQuoteCustomerReview from "../createQuote/createQuoteCustomerReview";
 import { UpdateQuoteSelection } from "./updateQuoteSelection";
-import CreateQuoteProducts from "../createQuote2/createQuoteProducts";
+import CreateQuoteProducts from "../createQuote/createQuoteProducts";
 import { formatProducts } from "../../../utils/formatedProducts";
 import updateQuotePdf from "./updateQuotePdf";
 
@@ -71,7 +71,7 @@ export default function UpdateQuoteModal({invoice, invoice_products}) {
         shipVia: invoice[0].ShippingMethod,
         method: invoice[0].P_O_No,
         paymentTerms:invoice[0].PaymentTerms,
-        estDelivDate:invoice[0].EstDelivery_Date.split('T')[0]
+        estDelivDate: invoice[0].EstDelivery_Date !== null ? invoice[0].EstDelivery_Date?.split('T')[0] : null
       } 
     });
     const dispatch = useDispatch();
@@ -122,7 +122,7 @@ export default function UpdateQuoteModal({invoice, invoice_products}) {
             shipVia: invoice[0].ShippingMethod,
             method: invoice[0].P_O_No,
             paymentTerms:invoice[0].PaymentTerms,
-            estDelivDate:invoice[0].EstDelivery_Date.split('T')[0]
+            estDelivDate:invoice[0].EstDelivery_Date !== null ? invoice[0].EstDelivery_Date?.split('T')[0] : null
           } 
         })
     }, [invoice, invoice_products])
@@ -184,7 +184,7 @@ export default function UpdateQuoteModal({invoice, invoice_products}) {
           shipVia: invoice[0].ShippingMethod,
           method: invoice[0].P_O_No,
           paymentTerms:invoice[0].PaymentTerms,
-          estDelivDate:invoice[0].EstDelivery_Date.split('T')[0]
+          estDelivDate:invoice[0].EstDelivery_Date !== null ? invoice[0].EstDelivery_Date?.split('T')[0] : null
         } 
       });
     

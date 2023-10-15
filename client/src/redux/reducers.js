@@ -78,6 +78,7 @@ import {
   PATCH_CUSTOMER,
   POST_CUSTOMER_RELATIONSHIP,
   GET_CUSTOMER_RELATIONSHIP,
+  CLEAN_CUSTOMER_RELATIONSHIP
 } from "./actions-customers";
 import { GET_MONTH } from "./actions-month";
 import { GET_SELLER_ID } from "./actions-sellerId";
@@ -167,7 +168,7 @@ const intialState = {
   products_new_samples: [],
   products_new_samples_values: [],
   products_new_samples_errors: {},
-  customer_relationship: [],
+  customer_relationship: '',
   materials: [],
   all_products_search: [],
   loading: false,
@@ -683,6 +684,11 @@ function rootReducer(state = intialState, action) {
     case PATCH_PROJECT:
       return {
         ...state,
+      }
+    case CLEAN_CUSTOMER_RELATIONSHIP:
+      return {
+        ...state,
+        customer_relationship: action.payload,
       }
     default:
       return {

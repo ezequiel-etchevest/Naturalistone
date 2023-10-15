@@ -8,43 +8,68 @@ import {
     Th,
     Td,
     TableContainer,
+    FormLabel,
+    Textarea,
+    FormControl,
+    useToast,
     } from "@chakra-ui/react"
 import '../../../assets/styleSheet.css'
 
 const CreateQuoteProductsReview = ({ formData, setFormData }) => {
+  const toast = useToast();
+  const toastId = "error-toast";
+  
+  const handleChangeNotes = (e) => {
 
+    const inputValue = e.target.value;
+
+    if (inputValue.length <= 180) {
+      setFormData({
+        ...formData,
+        quote: {
+          ...formData.quote,
+          notes: inputValue,
+        },
+      });
+    } else if(!toast.isActive(toastId)) {
+          toast({
+            id: toastId,
+            title: "Error",
+            description: "Text field, up to 180 characters",
+            status: "error",
+            duration: 5000,
+            isClosable: true,
+          });
+  }}
+  
   return(
 <>
+<Box display={"flex"} justifyContent={"center"} flexDir={'column'}>
+  <Text h={'4vh'} mb={'1vh'} mt={'2vh'} ml={'2vw'} fontSize={'lg'} w={'16vw'} color={'white'} alignSelf={'flex-start'}>Products review</Text>
   <Box 
     color={'web.text2'} 
-    display={'flex'} 
-    justifyContent={'center'} 
-    flexDir={'column'} 
-    h={'58vh'}
+    maxHeight={'45vh'}
+    minHeight={'45vh'}
+    overflow={'auto'}
+    css={{
+      '&::-webkit-scrollbar': {
+        width: '0.2vw',
+      },
+      '&::-webkit-scrollbar-track': {
+        width: '6px',
+      },
+      '&::-webkit-scrollbar-thumb': {
+        background: '#E47424',
+        borderRadius: '5px',
+      },
+    }} 
     alignItems={'center'}>
-    <Text ml={'2vw'} mt={'2vw'} fontSize={'lg'} w={'16vw'} color={'white'} alignSelf={'flex-start'}>Products review</Text>
     <TableContainer
-      mt={'3vh'}
       mr={'0.5vw'}  
       ml={'0.5vw'}
       bg={'web.sideBar'} 
       rounded={'md'}
-      maxHeight={'50vh'}
-      minHeight={'50vh'}
-      overflow={'auto'}
-      css={{
-        '&::-webkit-scrollbar': {
-          width: '0.4vw',
-        },
-        '&::-webkit-scrollbar-track': {
-          width: '6px',
-        },
-        '&::-webkit-scrollbar-thumb': {
-          background: '#E47424',
-          borderRadius: '5px',
-        },
-      }} 
-      p={'3vh'}>
+      px={'3vh'}>
       <Table color={'web.text'} variant={'simple'} size={'sm'}>
         <Thead h={'6vh'}>
           <Tr>  
@@ -101,6 +126,29 @@ const CreateQuoteProductsReview = ({ formData, setFormData }) => {
         </Tbody>
       </Table>
     </TableContainer>
+  </Box>
+    <FormControl mt={'3vh'} px={'2vw'}>
+      <Box
+        display={'flex'} 
+        flexDirection={'row'}
+        >
+        <FormLabel color={'web.text'}>Notes:</FormLabel>
+      </Box>
+      <Textarea
+        h={"50px"}
+        variant="unstyled"
+        textColor={'web.text'}
+        placeholder="Write your comment here..."
+        _placeholder={{ fontFamily: 'body', fontWeight: 'inherit', fontStyle:'italic' }}
+        size={"sm"}
+        border={'1px solid'}
+        borderColor={'web.border'}
+        type={"text"}
+        value={formData.quote.notes}
+        onChange={(e)=> handleChangeNotes(e)}
+        px={"1vw"}
+        />
+    </FormControl>
   </Box>
 </>
 )}
