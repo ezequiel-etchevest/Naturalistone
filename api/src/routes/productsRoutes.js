@@ -8,7 +8,7 @@ const {
   getSqftMaxMin,
 } = require("../Controllers/productValues");
 const objetosFiltrados = require("../Controllers/inventoryController");
-const { getImage } = require("../Controllers/oneDriveProductImages");
+// const { getImage } = require("../Controllers/oneDriveProductImages");
 const { productsNotEqual } = require("../Controllers/productsNotRepeat");
 const {
   getFormattedDate,
@@ -353,6 +353,9 @@ productsRouter.get("/filtered", async function (req, res) {
 productsRouter.patch("/product/:id", async function (req, res) {
   const { id } = req.params;
   const { product } = req.body;
+
+  const parsedPrice = product.Price === '' ? null : parseFloat(product.Price);
+
   const val =
     product.flag === undefined
       ? null
@@ -375,6 +378,9 @@ productsRouter.patch("/product/:id", async function (req, res) {
 
   if (product.productRate)
     updateColumnProduct.push(`Sale_Rate = ${product.productRate}`);
+
+    if (!isNaN(parsedPrice)) updateColumnProduct.push(`SalePrice = ${parsedPrice}`);
+    else updateColumnProduct.push(`SalePrice = NULL`);
 
   const updateColumnProductString = updateColumnProduct.join(", ");
 

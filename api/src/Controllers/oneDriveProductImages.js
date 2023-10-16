@@ -58,21 +58,21 @@ const path = require('path');
 //       });
 //   };
 
-const getImage = (obj) => {
-  const imagePath = `/app/OneDrive/Naturali/PHOTOS/${obj.material}/${obj.prodName}/${obj.prodName}_0.jpg`;
+// const getImage = (obj) => {
+//   const imagePath = `/app/OneDrive/Naturali/PHOTOS/${obj.material}/${obj.prodName}/${obj.prodName}_0.jpg`;
   
-  return new Promise((resolve, reject) => {
-    fs.readFile(imagePath, { encoding: 'base64' }, (err, data) => {
-      if (err) {
-        console.error(err);
-        reject({ error: 'Unable to read image' });
-      } else {
-        resolve({ ...obj, img: data });
-      }
-    });
-  });
-};
+//   return new Promise((resolve, reject) => {
+//     fs.readFile(imagePath, { encoding: 'base64' }, (err, data) => {
+//       if (err) {
+//         console.error(err);
+//         reject({ error: 'Unable to read image' });
+//       } else {
+//         resolve({ ...obj, img: data });
+//       }
+//     });
+//   });
+// };
 
-module.exports = {
-  getImage: getImage
-};
+// module.exports = {
+//   getImage: getImage
+// };

@@ -10,6 +10,7 @@ import { getCustomerRelationship } from "../../../redux/actions-customers";
 import { getSellers } from "../../../redux/actions-sellers";
 import { getEmployeeById } from "../../../redux/actions-employees";
 
+
 const CustomerDetail = ({user, customer, projects_by_customer_id }) => {
 
   const customer_relationship = useSelector(state => state.customer_relationship)
@@ -70,12 +71,14 @@ const CustomerDetail = ({user, customer, projects_by_customer_id }) => {
                 alignItems={'baseline'}
                 justifySelf={'flex-start'}
                 mb={'1vh'} 
-                fontSize={'2.6vh'} 
+                pl={'0.5vw'} 
+                fontSize={'1.3rem'} 
                 color={'web.text2'}
                   >Projects & Invoices</Text> 
               <Box display={'flex'} flexDir={'row'}>
                 <ProjectList projects_by_customer_id={projects_by_customer_id} customer={customer} highlight={highlight} sethighlight={sethighlight}/>
                 <InvoiceList/> 
+
               </Box>
           </Box> 
           <Box

@@ -100,9 +100,6 @@ function sendEmailClient(
   return client.sendEmailWithTemplate(optionsEmail)
 }
 
-
-
-
 function sendSamplesEmail( fromEmail, clientEmail, ccEmail, bodyValue, subjectValue ) {
 
   let seller = fromEmail.split('@')[0].toLowerCase()

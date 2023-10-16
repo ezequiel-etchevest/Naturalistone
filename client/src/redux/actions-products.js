@@ -144,6 +144,7 @@ export function updateProductNotes(input, idProduct) {
   };
 }
 export function patchProduct(idProduct, product) {
+
   return async function (dispatch) {
     try {
       let { response } = await axios.patch(`/products/product/${idProduct}`, {

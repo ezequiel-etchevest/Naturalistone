@@ -293,24 +293,30 @@ salesRouter.post('/create-quote/:sellerID', async function(req, res) {
 
   const { sellerID } = req.params;
   const { formData, authFlag } = req.body;
-  const { project, products, variables} = formData
-  
-  
+  const { project, products, variables, customer, specialProducts} = formData
+
   const parsedProducts = Object.entries(products)
     .flat()
     .filter((element) => typeof element === 'object')
     .map((product, index) => ({ variableName: `${index + 1}`, ...product }));
 
-  const Value = parsedProducts.reduce((acc, curr) => acc + curr.quantity * curr.price, 0);
-
+  const shipVia = variables.shipVia
+  const shippingPrice = variables.shippingPrice !== "" ? variables.shippingPrice : 0;
+  const discountRate = Number(customer.DiscountRate)
+  const discountFactor = discountRate / 100;
+  const ValueProducts = parsedProducts.reduce((acc, curr) => acc + Number(curr.quantity) * (curr.price - curr.price * discountFactor), 0);
+  const ValueSpecialProducts = specialProducts.reduce((acc, curr) => acc + Number(curr.quantity) * (curr.price - curr.price * discountFactor), 0);
+  const Value = ValueProducts + ValueSpecialProducts
+  const taxValue = ((Value * 7) / 100);
+  const totalValue = Value + shippingPrice + taxValue;
   const ProjectID = project.idProjects;
   const InsertDate = `${year}-${month0}-${day0}`
 
   const EstDelivery_Date = variables.estDelivDate;
+  let combinedArray = []
   let Naturali_Invoice = 0
 
-
-
+console.log(ValueSpecialProducts)
   try {
     mysqlConnection.beginTransaction(function(err) {
       if (err) {
@@ -337,7 +343,7 @@ salesRouter.post('/create-quote/:sellerID', async function(req, res) {
         
         const status = authFlag ? ('Pending_Approval') : ('Pending')
         const salesQuery = `INSERT INTO Sales (Naturali_Invoice, Value, ProjectID, InvoiceDate, EstDelivery_Date, SellerID, ShippingMethod, PaymentTerms, P_O_No, Status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
-        const salesValues = [Naturali_Invoice, Value, ProjectID, InsertDate, EstDelivery_Date, sellerID, variables.shipVia, variables.paymentTerms, variables.method, status ];
+        const salesValues = [Naturali_Invoice, totalValue, ProjectID, InsertDate, EstDelivery_Date, sellerID, variables.shipVia, variables.paymentTerms, variables.method, status ];
         
         mysqlConnection.query(salesQuery, salesValues, async function(error, salesResult, fields) {
           if (error) {
@@ -350,9 +356,16 @@ salesRouter.post('/create-quote/:sellerID', async function(req, res) {
           console.log('Quote created successfully');
 
           const prodSoldQuery = `INSERT INTO NaturaliStone.ProdSold (SaleID, ProdID, Quantity, SalePrice) VALUES ?`;
-          const prodSoldValues = parsedProducts.map((product) => [Naturali_Invoice, product.prodID, product.quantity, product.price]);
+          
+          const prodSoldValues = parsedProducts.map((product) => [Naturali_Invoice, product.prodID, Number(product.quantity), (product.price - product.price * discountFactor)]);
+          const specialProductsValues = specialProducts.map((product) => [Naturali_Invoice, null, product.quantity, (product.price - product.price * discountFactor)]);
+          combinedArray = combinedArray.concat(prodSoldValues, specialProductsValues);
 
-          mysqlConnection.query(prodSoldQuery, [prodSoldValues], async function(error, prodSoldResult, fields) {
+          if(shipVia !== 'Pick up' && shippingPrice.toString().length){
+            combinedArray.push([Naturali_Invoice, 123, 1, shippingPrice]);
+          }
+          console.log({combinedArray})
+          mysqlConnection.query(prodSoldQuery, [combinedArray], async function(error, prodSoldResult, fields) {
             if (error) {
               console.log('Error in salesRoutes.post /create-quote/:sellerID: ' + error);
               console.log('Retrying ProdSold insert after 0.5 seconds...');

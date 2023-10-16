@@ -8,7 +8,7 @@ import {
     Select,
     } from "@chakra-ui/react"
 import { useSelector } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { CreateNewProject } from "../../customers/customerDetail/createProject";
 import CreateQuoteProjectList from "./createQuoteProjectList";
 import '../../../assets/styleSheet.css'
@@ -17,26 +17,59 @@ import '../../../assets/styleSheet.css'
 const CreateQuoteCustomerProjets = ({ formData, setFormData, setDisable, update, invoice }) => {
 
   const projects = useSelector(state => state.projects_by_customer_id)
+  const [disabledPrice, setDisabledPrice] = useState(true)
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+    if(name === 'shippingPrice'){
+
+      const regex = /^\d+(\.\d{0,2})?$/;  
   
-    setFormData({
-      ...formData,
-      variables: {
-        ...formData.variables,
-        [name]: value,
-      },
-    });
+      if (regex.test(value) || value === '') {
+        const rounded = value === '' ? '' : Math.round(parseFloat(value) * 100) / 100;
+    
+        setFormData({
+          ...formData,
+          variables: {
+            ...formData.variables,
+            [name]: rounded,
+          },
+        });
+      }
+    } else{
+      setFormData({
+        ...formData,
+        variables: {
+          ...formData.variables,
+          [name]: value,
+        },
+      });
+    }
   };
 
   useEffect(() => {
-    if(!Array.isArray(projects)) setDisable(true) 
+    const { shipVia } = formData.variables;
+    setDisabledPrice(shipVia === "Pick up" || shipVia === "");
+  }, [formData.variables]);
+
+  useEffect(() => {
+    const {
+      shipVia,
+      paymentTerms,
+      estDelivDate,
+      shippingPrice,
+    } = formData.variables;
+    const { ProjectName } = formData.project;
+
+  
+    if (!Array.isArray(projects) ||
+        !paymentTerms.length ||
+        !estDelivDate.length ||
+        !ProjectName.length ||
+        !shipVia.length || (shipVia !== 'Pick up' && !shippingPrice.toString().length)
+        ) setDisable(true);
     else {
-      if(!formData?.variables?.shipVia?.length || !formData?.variables?.paymentTerms?.length || !formData?.variables?.estDelivDate?.length || !formData?.project.ProjectName?.length){
-        setDisable(true)
-      } else { 
-        setDisable(false)}
+      setDisable(false);
     }
   }, [formData.variables, formData.project, projects]);
 
@@ -50,8 +83,8 @@ const CreateQuoteCustomerProjets = ({ formData, setFormData, setDisable, update,
           <Box>
               <Text fontSize={'md'} color={'white'} alignSelf={'flex-start'}>Previous project </Text>
             <Box mt={'1vh'} display={'flex'} flexDir={'row'} w={'20vw'}>
-              <Text fontSize={'sm'}>{invoice[0]?.idProjects } </Text>
-              <Text ml={'2vw'} fontSize={'sm'}> {invoice[0]?.ProjectName != '-' && invoice[0]?.ProjectName != null ? invoice[0]?.ProjectName : ''}</Text>
+              <Text fontSize={'sm'}>{invoice[0].idProjects } </Text>
+              <Text ml={'2vw'} fontSize={'sm'}> {invoice[0].ProjectName != '-' && invoice[0].ProjectName != null ? invoice[0].ProjectName : ''}</Text>
             </Box>        
           </Box>
           <Box>
@@ -59,14 +92,14 @@ const CreateQuoteCustomerProjets = ({ formData, setFormData, setDisable, update,
             <Box mt={'1vh'} display={'flex'} flexDir={'row'}>
               <Text fontSize={'sm'}>
                 {
-                  formData?.project?.idProjects === invoice[0]?.idProjects ? '' : formData?.project?.idProjects
+                  formData.project.idProjects === invoice[0].idProjects ? '' : formData.project.idProjects
                 } 
               </Text>
               <Text ml={'2vw'} fontSize={'sm'}> 
                 {
-                  formData?.project?.ProjectName === invoice[0]?.ProjectName ? ''
+                  formData.project.ProjectName === invoice[0].ProjectName ? ''
                   :
-                  formData?.project?.ProjectName != '-' && formData?.project?.ProjectName != null ? formData?.project?.ProjectName : ''
+                  formData.project.ProjectName != '-' && formData.project.ProjectName != null ? formData.project.ProjectName : ''
                 }
               </Text>
             </Box>        
@@ -75,12 +108,15 @@ const CreateQuoteCustomerProjets = ({ formData, setFormData, setDisable, update,
         :
         <Text ml={'2vw'} mt={'1vh'} mb={'1vh'} fontSize={'lg'}w={'16vw'} color={'white'} alignSelf={'flex-start'}>Select Project</Text>
       }
+      <Box display={'flex'} mr={'2vw'} alignSelf={'flex-end'}>
+      <CreateNewProject customer={formData.customer}/>
+      </Box>
       <HStack
         display={'flex'}
         justifyContent={'space-between'}
         h={'6vh'}
         mb={'3vh'}
-        mt={'4vh'}
+        mt={'2vh'}
         mr={'2vw'}
         ml={'2vw'}
         >
@@ -97,7 +133,7 @@ const CreateQuoteCustomerProjets = ({ formData, setFormData, setDisable, update,
           placeholder={'P.O. No.'}
           type={"text"}
           name={"method"}
-          value={formData?.variables?.method || ""}
+          value={formData.variables.method || ""}
           onChange={(e)=>handleChange(e)}
           className="mailInputs"
           />  
@@ -115,7 +151,7 @@ const CreateQuoteCustomerProjets = ({ formData, setFormData, setDisable, update,
           placeholder={'Payment Terms'}
           type={"text"}
           name={"paymentTerms"}
-          value={formData?.variables?.paymentTerms || ""}
+          value={formData.variables.paymentTerms || ""}
           onChange={(e)=>handleChange(e)}
           className="mailInputs"
           />
@@ -129,7 +165,7 @@ const CreateQuoteCustomerProjets = ({ formData, setFormData, setDisable, update,
               textColor={'web.text2'}
               _placeholder={{ fontFamily: 'body', fontWeight: 'inherit' }}
               size={"sm"}
-              value={formData?.variables?.estDelivDate}
+              value={formData.variables.estDelivDate}
               borderBottomWidth={"2px"}
               borderBottomColor={'web.text2'}
               type={"date"}
@@ -165,7 +201,7 @@ const CreateQuoteCustomerProjets = ({ formData, setFormData, setDisable, update,
               borderBottomColor={'web.text2'}
               _hover={{borderColor: 'web.border'}}
               cursor={'pointer'}
-              value={formData?.variables?.shipVia || ""}
+              value={formData.variables.shipVia || ""}
               name={'shipVia'}
             >
             <option value='' className="options">Ship Via</option>
@@ -173,9 +209,27 @@ const CreateQuoteCustomerProjets = ({ formData, setFormData, setDisable, update,
             <option value='3rd Party' className="options">3rd Party</option>
             <option value='Pick up' className="options">Pick up</option>
           </Select>
-          <Divider orientation={'vertical'} h={'5vh'}/>
-            <CreateNewProject customer={formData?.customer}/>
+          <Input
+            mb={'0.5vh'}
+            w={'10vw'}
+            minW={'120px'}
+            minH={'4.5vh'}
+            variant="unstyled"
+            textColor={'web.text2'}
+            _placeholder={{ fontFamily: 'body', fontWeight: 'inherit' }}
+            size={"sm"}
+            borderBottomWidth={"2px"}
+            borderBottomColor={'web.text2'}
+            placeholder={'Shipping price'}
+            type={"number"}
+            name={"shippingPrice"}
+            disabled={disabledPrice}
+            value={formData.variables.shippingPrice || ""}
+            onChange={(e)=>handleChange(e)}
+            className="mailInputs"
+            />
         </HStack>
+          {/* <Divider orientation={'horizontal'} w={'50%'} display={'flex'} alignSelf={'center'}/> */}
         <CreateQuoteProjectList projects={ projects } formData={formData} setFormData={setFormData} setDisable={setDisable}/>
     </Box>
   </>

@@ -7,16 +7,15 @@ import {
   Select,
   Divider,
   Tooltip,
-  Button,
   } from "@chakra-ui/react";
 import { SearchIcon } from '@chakra-ui/icons';
 import {  getInvoicesBySeller } from "../../redux/actions-invoices";
 import { useDispatch } from 'react-redux'
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import '../../assets/styleSheet.css';
 import {AiOutlineClear} from 'react-icons/ai';
-import { useLocation, useNavigate } from "react-router-dom";
-import CreateQuote from "./createQuote2/createQuoteModal";
+import {  useNavigate } from "react-router-dom";
+import CreateQuote from "./createQuote/createQuoteModal";
 
 const Filters = ({user, seller_invoices, sellers, setFocusFilter, seller_values, customers, inputValues, setInputValues, setLoading}) => {
 

@@ -53,8 +53,9 @@ export function CustomerRelationShip({ user, customer }) {
       <>
         <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} flexDir={"row"}>
           <Text
-            mb={'1vh'} 
-            fontSize={'2.6vh'} 
+            mb={'1vh'}
+            pl={'0.5vw'} 
+            fontSize={'1.3rem'} 
             color={'web.text2'}>
             Customer Relationship
           </Text>
@@ -113,7 +114,7 @@ export function CustomerRelationShip({ user, customer }) {
               <option value='' className="options" >Select Interaction</option>
               <option value='Call' className="options" >Call</option>
               <option value='Email' className="options" >Email</option>
-              <option value='Email' className="options" >Message</option>
+              <option value='Message' className="options" >Message</option>
               <option value='Showroom ' className="options" >Showroom visit</option>
  
           </Select>

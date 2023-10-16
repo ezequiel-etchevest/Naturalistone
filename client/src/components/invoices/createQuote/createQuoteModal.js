@@ -27,8 +27,9 @@ import CreateQuoteCustomerProjets from "./createQuoteProject";
 import CreateQuoteProducts from "./createQuoteProducts";
 import { getAllProductsNewQuote } from "../../../redux/actions-products";
 import CreateQuoteProductsReview from "./createQuoteProductsReview";
+import TESTpdf from "./testPDFreview";
 import { cleanCreatedQuote, createQuote, getInvoicesBySeller } from "../../../redux/actions-invoices";
-import QuotePdfModal from "../createQuote/quotePdfModal";
+import QuotePdfModal from "./quotePdfModal";
 import { addSpecialProducts } from "../../../redux/actions-sp-1";
 import { updateAddress } from "../../../redux/actions-address";
 
@@ -80,9 +81,12 @@ export function CreateQuote({ customers, sellers }) {
       method: "",
       paymentTerms: "",
       estDelivDate: `${year}-${month0}-${day0}`,
+      shippingPrice: ""
     },
     quote: {
       quoteID: "",
+      notes:'',
+      taxVal: 0
     },
   });
 
@@ -90,7 +94,7 @@ export function CreateQuote({ customers, sellers }) {
   const toast = useToast();
   const toastId = "error-toast";
   const customerID = formData.customer.CustomerID;
- 
+
   useEffect(() => {
     if(Object.entries(posted_quote).length){
     sp1PostBack()
@@ -197,9 +201,12 @@ export function CreateQuote({ customers, sellers }) {
         method: "",
         paymentTerms: "",
         estDelivDate: `${year}-${month0}-${day0}`,
+        shippingPrice: ""
       },
       quote: {
         quoteID: "",
+        notes: "",
+        taxVal: 0
       },
     });
   };
@@ -266,6 +273,7 @@ export function CreateQuote({ customers, sellers }) {
     }
     setProgress(progress - 20);
   };
+ 
   return (
     <>
       <ButtonGroup onClick={onOpen} display={"flex"} spacing={0}>
@@ -369,6 +377,12 @@ export function CreateQuote({ customers, sellers }) {
                   formData={formData}
                   setFormData={setFormData}
                 />
+              // <TESTpdf
+              // formData={formData}
+              // setFormData={setFormData}
+              // authFlag={authFlag}
+              // user={user}
+              // isOpen={isOpen}/>  
               ) : (
                 <Text
                   display={"flex"}

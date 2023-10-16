@@ -8,7 +8,7 @@ export const months = [
   'July',
   'August',
   'September',
-  'Octuber',
+  'October',
   'November',
   'December',
 ];
