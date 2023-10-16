@@ -18,7 +18,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import CreateProduct from "./createProduct/createProduct";
 import CreateProductDimension from "./createProductDimension/modalCreateProductDimension";
 
-const ProductsFilters = ({ values, factories, materials }) => {
+const ProductsFilters = ({ values, factories, materials, user }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
@@ -34,6 +34,7 @@ const ProductsFilters = ({ values, factories, materials }) => {
   const getParamsType = searchParams.get("type");
   const sqftMin = getParamsSqftMin ? getParamsSqftMin : 0;
   const sqftMax = getParamsSqftMax ? getParamsSqftMax : values?.sqftMinMax?.max;
+  const validUser = user[0].SellerID === 17 ? true : false
 
   const [filters, setFilters] = useState({
     finish: getParamsFinish ? getParamsFinish : "",
@@ -281,6 +282,8 @@ const ProductsFilters = ({ values, factories, materials }) => {
               _active={{ color: "gray.800" }}
             />
           </Box>
+          {
+          validUser === true ? (
           <Box display={'flex'} flexDir={'row'} h={'6vh'} justifyContent={'center'} alignItems={'center'} gap={'3vw'} pr={"1vw"}>
             <CreateProduct
               values={values}
@@ -291,7 +294,9 @@ const ProductsFilters = ({ values, factories, materials }) => {
               values={values}
               materials={materials}
           />
-          </Box>
+          </Box>) :
+          null
+          }
         </Box>
         {/* --------------------BOX SELECTS, SLIDER AND CLEAR BUTTON ------------------------------ */}
         <Box

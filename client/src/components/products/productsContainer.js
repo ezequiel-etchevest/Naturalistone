@@ -34,6 +34,7 @@ const ProductsContainer = ({
             values={values}
             factories={factories}
             materials={materials}
+            user={user}
           />
           <ProductList
             allProducts={allProducts}

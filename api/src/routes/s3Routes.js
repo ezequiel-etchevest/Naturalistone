@@ -135,14 +135,10 @@ s3Router.get('/pdf/:id', (req, res) => {
       return res.status(404).send('Error al obtener el archivo PDF de S3');
     }
 
-    console.log('datico', data)
-
     res.writeHead(200, {
       'Content-Type': data.ContentType,
       'Content-Length': data.ContentLength,
     });
-
-    console.log(data)
 
     res.end(data.Body);
   });

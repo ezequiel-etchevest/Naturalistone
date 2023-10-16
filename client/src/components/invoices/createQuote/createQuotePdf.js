@@ -5,6 +5,7 @@ import { Box, Center, Spinner, Button, Flex } from "@chakra-ui/react";
 import { states } from '../../../utils/eeuuStates'
 import { formatTextForPdf, getFontSize, getX, getXForExtPrice, getXForExtSubtotal, getXForExtTotal, getXForID, getXForPrice, getXForQuantity, getXForUM, getXPO, getXPaymentTerms, getXRef, parseThickness, parsedNumbers } from "../../../utils/xYfunctionsPdf";
 import { savePdfOnServer } from "../../../utils/savePdfOnServer";
+import { day0, month0, year } from "../../../utils/todayDate";
 
 const CreatedQuotePdf = ({ formData, user, handleChangeEmail }) => {
   const { variables, customer, project } = formData;
@@ -12,8 +13,7 @@ const CreatedQuotePdf = ({ formData, user, handleChangeEmail }) => {
   const posted_quote = useSelector((state) => state.posted_quote);
 
   let invoiceID = posted_quote.Naturali_Invoice;
-  const date = posted_quote.InsertDate;
-
+  const date =  `${year}-${month0}-${day0}`;
 
   const [pdfInfo, setPdfInfo] = useState([]);
   const mappedProducts = posted_quote.parsedProducts;
