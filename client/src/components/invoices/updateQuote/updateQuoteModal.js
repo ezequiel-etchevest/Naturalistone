@@ -82,7 +82,7 @@ export default function UpdateQuoteModal({invoice, invoice_products}) {
     const SellerID = user[0].SellerID
     
     useEffect(() => {
-      if(!customers.length){
+      if(!customers?.length){
         dispatch(getCustomers('',''))
       }
       dispatch(getCustomerProjects(invoice[0].CustomerID))
@@ -189,7 +189,8 @@ export default function UpdateQuoteModal({invoice, invoice_products}) {
       });
     
     }
-
+console.log("soy  customer", formData.customer)
+console.log("soy id", customerID)
     const handleNextButton = () =>{
       setErrorsCustomer({})
       if(progress === 40){
@@ -208,7 +209,7 @@ export default function UpdateQuoteModal({invoice, invoice_products}) {
         };
         let newErrors = validateEmptyInputsCreateQuote(formData.customer)
         setErrorsCustomer(newErrors)
-        if(Object.entries(newErrors).length){
+        if(Object.entries(newErrors)?.length){
           if(!toast.isActive(toastId)){
             return toast(({
               id: toastId,
@@ -223,8 +224,8 @@ export default function UpdateQuoteModal({invoice, invoice_products}) {
             dispatch(getCustomerProjects(customerID))
             setProgress(progress + 20)
             if (
-              Object.values(formData.variables).every((value) => value.length !== 0) &&
-              formData.project.ProjectName.length !== 0
+              Object.values(formData.variables)?.every((value) => value?.length !== 0) &&
+              formData?.project.ProjectName?.length !== 0
             ) {
               setDisable(false);
             } else {
@@ -238,17 +239,17 @@ export default function UpdateQuoteModal({invoice, invoice_products}) {
     }}
     
     const handlePreviousButton = () => {
-      if(progress == 40){
+      if(progress === 40){
         setErrorsCustomer({})
         dispatch(getCustomers('', ''))
         handleCleanFormData()
         setProgress(progress - 20)
       }
-      if(progress == 60){
+      if(progress === 60){
         setDisable(false)
         setProgress(progress - 20)
       }
-      if(component === 'Project' && progress == 100){
+      if(component === 'Project' && progress === 100){
         setProgress(0)
       }else{
         setProgress(progress - 20)
@@ -281,7 +282,7 @@ export default function UpdateQuoteModal({invoice, invoice_products}) {
         <Modal 
           isOpen={isOpenUpdate} 
           onClose={handleClose}
-          size={progress === 0 ? 'lg' : '4xl'}
+          size={progress === 0 ? 'lg' : '5xl'}
           motionPreset='slideInRight'
           >
           <ModalOverlay />
@@ -307,26 +308,26 @@ export default function UpdateQuoteModal({invoice, invoice_products}) {
               ) 
             }
             {
-              component === 'Customer' && progress == 20 &&(
+              component === 'Customer' && progress === 20 &&(
                 <CreateQuoteCustomer customers={customers} setFormData={setFormData} formData={formData} setDisable={setDisable} update={update} invoice={invoice}/>
               )
             }
             {
-              component === 'Customer' && progress == 40 &&(
+              component === 'Customer' && progress === 40 &&(
                 <CreateQuoteCustomerReview  formData={formData} setFormData={setFormData} errorsCustomer={errorsCustomer} setErrorsCustomer={setErrorsCustomer}/>)
             }
             {
-              component === 'Customer' && progress == 60 &&(
+              component === 'Customer' && progress === 60 &&(
                 <CreateQuoteCustomerProjets formData={formData} setFormData={setFormData} setDisable={setDisable} update={update} invoice={invoice}/>
               )
             }
             {
-              component === 'Project' && progress == 20 &&(
+              component === 'Project' && progress === 20 &&(
                 <CreateQuoteCustomerProjets formData={formData} setFormData={setFormData} setDisable={setDisable} update={update}  invoice={invoice}/>
               )
             }
             {
-              component === 'Products' && progress == 20 &&(
+              component === 'Products' && progress === 20 &&(
                 <CreateQuoteProducts formData={formData} setFormData={setFormData} setDisable={setDisable} invoice_products={invoice_products}/>
               )
             }

@@ -50,7 +50,8 @@ const initialState = {
 const [inputs, setInputs] = useState(initialState)
 const [originInput, setOriginInput] = useState(initialState)
 const discountRates = [0, 5, 10, 15]
-
+console.log("inputs", inputs)
+console.log("iorigin", originInput)
 const handleCancel = (e) => {
 
   const {name} = e
@@ -408,7 +409,7 @@ function EditableControls(name, value) {
                   >
                 <option value='' className="options" disabled>Select Role</option>
                 {
-                  companyRole.length ? (
+                  companyRole?.length ? (
                     companyRole?.map((role, i) => {
                       return(
                         <option key={i} className={'options'} value={role}>{role}</option>
@@ -449,7 +450,7 @@ function EditableControls(name, value) {
                     name="DiscountRate"
                   >
                     {
-                      discountRates.map((e, i) => {
+                      discountRates?.map((e, i) => {
                           return(
                             <option key={i} className={'options'} value={e}>{e}</option>
                       )})
@@ -477,7 +478,7 @@ function EditableControls(name, value) {
                   >
                     <option value='' className="options">Select seller</option>
                     {
-                      sellers.length ? (
+                      sellers?.length ? (
                         sellers?.map((e, i) => {
                             return(
                               <option key={i} className={'options'} value={e.SellerID}>{e.FirstName} {e.LastName}</option>

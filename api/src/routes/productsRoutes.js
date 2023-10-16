@@ -301,16 +301,15 @@ productsRouter.get("/filtered", async function (req, res) {
     FROM Products
     INNER JOIN ProdNames ON ProdNames.ProdNameID = Products.ProdNameID
     INNER JOIN Dimension ON Dimension.DimensionID = Products.DimensionID
-    INNER JOIN Inventory ON Inventory.ProdID = Products.ProdID 
-    WHERE (Inventory.InStock_Available > 0 OR Inventory.Incoming_Available > 0)
+    INNER JOIN Inventory ON Inventory.ProdID = Products.ProdID
+    WHERE ProdNames.Naturali_ProdName IS NOT NULL AND Dimension.Size IS NOT NULL
       ${material.length ? `AND (ProdNames.Material = "${material}")` : ``}
       ${type.length ? `AND (Dimension.Type = "${type}")` : ``}
       ${finish.length ? `AND (Dimension.Finish = "${finish}")` : ``}
       ${size.length ? `AND (Dimension.Size = "${size}")` : ``}
       ${thickness.length ? `AND (Dimension.Thickness = "${thickness}")` : ``}
       ${search.length ? `AND (LOWER(ProdNames.Naturali_ProdName) LIKE LOWER('%${search}%'))` : ``}
-  
-  ORDER BY ProdNames.Naturali_ProdName ASC;`;
+    ORDER BY sqft DESC`;
 
   try {
     mysqlConnection.query(query, function (error, results, fields) {
@@ -336,13 +335,13 @@ productsRouter.get("/filtered", async function (req, res) {
           price,
           sqftMinMax
         );
-        results = results.sort((a, b) => {
-          const nameA = a.ProductName.toUpperCase();
-          const nameB = b.ProductName.toUpperCase();
-          if (nameA < nameB) return -1;
-          if (nameA > nameB) return 1;
-          return 0;
-        });
+        // results = results.sort((a, b) => {
+        //   const nameA = a?.ProductName?.toUpperCase();
+        //   const nameB = b?.ProductName?.toUpperCase();
+        //   if (nameA < nameB) return -1;
+        //   if (nameA > nameB) return 1;
+        //   return 0;
+        // });
         res.status(200).json({ results, errorSearch, filteredValues });
       }
     });

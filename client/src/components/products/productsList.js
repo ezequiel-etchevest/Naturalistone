@@ -48,8 +48,8 @@ const handleClickSwitch = () => {
   //   }
   // }, [allProducts, loadedCount]);
 
-  const material = e.Material.replace(/\+/g, '+')
-  const name = e.ProductName.replace(/\+/g, '+')
+  const material = e?.Material?.replace(/\+/g, '+')
+  const name = e?.ProductName?.replace(/\+/g, '+')
   const urlImg = `https://naturalistone-images.s3.amazonaws.com/${material}/${name}/${name}_0.jpg`
 
   return(
@@ -75,17 +75,17 @@ const handleClickSwitch = () => {
         </div>
       </Td>
       )}
-    <Td maxH={'6vh'} maxW={'3vw'} onClick={() => handleClickProduct()} fontSize={'xs'} textAlign={'match-parent'}>{e.ProductName}</Td>
-    <Td maxH={'6vh'} maxW={'6vw'} onClick={() => handleClickProduct()} fontSize={'xs'} textAlign={'center'}>{e.Material}</Td>
-    <Td maxH={'6vh'} maxW={'6vw'} onClick={() => handleClickProduct()} fontSize={'xs'} textAlign={'center'}>{e.Type}</Td>
-    <Td maxH={'6vh'} maxW={'3vw'} onClick={() => handleClickProduct()} fontSize={'xs'} textAlign={'center'}>{e.Size}</Td>
-    <Td maxH={'6vh'} maxW={'2vw'} onClick={() => handleClickProduct()} fontSize={'xs'} textAlign={'center'}> {e.Thickness === null ? 'N/A' : e.Thickness} </Td>
-    <Td maxH={'6vh'} maxW={'3vw'} onClick={() => handleClickProduct()} fontSize={'xs'} textAlign={'center'}> {e.Finish === null ? 'N/A' : e.Finish} </Td>
-    <Td maxH={'6vh'} maxW={'3vw'} onClick={() => handleClickProduct()} fontSize={'xs'} isNumeric>$ { e.Price ? e.Price.toLocaleString('en-US') : '-'}</Td>
-    <Td maxH={'6vh'} maxW={'2vw'} onClick={() => handleClickProduct()} fontSize={'xs'} textAlign={'center'}>{e.InStock_Available === null ? 'N/A' : e.InStock_Available}</Td>
-    <Td maxH={'6vh'} maxW={'2vw'} onClick={() => handleClickProduct()} fontSize={'xs'} textAlign={'center'}>{e.Incoming_Available === null ? 0 : e.Incoming_Available}</Td>
-    <Td maxH={'6vh'} maxW={'3vw'} onClick={() => handleClickProduct()} fontSize={'xs'} textAlign={'center'}>{e.NextArrival === undefined ? '-' : e.NextArrival}</Td>
-    <Td maxH={'6vh'} maxW={'3vw'} pl={'3.5vw'}>{ user[0].Secction7Flag !== 1 ? (e.Discontinued_Flag === 'True' ? <ImCheckboxChecked color='logo.orange'/> : <ImCheckboxUnchecked color='logo.orange'/> ) : (<Switch  onChange={() => handleClickSwitch()} isChecked={flag} colorScheme={'orange'} size={'sm'}/>) }</Td>
+    <Td maxH={'6vh'} maxW={'3vw'} onClick={() => handleClickProduct()} fontSize={'xs'} textAlign={'match-parent'}>{e?.ProductName}</Td>
+    <Td maxH={'6vh'} maxW={'6vw'} onClick={() => handleClickProduct()} fontSize={'xs'} textAlign={'center'}>{e?.Material}</Td>
+    <Td maxH={'6vh'} maxW={'6vw'} onClick={() => handleClickProduct()} fontSize={'xs'} textAlign={'center'}>{e?.Type}</Td>
+    <Td maxH={'6vh'} maxW={'3vw'} onClick={() => handleClickProduct()} fontSize={'xs'} textAlign={'center'}>{e?.Size}</Td>
+    <Td maxH={'6vh'} maxW={'2vw'} onClick={() => handleClickProduct()} fontSize={'xs'} textAlign={'center'}> {e?.Thickness === null ? 'N/A' : e.Thickness} </Td>
+    <Td maxH={'6vh'} maxW={'3vw'} onClick={() => handleClickProduct()} fontSize={'xs'} textAlign={'center'}> {e?.Finish === null ? 'N/A' : e.Finish} </Td>
+    <Td maxH={'6vh'} maxW={'3vw'} onClick={() => handleClickProduct()} fontSize={'xs'} isNumeric>$ { e?.Price ? e?.Price.toLocaleString('en-US') : '-'}</Td>
+    <Td maxH={'6vh'} maxW={'2vw'} onClick={() => handleClickProduct()} fontSize={'xs'} textAlign={'center'}>{e?.InStock_Available === null ? 'N/A' : e.InStock_Available}</Td>
+    <Td maxH={'6vh'} maxW={'2vw'} onClick={() => handleClickProduct()} fontSize={'xs'} textAlign={'center'}>{e?.Incoming_Available === null ? 0 : e?.Incoming_Available}</Td>
+    <Td maxH={'6vh'} maxW={'3vw'} onClick={() => handleClickProduct()} fontSize={'xs'} textAlign={'center'}>{e?.NextArrival === undefined ? '-' : e?.NextArrival}</Td>
+    <Td maxH={'6vh'} maxW={'3vw'} pl={'3.5vw'}>{ user[0]?.Secction7Flag !== 1 ? (e?.Discontinued_Flag === 'True' ? <ImCheckboxChecked color='logo.orange'/> : <ImCheckboxUnchecked color='logo.orange'/> ) : (<Switch  onChange={() => handleClickSwitch()} isChecked={flag} colorScheme={'orange'} size={'sm'}/>) }</Td>
     </Tr>
 
     </>

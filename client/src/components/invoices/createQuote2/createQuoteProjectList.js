@@ -58,7 +58,6 @@ import { useState } from 'react';
   }
   
   const CreateQuoteProjectList = ({ projects, formData, setFormData, setDisable }) => {
-
     return(
 <>
   <Box
@@ -87,7 +86,6 @@ import { useState } from 'react';
       >
       {
         projects.length ? (
-          Array.isArray(projects) ? (
             <TableContainer w={'66vw'}>
             <Table color={'web.text'}variant={'simple'} size={'sm'}>
               <Thead h={'3vh'}>
@@ -109,15 +107,9 @@ import { useState } from 'react';
                 </Tbody>
               </Table>
             </TableContainer> 
-          ):(
-            <Center w={'full'} h={'full'}>
-              <Text userSelect={'none'} fontSize={'sm'}>No projects registered for {formData.customer.Contact_Name?.length ? formData.customer?.Contact_Name : formData.customer?.CustomerID } </Text>
-            </Center>
-          )
-
             ) : (
             <Center w={'full'} h={'full'}>
-              <Spinner colorScheme='orange'/>
+              <Text userSelect={'none'} fontSize={'sm'}>No projects registered for {formData.customer.Contact_Name?.length ? formData.customer?.Contact_Name : formData.customer?.CustomerID } </Text>
             </Center>
             )
         }
