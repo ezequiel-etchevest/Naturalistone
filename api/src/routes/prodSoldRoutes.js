@@ -3,100 +3,61 @@ const prodSoldRouter = express.Router()
 const mysqlConnection = require('../db')
 const historyPrice = require('../Controllers/historyPrice')
 
+const getProductsSoldInProds = async (id) => {
+    const query_ = `SELECT 
+                    ProdSold.*,
+                    Products.*,
+                    ProdNames.Naturali_ProdName AS ProductName,
+                    Dimension.Type,
+                    Dimension.Finish,
+                    Dimension.Thickness,
+                    Dimension.Size
+                    FROM Sales
+                    LEFT JOIN ProdSold ON Sales.Naturali_Invoice = ProdSold.SaleID
+                    LEFT JOIN Products ON ProdSold.ProdID = Products.ProdID
+                    LEFT JOIN ProdNames ON Products.ProdNameID = ProdNames.ProdNameID
+                    LEFT JOIN Dimension ON Products.DimensionID = Dimension.DimensionID
+                    WHERE Sales.Naturali_Invoice = ${id} AND ProdSold.Status != "Canceled" AND ProdSold.ProdID IS NOT NULL`
+
+  return new Promise((resolve, reject) => {
+    mysqlConnection.query(query_, function(err, results) {
+      if (err) {
+        reject('Error in get products in prodSold')
+      }
+      resolve(results)
+    })
+  })
+}
+
+const getProdSoldInSpecialProducts = async (id) => {
+  const query_ = `SELECT * FROM SpecialProducts WHERE SaleID = ${id}`
+
+  return new Promise((resolve, reject) => {
+    mysqlConnection.query(query_, function(err, results) {
+      if (err) {
+        return reject('Error in get specialproducts in prodsold')
+      }
+      return resolve(results)
+    })
+  })
+}
 
 prodSoldRouter.get('/:id', async function(req, res){
     
-    const {id} = req.params
+  const {id} = req.params
 
-    query_ =   `SELECT Products.*,
-                CASE
-                  WHEN Products.ProdID IS NOT NULL THEN ProdSold.Quantity
-                  ELSE SpecialProducts.Quantity
-                END AS Quantity,
-                CASE
-                  WHEN Products.ProdID IS NOT NULL THEN ProdSold.Delivered
-                  ELSE SpecialProducts.Delivered
-                END AS Delivered,
-                CASE
-                  WHEN Products.ProdID IS NOT NULL THEN ProdSold.SalePrice
-                  ELSE SpecialProducts.SalePrice
-                END AS SalePrice,
-                CASE
-                  WHEN Products.ProdID IS NOT NULL THEN ProdSold.InStock_Reserved
-                  ELSE 0
-                END AS InStock_Reserved,
-                CASE
-                  WHEN Products.ProdID IS NOT NULL THEN ProdSold.InStock_PendingPayment
-                  ELSE 0
-                END AS InStock_PendingPayment,
-                CASE
-                  WHEN Products.ProdID IS NOT NULL THEN ProdSold.Incoming_Reserved
-                  ELSE 0
-                END AS Incoming_Reserved,
-                CASE
-                  WHEN Products.ProdID IS NOT NULL THEN ProdSold.Incoming_PendingPayment
-                  ELSE 0
-                END AS Incoming_PendingPayment,
-                CASE
-                  WHEN Products.ProdID IS NOT NULL THEN ProdSold.Order_PaymentCompleted
-                  ELSE 0
-                END AS Order_PaymentCompleted,
-                CASE
-                  WHEN Products.ProdID IS NOT NULL THEN ProdSold.Order_PendingPayment
-                  ELSE 0
-                END AS Order_PendingPayment,
-                CASE
-                  WHEN Products.ProdID IS NOT NULL THEN ProdNames.Naturali_ProdName
-                  ELSE SpecialProducts.ProdName
-                END AS ProductName,
-                CASE
-                  WHEN Products.ProdID IS NOT NULL THEN Dimension.Type
-                  ELSE SpecialProducts.Type
-                END AS Type,
-                CASE
-                  WHEN Products.ProdID IS NOT NULL THEN Dimension.Type
-                  ELSE SpecialProducts.Type
-                END AS Type,
-                CASE
-                  WHEN Products.ProdID IS NOT NULL THEN Dimension.Size
-                  ELSE SpecialProducts.Size
-                END AS Size,
-                CASE
-                  WHEN Products.ProdID IS NOT NULL THEN Dimension.Finish
-                  ELSE SpecialProducts.Finish
-                END AS Finish,
-                CASE
-                  WHEN Products.ProdID IS NOT NULL THEN ProdNames.Material
-                  ELSE SpecialProducts.Material
-                END AS Material,
-                CASE
-                  WHEN Products.ProdID IS NOT NULL THEN Dimension.Thickness
-                  ELSE SpecialProducts.Thickness
-                END AS Thickness
-                FROM ProdSold
-                LEFT JOIN Products ON Products.ProdID = ProdSold.ProdID
-                LEFT JOIN ProdNames ON ProdNames.ProdNameID = Products.ProdNameID
-                LEFT JOIN Dimension ON Dimension.DimensionID = Products.DimensionID
-                LEFT JOIN SpecialProducts ON SpecialProducts.SaleID = ProdSold.SaleID
-                WHERE ProdSold.SaleID = ${id} AND ProdSold.Status != "Canceled"
-                ORDER BY ProdNames.Naturali_ProdName ASC`;
+  try {
+    const products = await getProductsSoldInProds(id);
+    const specialProducts = await getProdSoldInSpecialProducts(id);
 
+    const prodSolds = products.concat(specialProducts)
 
-    try{
-        mysqlConnection.query(query_, function(error, results, fields){
-            if(error) throw error;
-            if(results.length == 0) {
-                console.log('No products linked to this quote')
-                res.status(200).send('No products linked to this quote');
-            } else {
+    return res.status(200).json(prodSolds)
+  } catch (error) {
+    console.log("error", error)
+    return res.status(400).json({ success: false, msg: "General error in get prodsold"})
+  }
 
-                console.log('data ok')
-                res.status(200).json(results);
-            }
-        });
-    } catch(error){
-        res.status(409).send(error);
-    }
 });
 
 prodSoldRouter.get('/historyprice/:id', async function(req, res){

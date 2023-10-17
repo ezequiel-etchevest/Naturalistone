@@ -31,7 +31,7 @@ const CreateQuoteCustomerProjets = ({ formData, setFormData, setDisable, update,
         setFormData({
           ...formData,
           variables: {
-            ...formData.variables,
+            ...formData?.variables,
             [name]: rounded,
           },
         });
@@ -40,7 +40,7 @@ const CreateQuoteCustomerProjets = ({ formData, setFormData, setDisable, update,
       setFormData({
         ...formData,
         variables: {
-          ...formData.variables,
+          ...formData?.variables,
           [name]: value,
         },
       });
@@ -48,9 +48,9 @@ const CreateQuoteCustomerProjets = ({ formData, setFormData, setDisable, update,
   };
 
   useEffect(() => {
-    const { shipVia } = formData.variables;
+    const { shipVia } = formData?.variables;
     setDisabledPrice(shipVia === "Pick up" || shipVia === "");
-  }, [formData.variables]);
+  }, [formData?.variables]);
 
   useEffect(() => {
     const {
@@ -63,15 +63,15 @@ const CreateQuoteCustomerProjets = ({ formData, setFormData, setDisable, update,
 
   
     if (!Array.isArray(projects) ||
-        !paymentTerms.length ||
-        !estDelivDate.length ||
-        !ProjectName.length ||
-        !shipVia.length || (shipVia !== 'Pick up' && !shippingPrice?.toString().length)
+        !paymentTerms?.length ||
+        !estDelivDate?.length ||
+        !ProjectName?.length ||
+        !shipVia?.length || (shipVia !== 'Pick up' && !shippingPrice?.toString().length)
         ) setDisable(true);
     else {
       setDisable(false);
     }
-  }, [formData.variables, formData.project, projects]);
+  }, [formData?.variables, formData?.project, projects]);
 
   return(
 
@@ -83,8 +83,8 @@ const CreateQuoteCustomerProjets = ({ formData, setFormData, setDisable, update,
           <Box>
               <Text fontSize={'md'} color={'white'} alignSelf={'flex-start'}>Previous project </Text>
             <Box mt={'1vh'} display={'flex'} flexDir={'row'} w={'20vw'}>
-              <Text fontSize={'sm'}>{invoice[0].idProjects } </Text>
-              <Text ml={'2vw'} fontSize={'sm'}> {invoice[0].ProjectName != '-' && invoice[0].ProjectName != null ? invoice[0].ProjectName : ''}</Text>
+              <Text fontSize={'sm'}>{invoice[0]?.idProjects } </Text>
+              <Text ml={'2vw'} fontSize={'sm'}> {invoice[0]?.ProjectName != '-' && invoice[0]?.ProjectName != null ? invoice[0]?.ProjectName : ''}</Text>
             </Box>        
           </Box>
           <Box>
@@ -92,14 +92,14 @@ const CreateQuoteCustomerProjets = ({ formData, setFormData, setDisable, update,
             <Box mt={'1vh'} display={'flex'} flexDir={'row'}>
               <Text fontSize={'sm'}>
                 {
-                  formData.project.idProjects === invoice[0].idProjects ? '' : formData.project.idProjects
+                  formData?.project?.idProjects === invoice[0]?.idProjects ? '' : formData?.project?.idProjects
                 } 
               </Text>
               <Text ml={'2vw'} fontSize={'sm'}> 
                 {
-                  formData.project.ProjectName === invoice[0].ProjectName ? ''
+                  formData?.project?.ProjectName === invoice[0]?.ProjectName ? ''
                   :
-                  formData.project.ProjectName != '-' && formData.project.ProjectName != null ? formData.project.ProjectName : ''
+                  formData?.project?.ProjectName != '-' && formData?.project?.ProjectName != null ? formData?.project?.ProjectName : ''
                 }
               </Text>
             </Box>        
@@ -109,7 +109,7 @@ const CreateQuoteCustomerProjets = ({ formData, setFormData, setDisable, update,
         <Text ml={'2vw'} mt={'1vh'} mb={'1vh'} fontSize={'lg'}w={'16vw'} color={'white'} alignSelf={'flex-start'}>Select Project</Text>
       }
       <Box display={'flex'} mr={'2vw'} alignSelf={'flex-end'}>
-      <CreateNewProject customer={formData.customer}/>
+      <CreateNewProject customer={formData?.customer}/>
       </Box>
       <HStack
         display={'flex'}
@@ -133,7 +133,7 @@ const CreateQuoteCustomerProjets = ({ formData, setFormData, setDisable, update,
           placeholder={'P.O. No.'}
           type={"text"}
           name={"method"}
-          value={formData.variables.method || ""}
+          value={formData?.variables?.method || ""}
           onChange={(e)=>handleChange(e)}
           className="mailInputs"
           />  
@@ -151,7 +151,7 @@ const CreateQuoteCustomerProjets = ({ formData, setFormData, setDisable, update,
           placeholder={'Payment Terms'}
           type={"text"}
           name={"paymentTerms"}
-          value={formData.variables.paymentTerms || ""}
+          value={formData?.variables?.paymentTerms || ""}
           onChange={(e)=>handleChange(e)}
           className="mailInputs"
           />
@@ -165,7 +165,7 @@ const CreateQuoteCustomerProjets = ({ formData, setFormData, setDisable, update,
               textColor={'web.text2'}
               _placeholder={{ fontFamily: 'body', fontWeight: 'inherit' }}
               size={"sm"}
-              value={formData.variables.estDelivDate}
+              value={formData?.variables?.estDelivDate}
               borderBottomWidth={"2px"}
               borderBottomColor={'web.text2'}
               type={"date"}
@@ -201,7 +201,7 @@ const CreateQuoteCustomerProjets = ({ formData, setFormData, setDisable, update,
               borderBottomColor={'web.text2'}
               _hover={{borderColor: 'web.border'}}
               cursor={'pointer'}
-              value={formData.variables.shipVia || ""}
+              value={formData?.variables?.shipVia || ""}
               name={'shipVia'}
             >
             <option value='' className="options">Ship Via</option>
@@ -224,7 +224,7 @@ const CreateQuoteCustomerProjets = ({ formData, setFormData, setDisable, update,
             type={"number"}
             name={"shippingPrice"}
             disabled={disabledPrice}
-            value={formData.variables.shippingPrice || ""}
+            value={formData?.variables?.shippingPrice || ""}
             onChange={(e)=>handleChange(e)}
             className="mailInputs"
             />

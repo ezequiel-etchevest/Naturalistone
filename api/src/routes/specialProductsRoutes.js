@@ -65,10 +65,10 @@ try{
     mysqlConnection.query(query, values, (error, results) => {
       if (error) {
         console.log('Error in SpecialProducts.post api/sp-1prods/:sellerID: ' + error);
-        res.status(500).json('Failed to POST sp-1');
+        return res.status(500).json('Failed to POST sp-1');
         }
         console.log('insert successfully specialProducts')
-        res.status(200).json({success: true}); 
+        return res.status(200).json({success: true}); 
       })
     })
   } catch(error){

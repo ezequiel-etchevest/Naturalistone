@@ -37,9 +37,9 @@ const ModelTr = ({p}) => {
         <Td fontSize={'1.3vh'} textAlign={'center'}>{p?.Thickness}</Td>
         <Td fontSize={'1.3vh'} textAlign={'center'}>{p?.Finish}</Td>
         <Td fontSize={'1.3vh'} textAlign={'center'} >$ {p?.SalePrice?.toLocaleString('en-US')}</Td>
-        <Td fontSize={'1.3vh'} textAlign={'center'}>{(p?.InStock_Reserved + p?.InStock_PendingPayment) === null ? '0' : (p?.InStock_Reserved + p?.InStock_PendingPayment)}</Td>
-        <Td fontSize={'1.3vh'} textAlign={'center'}>{(p?.Incoming_Reserved + p?.Incoming_PendingPayment) === null ? '0' : (p?.Incoming_Reserved + p?.Incoming_PendingPayment)}</Td>
-        <Td fontSize={'1.3vh'} textAlign={'center'}>{(p?.Order_PendingPayment + p?.Order_PaymentCompleted) === null ? '0' : (p?.Order_PendingPayment + p?.Order_PaymentCompleted)}</Td>
+        <Td fontSize={'1.3vh'} textAlign={'center'}>{(p?.InStock_Reserved + p?.InStock_PendingPayment) === null || typeof (p?.InStock_Reserved + p?.InStock_PendingPayment) !== "number" ? '0' : (p?.InStock_Reserved + p?.InStock_PendingPayment)}</Td>
+        <Td fontSize={'1.3vh'} textAlign={'center'}>{(p?.Incoming_Reserved + p?.Incoming_PendingPayment) === null || typeof (p?.Incoming_Reserved + p?.Incoming_PendingPayment) !== "number" ? '0' : (p?.Incoming_Reserved + p?.Incoming_PendingPayment)}</Td>
+        <Td fontSize={'1.3vh'} textAlign={'center'}>{(p?.Order_PendingPayment + p?.Order_PaymentCompleted) === null || typeof (p?.Order_PendingPayment + p?.Order_PaymentCompleted) !== "number" ? '0' : (p?.Order_PendingPayment + p?.Order_PaymentCompleted)}</Td>
         <Td fontSize={'1.3vh'} textAlign={'center'}>{p?.Delivered}</Td>
       </Tr>
     )
