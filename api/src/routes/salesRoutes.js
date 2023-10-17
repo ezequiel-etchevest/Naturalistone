@@ -364,14 +364,14 @@ console.log(ValueSpecialProducts)
           if(shipVia !== 'Pick up' && shippingPrice.toString().length){
             combinedArray.push([Naturali_Invoice, 123, 1, shippingPrice]);
           }
-          console.log({combinedArray})
+          console.log(combinedArray)
           mysqlConnection.query(prodSoldQuery, [combinedArray], async function(error, prodSoldResult, fields) {
             if (error) {
               console.log('Error in salesRoutes.post /create-quote/:sellerID: ' + error);
               console.log('Retrying ProdSold insert after 0.5 seconds...');
               
               setTimeout(() => {
-                mysqlConnection.query(prodSoldQuery, [prodSoldValues], async function(error, prodSoldResult, fields) {
+                mysqlConnection.query(prodSoldQuery, [combinedArray], async function(error, prodSoldResult, fields) {
                   if (error) {
                     console.log('Error in salesRoutes.post /create-quote/:sellerID: ' + error);
                     res.status(500).json('Failed to insert ProdSold');

@@ -8,17 +8,79 @@ prodSoldRouter.get('/:id', async function(req, res){
     
     const {id} = req.params
 
-    query_ =   `SELECT ProdSold.*, Naturali_ProdName AS ProductName, 
-                  Dimension.Type,
-                  Dimension.Size,
-                  Dimension.Finish,
-                  ProdNames.Material,
-                  Dimension.Thickness FROM Products
-                  INNER JOIN ProdNames ON ProdNames.ProdNameID = Products.ProdNameID
-                  INNER JOIN ProdSold ON ProdSold.ProdID = Products.ProdID
-                  INNER JOIN Dimension ON Dimension.DimensionID = Products.DimensionID
-                  WHERE SaleID = ${id} AND ProdSold.Status != "Canceled"
-                  ORDER BY ProdNames.Naturali_ProdName ASC`;
+    query_ =   `SELECT Products.*,
+                CASE
+                  WHEN Products.ProdID IS NOT NULL THEN ProdSold.Quantity
+                  ELSE SpecialProducts.Quantity
+                END AS Quantity,
+                CASE
+                  WHEN Products.ProdID IS NOT NULL THEN ProdSold.Delivered
+                  ELSE SpecialProducts.Delivered
+                END AS Delivered,
+                CASE
+                  WHEN Products.ProdID IS NOT NULL THEN ProdSold.SalePrice
+                  ELSE SpecialProducts.SalePrice
+                END AS SalePrice,
+                CASE
+                  WHEN Products.ProdID IS NOT NULL THEN ProdSold.InStock_Reserved
+                  ELSE 0
+                END AS InStock_Reserved,
+                CASE
+                  WHEN Products.ProdID IS NOT NULL THEN ProdSold.InStock_PendingPayment
+                  ELSE 0
+                END AS InStock_PendingPayment,
+                CASE
+                  WHEN Products.ProdID IS NOT NULL THEN ProdSold.Incoming_Reserved
+                  ELSE 0
+                END AS Incoming_Reserved,
+                CASE
+                  WHEN Products.ProdID IS NOT NULL THEN ProdSold.Incoming_PendingPayment
+                  ELSE 0
+                END AS Incoming_PendingPayment,
+                CASE
+                  WHEN Products.ProdID IS NOT NULL THEN ProdSold.Order_PaymentCompleted
+                  ELSE 0
+                END AS Order_PaymentCompleted,
+                CASE
+                  WHEN Products.ProdID IS NOT NULL THEN ProdSold.Order_PendingPayment
+                  ELSE 0
+                END AS Order_PendingPayment,
+                CASE
+                  WHEN Products.ProdID IS NOT NULL THEN ProdNames.Naturali_ProdName
+                  ELSE SpecialProducts.ProdName
+                END AS ProductName,
+                CASE
+                  WHEN Products.ProdID IS NOT NULL THEN Dimension.Type
+                  ELSE SpecialProducts.Type
+                END AS Type,
+                CASE
+                  WHEN Products.ProdID IS NOT NULL THEN Dimension.Type
+                  ELSE SpecialProducts.Type
+                END AS Type,
+                CASE
+                  WHEN Products.ProdID IS NOT NULL THEN Dimension.Size
+                  ELSE SpecialProducts.Size
+                END AS Size,
+                CASE
+                  WHEN Products.ProdID IS NOT NULL THEN Dimension.Finish
+                  ELSE SpecialProducts.Finish
+                END AS Finish,
+                CASE
+                  WHEN Products.ProdID IS NOT NULL THEN ProdNames.Material
+                  ELSE SpecialProducts.Material
+                END AS Material,
+                CASE
+                  WHEN Products.ProdID IS NOT NULL THEN Dimension.Thickness
+                  ELSE SpecialProducts.Thickness
+                END AS Thickness
+                FROM ProdSold
+                LEFT JOIN Products ON Products.ProdID = ProdSold.ProdID
+                LEFT JOIN ProdNames ON ProdNames.ProdNameID = Products.ProdNameID
+                LEFT JOIN Dimension ON Dimension.DimensionID = Products.DimensionID
+                LEFT JOIN SpecialProducts ON SpecialProducts.SaleID = ProdSold.SaleID
+                WHERE ProdSold.SaleID = ${id} AND ProdSold.Status != "Canceled"
+                ORDER BY ProdNames.Naturali_ProdName ASC`;
+
 
     try{
         mysqlConnection.query(query_, function(error, results, fields){

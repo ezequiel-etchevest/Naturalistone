@@ -66,7 +66,7 @@ const CreateQuoteCustomerProjets = ({ formData, setFormData, setDisable, update,
         !paymentTerms.length ||
         !estDelivDate.length ||
         !ProjectName.length ||
-        !shipVia.length || (shipVia !== 'Pick up' && !shippingPrice.toString().length)
+        !shipVia.length || (shipVia !== 'Pick up' && !shippingPrice?.toString().length)
         ) setDisable(true);
     else {
       setDisable(false);

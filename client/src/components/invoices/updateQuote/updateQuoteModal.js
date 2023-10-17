@@ -189,8 +189,7 @@ export default function UpdateQuoteModal({invoice, invoice_products}) {
       });
     
     }
-console.log("soy  customer", formData.customer)
-console.log("soy id", customerID)
+
     const handleNextButton = () =>{
       setErrorsCustomer({})
       if(progress === 40){

@@ -21,6 +21,7 @@ import '../../../assets/styleSheet.css'
 import { useState } from "react"
 import { validateCompletedInputs } from "../../../utils/validateForm"
 import { companyRole } from "../../../utils/arrayCompanyRole"
+import { USStates } from "../../../utils/USStates"
 
 const CreateQuoteCustomerReview = ({setFormData, formData, sellers, user, setErrorsCustomer, errorsCustomer, setUpdated}) => {
 
@@ -50,8 +51,7 @@ const initialState = {
 const [inputs, setInputs] = useState(initialState)
 const [originInput, setOriginInput] = useState(initialState)
 const discountRates = [0, 5, 10, 15]
-console.log("inputs", inputs)
-console.log("iorigin", originInput)
+
 const handleCancel = (e) => {
 
   const {name} = e
@@ -154,7 +154,7 @@ function EditableControls(name, value) {
   )
 }
 
-  return(
+return(
 
   <>
     <Box 
@@ -665,49 +665,43 @@ function EditableControls(name, value) {
               </Box>
               <Box pt='2' w={'16vw'} h={'8vh'}  mt={'0.5vh'} maxW={'276px'}>
                 <Text fontSize='sm' fontWeight={'semibold'}> Billing State </Text>
-                <Editable
-                  value={inputs.Billing_State}
-                  fontSize='sm'
-                  fontWeight={'hairline'}
-                  isPreviewFocusable={false}
-                  display={'flex'}
-                  flexDir={'row'}
-                  pl='2'
-                  pt='1'
-                  justifyContent={'space-between'}
-                  w={'16vw'}
-                  maxW={'280px'}
-                  alignItems={'center'}
-                >
-                  <EditablePreview 
-                    maxW={'280px'} 
-                    css={{
-                    whiteSpace: 'nowrap',
-                    overflow: 'hidden',
-                    textOverflow: 'ellipsis',
-                  }}/>
-                  <Input
-                    name={'Billing_State'}
-                    className="mailInputs"
-                    value={inputs.Billing_State}
-                    as={EditableInput}
-                    w={'15vw'}
-                    maxW={'280px'}
-                    minH={'4vh'}
-                    variant="unstyled"
-                    textColor={'web.text2'}
-                    _placeholder={{ fontFamily: 'body', fontWeight: 'inherit' }}
-                    _focus={{
-                      outline: 'none',
-                      boxShadow: 'none',
-                   }} 
-                    size={"sm"}
-                    type={"text"}
-                    onChange={(e) =>{handleChange(e)}}
-                  /> 
-                  <EditableControls name={'Billing_State'} value={inputs.Billing_State} />
-                </Editable>
-                { errorsCustomer.Billing_Address && (
+                <Select
+                onChange={(e)=>handleChange(e)}
+                mb={'0.5vh'}
+                minH={'5vh'}
+                borderBottomWidth={"2px"}
+                borderBottomColor={'web.text2'}
+                variant="unstyled"
+                color={'web.text2'}
+                textColor={'web.text2'}
+                _placeholder={{ fontFamily: 'body', fontWeight: 'inherit', textColor: 'inherit' }}
+                css={{
+                '&::-webkit-scrollbar': {
+                  width: '0.4vw',
+                  background: '#0D1117'
+                },
+                '&::-webkit-scrollbar-track': {
+                  width: '6px',
+                },
+                '&::-webkit-scrollbar-thumb': {
+                   background: '#E47424',
+                  borderRadius: '5px',
+                },
+                }}
+                size={"sm"}
+                value={inputs.Billing_State}
+                cursor={'pointer'}
+                name="Billing_State"
+              >
+                <option value='' className="options">Select state</option>
+                {
+                  USStates.map((e, i) => {
+                      return(
+                        <option key={i} className={'options'} value={e}>{e}</option>
+                  )})
+                }
+            </Select>
+                { errorsCustomer.Billing_State && (
                   <Text
                     h={'3.6vh'}
                     color={'web.error'}
@@ -720,7 +714,6 @@ function EditableControls(name, value) {
                   </Text>
                 )}
               </Box>
-              <Box></Box>
             </Stack>          
           </CardBody>
         </Card>
