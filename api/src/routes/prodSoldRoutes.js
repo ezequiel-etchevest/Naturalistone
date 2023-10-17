@@ -61,7 +61,17 @@ prodSoldRouter.get('/:id', async function(req, res){
     const products = await getProductsSoldInProds(id);
     const specialProducts = await getProdSoldInSpecialProducts(id);
 
-    const prodSolds = products.concat(specialProducts)
+    const prodSolds = specialProducts.concat(products)
+
+  prodSolds.sort((a, b) => {
+    if(a.ProductName === 'Shipping- Delivery') {
+      return 1;
+    }
+    if(b.ProductName === 'Shipping- Delivery') {
+      return -1
+    };
+    return a.ProductName - b.ProductName
+  })
 
     return res.status(200).json(prodSolds)
   } catch (error) {
