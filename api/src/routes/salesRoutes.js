@@ -316,7 +316,7 @@ salesRouter.post('/create-quote/:sellerID', async function(req, res) {
   let combinedArray = []
   let Naturali_Invoice = 0
 
-console.log(ValueSpecialProducts)
+
   try {
     mysqlConnection.beginTransaction(function(err) {
       if (err) {
@@ -355,6 +355,29 @@ console.log(ValueSpecialProducts)
           }
           console.log('Quote created successfully');
 
+          if(specialProducts.length > 0){
+          await Promise.all(specialProducts.map(product => {
+                  return new Promise((resolve, reject) => {
+                    const query = `INSERT INTO SpecialProducts(SaleID, ProdName, Type, Thickness, Size, Finish, Material, Quantity, SalePrice, Delivered, Status, InsertDate) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)`;
+              
+                    const values = [Naturali_Invoice, product.prodName, product.type, product.thickness, product.size, product.finish, product.material, product.quantity, (product.price - product.price * discountFactor), 0, 'Pending', InsertDate];
+              
+                    mysqlConnection.query(query, values, (error, results) => {
+                      if (error) {
+                        console.log('Error in SpecialProducts.post api/sp-1prods/:sellerID: ' + error);
+                        reject('Failed to POST sp-1');
+                        return mysqlConnection.rollback(function() {
+                          throw error;
+                        });
+                      } else {
+                        console.log('Inserted successfully into SpecialProducts');
+                        resolve(results);
+                      } 
+                      });
+                    });
+                  })
+                  )}
+
           const prodSoldQuery = `INSERT INTO NaturaliStone.ProdSold (SaleID, ProdID, Quantity, SalePrice) VALUES ?`;
           
           const prodSoldValues = parsedProducts.map((product) => [Naturali_Invoice, product.prodID, Number(product.quantity), (product.price - product.price * discountFactor)]);
@@ -364,7 +387,7 @@ console.log(ValueSpecialProducts)
           if(shipVia !== 'Pick up' && shippingPrice.toString().length){
             combinedArray.push([Naturali_Invoice, 123, 1, shippingPrice]);
           }
-          console.log({combinedArray})
+
           mysqlConnection.query(prodSoldQuery, [combinedArray], async function(error, prodSoldResult, fields) {
             if (error) {
               console.log('Error in salesRoutes.post /create-quote/:sellerID: ' + error);
@@ -413,6 +436,38 @@ console.log(ValueSpecialProducts)
     });
   }
 });
+
+
+// specialProductsRouter.post('/:SaleID', async function(req, res){
+//   const { SaleID } = req.params
+//   const products  = req.body 
+//   const InsertDate = `${year}-${month0}-${day0}`
+
+// try{
+
+//   products.forEach(product => {
+
+//     const query = ` INSERT INTO SpecialProducts(SaleID, ProdName, Type, Thickness, Size, Finish, Material, Quantity, SalePrice, Delivered, Status, InsertDate ) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)`;
+
+//     const values = [ SaleID, product.prodName, product.type, product.thickness, product.size, product.finish, product.material, product.quantity, product.price, 0, 'Pending', InsertDate ];
+
+//     mysqlConnection.query(query, values, (error, results) => {
+//       if (error) {
+//         console.log('Error in SpecialProducts.post api/sp-1prods/:sellerID: ' + error);
+//         res.status(500).json('Failed to POST sp-1');
+//         }
+//         console.log('insert successfully specialProducts')
+//         res.status(200).json({success: true}); 
+//       })
+//     })
+//   } catch(error){
+//     res.status(409).send({success: false, results: error});
+//   }
+// });
+
+
+
+
 
 
 salesRouter.get('/project-invoices/:id', async function(req, res){

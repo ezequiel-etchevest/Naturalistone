@@ -43,7 +43,6 @@ const CreatedQuotePdf = ({ formData, user, handleChangeEmail }) => {
     return states[state];
   }
 
-
   async function CreateForm() {
     const url = `/Quote/quote-blank.pdf`;
     const existingPdfBytes = await fetch(url).then((res) => res.arrayBuffer());
@@ -65,10 +64,6 @@ const CreatedQuotePdf = ({ formData, user, handleChangeEmail }) => {
       y = 460.8;
     };
 
-    
-    const pages = pdfDoc.getPages();
-    const page = pages[0];
-
     const name = customer.Contact_Name;
     const phone = customer.Phone;
     const email = customer.Email;
@@ -84,7 +79,7 @@ const CreatedQuotePdf = ({ formData, user, handleChangeEmail }) => {
     const estDate = variables.estDelivDate;
     const deliveryMethod = variables.shipVia;
     const paymentTerms = variables.paymentTerms;
-    const shippingPrice = variables.shippingPrice;
+    const shippingPrice = variables.shippingPrice ? variables.shippingPrice : 0;
 
     const discountRate = Number(customer.DiscountRate)
     const discountFactor = discountRate / 100;
@@ -93,14 +88,18 @@ const CreatedQuotePdf = ({ formData, user, handleChangeEmail }) => {
     const totalRows = mappedProducts?.length + formData?.specialProducts.length
 
     if(totalRows > 5) await createNewPage()
+    const pages = pdfDoc.getPages();
+    const page = pages[0];
     let productRows = 1;
     let productRowsBis = 1; 
     let currentPage = (productRows <= 5) ? pages[0] : pages[1]
-
+  
   {/*               Here Starts mapping for regular products             */}
-
+    
     mappedProducts.forEach((product, index) => {
+
       let currentPage = (productRows <= 5) ? pages[0] : pages[1]
+  
       if(productRowsBis > 5){
         y = 460.8
         productRowsBis = 1
@@ -134,32 +133,25 @@ const CreatedQuotePdf = ({ formData, user, handleChangeEmail }) => {
       currentPage.drawText(`$ ${parsedNumbers(discountedPrice)}`, { x, y, size: 9 });
       currentPage.drawText(`$ ${(formattedExtPrice)}`, { x: xExtPrice, y, size: 9 });
       
-      let text = `Special Order: ${product.material} ${product.type} ${product.prodName} ${product.finish} ${formatSize(product.size)}x${parseThickness(product.thickness)}`
+      let text = `Special Order: ${product.material} ${product.type} ${product.prodName} ${product.finish} ${formatSize(product.size)}x${parseThickness(product.thickness)}Mm`
       let maxLength = 52;
       if (text.length > maxLength) {
         const formattedLines = formatTextForPdf(text, maxLength).split('\n');
       
         for (let i = 0; i < formattedLines.length; i++) {
           currentPage.drawText(formattedLines[i], { x: 198, y, size: 9 });
-          y -= 14; // Ajusta el valor de 'y' para dejar espacio entre las partes
-        }
+          if(i === formattedLines.length - 1) {
+            y -= 18;
+          } else {
+            y -= 14;
+        }}
       } else {
         currentPage.drawText(text, { x: 198, y, size: 9 });
+        y -= 18;
       }
-      // if (text.length > maxLength) {
-      //   const firstPart = text.substring(0, maxLength);
-      //   const secondPart = text.substring(maxLength);
-      //   currentPage.drawText(firstPart, { x: 198, y, size: 9 });
-
-      //   y -= 14; // Ajusta el valor de 'y' para dejar espacio entre las partes
-
-      //   currentPage.drawText(secondPart, { x: 198, y, size: 9 });
-      // } else {
-      //   currentPage.drawText(text, { x: 198, y, size: 9 });
-      // }
       productRows++
       productRowsBis++
-      y -= 18;
+
     });
 
   {/*               Here FINISH mapping for regular products             */}
@@ -201,7 +193,7 @@ const CreatedQuotePdf = ({ formData, user, handleChangeEmail }) => {
         y,
         size: 9,
       });
-      const text = `Special Order: ${product.material} ${product.type} ${product.prodName} ${product.finish} ${formatSize(product.size)}x${parseThickness(product.thickness)}`
+      const text = `Special Order: ${product.material} ${product.type} ${product.prodName} ${product.finish} ${formatSize(product.size)}x${parseThickness(product.thickness)}Mm`
       const maxLength = 52;
 
       if (text.length > maxLength) {
@@ -209,23 +201,29 @@ const CreatedQuotePdf = ({ formData, user, handleChangeEmail }) => {
       
         for (let i = 0; i < formattedLines.length; i++) {
           currentPage.drawText(formattedLines[i], { x: 198, y, size: 9 });
-          y -= 14; // Ajusta el valor de 'y' para dejar espacio entre las partes
-        }
+          if(i === formattedLines.length - 1) {
+            y -= 18;
+          } else {
+            y -= 14;
+        }}
       } else {
         currentPage.drawText(text, { x: 198, y, size: 9 });
+        y -= 18;
       }
-
       productRows++
       productRowsBis++
-      y -= 18;
-
     });
 
-  {/*               Here FINISH mapping for regular products             */}
+  {/*               Here FINISH mapping for Special products             */}
 
   if(totalRows > 5) currentPage = pages[1]
-  currentPage.drawText("Shipping - Delivery:", { x: 198, y, size: 9 });
-  currentPage.drawText(`$ ${parsedNumbers(shippingPrice)}`, { x: getXForExtPrice(parsedNumbers(shippingPrice)), y, size: 9 });
+  
+  if(shippingPrice !== 0){
+    currentPage.drawText("Shipping - Delivery:", { x: 198, y, size: 9 });
+    currentPage.drawText(`$ ${parsedNumbers(shippingPrice)}`, { x: getXForExtPrice(parsedNumbers(shippingPrice)), y, size: 9 });
+  }
+
+
     const taxValue = ((subtotal * tax) / 100)
   // este forEach nos permite replicar la informacion comun a todas las paginas del pdf.
     pages.forEach(p => {
@@ -255,7 +253,7 @@ const CreatedQuotePdf = ({ formData, user, handleChangeEmail }) => {
         y: 247,
         size: 10,
       });
-
+      
       p.drawText(`$ ${parsedNumbers(subtotal + shippingPrice + taxValue)}`, {
         x: getXForExtTotal(parsedNumbers(subtotal + shippingPrice + taxValue)),
         y: 222,
@@ -288,7 +286,7 @@ const CreatedQuotePdf = ({ formData, user, handleChangeEmail }) => {
 
     setPdfInfo(URL.createObjectURL(blob));
 
-    savePdfOnServer(pdfBytes, invoiceID);
+    // savePdfOnServer(pdfBytes, invoiceID);
   }
 
   return (

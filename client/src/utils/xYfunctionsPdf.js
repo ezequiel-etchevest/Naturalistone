@@ -19,7 +19,6 @@ export const getXForExtPrice = (extPrice) => {
 
 export const getXForExtSubtotal= (subtotal) => {
   const length = subtotal.toString().length;
-
   if(length === 1) return 552;
   if(length === 2) return 548;
   if(length === 3) return 542;
@@ -29,13 +28,13 @@ export const getXForExtSubtotal= (subtotal) => {
   if(length === 7) return 526;
   if(length === 8) return 522;
   if(length === 9) return 516;
-  if(length > 9) return 504;
+  if(length === 10) return 511;
+  if(length > 10) return 504;
 }  
 
 export const getXForExtTotal = (extPrice) => {
 
     const length = (extPrice).toString().length;
-    
     if(length === 1) return 568;
     if(length === 2) return 560;
     if(length === 3) return 552;
@@ -45,7 +44,8 @@ export const getXForExtTotal = (extPrice) => {
     if(length === 7) return 520;
     if(length === 8) return 512;
     if(length === 9) return 506;
-    if(length > 9) return 504;
+    if(length === 10) return 500;
+    if(length > 10) return 494;
   }
 
 export  const getXForPrice = (price) => {
@@ -83,7 +83,7 @@ export const getXForQuantity = (quantity) => {
   }
 
 export const getXForUM = (um) => {
-  console.log(um)
+
     if(um === "Tile" || um === "Sqft" || um === 'Mosaic') return 80;
     else return 76;
   }
@@ -143,32 +143,45 @@ export  const getFontSize = (text) => {
     return  size; 
   }
 
-export const parseThickness = (thickness) => {
-
+  export const parseThickness = (thickness) => {
+    function formatThickness(thickness, term) {
+      const parts = thickness.split(term);
+      const previousTerm = parts[0].trim();
+      const numberBeforeTerm = parseFloat(previousTerm);
+      return isNaN(numberBeforeTerm) ? previousTerm : numberBeforeTerm;
+    }
+  
+  
     // Caso 1 - 3/8
-    if(thickness.includes('/')) {
+    if (thickness.includes('/')) {
       const [num1, num2] = thickness.split('/');
       return `${num1}/${num2}"`;
     }
   
     // Caso 2 - 1 1/4
-    if(thickness.includes(' ')) {
+    if (thickness.includes(' ')) {
       const [num1, num2] = thickness.split(' ');
       const [num3, num4] = num2.split('/');
-      return `${num1} ${num3}/${num4}"`; 
+      return `${num1} ${num3}/${num4}"`;
     }
   
     // Caso 3 - Entero
-    if(Number.isInteger(Number(thickness))) {
+    if (Number.isInteger(Number(thickness))) {
       return `${thickness}"`;
     }
   
     // Caso 4 - 6Mm
-    if(thickness.includes('Mm')) {
-      return thickness;
+    const terms = ['Mm', 'mm', 'mM', 'MM'];
+    for (const term of terms) {
+      if (thickness.toLowerCase().includes(term.toLowerCase())) {
+        return formatThickness(thickness, term);
+      }
     }
   
-  }
+    return `${thickness}"`;
+  };
+  
+
 
  export const parsedNumbers = (number) => {
     const formattedPrice = (number).toLocaleString('en-US', {
