@@ -46,7 +46,7 @@ customersRouter.get('/', async function(req, res){
     try{
         mysqlConnection.query(query_, function(error, results, fields){
                 console.log('Data OK')
-                if(!results.length) res.status(200).send([])
+                if(!results) res.status(200).send([])
                 else res.status(200).json(results);
             
         });

@@ -95,10 +95,10 @@ export function CreateQuote({ customers, sellers }) {
   const toastId = "error-toast";
   const customerID = formData.customer.CustomerID;
 
-  useEffect(() => {
-    if(Object.entries(posted_quote).length){
-    sp1PostBack()
-  }}, [posted_quote]);
+  // useEffect(() => {
+  //   if(Object.entries(posted_quote).length){
+  //   sp1PostBack()
+  // }}, [posted_quote]);
 
   useEffect(() => {
     if(!values.length){
@@ -137,12 +137,12 @@ export function CreateQuote({ customers, sellers }) {
     return false;
   };
   
-  const sp1PostBack = () => {
-    if(formData.specialProducts.length && Object.entries(posted_quote).length){
-      let invoiceID = posted_quote.Naturali_Invoice;
-       dispatch(addSpecialProducts(invoiceID,  formData.specialProducts))
-    }
-  }
+  // const sp1PostBack = () => {
+  //   if(formData.specialProducts.length && Object.entries(posted_quote).length){
+  //     let invoiceID = posted_quote.Naturali_Invoice;
+  //      dispatch(addSpecialProducts(invoiceID,  formData.specialProducts))
+  //   }
+  // }
 
   let authFlag = validateAuthFlag(formData.products)
   ;

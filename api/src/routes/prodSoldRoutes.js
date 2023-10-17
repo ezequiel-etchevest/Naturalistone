@@ -22,15 +22,26 @@ const getProductsSoldInProds = async (id) => {
   return new Promise((resolve, reject) => {
     mysqlConnection.query(query_, function(err, results) {
       if (err) {
-        reject('Error in get products in prodSold')
+        return reject('Error in get products in prodSold')
       }
-      resolve(results)
+      return resolve(results)
     })
   })
 }
 
 const getProdSoldInSpecialProducts = async (id) => {
-  const query_ = `SELECT * FROM SpecialProducts WHERE SaleID = ${id}`
+  const query_ = `SELECT 
+                  SpecialProducts.Type,
+                  SpecialProducts.Thickness,
+                  SpecialProducts.Size,
+                  SpecialProducts.Finish,
+                  SpecialProducts.Material,
+                  SpecialProducts.Quantity,
+                  SpecialProducts.SalePrice,
+                  SpecialProducts.ProdName AS ProductName,
+                  SpecialProducts.Delivered
+                  FROM SpecialProducts
+                  WHERE SaleID = ${id}`
 
   return new Promise((resolve, reject) => {
     mysqlConnection.query(query_, function(err, results) {
