@@ -76,7 +76,7 @@ const TESTpdf = ({ formData, user, handleChangeEmail }) => {
     if(totalRows > 5) await createNewPage()
     let productRows = 1;
     let productRowsBis = 1; 
-    
+    let yfield = 446
     const pages = pdfDoc.getPages();
     const page = pages[0];
     let currentPage = (productRows <= 5) ? pages[0] : pages[1]
@@ -123,6 +123,7 @@ const TESTpdf = ({ formData, user, handleChangeEmail }) => {
 
       const { variableName } = product;
       const x = getXForPrice(discountedPrice);
+
       const xType = getXForUM(product.type)
       const xQuantity = getXForQuantity(product.quantity)
       const xID = getXForID(product.prodID)
@@ -149,9 +150,9 @@ const TESTpdf = ({ formData, user, handleChangeEmail }) => {
       
       const prod = form.createTextField(`product${index}`);
       prod.setText(text);
-      prod.addToPage(currentPage, { x: 197, y,
+      prod.addToPage(currentPage, { x: 197, y: yfield,
                               width: 253,
-                              height: 38,
+                              height: 28,
                               textColor: rgb(0, 0, 0),
                               borderColor: rgb(0, 0, 0),
                               borderWidth: 0,
@@ -252,7 +253,7 @@ const TESTpdf = ({ formData, user, handleChangeEmail }) => {
 
   currentPage.drawText("Shipping fee:", { x: 198, y, size: 9 });
   currentPage.drawText(parsedNumbers(shippingPrice), { x: getXForExtPrice(parsedNumbers(shippingPrice)), y, size: 9 });
-    const taxValue = ((subtotal * tax) / 100)
+  const taxValue = ((subtotal * tax) / 100)
 
   // este forEach nos permite replicar la informacion comun a todas las paginas del pdf.
     pages.forEach(p => {
