@@ -16,7 +16,7 @@ export function AddressInfo({formData, setFormData, validate, errors, setErrors,
         Billing_State: formData.State,
         Billing_City: formData.City,
         Billing_Address2: formData.Address2,
-        Billing_Nickname: formData.Nickname,
+        // Billing_Nickname: formData.Nickname,
         ShippingAddressInBilling: true
       })
     }
@@ -28,7 +28,7 @@ export function AddressInfo({formData, setFormData, validate, errors, setErrors,
         Billing_State: '',
         Billing_City: '',
         Billing_Address2: '',
-        Billing_Nickname: '',
+        // Billing_Nickname: '',
         ShippingAddressInBilling: false
       })
     }
@@ -172,7 +172,7 @@ export function AddressInfo({formData, setFormData, validate, errors, setErrors,
               )}
           </FormControl>
         </Box>
-        <Box w={'22vw'} display={'flex'} flexDir={'row'} justifyContent={'space-between'}>
+        {/* <Box w={'22vw'} display={'flex'} flexDir={'row'} justifyContent={'space-between'}>
           <FormControl>
           <FormLabel textColor={'web.text2'} fontSize={'sm'} pt={"1.5vh"} name={'Nickname'}  fontWeight={'normal'}>Nickname</FormLabel>
             <Input
@@ -189,7 +189,7 @@ export function AddressInfo({formData, setFormData, validate, errors, setErrors,
               onChange={handleChange}
               />
           </FormControl>
-        </Box>
+        </Box> */}
         <Box w={'22vw'} display={'flex'} flexDir={'row'} justifyContent={'space-between'} pr={'1vw'}>
           <Text 
           alignSelf={'flex-start'} 

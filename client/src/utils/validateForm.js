@@ -95,6 +95,11 @@ return errors
 
 
 export const validateEmptyInputs = (formData, progress) => {
+  const regexNumber = /^[0-9]+$/;
+  const regexNumberAndPlus = /^[\d+()\[\]-\s]*$/;
+  const regexEmail = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
+  const regexLetters = /^[A-Za-z]+$/;
+
   let errors = {}
 
   if(progress === 25){
@@ -104,9 +109,19 @@ export const validateEmptyInputs = (formData, progress) => {
     if(!formData.Phone){
       errors.Phone = 'Please enter phone number'
     }
+    if(formData.Phone !== ''){
+      if(!regexNumberAndPlus.test(formData.Phone)) {
+        errors.Phone = 'Please enter a valid Phone'
+    } 
+  }
     if(!formData.Email){
       errors.Email = 'Please enter email address'
     }
+    if(formData.Email !== ''){
+      if(!regexEmail.test(formData.Email)){
+        errors.Email = 'Please enter a valid email'
+      }
+  }
     return errors  
   }
   if (progress === 50){
@@ -115,25 +130,38 @@ export const validateEmptyInputs = (formData, progress) => {
     }
     if(!formData.ZipCode){
       errors.ZipCode = 'Please enter a zip code'
-    } 
+    }
+    if(formData.ZipCode.length){
+      if(formData.ZipCode !== '' && formData.ZipCode !== "undefined"){
+        if(!regexNumber.test(formData.ZipCode)) {
+          errors.ZipCode = 'Please enter a valid zip code'
+        }
+    }
+  }
     if(!formData.City){
       errors.City = 'Please enter a city'
     }
+    if(formData.City?.length){
+      if(formData.City !== '' && formData.City != "undefined") {
+        if(!regexLetters.test(formData.City)){
+          errors.City = 'Please enter a valid City'
+        }
+    }
+  }
     if(!formData.State) {
       errors.State = 'Please enter a state'
     }
     return errors
   }
   if (progress === 75){
-
-    if(!formData.Company){
-      errors.Company = 'Please enter customer company name'
+    if (formData.Company_Position === '') {
+      errors.Company_Position = 'Please enter a company Position'
+    }
+    if(formData.Company_Position !== "Home Owner" && formData.Company === '') {
+        errors.Company = 'Please enter a company';
     }
     if(!formData.DiscountID){
       errors.DiscountID = 'Please enter discount rate'
-    }
-    if(!formData.Company_Position){
-      errors.Company_Position = 'Please enter customer company position'
     }
     return errors
   }
@@ -144,9 +172,23 @@ export const validateEmptyInputs = (formData, progress) => {
     if(!formData.Billing_ZipCode){
       errors.Billing_ZipCode = 'Please enter a zip code'
     } 
+    if(formData.Billing_ZipCode.length){
+      if(formData.Billing_ZipCode !== '' && formData.Billing_ZipCode !== "undefined"){
+        if(!regexNumber.test(formData.Billing_ZipCode)) {
+          errors.Billing_ZipCode = 'Please enter a valid zip code'
+        }
+    }
+  }
     if(!formData.Billing_City){
       errors.Billing_City = 'Please enter a city'
     }
+    if(formData.Billing_City?.length){
+      if(formData.Billing_City !== '' && formData.Billing_City != "undefined") {
+        if(!regexLetters.test(formData.Billing_City)){
+          errors.Billing_City = 'Please enter a valid city'
+        }
+    }
+  }
     if(!formData.Billing_State) {
       errors.Billing_State = 'Please enter a state'
     }

@@ -141,7 +141,7 @@ export function BillingInfo({formData, setFormData, validate, errors, setErrors,
               )}
           </FormControl>
             </Box>
-            <Box w={'22vw'} display={'flex'} flexDir={'row'} justifyContent={'space-between'}>
+            {/* <Box w={'22vw'} display={'flex'} flexDir={'row'} justifyContent={'space-between'}>
           <FormControl>
           <FormLabel textColor={'web.text2'} fontSize={'sm'} pt={"1.5vh"} name={'Billing_Nickname'}  fontWeight={'normal'}>Billing Nickname</FormLabel>
             <Input
@@ -158,7 +158,7 @@ export function BillingInfo({formData, setFormData, validate, errors, setErrors,
               onChange={handleChange}
               />
           </FormControl>
-            </Box>
+            </Box> */}
           </VStack>
         </Box>    
       </form>

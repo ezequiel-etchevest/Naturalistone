@@ -14,6 +14,9 @@ export function CompanyInfo({formData, setFormData, validate, errors, setErrors,
       DiscountID: value
     })
   }
+  console.log("soy formdata", formData)
+  const discountRates = [0, 5, 10, 15]
+
   return(
     <>
       <form>
@@ -83,24 +86,28 @@ export function CompanyInfo({formData, setFormData, validate, errors, setErrors,
             <Box w={'22vw'} display={'flex'} flexDir={'row'} justifyContent={'space-between'}>
               <FormControl>
               <FormLabel textColor={'web.text2'} name={'discount'} fontSize={'sm'}>Discount</FormLabel>
-                <RadioGroup
-                textColor={'web.text2'} 
-                name={'DiscountID'} 
-                onChange={handleDiscount} 
-                value={discountID}
-                colorScheme="orange">
-                  <HStack spacing={'auto'} px={'1.5vw'}>
-                    <Radio className='options' value={'1'}>0%</Radio>
-                    <Radio className='options' value={'2'}>5%</Radio>
-                    <Radio className='options' value={'3'}>10%</Radio>
-                    <Radio className='options' value={'4'}>15%</Radio>
-                  </HStack>
-                </RadioGroup>
-                  { errors.Phone && (
-                    <Text position={'absolute'} color={'web.error'} fontSize={'xs'}>
-                      {errors.Phone}
-                    </Text>
-                  )}
+                <Select
+                  onChange={(e)=>handleChange(e)}
+                  mb={'0.5vh'}
+                  borderBottomWidth={"2px"}
+                  borderBottomColor={'web.text2'}
+                  minH={'4vh'}
+                  color={"web.text2"}
+                  variant="unstyled"
+                  textColor={'web.text2'}
+                  _placeholder={{ fontFamily: 'body', fontWeight: 'inherit', textColor: 'inherit' }}
+                  size={"sm"}
+                  value={formData.DiscountID}
+                  cursor={'pointer'}
+                  name="DiscountID"
+                >
+                    {
+                      discountRates?.map((e, i) => {
+                          return(
+                            <option key={i} className={'options'} value={e}>{e}</option>
+                      )})
+                    }
+                </Select>
               </FormControl>
             </Box>
           </VStack>

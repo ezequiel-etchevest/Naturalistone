@@ -11,7 +11,7 @@ import { IconButton,
         Progress, 
         Box} from "@chakra-ui/react";
 import { HiUserAdd } from "react-icons/hi";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { createCustomer } from '../../../redux/actions-customers'
 import { CustomerInfo } from "./customerInfo";
@@ -26,6 +26,7 @@ export function CreateCustomerModal() {
   const toastId = 'error-toast'
   const [errors, setErrors] = useState({})
   const [ progress, setProgress ] = useState(25)
+  const [ disabled, setDisabled ] = useState(false)
   const toast = useToast()
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [changeInput, setChangeInput] = useState(true)
@@ -59,10 +60,10 @@ export function CreateCustomerModal() {
       [name]: value,
     }));
     setErrors(
-      validateCompletedInputs({
+      validateEmptyInputs({
         ...formData,
         [name]: value,
-      })
+      }, progress)
     );
     setChangeInput(true)
   };
@@ -110,11 +111,11 @@ export function CreateCustomerModal() {
     setProgress(25)
     onClose()
   }
+
   const handleNextButton = () =>{
     setErrors({})
     let newErrors = validateEmptyInputs(formData, progress)
     setErrors(newErrors)
-
     if(Object.entries(newErrors).length){
       console.log({newErrors})
       if(!toast.isActive(toastId)){
@@ -126,7 +127,9 @@ export function CreateCustomerModal() {
           duration: 5000,
           isClosable: true,
           }))
-    }}else{
+        }
+      return;
+  }else{
       setProgress(progress + 25)
     }
     
@@ -134,6 +137,23 @@ export function CreateCustomerModal() {
   const handlePreviousButton = () => {
     setProgress(progress - 25)
   }
+
+  useEffect(() => {
+    const newErrorsEmptyInputs = validateEmptyInputs(formData, progress)
+    if (progress === 25) {
+      if (formData.Contact_Name === '' || formData.Email === '' || formData.Phone === '' || Object.entries(newErrorsEmptyInputs).length) setDisabled(true)
+      else setDisabled(false)
+    } else if (progress === 50) {
+        if (formData.Address === '' || formData.State === '' || formData.City === '' || formData.ZipCode === '' || Object.entries(newErrorsEmptyInputs).length) setDisabled(true)
+        else setDisabled(false)
+    } else if (progress === 75) {
+        if ((formData.Company_Position !== "Home Owner" && formData.Company === '') || formData.Company_Position === '' || Object.entries(newErrorsEmptyInputs).length) setDisabled(true)
+        else setDisabled(false)
+  } else {
+        if (formData.Billing_Address === '' || formData.Billing_State === '' || formData.Billing_City === '' || formData.Billing_ZipCode === '' || Object.entries(newErrorsEmptyInputs).length) setDisabled(true)
+        else setDisabled(false)
+}
+  }, [formData, progress])
   return (
     <>
       <IconButton
@@ -206,11 +226,11 @@ export function CreateCustomerModal() {
               </Button>
               {
               progress === 100 ? (
-                <Button colorScheme='orange' mr={3} onClick={(e)=>handleSubmit(e)}>
+                <Button colorScheme='orange' mr={3} onClick={(e)=>handleSubmit(e)} disabled={disabled}>
                   Submit
                 </Button>
               ):(
-                <Button colorScheme='orange' mr={3} onClick={()=>handleNextButton()}>
+                <Button colorScheme='orange' mr={3} onClick={()=>handleNextButton()} disabled={disabled}>
                   Next
                 </Button>
               )
