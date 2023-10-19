@@ -6,11 +6,11 @@ export function BillingInfo({formData, setFormData, validate, errors, setErrors,
   return (
     <>
       <form>
-        <Box display={"flex"} flexDir={"row"} gap={"2vw"} >
-          <VStack h={'20vh'} pl={"3vw"}>
+        <Box display={"flex"} flexDir={"column"} gap={"2vw"} h={"45vh"}>
             <Box w={'19vw'} display={'flex'} flexDir={'row'} justifyContent={'space-between'}>
-          <Text alignSelf={'flex-start'} textColor={'web.text2'} fontWeight={'bold'} >Billing Address Info</Text>
+          <Text alignSelf={'flex-start'} textColor={'web.text2'} fontWeight={'bold'} pl={"3vw"}>Billing Address Info</Text>
             </Box>
+            <Box pt={"1vh"} display={"flex"} flexDir={"row"} justifyContent={"center"} alignItems={"center"} gap={"3vw"}>
             <Stack h={'44vh'} divider={<StackDivider />}>
             <Box w={'19vw'} display={'flex'} flexDir={'row'} justifyContent={'space-between'}>
           <FormControl>
@@ -79,8 +79,6 @@ export function BillingInfo({formData, setFormData, validate, errors, setErrors,
             </Box>
             <Box></Box>
             </Stack>
-          </VStack>
-          <VStack h={'20vh'}  pt={"4.2vh"}>
             <Stack h={'44vh'} divider={<StackDivider />}>
             <Box w={'19vw'} display={'flex'} flexDir={'row'} justifyContent={'space-between'}>
         <FormControl>
@@ -89,6 +87,7 @@ export function BillingInfo({formData, setFormData, validate, errors, setErrors,
                 onChange={(e)=>handleChange(e)}
                 minH={'5vh'}
                 pl={"2"}
+                // pb={"1"}
                 variant="unstyled"
                 color={'web.text2'}
                 textColor={'web.text2'}
@@ -123,7 +122,7 @@ export function BillingInfo({formData, setFormData, validate, errors, setErrors,
             </Box>
             <Box w={'19vw'} display={'flex'} flexDir={'row'} justifyContent={'space-between'}>
           <FormControl>
-          <FormLabel textColor={'web.text2'} name={'billingzipcode'} pt={"1.5vh"} fontSize={'sm'}>Zip Code</FormLabel>
+          <FormLabel textColor={'web.text2'} name={'billingzipcode'} pt={"2vh"} fontSize={'sm'}>Zip Code</FormLabel>
             <Input
               variant="unstyled"
               pl={"2"}
@@ -164,7 +163,8 @@ export function BillingInfo({formData, setFormData, validate, errors, setErrors,
             </Box> */}
             <Box></Box>
             </Stack>
-          </VStack>
+            </Box>
+
         </Box>    
       </form>
     </>

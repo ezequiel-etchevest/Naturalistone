@@ -184,8 +184,9 @@ export function CreateCustomerModal() {
         bg={'web.sideBar'}
         border={'1px solid'}
         borderColor={'web.border'}
-        minH={progress === 99.99 ? "70vh" : '50vh'}
+        minH={progress === 99.99 ? "60vh" : '50vh'}
         minW={progress === 99.99 ? '50vw' : '35vw'}
+        maxH={progress === 99.99 ? "80vh" : ''}
         >
         <Progress
         value={progress} 

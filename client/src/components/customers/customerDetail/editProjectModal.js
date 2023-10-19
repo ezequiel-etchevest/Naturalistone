@@ -1,9 +1,7 @@
-import { useDisclosure, Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, ModalFooter, Button, Progress, Box, Text, Tooltip } from "@chakra-ui/react"
-import { TbBuildingCommunity } from "react-icons/tb";
-import CreateProjectForm from "./createProjectForm";
+import { useDisclosure, Modal, ModalOverlay, ModalContent, ModalCloseButton, ModalBody, ModalFooter, Button, Progress, Box, Text, Tooltip } from "@chakra-ui/react"
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { createProject, getCustomerProjects, patchProject } from '../../../redux/actions-projects';
+import {  getCustomerProjects, patchProject } from '../../../redux/actions-projects';
 import { validateCompletedInputsProject } from "../../../utils/validateForm";
 import { useToast } from "@chakra-ui/react";
 import EditProjectList from "./editProjectList";
@@ -25,6 +23,7 @@ export function EditProject({customer, projects_by_customer_id}) {
     Shipping_ZipCode: '',
     Shipping_City: '',
     Shipping_Address: '',
+    Shipping_Address2: '',
     Shipping_Address_id: ''
   });
 
@@ -82,6 +81,7 @@ export function EditProject({customer, projects_by_customer_id}) {
         Shipping_ZipCode: '',
         Shipping_City: '',
         Shipping_Address: '',
+        Shipping_Address2: '',
         Shipping_Address_id: ''
     })
     setErrors({})
@@ -135,7 +135,9 @@ export function EditProject({customer, projects_by_customer_id}) {
         <ModalOverlay/>
         <ModalContent
         bg={'web.sideBar'}
-        maxW={progress === 50 ? '65vw' : '40vw'}
+        h={"76vh"}
+        maxW={progress === 50 ? '65vw' : '50vw'}
+        minH={"55vh"}
         border={'1px solid'}
         borderColor={'web.border'}>
           <ModalCloseButton onClick={()=>handleClose()} />
@@ -147,15 +149,7 @@ export function EditProject({customer, projects_by_customer_id}) {
               size={'sm'} 
               borderTopRightRadius={'md'}
               borderTopLeftRadius={'md'}/>
-            <Box h={"6vh"} mt={'1vh'}>
-              <Text
-                ml={"2vw"}
-                fontSize={"2xl"}
-                color={"white"}
-              >
-                Projects Information
-            </Text>
-            </Box>
+            <Text ml={'3vw'} mt={"4vh"} mb={'2vh'} fontSize={'lg'} w={'14vw'} color={'white'} alignSelf={'flex-start'}>Project information</Text> 
             <ModalBody >
                 {
                   progress === 50 && (
@@ -179,7 +173,14 @@ export function EditProject({customer, projects_by_customer_id}) {
                   )
                 }
             </ModalBody>
-            <ModalFooter display={"flex"} justifyContent={"space-between"}>
+            <ModalFooter 
+              mb={"2vh"}
+              mt={"2vh"}
+              display={"flex"}
+              flexDir={"row"}
+              justifyContent={"space-between"}
+              ml={"1vw"}
+              mr={"0.5vw"}>
             <Button visibility={progress === 50 ? 'hidden' : 'unset'} colorScheme='orange' mr={3} onClick={()=>handlePreviousButton()}>
               Prev
             </Button>

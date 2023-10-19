@@ -64,14 +64,14 @@ projectsRouter.get('/:idCustomer', async function(req, res){
 projectsRouter.post('/:customerID', async function(req, res){
 
     const { customerID } = req.params
-    const { ProjectName, Shipping_State, Shipping_ZipCode, Shipping_City, Shipping_Address } = req.body
+    const { ProjectName, Shipping_State, Shipping_ZipCode, Shipping_City, Shipping_Address, Shipping_Address2 } = req.body
 
     const numberZipCode = parseFloat(Shipping_ZipCode);
 
     try{
       mysqlConnection.beginTransaction();
 
-      const addressProject = await createAddress(customerID, Shipping_Address, '', Shipping_City, Shipping_State, numberZipCode, '')
+      const addressProject = await createAddress(customerID, Shipping_Address, Shipping_Address2 ?? '', Shipping_City, Shipping_State, numberZipCode, '')
 
       await createProject(ProjectName, customerID, addressProject.insertId);
 

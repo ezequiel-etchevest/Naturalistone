@@ -106,16 +106,15 @@ return (
         flexDir={'column'} 
         alignItems={'center'}>
           <Card w={'46vw'} mb={'3vh'}>
-            <CardHeader mr={'20px'} textColor={'web.text'} fontSize={'xl'}>Edit Customer</CardHeader>
-            <Text textColor={'web.text2'} mt={'20px'} ml={'20px'}>Customer Info</Text>
-            <CardBody display={'flex'} flexDir={'row'} justifyContent={'space-around'} mt={'1vh'}>
+            <CardHeader mr={'20px'} pt={"2"} textColor={'web.text'} fontSize={'xl'}>Edit Customer</CardHeader>
+            <Text textColor={'web.text2'} mt={'4vh'} ml={'20px'} fontWeight={'bold'}>Customer Info</Text>
+            <CardBody display={'flex'} flexDir={'row'} justifyContent={'space-around'} mt={'5vh'}>
               <Stack divider={<StackDivider />}>
                 <Box pt='2' w={'20vw'} h={'8vh'}>
                  <Text textColor={'web.text2'} fontSize='sm' fontWeight={'semisemibold'}> Name </Text>
                   <Editable
                   value={inputs.Contact_Name}
                   fontSize='sm'
-                  fontWeight={'hairline'}
                   isPreviewFocusable={false}
                   display={'flex'}
                   flexDir={'row'}
@@ -156,7 +155,6 @@ return (
                 <Editable
                   value={inputs.Email}
                   fontSize='sm'
-                  fontWeight={'hairline'}
                   isPreviewFocusable={false}
                   display={'flex'}
                   flexDir={'row'}
@@ -195,7 +193,6 @@ return (
                 <Editable
                   value={inputs.Phone}
                   fontSize='sm'
-                  fontWeight={'hairline'}
                   isPreviewFocusable={false}
                   display={'flex'}
                   flexDir={'row'}
@@ -268,7 +265,6 @@ return (
                 <Editable
                   value={inputs.Company}
                   fontSize='sm'
-                  fontWeight={'hairline'}
                   isPreviewFocusable={false}
                   display={'flex'}
                   flexDir={'row'}

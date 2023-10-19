@@ -103,17 +103,16 @@ return (
         display={'flex'} 
         flexDir={'column'} 
         alignItems={'center'}>
-        <Card w={'46vw'} h={'46vh'} >
+        <Card w={'46vw'} h={'55vh'} >
         <CardHeader mr={'20px'} textColor={'web.text'} fontSize={'xl'}>Edit Customer</CardHeader>
-            <Text textColor={'web.text2'} mt={'5vh'} ml={'20px'}>Customer Shipping Address</Text>
+            <Text textColor={'web.text2'} mt={'5vh'} ml={'20px'} fontWeight={'bold'}>Shipping Address</Text>
           <CardBody display={'flex'} flexDir={'row'} justifyContent={'space-around'} alignContent={'center'} mt={'5vh'}>
             <Stack divider={<StackDivider />} display={'flex'} flexDir={'column'}>
-            <Box w={'20vw'} mt={'0.5vh'}>
+            <Box pt='2' w={'20vw'} h={'8vh'} mt={'0.5vh'}>
                 <Text textColor={'web.text2'} fontSize='sm' fontWeight={'semibold'}> Address </Text>
                 <Editable
                   value={inputs?.Address}
                   fontSize='sm'
-                  fontWeight={'hairline'}
                   isPreviewFocusable={false}
                   display={'flex'}
                   flexDir={'row'}
@@ -147,12 +146,44 @@ return (
                     </Text>
                 )}
               </Box>
-              <Box w={'20vw'} mt={'0.5vh'}>
+                <Box pt='2' w={'20vw'} h={'8vh'} mt={'0.5vh'}>
+                <Text textColor={'web.text2'} fontSize='sm' fontWeight={'semibold'}> Address 2 </Text>
+                <Editable
+                  value={inputs?.Address2}
+                  fontSize='sm'
+                  isPreviewFocusable={false}
+                  display={'flex'}
+                  flexDir={'row'}
+                  pl='2'
+                  pt='1'
+                  textColor={'web.text2'}
+                  justifyContent={'space-between'}
+                  w={'19vw'}
+                >
+                  <EditablePreview />
+                  <Input as={EditableInput}
+                    name={'Address2'}
+                    w={'17vw'}
+                    minH={'4vh'}
+                    variant="unstyled"
+                    textColor={'web.text2'}
+                    _placeholder={{ fontFamily: 'body', fontWeight: 'inherit' }}
+                    _focus={{
+                      outline: 'none',
+                      boxShadow: 'none',
+                   }} 
+                    size={"sm"}
+                    type={"text"}
+                    onChange={(e) =>{handleChange(e)}}
+                  /> 
+                  <EditableControls name={'Address2'} value={inputs.Address2}   />
+                </Editable>
+              </Box>
+              <Box pt='2' w={'20vw'} h={'8vh'} mt={'0.5vh'}>
                 <Text textColor={'web.text2'} pt='1' fontSize='sm' fontWeight={'semibold'}> City </Text>
                 <Editable
                   value= {inputs.City}
                   fontSize='sm'
-                  fontWeight={'hairline'}
                   isPreviewFocusable={false}
                   display={'flex'}
                   flexDir={'row'}
@@ -189,12 +220,11 @@ return (
               <Box></Box>
             </Stack>
             <Stack divider={<StackDivider />} display={'flex'} flexDir={'column'}>
-            <Box w={'20vw'}>
+            <Box pt='2' w={'20vw'} h={'8vh'} mt={'0.5vh'}>
                 <Text textColor={'web.text2'} pt='1' fontSize='sm' fontWeight={'semibold'}> ZipCode </Text>
                 <Editable
                   value= {inputs.ZipCode}
                   fontSize='sm'
-                  fontWeight={'hairline'}
                   isPreviewFocusable={false}
                   display={'flex'}
                   flexDir={'row'}

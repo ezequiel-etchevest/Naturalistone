@@ -121,8 +121,8 @@ return (
         alignItems={'center'}>
           <Card w={'46vw'} mb={'3vh'}>
             <CardHeader mr={'20px'} textColor={'web.text'} fontSize={'xl'}>Edit Customer</CardHeader>
-            <Text textColor={'web.text2'} mt={'20px'} ml={'20px'}>Customer Info</Text>
-            <CardBody display={'flex'} flexDir={'row'} justifyContent={'space-around'} mt={'1vh'}>
+            <Text textColor={'web.text2'} mt={'20px'} ml={'20px'} fontWeight={'bold'}>Customer Info</Text>
+            <CardBody display={'flex'} flexDir={'row'} justifyContent={'space-around'} mt={'2vh'}>
               <Stack divider={<StackDivider />}>
                 <Box pt='2' w={'20vw'} h={'8vh'}>
                  <Text textColor={'web.text2'} fontSize='sm' fontWeight={'semisemibold'}> Name </Text>

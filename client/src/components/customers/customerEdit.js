@@ -45,6 +45,7 @@ const [inputs, setInputs] = useState({
     Contact_Name: normalizeValue(customer.Contact_Name),
     City: normalizeValue(!customer.shipping_address_id ? customer.City : customer.shipping_city),
     Address: normalizeValue(!customer.shipping_address_id ? customer.Address : customer.shipping_address),
+    Address2: normalizeValue(!customer.shipping_address_id ? '' : customer.shipping_address2),
     State: normalizeValue(!customer.shipping_address_id ? customer.State : customer.shipping_state),
     ZipCode: normalizeValue(!customer.shipping_address_id ? customer.ZipCode : customer.shipping_zip_code),
     Company: normalizeValue(customer.Company),
@@ -54,6 +55,7 @@ const [inputs, setInputs] = useState({
     DiscountID: normalizeValue(customer.DiscountID),
     DiscountRate: discount(normalizeValue(customer.DiscountRate)),
     Billing_Address: normalizeValue(!customer.billing_address_id ? customer.Billing_Address : customer.billing_address),
+    Billing_Address2: normalizeValue(!customer.billing_address_id ? '' : customer.billing_address2),
     Billing_City: normalizeValue(!customer.billing_address_id ? customer.Billing_City : customer.billing_city),
     Billing_ZipCode: normalizeValue(!customer.billing_address_id ? customer.Billing_ZipCode : customer.billing_zip_code),
     Billing_State: normalizeValue(!customer.billing_address_id ? customer.Billing_State : customer.billing_state),
@@ -130,6 +132,7 @@ setInputs({
   Contact_Name: normalizeValue(customer.Contact_Name),
   City: normalizeValue(!customer.shipping_address_id ? customer.City : customer.shipping_city),
   Address: normalizeValue(!customer.shipping_address_id ? customer.Address : customer.shipping_address),
+  Address2: normalizeValue(!customer.shipping_address_id ? '' : customer.shipping_address2),
   State: normalizeValue(!customer.shipping_address_id ? customer.State : customer.shipping_state),
   ZipCode: normalizeValue(!customer.shipping_address_id ? customer.ZipCode : customer.shipping_zip_code),
   Company: normalizeValue(customer.Company),
@@ -139,6 +142,7 @@ setInputs({
   DiscountID: normalizeValue(customer.DiscountID),
   DiscountRate: discount(normalizeValue(customer.DiscountRate)),
   Billing_Address: normalizeValue(!customer.billing_address_id ? customer.Billing_Address : customer.billing_address),
+  Billing_Address2: normalizeValue(!customer.billing_address_id ? '' : customer.billing_address2),
   Billing_City: normalizeValue(!customer.billing_address_id ? customer.Billing_City : customer.billing_city),
   Billing_ZipCode: normalizeValue(!customer.billing_address_id ? customer.Billing_ZipCode : customer.billing_zip_code),
   Billing_State: normalizeValue(!customer.billing_address_id ? customer.Billing_State : customer.billing_state),
@@ -168,26 +172,26 @@ const handleSubmit = async () => {
     if(customer.shipping_address_id) {
       await dispatch(updateAddress(customer.shipping_address_id, 
         {
-          address: inputs.Address, city: inputs.City, state: inputs.State, zip_code: inputs.ZipCode
+          address: inputs.Address, city: inputs.City, state: inputs.State, zip_code: inputs.ZipCode, address2: inputs.Address2
         }
       ))
     } else {
       await dispatch(createAddressCustomer(customer.CustomerID, 
         {
-          Address: inputs.Address, City: inputs.City, State: inputs.State, ZipCode: inputs.ZipCode, AddressInShipping: true
+          Address: inputs.Address, City: inputs.City, State: inputs.State, ZipCode: inputs.ZipCode, AddressInShipping: true, Address2: inputs.Address2
         }
         ))
     }
     if(customer.billing_address_id) {
       await dispatch(updateAddress(customer.billing_address_id, 
         {
-          address: inputs.Billing_Address, city: inputs.Billing_City, state: inputs.Billing_State, zip_code: inputs.Billing_ZipCode
+          address: inputs.Billing_Address, city: inputs.Billing_City, state: inputs.Billing_State, zip_code: inputs.Billing_ZipCode, address2: inputs.Billing_Address2
         }
       ))
     } else {
       await dispatch(createAddressCustomer(customer.CustomerID, 
         {
-          Address: inputs.Billing_Address, City: inputs.Billing_City, State: inputs.Billing_State, ZipCode: inputs.Billing_ZipCode, AddressInShipping: false
+          Address: inputs.Billing_Address, City: inputs.Billing_City, State: inputs.Billing_State, ZipCode: inputs.Billing_ZipCode, AddressInShipping: false, Address2: inputs.Billing_Address2
         }
         ))
     }
@@ -249,6 +253,7 @@ useEffect(() => {
   Contact_Name: normalizeValue(customer.Contact_Name),
   City: normalizeValue(!customer.shipping_address_id ? customer.City : customer.shipping_city),
   Address: normalizeValue(!customer.shipping_address_id ? customer.Address : customer.shipping_address),
+  Address2: normalizeValue(!customer.shipping_address_id ? '' : customer.shipping_address2),
   State: normalizeValue(!customer.shipping_address_id ? customer.State : customer.shipping_state),
   ZipCode: normalizeValue(!customer.shipping_address_id ? customer.ZipCode : customer.shipping_zip_code),
   Company: normalizeValue(customer.Company),
@@ -258,6 +263,7 @@ useEffect(() => {
   DiscountID: normalizeValue(customer.DiscountID),
   DiscountRate: String(discount(normalizeValue(customer.DiscountRate))),
   Billing_Address: normalizeValue(!customer.billing_address_id ? customer.Billing_Address : customer.billing_address),
+  Billing_Address2: normalizeValue(!customer.billing_address_id ? '' : customer.billing_address2),
   Billing_City: normalizeValue(!customer.billing_address_id ? customer.Billing_City : customer.billing_city),
   Billing_ZipCode: normalizeValue(!customer.billing_address_id ? customer.Billing_ZipCode : customer.billing_zip_code),
   Billing_State: normalizeValue(!customer.billing_address_id ? customer.Billing_State : customer.billing_state),
@@ -292,7 +298,9 @@ return (
     bg={'web.sideBar'}
     border={'1px solid'}
     maxW={'52vw'}
-    borderColor={'web.border'}>
+    borderColor={'web.border'}
+    minH={"50vh"}
+    >
     <Progress
     value={progress} 
     colorScheme={"orange"} 
@@ -359,7 +367,14 @@ return (
           }
 
         </ModalBody>
-        <ModalFooter display={'flex'} justifyContent={'space-between'}>
+        <ModalFooter
+          mb={"2vh"}
+          mt={"2vh"}
+          display={"flex"}
+          flexDir={"row"}
+          justifyContent={"space-between"}
+          ml={"1vw"}
+          mr={"0.5vw"}>
           <Button visibility={progress === 33.33 ? 'hidden' : 'unset'} colorScheme='orange' mr={3} onClick={()=>handlePreviousButton()}>
           Prev
           </Button>

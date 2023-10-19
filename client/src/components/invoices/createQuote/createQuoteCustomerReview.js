@@ -41,6 +41,7 @@ const initialState = {
   DiscountID: normalizeValue(formData.customer.DiscountID),
   DiscountRate: normalizeValue(formData.customer.DiscountRate) ? normalizeValue(formData.customer.DiscountRate) : '0',
   Billing_Address: normalizeValue(formData.customer.Billing_Address),
+  Billing_Address2: normalizeValue(formData.customer.Billing_Address2),
   Billing_City: normalizeValue(formData.customer.Billing_City),
   Billing_ZipCode: normalizeValue(formData.customer.Billing_ZipCode),
   Billing_State: normalizeValue(formData.customer.Billing_State),
@@ -174,7 +175,6 @@ return(
                 <Editable
                   value={inputs.Contact_Name}
                   fontSize='sm'
-                  fontWeight={'hairline'}
                   isPreviewFocusable={false}
                   display={'flex'}
                   flexDir={'row'}
@@ -231,7 +231,6 @@ return(
                 <Editable
                   value={inputs.Email}
                   fontSize='sm'
-                  fontWeight={'hairline'}
                   isPreviewFocusable={false}
                   display={'flex'}
                   flexDir={'row'}
@@ -285,7 +284,6 @@ return(
                 <Editable
                   value={inputs.Phone}
                   fontSize='sm'
-                  fontWeight={'hairline'}
                   isPreviewFocusable={false}
                   display={'flex'}
                   flexDir={'row'}
@@ -339,10 +337,11 @@ return(
             </Stack>
             <Divider borderColor={'web.border'} orientation='vertical'/>
             <Stack h={'44vh'} divider={<StackDivider />}>
-              <Box pt='2' w={'16vw'} h={'8vh'} maxW={'276px'}>
+              <Box pt='2' w={'16vw'} h={'8vh'} mt={'0.5vh'} maxW={'276px'}>
                 <Text fontSize='sm' fontWeight={'semibold'}> Company </Text>
                 <Editable
                   value={inputs.Company}
+                  fontSize='sm'
                   isPreviewFocusable={false}
                   display={'flex'}
                   flexDir={'row'}
@@ -496,7 +495,6 @@ return(
                 <Editable
                   value={inputs.Billing_Address}
                   fontSize='sm'
-                  fontWeight={'hairline'}
                   isPreviewFocusable={false}
                   display={'flex'}
                   flexDir={'row'}
@@ -553,7 +551,6 @@ return(
                 <Editable
                   value={inputs.Billing_Address2}
                   fontSize='sm'
-                  fontWeight={'hairline'}
                   isPreviewFocusable={false}
                   display={'flex'}
                   flexDir={'row'}
@@ -598,7 +595,6 @@ return(
                 <Editable
                   value={inputs.Billing_City}
                   fontSize='sm'
-                  fontWeight={'hairline'}
                   isPreviewFocusable={false}
                   display={'flex'}
                   flexDir={'row'}
@@ -655,7 +651,6 @@ return(
                 <Editable
                   value={inputs.Billing_ZipCode}
                   fontSize='sm'
-                  fontWeight={'hairline'}
                   isPreviewFocusable={false}
                   display={'flex'}
                   flexDir={'row'}

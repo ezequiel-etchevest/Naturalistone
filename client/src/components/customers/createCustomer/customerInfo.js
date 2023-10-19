@@ -21,8 +21,6 @@ export function CustomerInfo({formData, setFormData, validate, errors, setErrors
               pl={"2"}
               _placeholder={{ fontFamily: 'body', fontWeight: 'inherit' }}
               size={"sm"}
-              // borderBottomWidth={"2px"}
-              // borderBottomColor={'web.text2'}
               type={"text"}
               name={"Contact_Name"}
               value={formData?.Contact_Name}
@@ -44,8 +42,6 @@ export function CustomerInfo({formData, setFormData, validate, errors, setErrors
               pl={"2"}
               _placeholder={{ fontFamily: 'body', fontWeight: 'inherit' }}
               size={"sm"}
-              // borderBottomWidth={"2px"}
-              // borderBottomColor={'web.text2'}
               type={"text"}
               name={"Email"}
               value={formData?.Email}
@@ -67,8 +63,6 @@ export function CustomerInfo({formData, setFormData, validate, errors, setErrors
               pl={"2"}
               _placeholder={{ fontFamily: 'body', fontWeight: 'inherit' }}
               size={"sm"}
-              // borderBottomWidth={"2px"}
-              // borderBottomColor={'web.text2'}
               type={"text"}
               name={"Phone"}
               value={formData?.Phone}

@@ -1,4 +1,4 @@
-import { useDisclosure, Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, ModalFooter, Button } from "@chakra-ui/react"
+import { useDisclosure, Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, ModalFooter, Button, Text } from "@chakra-ui/react"
 import { TbBuildingCommunity } from "react-icons/tb";
 import CreateProjectForm from "./createProjectForm";
 import { useEffect, useState } from "react";
@@ -22,7 +22,8 @@ export function CreateNewProject({customer, custID}) {
     Shipping_State: '',
     Shipping_ZipCode: '',
     Shipping_City: '',
-    Shipping_Address: ''
+    Shipping_Address: '',
+    Shipping_Address2: ''
   });
 
   const dispatch = useDispatch();
@@ -57,7 +58,8 @@ export function CreateNewProject({customer, custID}) {
         Shipping_State: '',
         Shipping_ZipCode: '',
         Shipping_City: '',
-        Shipping_Address: ''
+        Shipping_Address: '',
+        Shipping_Address2: '',
     })
     setChangeInput(false)
     setErrors({})
@@ -95,14 +97,20 @@ export function CreateNewProject({customer, custID}) {
         <ModalContent
         bg={'web.sideBar'}
         border={'1px solid'}
+        minW={'50vw'}
         borderColor={'web.border'}>
-          <ModalHeader color={'web.text'}>Add New Project</ModalHeader>
+          {/* <ModalHeader color={'web.text'}>Add New Project</ModalHeader> */}
+          <Text ml={'3vw'} mt={"4vh"} mb={'4vh'} fontSize={'lg'} w={'14vw'} color={'white'} alignSelf={'flex-start'}>Add new project</Text> 
           <ModalCloseButton onClick={()=>handleClose()} />
             <ModalBody >
               <CreateProjectForm formData={formData} setFormData={setFormData} errors={errors}
                setErrors={setErrors} validateCompletedInputsProject={validateCompletedInputsProject} setChangeInput={setChangeInput}/>
             </ModalBody>
-            <ModalFooter>
+            <ModalFooter
+              mb={"2vh"}
+              mt={"2vh"}
+              ml={"1vw"}
+              mr={"0.5vw"}>
               <Button colorScheme='orange' mr={3} onClick={(e)=>handleSubmit(e)} disabled={disabled}>
                 Submit
               </Button>
