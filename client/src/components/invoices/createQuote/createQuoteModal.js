@@ -58,6 +58,7 @@ export function CreateQuote({ customers, sellers }) {
       DiscountID: "",
       DiscountRate: "",
       Billing_Address: "",
+      Billing_Address2: "",
       Billing_City: "",
       Billing_ZipCode: "",
       Billing_State: "",
@@ -112,19 +113,20 @@ export function CreateQuote({ customers, sellers }) {
           data.Billing_City.length !== 0 &&
           data.Billing_State.length !== 0 &&
           data.Billing_ZipCode.length !== 0 &&
-          data.Company.length !== 0 &&
+          ((data.Company_Position === "Home Owner" && data.Company.length === 0) || (data.Company_Position === "Home Owner" && data.Company.length !== 0) || (data.Company_Position !== "Home Owner" && data.Company.length !== 0)) &&
           data.Company_Position.length !== 0 &&
           data.Contact_Name.length !== 0 &&
           data.DiscountRate.length !== 0 &&
           data.Email.length !== 0 &&
           data.Phone.length !== 0 &&
-          data.Seller.length !== 0
+          data.Seller.length !== 0 &&
+          Object.entries(errorsCustomer).length === 0
           ) {
-            setDisable(false);
+          setDisable(false);
         } else {
           setDisable(true)
         }
-    }}, [formData.customer, progress]);
+    }}, [formData.customer, progress, errorsCustomer]);
     
   const validateAuthFlag = (objetos) => {
     for (const id in objetos) {
@@ -180,6 +182,7 @@ export function CreateQuote({ customers, sellers }) {
         DiscountID: "",
         DiscountRate: "",
         Billing_Address: "",
+        Billing_Address2: "",
         Billing_City: "",
         Billing_ZipCode: "",
         Billing_State: "",
@@ -238,13 +241,13 @@ export function CreateQuote({ customers, sellers }) {
           if(formData.customer.billing_address_id) {
             await dispatch(updateAddress(formData.customer.billing_address_id, 
               {
-                address: formData.customer.Billing_Address, city: formData.customer.Billing_City, state: formData.customer.Billing_State, zip_code: formData.customer.Billing_ZipCode
+                address: formData.customer.Billing_Address, city: formData.customer.Billing_City, state: formData.customer.Billing_State, zip_code: formData.customer.Billing_ZipCode, address2: formData.customer.Billing_Address2
               }
           ))
           } else {
             await dispatch(createAddressCustomer(formData.customer.CustomerID, 
           {
-            Address: formData.customer.Billing_Address, City: formData.customer.Billing_City, State: formData.customer.Billing_State, ZipCode: formData.customer.Billing_ZipCode, AddressInShipping: false
+            Address: formData.customer.Billing_Address, City: formData.customer.Billing_City, State: formData.customer.Billing_State, ZipCode: formData.customer.Billing_ZipCode, AddressInShipping: false, Address2: formData.customer.Billing_Address2
           }
             ))
           }

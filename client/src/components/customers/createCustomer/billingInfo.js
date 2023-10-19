@@ -1,4 +1,4 @@
-import { VStack, Box, FormControl, Input, Text, FormLabel, Select} from "@chakra-ui/react";
+import { VStack, Box, FormControl, Input, Text, FormLabel, Select, Stack, StackDivider} from "@chakra-ui/react";
 import { USStates } from "../../../utils/USStates";
 
 export function BillingInfo({formData, setFormData, validate, errors, setErrors, setChangeInput, handleChange}) {
@@ -6,45 +6,47 @@ export function BillingInfo({formData, setFormData, validate, errors, setErrors,
   return (
     <>
       <form>
-        <Box display={"flex"} flexDir={"row"} gap={"2vw"}>
-          <VStack h={'20vh'} >
-            <Box w={'22vw'} display={'flex'} flexDir={'row'} justifyContent={'space-between'}>
+        <Box display={"flex"} flexDir={"row"} gap={"2vw"} >
+          <VStack h={'20vh'} pl={"3vw"}>
+            <Box w={'19vw'} display={'flex'} flexDir={'row'} justifyContent={'space-between'}>
           <Text alignSelf={'flex-start'} textColor={'web.text2'} fontWeight={'bold'} >Billing Address Info</Text>
             </Box>
-            <Box w={'22vw'} display={'flex'} flexDir={'row'} justifyContent={'space-between'}>
+            <Stack h={'44vh'} divider={<StackDivider />}>
+            <Box w={'19vw'} display={'flex'} flexDir={'row'} justifyContent={'space-between'}>
           <FormControl>
-          <FormLabel textColor={'web.text2'} fontSize={'sm'} pt={"1.5vh"} name={'billingaddress'} fontWeight={'normal'}>Billing Address</FormLabel>
+          <FormLabel textColor={'web.text2'} fontSize={'sm'} pt={"1.5vh"} name={'billingaddress'} >Address</FormLabel>
             <Input
-              mb={'0.5vh'}
               variant="unstyled"
-              textColor={'web.text'}
+              textColor={'web.text2'}
+              pl={"2"}
               _placeholder={{ fontFamily: 'body', fontWeight: 'inherit' }}
               size={"sm"}
-              borderBottomWidth={"2px"}
-              borderBottomColor={'web.text2'}
+              // borderBottomWidth={"2px"}
+              // borderBottomColor={'web.text2'}
               type={"text"}
               name={"Billing_Address"}
               value={formData.Billing_Address}
               onChange={handleChange}
               />
               { errors.Billing_Address && (
-                <Text position={'absolute'} color={'web.error'} fontSize={'xs'}>
+                <Text position={'absolute'} color={'web.error'} fontSize={'xs'} pt={"1.5vh"}>
                   {errors.Billing_Address}
                 </Text>
               )}
           </FormControl>
             </Box>
-            <Box w={'22vw'} display={'flex'} flexDir={'row'} justifyContent={'space-between'}>
+            <Box w={'19vw'} display={'flex'} flexDir={'row'} justifyContent={'space-between'}>
           <FormControl>
-          <FormLabel textColor={'web.text2'} fontSize={'sm'} pt={"1.5vh"} name={'Billing_Address2'} fontWeight={'normal'}>Billing Address 2</FormLabel>
+          <FormLabel textColor={'web.text2'} fontSize={'sm'} pt={"1.5vh"} name={'Billing_Address2'}>Address 2</FormLabel>
             <Input
               mb={'0.5vh'}
               variant="unstyled"
-              textColor={'web.text'}
+              pl={"2"}
+              textColor={'web.text2'}
               _placeholder={{ fontFamily: 'body', fontWeight: 'inherit' }}
               size={"sm"}
-              borderBottomWidth={"2px"}
-              borderBottomColor={'web.text2'}
+              // borderBottomWidth={"2px"}
+              // borderBottomColor={'web.text2'}
               type={"text"}
               name={"Billing_Address2"}
               value={formData.Billing_Address2}
@@ -52,40 +54,41 @@ export function BillingInfo({formData, setFormData, validate, errors, setErrors,
               />
           </FormControl>
             </Box>
-            <Box w={'22vw'} display={'flex'} flexDir={'row'} justifyContent={'space-between'}>
+            <Box w={'19vw'} display={'flex'} flexDir={'row'} justifyContent={'space-between'}>
           <FormControl>
-          <FormLabel textColor={'web.text2'} name={'billingcity'} pt={"1.5vh"} fontSize={'sm'}>City</FormLabel>
+          <FormLabel textColor={'web.text2'}  name={'billingcity'} pt={"1.5vh"} fontSize={'sm'}>City</FormLabel>
             <Input
-              mb={'0.5vh'}
+              pl={"2"}
               variant="unstyled"
-              textColor={'web.text'}
+              textColor={'web.text2'}
               _placeholder={{ fontFamily: 'body', fontWeight: 'inherit' }}
               size={"sm"}
-              borderBottomWidth={"2px"}
-              borderBottomColor={'web.text2'}
+              // borderBottomWidth={"2px"}
+              // borderBottomColor={'web.text2'}
               type={"text"}
               name={"Billing_City"}
               value={formData.Billing_City}
               onChange={handleChange}
               />
               { errors.Billing_City && (
-                <Text position={'absolute'} color={'web.error'} fontSize={'xs'}>
+                <Text position={'absolute'} color={'web.error'} fontSize={'xs'} pt={"1.5vh"}>
                   {errors.Billing_City}
                 </Text>
               )}
           </FormControl>
             </Box>
+            <Box></Box>
+            </Stack>
           </VStack>
           <VStack h={'20vh'}  pt={"4.2vh"}>
-            <Box w={'22vw'} display={'flex'} flexDir={'row'} justifyContent={'space-between'}>
+            <Stack h={'44vh'} divider={<StackDivider />}>
+            <Box w={'19vw'} display={'flex'} flexDir={'row'} justifyContent={'space-between'}>
         <FormControl>
           <FormLabel textColor={'web.text2'} name={'billingstate'} fontSize={'sm'}>State</FormLabel>
               <Select
                 onChange={(e)=>handleChange(e)}
-                mb={'0.5vh'}
                 minH={'5vh'}
-                borderBottomWidth={"2px"}
-                borderBottomColor={'web.text2'}
+                pl={"2"}
                 variant="unstyled"
                 color={'web.text2'}
                 textColor={'web.text2'}
@@ -118,30 +121,30 @@ export function BillingInfo({formData, setFormData, validate, errors, setErrors,
             </Select>
           </FormControl>
             </Box>
-            <Box w={'22vw'} display={'flex'} flexDir={'row'} justifyContent={'space-between'}>
+            <Box w={'19vw'} display={'flex'} flexDir={'row'} justifyContent={'space-between'}>
           <FormControl>
           <FormLabel textColor={'web.text2'} name={'billingzipcode'} pt={"1.5vh"} fontSize={'sm'}>Zip Code</FormLabel>
             <Input
-              mb={'0.5vh'}
               variant="unstyled"
-              textColor={'web.text'}
+              pl={"2"}
+              textColor={'web.text2'}
               _placeholder={{ fontFamily: 'body', fontWeight: 'inherit' }}
               size={"sm"}
-              borderBottomWidth={"2px"}
-              borderBottomColor={'web.text2'}
+              // borderBottomWidth={"2px"}
+              // borderBottomColor={'web.text2'}
               type={"text"}
               name={"Billing_ZipCode"}
               value={formData.Billing_ZipCode}
               onChange={handleChange}
               />
               { errors.Billing_ZipCode && (
-                <Text position={'absolute'} color={'web.error'} fontSize={'xs'}>
+                <Text position={'absolute'} color={'web.error'} fontSize={'xs'} pt={"1.5vh"}>
                   {errors.Billing_ZipCode}
                 </Text>
               )}
           </FormControl>
             </Box>
-            {/* <Box w={'22vw'} display={'flex'} flexDir={'row'} justifyContent={'space-between'}>
+            {/* <Box w={'19vw'} display={'flex'} flexDir={'row'} justifyContent={'space-between'}>
           <FormControl>
           <FormLabel textColor={'web.text2'} fontSize={'sm'} pt={"1.5vh"} name={'Billing_Nickname'}  fontWeight={'normal'}>Billing Nickname</FormLabel>
             <Input
@@ -150,8 +153,8 @@ export function BillingInfo({formData, setFormData, validate, errors, setErrors,
               textColor={'web.text'}
               _placeholder={{ fontFamily: 'body', fontWeight: 'inherit' }}
               size={"sm"}
-              borderBottomWidth={"2px"}
-              borderBottomColor={'web.text2'}
+              // borderBottomWidth={"2px"}
+              // borderBottomColor={'web.text2'}
               type={"text"}
               name={"Billing_Nickname"}
               value={formData.Billing_Nickname}
@@ -159,6 +162,8 @@ export function BillingInfo({formData, setFormData, validate, errors, setErrors,
               />
           </FormControl>
             </Box> */}
+            <Box></Box>
+            </Stack>
           </VStack>
         </Box>    
       </form>

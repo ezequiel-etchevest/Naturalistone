@@ -16,7 +16,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { FiEdit } from 'react-icons/fi'
 import { validateEmptyInputsCreateQuote } from "../../../utils/validateForm";
 import { getCustomers, updateCustomer } from "../../../redux/actions-customers";
-import { getCustomerProjects } from "../../../redux/actions-projects";
+import { cleanProjectsCustomer, getCustomerProjects } from "../../../redux/actions-projects";
 import CreateQuoteCustomerProjets from "../createQuote/createQuoteProject";
 import { getAllProductsNewQuote } from "../../../redux/actions-products";
 import {  cleanInvoiceProducts, updateQuote, updateQuoteProds } from "../../../redux/actions-invoices";
@@ -219,6 +219,7 @@ export default function UpdateQuoteModal({invoice, invoice_products}) {
               isClosable: true,
               }))
           }} else {
+            dispatch(cleanProjectsCustomer(customerID))
             dispatch(updateCustomer(customerID, formData.customer))
             dispatch(getCustomerProjects(customerID))
             setProgress(progress + 20)

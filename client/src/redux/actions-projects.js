@@ -8,6 +8,7 @@ export const GET_PROJECT_BY_ID = 'GET_PROJECT_BY_ID';
 export const GET_PROJECTS_BY_CUSTOMER = 'GET_PROJECTS_BY_CUSTOMER';
 export const CLEAN_PROJECT_DETAIL = 'CLEAN_PROJECT_DETAIL';
 export const PATCH_PROJECT = 'PATCH_PROJECT';
+export const CLEAN_CUSTOMERS_PROJECTS = 'CLEAN_CUSTOMERS_PROJECTS';
 
 export function getProjects(){
     return async function(dispatch){
@@ -120,4 +121,18 @@ export function patchProject(idProject, customerID, project){
             console.log({error})
             return error.response    
         }}
+}
+
+export function cleanProjectsCustomer(){
+    return async function(dispatch){
+        try{ 
+          
+            dispatch(
+            {
+                type: CLEAN_CUSTOMERS_PROJECTS
+            })
+        }catch(error){
+            console.log({error})
+        }
+    }
 }

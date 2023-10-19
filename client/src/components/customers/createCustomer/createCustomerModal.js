@@ -9,7 +9,8 @@ import { IconButton,
         Button, 
         useToast, 
         Progress, 
-        Box} from "@chakra-ui/react";
+        Box,
+        Text} from "@chakra-ui/react";
 import { HiUserAdd } from "react-icons/hi";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
@@ -25,7 +26,7 @@ export function CreateCustomerModal() {
   const dispatch = useDispatch();
   const toastId = 'error-toast'
   const [errors, setErrors] = useState({})
-  const [ progress, setProgress ] = useState(25)
+  const [ progress, setProgress ] = useState(33.33)
   const [ disabled, setDisabled ] = useState(false)
   const toast = useToast()
   const { isOpen, onOpen, onClose } = useDisclosure()
@@ -51,6 +52,7 @@ export function CreateCustomerModal() {
     Billing_NickName: '',
     ShippingAddressInBilling: false
   });
+
   const handleChange = (event) => {
     const { name, value } = event.target;
     setErrors({})
@@ -108,7 +110,7 @@ export function CreateCustomerModal() {
       })
     setChangeInput(false)
     setErrors({})
-    setProgress(25)
+    setProgress(33.33)
     onClose()
   }
 
@@ -130,30 +132,31 @@ export function CreateCustomerModal() {
         }
       return;
   }else{
-      setProgress(progress + 25)
+      setProgress(progress + 33.33)
     }
     
   }
   const handlePreviousButton = () => {
-    setProgress(progress - 25)
+    setProgress(progress - 33.33)
   }
 
   useEffect(() => {
     const newErrorsEmptyInputs = validateEmptyInputs(formData, progress)
-    if (progress === 25) {
-      if (formData.Contact_Name === '' || formData.Email === '' || formData.Phone === '' || Object.entries(newErrorsEmptyInputs).length) setDisabled(true)
+    if (progress === 33.33) {
+      if (formData?.Contact_Name === '' || formData?.Email === '' || formData?.Phone === '' || Object.entries(newErrorsEmptyInputs).length) setDisabled(true)
       else setDisabled(false)
-    } else if (progress === 50) {
-        if (formData.Address === '' || formData.State === '' || formData.City === '' || formData.ZipCode === '' || Object.entries(newErrorsEmptyInputs).length) setDisabled(true)
-        else setDisabled(false)
-    } else if (progress === 75) {
-        if ((formData.Company_Position !== "Home Owner" && formData.Company === '') || formData.Company_Position === '' || Object.entries(newErrorsEmptyInputs).length) setDisabled(true)
+    } else if (progress === 66.66) {
+        // if (formData?.Address === '' || formData?.State === '' || formData?.City === '' || formData?.ZipCode === '' || Object.entries(newErrorsEmptyInputs).length) setDisabled(true)
+        // else setDisabled(false)
+    // } else if (progress === 75) {
+        if ((formData?.Company_Position !== "Home Owner" && formData?.Company === '') || formData?.Company_Position === '' || Object.entries(newErrorsEmptyInputs).length) setDisabled(true)
         else setDisabled(false)
   } else {
-        if (formData.Billing_Address === '' || formData.Billing_State === '' || formData.Billing_City === '' || formData.Billing_ZipCode === '' || Object.entries(newErrorsEmptyInputs).length) setDisabled(true)
+        if (formData?.Billing_Address === '' || formData?.Billing_State === '' || formData?.Billing_City === '' || formData?.Billing_ZipCode === '' || Object.entries(newErrorsEmptyInputs).length) setDisabled(true)
         else setDisabled(false)
 }
   }, [formData, progress])
+
   return (
     <>
       <IconButton
@@ -181,8 +184,8 @@ export function CreateCustomerModal() {
         bg={'web.sideBar'}
         border={'1px solid'}
         borderColor={'web.border'}
-        minH={progress === 50 || progress === 100 ? "70vh" : ''}
-        minW={progress === 50 || progress === 100 ? '50vw' : '35vw'}
+        minH={progress === 99.99 ? "70vh" : '50vh'}
+        minW={progress === 99.99 ? '50vw' : '35vw'}
         >
         <Progress
         value={progress} 
@@ -192,40 +195,48 @@ export function CreateCustomerModal() {
         size={'sm'} 
         borderTopRightRadius={'md'}
         borderTopLeftRadius={'md'}/>
-          <ModalHeader color={'web.text'}>Create New Customer</ModalHeader>
+          {/* <ModalHeader color={'web.text'}>Create New Customer</ModalHeader> */}
+            <Text ml={'3vw'} mt={"2vh"} mb={'4vh'} fontSize={'lg'} w={'14vw'} color={'white'} alignSelf={'flex-start'}>Customer review</Text> 
             <ModalBody >
               {
-                progress === 25 && (
+                progress === 33.33 && (
                   <CustomerInfo validate={validateCompletedInputs} formData={formData} setFormData={setFormData} errors={errors} setErrors={setErrors} handleChange={handleChange} setChangeInput={setChangeInput}/>
                 )
 
               }
-              {
+              {/* {
                 progress === 50 && (
                   <AddressInfo validate={validateCompletedInputs} formData={formData} setFormData={setFormData} errors={errors} setErrors={setErrors} handleChange={handleChange} setChangeInput={setChangeInput} />
                 )
 
-              }
+              } */}
               {
-                progress === 75 && (
+                progress === 66.66 && (
                   <CompanyInfo validate={validateCompletedInputs} formData={formData} setFormData={setFormData} errors={errors} setErrors={setErrors} handleChange={handleChange} setChangeInput={setChangeInput}/>
                 )
 
               }
               {
-                progress === 100 && (
+                progress === 99.99 && (
                   <BillingInfo validate={validateCompletedInputs} formData={formData} setFormData={setFormData} errors={errors} setErrors={setErrors} handleChange={handleChange} setChangeInput={setChangeInput}/>
                 )
 
               }
 
             </ModalBody>
-            <ModalFooter display={'flex'} justifyContent={'space-between'}>
-              <Button visibility={progress === 25 ? 'hidden' : 'unset'} colorScheme='orange' mr={3} onClick={()=>handlePreviousButton()}>
+            <ModalFooter
+              mb={"2vh"}
+              mt={"2vh"}
+              display={"flex"}
+              flexDir={"row"}
+              justifyContent={"space-between"}
+              ml={"1vw"}
+              mr={"0.5vw"}>
+              <Button visibility={progress === 33.33 ? 'hidden' : 'unset'} colorScheme='orange' mr={3} onClick={()=>handlePreviousButton()}>
               Prev
               </Button>
               {
-              progress === 100 ? (
+              progress === 99.99 ? (
                 <Button colorScheme='orange' mr={3} onClick={(e)=>handleSubmit(e)} disabled={disabled}>
                   Submit
                 </Button>

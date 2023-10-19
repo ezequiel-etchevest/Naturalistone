@@ -52,9 +52,12 @@ export const validateCompletedInputs = (formData) =>{
   //     errors.DiscountRate = 'Valid discounts: 0, 5, 10, 15'
   //   }
   // }
-    if(formData.Company_Position === '') {
-    errors.Company_Position = 'Please enter a position'
-  }
+    if (formData.Company_Position === '') {
+      errors.Company_Position = 'Please enter a company Position'
+    }
+    if(formData.Company_Position !== "Home Owner" && formData.Company === '') {
+        errors.Company = 'Please enter a company';
+    }
 
   return errors
 }
@@ -102,7 +105,7 @@ export const validateEmptyInputs = (formData, progress) => {
 
   let errors = {}
 
-  if(progress === 25){
+  if(progress === 33.33){
     if(!formData.Contact_Name){
       errors.Contact_Name = 'Please enter customer name'
       }
@@ -124,36 +127,36 @@ export const validateEmptyInputs = (formData, progress) => {
   }
     return errors  
   }
-  if (progress === 50){
-    if(!formData.Address){
-      errors.Address = 'Please enter an address'
-    }
-    if(!formData.ZipCode){
-      errors.ZipCode = 'Please enter a zip code'
-    }
-    if(formData.ZipCode.length){
-      if(formData.ZipCode !== '' && formData.ZipCode !== "undefined"){
-        if(!regexNumber.test(formData.ZipCode)) {
-          errors.ZipCode = 'Please enter a valid zip code'
-        }
-    }
-  }
-    if(!formData.City){
-      errors.City = 'Please enter a city'
-    }
-    if(formData.City?.length){
-      if(formData.City !== '' && formData.City != "undefined") {
-        if(!regexLetters.test(formData.City)){
-          errors.City = 'Please enter a valid City'
-        }
-    }
-  }
-    if(!formData.State) {
-      errors.State = 'Please enter a state'
-    }
-    return errors
-  }
-  if (progress === 75){
+  // if (progress === 50){
+  //   if(!formData.Address){
+  //     errors.Address = 'Please enter an address'
+  //   }
+  //   if(!formData.ZipCode){
+  //     errors.ZipCode = 'Please enter a zip code'
+  //   }
+  //   if(formData.ZipCode.length){
+  //     if(formData.ZipCode !== '' && formData.ZipCode !== "undefined"){
+  //       if(!regexNumber.test(formData.ZipCode)) {
+  //         errors.ZipCode = 'Please enter a valid zip code'
+  //       }
+  //   }
+  // }
+  //   if(!formData.City){
+  //     errors.City = 'Please enter a city'
+  //   }
+  //   if(formData.City?.length){
+  //     if(formData.City !== '' && formData.City != "undefined") {
+  //       if(!regexLetters.test(formData.City)){
+  //         errors.City = 'Please enter a valid City'
+  //       }
+  //   }
+  // }
+  //   if(!formData.State) {
+  //     errors.State = 'Please enter a state'
+  //   }
+  //   return errors
+  // }
+  if (progress === 66.66){
     if (formData.Company_Position === '') {
       errors.Company_Position = 'Please enter a company Position'
     }
@@ -165,7 +168,7 @@ export const validateEmptyInputs = (formData, progress) => {
     }
     return errors
   }
-  if (progress === 100){
+  if (progress === 99.99){
     if(!formData.Billing_Address){
       errors.Billing_Address = 'Please enter an address'
     }

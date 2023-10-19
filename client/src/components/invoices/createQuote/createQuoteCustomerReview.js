@@ -24,7 +24,6 @@ import { companyRole } from "../../../utils/arrayCompanyRole"
 import { USStates } from "../../../utils/USStates"
 
 const CreateQuoteCustomerReview = ({setFormData, formData, sellers, user, setErrorsCustomer, errorsCustomer, setUpdated}) => {
-
 const normalizeValue = (value) => {
   return value === null || value === "null" || value === '' || value === 'undefined' ? "" : value;
 };
@@ -40,7 +39,7 @@ const initialState = {
   Phone: normalizeValue(formData.customer.Phone),
   Email: normalizeValue(formData.customer.Email),
   DiscountID: normalizeValue(formData.customer.DiscountID),
-  DiscountRate: normalizeValue(formData.customer.DiscountRate),
+  DiscountRate: normalizeValue(formData.customer.DiscountRate) ? normalizeValue(formData.customer.DiscountRate) : '0',
   Billing_Address: normalizeValue(formData.customer.Billing_Address),
   Billing_City: normalizeValue(formData.customer.Billing_City),
   Billing_ZipCode: normalizeValue(formData.customer.Billing_ZipCode),
@@ -81,18 +80,19 @@ const handleChange = (e) =>{
     [name]: value,
   }));
 
-  const updatedErrors = validateCompletedInputs({
+  setErrorsCustomer(
+    validateCompletedInputs({
     ...inputs,
     [name]: value,
-  });
+  }))
 
-  setErrorsCustomer((prevErrors) => {
-    const { [name]: removedError, ...restErrors } = prevErrors;
-    return {
-      ...restErrors,
-      ...updatedErrors,
-    };
-  });
+  // setErrorsCustomer((prevErrors) => {
+  //   const { [name]: removedError, ...restErrors } = prevErrors;
+  //   return {
+  //     ...restErrors,
+  //     ...updatedErrors,
+  //   };
+  // });
   setFormData({
     ...formData,
     customer: {
@@ -343,8 +343,6 @@ return(
                 <Text fontSize='sm' fontWeight={'semibold'}> Company </Text>
                 <Editable
                   value={inputs.Company}
-                  fontSize='sm'
-                  fontWeight={'hairline'}
                   isPreviewFocusable={false}
                   display={'flex'}
                   flexDir={'row'}
@@ -396,6 +394,7 @@ return(
               <Box pt='2' w={'16vw'} h={'8vh'} mt={'0.5vh'} maxW={'276px'}>
                 <Text fontSize='sm' fontWeight={'semibold'}> Company position </Text>
                   <Select
+                    pl={'2'}
                     onChange={(e)=>handleChange(e)}
                     mb={'0.5vh'}
                     h={'4vh'}
@@ -493,7 +492,7 @@ return(
             <Divider borderColor={'web.border'} orientation='vertical'/>
             <Stack h={'44vh'} divider={<StackDivider />}>
               <Box pt='2' w={'16vw'} h={'8vh'} maxW={'276px'}>
-                <Text fontSize='sm' fontWeight={'semibold'}> Billing Adress </Text>
+                <Text fontSize='sm' fontWeight={'semibold'}> Billing Address </Text>
                 <Editable
                   value={inputs.Billing_Address}
                   fontSize='sm'
@@ -548,6 +547,51 @@ return(
                     {errorsCustomer.Billing_Address}
                   </Text>
                 )}
+              </Box>
+              <Box pt='2' w={'16vw'} h={'8vh'} maxW={'276px'}>
+                <Text fontSize='sm' fontWeight={'semibold'}> Billing Address 2 </Text>
+                <Editable
+                  value={inputs.Billing_Address2}
+                  fontSize='sm'
+                  fontWeight={'hairline'}
+                  isPreviewFocusable={false}
+                  display={'flex'}
+                  flexDir={'row'}
+                  pl='2'
+                  pt='1'
+                  justifyContent={'space-between'}
+                  w={'16vw'}
+                  maxW={'280px'}
+                  alignItems={'center'}
+                >
+                  <EditablePreview 
+                    maxW={'280px'} 
+                    css={{
+                    whiteSpace: 'nowrap',
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
+                  }}/>
+                  <Input
+                    name={'Billing_Address2'}
+                    className="mailInputs"
+                    value={inputs.Billing_Address2}
+                    as={EditableInput}
+                    w={'15vw'}
+                    maxW={'280px'}
+                    minH={'4vh'}
+                    variant="unstyled"
+                    textColor={'web.text2'}
+                    _placeholder={{ fontFamily: 'body', fontWeight: 'inherit' }}
+                    _focus={{
+                      outline: 'none',
+                      boxShadow: 'none',
+                   }} 
+                    size={"sm"}
+                    type={"text"}
+                    onChange={(e) =>{handleChange(e)}}
+                  /> 
+                  <EditableControls name={'Billing_Address2'} value={inputs.Billing_Address2} />
+                </Editable>
               </Box>
               <Box pt='2' w={'16vw'} h={'8vh'}  mt={'0.5vh'} maxW={'276px'}>
                 <Text fontSize='sm' fontWeight={'semibold'}> Billing City</Text>
@@ -666,11 +710,10 @@ return(
               <Box pt='2' w={'16vw'} h={'8vh'}  mt={'0.5vh'} maxW={'276px'}>
                 <Text fontSize='sm' fontWeight={'semibold'}> Billing State </Text>
                 <Select
+                pl={'2'}
                 onChange={(e)=>handleChange(e)}
                 mb={'0.5vh'}
                 minH={'5vh'}
-                borderBottomWidth={"2px"}
-                borderBottomColor={'web.text2'}
                 variant="unstyled"
                 color={'web.text2'}
                 textColor={'web.text2'}
@@ -714,6 +757,7 @@ return(
                   </Text>
                 )}
               </Box>
+              <Box></Box>
             </Stack>          
           </CardBody>
         </Card>

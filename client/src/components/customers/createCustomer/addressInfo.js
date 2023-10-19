@@ -37,14 +37,14 @@ export function AddressInfo({formData, setFormData, validate, errors, setErrors,
   return (
     <>
       <form>
-        <Box display={"flex"} flexDir={"row"}>
+        <Box display={"flex"} h={"full"} w={"full"} flexDir={"row"} pl={"3vw"}>
       <VStack h={'20vh'} pr={"2vw"}>
-        <Box w={'22vw'} display={'flex'} flexDir={'row'} justifyContent={'space-between'} >
+        <Box w={'19vw'} display={'flex'} flexDir={'row'} justifyContent={'space-between'} >
           <Text alignSelf={'flex-start'} textColor={'web.text2'} fontWeight={'bold'} >Address Info</Text>
         </Box>
-        <Box w={'22vw'} display={'flex'} flexDir={'row'} justifyContent={'space-between'}>
+        <Box w={'19vw'} display={'flex'} flexDir={'row'} justifyContent={'space-between'}>
           <FormControl>
-          <FormLabel textColor={'web.text2'} fontSize={'sm'} name={'address'} pt={"1.5vh"} fontWeight={'normal'}>Address</FormLabel>
+          <FormLabel textColor={'web.text2'} fontSize='sm' fontWeight={'semibold'} name={'address'} pt={"1.5vh"}>Address</FormLabel>
             <Input
               mb={'0.5vh'}
               variant="unstyled"
@@ -65,9 +65,9 @@ export function AddressInfo({formData, setFormData, validate, errors, setErrors,
               )}
           </FormControl>
         </Box>
-        <Box w={'22vw'} display={'flex'} flexDir={'row'} justifyContent={'space-between'}>
+        <Box w={'19vw'} display={'flex'} flexDir={'row'} justifyContent={'space-between'}>
           <FormControl>
-          <FormLabel textColor={'web.text2'} fontSize={'sm'} name={'address2'} pt={"1.5vh"} fontWeight={'normal'}>Address 2</FormLabel>
+          <FormLabel textColor={'web.text2'} fontSize='sm' fontWeight={'semibold'} name={'address2'} pt={"1.5vh"}>Address 2</FormLabel>
             <Input
               mb={'0.5vh'}
               variant="unstyled"
@@ -83,9 +83,9 @@ export function AddressInfo({formData, setFormData, validate, errors, setErrors,
               />
           </FormControl>
         </Box>
-        <Box w={'22vw'} display={'flex'} flexDir={'row'} justifyContent={'space-between'}>
+        <Box w={'19vw'} display={'flex'} flexDir={'row'} justifyContent={'space-between'}>
           <FormControl>
-          <FormLabel textColor={'web.text2'} name={'city'} fontSize={'sm'} pt={"1.5vh"}>City</FormLabel>
+          <FormLabel textColor={'web.text2'} name={'city'} fontSize='sm' fontWeight={'semibold'} pt={"1.5vh"}>City</FormLabel>
             <Input
               mb={'0.5vh'}
               variant="unstyled"
@@ -108,7 +108,7 @@ export function AddressInfo({formData, setFormData, validate, errors, setErrors,
         </Box>
       </VStack>
       <VStack h={'20vh'} pt={"4.2vh"}>
-        <Box w={'22vw'} display={'flex'} flexDir={'row'} justifyContent={'space-between'}>
+        <Box w={'19vw'} display={'flex'} flexDir={'row'} justifyContent={'space-between'}>
         <FormControl>
           <FormLabel textColor={'web.text2'} name={'state'}  fontSize={'sm'}>State</FormLabel>
               <Select
@@ -149,7 +149,7 @@ export function AddressInfo({formData, setFormData, validate, errors, setErrors,
             </Select>
           </FormControl>
         </Box>
-        <Box w={'22vw'} display={'flex'} flexDir={'row'} justifyContent={'space-between'}>
+        <Box w={'19vw'} display={'flex'} flexDir={'row'} justifyContent={'space-between'}>
           <FormControl>
           <FormLabel textColor={'web.text2'} name={'zipcode'} pt={"1.5vh"} fontSize={'sm'}>Zip Code</FormLabel>
             <Input
@@ -172,7 +172,7 @@ export function AddressInfo({formData, setFormData, validate, errors, setErrors,
               )}
           </FormControl>
         </Box>
-        {/* <Box w={'22vw'} display={'flex'} flexDir={'row'} justifyContent={'space-between'}>
+        {/* <Box w={'19vw'} display={'flex'} flexDir={'row'} justifyContent={'space-between'}>
           <FormControl>
           <FormLabel textColor={'web.text2'} fontSize={'sm'} pt={"1.5vh"} name={'Nickname'}  fontWeight={'normal'}>Nickname</FormLabel>
             <Input
@@ -190,7 +190,7 @@ export function AddressInfo({formData, setFormData, validate, errors, setErrors,
               />
           </FormControl>
         </Box> */}
-        <Box w={'22vw'} display={'flex'} flexDir={'row'} justifyContent={'space-between'} pr={'1vw'}>
+        <Box w={'19vw'} display={'flex'} flexDir={'row'} justifyContent={'space-between'} pr={'1vw'}>
           <Text 
           alignSelf={'flex-start'} 
           textColor={'web.text2'} 

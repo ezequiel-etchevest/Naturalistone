@@ -1,86 +1,88 @@
-import { VStack, Box, FormControl, Input, Text, FormLabel} from "@chakra-ui/react"
+import { VStack, Box, FormControl, Input, Text, FormLabel, Stack, StackDivider} from "@chakra-ui/react"
 
 
 
 export function CustomerInfo({formData, setFormData, validate, errors, setErrors, setChangeInput, handleChange}) {
 
-
   return (
     <>
       <form>
       <VStack h={'40vh'}>
-        <Box w={'22vw'} display={'flex'} pt={'2vh'} flexDir={'row'} justifyContent={'space-between'}>
+        <Box w={'22vw'} display={'flex'} flexDir={'row'} justifyContent={'space-between'} mr={"4vw"}>
           <Text alignSelf={'flex-start'} textColor={'web.text2'} fontWeight={'bold'} >Customer Info</Text>
         </Box>
-        <Box w={'22vw'} display={'flex'} flexDir={'row'} pt={'4vh'} justifyContent={'space-between'}>
+        <Stack h={'44vh'} divider={<StackDivider />}>
+        <Box w={'22vw'} display={'flex'} flexDir={'row'} pt={'1.5vh'} justifyContent={'space-between'}>
           <FormControl>
-          <FormLabel textColor={'web.text2'} fontSize={'sm'} name={'name'} fontWeight={'normal'}>Full Name</FormLabel>
+          <FormLabel textColor={'web.text2'} fontSize='sm' fontWeight={'semibold'} name={'name'}>Full Name</FormLabel>
             <Input
-              mb={'0.5vh'}
               variant="unstyled"
-              textColor={'web.text'}
+              textColor={'web.text2'}
+              pl={"2"}
               _placeholder={{ fontFamily: 'body', fontWeight: 'inherit' }}
               size={"sm"}
-              borderBottomWidth={"2px"}
-              borderBottomColor={'web.text2'}
+              // borderBottomWidth={"2px"}
+              // borderBottomColor={'web.text2'}
               type={"text"}
               name={"Contact_Name"}
-              value={formData.Contact_Name}
+              value={formData?.Contact_Name}
               onChange={handleChange}
               />
               { errors.Contact_Name && (
-                <Text position={'absolute'} color={'web.error'} fontSize={'xs'}>
+                <Text position={'absolute'} pt={"1.5vh"} color={'web.error'} fontSize={'xs'}>
                   {errors.Contact_Name}
                 </Text>
               )}
           </FormControl>
         </Box>
-        <Box w={'22vw'} display={'flex'} flexDir={'row'} justifyContent={'space-between'}>
+        <Box w={'22vw'} display={'flex'} flexDir={'row'} justifyContent={'space-between'} pt={"3"}>
           <FormControl>
-          <FormLabel textColor={'web.text2'}name={'email'}  fontSize={'sm'}>Email</FormLabel>
+          <FormLabel textColor={'web.text2'}name={'email'} fontSize='sm' fontWeight={'semibold'}>Email</FormLabel>
             <Input
-              mb={'0.5vh'}
               variant="unstyled"
-              textColor={'web.text'}
+              textColor={'web.text2'}
+              pl={"2"}
               _placeholder={{ fontFamily: 'body', fontWeight: 'inherit' }}
               size={"sm"}
-              borderBottomWidth={"2px"}
-              borderBottomColor={'web.text2'}
+              // borderBottomWidth={"2px"}
+              // borderBottomColor={'web.text2'}
               type={"text"}
               name={"Email"}
-              value={formData.Email}
+              value={formData?.Email}
               onChange={handleChange}
               />
               { errors.Email && (
-                <Text position={'absolute'} color={'web.error'} fontSize={'xs'}>
+                <Text position={'absolute'} pt={"1.5vh"} color={'web.error'} fontSize={'xs'}>
                   {errors.Email}
                 </Text>
               )}
           </FormControl>
         </Box>
-        <Box w={'22vw'} display={'flex'} flexDir={'row'} justifyContent={'space-between'}>
+        <Box w={'22vw'} display={'flex'} flexDir={'row'} justifyContent={'space-between'} pt={"3"}>
           <FormControl>
-          <FormLabel textColor={'web.text2'}name={'phone'} fontSize={'sm'}>Phone</FormLabel>
+          <FormLabel textColor={'web.text2'}name={'phone'} fontSize='sm' fontWeight={'semibold'}>Phone</FormLabel>
             <Input
-              mb={'0.5vh'}
               variant="unstyled"
-              textColor={'web.text'}
+              textColor={'web.text2'}
+              pl={"2"}
               _placeholder={{ fontFamily: 'body', fontWeight: 'inherit' }}
               size={"sm"}
-              borderBottomWidth={"2px"}
-              borderBottomColor={'web.text2'}
+              // borderBottomWidth={"2px"}
+              // borderBottomColor={'web.text2'}
               type={"text"}
               name={"Phone"}
-              value={formData.Phone}
+              value={formData?.Phone}
               onChange={handleChange}
               />
               { errors.Phone && (
-                <Text position={'absolute'} color={'web.error'} fontSize={'xs'}>
+                <Text position={'absolute'} pt={"1.5vh"} color={'web.error'} fontSize={'xs'}>
                   {errors.Phone}
                 </Text>
               )}
           </FormControl>
         </Box>
+        <Box></Box>
+        </Stack>
       </VStack>
     </form>
   </>
