@@ -2,11 +2,12 @@ const express = require('express');
 const { sendEmailClient, sendSamplesEmail } = require('../utils/email');
 const emailInvoiceRouter = express.Router();
 const multer = require('multer')
-const upload = multer();
+// const upload = multer();
 const fs = require('fs');
 const axios = require('axios');
 require('dotenv').config()
-
+const storage = multer.memoryStorage(); // Almacena los archivos en memoria
+const upload = multer({ storage });
 
 emailInvoiceRouter.post('/', upload.single('pdfFile'), async function(req, res) {
 
@@ -60,21 +61,35 @@ emailInvoiceRouter.post('/samples', async function (req, res) {
   }
 })
 
-emailInvoiceRouter.post('/customer', async function (req, res) {
+// emailInvoiceRouter.post('/customer', async function (req, res) {
   
-  const { htmlBody, subject, clientEmail, sellerEmail, ccEmail } = req.body
-  try {
-    await sendSamplesEmail(
-      sellerEmail,
-      clientEmail,
-      ccEmail,
-      htmlBody,
-      subject,
-      )
-    return res.status(200).json({success: true, data: "email send successfully"})
-  } catch (error) {
-    return res.status(400).json({success: false, data: error})
-  }
-})
+//   const { htmlBody, subject, clientEmail, sellerEmail, ccEmail, attachments } = req.body
+//   console.log(req.body)
+//   try {
+//     await sendSamplesEmail(
+//       sellerEmail,
+//       clientEmail,
+//       ccEmail,
+//       htmlBody,
+//       subject,
+//       )
+//     return res.status(200).json({success: true, data: "email send successfully"})
+//   } catch (error) {
+//     return res.status(400).json({success: false, data: error})
+//   }
+// })
+emailInvoiceRouter.post('/customer', upload.array('attachments'), async (req, res) => {
+  const { htmlBody, subject, clientEmail, sellerEmail, ccEmail } = req.body;
+  const attachments = req.files; // El array de archivos adjuntos se encuentra en req.files
+  let seller = sellerEmail.split('@')[0].toLowerCase()
 
+  try {
+    // Lógica para enviar el correo con los archivos adjuntos
+    await sendSamplesEmail(sellerEmail, clientEmail, ccEmail, htmlBody, subject, attachments, seller);
+
+    return res.status(200).json({ success: true, data: 'email send successfully' });
+  } catch (error) {
+    return res.status(400).json({ success: false, data: error });
+  }
+});
 module.exports = emailInvoiceRouter

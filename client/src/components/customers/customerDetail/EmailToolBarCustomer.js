@@ -21,12 +21,22 @@ const [editorContent, setEditorContent] = useState("");
       ...input,
       htmlBody: value,
       plainTextBody: plainText,
+      
     });
   };
 
+    const handleAttachment = (file) => {
+      if (file) {
+        setInput({
+          ...input,
+          attachments: [...input.attachments, file],
+        });
+      }
+    };
+    
   return (
         <Box w={'100%'} p={'10px'}>
-          <QuillToolbar handleSendEmail={handleSendEmail} />
+          <QuillToolbar handleSendEmail={handleSendEmail} handleAttachment={handleAttachment}/>
           <ReactQuill
           className='quill-container'
           modules={modules}

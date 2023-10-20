@@ -133,7 +133,7 @@ const CreatedQuotePdf = ({ formData, user, handleChangeEmail }) => {
       currentPage.drawText(`$ ${parsedNumbers(discountedPrice)}`, { x, y, size: 9 });
       currentPage.drawText(`$ ${(formattedExtPrice)}`, { x: xExtPrice, y, size: 9 });
       
-      let text = `Special Order: ${product.material} ${product.type} ${product.prodName} ${product.finish} ${formatSize(product.size)}x${parseThickness(product.thickness)}Mm`
+      let text = `Special Order: ${product.material} ${product.type} ${product.prodName} ${product.finish} ${formatSize(product.size)}x${parseThickness(product.thickness)}`
       let maxLength = 52;
       if (text.length > maxLength) {
         const formattedLines = formatTextForPdf(text, maxLength).split('\n');
@@ -193,7 +193,7 @@ const CreatedQuotePdf = ({ formData, user, handleChangeEmail }) => {
         y,
         size: 9,
       });
-      const text = `Special Order: ${product.material} ${product.type} ${product.prodName} ${product.finish} ${formatSize(product.size)}x${parseThickness(product.thickness)}Mm`
+      const text = `Special Order: ${product.material} ${product.type} ${product.prodName} ${product.finish} ${formatSize(product.size)}x${parseThickness(product.thickness)}`
       const maxLength = 52;
 
       if (text.length > maxLength) {
@@ -286,7 +286,7 @@ const CreatedQuotePdf = ({ formData, user, handleChangeEmail }) => {
 
     setPdfInfo(URL.createObjectURL(blob));
 
-    // savePdfOnServer(pdfBytes, invoiceID);
+    savePdfOnServer(pdfBytes, invoiceID);
   }
 
   return (
