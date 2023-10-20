@@ -18,8 +18,6 @@ export function AddTaskInfo({formData, handleChange, user}) {
         <Box  w={'35vw'} display={'flex'} flexDir={'row'} pt={'1vh'} justifyContent={'space-between'}>
           <FormControl  pr={'2vw'}>
           <FormLabel textColor={'web.text2'} fontSize={'sm'} name={'name'} fontWeight={'normal'}>Assignee</FormLabel>
-          {
-            user[0].Secction7Flag === 1 ? (
               <Select
               onChange={handleChange}
               mb={'0.5vh'}
@@ -46,8 +44,7 @@ export function AddTaskInfo({formData, handleChange, user}) {
                        })
                 }
             </Select>
-            ):(
-              <Input
+              {/* <Input
               isReadOnly={true}
               mb={'0.5vh'}
               variant="unstyled"
@@ -59,10 +56,7 @@ export function AddTaskInfo({formData, handleChange, user}) {
               type={"text"}
               name={"Title"}
               value={`${user[0].FirstName} ${user[0].LastName}`}
-              />
-            )
-          }
-           
+              /> */}
           </FormControl>
           <FormControl pl={'2vw'}>
           <FormLabel textColor={'web.text2'} fontSize={'sm'} name={'name'} fontWeight={'normal'}>Due Date</FormLabel>
