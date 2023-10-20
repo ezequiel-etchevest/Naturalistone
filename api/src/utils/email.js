@@ -101,7 +101,10 @@ function sendEmailClient(
 }
 
 function sendSamplesEmail( fromEmail, clientEmail, ccEmail, bodyValue, subjectValue, attachments, seller ) {
-
+ 
+  if (seller === 'sales') {
+    seller = 'german';
+  }
   var imageSignature = `https://naturali-parseddocuments.s3.amazonaws.com/Invoice+Naturali/assets/${seller}.png`
 
   const optionsEmail = {
@@ -131,6 +134,7 @@ function sendSamplesEmail( fromEmail, clientEmail, ccEmail, bodyValue, subjectVa
         });
       });
     }
+    console.log(optionsEmail)
   return client.sendEmailWithTemplate(optionsEmail)
 }
 
