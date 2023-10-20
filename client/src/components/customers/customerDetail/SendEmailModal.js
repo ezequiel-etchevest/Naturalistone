@@ -213,6 +213,8 @@ const SendEmailModalCustomer = ({ customer }) => {
           handleSendEmail={handleSendEmail}
           setInput={setInput}
           input={input}
+          showSuccessToast={showSuccessToast}
+          showErrorToast={showErrorToast}
           />
       </ModalBody>
       </ModalContent>

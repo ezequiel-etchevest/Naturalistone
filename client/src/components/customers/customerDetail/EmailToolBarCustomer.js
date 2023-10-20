@@ -5,7 +5,7 @@ import 'react-quill/dist/quill.snow.css';
 import { Box } from '@chakra-ui/react';
 import { modules, formats, QuillToolbar } from "../../samples/createSample/EmailTollbarButtons";
 
-const EmailTemplateCustomer = ({setInput, input, handleSendEmail}) => {
+const EmailTemplateCustomer = ({setInput, input, handleSendEmail, showErrorToast, showSuccessToast}) => {
   
 const [editorContent, setEditorContent] = useState("");
   function stripHtml(html) {
@@ -26,11 +26,13 @@ const [editorContent, setEditorContent] = useState("");
   };
 
     const handleAttachment = (file) => {
+      console.log(file)
       if (file) {
         setInput({
           ...input,
           attachments: [...input.attachments, file],
         });
+        showSuccessToast(`${file.name} added successfully`)
       }
     };
     

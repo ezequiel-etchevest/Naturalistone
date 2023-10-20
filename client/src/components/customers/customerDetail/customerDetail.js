@@ -59,7 +59,7 @@ const CustomerDetail = ({user, customer, projects_by_customer_id }) => {
             userSelect={'none'}
             px={'1.5vw'}
             py={'3vh'}
-            w={'60vw'}
+            w={'56vw'}
             flexDir={'column'}
             color={'web.text'}
             bg={'web.sideBar'}
@@ -89,7 +89,7 @@ const CustomerDetail = ({user, customer, projects_by_customer_id }) => {
             userSelect={'none'}
             px={'1.5vw'}
             py={'3vh'}
-            w={'60vw'}
+            w={'56vw'}
             flexDir={'column'}
             color={'web.text'}
             bg={'web.sideBar'}
