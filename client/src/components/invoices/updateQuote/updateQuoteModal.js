@@ -32,7 +32,7 @@ export default function UpdateQuoteModal({invoice, invoice_products}) {
     const { isOpen: isOpenUpdate, onOpen: onOpenUpdate, onClose: onCloseUpdate } = useDisclosure()
     const user = useSelector(state => state.user)
     const customers = useSelector(state => state.customers)
-    
+    const values = useSelector(state => state.products_new_quote_values)
     const [errorsCustomer, setErrorsCustomer] = useState({})
     const [disable, setDisable] = useState(true)
     const [progress, setProgress] = useState(0)
@@ -328,7 +328,7 @@ export default function UpdateQuoteModal({invoice, invoice_products}) {
             }
             {
               component === 'Products' && progress === 20 &&(
-                <CreateQuoteProducts formData={formData} setFormData={setFormData} setDisable={setDisable} invoice_products={invoice_products}/>
+                <CreateQuoteProducts formData={formData} setFormData={setFormData} setDisable={setDisable} invoice_products={invoice_products} values={values}/>
               )
             }
             </ModalBody> 

@@ -101,7 +101,8 @@ export const validateEmptyInputs = (formData, progress) => {
   const regexNumber = /^[0-9]+$/;
   const regexNumberAndPlus = /^[\d+()\[\]-\s]*$/;
   const regexEmail = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
-  const regexLetters = /^[A-Za-z]+$/;
+  const regexNoNumber = /^[a-zA-Z\s!"#$%&'()*+,\-./:;<=>?@\[\\\]^_`{|}~]*$/;
+
 
   let errors = {}
 
@@ -146,7 +147,7 @@ export const validateEmptyInputs = (formData, progress) => {
   //   }
   //   if(formData.City?.length){
   //     if(formData.City !== '' && formData.City != "undefined") {
-  //       if(!regexLetters.test(formData.City)){
+  //       if(!regexNoNumber.test(formData.City)){
   //         errors.City = 'Please enter a valid City'
   //       }
   //   }
@@ -187,7 +188,7 @@ export const validateEmptyInputs = (formData, progress) => {
     }
     if(formData.Billing_City?.length){
       if(formData.Billing_City !== '' && formData.Billing_City != "undefined") {
-        if(!regexLetters.test(formData.Billing_City)){
+        if(!regexNoNumber.test(formData.Billing_City)){
           errors.Billing_City = 'Please enter a valid city'
         }
     }

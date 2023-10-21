@@ -18,13 +18,14 @@ const TaskDetail = ({activeCard, user}) => {
   const comments = useSelector(state => state.task_comments)
   const dispatch = useDispatch()
 
-  useEffect(()=>{
-    if(CustomerID) dispatch(getCustomerById(CustomerID))
-    if(ProjectID) dispatch(getProjectById(ProjectID))
-    if(InvoiceID) dispatch(getInvoiceById(InvoiceID))
-    if(!sellers.length) dispatch(getSellers())
-    dispatch(getComments(taskID))
-  }, [activeCard])
+  // useEffect(()=>{
+  //   if(CustomerID) dispatch(getCustomerById(CustomerID))
+  //   if(ProjectID) dispatch(getProjectById(ProjectID))
+  //   if(InvoiceID) dispatch(getInvoiceById(InvoiceID))
+  //   if(!sellers.length) dispatch(getSellers())
+  //   dispatch(getComments(taskID))
+  // }, [activeCard])
+  
     const seller = sellers.find(e => e.SellerID === activeCard.SellerID)
 
     return(

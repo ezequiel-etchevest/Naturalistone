@@ -25,7 +25,6 @@ import { LinkInvoiceModal } from './LinkInvoice';
 
 
 export const TaskBoardToolbar = ({activeCard, user, setActiveCard, setFilters, filters}) => {
-
   const navigate = useNavigate()
 
 
@@ -53,20 +52,20 @@ export const TaskBoardToolbar = ({activeCard, user, setActiveCard, setFilters, f
          color: 'logo.orange'
          }}
          disabled={activeCard ? activeCard.CustomerID ? false : true : true}
-         onClick={ ()=>navigate(`/customers/${activeCard.CustomerID}`)}
+         onClick={ ()=>navigate(`/customers/${activeCard?.CustomerID}`)}
          >
         <IconButton
          variant={'unstyled'}           
          fontSize={'xl'}
          icon={<AiOutlineInfoCircle/>}
          disabled={activeCard ? activeCard.CustomerID ? false : true : true}
-         onClick={()=> navigate(`/customers/${activeCard.CustomerID}`)}
+         onClick={()=> navigate(`/customers/${activeCard?.CustomerID}`)}
          />
          <Button
          fontSize={'md'}
          variant={'unstyled'}           
          fontWeight={'normal'}
-         onClick={()=> navigate(`/customers/${activeCard.CustomerID}`)}
+         onClick={()=> navigate(`/customers/${activeCard?.CustomerID}`)}
          disabled={activeCard ? activeCard.CustomerID ? false : true : true}
          >Customer Details</Button>       
         </ButtonGroup>

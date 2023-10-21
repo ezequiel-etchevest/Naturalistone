@@ -145,8 +145,8 @@ const CreateQuoteProductsList = ({
   invoice_products,
   setDisable,
 }) => {
-  const productKeys = Object.keys(formData.products);
-  const filteredProducts = allProducts.filter((product) =>
+  const productKeys = Object.keys(formData?.products);
+  const filteredProducts = allProducts?.filter((product) =>
     productKeys.includes(String(product.ProdID))
   );
 
@@ -204,7 +204,7 @@ const CreateQuoteProductsList = ({
         rounded={"md"}
         p={"1vh"}
       >
-        {allProducts.length ? (
+        {allProducts?.length ? (
           filterProducts === "All" ? (
             <TableContainer mr={"0.5vw"} ml={"0.5vw"}>
               <Table color={"web.text"} variant={"simple"} size={"sm"}>
@@ -223,7 +223,7 @@ const CreateQuoteProductsList = ({
                   </Tr>
                 </Thead>
                 <Tbody>
-                  {allProducts.slice(0, loadedCount).map((e, i) => {
+                  {allProducts?.slice(0, loadedCount).map((e, i) => {
                     return (
                       <ModelTr
                         key={i}
@@ -237,7 +237,7 @@ const CreateQuoteProductsList = ({
                 </Tbody>
               </Table>
             </TableContainer>
-          ) : Object.entries(formData.products).length || formData.specialProducts.length ? (
+          ) : Object.entries(formData?.products)?.length || formData?.specialProducts?.length ? (
             <TableContainer mr={"0.5vw"} ml={"0.5vw"}>
               <Table color={"web.text"} variant={"simple"} size={"sm"}>
               <Thead h={"6vh"}>
@@ -256,8 +256,8 @@ const CreateQuoteProductsList = ({
                 </Thead>
                 <Tbody>
                   {
-                  filteredProducts.length ? 
-                  filteredProducts.map((e, i) => {
+                  filteredProducts?.length ? 
+                  filteredProducts?.map((e, i) => {
                     return (
                       <ModelTr
                         key={i}
@@ -271,8 +271,8 @@ const CreateQuoteProductsList = ({
                   : null
                   } 
                   { 
-                  formData.specialProducts.length ?
-                    formData.specialProducts.map((e, i) => (
+                  formData?.specialProducts?.length ?
+                    formData?.specialProducts?.map((e, i) => (
                       <Tr
                       cursor={'pointer'} 
                       key={i}

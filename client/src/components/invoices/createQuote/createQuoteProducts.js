@@ -122,8 +122,8 @@ return(
       >
       <option value='' className="options">Material</option>
       {
-        Object.entries(values).length ?
-        values?.materials.map((v, i) => {
+        Object.entries(values)?.length ?
+        values?.materials?.map((v, i) => {
             return(
               <option value={`${v}`} key={i} className={'options'}>{`${v}`}</option>
             )
@@ -151,8 +151,8 @@ return(
       >
       <option value='' className="options">Finish</option>
       {
-        Object.entries(values).length ?
-        values?.finishValues.map((v, i )=> {
+        Object.entries(values)?.length ?
+        values?.finishValues?.map((v, i )=> {
           return(
             <option value={`${v}`} key={i} className={'options'}>{`${v}`}</option>
           )

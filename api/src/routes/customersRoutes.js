@@ -180,20 +180,20 @@ customersRouter.post('/', async function(req, res){
       mysqlConnection.beginTransaction();
 
       const customer = await createCustomer(Company, Phone, Email, DiscountID, Contact_Name, Company_Position)
-      const shippingAddress = await createAddress(customer.insertId, Address, Address2, City, State, ZipCode, Nickname)
+      const billingAddress = await createAddress(customer.insertId, Billing_Address, Billing_Address2, Billing_City, Billing_State, Billing_ZipCode, Billing_Nickname)
+      
+      // const shippingAddress = await createAddress(customer.insertId, Address, Address2, City, State, ZipCode, Nickname)
+      // let billingAddress;
 
-      let billingAddress;
+      // if (!ShippingAddressInBilling) {
+      // }
 
-      if (!ShippingAddressInBilling) {
-          billingAddress = await createAddress(customer.insertId, Billing_Address, Billing_Address2, Billing_City, Billing_State, Billing_ZipCode, Billing_Nickname)
-      }
-
-      await updateCustomerAddress('shipping_address_id', shippingAddress.insertId, customer.insertId)
+      // await updateCustomerAddress('shipping_address_id', shippingAddress.insertId, customer.insertId)
 
       await updateCustomerAddress(
         'billing_address_id',
-        billingAddress?.insertId ??
-        shippingAddress.insertId,
+        billingAddress?.insertId,
+        // shippingAddress.insertId,
         customer.insertId
         )
 

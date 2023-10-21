@@ -216,7 +216,7 @@ const AddSpecialProduct = ({values, allMaterials, formData, setFormData}) => {
                   </Tr>
                 </Thead>
                 <Tbody> 
-                {products.map((product, index) => (
+                {products?.map((product, index) => (
                   <ModelTr
                     key={index} 
                     index={index}
@@ -304,7 +304,7 @@ const ModelTr = ({product, handleChange, handleDelete, index, values, allMateria
           _hover={{borderColor: 'web.border'}}
           cursor={'pointer'}
           name={'um'}
-          value={product.um}
+          value={product?.um}
           >
           <option value='Units'className="options">Units</option>
           <option value='Sqft' className="options">Sqft</option>
@@ -319,7 +319,7 @@ const ModelTr = ({product, handleChange, handleDelete, index, values, allMateria
           textColor={'web.text2'}
           _placeholder={{ fontFamily: 'body', fontWeight: 'thin' }}
           size={"sm"}
-          value={product.prodName}
+          value={product?.prodName}
           borderBottomColor={'web.text2'}
           name={'prodName'}
           onChange={e => handleChange(e, 'prodName', index)}
@@ -340,10 +340,10 @@ const ModelTr = ({product, handleChange, handleDelete, index, values, allMateria
           _hover={{borderColor: 'web.border'}}
           cursor={'pointer'}
           name={'material'}
-          value={product.material}
+          value={product?.material}
         >
         {
-          Object.entries(values).length ?
+          Object.entries(values)?.length ?
           allMaterials?.map((v, i) => {
               return(
                 <option value={`${v}`} key={i} className={'options'}>{`${v}`}</option>
@@ -363,7 +363,7 @@ const ModelTr = ({product, handleChange, handleDelete, index, values, allMateria
           textColor={'web.text2'}
           _placeholder={{ fontFamily: 'body', fontWeight: 'thin' }}
           size={"sm"}
-          value={product.size}
+          value={product?.size}
           borderBottomColor={'web.text2'}
           name={'size'}
           onChange={e => handleChange(e, 'size', index)}
@@ -378,7 +378,7 @@ const ModelTr = ({product, handleChange, handleDelete, index, values, allMateria
           textColor={'web.text2'}
           _placeholder={{ fontFamily: 'body', fontWeight: 'thin' }}
           size={"sm"}
-          value={product.thickness}
+          value={product?.thickness}
           borderBottomColor={'web.text2'}
           name={'thickness'}
           onChange={e => handleChange(e, 'thickness', index)}
@@ -399,7 +399,7 @@ const ModelTr = ({product, handleChange, handleDelete, index, values, allMateria
           _hover={{borderColor: 'web.border'}}
           cursor={'pointer'}
           name={'type'}
-          value={product.type}
+          value={product?.type}
           >
           <option value='Tile'className="options">Tile</option>
           <option value='Slab' className="options">Slab</option>
@@ -421,11 +421,11 @@ const ModelTr = ({product, handleChange, handleDelete, index, values, allMateria
           _hover={{borderColor: 'web.border'}}
           cursor={'pointer'}
           name={'finish'}
-          value={product.finish}
+          value={product?.finish}
           >
           {
-            Object.entries(values).length ?
-            values?.finishValues.map((v, i )=> {
+            Object.entries(values)?.length ?
+            values?.finishValues?.map((v, i )=> {
               return(
                 <option value={`${v}`} key={i} className={'options'}>{`${v}`}</option>
               )
@@ -448,7 +448,7 @@ const ModelTr = ({product, handleChange, handleDelete, index, values, allMateria
           type="number"
           name={'price'}
           key={index}
-          value={product.price} 
+          value={product?.price} 
           fontSize={"2xs"}
           style={{ 
             textAlign: 'center',

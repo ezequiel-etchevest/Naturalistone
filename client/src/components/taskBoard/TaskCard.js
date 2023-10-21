@@ -8,6 +8,7 @@ import { getComments } from "../../redux/actions-tasks";
 const TaskCard = ({task, setActiveCard, activeCard, user }) => {
 
   const { taskID, Description, Title, Status, CustomerID, ProjectID, InvoiceID, DueDate, SellerReference  } = task 
+  
   const dispatch = useDispatch()
   const handleClick = () => {
     if(CustomerID) dispatch(getCustomerById(CustomerID))
@@ -33,10 +34,10 @@ const TaskCard = ({task, setActiveCard, activeCard, user }) => {
       py={'1vh'}>
         <Heading size='xs' textTransform='uppercase' display={'flex'}justifyContent={'space-between'}>
           <Box display={'flex'}>
-            <Text mr={'0.75vw'} color={'logo.orange'}>#{task.taskID}</Text>{Title}
+            <Text mr={'0.75vw'} color={'logo.orange'}>#{task?.taskID}</Text>{Title}
             </Box>
             {
-              user[0].Secction7Flag === 1 && (
+              user[0]?.Secction7Flag === 1 && (
                 <Text mr={'1.5vw'}>{SellerReference}</Text>
               )
             }
