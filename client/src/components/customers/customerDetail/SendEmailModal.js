@@ -35,8 +35,10 @@ const SendEmailModalCustomer = ({ customer }) => {
     subject: '',
     htmlBody: '',
     ccEmail: '',
-    plainTextBody: ''
+    plainTextBody: '',
+    attachments: []
   })
+
   
   const toast = useToast()
 
@@ -75,13 +77,14 @@ const SendEmailModalCustomer = ({ customer }) => {
         subject: input.subject,
         clientEmail: customer.Email,
         ccEmail: input.ccEmail,
+        // Adjuntar los archivos almacenados en input.attachments
+        attachments: input.attachments,
       };
 
       const relationShip = {
         Action: "Email",
         Comment: input.plainTextBody 
       }
-      
       try {
         const response = await sendEmailCustomer(email);
         const responseRelationShip = await dispatch(createCustomerRelationship(relationShip, user[0].SellerID, customer.CustomerID))
@@ -94,6 +97,7 @@ const SendEmailModalCustomer = ({ customer }) => {
             subject: '',
             htmlBody: '',
             ccEmail: '',
+            attachments: []
           });
           handleClose();
         }
@@ -109,7 +113,8 @@ const SendEmailModalCustomer = ({ customer }) => {
     setInput({
       subject: '',
       htmlBody: '',
-      ccEmail: ''
+      ccEmail: '',
+      attachments: []
     })
     onClose()
   }

@@ -178,7 +178,7 @@ export  const getFontSize = (text) => {
       }
     }
   
-    return `${thickness}"`;
+    return `${thickness}Mm`;
   };
   
 

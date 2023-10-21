@@ -96,11 +96,6 @@ export function CreateQuote({ customers, sellers }) {
   const toastId = "error-toast";
   const customerID = formData.customer.CustomerID;
 
-  // useEffect(() => {
-  //   if(Object.entries(posted_quote).length){
-  //   sp1PostBack()
-  // }}, [posted_quote]);
-
   useEffect(() => {
     if(!values.length){
       dispatch(getAllProductsNewQuote('', '', ''))

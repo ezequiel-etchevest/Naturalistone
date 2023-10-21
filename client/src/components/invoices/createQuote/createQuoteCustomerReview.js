@@ -168,8 +168,8 @@ return(
       <Text ml={'2vw'} mb={'4vh'} fontSize={'lg'} w={'14vw'} color={'white'} alignSelf={'flex-start'}>Customer review</Text>          
       <Box display={'flex'} alignSelf={'center'} maxW={'900px'} minW={'920px'}> 
         <Card w={'100%'}>
-          <CardBody  display={'flex'} flexDir={'row'} justifyContent={'space-between'}  alignItems={'center'} mt={'1vh'}>
-            <Stack h={'44vh'} divider={<StackDivider />}>
+          <CardBody  display={'flex'} flexDir={'row'} justifyContent={'space-between'}  alignItems={'center'} mt={'1vh'} h={'48vh'}>
+            <Stack h={'50vh'} divider={<StackDivider />}>
               <Box pt='2' w={'16vw'} h={'8vh'} maxW={'276px'}>
                 <Text fontSize='sm' fontWeight={'semibold'}> Name </Text>
                 <Editable
@@ -336,8 +336,8 @@ return(
               <Box></Box>
             </Stack>
             <Divider borderColor={'web.border'} orientation='vertical'/>
-            <Stack h={'44vh'} divider={<StackDivider />}>
-              <Box pt='2' w={'16vw'} h={'8vh'} mt={'0.5vh'} maxW={'276px'}>
+            <Stack h={'50vh'} divider={<StackDivider />}>
+              <Box pt='2' w={'16vw'} h={'8vh'} maxW={'276px'}>
                 <Text fontSize='sm' fontWeight={'semibold'}> Company </Text>
                 <Editable
                   value={inputs.Company}
@@ -489,8 +489,8 @@ return(
               <Box></Box>
             </Stack>
             <Divider borderColor={'web.border'} orientation='vertical'/>
-            <Stack h={'44vh'} divider={<StackDivider />}>
-              <Box pt='2' w={'16vw'} h={'8vh'} maxW={'276px'}>
+            <Stack h={'50vh'} divider={<StackDivider />}>
+              <Box pt='2' w={'16vw'} h={'8vh'} minH={'8vh'}maxW={'276px'}>
                 <Text fontSize='sm' fontWeight={'semibold'}> Billing Address </Text>
                 <Editable
                   value={inputs.Billing_Address}
@@ -546,7 +546,7 @@ return(
                   </Text>
                 )}
               </Box>
-              <Box pt='2' w={'16vw'} h={'8vh'} maxW={'276px'}>
+              <Box pt='3' w={'16vw'} h={'8vh'}maxW={'276px'} minH={'8.5vh'}>
                 <Text fontSize='sm' fontWeight={'semibold'}> Billing Address 2 </Text>
                 <Editable
                   value={inputs.Billing_Address2}
@@ -560,6 +560,7 @@ return(
                   w={'16vw'}
                   maxW={'280px'}
                   alignItems={'center'}
+
                 >
                   <EditablePreview 
                     maxW={'280px'} 
@@ -590,7 +591,7 @@ return(
                   <EditableControls name={'Billing_Address2'} value={inputs.Billing_Address2} />
                 </Editable>
               </Box>
-              <Box pt='2' w={'16vw'} h={'8vh'}  mt={'0.5vh'} maxW={'276px'}>
+              <Box pt='2' w={'16vw'} h={'8vh'}  mt={'0.5vh'} minH={'8vh'} maxW={'276px'}>
                 <Text fontSize='sm' fontWeight={'semibold'}> Billing City</Text>
                 <Editable
                   value={inputs.Billing_City}
@@ -646,7 +647,7 @@ return(
                   </Text>
                 )}
               </Box>
-              <Box pt='2' w={'16vw'} h={'8vh'}  mt={'0.5vh'} maxW={'276px'}>
+              <Box pt='2' w={'16vw'} h={'8vh'}  mt={'0.5vh'}  minH={'8vh'} maxW={'276px'}>
                 <Text fontSize='sm' fontWeight={'semibold'}> Billing ZipCode </Text>
                 <Editable
                   value={inputs.Billing_ZipCode}
@@ -702,7 +703,7 @@ return(
                   </Text>
                 )}
               </Box>
-              <Box pt='2' w={'16vw'} h={'8vh'}  mt={'0.5vh'} maxW={'276px'}>
+              <Box pt='2' w={'16vw'} h={'8vh'}  mt={'0.5vh'}  minH={'8vh'} maxW={'276px'}>
                 <Text fontSize='sm' fontWeight={'semibold'}> Billing State </Text>
                 <Select
                 pl={'2'}

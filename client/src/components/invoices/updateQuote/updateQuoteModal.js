@@ -282,7 +282,7 @@ export default function UpdateQuoteModal({invoice, invoice_products}) {
         <Modal 
           isOpen={isOpenUpdate} 
           onClose={handleClose}
-          size={progress === 0 ? 'lg' : '5xl'}
+          size={progress === 0 ? 'lg' : '6xl'}
           motionPreset='slideInRight'
           >
           <ModalOverlay />

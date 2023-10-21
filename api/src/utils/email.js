@@ -100,15 +100,9 @@ function sendEmailClient(
   return client.sendEmailWithTemplate(optionsEmail)
 }
 
-function sendSamplesEmail( fromEmail, clientEmail, ccEmail, bodyValue, subjectValue ) {
+function sendSamplesEmail( fromEmail, clientEmail, ccEmail, bodyValue, subjectValue, attachments, seller ) {
 
-  let seller = fromEmail.split('@')[0].toLowerCase()
-
-  if (seller === 'samples') {
-    seller = 'ines';
-  }
-
-  const imageSignature = `https://naturali-parseddocuments.s3.amazonaws.com/Invoice+Naturali/assets/${seller}.png`
+  var imageSignature = `https://naturali-parseddocuments.s3.amazonaws.com/Invoice+Naturali/assets/${seller}.png`
 
   const optionsEmail = {
     From: fromEmail,
@@ -122,9 +116,21 @@ function sendSamplesEmail( fromEmail, clientEmail, ccEmail, bodyValue, subjectVa
       company_address: companyAddress,
       image: 'https://naturali-parseddocuments.s3.amazonaws.com/Invoice+Naturali/assets/NaturalistoneLogo.png',
       imageSignature: imageSignature
-
     }
   };
+    // Manejar archivos adjuntos
+    if (attachments && attachments.length > 0) {
+      optionsEmail.attachments = []; // Inicializa la lista de archivos adjuntos
+  
+      // Recorrer la lista de archivos adjuntos y generar campos "attachments" para cada uno
+      attachments.forEach((attachment) => {
+        optionsEmail.attachments.push({
+          Name: attachment.originalname, // Nombre del archivo adjunto
+          Content: attachment.buffer.toString('base64'), // Contenido del archivo en base64
+          ContentType: attachment.mimetype, // Tipo de contenido del archivo
+        });
+      });
+    }
   return client.sendEmailWithTemplate(optionsEmail)
 }
 
