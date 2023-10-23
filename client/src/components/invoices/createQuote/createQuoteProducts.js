@@ -8,7 +8,7 @@ import {
   Divider,
   Tooltip,
   } from "@chakra-ui/react"
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllProductsNewQuote } from "../../../redux/actions-products";
 import {BiSearch} from 'react-icons/bi'
@@ -17,13 +17,12 @@ import '../../../assets/styleSheet.css'
 import CreateQuoteProductsList from "./createQuoteProductsList";
 import AddSpecialProduct from "./createQuoteAddSpecialProd";
 
-const CreateQuoteProducts = ({formData, setFormData, invoice_products, setDisable, values}) => {
+const CreateQuoteProducts = ({formData, setFormData, invoice_products, setDisable, values, allMaterials, allValues}) => {
 
 const dispatch = useDispatch()
 const allProducts = useSelector(state => state.products_new_quote)
 const allProductsErrors = useSelector(state => state.products_new_quote_errors)
 const productErrors = useSelector((state) => state.products_errors)
-const [allMaterials, setAllMaterials] = useState(values?.materials)
 
 const [filters, setFilters] = useState({
   finish:'',
@@ -71,6 +70,7 @@ const handleClear = () => {
 const handleProducts = (e) => {
   setFilterProducts(e.target.value)
 }
+
 
 return(
 <>
@@ -129,7 +129,7 @@ return(
             )
           })
         :
-        null  
+        null
       }
       </Select>
       <Select
@@ -144,6 +144,19 @@ return(
         size={"sm"}
         borderBottomWidth={"2px"}
         borderBottomColor={'web.text2'}
+         css={{
+          '&::-webkit-scrollbar': {
+          width: '0.4vw',
+          background: '#0D1117'
+          },
+          '&::-webkit-scrollbar-track': {
+          width: '6px',
+        },
+          '&::-webkit-scrollbar-thumb': {
+          background: '#E47424',
+          borderRadius: '5px',
+         },
+         }}
         _hover={{borderColor: 'web.border'}}
         cursor={'pointer'}
         name={'finish'}
@@ -191,7 +204,7 @@ return(
         _active={{ color: 'gray.800'}}
       />
       <Divider orientation={'vertical'} h={'5vh'} ml={'1vw'}mr={'1vw'} pt={'2vh'}/>
-      <AddSpecialProduct values={values} allMaterials={allMaterials} formData={formData} setFormData={setFormData}/>
+      <AddSpecialProduct values={values} allMaterials={allMaterials} formData={formData} setFormData={setFormData} allValues={allValues}/>
       <Tooltip placement={'bottom-start'} label={'Clear all filters'} fontWeight={'hairline'}>      
         <IconButton
           icon={ <AiOutlineClear/>}

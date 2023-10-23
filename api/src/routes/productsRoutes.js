@@ -47,7 +47,6 @@ productsRouter.get("/search_prodname", async function (req, res) {
   }
 });
 
-
 productsRouter.get("/", async function (req, res) {
 
   query_ = `SELECT    

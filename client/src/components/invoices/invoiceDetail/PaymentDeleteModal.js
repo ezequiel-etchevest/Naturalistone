@@ -15,7 +15,7 @@ import { AiOutlineDelete } from 'react-icons/ai';
 import { useDispatch, useSelector } from 'react-redux';
 import { deletePayment } from '../../../redux/actions-payments';
 
-export default function PaymentDeleteModal({InvoiceID, idPayments}) {
+export default function PaymentDeleteModal({InvoiceID, idPayments, deliveries}) {
     
   const { isOpen, onOpen, onClose } = useDisclosure()
   const user = useSelector(state => state.user)
@@ -24,7 +24,12 @@ export default function PaymentDeleteModal({InvoiceID, idPayments}) {
   const handleSubmit = () => {
     dispatch(deletePayment(InvoiceID,idPayments, user[0].SellerID))
     onClose()
-    }
+  }
+
+  const onDeliveries = () => {
+    if (deliveries.length > 0) return true
+    else return false
+  }
   
     return (
       <>
@@ -34,7 +39,8 @@ export default function PaymentDeleteModal({InvoiceID, idPayments}) {
         fontWeight={'normal'}
         boxSize={'3vh'}
         display={'flex'}
-        icon={<AiOutlineDelete/>}           
+        icon={<AiOutlineDelete/>}
+        disabled={onDeliveries()}
         onClick={onOpen}
         _hover={{
         color: 'logo.orange'

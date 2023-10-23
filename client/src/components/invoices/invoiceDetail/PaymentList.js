@@ -12,7 +12,7 @@ import {
 import AddPayment from './addPayment';
 import PaymentDeleteModal from './PaymentDeleteModal'
 
-const ModelTr = ({p, totalAmount}) => {
+const ModelTr = ({p, totalAmount, deliveries}) => {
 
     const per = (p.Amount * 100) / totalAmount
     return(
@@ -29,13 +29,13 @@ const ModelTr = ({p, totalAmount}) => {
         <Td textAlign={'center'} fontSize={'1.3vh'}>$ {p.Amount.toLocaleString('en-US')} </Td>
         <Td textAlign={'center'} fontSize={'1.3vh'}>{p.Method}</Td>
         <Td w={'2vh'} textAlign={'center'} fontSize={'1.3vh'} >{Math.round(per.toFixed(2))} %</Td>
-        <Td w={'2vh'}> <PaymentDeleteModal InvoiceID={p.InvoiceID} idPayments={p.idPayments}/>
+        <Td w={'2vh'}> <PaymentDeleteModal InvoiceID={p.InvoiceID} idPayments={p.idPayments} deliveries={deliveries}/>
         </Td>
       </Tr>
     )
 }
 
-const PaymentList = ({payments, totalAmount, invoice}) => {
+const PaymentList = ({payments, totalAmount, invoice, deliveries}) => {
 
   const pendingAmount = payments.paymentsMath.PendingAmount
   const handlePendig = () => {
@@ -109,7 +109,7 @@ const PaymentList = ({payments, totalAmount, invoice}) => {
                 { 
                   payments.paymentData.map((p, i) =>{
                     return(
-                      <ModelTr p={p} key={i} totalAmount={totalAmount} invoice={invoice}/>
+                      <ModelTr p={p} key={i} totalAmount={totalAmount} invoice={invoice} deliveries={deliveries}/>
                       )})                   
                     }
                   </Tbody>

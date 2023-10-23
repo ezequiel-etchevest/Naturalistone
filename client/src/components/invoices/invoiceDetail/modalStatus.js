@@ -21,7 +21,7 @@ import '../../../assets/styleSheet.css';
 
 
 
-const CancelQuote= ({invoice, user}) => {
+const CancelQuote= ({invoice, user, payments}) => {
 
   const dispatch = useDispatch()
   const {id} = useParams()
@@ -31,7 +31,17 @@ const CancelQuote= ({invoice, user}) => {
     onClose()
   }
 
-    return(
+  const disabled = () => {
+    if (user.Secction7Flag === 0) {
+      return true
+    }
+    if (invoice[0]?.Payment_Stamp !== "0" || payments?.paymentData.length > 0) {
+      return true
+    }
+    return false
+  }
+
+  return(
         <>
           <ButtonGroup
             textColor={'web.text2'}
@@ -42,25 +52,17 @@ const CancelQuote= ({invoice, user}) => {
             _hover={{
             color: 'logo.orange'
             }}
-            disabled={
-              user.Secction7Flag === 1 ? false :
-              invoice[0].Payment_Stamp === 0 ? false : true 
-            }
+            disabled={disabled()}
             >
           <IconButton
             fontSize={'xl'}
-            disabled={
-              user.Secction7Flag === 1 ? false :
-              invoice[0].Payment_Stamp === 0 ? false : true 
-            }
+            disabled={disabled()}
             variant={'unstyled'}           
             fontWeight={'normal'}
             icon={<MdOutlineCancel/>}/>
           
               <Button
-                disabled={
-                  user.Secction7Flag === 1 ? false :
-                  invoice[0].Payment_Stamp === 0 ? false : true }
+                disabled={disabled()}
                 variant={'unstyled'}           
                 fontWeight={'normal'}
                 fontSize={'1vw'}

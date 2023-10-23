@@ -95,7 +95,10 @@ export function CreateQuote({ customers, sellers }) {
   const toast = useToast();
   const toastId = "error-toast";
   const customerID = formData.customer.CustomerID;
-
+  const [change, setChange] = useState(false);
+  const [allMaterials, setAllMaterials] = useState(values?.materials)
+  const [allValues, setAllValues] = useState(values?.finishValues)
+  
   useEffect(() => {
     if(!values.length){
       dispatch(getAllProductsNewQuote('', '', ''))
@@ -210,6 +213,7 @@ export function CreateQuote({ customers, sellers }) {
   };
 
   const handleNextButton = async () => {
+    setChange(!change);
     if(progress === 20){
       const areCustomerFieldCompleted = Object.values(formData.customer).every((value) => value.length !== 0)
       
@@ -253,20 +257,32 @@ export function CreateQuote({ customers, sellers }) {
   
     if (progress === 60) {
       dispatch(getAllProductsNewQuote("", "", ""));
+      setAllMaterials(values?.materials)
+      setAllValues(values?.finishValues)
       setProgress(progress + 20);
     } else {
       setProgress(progress + 20);
     }
   };
-  
+
+  useEffect(() => {
+    if (progress === 80) {
+      setDisable(false);
+      dispatch(getAllProductsNewQuote("", "", ""));
+      setAllMaterials(values?.materials)
+      setAllValues(values?.finishValues)
+    }
+},[])
+
   const handlePreviousButton = () => {
-    if (progress == 40) {
+    setChange(!change);
+    if (progress === 40) {
       setErrorsCustomer({});
       dispatch(getCustomers("", ""));
       handleCleanFormData();
       setDisable(true);
     }
-    if (progress == 60) {
+    if (progress === 60) {
       setDisable(false);
     }
     setProgress(progress - 20);
@@ -366,6 +382,9 @@ export function CreateQuote({ customers, sellers }) {
                 setFormData={setFormData}
                 setDisable={setDisable}
                 values={values}
+                change={change}
+                allMaterials={allMaterials}
+                allValues={allValues}
               />
             )}
             {!submited &&

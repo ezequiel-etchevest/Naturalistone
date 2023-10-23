@@ -44,8 +44,7 @@ const DeliveriesList = ({deliveries, input, onSecondModalOpen, setDeliveryID, id
   const dispatch = useDispatch()
   useEffect(()=>{
     dispatch(getDeliveriesNotes(id))
-  } 
-    ,[dispatch]) 
+  },[]) 
 
   return(
       <Box

@@ -51,7 +51,7 @@ const Detail = ({invoice, payments, invoice_products, user, deliveries, windowWi
         >
           {
            Object.entries(payments).length >= 1 ? (
-              <PaymentList payments={payments} totalAmount={invoice[0].Value} invoice={invoice}/>
+              <PaymentList payments={payments} totalAmount={invoice[0].Value} invoice={invoice} deliveries={deliveries}/>
             ) : (
               <Text>No payments done yet</Text>
             )

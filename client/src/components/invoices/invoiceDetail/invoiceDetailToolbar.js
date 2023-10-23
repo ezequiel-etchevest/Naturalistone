@@ -65,7 +65,7 @@ export const InvoiceDetailToolbar = ({invoice, payments, user, invoice_products,
           : <ApproveQuote invoice={invoice} user={user} handleDisabled={handleDisabled}/>
         }
         <ModalStamp invoice={invoice} payments={payments} />
-        <CancelQuote invoice={invoice} user={user} />
+        <CancelQuote invoice={invoice} user={user} payments={payments}/>
       </Box>
       <Text fontSize={'xs'} textColor={'web.text2'} w={'100%'}>Customer</Text>
       <Divider w={'100%'} textColor={'web.border'}/>

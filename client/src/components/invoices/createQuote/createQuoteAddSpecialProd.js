@@ -25,8 +25,8 @@ import {
 import { useState } from "react";
 import { AiOutlineFire, AiOutlinePlus } from 'react-icons/ai';
 
-const AddSpecialProduct = ({values, allMaterials, formData, setFormData}) => {
-  
+const AddSpecialProduct = ({values, allMaterials, formData, setFormData, allValues}) => {
+
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [products, setProducts] = useState([{
     quantity: 0,
@@ -225,6 +225,7 @@ const AddSpecialProduct = ({values, allMaterials, formData, setFormData}) => {
                     product={product}
                     values={values} 
                     allMaterials={allMaterials}
+                    allValues={allValues}
                   />
                 ))}
                 </Tbody>
@@ -253,7 +254,7 @@ const AddSpecialProduct = ({values, allMaterials, formData, setFormData}) => {
   )
 }
 
-const ModelTr = ({product, handleChange, handleDelete, index, values, allMaterials}) => {
+const ModelTr = ({product, handleChange, handleDelete, index, values, allMaterials, allValues}) => {
   
   return (
     <Tr
@@ -421,11 +422,24 @@ const ModelTr = ({product, handleChange, handleDelete, index, values, allMateria
           _hover={{borderColor: 'web.border'}}
           cursor={'pointer'}
           name={'finish'}
+          css={{
+            '&::-webkit-scrollbar': {
+            width: '0.4vw',
+           background: '#0D1117'
+          },
+            '&::-webkit-scrollbar-track': {
+            width: '6px',
+          },
+            '&::-webkit-scrollbar-thumb': {
+            background: '#E47424',
+            borderRadius: '5px',
+        },
+        }}
           value={product?.finish}
           >
           {
             Object.entries(values)?.length ?
-            values?.finishValues?.map((v, i )=> {
+            allValues?.map((v, i )=> {
               return(
                 <option value={`${v}`} key={i} className={'options'}>{`${v}`}</option>
               )
