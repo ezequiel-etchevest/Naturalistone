@@ -47,7 +47,7 @@ import SampleDeleteModal from './SampleDeleteModal';
         <Td onClick={handleClick} fontSize={'xs'} w={'6vw'} maxW={'6vw'}textAlign={'center'}>{e.InsertDate?.split('T')[0]}</Td>
         <Td onClick={handleClick} fontSize={'xs'} w={'8vw'} maxW={'6vw'}textAlign={'center'}>{e.EstDelivery_Date?.split('T')[0]}</Td>
         {
-          user[0].Secction7Flag === 1 ? <Td fontSize={'xs'} w={'2vw'} maxW={'6vw'}textAlign={'center'}>{<SampleDeleteModal idSample={e.idSamples} sellerDinamic={sellerDinamic}/>}</Td> : ''
+          user[0].Secction7Flag === 1 || user[0].SellerID === 8 ? <Td fontSize={'xs'} w={'2vw'} maxW={'6vw'}textAlign={'center'}>{<SampleDeleteModal idSample={e.idSamples} sellerDinamic={sellerDinamic}/>}</Td> : ''
         }
       </Tr>
       { isOpen && <SamplesProducts isOpenModal={isOpen} onCloseModal={onClose} idSamples={e.idSamples}/> }
@@ -123,7 +123,7 @@ import SampleDeleteModal from './SampleDeleteModal';
                     <Th color={'web.text2'} w={'6vw'} maxW={'6vw'} textAlign={'center'}>Insert Date</Th>
                     <Th color={'web.text2'} w={'6vw'} maxW={'6vw'} textAlign={'center'}>Est Delivery Date</Th>
                     {
-                      user[0].Secction7Flag === 1 ? <Th color={'web.text2'} w={'2vw'} maxW={'6vw'} textAlign={'center'}></Th> : ''
+                      user[0].Secction7Flag === 1 || user[0].SellerID === 8 ? <Th color={'web.text2'} w={'2vw'} maxW={'6vw'} textAlign={'center'}></Th> : ''
                     }
                   </Tr>
                 </Thead>

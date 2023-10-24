@@ -6,7 +6,7 @@ import 'react-quill/dist/quill.snow.css';
 import { Box } from '@chakra-ui/react';
 import { modules, formats, QuillToolbar } from "./EmailTollbarButtons";
 
-const EmailTemplate = ({ formData, setInput, input, handleSendEmail}) => {
+const EmailTemplate = ({ formData, setInput, input, handleSendEmail, showSuccessToast}) => {
   
   const valuesProducts = Object.values(formData?.products)
 
@@ -63,9 +63,19 @@ const [editorContent, setEditorContent] = useState(initialContent);
       });
     };
 
+    const handleAttachment = (file) => {
+
+      if (file) {
+        setInput({
+          ...input,
+          attachments: [...input.attachments, file],
+        });
+        showSuccessToast(`${file.name} added successfully`)
+      }
+    };
   return (
         <Box w={'100%'} p={'10px'}>
-          <QuillToolbar handleSendEmail={handleSendEmail} formData={formData}/>
+          <QuillToolbar handleSendEmail={handleSendEmail} formData={formData} handleAttachment={handleAttachment}/>
           <ReactQuill modules={modules} formats={formats} bounds={'.app'} theme="snow" onChange={handleBodyChange} value={editorContent} placeholder="Write your email here..."/>
         </Box>
   );

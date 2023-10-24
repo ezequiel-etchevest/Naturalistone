@@ -41,25 +41,25 @@ emailInvoiceRouter.post('/quoteDetail', async function(req, res) {
     }
 })
 
-emailInvoiceRouter.post('/samples', async function (req, res) {
+// emailInvoiceRouter.post('/samples', async function (req, res) {
   
-  const { userName } = req.params 
-  const { htmlBody, subject, clientEmail, sellerEmail, ccEmail } = req.body
+//   const { userName } = req.params 
+//   const { htmlBody, subject, clientEmail, sellerEmail, ccEmail } = req.body
 
 
-  try {
-    await sendSamplesEmail(
-      sellerEmail,
-      clientEmail,
-      ccEmail,
-      htmlBody,
-      subject,
-      )
-    return res.status(200).json({success: true, data: "email send successfully"})
-  } catch (error) {
-    return res.status(400).json({success: false, data: error})
-  }
-})
+//   try {
+//     await sendSamplesEmail(
+//       sellerEmail,
+//       clientEmail,
+//       ccEmail,
+//       htmlBody,
+//       subject,
+//       )
+//     return res.status(200).json({success: true, data: "email send successfully"})
+//   } catch (error) {
+//     return res.status(400).json({success: false, data: error})
+//   }
+// })
 
 // emailInvoiceRouter.post('/customer', async function (req, res) {
   
@@ -78,18 +78,25 @@ emailInvoiceRouter.post('/samples', async function (req, res) {
 //     return res.status(400).json({success: false, data: error})
 //   }
 // })
-emailInvoiceRouter.post('/customer', upload.array('attachments'), async (req, res) => {
+emailInvoiceRouter.post('/customer', upload.array('Attachments'), async (req, res) => {
   const { htmlBody, subject, clientEmail, sellerEmail, ccEmail } = req.body;
   const attachments = req.files; // El array de archivos adjuntos se encuentra en req.files
-  let seller = sellerEmail.split('@')[0].toLowerCase()
-
+  let seller = sellerEmail.split('@')[0].toLowerCase();
+  console.log(req.body)
   try {
-    // Lógica para enviar el correo con los archivos adjuntos
-    await sendSamplesEmail(sellerEmail, clientEmail, ccEmail, htmlBody, subject, attachments, seller);
+    if (attachments && attachments.length > 0) {
+      console.log('attachments tiene length')
+      // Si hay archivos adjuntos, enviar el correo con los archivos adjuntos
+      await sendSamplesEmail(sellerEmail, clientEmail, ccEmail, htmlBody, subject, attachments, seller);
+    } else {
+      // Si no hay archivos adjuntos, enviar el correo sin archivos adjuntos
+      await sendSamplesEmail(sellerEmail, clientEmail, ccEmail, htmlBody, subject, [], seller);
+    }
 
     return res.status(200).json({ success: true, data: 'email send successfully' });
   } catch (error) {
     return res.status(400).json({ success: false, data: error });
   }
 });
+
 module.exports = emailInvoiceRouter

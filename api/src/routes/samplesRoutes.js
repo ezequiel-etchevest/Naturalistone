@@ -149,14 +149,18 @@ samplesRoutes.post("/", async function (req, res) {
     //Busca todas las dimensiones tipo sample que haya en la db y trae sus dimensionID + su finish
     const allDimensions = await selectAllDimensions()
     //Mapea parsedProducts y se queda con aquellos productos que ya esten guardados en la db con tipo ProdNameId Sample y finish
-    const existingProducts = await selectExistingProducts(parsedProducts);
+    const existing = await selectExistingProducts(parsedProducts);
+    const existingProducts = existing.existingProducts
+
     //Se queda con un array donde unicamente esten los ProdID de los productos existentes de tipo sample
     const existingProductIds = existingProducts.map(product => product.ProdID);
 
     //Genera un array de objetos que no estan en la db con el tipo Sample, los crea en la db y retorna sus ids.
-    const newProducts = getNewProducts(parsedProducts, existingProducts);
+    // const newProducts = await getNewProducts(parsedProducts, existingProducts);
     //Guarda los IDs de los nuevos productos creados
+    const newProducts = existing.nonExistingProducts
     const prodIds = await insertNewProducts(newProducts, allDimensions);
+
     //Combina los Ids de los productos existentes y los Ids de los nuevos productos para generer un unico array de Ids.
     const combinedProductIds = existingProductIds.concat(prodIds);
 
@@ -185,7 +189,23 @@ function startTransaction() {
   });
 }
 
-function selectExistingProducts(parsedProducts) {
+// function selectExistingProducts(parsedProducts) {
+//   const clausulasWhere = parsedProducts.map((valores) => {
+//     return `ProdNames.Material = '${valores.type}' AND Dimension.Type = 'Sample' 
+//       AND Dimension.Finish = '${valores.finish}' AND ProdNames.ProdNameID = ${valores.prodNameID}`;
+//   });
+
+//   const sqlSelect = `
+//     SELECT Products.ProdID, Products.ProdNameID, ProdNames.Material, Dimension.Type, 
+//     Dimension.Finish FROM Products
+//     LEFT JOIN Dimension ON Dimension.DimensionID = Products.DimensionID
+//     LEFT JOIN ProdNames ON ProdNames.ProdNameID = Products.ProdNameID
+//     WHERE ${clausulasWhere.join(" OR ")}
+//   `;
+
+//   return executeQuery(sqlSelect);
+// }
+async function selectExistingProducts(parsedProducts) {
   const clausulasWhere = parsedProducts.map((valores) => {
     return `ProdNames.Material = '${valores.type}' AND Dimension.Type = 'Sample' 
       AND Dimension.Finish = '${valores.finish}' AND ProdNames.ProdNameID = ${valores.prodNameID}`;
@@ -199,19 +219,42 @@ function selectExistingProducts(parsedProducts) {
     WHERE ${clausulasWhere.join(" OR ")}
   `;
 
-  return executeQuery(sqlSelect);
+  try {
+    const results = await executeQuery(sqlSelect);
+
+    // Divide los resultados en dos arrays: existentes y no existentes
+    const existingProducts = [];
+    const nonExistingProducts = [];
+
+    for (const valores of parsedProducts) {
+      const existingProduct = results.find((existente) => (
+        existente.Material === valores.type &&
+        existente.Finish === valores.finish &&
+        existente.Type === 'Sample'
+      ));
+      
+      if (existingProduct) {
+        existingProducts.push(existingProduct);
+      } else {
+        nonExistingProducts.push(valores);
+      }
+    }
+    return { existingProducts, nonExistingProducts };
+  } catch (error) {
+    throw error;
+  }
 }
 
-function getNewProducts(parsedProducts, existingProducts) {
-  return parsedProducts.filter((valores) => {
-    return !existingProducts.some((existente) => {
-      return (
-        existente.Material === valores.type &&
-        existente.Finish === valores.finish
-      );
-    });
-  });
-}
+
+// function getNewProducts(parsedProducts, existingProducts) {
+//   return parsedProducts.filter((valores) => {
+//     return !existingProducts.some((existente) => (
+//       existente.Material === valores.type &&
+//       existente.Finish === valores.finish
+//     ));
+//   });
+// }
+
 
 
 async function insertNewProducts(newProducts, allDimensions) {

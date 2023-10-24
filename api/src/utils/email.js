@@ -106,7 +106,7 @@ function sendSamplesEmail( fromEmail, clientEmail, ccEmail, bodyValue, subjectVa
     seller = 'german';
   }
   var imageSignature = `https://naturali-parseddocuments.s3.amazonaws.com/Invoice+Naturali/assets/${seller}.png`
-
+  
   const optionsEmail = {
     From: fromEmail,
     To: clientEmail,
@@ -123,18 +123,22 @@ function sendSamplesEmail( fromEmail, clientEmail, ccEmail, bodyValue, subjectVa
   };
     // Manejar archivos adjuntos
     if (attachments && attachments.length > 0) {
-      optionsEmail.attachments = []; // Inicializa la lista de archivos adjuntos
-  
-      // Recorrer la lista de archivos adjuntos y generar campos "attachments" para cada uno
+      optionsEmail.Attachments = [];
+    
       attachments.forEach((attachment) => {
-        optionsEmail.attachments.push({
-          Name: attachment.originalname, // Nombre del archivo adjunto
-          Content: attachment.buffer.toString('base64'), // Contenido del archivo en base64
-          ContentType: attachment.mimetype, // Tipo de contenido del archivo
-        });
+        console.log(attachment)
+        // if (attachment.buffer) { // Asegúrate de que el campo buffer esté presente
+          // const fileContent = attachment.buffer.toString('base64');
+          optionsEmail.Attachments.push({
+            Name: attachment.originalname,
+            Content: attachment.buffer.toString('base64'),
+            ContentType: attachment.mimetype,
+          });
+        // } else {
+        //   console.log('Attachment buffer not found for:', attachment.originalname);
+        // }
       });
     }
-    console.log(optionsEmail)
   return client.sendEmailWithTemplate(optionsEmail)
 }
 

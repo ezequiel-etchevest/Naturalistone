@@ -4,7 +4,7 @@ import SamplesList from './SamplesList';
 import SamplesFilters from './SamplesFilters';
 
 const SamplesContainer = ({samples, user, sellers, loading}) => {
-    const sellerDinamic = user[0].Secction7Flag === 1 ? '3' : user[0].SellerID
+    const sellerDinamic = user[0].Secction7Flag === 1 || user[0].SellerID === 8 ? '3' : user[0].SellerID
 
         return(
             <Box
