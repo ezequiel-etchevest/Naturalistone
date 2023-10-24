@@ -21,7 +21,7 @@ body {
 .ql-editor {
   overflow-y: scroll;
   resize: vertical;
-  /* height: 300px !important; */
+  height: 420px !important;
 }
 
 .ql-editor::-webkit-scrollbar {
@@ -30,6 +30,9 @@ body {
 
 .ql-editor::-webkit-scrollbar-track {
   width: 6px;
+}
+.ql-editor.ql-blank::before {
+  color: #8B949E !important;
 }
 
 .ql-editor::-webkit-scrollbar-thumb {
