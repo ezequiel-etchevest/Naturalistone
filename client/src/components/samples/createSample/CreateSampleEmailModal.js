@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import {  useSelector } from 'react-redux';
 import { Box,  Divider, Flex, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalOverlay, Text, useToast } from '@chakra-ui/react';
-import { sendEmailSamples } from '../../../api/sendEmai';
+import { sendEmailCustomer, sendEmailSamples } from '../../../api/sendEmai';
 import EmailTemplate from './EmailToolbar';
 import '../../../assets/styleSheet.css'
 
@@ -14,6 +14,7 @@ const SendEmailModal = ({ formData, isOpen3, onClose3, handleCleanFormData }) =>
     subject: '',
     htmlBody: '',
     ccEmail: '',
+    attachments:[]
   })
   const toast = useToast()
 
@@ -53,10 +54,11 @@ const SendEmailModal = ({ formData, isOpen3, onClose3, handleCleanFormData }) =>
         subject: input.subject,
         clientEmail: formData.customer.Email,
         ccEmail: input.ccEmail,
+        attachments:[]
       };
       
       try {
-        const response = await sendEmailSamples(email);
+        const response = await sendEmailCustomer(email);
         if (response.success === false) {
           showErrorToast('The email was not sent correctly');
         } else {
@@ -65,6 +67,7 @@ const SendEmailModal = ({ formData, isOpen3, onClose3, handleCleanFormData }) =>
             subject: '',
             htmlBody: '',
             ccEmail: '',
+            attachments:[]
           });
           handleClose();
         }
@@ -81,7 +84,6 @@ const SendEmailModal = ({ formData, isOpen3, onClose3, handleCleanFormData }) =>
     handleCleanFormData()
     onClose3()
   }
-  // const image = 'C:\Users\Keki\Desktop\Naturalistone\Naturalistone\client\src\assets\NaturalistoneLogo.png'
 
   return (
   <>
@@ -158,6 +160,7 @@ const SendEmailModal = ({ formData, isOpen3, onClose3, handleCleanFormData }) =>
           handleSendEmail={handleSendEmail}
           setInput={setInput}
           input={input}
+          showSuccessToast={showSuccessToast}
           />
       </ModalBody>
       </ModalContent>

@@ -23,7 +23,7 @@ export function getSamples(search, sellerId){
       console.error('Error al obtener las muestras:', error.message);
 
     }
-      }
+    }
   }
 
   

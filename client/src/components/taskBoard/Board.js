@@ -16,6 +16,7 @@ const Board = ({setActiveCard, activeCard, user, filters, setFilters}) => {
 
 
   useEffect(()=>{},[tasks])
+
   useEffect(()=>{
     if(!sellers.length) dispatch(getSellers())
     },[sellers])

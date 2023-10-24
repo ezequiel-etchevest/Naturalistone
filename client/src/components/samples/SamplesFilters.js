@@ -52,7 +52,7 @@ import { getSamples } from "../../redux/actions-samples";
     }
 
     const validateSeller = () => {
-      if(user[0].Secction7Flag === 1) return true
+      if(user[0].Secction7Flag === 1 || user[0].SellerID === 8 ) return true
       else return false
     }
 

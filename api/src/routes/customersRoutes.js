@@ -312,7 +312,7 @@ customersRouter.patch('/:id', async function(req, res){
         else if(DiscountRate == '5') return 2
         else return 1
     } 
-
+   
     query_ = `UPDATE Customers SET Contact_Name = "${Contact_Name}", 
                 Company = "${Company}", 
                 Company_Position = "${Company_Position}", 

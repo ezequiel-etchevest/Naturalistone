@@ -26,7 +26,7 @@ const Samples = ({ focus, setFocus }) => {
       dispatch(getEmployeeById(userLocal.SellerID));
     }
     if (user.length) {
-      const sellerDinamic = user[0].Secction7Flag === 1 ? '3' : user[0].SellerID
+      const sellerDinamic = user[0].Secction7Flag === 1 || user[0].SellerID === 8 ? '3' : user[0].SellerID
       if (!samples.length) {
       dispatch(getSamples('', sellerDinamic));
     }
