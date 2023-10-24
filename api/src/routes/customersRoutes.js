@@ -176,10 +176,17 @@ customersRouter.post('/', async function(req, res){
         ShippingAddressInBilling
     } = req.body
 
+    const parsedDiscount = () => {
+      if(DiscountID == '15') return 4
+      else if(DiscountID == '10') return 3
+      else if(DiscountID == '5') return 2
+      else return 1
+  } 
+    const discountID = parsedDiscount()
+    
     try{
       mysqlConnection.beginTransaction();
-
-      const customer = await createCustomer(Company, Phone, Email, DiscountID, Contact_Name, Company_Position)
+      const customer = await createCustomer(Company, Phone, Email, discountID, Contact_Name, Company_Position)
       const billingAddress = await createAddress(customer.insertId, Billing_Address, Billing_Address2, Billing_City, Billing_State, Billing_ZipCode, Billing_Nickname)
       
       // const shippingAddress = await createAddress(customer.insertId, Address, Address2, City, State, ZipCode, Nickname)
@@ -305,7 +312,7 @@ customersRouter.patch('/:id', async function(req, res){
         else if(DiscountRate == '5') return 2
         else return 1
     } 
-    console.log("soy req bdy", req.body)
+
     query_ = `UPDATE Customers SET Contact_Name = "${Contact_Name}", 
                 Company = "${Company}", 
                 Company_Position = "${Company_Position}", 

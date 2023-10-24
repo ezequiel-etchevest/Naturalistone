@@ -26,7 +26,7 @@ const createCustomer = async (
 ) => {
 
   postCustomerQuery = `INSERT INTO Customers (Company, Phone, Email, DiscountID, Contact_Name, Company_Position) 
-  VALUES ("${company}", "${phone}", "${email}", "${discountId}", "${contact_name}", "${company_position}")`;
+  VALUES ("${company}", "${phone}", "${email}", ${discountId}, "${contact_name}", "${company_position}")`;
     
   return new Promise((resolve, reject) => {
     try{

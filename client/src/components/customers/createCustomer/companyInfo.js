@@ -5,16 +5,17 @@ import { companyRole } from "../../../utils/arrayCompanyRole";
 
 
 export function CompanyInfo({formData, setFormData, validate, errors, setErrors, setChangeInput, handleChange}) {
-  const [ discountID, setDiscountID ] = useState(1)
+  
+  // const [ discountID, setDiscountID ] = useState(1)
 
-  const handleDiscount = (value) => {
-    setDiscountID(value)
-    setFormData({
-      ...formData,
-      DiscountID: value
-    })
-  }
-  console.log("soy formdata", formData)
+  // const handleDiscount = (value) => {
+  //   setDiscountID(value)
+  //   setFormData({
+  //     ...formData,
+  //     DiscountID: value
+  //   })
+  // }
+  
   const discountRates = [0, 5, 10, 15]
 
   return(

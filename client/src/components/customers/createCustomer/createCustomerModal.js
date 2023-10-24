@@ -87,7 +87,7 @@ export function CreateCustomerModal() {
           }))
     }}else{
       dispatch(createCustomer(formData));
-      handleClose()
+      // handleClose()
     } 
   }
   const handleClose = () => {
