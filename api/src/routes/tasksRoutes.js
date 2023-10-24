@@ -50,10 +50,13 @@ tasksRouter.get('/comments/:TaskID', async function(req, res){
         ORDER BY Task_Comments.Date DESC`;
     try{
         mysqlConnection.query(query_, function(error, results, fields){
-            if(!results) res.status(400).json('error in comments tasks')
+
+            if(!results) {
+                 res.status(200).send('No Comments')
+            } else{
                 console.log('Comments OK')
-                if(!results.length) res.status(200).send('No Comments')
-                else res.status(200).json(results);
+                 res.status(200).json(results);
+                }
         });
     } catch(error){
         res.status(409).send(error);
