@@ -6,7 +6,7 @@ import { getInvoiceById, cleanInvoiceDetail } from "../../redux/actions-invoices
 import { getComments } from "../../redux/actions-tasks";
 
 const TaskCard = ({task, setActiveCard, activeCard, user }) => {
-  console.log(task)
+
   const { taskID, Description, Title, Status, CustomerID, ProjectID, InvoiceID, DueDate, SellerReference  } = task 
   const dispatch = useDispatch()
   const handleClick = () => {

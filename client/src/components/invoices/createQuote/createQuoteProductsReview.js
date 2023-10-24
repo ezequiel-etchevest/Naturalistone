@@ -80,6 +80,8 @@ const CreateQuoteProductsReview = ({ formData, setFormData }) => {
             <Th color={'web.text2'} fontSize={'sm'} textAlign={'center'}>Thickness</Th>
             <Th color={'web.text2'} fontSize={'sm'} textAlign={'center'}>Price</Th>
             <Th color={'web.text2'} fontSize={'sm'} w={'10vw'} textAlign={'center'}>Finish</Th>
+            <Th color={'web.text2'} fontSize={'sm'} w={'10vw'} textAlign={'center'}>LT \ In Stock</Th>
+            <Th color={'web.text2'} fontSize={'sm'} w={'10vw'} textAlign={'center'}>Notes</Th>
           </Tr>
         </Thead>
         <Tbody>
@@ -100,6 +102,8 @@ const CreateQuoteProductsReview = ({ formData, setFormData }) => {
               <Td fontSize={'xs'} textAlign={'center'}>{e[1].thickness}</Td>
               <Td fontSize={'xs'} textAlign={'center'}>{e[1].price}</Td>
               <Td fontSize={'xs'} textAlign={'center'}>{e[1].finish}</Td>
+              <Td fontSize={'xs'} textAlign={'center'}>LEAD TIME</Td>
+              <Td fontSize={'xs'} textAlign={'center'}>NOTAS</Td>
             </Tr>
           )) : null
         }
@@ -120,6 +124,8 @@ const CreateQuoteProductsReview = ({ formData, setFormData }) => {
               <Td fontSize={'xs'} textAlign={'center'}>{e[1].thickness}</Td>
               <Td fontSize={'xs'} textAlign={'center'}>{e[1].price}</Td>
               <Td fontSize={'xs'} textAlign={'center'}>{e[1].finish}</Td>
+              <Td fontSize={'xs'} textAlign={'center'}>LEADTIME</Td>
+              <Td fontSize={'xs'} textAlign={'center'}>NOTES</Td>
             </Tr>
           )) : null
         }
