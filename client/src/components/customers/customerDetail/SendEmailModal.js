@@ -39,7 +39,7 @@ const SendEmailModalCustomer = ({ customer }) => {
     attachments: []
   })
 
-  console.log(input.attachments)
+  
   const toast = useToast()
 
   const showSuccessToast = (message) => {
@@ -47,7 +47,7 @@ const SendEmailModalCustomer = ({ customer }) => {
       title: 'Success',
       description: message,
       status: 'success',
-      duration: 9000,
+      duration: 2000,
       isClosable: true,
     });
   };
@@ -57,7 +57,7 @@ const SendEmailModalCustomer = ({ customer }) => {
       title: 'Error',
       description: message,
       status: 'error',
-      duration: 9000,
+      duration: 2000,
       isClosable: true,
     });
   };
@@ -70,7 +70,6 @@ const SendEmailModalCustomer = ({ customer }) => {
     })
   }
   const handleSendEmail = async () => {
-    if (!isToastShowing) {
       const email = {
         sellerEmail: user[0].Username,
         htmlBody: input.htmlBody,
@@ -78,7 +77,7 @@ const SendEmailModalCustomer = ({ customer }) => {
         clientEmail: customer.Email,
         ccEmail: input.ccEmail,
         // Adjuntar los archivos almacenados en input.attachments
-        attachments: input?.attachments,
+        attachments: input.attachments,
       };
 
       const relationShip = {
@@ -106,7 +105,6 @@ const SendEmailModalCustomer = ({ customer }) => {
       } finally {
         setIsToastShowing(false);
       }
-    }
   };
 
   const handleClose = () => {

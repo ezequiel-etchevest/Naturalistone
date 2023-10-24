@@ -78,20 +78,14 @@ emailInvoiceRouter.post('/quoteDetail', async function(req, res) {
 //     return res.status(400).json({success: false, data: error})
 //   }
 // })
-emailInvoiceRouter.post('/customer', upload.array('Attachments'), async (req, res) => {
+emailInvoiceRouter.post('/customer', upload.array('attachments'), async (req, res) => {
   const { htmlBody, subject, clientEmail, sellerEmail, ccEmail } = req.body;
   const attachments = req.files; // El array de archivos adjuntos se encuentra en req.files
-  let seller = sellerEmail.split('@')[0].toLowerCase();
-  console.log(req.body)
+  let seller = sellerEmail.split('@')[0].toLowerCase()
+
   try {
-    if (attachments && attachments.length > 0) {
-      console.log('attachments tiene length')
-      // Si hay archivos adjuntos, enviar el correo con los archivos adjuntos
-      await sendSamplesEmail(sellerEmail, clientEmail, ccEmail, htmlBody, subject, attachments, seller);
-    } else {
-      // Si no hay archivos adjuntos, enviar el correo sin archivos adjuntos
-      await sendSamplesEmail(sellerEmail, clientEmail, ccEmail, htmlBody, subject, [], seller);
-    }
+    // Lógica para enviar el correo con los archivos adjuntos
+    await sendSamplesEmail(sellerEmail, clientEmail, ccEmail, htmlBody, subject, attachments, seller);
 
     return res.status(200).json({ success: true, data: 'email send successfully' });
   } catch (error) {
