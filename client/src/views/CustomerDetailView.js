@@ -36,6 +36,8 @@ const CustomerDetailView = ({focus, setFocus}) => {
     dispatch(cleanCustomerRelationship()); 
   };
   },[])
+
+
   
   if(userLocal) {
     if(user.length){

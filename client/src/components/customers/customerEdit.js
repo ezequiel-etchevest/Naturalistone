@@ -41,6 +41,7 @@ const discount = (discountId) => {
 const normalizeValue = (value) => {
   return value === null || value === "null" || value === '' || value === 'undefined' ? "" : value;
 };
+
 const [inputs, setInputs] = useState({
     Contact_Name: normalizeValue(customer.Contact_Name),
     City: normalizeValue(!customer.shipping_address_id ? customer.City : customer.shipping_city),
@@ -53,7 +54,7 @@ const [inputs, setInputs] = useState({
     Phone: normalizeValue(customer.Phone),
     Email: normalizeValue(customer.Email),
     DiscountID: normalizeValue(customer.DiscountID),
-    DiscountRate: discount(normalizeValue(customer.DiscountRate)),
+    DiscountRate: normalizeValue(customer.DiscountRate),
     Billing_Address: normalizeValue(!customer.billing_address_id ? customer.Billing_Address : customer.billing_address),
     Billing_Address2: normalizeValue(!customer.billing_address_id ? '' : customer.billing_address2),
     Billing_City: normalizeValue(!customer.billing_address_id ? customer.Billing_City : customer.billing_city),
@@ -63,7 +64,7 @@ const [inputs, setInputs] = useState({
     Seller: normalizeValue(customer.SellerID)
   });
 
-function validateFields() {
+  function validateFields() {
   if(errorsCustomer?.Address?.length || errorsCustomer?.State?.length || errorsCustomer?.City?.length || errorsCustomer?.ZipCode?.length){
     return setDisabled(true)
   }
@@ -140,7 +141,7 @@ setInputs({
   Phone: normalizeValue(customer.Phone),
   Email: normalizeValue(customer.Email),
   DiscountID: normalizeValue(customer.DiscountID),
-  DiscountRate: discount(normalizeValue(customer.DiscountRate)),
+  DiscountRate: normalizeValue(customer.DiscountRate),
   Billing_Address: normalizeValue(!customer.billing_address_id ? customer.Billing_Address : customer.billing_address),
   Billing_Address2: normalizeValue(!customer.billing_address_id ? '' : customer.billing_address2),
   Billing_City: normalizeValue(!customer.billing_address_id ? customer.Billing_City : customer.billing_city),
@@ -261,7 +262,7 @@ useEffect(() => {
   Phone: normalizeValue(customer.Phone),
   Email: normalizeValue(customer.Email),
   DiscountID: normalizeValue(customer.DiscountID),
-  DiscountRate: String(discount(normalizeValue(customer.DiscountRate))),
+  DiscountRate: normalizeValue(customer.DiscountRate),
   Billing_Address: normalizeValue(!customer.billing_address_id ? customer.Billing_Address : customer.billing_address),
   Billing_Address2: normalizeValue(!customer.billing_address_id ? '' : customer.billing_address2),
   Billing_City: normalizeValue(!customer.billing_address_id ? customer.Billing_City : customer.billing_city),

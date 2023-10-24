@@ -17,15 +17,11 @@ const CustomerDetail = ({user, customer, projects_by_customer_id }) => {
   const customer_relationship = useSelector(state => state.customer_relationship)
   const sellers = useSelector(state => state.sellers)
   const userLocal = JSON.parse(localStorage.getItem('user'))
+  const dispatch = useDispatch()
 
-  // const dispatch = useDispatch()
-  // useEffect(() => {
-  //   // if(!customer_relationship.length) dispatch(getCustomerRelationship(customer.CustomerID))
-  //   if(!sellers.length) dispatch(getSellers())
-  //   if(userLocal && !user.length){
-  //     dispatch(getEmployeeById(userLocal.SellerID))
-  //   }
-  // },[])
+  useEffect(() => {
+    if(!sellers.length) dispatch(getSellers())
+  },[])
 
   const [highlight, sethighlight] = useState('');
 
