@@ -16,24 +16,19 @@ const CustomerDetailView = ({focus, setFocus}) => {
   const user = useSelector(state => state.user)
   const customer = useSelector(state => state.customer_by_id)
   const projects_by_customer_id = useSelector(state => state.projects_by_customer_id)
-  const project_invoices = useSelector(state => state.project_invoices)
   const userLocal = JSON.parse(localStorage.getItem('user'))
   const { id } = useParams()
   const customer_relationship = useSelector(state => state.customer_relationship)
 
   
-  useEffect(() => {
-    if (typeof customer_relationship === 'string') dispatch(getCustomerRelationship(id))
-  },[customer_relationship])
-
   useEffect(()=>{
     if(userLocal && !user.length){
       dispatch(getEmployeeById(userLocal.SellerID))
     }
     if(!Object.entries(customer).length) dispatch(getCustomerById(id))
     if(!Object.entries(projects_by_customer_id).length) dispatch(getCustomerProjects(id))
-    if(!project_invoices) dispatch(getCustomerInvoices(id))},
-    [ user, projects_by_customer_id, customer])
+    if(!customer_relationship.length) dispatch(getCustomerRelationship(id))
+  },[])
 
   useEffect(()=> {
     return()=>{
@@ -42,16 +37,13 @@ const CustomerDetailView = ({focus, setFocus}) => {
   };
   },[])
   
-  useEffect(() => {
-  },[customer])
-
   if(userLocal) {
     if(user.length){
       return(
         <>
           <SideBar user={user} focus={focus} setFocus={setFocus}/>
           {
-            Object.entries(customer).length && Object.entries(projects_by_customer_id).length && typeof customer_relationship !== 'string' ? (
+            Object.entries(customer).length && typeof projects_by_customer_id !== 'string' && typeof customer_relationship !== 'string'? (
               <CustomerDetail user={userLocal} customer={customer} customer_relationship={customer_relationship} projects_by_customer_id={projects_by_customer_id} />
               ) : (
               <Center ml={'16vh'} bg={'web.bg'} h={'92vh'}>

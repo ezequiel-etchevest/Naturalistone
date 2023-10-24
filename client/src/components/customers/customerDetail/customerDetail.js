@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getCustomerRelationship } from "../../../redux/actions-customers";
 import { getSellers } from "../../../redux/actions-sellers";
 import { getEmployeeById } from "../../../redux/actions-employees";
+import { getCustomerProjects } from "../../../redux/actions-projects";
 
 
 const CustomerDetail = ({user, customer, projects_by_customer_id }) => {
@@ -17,14 +18,14 @@ const CustomerDetail = ({user, customer, projects_by_customer_id }) => {
   const sellers = useSelector(state => state.sellers)
   const userLocal = JSON.parse(localStorage.getItem('user'))
 
-  const dispatch = useDispatch()
-  useEffect(() => {
-    if(!customer_relationship.length) dispatch(getCustomerRelationship(customer.CustomerID))
-    if(!sellers.length) dispatch(getSellers())
-    if(userLocal && !user.length){
-      dispatch(getEmployeeById(userLocal.SellerID))
-    }
-  },[])
+  // const dispatch = useDispatch()
+  // useEffect(() => {
+  //   // if(!customer_relationship.length) dispatch(getCustomerRelationship(customer.CustomerID))
+  //   if(!sellers.length) dispatch(getSellers())
+  //   if(userLocal && !user.length){
+  //     dispatch(getEmployeeById(userLocal.SellerID))
+  //   }
+  // },[])
 
   const [highlight, sethighlight] = useState('');
 

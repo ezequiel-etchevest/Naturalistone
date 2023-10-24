@@ -87,7 +87,15 @@ export function CreateCustomerModal() {
           }))
     }}else{
       dispatch(createCustomer(formData));
-      // handleClose()
+        toast(({
+          id: toastId,
+          title: "Success",
+          description: 'Customer created successful',
+          status: "success",
+          duration: 5000,
+          isClosable: true,
+          }))
+      handleClose()
     } 
   }
   const handleClose = () => {

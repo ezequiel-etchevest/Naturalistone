@@ -123,7 +123,7 @@ customersRouter.get("/relationship", async function(req, res) {
         mysqlConnection.query(selectAllDataQuery, function(err, results) {
           if (err) {
             console.log(err)
-            return res.status(400).json({ success: false, msg: "Error in get customer relationship" });
+            return res.status(400).json({ success: false, msg: "Error in get customer relationship", data: ''});
           }
   
           if (results.length === 0) {
