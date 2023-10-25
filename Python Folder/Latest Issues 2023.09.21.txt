@@ -1,0 +1,15 @@
+Inventory Movement Issues:
+
+The main goal of the research was to discover why when orders arrive they fail to change status from Incoming to Arrived. 
+There is a trigger in Orders table that will update the status in prodOrdered, which then will trigger an event Stock_Arrived_From_Order. 
+Stock_Arrived_From_Order is supposed to update ProdSold values and Inventory values. That is still pending review. 
+	Being analyzed on SQL File 11
+
+Progress: 
+	I do not understand why i get error when triggering Stock_Arrived_From_Order in ProdOrdered but i do not get it when translatng the logic, but it works.
+		I need to finish adjusting the table to update Inventory from ProdOrdered.
+
+Done:  
+	I have been reviewing what happens when i cancel order 1111 which has prod 1024. It correctly updates both inventory and ProdSold.
+	EveeryTwoMin_InventoryAvailable_Movements makes an uninportant inventory movement which triggers the update in Inventory Table. 
+		This last one is being reviewed on file SQL File 14 and is still pending approval
