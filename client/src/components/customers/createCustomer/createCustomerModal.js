@@ -205,7 +205,7 @@ export function CreateCustomerModal() {
         borderTopRightRadius={'md'}
         borderTopLeftRadius={'md'}/>
           {/* <ModalHeader color={'web.text'}>Create New Customer</ModalHeader> */}
-            <Text ml={'3vw'} mt={"2vh"} mb={'4vh'} fontSize={'lg'} w={'14vw'} color={'white'} alignSelf={'flex-start'}>Customer review</Text> 
+            <Text ml={'3vw'} mt={"2vh"} mb={'4vh'} fontSize={'lg'} w={'14vw'} color={'white'} alignSelf={'flex-start'}>Create Customer</Text> 
             <ModalBody >
               {
                 progress === 33.33 && (

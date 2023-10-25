@@ -39,7 +39,16 @@ export const AddTask = ({ user, filters, setFilters}) => {
   const handleClose = () => {
     setProgress(20)
     dispatch(getCustomers(''))
-    setFormData({})
+    setFormData({
+      Title: '',
+      Description: '',
+      CustomerID: null,
+      ProjectID: null,
+      InvoiceID: null,
+      DueDate: new Date().toISOString().split('T')[0],
+      SellerID: userLocal.SellerID === 3 ? ('') : (userLocal.SellerID) ,
+      Assigner: userLocal.SellerID
+    })
     setInputValueCustomer('')
     onClose()
   }
@@ -105,7 +114,7 @@ export const AddTask = ({ user, filters, setFilters}) => {
   useEffect(()=>{
     if(!customers.length)dispatch(getCustomers(''))
     if(!seller_invoices.length) dispatch(getInvoicesBySeller(user[0].SellerID, {inputName: '', inputNumber: '', selectSeller: '', timeFilter: ''}))
-  }, [seller_invoices])
+  }, [])
 
   return(
     <>

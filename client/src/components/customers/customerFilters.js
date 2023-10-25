@@ -11,11 +11,11 @@ import { useDispatch } from 'react-redux'
 import { useEffect, useState } from "react";
 import '../../assets/styleSheet.css';
 import {AiOutlineClear} from 'react-icons/ai';
-import { cleanCustomerDetail, getCustomers } from "../../redux/actions-customers";
+import { cleanCustomerDetail, getCustomers, getCustomersByFilter } from "../../redux/actions-customers";
 import { CreateCustomerModal } from './createCustomer/createCustomerModal';
 import { useLocation, useNavigate } from "react-router-dom";
 
-const CustomerFilters = () => {
+const CustomerFilters = (customers) => {
 
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -32,25 +32,27 @@ const CustomerFilters = () => {
       searchParams.set('customer', customer)
       navigate(`?${searchParams.toString()}`)
       setInputValues(customer)
-      dispatch(getCustomers(customer))
+      // dispatch(getCustomers(customer))
+      dispatch(getCustomersByFilter(customers, customer))
     } else {
       searchParams.delete('customer')
       navigate(`?${searchParams.toString()}`)
       setInputValues('')
-      dispatch(getCustomers(''))
+      // dispatch(getCustomers(''))
+      dispatch(getCustomersByFilter(customers, ''))
     }
   }
 
   useEffect(() => {
     dispatch(cleanCustomerDetail())
-    dispatch(getCustomers(inputValues))
+    dispatch(getCustomersByFilter(customers, inputValues))
   },[])
 
   const handleClear = () => {
     searchParams.delete('customer')
     navigate(`?${searchParams.toString()}`)
     setInputValues('')
-    dispatch(getCustomers(''))
+    dispatch(getCustomersByFilter(customers, ''))
   }
   
   return (

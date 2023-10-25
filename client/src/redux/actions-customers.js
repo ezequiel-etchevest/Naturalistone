@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { filterCustomer } from '../utils/customerFilters';
 
 export const GET_CUSTOMERS = 'GET_CUSTOMERS';
 export const GET_CUSTOMER_BY_ID = 'GET_CUSTOMERS_BY_ID';
@@ -10,6 +11,7 @@ export const POST_CUSTOMER_RELATIONSHIP = 'POST_CUSTOMER_RELATIONSHIP'
 export const GET_CUSTOMER_RELATIONSHIP = 'GET_CUSTOMER_RELATIONSHIP'
 export const CLEAN_CUSTOMER_RELATIONSHIP = 'CLEAN_CUSTOMER_RELATIONSHIP'
 export const UPDATE_ADDRESS_CUSTOMER = 'UPDATE_ADDRESS_CUSTOMER'
+export const GET_CUSTOMERS_FILTER = 'GET_CUSTOMERS_FILTER'
 
 
 export function getCustomers(search){
@@ -157,6 +159,22 @@ export function createAddressCustomer(customerId, address){
       }catch(error){
         console.log({error})
         return error.msg
+      }
+    }
+}
+
+export function getCustomersByFilter(customers, filter){
+    
+  return async function(dispatch){
+    try{ 
+        const data = filterCustomer(customers, filter)
+        dispatch(
+          {
+            type: GET_CUSTOMERS_FILTER,
+            payload: data
+          })
+      }catch(error){
+        console.log({error})
       }
     }
 }

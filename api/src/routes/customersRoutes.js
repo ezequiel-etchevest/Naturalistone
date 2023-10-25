@@ -17,7 +17,6 @@ const { executeQueries } = require('../Controllers/customerRelationship');
 customersRouter.get('/', async function(req, res){
 
     const { search } = req.query
-
     let query_ = `
         SELECT NaturaliStone.Customers.*, Discount.Rate As DiscountRate,
               shipping_address.address AS shipping_address,

@@ -79,7 +79,8 @@ import {
   PATCH_CUSTOMER,
   POST_CUSTOMER_RELATIONSHIP,
   GET_CUSTOMER_RELATIONSHIP,
-  CLEAN_CUSTOMER_RELATIONSHIP
+  CLEAN_CUSTOMER_RELATIONSHIP,
+  GET_CUSTOMERS_FILTER
 } from "./actions-customers";
 import { GET_MONTH } from "./actions-month";
 import { GET_SELLER_ID } from "./actions-sellerId";
@@ -173,6 +174,7 @@ const intialState = {
   materials: [],
   all_products_search: [],
   loading: false,
+  customer_filters: [],
 };
 
 function rootReducer(state = intialState, action) {
@@ -695,6 +697,11 @@ function rootReducer(state = intialState, action) {
       return {
         ...state,
         projects_by_customer_id: [],
+      }
+    case GET_CUSTOMERS_FILTER:
+      return {
+        ...state,
+        customer_filters: action.payload,
       }
     default:
       return {
