@@ -8,26 +8,23 @@ import { getInvoiceById } from "../../redux/actions-invoices";
 import { getComments } from "../../redux/actions-tasks";
 import { getSellers } from "../../redux/actions-sellers";
 
-const TaskDetail = ({activeCard, user}) => {
+const TaskDetail = ({activeCard, user, setActiveCard}) => {
 
-  const { taskID, Description, Title, Status, CompletedDate, CustomerID, ProjectID, InvoiceID } = activeCard 
+  const { taskID, Description, Title, Status, CompletedDate } = activeCard 
+
   const sellers = useSelector(state => state.sellers)
-  const customer = useSelector(state => state.customer_by_id)
-  const invoice = useSelector(state => state.invoice)
-  const project = useSelector(state => state.project_by_id)
+  // const customer = useSelector(state => state.customer_by_id)
+  // const invoice = useSelector(state => state.invoice)
+  // const project = useSelector(state => state.project_by_id)
   const comments = useSelector(state => state.task_comments)
   const dispatch = useDispatch()
-
-  // useEffect(()=>{
-  //   if(CustomerID) dispatch(getCustomerById(CustomerID))
-  //   if(ProjectID) dispatch(getProjectById(ProjectID))
-  //   if(InvoiceID) dispatch(getInvoiceById(InvoiceID))
-  //   if(!sellers.length) dispatch(getSellers())
-  //   dispatch(getComments(taskID))
-  // }, [activeCard])
   
-    const seller = sellers.find(e => e.SellerID === activeCard.SellerID)
-
+  const seller = sellers.find(e => e.SellerID === activeCard.SellerID)
+    
+  useEffect(() => {
+    dispatch(getComments(taskID))
+  },[activeCard])
+  
     return(
       <>
         <Box
@@ -119,7 +116,8 @@ const TaskDetail = ({activeCard, user}) => {
           <Text 
             fontSize={'lg'} 
             fontWeight={'bold'}>
-            { customer.Contact_Name ? customer.Contact_Name : '-'}
+            { activeCard.Contact_Name ? activeCard.Contact_Name : '-'}
+            {/* { customer.Contact_Name ? customer.Contact_Name : '-'} */}
           </Text>
         </Box>
         <Box  mb={'1.5vh'}>
@@ -131,7 +129,7 @@ const TaskDetail = ({activeCard, user}) => {
           <Text 
             fontSize={'lg'} 
             fontWeight={'bold'}>
-              {customer.Company ? customer.Company : '-'}
+              {activeCard.Company ? activeCard.Company : '-'}
           </Text>
         </Box>
         <Box mb={'1.5vh'}>
@@ -143,7 +141,7 @@ const TaskDetail = ({activeCard, user}) => {
           <Text 
             fontSize={'lg'} 
             fontWeight={'bold'}>
-              {project[0]?.ProjectName ? project[0].ProjectName : '-'}
+              {activeCard.ProjectName ? activeCard.ProjectName : '-'}
           </Text>
         </Box>
         <Box mb={'1.5vh'}>
@@ -155,7 +153,7 @@ const TaskDetail = ({activeCard, user}) => {
           <Text 
             fontSize={'lg'} 
             fontWeight={'bold'}>
-              {invoice[0]?.Naturali_Invoice ? invoice[0]?.Naturali_Invoice : '-'}
+              {activeCard.Naturali_Invoice ? activeCard.Naturali_Invoice : '-'}
           </Text>
         </Box>
         <Divider mb={'2vh'}/>

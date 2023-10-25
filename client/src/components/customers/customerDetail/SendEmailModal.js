@@ -39,7 +39,6 @@ const SendEmailModalCustomer = ({ customer }) => {
     attachments: []
   })
 
-  
   const toast = useToast()
 
   const showSuccessToast = (message) => {
@@ -79,7 +78,7 @@ const SendEmailModalCustomer = ({ customer }) => {
         // Adjuntar los archivos almacenados en input.attachments
         attachments: input.attachments,
       };
-
+   
       const relationShip = {
         Action: "Email",
         Comment: input.plainTextBody 

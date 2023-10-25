@@ -135,7 +135,7 @@ export function EditProject({customer, projects_by_customer_id}) {
         <ModalOverlay/>
         <ModalContent
         bg={'web.sideBar'}
-        h={"76vh"}
+        h={"86vh"}
         maxW={progress === 50 ? '65vw' : '50vw'}
         minH={"55vh"}
         border={'1px solid'}
