@@ -25,7 +25,7 @@ export function CustomerEdit({user, customer, sellers}) {
 
 const dispatch = useDispatch();
 const [errorsCustomer, setErrorsCustomer] = useState({})
-const [ progress, setProgress ] = useState(33.33)
+const [ progress, setProgress ] = useState(50)
 const toast = useToast()
 const { isOpen, onOpen, onClose } = useDisclosure()
 const [isToastShowing, setIsToastShowing] = useState(false)
@@ -151,20 +151,20 @@ setInputs({
   Seller: normalizeValue(customer.SellerID)
 })
 setErrorsCustomer({})
-setProgress(33.33)
+setProgress(50)
 onClose()
 }
 
 const handleNextButton = () =>{
   setErrorsCustomer({})
-  setProgress(progress + 33.33)
+  setProgress(progress + 50)
 }
 
 const handlePreviousButton = () => {
-  if(progress === 33.33) {
+  if(progress === 50) {
     return
   }
-  setProgress(progress - 33.33)
+  setProgress(progress - 50)
 }
 
 const handleSubmit = async () => {
@@ -209,11 +209,11 @@ const handleSubmit = async () => {
   await dispatch(getCustomerById(customer.CustomerID))
   onClose()
   setErrorsCustomer({})
-  setProgress(33.33)
+  setProgress(50)
 }
 
 useEffect(() => {
-    if(progress === 33.33) {
+    if(progress === 50) {
     if(
       (inputs.Contact_Name.length &&
       inputs.Email.length &&
@@ -313,7 +313,7 @@ return (
       {/* <ModalHeader color={'web.text'}>Edit Customer</ModalHeader> */}
         <ModalBody >
           {
-            progress === 33.33 && (
+            progress === 50 && (
               <CustomersEditModal
               inputs={inputs}
               setInputs={setInputs}
@@ -331,7 +331,7 @@ return (
             )
           }
           {
-            progress === 66.66 && (
+            progress === 100 && (
               <CustomersEditModal2
               inputs={inputs}
               setInputs={setInputs}
@@ -347,26 +347,7 @@ return (
               validateCompletedInputsEditCustomer={validateCompletedInputsEditCustomer}
               />
             )
-
           }
-          {
-            progress === 99.99 && (
-              <CustomersEditModal1
-              inputs={inputs}
-              setInputs={setInputs}
-              updateCustomer={updateCustomer}
-              isToastShowing={isToastShowing}
-              setIsToastShowing={setIsToastShowing}
-              handleCheck={handleCheck}
-              handleCancel={handleCancel}
-              handleChange={handleChange}
-              errorsCustomer={errorsCustomer}
-              setErrorsCustomer={setErrorsCustomer}
-              USStates={USStates}
-              />
-            )
-          }
-
         </ModalBody>
         <ModalFooter
           mb={"2vh"}
@@ -376,11 +357,11 @@ return (
           justifyContent={"space-between"}
           ml={"1vw"}
           mr={"0.5vw"}>
-          <Button visibility={progress === 33.33 ? 'hidden' : 'unset'} colorScheme='orange' mr={3} onClick={()=>handlePreviousButton()}>
+          <Button visibility={progress === 50 ? 'hidden' : 'unset'} colorScheme='orange' mr={3} onClick={()=>handlePreviousButton()}>
           Prev
           </Button>
           {
-          progress === 99.99 ? (
+          progress === 100 ? (
             <Button colorScheme='orange' mr={3} onClick={(e)=>handleSubmit(e)} disabled={disabled}>
               Submit
             </Button>

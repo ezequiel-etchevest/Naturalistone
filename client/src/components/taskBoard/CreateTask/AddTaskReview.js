@@ -6,8 +6,9 @@ const AddTaskReview = ({formData}) => {
   const customer = useSelector(state => state.customer_by_id)
   const invoice = useSelector(state => state.invoice)
   const project = useSelector(state => state.project_by_id)
+  
 
-    return(
+  return(
       <>
         <Box
         overflow={'auto'}
@@ -69,7 +70,7 @@ const AddTaskReview = ({formData}) => {
           <Text 
             fontSize={'md'} 
             fontWeight={'bold'}>
-            { customer.Contact_Name ? customer.Contact_Name : '-'}
+            { formData.CustomerID ? customer.Contact_Name : '-'}
           </Text>
         </Box>
         <Box  mb={'1.5vh'}>
@@ -81,7 +82,7 @@ const AddTaskReview = ({formData}) => {
           <Text 
             fontSize={'md'} 
             fontWeight={'bold'}>
-              {customer.Company ? customer.Company : '-'}
+            { formData.CustomerID ? customer.Company : '-'}
           </Text>
         </Box>
         <Box mb={'1.5vh'}>
@@ -93,7 +94,7 @@ const AddTaskReview = ({formData}) => {
           <Text 
             fontSize={'md'} 
             fontWeight={'bold'}>
-              {project[0]?.ProjectName ? project[0].ProjectName : '-'}
+              {formData.ProjectID ? project[0].ProjectName : '-'}
           </Text>
         </Box>
         <Box mb={'1.5vh'}>
@@ -105,7 +106,7 @@ const AddTaskReview = ({formData}) => {
           <Text 
             fontSize={'md'} 
             fontWeight={'bold'}>
-              {invoice[0]?.Naturali_Invoice ? invoice[0].Naturali_Invoice : '-'}
+              {formData.InvoiceID ? invoice[0].Naturali_Invoice : '-'}
           </Text>
         </Box>
         </Box>

@@ -25,7 +25,7 @@ import { getCustomerById } from "../../../redux/actions-customers";
       dispatch(getCustomerById(formData.CustomerID))
     }
   }, [customer])
-
+// console.log("soy projects", projects)
   return(
     <>
       <Text fontWeight={'semibold'}  ml={'1vw'} fontSize={'lg'}  color={'web.text2'} alignSelf={'flex-start'}>If you want to link a project, please select one from the list:</Text>
@@ -44,7 +44,7 @@ import { getCustomerById } from "../../../redux/actions-customers";
         { 
         projects.length ?
           
-          Array.isArray(projects) ?
+          // Array.isArray(projects) ?
           <>
             <Box display={'flex'} flexDir={'column'} >
             <AddTaskProjectList 
@@ -62,10 +62,10 @@ import { getCustomerById } from "../../../redux/actions-customers";
             <CreateNewProject customer={customer} custID={custID}/>
             </Box>
             </>
-          :
-          <Center maxH={'50vh'} minH={'50vh'}>
-            <Spinner thickness={'4px'} size={'xl'} color={'logo.orange'}/>
-          </Center>
+          // :
+          // <Center maxH={'50vh'} minH={'50vh'}>
+          //   <Spinner thickness={'4px'} size={'xl'} color={'logo.orange'}/>
+          // </Center>
         }
     </>
     )
