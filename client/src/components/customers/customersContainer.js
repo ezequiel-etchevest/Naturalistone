@@ -2,6 +2,8 @@ import {Box, Spinner, Center} from '@chakra-ui/react';
 import CustomerList from './customerList';
 import CustomerFilters from './customerFilters';
 import { useState, useEffect } from 'react';
+import { getCustomersByFilter } from '../../redux/actions-customers';
+import { useDispatch } from 'react-redux';
 
 const CustomersContainer = ({customers, user, focusFilter, setFocusFilter, customer_filters}) => {
     const [ spinner, setSpinner ] = useState(false)
@@ -11,6 +13,7 @@ const CustomersContainer = ({customers, user, focusFilter, setFocusFilter, custo
     useEffect(()=>{
         handleSpinner()
       })
+
     if(spinner){
         return(
             <Box

@@ -107,7 +107,7 @@ useEffect(()=>{
     w={'80vw'}
     >
     {
-      customer_filters.length ? (
+      customers.length || customer_filters.length ? (
         <TableContainer  maxW={'80vw'}>
           <Table color={'web.text'}variant={'simple'} size={'sm'}>
             <Thead h={'6vh'}>
@@ -121,7 +121,12 @@ useEffect(()=>{
               </Thead>
               <Tbody >
               { 
-                customer_filters.slice(0, loadedCount).map((e, i) => {
+              customer_filters.length ? 
+              customer_filters.slice(0, loadedCount).map((e, i) => {
+                  return (<ModelTr key={i} e={e} user={user}/> )
+                })
+                :
+                customers.slice(0, loadedCount).map((e, i) => {
                   return (<ModelTr key={i} e={e} user={user}/> )
                 })
               }
