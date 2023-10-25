@@ -53,7 +53,7 @@ const ModelTr = ({e}) => {
   )
 }
 
-const CustomerList = ({customers, user}) => {
+const CustomerList = ({customers, user, customer_filters}) => {
 
 const [initialCount] = useState(20);
 const [batchCount] = useState(15);
@@ -107,7 +107,7 @@ useEffect(()=>{
     w={'80vw'}
     >
     {
-      customers.length ? (
+      customer_filters.length ? (
         <TableContainer  maxW={'80vw'}>
           <Table color={'web.text'}variant={'simple'} size={'sm'}>
             <Thead h={'6vh'}>
@@ -121,7 +121,7 @@ useEffect(()=>{
               </Thead>
               <Tbody >
               { 
-                customers.slice(0, loadedCount).map((e, i) => {
+                customer_filters.slice(0, loadedCount).map((e, i) => {
                   return (<ModelTr key={i} e={e} user={user}/> )
                 })
               }

@@ -3,7 +3,7 @@ import CustomerList from './customerList';
 import CustomerFilters from './customerFilters';
 import { useState, useEffect } from 'react';
 
-const CustomersContainer = ({customers, user, focusFilter, setFocusFilter }) => {
+const CustomersContainer = ({customers, user, focusFilter, setFocusFilter, customer_filters}) => {
     const [ spinner, setSpinner ] = useState(false)
     const handleSpinner = () => {
         setTimeout(()=>{ setSpinner(true)}, 500)
@@ -24,7 +24,9 @@ const CustomersContainer = ({customers, user, focusFilter, setFocusFilter }) => 
               focusFilter={focusFilter}/>
               <CustomerList 
               customers={customers}
-              user={user} />
+              user={user}
+              customer_filters={customer_filters}
+              />
             </Box>
         )}else{
             return(
