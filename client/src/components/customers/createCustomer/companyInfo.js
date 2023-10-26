@@ -15,7 +15,7 @@ export function CompanyInfo({formData, setFormData, validate, errors, setErrors,
   //     DiscountID: value
   //   })
   // }
-  
+
   const discountRates = [0, 5, 10, 15]
 
   return(

@@ -8,9 +8,20 @@ tasksRouter.get('/all-tasks', async function(req, res){
 
     const { SellerID, Status } = req.query
 
+    // SELECT Tasks.*, Seller.* FROM Tasks
+    // LEFT JOIN Seller ON Tasks.SellerID = Seller.SellerID
+
     let query_ = `
-    SELECT Tasks.*, Seller.* FROM Tasks
+    SELECT Tasks.*, 
+    Seller.FirstName,
+    Seller.LastName,
+    Customers.Contact_Name,
+    Customers.Company,
+    Projects.ProjectName
+    FROM Tasks
     LEFT JOIN Seller ON Tasks.SellerID = Seller.SellerID
+    LEFT JOIN Customers ON Customers.CustomerID = Tasks.CustomerID 
+    LEFT JOIN Projects ON Tasks.ProjectID = Projects.idProjects
     ${
         Number(SellerID) !== 3 ? (
             `WHERE Tasks.SellerID = ${SellerID} AND Status = "${Status}"`
@@ -41,7 +52,6 @@ tasksRouter.get('/all-tasks', async function(req, res){
 tasksRouter.get('/comments/:TaskID', async function(req, res){
 
     const { TaskID } = req.params
-
     let query_ = `
         SELECT Task_Comments.*,
         Seller.*
@@ -51,13 +61,13 @@ tasksRouter.get('/comments/:TaskID', async function(req, res){
         ORDER BY Task_Comments.Date DESC`;
     try{
         mysqlConnection.query(query_, function(error, results, fields){
-
+          
             if(!results) {
                  res.status(200).send('No Comments')
             } else{
                 console.log('Comments OK')
                  res.status(200).json(results);
-                }
+            }
         });
     } catch(error){
         res.status(409).send(error);
@@ -97,8 +107,8 @@ tasksRouter.get('/id/:TaskID', async function(req, res){
 
 tasksRouter.post('/new-comment', async function(req, res) {
     const { Description, By, Date, TaskID } = req.body;
-  
-    const query = `INSERT INTO Task_Comments (Description, \`By\`, Date, TaskID) 
+
+    const query = `INSERT INTO Task_Comments (Description, SellerID, Date, TaskID) 
                    VALUES ("${Description}", "${By}", "${Date}", "${TaskID}")`;
   
     try {
