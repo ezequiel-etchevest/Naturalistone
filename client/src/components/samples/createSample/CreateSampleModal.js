@@ -34,7 +34,7 @@ import { getSamples, postSamples, validateTrackingNumber } from "../../../redux/
 import CreateSampleModalAskEmail from "./CreateSampleModalAskEmail";
 import { day0, month0, year } from "../../../utils/todayDate";
 
-export function CreateSampleModal({ customers, sellers, sellerDinamic}) {
+export function CreateSampleModal({ customers, sellers, sellerDinamic, customersFilter, setCustomersFilter}) {
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { isOpen: isOpen2, onOpen: onOpen2, onClose: onClose2 } = useDisclosure();
@@ -107,6 +107,7 @@ export function CreateSampleModal({ customers, sellers, sellerDinamic}) {
     setDisable(true);
     setProgress(20);
     setSubmited(false);
+    setCustomersFilter(customers)
   };
 
   const handleCleanFormData = () => {
@@ -299,6 +300,8 @@ export function CreateSampleModal({ customers, sellers, sellerDinamic}) {
                 setFormData={setFormData}
                 formData={formData}
                 setDisable={setDisable}
+                customersFilter={customersFilter}
+                setCustomersFilter={setCustomersFilter}
               />
             )}
             {progress == 40 && (

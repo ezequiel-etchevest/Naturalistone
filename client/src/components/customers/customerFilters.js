@@ -7,17 +7,15 @@ import {
   Tooltip,
   } from "@chakra-ui/react";
 import { SearchIcon } from '@chakra-ui/icons';
-import { useDispatch } from 'react-redux'
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import '../../assets/styleSheet.css';
 import {AiOutlineClear} from 'react-icons/ai';
-import { cleanCustomerDetail, getCustomers, getCustomersByFilter } from "../../redux/actions-customers";
 import { CreateCustomerModal } from './createCustomer/createCustomerModal';
 import { useLocation, useNavigate } from "react-router-dom";
+import { filterCustomer } from "../../utils/customerFilters";
 
-const CustomerFilters = (customers) => {
+const CustomerFilters = ({ customers, customerFilters, setCustomerFilters }) => {
 
-  const dispatch = useDispatch()
   const navigate = useNavigate()
   const location = useLocation();
   const searchParams = new URLSearchParams();
@@ -32,27 +30,21 @@ const CustomerFilters = (customers) => {
       searchParams.set('customer', customer)
       navigate(`?${searchParams.toString()}`)
       setInputValues(customer)
-      // dispatch(getCustomers(customer))
-      dispatch(getCustomersByFilter(customers, customer))
+      setCustomerFilters(filterCustomer(customers, customer))
     } else {
       searchParams.delete('customer')
       navigate(`?${searchParams.toString()}`)
       setInputValues('')
-      // dispatch(getCustomers(''))
-      dispatch(getCustomersByFilter(customers, ''))
+      setCustomerFilters(filterCustomer(customers, ''))
+
     }
   }
-
-  useEffect(() => {
-    dispatch(cleanCustomerDetail())
-    dispatch(getCustomersByFilter(customers, inputValues))
-  },[])
 
   const handleClear = () => {
     searchParams.delete('customer')
     navigate(`?${searchParams.toString()}`)
     setInputValues('')
-    dispatch(getCustomersByFilter(customers, ''))
+    setCustomerFilters(customers);
   }
   
   return (

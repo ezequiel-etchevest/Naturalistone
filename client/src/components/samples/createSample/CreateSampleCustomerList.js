@@ -62,7 +62,7 @@ import {
     )
   }
   
-  const CreateSampleCustomerList = ({customers, setFormData, formData, setDisable}) => {
+  const CreateSampleCustomerList = ({customersFilter, setFormData, formData, setDisable}) => {
   
     const [initialCount] = useState(14);
     const [batchCount] = useState(10);
@@ -114,7 +114,7 @@ import {
       p={'3vh'}
       >
       {
-        customers.length ? (
+        customersFilter.length ? (
           <TableContainer>
             <Table color={'web.text'}variant={'simple'} size={'sm'}>
               <Thead h={'3vh'}>
@@ -128,7 +128,7 @@ import {
                 </Thead>
                 <Tbody >
                 { 
-                  customers.slice(0, loadedCount).map((e, i) => (
+                  customersFilter.slice(0, loadedCount).map((e, i) => (
                     <ModelTr key={i} e={e} setFormData={setFormData} formData={formData} setDisable={setDisable} /> 
                   ))
                 }

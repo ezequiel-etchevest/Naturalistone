@@ -13,10 +13,20 @@ import { useDispatch } from "react-redux";
 import {BiSearch} from 'react-icons/bi'
 import '../../../assets/styleSheet.css'
 import { CreateCustomerModal } from "../../customers/createCustomer/createCustomerModal";
-import { getCustomers, getCustomersByFilter } from "../../../redux/actions-customers";
 import CreateQuoteCustomerList from "./createQuoteCustomerList";
+import { filterCustomer } from "../../../utils/customerFilters";
 
-const CreateQuoteCustomer = ({customers, setFormData, formData, setDisable, update, invoice, user, customer_filters}) =>{
+const CreateQuoteCustomer = ({
+  customers,
+  setFormData,
+  formData,
+  setDisable,
+  update,
+  invoice,
+  user,
+  customersFilter,
+  setCustomersFilter
+}) =>{
 
 
 const dispatch = useDispatch()
@@ -25,14 +35,10 @@ const [inputValue, setInputValue] = useState('')
 const handleInput = (e) =>  {
   if(e.target.value.length) {
     setInputValue(e.target.value)
-    console.log("eeee", e.target.value)
-    console.log("soy custoerrrrsssmm input", customers)
-    // dispatch(getCustomers(e.target.value, e.target.value))
-    dispatch(getCustomersByFilter(customers, 'eduardo'))
+    setCustomersFilter(filterCustomer(customers, e.target.value))
   } else {
     setInputValue('')
-    dispatch(getCustomersByFilter(customers, ''))
-    // dispatch(getCustomers('', ''))
+    setCustomersFilter(customers)
   }
 }
 
@@ -114,8 +120,8 @@ return(
         </Box>
       </HStack>
       { 
-      customers || customer_filters ?
-        Array.isArray(customers) || Array.isArray(customer_filters) ?
+      customersFilter ?
+        Array.isArray(customersFilter) ?
           <CreateQuoteCustomerList 
             customers={customers} 
             setInputValue={setInputValue}
@@ -123,7 +129,7 @@ return(
             formData={formData}
             setDisable={setDisable}
             user={user}
-            customer_filters={customer_filters}
+            customersFilter={customersFilter}
             />
           :
           <Text maxH={'50vh'} minH={'50vh'} display={'flex'} justifyContent={'center'} alignItems={'center'}>No customers match this filters</Text>

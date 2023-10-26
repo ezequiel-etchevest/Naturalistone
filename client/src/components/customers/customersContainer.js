@@ -3,12 +3,12 @@ import CustomerList from './customerList';
 import CustomerFilters from './customerFilters';
 import { useState, useEffect } from 'react';
 import { getCustomersByFilter } from '../../redux/actions-customers';
-import { useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux'; 
 
-const CustomersContainer = ({customers, user, focusFilter, setFocusFilter, customer_filters}) => {
+const CustomersContainer = ({customers, user, focusFilter, setFocusFilter, customerFilters, setCustomerFilters}) => {
     const [ spinner, setSpinner ] = useState(false)
     const handleSpinner = () => {
-        setTimeout(()=>{ setSpinner(true)}, 500)
+        setTimeout(()=>{ setSpinner(true)}, 2000)
       }
     useEffect(()=>{
         handleSpinner()
@@ -24,11 +24,14 @@ const CustomersContainer = ({customers, user, focusFilter, setFocusFilter, custo
               customers={customers}
               user={user} 
               setFocusFilter={setFocusFilter} 
-              focusFilter={focusFilter}/>
+              focusFilter={focusFilter}
+              customerFilters={customerFilters}
+              setCustomerFilters={setCustomerFilters}
+              />
               <CustomerList 
               customers={customers}
               user={user}
-              customer_filters={customer_filters}
+              customerFilters={customerFilters}
               />
             </Box>
         )}else{

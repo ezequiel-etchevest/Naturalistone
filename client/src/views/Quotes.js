@@ -27,7 +27,7 @@ const Quotes = ({focus, setFocus}) => {
   const getParamsSeller = url.get('seller')
   const getParamsName = url.get('name')
   const getParamsNumber = url.get('number')
-  const customer_filters = useSelector(state => state.customer_filters)
+  const [customersFilter, setCustomersFilter] = useState(customers);
 
   const [focusFilter, setFocusFilter] = useState('All')
   const userLocal = JSON.parse(localStorage.getItem('user'))
@@ -56,6 +56,10 @@ const Quotes = ({focus, setFocus}) => {
         }
     }, [dispatch, user])
 
+    useEffect(() => {
+      setCustomersFilter(customers)
+    },[customers])
+
   useEffect(() => {
     return () => {
       dispatch(getCustomers(''))
@@ -63,24 +67,6 @@ const Quotes = ({focus, setFocus}) => {
       }
     },[])
   
-
-//       useEffect(() => {
-//         if(user.length){
-//           dispatch(getInvoicesBySeller(user[0].SellerID, {
-//             inputName: getParamsName ? getParamsName : '',
-//             inputNumber: getParamsNumber ? getParamsNumber : '',
-//             selectSeller: getParamsSeller ? getParamsSeller : '',
-//             timeFilter: getParamsTimeFilter ? getParamsTimeFilter : 'All'
-//           }))
-//       }
-//     }
-// , [])
-
-//     useEffect(() => {
-//       if(user.length && !customers.length){
-//         dispatch(getCustomers('',''))
-//       }}, [dispatch, user])
-
       if(userLocal){
         if(user.length){
           return(
@@ -94,7 +80,9 @@ const Quotes = ({focus, setFocus}) => {
                 focusFilter={focusFilter} 
                 setFocusFilter={setFocusFilter}
                 customers={customers}
-                customer_filters={customer_filters}/>
+                setCustomersFilter={setCustomersFilter}
+                customersFilter={customersFilter}
+                />
                 
             </>)
         } else return (

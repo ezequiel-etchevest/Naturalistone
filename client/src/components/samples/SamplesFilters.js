@@ -16,6 +16,7 @@ import {
   import { useLocation, useNavigate } from "react-router-dom";
 import { getCustomers } from "../../redux/actions-customers";
 import { getSamples } from "../../redux/actions-samples";
+import { filterCustomer } from "../../utils/customerFilters";
   
   const SamplesFilters = ({sellers, samples, user, setLoading, sellerDinamic}) => {
     
@@ -26,12 +27,17 @@ import { getSamples } from "../../redux/actions-samples";
   
     const dispatch = useDispatch()
     const customers = useSelector(state => state.customers)
+    const [customersFilter, setCustomersFilter] = useState(customers)
 
     useEffect(() => {
       if(!customers.length){
         dispatch(getCustomers('',''))
       }
     },[])
+
+    useEffect(() => {
+      setCustomersFilter(customers)
+    },[customers])
 
 
     const handleInput = (e) => {
@@ -165,7 +171,14 @@ import { getSamples } from "../../redux/actions-samples";
           display={'flex'} 
           justifyContent={'flex-end'}
           >  
-            <CreateSampleModal customers={customers} sellers={sellers} samples={samples} sellerDinamic={sellerDinamic}/>
+            <CreateSampleModal
+            customers={customers}
+            sellers={sellers}
+            samples={samples}
+            sellerDinamic={sellerDinamic}
+            customersFilter={customersFilter}
+            setCustomersFilter={setCustomersFilter}
+            />
             <Divider orientation={'vertical'} h={'5vh'}/>
             <Tooltip placement={'bottom-start'} label={'Clear all filters'} fontWeight={'hairline'}>      
               <IconButton

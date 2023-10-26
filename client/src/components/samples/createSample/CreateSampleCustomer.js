@@ -15,9 +15,10 @@ import '../../../assets/styleSheet.css'
 import { CreateCustomerModal } from "../../customers/createCustomer/createCustomerModal";
 import { getCustomers } from "../../../redux/actions-customers";
 import CreateSampleCustomerList from "./CreateSampleCustomerList";
+import { filterCustomer } from "../../../utils/customerFilters";
 
 
-const CreateSampleCustomer = ({customers, setFormData, formData, setDisable}) =>{
+const CreateSampleCustomer = ({customers, setFormData, formData, setDisable, setCustomersFilter, customersFilter}) =>{
 
 
 const dispatch = useDispatch()
@@ -27,10 +28,10 @@ const [inputValue, setInputValue] = useState('')
 const handleInput = (e) =>  {
   if(e.target.value.length) {
     setInputValue(e.target.value)
-    dispatch(getCustomers(e.target.value, e.target.value))
+    setCustomersFilter(filterCustomer(customers, e.target.value))
   } else {
     setInputValue('')
-    dispatch(getCustomers('', ''))
+    setCustomersFilter(customers)
   }
 }
 
@@ -90,10 +91,10 @@ return(
         </Box>
       </HStack>
       { 
-      customers ?
-        Array.isArray(customers) ?
+      customersFilter ?
+        Array.isArray(customersFilter) ?
           <CreateSampleCustomerList 
-            customers={customers} 
+            customersFilter={customersFilter} 
             setInputValue={setInputValue}
             setFormData={setFormData}
             formData={formData}

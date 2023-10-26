@@ -27,13 +27,11 @@ import CreateQuoteCustomerProjets from "./createQuoteProject";
 import CreateQuoteProducts from "./createQuoteProducts";
 import { getAllProductsNewQuote } from "../../../redux/actions-products";
 import CreateQuoteProductsReview from "./createQuoteProductsReview";
-import TESTpdf from "./testPDFreview";
 import { cleanCreatedQuote, createQuote, getInvoicesBySeller } from "../../../redux/actions-invoices";
 import QuotePdfModal from "./quotePdfModal";
-import { addSpecialProducts } from "../../../redux/actions-sp-1";
 import { updateAddress } from "../../../redux/actions-address";
 
-export function CreateQuote({ customers, sellers, customer_filters}) {
+export function CreateQuote({ customers, sellers, customersFilter, setCustomersFilter}) {
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   const user = useSelector((state) => state.user);
@@ -356,7 +354,8 @@ export function CreateQuote({ customers, sellers, customer_filters}) {
                 formData={formData}
                 setDisable={setDisable}
                 user={user}
-                customer_filters={customer_filters}
+                customersFilter={customersFilter}
+                setCustomersFilter={setCustomersFilter}
               />
             )}
             {progress == 40 && (
@@ -395,12 +394,6 @@ export function CreateQuote({ customers, sellers, customer_filters}) {
                   formData={formData}
                   setFormData={setFormData}
                 />
-              // <TESTpdf
-              // formData={formData}
-              // setFormData={setFormData}
-              // authFlag={authFlag}
-              // user={user}
-              // isOpen={isOpen}/>  
               ) : (
                 <Text
                   display={"flex"}
