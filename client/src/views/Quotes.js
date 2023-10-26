@@ -3,7 +3,7 @@ import SideBar from "../components/sideBar";
 import InfoContainer from "../components/invoices/infoContainer";
 import { useDispatch, useSelector } from "react-redux";
 import { getEmployeeById } from '../redux/actions-employees';
-import { getCustomers } from '../redux/actions-customers';
+import { getCustomers, getCustomersByFilter } from '../redux/actions-customers';
 import { getInvoicesBySeller, getSellerValues } from '../redux/actions-invoices';
 import Redirect from "./RedirectPage";
 import { Center, Spinner, Text } from "@chakra-ui/react";
@@ -27,6 +27,7 @@ const Quotes = ({focus, setFocus}) => {
   const getParamsSeller = url.get('seller')
   const getParamsName = url.get('name')
   const getParamsNumber = url.get('number')
+  const customer_filters = useSelector(state => state.customer_filters)
 
   const [focusFilter, setFocusFilter] = useState('All')
   const userLocal = JSON.parse(localStorage.getItem('user'))
@@ -51,8 +52,17 @@ const Quotes = ({focus, setFocus}) => {
         }
         if(user.length && !customers.length){
           dispatch(getCustomers('',''))
+          dispatch(getCustomersByFilter(customers, ''))
         }
     }, [dispatch, user])
+
+  useEffect(() => {
+    return () => {
+      dispatch(getCustomers(''))
+      dispatch(getCustomersByFilter(customers, getParamsName ? getParamsName : ''))
+      }
+    },[])
+  
 
 //       useEffect(() => {
 //         if(user.length){
@@ -83,7 +93,9 @@ const Quotes = ({focus, setFocus}) => {
                 sellers={sellers} 
                 focusFilter={focusFilter} 
                 setFocusFilter={setFocusFilter}
-                customers={customers}/>
+                customers={customers}
+                customer_filters={customer_filters}/>
+                
             </>)
         } else return (
           <>

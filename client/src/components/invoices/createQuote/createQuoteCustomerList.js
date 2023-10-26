@@ -75,7 +75,7 @@ import {
     )
   }
   
-  const CreateQuoteCustomerList = ({customers, setFormData, formData, setDisable, user}) => {
+  const CreateQuoteCustomerList = ({customers, setFormData, formData, setDisable, user, customer_filters}) => {
   
     const [initialCount] = useState(14);
     const [batchCount] = useState(10);
@@ -101,6 +101,8 @@ import {
       };
     }, [batchCount]);
   
+console.log("soy customer", customers)
+console.log("soy customersssr", customer_filters)
 
   return(
 <>
@@ -140,6 +142,11 @@ import {
               </Thead>
               <Tbody >
               { 
+              customer_filters.length > 0 ? 
+                customer_filters.slice(0, loadedCount).map((e, i) => (
+                  <ModelTr key={i} e={e} setFormData={setFormData} formData={formData} setDisable={setDisable} user={user}/> 
+                ))
+                :
                 customers.slice(0, loadedCount).map((e, i) => (
                   <ModelTr key={i} e={e} setFormData={setFormData} formData={formData} setDisable={setDisable} user={user}/> 
                 ))

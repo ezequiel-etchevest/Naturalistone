@@ -13,10 +13,10 @@ import { useDispatch } from "react-redux";
 import {BiSearch} from 'react-icons/bi'
 import '../../../assets/styleSheet.css'
 import { CreateCustomerModal } from "../../customers/createCustomer/createCustomerModal";
-import { getCustomers } from "../../../redux/actions-customers";
+import { getCustomers, getCustomersByFilter } from "../../../redux/actions-customers";
 import CreateQuoteCustomerList from "./createQuoteCustomerList";
 
-const CreateQuoteCustomer = ({customers, setFormData, formData, setDisable, update, invoice, user}) =>{
+const CreateQuoteCustomer = ({customers, setFormData, formData, setDisable, update, invoice, user, customer_filters}) =>{
 
 
 const dispatch = useDispatch()
@@ -25,10 +25,14 @@ const [inputValue, setInputValue] = useState('')
 const handleInput = (e) =>  {
   if(e.target.value.length) {
     setInputValue(e.target.value)
-    dispatch(getCustomers(e.target.value, e.target.value))
+    console.log("eeee", e.target.value)
+    console.log("soy custoerrrrsssmm input", customers)
+    // dispatch(getCustomers(e.target.value, e.target.value))
+    dispatch(getCustomersByFilter(customers, 'eduardo'))
   } else {
     setInputValue('')
-    dispatch(getCustomers('', ''))
+    dispatch(getCustomersByFilter(customers, ''))
+    // dispatch(getCustomers('', ''))
   }
 }
 
@@ -110,8 +114,8 @@ return(
         </Box>
       </HStack>
       { 
-      customers ?
-        Array.isArray(customers) ?
+      customers || customer_filters ?
+        Array.isArray(customers) || Array.isArray(customer_filters) ?
           <CreateQuoteCustomerList 
             customers={customers} 
             setInputValue={setInputValue}
@@ -119,6 +123,7 @@ return(
             formData={formData}
             setDisable={setDisable}
             user={user}
+            customer_filters={customer_filters}
             />
           :
           <Text maxH={'50vh'} minH={'50vh'} display={'flex'} justifyContent={'center'} alignItems={'center'}>No customers match this filters</Text>

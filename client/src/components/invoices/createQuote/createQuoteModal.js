@@ -33,7 +33,7 @@ import QuotePdfModal from "./quotePdfModal";
 import { addSpecialProducts } from "../../../redux/actions-sp-1";
 import { updateAddress } from "../../../redux/actions-address";
 
-export function CreateQuote({ customers, sellers }) {
+export function CreateQuote({ customers, sellers, customer_filters}) {
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   const user = useSelector((state) => state.user);
@@ -356,6 +356,7 @@ export function CreateQuote({ customers, sellers }) {
                 formData={formData}
                 setDisable={setDisable}
                 user={user}
+                customer_filters={customer_filters}
               />
             )}
             {progress == 40 && (

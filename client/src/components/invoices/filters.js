@@ -17,7 +17,7 @@ import {AiOutlineClear} from 'react-icons/ai';
 import {  useNavigate } from "react-router-dom";
 import CreateQuote from "./createQuote/createQuoteModal";
 
-const Filters = ({user, seller_invoices, sellers, setFocusFilter, seller_values, customers, inputValues, setInputValues, setLoading}) => {
+const Filters = ({user, seller_invoices, sellers, setFocusFilter, seller_values, customers, inputValues, setInputValues, setLoading, customer_filters}) => {
 
   const dispatch = useDispatch()
   const [ disabled, setDisabled ] = useState(false)
@@ -446,7 +446,7 @@ const Filters = ({user, seller_invoices, sellers, setFocusFilter, seller_values,
             </IconButton>
           </Tooltip>
         {/* <CreateInvoiceButton user={user} customers={customers}/> */}
-        <CreateQuote customers={customers} sellers={sellers}/>
+        <CreateQuote customers={customers} sellers={sellers} customer_filters={customer_filters}/>
         </HStack>
 
 

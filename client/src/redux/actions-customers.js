@@ -168,6 +168,7 @@ export function getCustomersByFilter(customers, filter){
   return async function(dispatch){
     try{ 
         const data = filterCustomer(customers, filter)
+        console.log("sly dataa", data)
         dispatch(
           {
             type: GET_CUSTOMERS_FILTER,
