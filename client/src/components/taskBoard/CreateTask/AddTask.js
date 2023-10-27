@@ -32,9 +32,10 @@ export const AddTask = ({ user, filters, setFilters}) => {
     ProjectID: null,
     InvoiceID: null,
     DueDate: new Date().toISOString().split('T')[0],
-    SellerID: userLocal.SellerID === 3 ? ('') : (userLocal.SellerID) ,
+    SellerID: userLocal.SellerID,
     Assigner: userLocal.SellerID
   })
+  const [customersFilter, setCustomersFilter] = useState('');
 
   const handleClose = () => {
     setProgress(20)
@@ -46,7 +47,7 @@ export const AddTask = ({ user, filters, setFilters}) => {
       ProjectID: null,
       InvoiceID: null,
       DueDate: new Date().toISOString().split('T')[0],
-      SellerID: userLocal.SellerID === 3 ? ('') : (userLocal.SellerID) ,
+      SellerID: userLocal.SellerID,
       Assigner: userLocal.SellerID
     })
     setInputValueCustomer('')
@@ -63,6 +64,7 @@ export const AddTask = ({ user, filters, setFilters}) => {
   const handleNextButton = () => {
     if(progress == 20){
       if(formData.Title && formData.Description){
+        setCustomersFilter(customers)
         return setProgress(progress + 20)
       }else{
         if(!toast.isActive(toastId)){
@@ -93,6 +95,7 @@ export const AddTask = ({ user, filters, setFilters}) => {
       }
     }
   const handlePreviousButton = () => {
+    if(progress === 40) setCustomersFilter(customers)
     if(progress === 80 ){
       if(formData.CustomerID) return setProgress(progress - 20)
       else return setProgress(progress - 40)
@@ -177,7 +180,16 @@ export const AddTask = ({ user, filters, setFilters}) => {
           }
           {
             progress === 40 && (
-              <AddTaskCustomer inputValue={inputValueCustomer} setInputValue={setInputValueCustomer} customers={customers} formData={formData} setFormData={setFormData} user={user}/>
+              <AddTaskCustomer
+              inputValue={inputValueCustomer}
+              setInputValue={setInputValueCustomer}
+              customers={customers}
+              formData={formData}
+              setFormData={setFormData}
+              user={user}
+              setCustomersFilter={setCustomersFilter}
+              customersFilter={customersFilter}
+              />
             )
           }
           {

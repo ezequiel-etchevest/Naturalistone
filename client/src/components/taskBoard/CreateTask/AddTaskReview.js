@@ -38,7 +38,7 @@ const AddTaskReview = ({formData}) => {
           maxH={'17vh'}
           mb={'2vh'}
           >
-            {formData.Title}
+            {formData?.Title}
         </Text>
         <Box>
         <Text 
@@ -46,7 +46,7 @@ const AddTaskReview = ({formData}) => {
             color={'web.text2'}>
             Due Date
           </Text>
-        <Text>{formData.DueDate}</Text>
+        <Text>{formData?.DueDate}</Text>
         </Box>
         </Box>
         <Text
@@ -58,7 +58,7 @@ const AddTaskReview = ({formData}) => {
           fontWeight={'normal'}
           maxH={'17vh'}
           >
-            {formData.Description}
+            {formData?.Description}
         </Text>
         <Divider mb={'2.5vh'}/>
         <Box mb={'1.5vh'}>
@@ -70,7 +70,7 @@ const AddTaskReview = ({formData}) => {
           <Text 
             fontSize={'md'} 
             fontWeight={'bold'}>
-            { formData.CustomerID ? customer.Contact_Name : '-'}
+            { formData?.CustomerID ? customer?.Contact_Name : '-'}
           </Text>
         </Box>
         <Box  mb={'1.5vh'}>
@@ -82,7 +82,7 @@ const AddTaskReview = ({formData}) => {
           <Text 
             fontSize={'md'} 
             fontWeight={'bold'}>
-            { formData.CustomerID ? customer.Company : '-'}
+            { formData?.CustomerID ? customer?.Company : '-'}
           </Text>
         </Box>
         <Box mb={'1.5vh'}>
@@ -94,7 +94,7 @@ const AddTaskReview = ({formData}) => {
           <Text 
             fontSize={'md'} 
             fontWeight={'bold'}>
-              {formData.ProjectID ? project[0].ProjectName : '-'}
+              {formData?.ProjectID ? project[0]?.ProjectName : '-'}
           </Text>
         </Box>
         <Box mb={'1.5vh'}>
@@ -106,7 +106,7 @@ const AddTaskReview = ({formData}) => {
           <Text 
             fontSize={'md'} 
             fontWeight={'bold'}>
-              {formData.InvoiceID ? invoice[0].Naturali_Invoice : '-'}
+              {formData?.InvoiceID ? invoice[0]?.Naturali_Invoice : '-'}
           </Text>
         </Box>
         </Box>

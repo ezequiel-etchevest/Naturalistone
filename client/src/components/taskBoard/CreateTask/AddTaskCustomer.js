@@ -15,8 +15,18 @@ import {
   import { CreateCustomerModal } from "../../customers/createCustomer/createCustomerModal";
   import { getCustomers } from "../../../redux/actions-customers";
   import { AddTaskCustomerList } from "./AddTaskCustomerList";
+import { filterCustomer } from "../../../utils/customerFilters";
 
-  const AddTaskCustomer = ({customers, setFormData, formData, setDisable, inputValue, setInputValue}) =>{
+  const AddTaskCustomer = ({
+    customers,
+    setFormData,
+    formData,
+    setDisable,
+    inputValue, 
+    setInputValue,
+    customersFilter,
+    setCustomersFilter
+  }) =>{
   
   const dispatch = useDispatch()
   const [customer, setCustomer] = useState('')
@@ -24,10 +34,10 @@ import {
   const handleInput = (e) =>  {
     if(e.target.value.length) {
       setInputValue(e.target.value)
-      dispatch(getCustomers(e.target.value, e.target.value))
+      setCustomersFilter(filterCustomer(customers, e.target.value))
     } else {
       setInputValue('')
-      dispatch(getCustomers('', ''))
+      setCustomersFilter(customers)
     }
   }
   
@@ -78,7 +88,7 @@ import {
           </Box>
       </HStack>
         { 
-        customers.length ?
+        customersFilter.length ?
           Array.isArray(customers) ?
             <AddTaskCustomerList 
               customers={customers} 
@@ -86,6 +96,7 @@ import {
               setFormData={setFormData}
               formData={formData}
               setDisable={setDisable}
+              customersFilter={customersFilter}
               />
             :
             <Text maxH={'50vh'} minH={'50vh'} display={'flex'} justifyContent={'center'} alignItems={'center'}>No customers match this filters</Text>

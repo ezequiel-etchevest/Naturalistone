@@ -58,7 +58,7 @@ const ModelTr = ({e, setFormData, formData}) => {
   )
 }
 
-export const AddTaskCustomerList = ({customers, setFormData, formData}) => {
+export const AddTaskCustomerList = ({customers, setFormData, formData, customersFilter}) => {
 
   const [initialCount] = useState(20);
   const [batchCount] = useState(15);
@@ -113,8 +113,7 @@ export const AddTaskCustomerList = ({customers, setFormData, formData}) => {
         w={'100%'} 
         >
           {
-            customers.length ?
-
+            customersFilter.length ?
              (
               <TableContainer  maxW={'80vw'}>
                 <Table color={'web.text'}variant={'simple'} size={'sm'}>
@@ -127,7 +126,7 @@ export const AddTaskCustomerList = ({customers, setFormData, formData}) => {
                     </Thead>
                     <Tbody >
                     { 
-                      customers.slice(0, loadedCount).map((e, i) => {
+                      customersFilter.slice(0, loadedCount).map((e, i) => {
                         return (<ModelTr key={i} e={e} setFormData={setFormData} formData={formData}/> )
                       })
                     }

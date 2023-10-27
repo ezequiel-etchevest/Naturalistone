@@ -141,8 +141,16 @@ tasksRouter.post('/new-task', async function(req, res){
         Assigner
     } = req.body
 
+    console.log("req vboyd", req.body)
+
+    const numberCustomerID = Number(CustomerID);
+    const numberSellerID = Number(SellerID);
+    const numberAssigner = Number(Assigner)
+    const numberProjectID = Number(ProjectID)
+    const numberInvoiceID = Number(InvoiceID)
+
     query_ = `INSERT INTO Tasks (taskID, Description, Title, Status, CustomerID, ProjectID, InvoiceID, SellerID, DueDate, Assigner) 
-    VALUES ("${taskID}", "${Description}", "${Title}", "todo", "${CustomerID}", "${ProjectID}", "${InvoiceID}", "${SellerID}", "${DueDate}" , "${Assigner}")`;
+    VALUES ("${taskID}", "${Description}", "${Title}", "todo", ${numberCustomerID}, ${numberProjectID}, ${numberInvoiceID}, ${numberSellerID}, "${DueDate}" , ${numberAssigner})`;
     
     try{
          mysqlConnection.query(query_, function(error, results, fields){
