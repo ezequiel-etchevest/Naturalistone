@@ -21,7 +21,7 @@ const CreateQuoteCustomerProjets = ({ formData, setFormData, setDisable, update,
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    if(name === 'shippingPrice'){
+    if(name === 'shippingPrice' || name === 'cratingFee' || name === 'transferFee'){
 
       const regex = /^\d+(\.\d{0,2})?$/;  
   
@@ -113,13 +113,14 @@ const CreateQuoteCustomerProjets = ({ formData, setFormData, setDisable, update,
       </Box>
       <HStack
         display={'flex'}
-        justifyContent={'space-between'}
+        gap={'3vw'}
         h={'6vh'}
-        mb={'3vh'}
+        mb={'1vh'}
         mt={'2vh'}
         mr={'2vw'}
         ml={'2vw'}
         >
+       <Tooltip  label="P.O. No." fontWeight={'hairline'} placement='top-start'>     
         <Input
           w={'10vw'}
           minW={'120px'}
@@ -136,7 +137,9 @@ const CreateQuoteCustomerProjets = ({ formData, setFormData, setDisable, update,
           value={formData?.variables?.method || ""}
           onChange={(e)=>handleChange(e)}
           className="mailInputs"
-          />  
+          />
+        </Tooltip>
+       <Tooltip  label="Payment terms" fontWeight={'hairline'} placement='top-start'>     
         <Input
           mb={'0.5vh'}
           w={'10vw'}
@@ -155,6 +158,7 @@ const CreateQuoteCustomerProjets = ({ formData, setFormData, setDisable, update,
           onChange={(e)=>handleChange(e)}
           className="mailInputs"
           />
+          </Tooltip>
           <Tooltip  label="Estimated delivery date" fontWeight={'hairline'} placement='top-start'>
             <Input
               mb={'0.5vh'}
@@ -187,6 +191,7 @@ const CreateQuoteCustomerProjets = ({ formData, setFormData, setDisable, update,
               }}
             />
           </Tooltip>
+          <Tooltip  label="Shipping via" fontWeight={'hairline'} placement='top-start'>     
           <Select
               onChange={(e)=>handleChange(e)}
               mb={'0.5vh'}
@@ -209,6 +214,14 @@ const CreateQuoteCustomerProjets = ({ formData, setFormData, setDisable, update,
             <option value='3rd Party' className="options">3rd Party</option>
             <option value='Pick up' className="options">Pick up</option>
           </Select>
+          </Tooltip>
+        </HStack>
+        <HStack
+          display={'flex'}
+          h={'6vh'}
+          gap={'3vw'}
+          ml={'2vw'}>
+        <Tooltip  label="Shipping fee" fontWeight={'hairline'} placement='bottom-start'>
           <Input
             mb={'0.5vh'}
             w={'10vw'}
@@ -220,7 +233,7 @@ const CreateQuoteCustomerProjets = ({ formData, setFormData, setDisable, update,
             size={"sm"}
             borderBottomWidth={"2px"}
             borderBottomColor={'web.text2'}
-            placeholder={'Shipping price'}
+            placeholder={'Shipping fee'}
             type={"number"}
             name={"shippingPrice"}
             disabled={disabledPrice}
@@ -228,6 +241,49 @@ const CreateQuoteCustomerProjets = ({ formData, setFormData, setDisable, update,
             onChange={(e)=>handleChange(e)}
             className="mailInputs"
             />
+        </Tooltip>
+        <Tooltip  label="Transfer fee" fontWeight={'hairline'} placement='bottom-start'>
+          <Input
+            mb={'0.5vh'}
+            w={'10vw'}
+            minW={'120px'}
+            minH={'4.5vh'}
+            variant="unstyled"
+            textColor={'web.text2'}
+            _placeholder={{ fontFamily: 'body', fontWeight: 'inherit' }}
+            size={"sm"}
+            borderBottomWidth={"2px"}
+            borderBottomColor={'web.text2'}
+            placeholder={'Transfer fee'}
+            type={"number"}
+            name={"transferFee"}
+            disabled={disabledPrice}
+            value={formData?.variables?.transferFee || ""}
+            onChange={(e)=>handleChange(e)}
+            className="mailInputs"
+            />
+        </Tooltip>
+        <Tooltip  label="Crating fee" fontWeight={'hairline'} placement='bottom-start'>
+          <Input
+            mb={'0.5vh'}
+            w={'10vw'}
+            minW={'120px'}
+            minH={'4.5vh'}
+            variant="unstyled"
+            textColor={'web.text2'}
+            _placeholder={{ fontFamily: 'body', fontWeight: 'inherit' }}
+            size={"sm"}
+            borderBottomWidth={"2px"}
+            borderBottomColor={'web.text2'}
+            placeholder={'Crating fee'}
+            type={"number"}
+            name={"cratingFee"}
+            disabled={disabledPrice}
+            value={formData?.variables?.cratingFee || ""}
+            onChange={(e)=>handleChange(e)}
+            className=" "
+            />
+        </Tooltip>
         </HStack>
           {/* <Divider orientation={'horizontal'} w={'50%'} display={'flex'} alignSelf={'center'}/> */}
         <CreateQuoteProjectList projects={ projects } formData={formData} setFormData={setFormData} setDisable={setDisable}/>

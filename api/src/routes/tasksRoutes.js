@@ -115,7 +115,6 @@ tasksRouter.post('/new-comment', async function(req, res) {
       mysqlConnection.query(query, function(error, results, fields) {
         if (error) {
           console.log('Error en salesRoutes.get /new-comment');
-          console.log(error)
           res.status(200).json('');
         } else {
           console.log('Comment created successfully');
@@ -140,9 +139,9 @@ tasksRouter.post('/new-task', async function(req, res){
         DueDate,
         Assigner
     } = req.body
-
+console.log(req.body)
     query_ = `INSERT INTO Tasks (taskID, Description, Title, Status, CustomerID, ProjectID, InvoiceID, SellerID, DueDate, Assigner) 
-    VALUES ("${taskID}", "${Description}", "${Title}", "todo", "${CustomerID}", "${ProjectID}", "${InvoiceID}", "${SellerID}", "${DueDate}" , "${Assigner}")`;
+    VALUES ("${taskID}", "${Description}", "${Title}", "todo", "${CustomerID}", "${ProjectID}", "${InvoiceID}", "${SellerID}", "${DueDate}", "${Assigner}")`;
     
     try{
          mysqlConnection.query(query_, function(error, results, fields){

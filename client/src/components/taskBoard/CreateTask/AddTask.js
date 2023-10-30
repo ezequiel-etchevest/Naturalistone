@@ -32,7 +32,7 @@ export const AddTask = ({ user, filters, setFilters}) => {
     ProjectID: null,
     InvoiceID: null,
     DueDate: new Date().toISOString().split('T')[0],
-    SellerID: userLocal.SellerID === 3 ? ('') : (userLocal.SellerID) ,
+    SellerID: userLocal.SellerID,
     Assigner: userLocal.SellerID
   })
 
@@ -46,7 +46,7 @@ export const AddTask = ({ user, filters, setFilters}) => {
       ProjectID: null,
       InvoiceID: null,
       DueDate: new Date().toISOString().split('T')[0],
-      SellerID: userLocal.SellerID === 3 ? ('') : (userLocal.SellerID) ,
+      SellerID: userLocal.SellerID,
       Assigner: userLocal.SellerID
     })
     setInputValueCustomer('')

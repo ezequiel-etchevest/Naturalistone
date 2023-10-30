@@ -292,8 +292,9 @@ salesRouter.post('/create-quote/:sellerID', async function(req, res) {
 
   const { sellerID } = req.params;
   const { formData, authFlag } = req.body;
-  const { project, products, variables, customer, specialProducts} = formData
-
+  const { project, products, variables, customer, specialProducts, quote} = formData
+console.log(formData.customer)
+console.log(formData.project)
   const getFormattedDate = () => {
     const date = new Date();
     const year = date.getFullYear();
@@ -308,13 +309,16 @@ salesRouter.post('/create-quote/:sellerID', async function(req, res) {
 
   const shipVia = variables.shipVia
   const shippingPrice = variables.shippingPrice !== "" ? variables.shippingPrice : 0;
+  const transferFee = variables.transferFee !== "" ? variables.transferFee : 0;
+  const cratingFee = variables.cratingFee !== "" ? variables.cratingFee : 0;
+  const notes = quote.notes !== "" ? quote.notes : "";
   const discountRate = Number(customer.DiscountRate)
   const discountFactor = discountRate / 100;
   const ValueProducts = parsedProducts.reduce((acc, curr) => acc + Number(curr.quantity) * (curr.price - curr.price * discountFactor), 0);
   const ValueSpecialProducts = specialProducts.reduce((acc, curr) => acc + Number(curr.quantity) * (curr.price - curr.price * discountFactor), 0);
   const Value = ValueProducts + ValueSpecialProducts
   const taxValue = ((Value * 7) / 100);
-  const totalValue = Value + shippingPrice + taxValue;
+  const totalValue = Value + shippingPrice + transferFee + cratingFee + taxValue;
   const ProjectID = project.idProjects;
   const InsertDate = await getFormattedDate()
 
@@ -348,8 +352,8 @@ salesRouter.post('/create-quote/:sellerID', async function(req, res) {
         Naturali_Invoice = Math.max(...ids) + 1;
         
         const status = authFlag ? ('Pending_Approval') : ('Pending')
-        const salesQuery = `INSERT INTO Sales (Naturali_Invoice, Value, ProjectID, InvoiceDate, EstDelivery_Date, SellerID, ShippingMethod, PaymentTerms, P_O_No, Status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
-        const salesValues = [Naturali_Invoice, totalValue, ProjectID, InsertDate, EstDelivery_Date, sellerID, variables.shipVia, variables.paymentTerms, variables.method, status ];
+        const salesQuery = `INSERT INTO Sales (Naturali_Invoice, Value, ProjectID, InvoiceDate, EstDelivery_Date, SellerID, ShippingMethod, PaymentTerms, P_O_No, Status, Sale_Notes, Transfer_Fee, Crating_Fee, Shipping_Fee, shipping_address_id, billing_address_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+        const salesValues = [Naturali_Invoice, totalValue, ProjectID, InsertDate, EstDelivery_Date, sellerID, shipVia, variables.paymentTerms, variables.method, status, notes, transferFee, cratingFee, shippingPrice, shipping_address_i, billing_address_id ];
         
         mysqlConnection.query(salesQuery, salesValues, async function(error, salesResult, fields) {
           if (error) {
@@ -390,9 +394,9 @@ salesRouter.post('/create-quote/:sellerID', async function(req, res) {
           const specialProductsValues = specialProducts.map((product) => [Naturali_Invoice, null, product.quantity, (product.price - product.price * discountFactor)]);
           combinedArray = combinedArray.concat(prodSoldValues, specialProductsValues);
 
-          if(shipVia !== 'Pick up' && shippingPrice.toString().length){
-            combinedArray.push([Naturali_Invoice, 123, 1, shippingPrice]);
-          }
+          // if(shipVia !== 'Pick up' && shippingPrice.toString().length){
+          //   combinedArray.push([Naturali_Invoice, 123, 1, shippingPrice]);
+          // }
 
           mysqlConnection.query(prodSoldQuery, [combinedArray], async function(error, prodSoldResult, fields) {
             if (error) {

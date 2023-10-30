@@ -9,16 +9,17 @@ export const getXForExtPrice = (extPrice) => {
     if(length === 3) return 548;
     if(length === 4) return 544;
     if(length === 5) return 540;
-    if(length === 6) return 536;
+    if(length === 6) return 534.5;
     if(length === 7) return 532;
     if(length === 8) return 528;
     if(length === 9) return 524;
-    if(length > 9) return 504;
+    if(length > 9) return 520;
   
   }
 
 export const getXForExtSubtotal= (subtotal) => {
   const length = subtotal.toString().length;
+  console.log(length)
   if(length === 1) return 552;
   if(length === 2) return 548;
   if(length === 3) return 542;
@@ -28,7 +29,7 @@ export const getXForExtSubtotal= (subtotal) => {
   if(length === 7) return 526;
   if(length === 8) return 522;
   if(length === 9) return 516;
-  if(length === 10) return 511;
+  if(length === 10) return 510;
   if(length > 10) return 504;
 }  
 
@@ -56,9 +57,11 @@ export  const getXForPrice = (price) => {
     if(length === 3) return 485
     if(length === 4) return 481;
     if(length === 5) return 477;
-    if(length === 6) return 473;
+    if(length === 6) return 472;
     if(length === 7) return 469;
     if(length === 8) return 465;
+    if(length === 9) return 461;
+    if(length > 9) return 457;
   }
 
 export  const getXForID = (price) => {
@@ -93,7 +96,7 @@ export const getXRef = (text) => {
   const finish = 126; 
 
   if (text.length > 18) text = text.substring(0, 18 - 3) + '...';
-  const textWidth = text.length * 5;
+  const textWidth = text.length * 4.34;
 
   // Calcular la posición para que el texto esté centrado
   const x = start + ((finish - start) - textWidth) / 2;
@@ -113,7 +116,7 @@ export  const getXPO = (text) => {
   const finish = 222; 
   
   if (text.length > 18) text = text.substring(0, 18 - 3) + '...';
-  const textWidth = text.length * 5;
+  const textWidth = text.length * 4.34;
 
   // Calcular la posición para que el texto esté centrado
   const x = start + ((finish - start) - textWidth) / 2;
@@ -128,7 +131,7 @@ export  const getXPaymentTerms = (text) => {
   }
 
   if (text.length > 13) text = text.substring(0, 13 - 3) + '...';
-  const textWidth = text.length * 5;
+  const textWidth = text.length * 4.34;
   // Calcular la posición para que el texto esté centrado
   const x = start + ((finish - start) - textWidth) / 2;
 
@@ -180,10 +183,21 @@ export  const getFontSize = (text) => {
   
     return `${thickness}Mm`;
   };
-  
+
+  export const formatedPcs = (type, quantity, size) => {
+    let total
+    if(type === 'Tile'){
+    const num1 = Number(size.split('x')[0])
+    const num2 = Number(size.split('x')[1])
+    const numb = num1 * num2;
+    total = Number(quantity) / numb;
+    return `(Pcs: ${total})`
+    }  
+    return ""
+  }
 
 
- export const parsedNumbers = (number) => {
+  export const parsedNumbers = (number) => {
     const formattedPrice = (number).toLocaleString('en-US', {
       minimumFractionDigits: 2,
       maximumFractionDigits: 2,

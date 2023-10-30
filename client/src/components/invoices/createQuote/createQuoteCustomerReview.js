@@ -38,8 +38,8 @@ const initialState = {
   Company_Position: normalizeValue(formData.customer.Company_Position),
   Phone: normalizeValue(formData.customer.Phone),
   Email: normalizeValue(formData.customer.Email),
-  DiscountID: normalizeValue(formData.customer.DiscountID),
-  DiscountRate: normalizeValue(formData.customer.DiscountRate) ? normalizeValue(formData.customer.DiscountRate) : '0',
+  DiscountID: normalizeValue(formData.customer.DiscountID) ? (formData.customer.DiscountID) : "",
+  DiscountRate: normalizeValue(formData.customer.DiscountRate) ? normalizeValue(formData.customer.DiscountRate) : '',
   Billing_Address: normalizeValue(formData.customer.Billing_Address),
   Billing_Address2: normalizeValue(formData.customer.Billing_Address2),
   Billing_City: normalizeValue(formData.customer.Billing_City),
@@ -447,6 +447,7 @@ return(
                     cursor={'pointer'}
                     name="DiscountRate"
                   >
+                    <option value='' className="options">Select discount</option>
                     {
                       discountRates?.map((e, i) => {
                           return(
