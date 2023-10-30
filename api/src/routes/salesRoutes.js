@@ -531,7 +531,12 @@ salesRouter.get('/customer/:id', async function(req, res){
 
 salesRouter.patch('/sales-update-products/:id', async function(req, res) {
   const { id } = req.params;
-  const { products } = req.body.formData;
+  const { products, quote } = req.body.formData;
+
+  const notes = quote.notes
+
+  console.log("products", products)
+  console.log("notes", notes)
 
   const parsedProducts = Object.entries(products)
     .flat()
@@ -557,6 +562,12 @@ salesRouter.patch('/sales-update-products/:id', async function(req, res) {
       }
 
       const queryProducts = updateProducts(prodSoldResult, parsedProducts);
+
+      // const products = queryProducts.insert.filter(el => el.prodID !== undefined)
+
+      console.log("soy queriproducts", queryProducts)
+
+      // return;
 
       if (queryProducts.updateQuantity.length) {
         const updateQuantityStatements = queryProducts.updateQuantity.map((product) => {
@@ -652,7 +663,10 @@ salesRouter.patch('/sales-update-products/:id', async function(req, res) {
       }
 
       // Agregar la consulta de actualización de Sales
-      const updateSalesQuery = `UPDATE Sales SET Value = ${Value} WHERE Sales.Naturali_Invoice = ${id}`;
+      const updateSalesQuery = `UPDATE Sales
+                                SET Value = ${Value},
+                                Sale_Notes = "${notes}"
+                                WHERE Sales.Naturali_Invoice = ${id}`;
 
       mysqlConnection.query(updateSalesQuery, function(error, updateSalesResult, fields) {
         if (error) {

@@ -27,7 +27,7 @@ const CreateQuoteProductsReview = ({ formData, setFormData }) => {
       setFormData({
         ...formData,
         quote: {
-          ...formData.quote,
+          ...formData?.quote,
           notes: inputValue,
         },
       });
@@ -41,6 +41,7 @@ const CreateQuoteProductsReview = ({ formData, setFormData }) => {
             isClosable: true,
           });
   }}
+    console.log("soy formda", Object.entries(formData.products))
   
   return(
 <>
@@ -83,9 +84,9 @@ const CreateQuoteProductsReview = ({ formData, setFormData }) => {
           </Tr>
         </Thead>
         <Tbody>
-        {
-        Object.entries(formData.products).length ?
-          Object.entries(formData.products).map((e, i) => (
+        {/* { 
+        Object.entries(formData?.products)?.length ?
+          Object.entries(formData?.products)?.map((e, i) => (
             <Tr
             cursor={'pointer'} 
             key={i}
@@ -93,19 +94,19 @@ const CreateQuoteProductsReview = ({ formData, setFormData }) => {
               bg: 'web.navBar',
               color: 'logo.orange'
             }}>
-              <Td fontSize={'xs'} textAlign={'center'}>{e[1].quantity}</Td>
-              <Td fontSize={'xs'} w={'16vw'} textAlign={'center'}>{e[1].prodName}</Td>
-              <Td fontSize={'xs'} textAlign={'center'}>{e[1].type}</Td>
-              <Td fontSize={'xs'} textAlign={'center'}>{e[1].size}</Td>
-              <Td fontSize={'xs'} textAlign={'center'}>{e[1].thickness}</Td>
-              <Td fontSize={'xs'} textAlign={'center'}>{e[1].price}</Td>
-              <Td fontSize={'xs'} textAlign={'center'}>{e[1].finish}</Td>
+              <Td fontSize={'xs'} textAlign={'center'}>{e[1]?.quantity}</Td>
+              <Td fontSize={'xs'} w={'16vw'} textAlign={'center'}>{e[1]?.prodName}</Td>
+              <Td fontSize={'xs'} textAlign={'center'}>{e[1]?.type}</Td>
+              <Td fontSize={'xs'} textAlign={'center'}>{e[1]?.size}</Td>
+              <Td fontSize={'xs'} textAlign={'center'}>{e[1]?.thickness}</Td>
+              <Td fontSize={'xs'} textAlign={'center'}>{e[1]?.price}</Td>
+              <Td fontSize={'xs'} textAlign={'center'}>{e[1]?.finish}</Td>
             </Tr>
           )) : null
-        }
-        {
-        Object.entries(formData.specialProducts).length ?
-          Object.entries(formData.specialProducts).map((e, i) => (
+        } */}
+        {/* {
+        Object.entries(formData?.specialProducts)?.length ?
+          Object.entries(formData?.specialProducts)?.map((e, i) => (
             <Tr
             cursor={'pointer'} 
             key={i}
@@ -113,16 +114,16 @@ const CreateQuoteProductsReview = ({ formData, setFormData }) => {
               bg: 'web.navBar',
               color: 'logo.orange'
             }}>
-              <Td fontSize={'xs'} textAlign={'center'}>{e[1].quantity}</Td>
-              <Td fontSize={'xs'} w={'16vw'} textAlign={'center'}>{e[1].prodName}</Td>
-              <Td fontSize={'xs'} textAlign={'center'}>{e[1].type}</Td>
-              <Td fontSize={'xs'} textAlign={'center'}>{e[1].size}</Td>
-              <Td fontSize={'xs'} textAlign={'center'}>{e[1].thickness}</Td>
-              <Td fontSize={'xs'} textAlign={'center'}>{e[1].price}</Td>
-              <Td fontSize={'xs'} textAlign={'center'}>{e[1].finish}</Td>
+              <Td fontSize={'xs'} textAlign={'center'}>{e[1]?.quantity}</Td>
+              <Td fontSize={'xs'} w={'16vw'} textAlign={'center'}>{e[1]?.prodName}</Td>
+              <Td fontSize={'xs'} textAlign={'center'}>{e[1]?.type}</Td>
+              <Td fontSize={'xs'} textAlign={'center'}>{e[1]?.size}</Td>
+              <Td fontSize={'xs'} textAlign={'center'}>{e[1]?.thickness}</Td>
+              <Td fontSize={'xs'} textAlign={'center'}>{e[1]?.price}</Td>
+              <Td fontSize={'xs'} textAlign={'center'}>{e[1]?.finish}</Td>
             </Tr>
           )) : null
-        }
+        } */}
         </Tbody>
       </Table>
     </TableContainer>
@@ -144,7 +145,7 @@ const CreateQuoteProductsReview = ({ formData, setFormData }) => {
         border={'1px solid'}
         borderColor={'web.border'}
         type={"text"}
-        value={formData.quote.notes}
+        value={formData?.quote?.notes}
         onChange={(e)=> handleChangeNotes(e)}
         px={"1vw"}
         />

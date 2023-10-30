@@ -235,9 +235,9 @@ const CreateQuoteCustomerProjets = ({ formData, setFormData, setDisable, update,
             borderBottomColor={'web.text2'}
             placeholder={'Shipping fee'}
             type={"number"}
-            name={"shippingPrice"}
+            name={"shippingFee"}
             disabled={disabledPrice}
-            value={formData?.variables?.shippingPrice || ""}
+            value={formData?.variables?.shippingFee || ""}
             onChange={(e)=>handleChange(e)}
             className="mailInputs"
             />
