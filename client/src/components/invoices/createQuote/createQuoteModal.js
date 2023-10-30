@@ -72,6 +72,7 @@ export function CreateQuote({ customers, sellers, customersFilter, setCustomersF
       Shipping_ZipCode: "",
       Shipping_City: "",
       Shipping_Address: "",
+      shipping_address_id: ""
     },
     products: {},
     specialProducts:[],
@@ -80,7 +81,9 @@ export function CreateQuote({ customers, sellers, customersFilter, setCustomersF
       method: "",
       paymentTerms: "",
       estDelivDate: `${year}-${month0}-${day0}`,
-      shippingPrice: ""
+      shippingPrice: "",
+      transferFee: "",
+      cratingFee: ""
     },
     quote: {
       quoteID: "",
@@ -200,7 +203,9 @@ export function CreateQuote({ customers, sellers, customersFilter, setCustomersF
         method: "",
         paymentTerms: "",
         estDelivDate: `${year}-${month0}-${day0}`,
-        shippingPrice: ""
+        shippingPrice: "",
+        transferFee: "",
+        cratingFee: ""
       },
       quote: {
         quoteID: "",

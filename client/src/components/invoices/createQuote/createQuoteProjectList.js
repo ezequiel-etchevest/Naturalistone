@@ -30,7 +30,8 @@ import { useState } from 'react';
           Shipping_State: e.shipping_address_id ? e.shipping_state : e.Shipping_State || '',
           Shipping_ZipCode: e.shipping_address_id ? e.shipping_zip_code : e.Shipping_ZipCode || '',
           Shipping_City: e.shipping_address_id ? e.shipping_city : e.Shipping_City || '',
-          Shipping_Address: e.shipping_address_id ? e.shipping_address : e.Shipping_Address || ''
+          Shipping_Address: e.shipping_address_id ? e.shipping_address : e.Shipping_Address || '',
+          shipping_address_id: e.shipping_address_id || "" 
         }
       })
     }

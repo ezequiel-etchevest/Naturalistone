@@ -52,7 +52,7 @@ const InvoiceProductList = ({invoice_products, invoice}) => {
         justifyContent={'center'}
         >
           <Box
-            maxHeight={'38vh'}
+            maxHeight={'34vh'}
             overflow={'auto'}
             css={{
               '&::-webkit-scrollbar': {

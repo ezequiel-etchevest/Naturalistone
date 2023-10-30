@@ -115,7 +115,6 @@ tasksRouter.post('/new-comment', async function(req, res) {
       mysqlConnection.query(query, function(error, results, fields) {
         if (error) {
           console.log('Error en salesRoutes.get /new-comment');
-          console.log(error)
           res.status(200).json('');
         } else {
           console.log('Comment created successfully');
@@ -141,7 +140,6 @@ tasksRouter.post('/new-task', async function(req, res){
         Assigner
     } = req.body
 
-    console.log("req vboyd", req.body)
 
     const numberCustomerID = Number(CustomerID);
     const numberSellerID = Number(SellerID);

@@ -1,0 +1,356 @@
+Naturali Stone - Account Info
+
+Network Solutions
+http://www.networksolutions.com/
+UID: naturalistone
+PWD: Tommy$0202
+PIN: 712026
+Verification Phone: 3059622694
+
+Questions:
+	Who was child hero? spiderman
+	What was your grandfather's occupation? peluquero
+	What is the name of your favorite uncle? padrino
+
+Domains
+	naturalistone.com	
+	naturalistonehongkong.com
+	naturalistonequarries.co.uk
+Emails naturalistonequarries.co.uk
+	sales@naturalistonequarries.co.uk			S@l3m0re!
+	production@naturalistonequarries.co.uk			M@nuf@ctur3			
+	antonella@naturalistonequarries.co.uk			@dm1n1str@t10N			
+		(forwarded: antonella@naturalistone.com)
+	info@naturalistonequarries.co.uk			Inf0rm@t10n			
+		(forwarded: antonella@naturalistone.com)
+
+GoDaddy Account
+URL: www.godaddy.com
+UID: naturalistone
+PWD: Tommy$0202
+Email: bettina@naturalistone.com
+Customer #: 380387193
+PIN: 7770
+Emails naturalistone.com
+	accounting@naturalistone.com				B00kk33p1ng!
+	assistant@naturalistone.com				Ass1st@ntH3lp!			
+	bettina@naturalistone.com				Ec0Fr13ndly!			
+x	bettina.archive@naturalistone.com			Ec0Fr13ndly!a
+	gabriel@naturalistone.com				G@br13lMKusk			
+x	hr@naturalistone.com					St@ff1ng2021			
+	info@naturalistone.com					Inf0rm@t10n$$$
+	orders@naturalistone.com				Ord3rn0w!2021
+	sales@naturalistone.com					S@l3m0re!2021			
+x	santiago@naturalistone.com				@dvi3Me!2021
+	showroom@naturalistone.com				M@n@g3m3nt!2020			
+x	tania@naturalistone.com					Bus1n3$$F1r$t			
+	tomas@naturalistone.com					B0ut1qu3!2019			
+	warehouse@naturalistone.com				W@r3h0us3261!			
+x	alejandra@naturalistone.com				@l3j@ndr@7102
+x	mika@naturalistone.com					T3rm1n@t3d8102			
+x	luis@naturalistone.com					D1dN0tS0ldM0r3			
+	samples@naturalistone.com				Sh0wM3S@mpl3s
+x	maria@naturalistone.com					S@l3@ll1t3ms
+	marketing@naturalistone.com				Br1ngL3@d$$$			
+	research@naturalistone.com				M0r3L3@d$$$$			
+x	antonella@naturalistone.com				@dm1n1str@t10N			
+x	matias@naturalistone.com				M0r3S@l3s!9102
+x	server@naturalistone.com				0nl1neB@ckup
+	factory@naturalistone.com				F@ct0ry!2021			
+	irina@naturalistone.com					H3lp!Ass1st@nt
+	prospect@naturalistone.com				M0r3L3@d$$$
+
+Melbourne IT
+https://www.melbourneit.com.au/cc/myaccount/login
+User: naturalistone
+PW: stonehongkong261
+
+Comcast
+IP: 10.1.10.1
+UID: cusadmin
+PWD: highspeed
+IP: 96.85.229.190
+Static IP Addresses 
+	New Block (5 IPs)
+		IP: 50.224.5.250	available
+		IP: 50.224.5.251	IPFone Edgewater
+		IP: 50.224.5.252	SonicWall	
+		IP: 50.224.5.253	available
+		IP: 50.224.5.254	available
+		Subnet: 255.255.255.248
+		Gateway: 50.224.5.249
+Wireless
+	SSID1: NATURALI-2.4
+	PWD1: 7866314184
+	SSID2: NATURALI-5
+	PWD2: 7866314184
+
+SonicWall TZ 350
+Serial Number: 2CB8ED75D0BC
+Authentication Code: G9WW-D428
+IP: 192.168.2.1
+UID: admin
+PWD: N@tur@l7120!
+WAN (X1)
+	IP: 50.224.5.252
+	Subnet: 255.255.255.248
+	Gateway: 50.224.5.249
+	DNS1: 75.75.75.75
+	DNS2: 75.75.76.76
+LAN (X0)
+	192.168.2.1/24
+DNS
+	Inherit DNS Settings Dynamically from WAN Zone
+DHCP
+	Disabled
+Forwarders:
+	85 -> 192.168.2.253
+	6036 -> 192.168.2.253
+
+Dell PowerEdge T320
+IP: 192.168.2.5
+Administrator password: Naturali7120
+Computer name: NATURALI-SVR
+Domain: naturalistone.local
+Forest functional level: Windows Server 2008 R2
+Domain functional level: Windows Server 2008 R2
+Directory Service Restore Mode password: Naturali7120
+NetBIOS domain name: NATURALISTONE
+Database folder: C:\Windows\NTDS
+Log files folder: C:\Windows\NTDS
+SYSVOL folder: C:\Windows\SYSVOL
+
+Windows Users
+Antonella		@dm1n1str@t10N
+Bettina@		B3tt1n@yu13
+Gabriel			Purch@s3s
+Lilly			W@r3h0us3
+Operations		M@n@g3m3nt!
+Showroom		Naturali01
+Santiago.Valencia	S@l3$1M!
+Carla's local password: oficina
+Sales1			moresales
+Accounting		Naturali1818
+Samples			Naturali01
+
+Symantec Cloud
+Username: bettina@naturalistone.com
+Password: Naturali5952
+
+Norton (mynortonaccount.com)
+Username: bettina@naturalistone.com
+Password: Naturali5952
+
+DVR
+http://192.168.2.253:85
+UID: admin
+PWD: 123456
+	Settings
+		IP: 192.168.2.253
+		HTTP Port: 85
+		server Port: 6036
+	iPhone
+		Download Q-See QT Viewer from iTunes
+		Address: 50.224.5.252:85
+		UID: admin
+		PWD: 123456
+
+Square Space
+http://www.squarespace.com/home
+Naturali Stone
+	User: bettina@naturalistone.com
+	Password: Boutique#5952
+	View: http://naturalistone.squarespace.com/
+	Template: Bryant
+	Call Center Form: https://www.naturalistone.com/call-center
+Naturali Stone UK
+	User: antonella@naturalistonequarries.co.uk
+	Password: EcoFriendly#5952
+	View: http://naturalistoneuk.squarespace.com/
+	Template: Bryant
+
+Sage Customer Portal
+username: bettina@naturalistone.com 	
+Password: S@g3P0rt@l
+
+SQL Server 2014 Express
+Server Name (Instance): NATURALI-SVR\SAGE300ERP
+SQL Administrator: sa
+SQL Administrator Password: N@tur@l171
+SQL Sage: sage
+SQL Sage Password: St0n3s71
+
+Sage 300 ERP Registration
+Order Number: 		1002668841 	
+Order Date: 		05/01/2015 	
+Phone Number: 		305-665-3655
+Sold to Contact: 	Peter Kaufman
+Order Type: 		B. Order on Behalf 	
+Email Address: 		pkaufman@adssglobal.net
+SAGE 300 PREM SM BDL
+Registered Name: 	Naturali Stone
+Serial Number: 		70042403010012
+Activation Key: 	05760575282676562945
+Registration Number: 	0789247560
+End Customer: 		Naturali Stone
+Account ID: 		4006710062
+Phone: 			305-751-9929
+
+Apple Time Capsule
+User Time Capsule Utility to locate the device in the network
+IP Address: Use DHCP
+Name: Naturali Stone Time Capsule
+Pwd: Naturali7120
+Wireless
+	SSID: Naturali Private
+	PWD: 3057519930 (fax number)
+
+Ruckus R610 Wireless Access Point
+IP: DHCP
+UID: admin
+Password: N@tural7120!
+Wireless
+	SSID: Naturali Private
+	PWD: 3057519930
+Recovery 
+	Email: rariste@bizsolutionsmiami.com
+	Security Q&A: what is the brand of your first car? Toyota
+
+Carbonite Online Backup - Personal Accounts
+Username: antonella@naturalistone.com
+Password: RecoverWS@#261
+Old Password: Stone@#261
+
+Carbonite Server Backup
+
+Carbonite Username: accounting@naturalistone.com
+Carbonite Password: RecoverSVR@#261
+Old Carbonite Password: Stone@#261
+Security Questions
+	1. City born: Mendoza
+	2. Father's middle name: Omar
+	3. City mother born: Mendoza
+Windows Carbonite username: carboniteuser
+Windows Carbonite password: St0n3@#261
+
+Adobe Account - Adobe Acrobat Registrations
+Username: antonella@naturalistone.com
+Password: Adobe@Natural1
+	Antonella's desktop
+		Adobe Acrobat DC Standard Serial Number: 1016-1218-9721-2341-2283-8350
+	Leda's laptop
+		Adobe Acrobat DC Standard Serial Number: 1016-1892-9666-0134-0620-1934
+
+Microsoft Store Account - Office Registrations
+URL: https://www.office.com/myaccount
+Username: antonella@naturalistone.com
+Password: Office@Natural1
+
+Phone Lines:
+	305.751.9929 (Main)
+	305.751.9900 (Second)
+	786.618.9923 (Third)
+	305.751.9930 (Fax)
+	
+Salesforce
+	Bettina (Admin)
+		UID: bettina@naturalistone.com
+		PWD: stone7123 (old: stone7122 (old: stone7121 (old: stone7120)))
+		Security Question: City born: Buenos Aires
+		(two-factor authentication enabled) 
+		(login from Naturali server: I added Naturali and BSM to Salesforce Network Access)
+	Warehose
+		UID: alejandra@naturalistone.com
+		PWD: Storage1
+	Assistant
+		UID: assistant@naturalistone.com
+		PWD: Helping#1
+	Tommy (Tomas Kuskunov)
+		UID: tomas@naturalistone.com
+		PWD: moresales1
+		
+Match My Email
+https://matchmyemail.com
+	Bettina (Admin)
+		UID: bettina@naturalistone.com
+		PWD: B3tt1n@yu13
+	Warehouse
+		UID: warehouse@naturalistone.com
+		PWD: St0r@g3!
+
+Intuit Account
+Customer Number: 773986150
+Account Name: Naturali Stone LLC
+Address: 7120 NW 2nd CT, Miami, FL 33150
+UID: bettina@naturalistone.com
+PWD: K33pMyB00k$
+Contacts: Ramon Willis (me) and Bettina Yuchimczuk
+
+QuickBooks Enterprise Gold Edition Standard 
+Download: https://enterprisesuite.intuit.com/customer-resource-center/download/
+License number: 181674574473765
+Product number: 381236
+User Licenses: 3
+Naturali Stone company
+	Username: Admin
+	Password: St0n3$$	St0n3$$$ ?
+	Security Question: In which city you went to high school?
+	Security Answer: Buenos Aires
+	Users
+		User Name	Password	Roles
+		Bettina		Naturali1818	Full Access
+		Tania		MoreSales1	Sales
+		Bookkeeper	MoreOrders1	Accounts Payable, Accounts Receivables, Purchasing, Inventory
+		Marcela		Naturali1818
+
+Sonos
+	Showroom computer
+	Sonos Account
+		Email: antonella@naturalistone.com
+		PWD: MusicOnline1
+	Pandora Account
+		Email: tania@naturalistone.com
+		Pwd: stone261
+
+LogMeIn
+UID: bettina@naturalistone.com
+PWD: St0n3+@cc3ss
+
+Splashtop
+UID: accounting@naturalistone.com
+PWD: Naturali1818
+
+Malwarebytes
+UID: bettina@naturalistone.com
+PWD: NaturaliStone2019*
+License: CBRX4-2GX9N-MCFPZ-G9ZU2 DEC 04, 2020
+License: MC9YB-NYZ7P-X8GFX-Q67K6 NOV 24, 2020
+
+McAfee MVISION
+MVISION ePO
+	URL: https://mvision.mcafee.com/ (https://ui-usw001.mvision.mcafee.com/)
+	UID: rariste@bizsolutionsmiami.com
+	PWD: Pr0t3ctN@tur@l1
+	Account Number 2482057
+Subscription details - 2021
+	Product: MVISION Standard 3 Yrs
+	Grant Number: 15572590-NAI
+	User Licenses: 12
+	Expiration: 05/07/2024
+	Purchase order Number: 4103543
+	Reseller PO: 10256
+Subscription details - 2021
+	Product: MV ePO AddOn
+	Expiration: 05/07/2024
+	Grant Number 15636592-NAI
+	Purchase order Number: 4103543
+
+McAfee Enterprise Support
+	Phone: 800-937-2237
+				
+McAfee Dealer
+	Jake Hunter
+	Discovery Solutions, Inc (http://www.discoverysolutionsinc.com/)
+	Office: 248.994.9022 ext 32
+	Direct: 248.274.1095
+
