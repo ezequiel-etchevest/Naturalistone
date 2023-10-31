@@ -154,6 +154,7 @@ export default function UpdateQuoteModal({invoice, invoice_products}) {
       setSubmited(true)
       handleClose()
       handleCleanFormData()
+      dispatch(getAllProductsNewQuote('', '', ''))
     }
 
     const handleClose = () => {
@@ -208,7 +209,6 @@ export default function UpdateQuoteModal({invoice, invoice_products}) {
           notes: invoice[0].Sale_Notes
         }
       });
-    
     }
 
     const handleNextButton = () =>{
@@ -252,7 +252,6 @@ export default function UpdateQuoteModal({invoice, invoice_products}) {
             } else {
               setDisable(true);
             }
-            
           }
       }
        else {
@@ -368,7 +367,7 @@ export default function UpdateQuoteModal({invoice, invoice_products}) {
                 Prev
                 </Button>
                 {
-                component === 'Customer' && progress === 60 || component === 'Project' && progress === 20 || component === 'Products' && progress === 40
+                (component === 'Customer' && progress === 60) || (component === 'Project' && progress === 20) || (component === 'Products' && progress === 40)
                 ? (
                     <Button colorScheme='orange' mr={3} onClick={(e)=>handleSubmit(e)} disabled={disable}>
                       Submit

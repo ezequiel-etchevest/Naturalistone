@@ -47,7 +47,19 @@ function updateProducts(existingProducts, newProducts) {
 }
 
 
-function buildUpdateValuesQuery( SellerID, idProjects, LastInsertDate, estDelivDate, shipVia, ModificationFlag, paymentTerms, method) {
+function buildUpdateValuesQuery(
+  SellerID,
+  idProjects,
+  LastInsertDate,
+  estDelivDate,
+  shipVia,
+  ModificationFlag,
+  paymentTerms,
+  method,
+  transferFee,
+  cratingFee,
+  shippingFee
+  ) {
   let updateValues = [];
 
   if (idProjects) updateValues.push(`ProjectID = ${idProjects}`)
@@ -58,6 +70,10 @@ function buildUpdateValuesQuery( SellerID, idProjects, LastInsertDate, estDelivD
   if (ModificationFlag) updateValues.push(`ModificationFlag = '${ModificationFlag}'`)
   if (paymentTerms) updateValues.push(`PaymentTerms = '${paymentTerms}'`)
   if (method) updateValues.push(`P_O_No = '${method}'`)
+  if (transferFee) updateValues.push(`Transfer_Fee = '${transferFee}'`)
+  if (cratingFee) updateValues.push(`Crating_Fee = '${cratingFee}'`)
+  if (shippingFee) updateValues.push(`Shipping_Fee = '${shippingFee}'`)
+
 
   return updateValues.join(', ');
 }

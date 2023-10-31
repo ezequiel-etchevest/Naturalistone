@@ -591,7 +591,7 @@ salesRouter.patch('/sales-update-products/:id', async function(req, res) {
       if (queryProducts.updateStatusQuantity.length) {
         const updateStatusQuantityStatements = queryProducts.updateStatusQuantity.map((product) => {
           const { quantity, prodID } = product;
-          return `UPDATE ProdSold SET Quantity = ${quantity}, Status = "Pending" WHERE ProdID = ${prodID} AND SaleID = ${id}`;
+          return `UPDATE ProdSold SET Quantity = ${quantity} WHERE ProdID = ${prodID} AND SaleID = ${id}`;
         });
 
         updateStatusQuantityStatements.forEach((updateStatement) => {
@@ -607,24 +607,24 @@ salesRouter.patch('/sales-update-products/:id', async function(req, res) {
         });
       }
 
-      if (queryProducts.updateStatus.length) {
-        const updateStatusStatements = queryProducts.updateStatus.map((product) => {
-          const { prodID } = product;
-          return `UPDATE ProdSold SET Status = "Pending" WHERE ProdID = ${prodID} AND SaleID = ${id}`;
-        });
+      // if (queryProducts.updateStatus.length) {
+      //   const updateStatusStatements = queryProducts.updateStatus.map((product) => {
+      //     const { prodID } = product;
+      //     return `UPDATE ProdSold SET Status = "Pending" WHERE ProdID = ${prodID} AND SaleID = ${id}`;
+      //   });
 
-        updateStatusStatements.forEach((updateStatement) => {
-          mysqlConnection.query(updateStatement, function(error, updateResult, fields) {
-            if (error) {
-              console.log('Error updating product: ' + error);
-              return mysqlConnection.rollback(function() {
-                throw error;
-              });
-            }
-            console.log('Updated product successfully 3');
-          });
-        });
-      }
+      //   updateStatusStatements.forEach((updateStatement) => {
+      //     mysqlConnection.query(updateStatement, function(error, updateResult, fields) {
+      //       if (error) {
+      //         console.log('Error updating product: ' + error);
+      //         return mysqlConnection.rollback(function() {
+      //           throw error;
+      //         });
+      //       }
+      //       console.log('Updated product successfully 3');
+      //     });
+      //   });
+      // }
 
       if (queryProducts.cancelStatus.length) {
         const cancelStatusStatements = queryProducts.cancelStatus.map((product) => {
@@ -648,7 +648,7 @@ salesRouter.patch('/sales-update-products/:id', async function(req, res) {
       if (queryProducts.insert.length) {
         queryProducts.insert.forEach((product) => {
           const { prodID, quantity, price } = product;
-          const insertQuery = `INSERT INTO ProdSold (SaleID, ProdID, Quantity, SalePrice, Status) VALUES (${id}, ${prodID}, ${quantity}, ${price}, 'Pending')`;
+          const insertQuery = `INSERT INTO ProdSold (SaleID, ProdID, Quantity, SalePrice) VALUES (${id}, ${prodID}, ${quantity}, ${price})`;
 
           mysqlConnection.query(insertQuery, function(error, insertResult, fields) {
             if (error) {
@@ -698,11 +698,28 @@ salesRouter.patch('/sales-update/:id', async function(req, res) {
   const { SellerID } = req.body
   const { variables, project } = req.body.formData
   const { idProjects } = project
-  const { estDelivDate, shipVia, paymentTerms, method } = variables
-  const LastInsertDate = `${year}-${month0}-${day0}` 
-  const ModificationFlag = true
+  const { estDelivDate, shipVia, paymentTerms, method, shippingFee, cratingFee, transferFee } = variables
+  const date = new Date();
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  const LastInsertDate = `${year}-${month}-${day}`;
+  const ModificationFlag = true;
 
-  const salesQuery = 'UPDATE Sales SET ' + buildUpdateValuesQuery(SellerID, idProjects, LastInsertDate, estDelivDate, shipVia, ModificationFlag, paymentTerms, method) + ` WHERE Naturali_Invoice = ${id}`;
+  const salesQuery = 'UPDATE Sales SET ' + 
+    buildUpdateValuesQuery(
+      SellerID,
+      idProjects,
+      LastInsertDate,
+      estDelivDate,
+      shipVia,
+      ModificationFlag,
+      paymentTerms,
+      method,
+      transferFee,
+      cratingFee,
+      shippingFee
+      ) + ` WHERE Naturali_Invoice = ${id}`;
 
   try {
 
