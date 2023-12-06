@@ -168,11 +168,12 @@ export const AddTask = ({ user, filters, setFilters}) => {
           Add New Task
         </ModalHeader>
         <ModalCloseButton
+          mt={'1vh'}
           color={'web.text2'}
           _hover={{
             color: 'web.text'
           }} />
-        <ModalBody color={'web.text2'} p={'2vh'} maxH={'40vh'} minH={'60vh'}>
+        <ModalBody color={'web.text2'} p={'2vh'} ml={'0.5vw'} maxH={'40vh'} minH={'60vh'}>
           {
             progress === 20 && (
               <AddTaskInfo handleChange={handleChange} formData={formData} setFormData={setFormData} user={user}/>
@@ -208,7 +209,7 @@ export const AddTask = ({ user, filters, setFilters}) => {
             )
           }
         </ModalBody>
-        <ModalFooter display={'flex'} justifyContent={'space-between'}>
+        <ModalFooter display={'flex'} justifyContent={'space-between'} mb={'3vh'} px={'2vw'}>
               <Button visibility={progress === 20 ? 'hidden' : 'unset'} colorScheme='orange' mr={3} onClick={()=>handlePreviousButton()}>
               Prev
               </Button>

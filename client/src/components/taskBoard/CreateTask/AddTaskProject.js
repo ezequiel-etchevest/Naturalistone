@@ -57,7 +57,7 @@ import { getCustomerById } from "../../../redux/actions-customers";
             </>
             :
             <>
-            <Box  maxH={'50vh'} minH={'50vh'} display={'flex'} flexDir={'column'} justifyContent={'center'} alignItems={'center'}>
+            <Box  maxH={'30vh'} minH={'30vh'} pr={'2vw'} display={'flex'} flexDir={'column'} justifyContent={'center'} alignItems={'center'}>
             <Text mb={'1vh'}>This customer does not have any assigned projects yet.</Text>
             <CreateNewProject customer={customer} custID={custID}/>
             </Box>

@@ -129,7 +129,6 @@ tasksRouter.post('/new-comment', async function(req, res) {
 tasksRouter.post('/new-task', async function(req, res){
 
     const {
-        taskID,
         Description,
         Title,
         CustomerID,
@@ -140,15 +139,11 @@ tasksRouter.post('/new-task', async function(req, res){
         Assigner
     } = req.body
 
+    if(ProjectID == 'null') ProjectID = null;
+    if(InvoiceID == 'null') InvoiceID = null;
 
-    const numberCustomerID = Number(CustomerID);
-    const numberSellerID = Number(SellerID);
-    const numberAssigner = Number(Assigner)
-    const numberProjectID = Number(ProjectID)
-    const numberInvoiceID = Number(InvoiceID)
-
-    query_ = `INSERT INTO Tasks (taskID, Description, Title, Status, CustomerID, ProjectID, InvoiceID, SellerID, DueDate, Assigner) 
-    VALUES ("${taskID}", "${Description}", "${Title}", "todo", ${numberCustomerID}, ${numberProjectID}, ${numberInvoiceID}, ${numberSellerID}, "${DueDate}" , ${numberAssigner})`;
+    query_ = `INSERT INTO Tasks (Description, Title, Status, CustomerID, ProjectID, InvoiceID, SellerID, DueDate, Assigner) 
+    VALUES ("${Description}", "${Title}", "todo", "${CustomerID}", ${ProjectID}, ${InvoiceID}, "${SellerID}", "${DueDate}", "${Assigner}")`;
     
     try{
          mysqlConnection.query(query_, function(error, results, fields){

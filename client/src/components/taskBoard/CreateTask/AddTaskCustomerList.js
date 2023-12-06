@@ -83,11 +83,8 @@ export const AddTaskCustomerList = ({customers, setFormData, formData, customers
     return(
       <Box
       display={'flex'}
-      justifyContent={'center'}
-      maxH={'40vh'}
-      minH={'40vh'}
-      ml={'1vh'}
-      w={'96%'}
+      maxH={'43vh'}
+      minH={'43vh'}
       >
         <Box
         id='scroll-container'
@@ -95,7 +92,7 @@ export const AddTaskCustomerList = ({customers, setFormData, formData, customers
         overflow={'auto'}
         css={{
           '&::-webkit-scrollbar': {
-            width: '0.4vw',
+            width: '0.2vw',
           },
           '&::-webkit-scrollbar-track': {
             width: '6px',
@@ -105,21 +102,21 @@ export const AddTaskCustomerList = ({customers, setFormData, formData, customers
             borderRadius: '5px',
           },
         }}
-        borderColor={'web.border'}
+        // borderColor={'web.border'}
         bg={'web.sideBar'} 
-        border={'1px solid'} 
+        // border={'1px solid'}
+        px={'0.5vw'} 
         rounded={'md'} 
-        p={'2vh'}
-        w={'100%'} 
+        w={'100%'}
         >
           {
             customersFilter.length ?
              (
-              <TableContainer  maxW={'80vw'}>
+              <TableContainer>
                 <Table color={'web.text'}variant={'simple'} size={'sm'}>
                   <Thead h={'6vh'}>
                     <Tr>
-                        <Th color={'web.text2'} maxW={'6vw'} textAlign={'center'}>Full Name</Th>
+                        <Th color={'web.text2'} maxW={'6vw'} >Full Name</Th>
                         <Th color={'web.text2'} maxW={'10vw'} textAlign={'center'}>Company</Th>
                         <Th color={'web.text2'} maxW={'6vw'} textAlign={'center'}>E-mail</Th>
                       </Tr>

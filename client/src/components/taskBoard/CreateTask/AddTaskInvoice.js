@@ -63,7 +63,7 @@ const AddTaskInvoice = ({setFormData, formData, setDisable, user}) =>{
       dispatch(getInvoicesBySeller(userId, {...inputValues, inputName: ''}))
     } 
   }
-
+  console.log()
   return(
     <>
       <Text fontWeight={'semibold'}  ml={'1vw'} fontSize={'lg'}  color={'web.text2'} alignSelf={'flex-start'}>If you want to link a invoice, please select one from the list:</Text>
@@ -179,9 +179,9 @@ const AddTaskInvoice = ({setFormData, formData, setDisable, user}) =>{
               setDisable={setDisable}
               />
             :
-            <Text maxH={'50vh'} minH={'50vh'} display={'flex'} justifyContent={'center'} alignItems={'center'}>{seller_invoices}</Text>
+            <Text maxH={'30vh'} pr={'2vw'} minH={'30vh'}display={'flex'} justifyContent={'center'} alignItems={'center'}>{seller_invoices}</Text>
           :
-          <Center maxH={'50vh'} minH={'50vh'}>
+          <Center maxH={'30vh'} pr={'2vw'} minH={'30vh'}>
             <Spinner thickness={'4px'} size={'xl'} color={'logo.orange'}/>
           </Center>
         }
