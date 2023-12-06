@@ -312,6 +312,8 @@ console.log(formData.project)
   const transferFee = variables.transferFee !== "" ? variables.transferFee : 0;
   const cratingFee = variables.cratingFee !== "" ? variables.cratingFee : 0;
   const notes = quote.notes !== "" ? quote.notes : "";
+  const billingAddressID = customer.billing_address_id !== "" ? customer.billing_address_id : null;
+  const shippignAddressID = project.shipping_address_id !== "" ? project.shipping_address_id : null;
   const discountRate = Number(customer.DiscountRate)
   const discountFactor = discountRate / 100;
   const ValueProducts = parsedProducts.reduce((acc, curr) => acc + Number(curr.quantity) * (curr.price - curr.price * discountFactor), 0);
@@ -352,8 +354,8 @@ console.log(formData.project)
         Naturali_Invoice = Math.max(...ids) + 1;
         
         const status = authFlag ? ('Pending_Approval') : ('Pending')
-        const salesQuery = `INSERT INTO Sales (Naturali_Invoice, Value, ProjectID, InvoiceDate, EstDelivery_Date, SellerID, ShippingMethod, PaymentTerms, P_O_No, Status, Sale_Notes, Transfer_Fee, Crating_Fee, Shipping_Fee, shipping_address_id, billing_address_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
-        const salesValues = [Naturali_Invoice, totalValue, ProjectID, InsertDate, EstDelivery_Date, sellerID, shipVia, variables.paymentTerms, variables.method, status, notes, transferFee, cratingFee, shippingPrice, shipping_address_i, billing_address_id ];
+        const salesQuery = `INSERT INTO Sales (Naturali_Invoice, Value, ProjectID, InvoiceDate, EstDelivery_Date, SellerID, ShippingMethod, PaymentTerms, P_O_No, Status, Sale_Notes, Transfer_Fee, Crating_Fee, Shipping_Fee, shipping_address_id, billing_address_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+        const salesValues = [Naturali_Invoice, totalValue, ProjectID, InsertDate, EstDelivery_Date, sellerID, shipVia, variables.paymentTerms, variables.method, status, notes, transferFee, cratingFee, shippingPrice, shippignAddressID, billingAddressID ];
         
         mysqlConnection.query(salesQuery, salesValues, async function(error, salesResult, fields) {
           if (error) {

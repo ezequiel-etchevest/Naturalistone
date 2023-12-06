@@ -90,7 +90,6 @@ const CreatedQuotePdf = ({ formData, user, handleChangeEmail }) => {
     const shippingPrice = variables.shippingPrice ? variables.shippingPrice : 0;
     const transferFee = variables.transferFee ? variables.transferFee : 0;
     const cratingFee = variables.cratingFee ? variables.cratingFee : 0;
-    console.log(formData)
     const discountRate = Number(customer.DiscountRate)
     const discountFactor = discountRate / 100;
 
@@ -103,7 +102,8 @@ const CreatedQuotePdf = ({ formData, user, handleChangeEmail }) => {
     let productRows = 1;
     let productRowsBis = 1; 
     let currentPage = (productRows <= 5) ? pages[0] : pages[1]
-  
+    // let productoPintado = true; // Variable para alternar el sombreado
+
   {/*               Here Starts mapping for regular products             */}
     
     mappedProducts.forEach((product, index) => {
@@ -114,6 +114,20 @@ const CreatedQuotePdf = ({ formData, user, handleChangeEmail }) => {
         y = 462.8
         productRowsBis = 1
       }
+        // Alternar el sombreado en productos
+        // if (productoPintado) {
+        //   const colorTranslucido = rgb(0.9, 0.9, 0.9, 0.5); // Gris claro con transparencia, ajusta según sea necesario
+        //   currentPage.drawRectangle({
+        //     x: 37,
+        //     y: y - 15, // Ajusta según sea necesario
+        //     width: 538,
+        //     height: 15,
+        //     color: colorTranslucido,
+        //   });
+        // }
+
+  // productoPintado = !productoPintado; // Alternar el sombreado
+
 
       const discountedPrice = product.price - product.price * discountFactor;
       const formattedExtPrice = parsedNumbers(discountedPrice * product.quantity)

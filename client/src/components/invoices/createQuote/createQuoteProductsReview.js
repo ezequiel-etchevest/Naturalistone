@@ -12,13 +12,19 @@ import {
     Textarea,
     FormControl,
     useToast,
+    Collapse,
+    useDisclosure,
+    Input,
     } from "@chakra-ui/react"
 import '../../../assets/styleSheet.css'
 
 const CreateQuoteProductsReview = ({ formData, setFormData }) => {
   const toast = useToast();
   const toastId = "error-toast";
+  const { isOpen, onToggle } = useDisclosure()
+
   
+
   const handleChangeNotes = (e) => {
 
     const inputValue = e.target.value;
@@ -86,13 +92,15 @@ const CreateQuoteProductsReview = ({ formData, setFormData }) => {
         {
         Object.entries(formData.products).length ?
           Object.entries(formData.products).map((e, i) => (
+            <>
             <Tr
             cursor={'pointer'} 
             key={i}
             _hover={{
               bg: 'web.navBar',
               color: 'logo.orange'
-            }}>
+            }}
+            onClick={onToggle}>
               <Td fontSize={'xs'} textAlign={'center'}>{e[1].quantity}</Td>
               <Td fontSize={'xs'} w={'16vw'} textAlign={'center'}>{e[1].prodName}</Td>
               <Td fontSize={'xs'} textAlign={'center'}>{e[1].type}</Td>
@@ -101,6 +109,35 @@ const CreateQuoteProductsReview = ({ formData, setFormData }) => {
               <Td fontSize={'xs'} textAlign={'center'}>{e[1].price}</Td>
               <Td fontSize={'xs'} textAlign={'center'}>{e[1].finish}</Td>
             </Tr>
+            <Collapse in={isOpen}>
+              <Box
+                h={'4vh'}
+                color='white'
+                mt='1'
+                bg={'web.border'}
+              >
+              <Input
+                mb={'0.5vh'}
+                w={'10vw'}
+                minW={'120px'}
+                minH={'4.5vh'}
+                variant="unstyled"
+                textColor={'web.text2'}
+                _placeholder={{ fontFamily: 'body', fontWeight: 'inherit' }}
+                size={"sm"}
+                borderBottomWidth={"2px"}
+                borderBottomColor={'web.text2'}
+                placeholder={'Lead time'}
+                type={"text"}
+                name={"leadTime"}
+                // disabled={disabledPrice}
+                // value={formData?.variables?.cratingFee || ""}
+                // onChange={(e)=>handleChange(e)}
+                className=" "
+              />
+              </Box>
+            </Collapse>
+          </>
           )) : null
         }
         {
