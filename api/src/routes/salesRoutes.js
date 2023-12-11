@@ -313,9 +313,9 @@ console.log({products})
     .flat()
     .filter((element) => typeof element === 'object')
     .map((product, index) => ({ variableName: `${index + 1}`, ...product }));
-
-  const shipVia = variables.shipVia
-  const shippingPrice = variables.shippingPrice !== "" ? variables.shippingPrice : 0;
+    const shipVia = variables.shipVia
+    const shippingPrice = variables.shippingPrice !== "" ? variables.shippingPrice : 0;
+    console.log({shippingPrice})
   const transferFee = variables.transferFee !== "" ? variables.transferFee : 0;
   const cratingFee = variables.cratingFee !== "" ? variables.cratingFee : 0;
   const notes = quote.notes !== "" ? quote.notes : "";
@@ -450,7 +450,7 @@ console.log({products})
       }
 
       console.log('Transaction committed successfully');
-      res.status(200).json({ Naturali_Invoice: Naturali_Invoice, InsertDate: InsertDate, parsedProducts: parsedProducts.concat(parsedProducts, parsedSpecialProducts) });
+      res.status(200).json({ Naturali_Invoice: Naturali_Invoice, InsertDate: InsertDate, parsedProducts: parsedProducts.concat(parsedSpecialProducts) });
     });
   }
 });
@@ -542,9 +542,6 @@ salesRouter.patch('/sales-update-products/:id', async function(req, res) {
   const { products, quote } = req.body.formData;
 
   const notes = quote.notes
-
-  console.log("products", products)
-  console.log("notes", notes)
 
   const parsedProducts = Object.entries(products)
     .flat()

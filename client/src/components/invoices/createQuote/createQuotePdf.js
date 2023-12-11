@@ -108,6 +108,7 @@ const CreatedQuotePdf = ({ formData, user, handleChangeEmail }) => {
   {/*               Here Starts mapping for regular products             */}
     
     mappedProducts.forEach((product, index) => {
+  
       let currentPage = (productRows <= 5) ? pages[0] : pages[1]
 
       currentRows = 1;
@@ -370,7 +371,7 @@ const CreatedQuotePdf = ({ formData, user, handleChangeEmail }) => {
 
     setPdfInfo(URL.createObjectURL(blob));
 
-    // savePdfOnServer(pdfBytes, invoiceID);
+    savePdfOnServer(pdfBytes, invoiceID);
   }
 
   return (

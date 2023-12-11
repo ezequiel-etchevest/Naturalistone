@@ -19,11 +19,13 @@ const ModelTr = ({p}) => {
   const navigate = useNavigate()
 
   const handleClick = () => {
-    navigate(`/products/${p.ProdID}`)
+    if(p.ProdID){
+      navigate(`/products/${p.ProdID}`)
+    }
   }
     return(
       <Tr 
-        cursor={'pointer'}
+        cursor={p.ProdID ? 'pointer' : 'auto'}
         key={p.ProdID} 
         _hover={{
           bg: 'web.navBar',
@@ -36,7 +38,7 @@ const ModelTr = ({p}) => {
         <Td fontSize={'1.3vh'} textAlign={'center'}>{p?.Size}</Td>
         <Td fontSize={'1.3vh'} textAlign={'center'}>{p?.Thickness}</Td>
         <Td fontSize={'1.3vh'} textAlign={'center'}>{p?.Finish}</Td>
-        <Td fontSize={'1.3vh'} textAlign={'center'} >$ {p?.SalePrice?.toLocaleString('en-US')}</Td>
+        <Td fontSize={'1.3vh'} textAlign={'right'} >$ {p?.SalePrice?.toLocaleString('en-US')}</Td>
         <Td fontSize={'1.3vh'} textAlign={'center'}>{p?.InStock_Reserved && p?.InStock_PendingPayment ? (p?.InStock_Reserved + p?.InStock_PendingPayment) === null ? '0' : (p?.InStock_Reserved + p?.InStock_PendingPayment) : '0'}</Td>
         <Td fontSize={'1.3vh'} textAlign={'center'}>{p?.Incoming_Reserved && p?.Incoming_PendingPayment ? (p?.Incoming_Reserved + p?.Incoming_PendingPayment) === null ? '0' : (p?.Incoming_Reserved + p?.Incoming_PendingPayment) : '0'}</Td>
         <Td fontSize={'1.3vh'} textAlign={'center'}>{p?.Order_PendingPayment && p?.Order_PaymentCompleted ? (p?.Order_PendingPayment + p?.Order_PaymentCompleted) === null  ? '0' : (p?.Order_PendingPayment + p?.Order_PaymentCompleted) : '0'}</Td>
@@ -44,8 +46,55 @@ const ModelTr = ({p}) => {
       </Tr>
     )
 }
+const renderAdditionalLines = (invoice) => {
+  const additionalLines = [];
 
+  if (invoice[0]?.Shipping_Fee !== null && invoice[0]?.Shipping_Fee !== 0) {
+    additionalLines.push(
+      <Tr key="shipping-fee">
+        <Td fontSize={'1.3vh'} textAlign={'match-parent'}>Shipping Fee</Td>
+        <Td colSpan="4"></Td>
+        <Td fontSize={'1.3vh'} textAlign={'right'}>${invoice[0]?.Shipping_Fee.toLocaleString('en-US')}</Td>
+        <Td></Td>
+        <Td></Td>
+        <Td></Td>
+        <Td></Td>
+      </Tr>
+    );
+  }
+
+  if (invoice[0]?.Transfer_Fee !== null && invoice[0]?.Transfer_Fee !== 0) {
+    additionalLines.push(
+      <Tr key="transfer-fee">
+        <Td fontSize={'1.3vh'} textAlign={'match-parent'}>Transfer Fee</Td>
+        <Td colSpan="4"></Td>
+        <Td fontSize={'1.3vh'} textAlign={'right'}>${invoice[0]?.Transfer_Fee.toLocaleString('en-US')}</Td>
+        <Td></Td>
+        <Td></Td>
+        <Td></Td>
+        <Td></Td>
+      </Tr>
+    );
+  }
+
+  if (invoice[0]?.Crating_Fee !== null && invoice[0]?.Crating_Fee !== 0) {
+    additionalLines.push(
+      <Tr key="crating-fee">
+        <Td fontSize={'1.3vh'} textAlign={'match-parent'}>Crating Fee</Td>
+        <Td colSpan="4"></Td>
+        <Td fontSize={'1.3vh'} textAlign={'right'}>${invoice[0]?.Crating_Fee.toLocaleString('en-US')}</Td>
+        <Td></Td>
+        <Td></Td>
+        <Td></Td>
+        <Td></Td>
+      </Tr>
+    );
+  }
+
+  return additionalLines;
+};
 const InvoiceProductList = ({invoice_products, invoice}) => {
+  
     return(
         <Box
         display={'flex'}
@@ -81,7 +130,7 @@ const InvoiceProductList = ({invoice_products, invoice}) => {
                       <Th fontSize={'1.3vh'} color={'web.text2'}textAlign={'center'}>Size</Th>
                       <Th fontSize={'1.3vh'} color={'web.text2'}textAlign={'center'}>Thickness</Th>
                       <Th fontSize={'1.3vh'} color={'web.text2'}textAlign={'center'}>Finish</Th>
-                      <Th fontSize={'1.3vh'} color={'web.text2'}textAlign={'center'}>Price</Th>
+                      <Th fontSize={'1.3vh'} color={'web.text2'}textAlign={'right'}>Price</Th>
                       <Th fontSize={'1.3vh'} color={'web.text2'}textAlign={'center'}>Reserved <br/> Stock</Th>
                       <Th fontSize={'1.3vh'} color={'web.text2'}textAlign={'center'}>Incoming <br/> Reserved</Th>
                       <Th fontSize={'1.3vh'} color={'web.text2'}textAlign={'center'}>Back <br/> Order</Th>
@@ -95,6 +144,7 @@ const InvoiceProductList = ({invoice_products, invoice}) => {
                           <ModelTr p={p} key={i}/>
                         )})
                     }
+                    {renderAdditionalLines(invoice)}
                     </Tbody>
                   </Table>
                     ) : (

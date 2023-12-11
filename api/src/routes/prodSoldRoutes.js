@@ -6,7 +6,6 @@ const historyPrice = require('../Controllers/historyPrice')
 const getProductsSoldInProds = async (id) => {
     const query_ = `SELECT 
                     ProdSold.*,
-                    Products.*,
                     ProdNames.Naturali_ProdName AS ProductName,
                     Dimension.Type,
                     Dimension.Finish,
@@ -64,6 +63,7 @@ prodSoldRouter.get('/:id', async function(req, res){
     const prodSolds = specialProducts.concat(products)
 
   prodSolds.sort((a, b) => {
+    
     if(a.ProductName === 'Shipping- Delivery') {
       return 1;
     }
