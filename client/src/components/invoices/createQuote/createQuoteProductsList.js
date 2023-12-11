@@ -48,6 +48,8 @@ const ModelTr = ({ e, formData, setFormData, setDisable }) => {
             finish: e.Finish,
             price: e.Price,
             authFlag: handleAuthFlag(event),
+            leadTime:"",
+            notes:""
           },
         },
       }));

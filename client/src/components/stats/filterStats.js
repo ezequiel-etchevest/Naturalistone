@@ -17,7 +17,7 @@ import { cleanStats } from "../../redux/actions-statsByMonth";
 import { useNavigate } from 'react-router-dom';
   
 const FilterStats = ({user, setFilters, filters, years}) => {
-    
+   
   const dispatch = useDispatch()
   const sellers = useSelector(state => state.sellers)
   const navigate = useNavigate();  

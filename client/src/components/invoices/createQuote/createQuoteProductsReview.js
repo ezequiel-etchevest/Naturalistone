@@ -13,16 +13,16 @@ import {
     FormControl,
     useToast,
     Collapse,
-    useDisclosure,
     Input,
     } from "@chakra-ui/react"
+import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import '../../../assets/styleSheet.css'
+import React, { useState } from "react";
 
 const CreateQuoteProductsReview = ({ formData, setFormData }) => {
   const toast = useToast();
   const toastId = "error-toast";
-  const { isOpen, onToggle } = useDisclosure()
-
+  const [isOpenState, setIsOpenState] = useState({});
   
 
   const handleChangeNotes = (e) => {
@@ -47,8 +47,40 @@ const CreateQuoteProductsReview = ({ formData, setFormData }) => {
             isClosable: true,
           });
   }}
-    console.log("soy formda", Object.entries(formData.products))
+
+  const handleChangeInputs = (i, type, value, name) => {
+
+    setFormData((prevFormData) => {
+      const updatedProducts = { ...prevFormData[type] };
   
+      if (!updatedProducts[i]) {
+        return prevFormData; // No hace cambios si el producto con el i no existe
+      }
+  
+      updatedProducts[i] = {
+        ...updatedProducts[i],
+        [name]: value,
+      };
+  
+      return {
+        ...prevFormData,
+        [type]: updatedProducts,
+      };
+    });
+  };
+  
+  const handleToggle = (index) => {
+    // Maneja el estado de isOpen para el índice específico
+    setIsOpenState((prevState) => ({
+      ...prevState,
+      [index]: !prevState[index],
+    }));
+  };
+
+  const generateUniqueId = (prefix, index) => {
+    return `${prefix}_${index}`;
+  };
+
   return(
 <>
 <Box display={"flex"} justifyContent={"center"} flexDir={'column'}>
@@ -87,21 +119,22 @@ const CreateQuoteProductsReview = ({ formData, setFormData }) => {
             <Th color={'web.text2'} fontSize={'sm'} textAlign={'center'}>Thickness</Th>
             <Th color={'web.text2'} fontSize={'sm'} textAlign={'center'}>Price</Th>
             <Th color={'web.text2'} fontSize={'sm'} w={'10vw'} textAlign={'center'}>Finish</Th>
+            <Th></Th>
           </Tr>
         </Thead>
         <Tbody>
-        {
-        Object.entries(formData.products).length ?
-          Object.entries(formData.products).map((e, i) => (
-            <>
-            <Tr
-            cursor={'pointer'} 
-            key={i}
-            _hover={{
-              bg: 'web.navBar',
-              color: 'logo.orange'
-            }}
-            onClick={onToggle}>
+        {Object.entries(formData.products).length
+          ? Object.entries(formData.products).map((e, i) => (
+              <React.Fragment key={i}>
+                <Tr
+                  cursor={"pointer"}
+                  key={i}
+                  _hover={{
+                    bg: "web.navBar",
+                    color: "logo.orange",
+                  }}
+                  onClick={() => handleToggle(generateUniqueId("product", i))}
+                >
               <Td fontSize={'xs'} textAlign={'center'}>{e[1].quantity}</Td>
               <Td fontSize={'xs'} w={'16vw'} textAlign={'center'}>{e[1].prodName}</Td>
               <Td fontSize={'xs'} textAlign={'center'}>{e[1].type}</Td>
@@ -109,48 +142,79 @@ const CreateQuoteProductsReview = ({ formData, setFormData }) => {
               <Td fontSize={'xs'} textAlign={'center'}>{e[1].thickness}</Td>
               <Td fontSize={'xs'} textAlign={'center'}>{e[1].price}</Td>
               <Td fontSize={'xs'} textAlign={'center'}>{e[1].finish}</Td>
-            </Tr>
-            <Collapse in={isOpen}>
-              <Box
-                h={'4vh'}
-                color='white'
-                mt='1'
-                bg={'web.border'}
-              >
-              <Input
-                mb={'0.5vh'}
-                w={'10vw'}
-                minW={'120px'}
-                minH={'4.5vh'}
-                variant="unstyled"
-                textColor={'web.text2'}
-                _placeholder={{ fontFamily: 'body', fontWeight: 'inherit' }}
-                size={"sm"}
-                borderBottomWidth={"2px"}
-                borderBottomColor={'web.text2'}
-                placeholder={'Lead time'}
-                type={"text"}
-                name={"leadTime"}
-                // disabled={disabledPrice}
-                // value={formData?.variables?.cratingFee || ""}
-                // onChange={(e)=>handleChange(e)}
-                className=" "
-              />
-              </Box>
-            </Collapse>
-          </>
-          )) : null
+              <Td> { !isOpenState[`product_${i}`] ? <IoIosArrowDown/> : <IoIosArrowUp /> } </Td>
+              </Tr>
+              <Tr display= {isOpenState[`product_${i}`] ? 'table-row' : 'none' }>
+                <Td colSpan={7}>
+                  <Collapse
+                      key={`product_${i}`}
+                      in={isOpenState[`product_${i}`]}
+                      >
+                    <Box display={'flex'} justifyContent={'space-around'} color="white" mt="1">
+                    <Input
+                      mb={"0.5vh"}
+                      w={"24vw"}
+                      minW={"120px"}
+                      minH={"4.5vh"}
+                      variant="unstyled"
+                      textColor={"web.text2"}
+                      pl={'10px'}
+                      name={'leadTime'}
+                      onChange={(ev) => handleChangeInputs(e[1].prodID, "products", ev.target.value, 'leadTime')}
+                      value={formData.products[e[1].prodID]?.leadTime || ""}
+                      _placeholder={{
+                        fontFamily: "body",
+                        fontWeight: "inherit",
+                      }}
+                      size={"sm"}
+                      fontSize={'xs'}
+                      border={'0.2px solid #30363D'}
+                      placeholder={"Lead time - In stock"}
+                      type={"text"}
+                    />
+                    <Input
+                      mb={"0.5vh"}
+                      w={"24vw"}
+                      minW={"120px"}
+                      minH={"4.5vh"}
+                      variant="unstyled"
+                      textColor={"web.text2"}
+                      pl={'10px'}
+                      _placeholder={{
+                        fontFamily: "body",
+                        fontWeight: "inherit",
+                      }}
+                      onChange={(ev) => handleChangeInputs(e[1].prodID, "products", ev.target.value, 'notes')}
+                      value={formData.products[e[1].prodID]?.notes || ""}
+                      size={"sm"}
+                      fontSize={'xs'}
+                      border={'0.2px solid #30363D'}
+                      placeholder={"Product notes"}
+                      type={"text"}
+                      name={"notes"}
+                    />
+                    </Box>
+                  </Collapse>
+                  </Td>
+                  <Td></Td>
+                  </Tr>
+                </React.Fragment>
+              ))
+          : null
         }
         {
-        Object.entries(formData.specialProducts).length ?
-          Object.entries(formData.specialProducts).map((e, i) => (
+        Object.entries(formData.specialProducts).length
+          ? Object.entries(formData.specialProducts).map((e, i) => (
+          <React.Fragment key={i}>
             <Tr
-            cursor={'pointer'} 
-            key={i}
-            _hover={{
-              bg: 'web.navBar',
-              color: 'logo.orange'
-            }}>
+              cursor={"pointer"}
+              key={i}
+              _hover={{
+                bg: "web.navBar",
+                color: "logo.orange",
+              }}
+              onClick={() => handleToggle(generateUniqueId("specialProduct", i))}
+              >
               <Td fontSize={'xs'} textAlign={'center'}>{e[1]?.quantity}</Td>
               <Td fontSize={'xs'} w={'16vw'} textAlign={'center'}>{e[1]?.prodName}</Td>
               <Td fontSize={'xs'} textAlign={'center'}>{e[1]?.type}</Td>
@@ -158,9 +222,64 @@ const CreateQuoteProductsReview = ({ formData, setFormData }) => {
               <Td fontSize={'xs'} textAlign={'center'}>{e[1]?.thickness}</Td>
               <Td fontSize={'xs'} textAlign={'center'}>{e[1]?.price}</Td>
               <Td fontSize={'xs'} textAlign={'center'}>{e[1]?.finish}</Td>
+              <Td> { !isOpenState[`specialProduct_${i}`] ? <IoIosArrowDown/> : <IoIosArrowUp /> } </Td>
             </Tr>
-          )) : null
-        } *
+            <Tr display= {isOpenState[`specialProduct_${i}`] ? 'table-row' : 'none' }>
+              <Td colSpan={7}>
+                <Collapse
+                  key={`specialProduct_${i}`}
+                  in={isOpenState[`specialProduct_${i}`]}
+                  >
+                  <Box display={'flex'} justifyContent={'space-around'} color="white" mt="1">
+                    <Input
+                      mb={"0.5vh"}
+                      w={"24vw"}
+                      minW={"120px"}
+                      minH={"4.5vh"}
+                      variant="unstyled"
+                      textColor={"web.text2"}
+                      pl={'10px'}
+                      _placeholder={{
+                        fontFamily: "body",
+                        fontWeight: "inherit",
+                      }}
+                      onChange={(ev) => handleChangeInputs(i, "specialProducts", ev.target.value, 'leadTime')}
+                      value={formData.specialProducts[i]?.leadTime || ""}
+                      size={"sm"}
+                      fontSize={'xs'}
+                      border={'0.2px solid #30363D'}
+                      placeholder={"Lead time - In stock"}
+                      type={"text"}
+                    />
+                    <Input
+                      mb={"0.5vh"}
+                      w={"24vw"}
+                      minW={"120px"}
+                      minH={"4.5vh"}
+                      variant="unstyled"
+                      textColor={"web.text2"}
+                      pl={'10px'}
+                      _placeholder={{
+                        fontFamily: "body",
+                        fontWeight: "inherit",
+                      }}
+                      onChange={(ev) => handleChangeInputs(i, "specialProducts", ev.target.value, 'notes')}
+                      value={formData.specialProducts[i]?.notes || ""}
+                      size={"sm"}
+                      fontSize={'xs'}
+                      border={'0.2px solid #30363D'}
+                      placeholder={"Product notes"}
+                      type={"text"}
+                      name={"notes"}
+                    />
+                  </Box>
+                </Collapse>
+              </Td>
+              <Td></Td>
+            </Tr>
+          </React.Fragment> 
+        ))
+        : null}
         </Tbody>
       </Table>
     </TableContainer>

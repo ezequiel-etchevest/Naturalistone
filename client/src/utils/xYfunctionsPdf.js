@@ -19,7 +19,7 @@ export const getXForExtPrice = (extPrice) => {
 
 export const getXForExtSubtotal= (subtotal) => {
   const length = subtotal.toString().length;
-  console.log(length)
+
   if(length === 1) return 552;
   if(length === 2) return 548;
   if(length === 3) return 542;
@@ -191,7 +191,7 @@ export  const getFontSize = (text) => {
     const num2 = Number(size.split('x')[1])
     const numb = num1 * num2;
     total = Number(quantity) / numb;
-    return `(Pcs: ${total})`
+    return `(Pcs: ${total.toFixed(2)})`
     }  
     return ""
   }

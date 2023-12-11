@@ -13,7 +13,7 @@ const CreatedQuotePdf = ({ formData, user, handleChangeEmail }) => {
   const posted_quote = useSelector((state) => state.posted_quote);
 
   let invoiceID = posted_quote.Naturali_Invoice;
-  const date =  `${month0}-${day0}-${year}`;
+  const date =  `${month0}/${day0}/${year}`;
 
   const [pdfInfo, setPdfInfo] = useState([]);
   const mappedProducts = posted_quote.parsedProducts;
@@ -87,14 +87,14 @@ const CreatedQuotePdf = ({ formData, user, handleChangeEmail }) => {
     const estDate = `${estDateMonth}-${estDateDay}-${estDateYear}`;
     const deliveryMethod = variables.shipVia;
     const paymentTerms = variables.paymentTerms;
-    const shippingPrice = variables.shippingPrice ? variables.shippingPrice : 0;
+    const shippingPrice = variables.shippingFee ? Number(variables.shippingFee) : 0;
     const transferFee = variables.transferFee ? variables.transferFee : 0;
     const cratingFee = variables.cratingFee ? variables.cratingFee : 0;
     const discountRate = Number(customer.DiscountRate)
     const discountFactor = discountRate / 100;
 
     await waitUntilMappedProductsExists();
-    const totalRows = mappedProducts?.length + formData?.specialProducts.length
+    const totalRows = mappedProducts?.length
 
     if(totalRows > 5) await createNewPage()
     const pages = pdfDoc.getPages();
@@ -102,33 +102,21 @@ const CreatedQuotePdf = ({ formData, user, handleChangeEmail }) => {
     let productRows = 1;
     let productRowsBis = 1; 
     let currentPage = (productRows <= 5) ? pages[0] : pages[1]
-    // let productoPintado = true; // Variable para alternar el sombreado
-
+    let productoPintado = true; // Variable para alternar el sombreado
+    let currentRows = 1;
+    let h
   {/*               Here Starts mapping for regular products             */}
     
     mappedProducts.forEach((product, index) => {
-
       let currentPage = (productRows <= 5) ? pages[0] : pages[1]
-  
+
+      currentRows = 1;
+
       if(productRowsBis > 5){
         y = 462.8
         productRowsBis = 1
       }
-        // Alternar el sombreado en productos
-        // if (productoPintado) {
-        //   const colorTranslucido = rgb(0.9, 0.9, 0.9, 0.5); // Gris claro con transparencia, ajusta según sea necesario
-        //   currentPage.drawRectangle({
-        //     x: 37,
-        //     y: y - 15, // Ajusta según sea necesario
-        //     width: 538,
-        //     height: 15,
-        //     color: colorTranslucido,
-        //   });
-        // }
-
-  // productoPintado = !productoPintado; // Alternar el sombreado
-
-
+      
       const discountedPrice = product.price - product.price * discountFactor;
       const formattedExtPrice = parsedNumbers(discountedPrice * product.quantity)
 
@@ -153,90 +141,146 @@ const CreatedQuotePdf = ({ formData, user, handleChangeEmail }) => {
 
       currentPage.drawText(`${product.type === "Tile"  || product.type === "Mosaic" ? "Sqft" : ""}`, { x: 79.5, y, size: 9, font: fontTimes});
 
-      currentPage.drawText(`${ firstFourLetters + product.prodID}`, { x: xID, y, size: 9, font:fontTimes });
+      currentPage.drawText(`${ product.prodID !== undefined ? firstFourLetters + product.prodID : ""}`, { x: xID, y, size: 9, font:fontTimes });
       currentPage.drawText(`$ ${parsedNumbers(discountedPrice)}`, { x, y, size: 9, font: fontTimes });
       currentPage.drawText(`$ ${(formattedExtPrice)}`, { x: xExtPrice, y, size: 9, font: fontTimes });
       
       let text = `Special Order: ${product.material} ${product.type} ${product.prodName} ${product.finish} ${formatSize(product.size)}x${parseThickness(product.thickness)}  ${formatedPcs(product.type, product.quantity, product.size)}`
-      let maxLength = 52;
-      if (text.length > maxLength) {
-        const formattedLines = formatTextForPdf(text, maxLength).split('\n');
+      let text2 = `${product.notes || ''}${(product.notes && product.leadTime) ? ' ' : ''}${product.leadTime || ''}`;
+
+    
+      let maxLength = 64;
       
+      const drawTextWithWrap = (text, x, y, maxLineLength) => {
+        const formattedLines = formatTextForPdf(text, maxLineLength).split('\n');
         for (let i = 0; i < formattedLines.length; i++) {
-          currentPage.drawText(formattedLines[i], { x: 198, y, size: 9, font: fontTimes });
-          if(i === formattedLines.length - 1) {
-            y -= 15;
-          } else {
-            y -= 13;
-        }}
+          currentPage.drawText(formattedLines[i], { x, y, size: 9, font: fontTimes });
+          y -= 14; // Ajusta este valor según el espacio entre líneas
+        }
+        return y;
+      };
+      
+      if (text.length > maxLength || (text.length <= maxLength && text2.length)) {
+        // Dibuja el primer texto y ajusta la coordenada y
+        y = drawTextWithWrap(text + " " + text2, 198, y, maxLength);
+        currentRows = 2;
       } else {
-        currentPage.drawText(text, { x: 198, y, size: 9, font: fontTimes });
-        y -= 15;
+        // Dibuja el primer texto si es posible
+        y = drawTextWithWrap(text, 198, y, maxLength);
+      
+        // Si hay un segundo texto, dibújalo en la línea siguiente
+        if (text2.length) {
+          y = drawTextWithWrap(text2, 198, y, maxLength);
+          currentRows = 2;
+        } else {
+          currentRows = 1;
+        }
       }
+
+      // Alternar el sombreado en productos
+      // if (productoPintado) {
+      //   if(currentRows == 1){
+      //     h = 15;
+      //   } else {
+      //     h = 30;
+      //   } 
+
+      //   const colorTranslucido = rgb(0.9, 0.9, 0.9, 0.5);
+      //   currentPage.drawRectangle({x: 37,y: y - 24, width: 34,height: h,color: colorTranslucido,});
+      //   currentPage.drawRectangle({ x: 73, y: y - 24, width: 30, height: h, color: colorTranslucido,});
+      //   currentPage.drawRectangle({ x: 104.6, y: y - 24, width: 88, height: h, color: colorTranslucido,});
+      //   currentPage.drawRectangle({ x: 194, y: y - 24, width: 259.5, height: h, color: colorTranslucido,});
+      //   currentPage.drawRectangle({ x: 455.5, y: y - 24, width: 56.2, height: h, color: colorTranslucido,});
+      //   currentPage.drawRectangle({ x: 455.5, y: y - 24, width: 56.2, height: h, color: colorTranslucido,});
+      //   currentPage.drawRectangle({ x: 514, y: y - 24, width: 61, height: h, color: colorTranslucido,});
+      // }
+      // Agrega un espacio adicional después del bloque de texto
+      y -= 5
+
       productRows++
       productRowsBis++
-
+      productoPintado = !productoPintado; // Alternar el sombreado
     });
+  //   let text = `Special Order: ${product.material} ${product.type} ${product.prodName} ${product.finish} ${formatSize(product.size)}x${parseThickness(product.thickness)}  ${formatedPcs(product.type, product.quantity, product.size)}`
+  //   let text2 = `${product.notes} ${product.leadTime}`
+  //   let maxLength = 70;
+  //   if (text.length > maxLength) {
+  //     const formattedLines = formatTextForPdf(text, maxLength).split('\n');
+    
+  //     for (let i = 0; i < formattedLines.length; i++) {
+  //       currentPage.drawText(formattedLines[i], { x: 198, y, size: 9, font: fontTimes });
+  //       if(i === formattedLines.length - 1) {
+  //         y -= 15;
+  //       } else {
+  //         y -= 13;
+  //     }}
+  //   } else {
+  //     currentPage.drawText(text, { x: 198, y, size: 9, font: fontTimes });
+  //     y -= 15;
+  //   }
+  //   productRows++
+  //   productRowsBis++
 
+  // });
   {/*               Here FINISH mapping for regular products             */}
 
   {/*               Here Starts mapping for Special products             */}
 
-    formData?.specialProducts.forEach((product, index) => {
-      let currentPage = (productRows <= 5) ? pages[0] : pages[1]
+    // formData?.specialProducts.forEach((product, index) => {
+    //   let currentPage = (productRows <= 5) ? pages[0] : pages[1]
    
-      if(productRowsBis > 5){
-        y = 462.8
-        productRowsBis = 1
-      }
+    //   if(productRowsBis > 5){
+    //     y = 462.8
+    //     productRowsBis = 1
+    //   }
 
-      const discountedPrice = product.price - product.price * discountFactor;
-      const formattedExtPrice = parsedNumbers(discountedPrice * product.quantity)
+    //   const discountedPrice = product.price - product.price * discountFactor;
+    //   const formattedExtPrice = parsedNumbers(discountedPrice * product.quantity)
 
-      const x = getXForPrice(parsedNumbers(discountedPrice));
-      const xQuantity = getXForQuantity(product.quantity)
-      const xExtPrice = getXForExtPrice((formattedExtPrice))
-      const formatSize = (size) => {
-        if (size.includes('x') || size.includes('X')) {
-          const [first, second] = size.split(size.includes('x') ? 'x' : 'X');
-          return `${first}"x${second}"`;
-        } else {
-          return `${size}"`;
-        }
-      };
+    //   const x = getXForPrice(parsedNumbers(discountedPrice));
+    //   const xQuantity = getXForQuantity(product.quantity)
+    //   const xExtPrice = getXForExtPrice((formattedExtPrice))
+    //   const formatSize = (size) => {
+    //     if (size.includes('x') || size.includes('X')) {
+    //       const [first, second] = size.split(size.includes('x') ? 'x' : 'X');
+    //       return `${first}"x${second}"`;
+    //     } else {
+    //       return `${size}"`;
+    //     }
+    //   };
 
-      subtotal = subtotal + discountedPrice * product.quantity;
+    //   subtotal = subtotal + discountedPrice * product.quantity;
 
-      currentPage.drawText(`${(product.quantity).toLocaleString('en-US')}`, { x: xQuantity, y, size: 9, font:fontTimes });
+    //   currentPage.drawText(`${(product.quantity).toLocaleString('en-US')}`, { x: xQuantity, y, size: 9, font:fontTimes });
       
-      currentPage.drawText(`${product.type === "Tile"  || product.type === "Mosaic" ? "Sqft" : ""}`, { x: 79.5, y, size: 9, font:fontTimes }); // en esta linea tiene que ser condicional dependiendo si es tile o slab
+    //   currentPage.drawText(`${product.type === "Tile"  || product.type === "Mosaic" ? "Sqft" : ""}`, { x: 79.5, y, size: 9, font:fontTimes }); // en esta linea tiene que ser condicional dependiendo si es tile o slab
 
-      currentPage.drawText(`$ ${parsedNumbers(discountedPrice)}`, { x, y, size: 9, font:fontTimes });
-      currentPage.drawText(`$ ${(formattedExtPrice)}`, {
-        x: xExtPrice,
-        y,
-        size: 9, font:fontTimes,
-      });
-      const text = `Special Order: ${product.material} ${product.type} ${product.prodName} ${product.finish} ${formatSize(product.size)}x${parseThickness(product.thickness)}  ${formatedPcs(product.type, product.quantity, product.size)}`
-      const maxLength = 52;
+    //   currentPage.drawText(`$ ${parsedNumbers(discountedPrice)}`, { x, y, size: 9, font:fontTimes });
+    //   currentPage.drawText(`$ ${(formattedExtPrice)}`, {
+    //     x: xExtPrice,
+    //     y,
+    //     size: 9, font:fontTimes,
+    //   });
+    //   const text = `Special Order: ${product.material} ${product.type} ${product.prodName} ${product.finish} ${formatSize(product.size)}x${parseThickness(product.thickness)}  ${formatedPcs(product.type, product.quantity, product.size)}`
+    //   const maxLength = 52;
 
-      if (text.length > maxLength) {
-        const formattedLines = formatTextForPdf(text, maxLength).split('\n');
+    //   if (text.length > maxLength) {
+    //     const formattedLines = formatTextForPdf(text, maxLength).split('\n');
       
-        for (let i = 0; i < formattedLines.length; i++) {
-          currentPage.drawText(formattedLines[i], { x: 198, y, size: 9, font:fontTimes });
-          if(i === formattedLines.length - 1) {
-            y -= 15;
-          } else {
-            y -= 13;
-        }}
-      } else {
-        currentPage.drawText(text, { x: 198, y, size: 9, font:fontTimes });
-        y -= 15
-      }
-      productRows++
-      productRowsBis++
-    });
+    //     for (let i = 0; i < formattedLines.length; i++) {
+    //       currentPage.drawText(formattedLines[i], { x: 198, y, size: 9, font:fontTimes });
+    //       if(i === formattedLines.length - 1) {
+    //         y -= 15;
+    //       } else {
+    //         y -= 13;
+    //     }}
+    //   } else {
+    //     currentPage.drawText(text, { x: 198, y, size: 9, font:fontTimes });
+    //     y -= 15
+    //   }
+    //   productRows++
+    //   productRowsBis++
+    // });
 
   {/*               Here FINISH mapping for Special products             */}
 
@@ -299,12 +343,15 @@ const CreatedQuotePdf = ({ formData, user, handleChangeEmail }) => {
       })
 
     if(formData.quote.notes.length){
-      page.drawText("Notes:", { x: 156, y: 318, size: 9, font: fontTimes });
+      page.drawText("Notes:", { x: 42, y: 274, size: 9, font: fontTimes });
+      // page.drawText("Notes:", { x: 156, y: 318, size: 9, font: fontTimes });
+
       const notes = form.createTextField('notes');
       notes.setText(formData.quote.notes);
-      notes.addToPage(page, { x: 197, y: 290,
+      // x: 197, y: 290,
+      notes.addToPage(page, { x: 70, y: 254.2,
                               width: 253,
-                              height: 40,
+                              height: 30,
                               textColor: rgb(0, 0, 0),
                               borderColor: rgb(0, 0, 0),
                               borderWidth: 0,

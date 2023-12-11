@@ -37,7 +37,9 @@ const AddSpecialProduct = ({values, allMaterials, formData, setFormData, allValu
     thickness: '',
     type:'Tile',
     finish:'Honed',
-    price:0
+    price:0,
+    leadTime: null,
+    notes: null
   }]);
   
   const addProduct = () => {
@@ -50,7 +52,9 @@ const AddSpecialProduct = ({values, allMaterials, formData, setFormData, allValu
       thickness: '',
       type:'Tile',
       finish:'Honed',
-      price:0
+      price:0,
+      leadTime: null,
+      notes: null
     }]) 
   }
 

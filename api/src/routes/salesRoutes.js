@@ -293,8 +293,10 @@ salesRouter.post('/create-quote/:sellerID', async function(req, res) {
   const { sellerID } = req.params;
   const { formData, authFlag } = req.body;
   const { project, products, variables, customer, specialProducts, quote} = formData
-console.log(formData.customer)
-console.log(formData.project)
+// console.log(formData.customer)
+// console.log(formData.project)
+console.log({specialProducts})
+console.log({products})
   const getFormattedDate = () => {
     const date = new Date();
     const year = date.getFullYear();
@@ -303,6 +305,11 @@ console.log(formData.project)
     return `${year}-${month}-${day}`;
   };
   const parsedProducts = Object.entries(products)
+    .flat()
+    .filter((element) => typeof element === 'object')
+    .map((product, index) => ({ variableName: `${index + 1}`, ...product }));
+
+  const parsedSpecialProducts = Object.entries(specialProducts)
     .flat()
     .filter((element) => typeof element === 'object')
     .map((product, index) => ({ variableName: `${index + 1}`, ...product }));
@@ -317,13 +324,12 @@ console.log(formData.project)
   const discountRate = Number(customer.DiscountRate)
   const discountFactor = discountRate / 100;
   const ValueProducts = parsedProducts.reduce((acc, curr) => acc + Number(curr.quantity) * (curr.price - curr.price * discountFactor), 0);
-  const ValueSpecialProducts = specialProducts.reduce((acc, curr) => acc + Number(curr.quantity) * (curr.price - curr.price * discountFactor), 0);
+  const ValueSpecialProducts = parsedSpecialProducts.reduce((acc, curr) => acc + Number(curr.quantity) * (curr.price - curr.price * discountFactor), 0);
   const Value = ValueProducts + ValueSpecialProducts
   const taxValue = ((Value * 7) / 100);
   const totalValue = Value + shippingPrice + transferFee + cratingFee + taxValue;
   const ProjectID = project.idProjects;
   const InsertDate = await getFormattedDate()
-
   const EstDelivery_Date = variables.estDelivDate;
   let combinedArray = []
   let Naturali_Invoice = 0
@@ -367,8 +373,8 @@ console.log(formData.project)
           }
           console.log('Quote created successfully');
 
-          if(specialProducts.length > 0){
-          await Promise.all(specialProducts.map(product => {
+          if(parsedSpecialProducts.length > 0){
+          await Promise.all(parsedSpecialProducts.map(product => {
                   return new Promise((resolve, reject) => {
                     const query = `INSERT INTO SpecialProducts(SaleID, ProdName, Type, Thickness, Size, Finish, Material, Quantity, SalePrice, Delivered, Status, InsertDate) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)`;
               
@@ -390,10 +396,10 @@ console.log(formData.project)
                   })
                   )}
 
-          const prodSoldQuery = `INSERT INTO NaturaliStone.ProdSold (SaleID, ProdID, Quantity, SalePrice) VALUES ?`;
+          const prodSoldQuery = `INSERT INTO NaturaliStone.ProdSold (SaleID, ProdID, Quantity, SalePrice, Notes, Lead_Time) VALUES ?`;
           
-          const prodSoldValues = parsedProducts.map((product) => [Naturali_Invoice, product.prodID, Number(product.quantity), (product.price - product.price * discountFactor)]);
-          const specialProductsValues = specialProducts.map((product) => [Naturali_Invoice, null, product.quantity, (product.price - product.price * discountFactor)]);
+          const prodSoldValues = parsedProducts.map((product) => [Naturali_Invoice, product.prodID, Number(product.quantity), (product.price - product.price * discountFactor), product.notes, product.leadTime]);
+          const specialProductsValues = parsedSpecialProducts.map((product) => [Naturali_Invoice, null, product.quantity, (product.price - product.price * discountFactor), product.notes, product.leadTime]);
           combinedArray = combinedArray.concat(prodSoldValues, specialProductsValues);
 
           // if(shipVia !== 'Pick up' && shippingPrice.toString().length){
@@ -444,7 +450,7 @@ console.log(formData.project)
       }
 
       console.log('Transaction committed successfully');
-      res.status(200).json({ Naturali_Invoice: Naturali_Invoice, InsertDate: InsertDate, parsedProducts: parsedProducts });
+      res.status(200).json({ Naturali_Invoice: Naturali_Invoice, InsertDate: InsertDate, parsedProducts: parsedProducts.concat(parsedProducts, parsedSpecialProducts) });
     });
   }
 });

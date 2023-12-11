@@ -8,13 +8,14 @@ statsRouter.get("/", async function (req, res) {
 
   // const lastDay = new Date(year, month, 0).getDate();
   
-  const endMonth = Number(month) + 1
+  const endMonth = Number(month) < 12 ? Number(month) + 1 : '01';
   const formattedMonth = month < 10 ? `0${month}` : `${month}`;
   const formattedEndMonth = month < 10 ? `0${endMonth}` : `${endMonth}`;
-  
-  const startDate = `${year}-${formattedMonth}-01`;
-  const endDate = `${year}-${formattedEndMonth}-01`;
+  const formattedEndYear = month == 12 ? Number(year) + 1 : year;
 
+  const startDate = `${year}-${formattedMonth}-01`;
+  const endDate = `${formattedEndYear}-${formattedEndMonth}-01`;
+ 
   query_1A = `SELECT ROUND(SUM(Value), 2) AS TotalValue FROM Sales WHERE InvoiceDate BETWEEN "${startDate}" AND "${endDate}" AND Status != "Canceled" AND Sales.Status != 'Pending_Approval' `;
   query_2A = `SELECT COUNT(*) AS InvoicesNumber FROM Sales WHERE InvoiceDate BETWEEN "${startDate}" AND "${endDate}" AND Status != "Canceled" AND Sales.Status != 'Pending_Approval' `;
   query_3A = `SELECT ROUND(AVG(Value), 2) AS AvgValue FROM Sales WHERE InvoiceDate BETWEEN "${startDate}" AND "${endDate}" AND Status != "Canceled" AND Sales.Status != 'Pending_Approval' `;
@@ -128,7 +129,7 @@ statsRouter.get("/", async function (req, res) {
         result_8,
         result_9,
       ] = results;
-
+      
       if (
         result_1[0].TotalValue === null ||
         result_1[0].TotalValue === undefined
@@ -164,7 +165,7 @@ statsRouter.get("/", async function (req, res) {
         TotalValue: result_1[0].TotalValue,
         InvoicesNumber: result_2[0].InvoicesNumber,
         AverageAmount: result_3[0].AvgValue,
-        YearsInvoices: result_4.map((e) => e.dates),
+        YearsInvoices: result_4.map((e) => e.dates).filter((item) => item !== 0),
         ClosingRate,
         TotalCharged,
         ClosingDaysAvg,
