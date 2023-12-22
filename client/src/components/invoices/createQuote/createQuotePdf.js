@@ -9,7 +9,7 @@ import { day0, month0, year } from "../../../utils/todayDate";
 
 const CreatedQuotePdf = ({ formData, user, handleChangeEmail }) => {
   const { variables, customer, project } = formData;
-
+  console.log(formData.products)
   const posted_quote = useSelector((state) => state.posted_quote);
 
   let invoiceID = posted_quote.Naturali_Invoice;
@@ -129,12 +129,14 @@ const CreatedQuotePdf = ({ formData, user, handleChangeEmail }) => {
       const xID = getXForID(firstFourLetters + product.prodID)
       const xExtPrice = getXForExtPrice((formattedExtPrice))
       const formatSize = (size) => {
-        if (size.includes('x') || size.includes('X')) {
+        if (size?.includes('x') || size?.includes('X')) {
           const [first, second] = size.split(size.includes('x') ? 'x' : 'X');
           return `${first}"x${second}"`;
         } else {
-          return `${size}"`;
-        }
+          if(size !== null && size.length > 0){
+            return `${size}"`;
+          } else return ""
+      }
       };
       subtotal = subtotal + discountedPrice * product.quantity;
 

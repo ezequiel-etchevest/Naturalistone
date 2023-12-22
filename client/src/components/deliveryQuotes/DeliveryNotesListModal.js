@@ -132,7 +132,7 @@ useEffect(() => {
       >
       <ModalHeader/>
       <ModalBody color={'web.text2'} w={'100%'} h={'100%'}>
-        <DeliveryNotePdf pdfInfo={pdfInfo} setPdfInfo={setPdfInfo}/>
+        <DeliveryNotePdf pdfInfo={pdfInfo} setPdfInfo={setPdfInfo} invoice={invoice}/>
         {/* idDeliveryNote={idDeliveryNote} */}
       </ModalBody>
       <ModalFooter/>

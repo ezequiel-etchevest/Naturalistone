@@ -113,7 +113,7 @@ productsRouter.get("/new_quote", async function (req, res) {
       ? `AND (LOWER(ProdNames.Naturali_ProdName) LIKE LOWER('%${search}%'))`
       : ``
   }
-  WHERE ProdNames.Naturali_ProdName IS NOT NULL AND Dimension.Finish IS NOT NULL AND Dimension.Size IS NOT NULL AND Dimension.Thickness IS NOT NULL 
+  WHERE ProdNames.Naturali_ProdName IS NOT NULL AND Dimension.Finish IS NOT NULL AND Dimension.Thickness IS NOT NULL 
   ORDER BY Available_Stock DESC
   `;
 
@@ -301,7 +301,7 @@ productsRouter.get("/filtered", async function (req, res) {
     INNER JOIN ProdNames ON ProdNames.ProdNameID = Products.ProdNameID
     INNER JOIN Dimension ON Dimension.DimensionID = Products.DimensionID
     INNER JOIN Inventory ON Inventory.ProdID = Products.ProdID
-    WHERE ProdNames.Naturali_ProdName IS NOT NULL AND Dimension.Size IS NOT NULL
+    WHERE ProdNames.Naturali_ProdName IS NOT NULL
       ${material.length ? `AND (ProdNames.Material = "${material}")` : ``}
       ${type.length ? `AND (Dimension.Type = "${type}")` : ``}
       ${finish.length ? `AND (Dimension.Finish = "${finish}")` : ``}
@@ -319,7 +319,7 @@ productsRouter.get("/filtered", async function (req, res) {
       } else {
 
         const sqftMinMax = getSqftMaxMin(results);
-
+       
         if (sqftMin >= 0 || sqftMax < 99999999) {
           results = results.filter(
             (item) => item.sqft >= sqftMin && item.sqft <= sqftMax

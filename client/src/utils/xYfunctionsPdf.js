@@ -39,7 +39,7 @@ export const getXForExtTotal = (extPrice) => {
     if(length === 1) return 568;
     if(length === 2) return 560;
     if(length === 3) return 552;
-    if(length === 4) return 544;
+    if(length === 4) return 533;
     if(length === 5) return 536;
     if(length === 6) return 528;
     if(length === 7) return 520;

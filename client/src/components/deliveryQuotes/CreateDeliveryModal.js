@@ -35,7 +35,7 @@ const CreateDeliveryModal = ({invoice, user, isOpen, onClose, invoice_products})
       Array.isArray(invoice_products) ?
         invoice_products?.map(p => {
         return {      
-          quantity: p.InStock_Reserved,
+          quantity: p.InStock_Reserved ? p.InStock_Reserved : 0,
           prodID:p.ProdID,
           prodName: p.ProductName ? p.ProductName : '-' ,
           type: p.Type,
@@ -59,12 +59,12 @@ const CreateDeliveryModal = ({invoice, user, isOpen, onClose, invoice_products})
   let deliveryID_error = useSelector(state => state.deliveryID_error)
   
   useEffect(()=> {
-    if(errors.length){
-      setDisabledConfirm(true)
-    } else {
+    if(!errors.length && quantities.length && quantities.some((item) => item.quantity > 0)){
       setDisabledConfirm(false)
+    } else {
+      setDisabledConfirm(true)
     }
-    }, [errors])
+    }, [errors, quantities])
 
 
   const handleSubmit = async () => {

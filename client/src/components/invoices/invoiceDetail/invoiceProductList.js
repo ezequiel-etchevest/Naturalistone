@@ -39,9 +39,9 @@ const ModelTr = ({p}) => {
         <Td fontSize={'1.3vh'} textAlign={'center'}>{p?.Thickness}</Td>
         <Td fontSize={'1.3vh'} textAlign={'center'}>{p?.Finish}</Td>
         <Td fontSize={'1.3vh'} textAlign={'right'} >$ {p?.SalePrice?.toLocaleString('en-US')}</Td>
-        <Td fontSize={'1.3vh'} textAlign={'center'}>{p?.InStock_Reserved && p?.InStock_PendingPayment ? (p?.InStock_Reserved + p?.InStock_PendingPayment) === null ? '0' : (p?.InStock_Reserved + p?.InStock_PendingPayment) : '0'}</Td>
-        <Td fontSize={'1.3vh'} textAlign={'center'}>{p?.Incoming_Reserved && p?.Incoming_PendingPayment ? (p?.Incoming_Reserved + p?.Incoming_PendingPayment) === null ? '0' : (p?.Incoming_Reserved + p?.Incoming_PendingPayment) : '0'}</Td>
-        <Td fontSize={'1.3vh'} textAlign={'center'}>{p?.Order_PendingPayment && p?.Order_PaymentCompleted ? (p?.Order_PendingPayment + p?.Order_PaymentCompleted) === null  ? '0' : (p?.Order_PendingPayment + p?.Order_PaymentCompleted) : '0'}</Td>
+        <Td fontSize={'1.3vh'} textAlign={'center'}>{(p?.InStock_Reserved + p?.InStock_PendingPayment) >= 0 ? (p?.InStock_Reserved + p?.InStock_PendingPayment) : '0'}</Td>  
+        <Td fontSize={'1.3vh'} textAlign={'center'}>{(p?.Incoming_Reserved + p?.Incoming_PendingPayment) >= 0 ? (p?.Incoming_Reserved + p?.Incoming_PendingPayment) : '0'}</Td>
+        <Td fontSize={'1.3vh'} textAlign={'center'}>{(p?.Order_PendingPayment + p?.Order_PaymentCompleted) >= 0 ? (p?.Order_PendingPayment + p?.Order_PaymentCompleted) === null  ? '0' : (p?.Order_PendingPayment + p?.Order_PaymentCompleted) : '0'}</Td>
         <Td fontSize={'1.3vh'} textAlign={'center'}>{p?.Delivered}</Td>
       </Tr>
     )

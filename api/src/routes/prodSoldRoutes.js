@@ -7,6 +7,7 @@ const getProductsSoldInProds = async (id) => {
     const query_ = `SELECT 
                     ProdSold.*,
                     ProdNames.Naturali_ProdName AS ProductName,
+                    ProdNames.Material,
                     Dimension.Type,
                     Dimension.Finish,
                     Dimension.Thickness,

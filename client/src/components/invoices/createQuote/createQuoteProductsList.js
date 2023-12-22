@@ -14,6 +14,7 @@ import {
   NumberIncrementStepper,
   NumberDecrementStepper,
   NumberInputStepper,
+  Input,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { formatProducts } from "../../../utils/formatedProducts";
@@ -65,7 +66,32 @@ const ModelTr = ({ e, formData, setFormData, setDisable }) => {
       setDisable(true);
     }
   };
+  const handleInputPrice = (event) => {
+    const { name, value } = event.target;
+  
+    // Realizar la validación con expresiones regulares
+    const regex = /^\d+(\.\d{1,2})?$|^$/;
+  
+    if (regex.test(value)) {
+      // Si la validación es exitosa, actualizar el estado
+      const updatedValue = value === '' ? 0 : Math.round(parseFloat(value) * 100) / 100;
+  
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        products: {
+          ...prevFormData.products,
+          [id]: {
+            ...prevFormData.products[id],
+            [name]: updatedValue,
+          },
+        },
+      }));
+    }
+    // Si la validación falla, no hagas nada o maneja el caso según tus necesidades
+  };
 
+//revisar el funcionamiento de los inputs. si cargo primero el quantity y despues el precio funciona, sino no.
+  
   return (
     <Tr
       cursor={"pointer"}
@@ -125,8 +151,35 @@ const ModelTr = ({ e, formData, setFormData, setDisable }) => {
         {" "}
         {e.Finish === null ? "N/A" : e.Finish}{" "}
       </Td>
-      <Td maxW={"3vw"} fontSize={"2xs"} isNumeric>
-        $ {e.Price ? e.Price.toLocaleString("en-US") : "-"}
+      <Td w={"4vw"} minW={'5vw'} fontSize={"2xs"} textAlign={"center"} justifyContent={'center'}>
+          {
+          e.Type === 'Slab' && e.Material !== 'Terrazzo' && e.Material !== 'Porcelain' ? 
+                  <Input
+                  borderColor={"web.border"}
+                  color={"web.text2"}
+                  w={"5vw"}
+                  h={"4vh"}
+                  onChange={handleInputPrice}
+                  step={1}
+                  min={0}
+                  precision={0}
+                  name={'price'}
+                  type="number"
+                  key={e.ProdID}
+                  value={formData.products[id] ? (formData.products[id].price) : 0}
+                  fontSize={"2xs"}
+                  style={{ 
+                    textAlign: 'center',
+                    WebkitPaddingEnd: 8,
+                    WebkitPaddingStart: 8
+                  }}
+                  _focus={{
+                    borderColor: "logo.orange",
+                    boxShadow:
+                      "0 0.5px 0.5px rgba(229, 103, 23, 0.075)inset, 0 0 5px rgba(255,144,0,0.6)",
+                  }}>
+                </Input> 
+            : e.Price ? `$ ${e.Price.toLocaleString("en-US")}` :  "-"}
       </Td>
       <Td maxW={"2vw"} fontSize={"2xs"} textAlign={"center"}>
         {e.InStock_Available === null ? "N/A" : e.InStock_Available}
@@ -219,7 +272,7 @@ const CreateQuoteProductsList = ({
                     <Th color={"web.text2"} fontSize={"2xs"} textAlign={"center"}> Thickness </Th>
                     <Th color={"web.text2"} fontSize={"2xs"} textAlign={"center"}> Type </Th>
                     <Th color={"web.text2"} fontSize={"2xs"} textAlign={"center"}> Finish </Th>
-                    <Th color={"web.text2"} fontSize={"2xs"} isNumeric> Price </Th>
+                    <Th color={"web.text2"} fontSize={"2xs"} textAlign={"center"}> Price </Th>
                     <Th color={"web.text2"} fontSize={"2xs"} textAlign={"center"}> In Stock </Th>
                     <Th color={"web.text2"} fontSize={"2xs"} textAlign={"center"}> Incoming </Th>
                   </Tr>

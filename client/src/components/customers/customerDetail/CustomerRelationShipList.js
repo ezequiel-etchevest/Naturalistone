@@ -23,11 +23,11 @@ return(
       color: 'logo.orange'
     }}
     >
-    <Td textAlign={'center'} maxW={"6vw"} fontSize={'0.8rem'}>{relationship.Date.split('T')[0]}</Td>
-    {/* <Td textAlign={'center'} fontSize={'0.8rem'}>{relationship.Type}</Td> */}
-    <Td textAlign={'-moz-initial'} maxW={"20vw"}fontSize={'0.8rem'} whiteSpace="nowrap" overflow="hidden" textOverflow="ellipsis">{relationship.Description}</Td>
+    <Td textAlign={'center'} maxW={"6vw"} fontSize={'0.8rem'}>{relationship.Insert_Date.split('T')[0]}</Td>
+    <Td fontSize={'0.8rem'}>{relationship.Action}</Td>
+    <Td maxW={"20vw"}fontSize={'0.8rem'} whiteSpace="nowrap" overflow="hidden" textOverflow="ellipsis">{relationship.Comment}</Td>
     <Td textAlign={'center'} fontSize={'0.8rem'}>{relationship.ProjectName}</Td>
-    <Td textAlign={'center'} fontSize={'0.8rem'}>{relationship.User}</Td>
+    <Td textAlign={'center'} fontSize={'0.8rem'}>{relationship.SellerReference}</Td>
     {/* <Td textAlign={'center'} fontSize={'0.8rem'}>{relationship.Comment}</Td> */}
 
   </Tr>
@@ -61,8 +61,8 @@ return(
             <Thead h={'4vh'}>
               <Tr>
                 <Th h={'4vh'} color={'web.text2'} textAlign={'center'} fontSize={'0.8rem'}>Date</Th>
-                {/* <Th h={'4vh'} color={'web.text2'} textAlign={'center'} fontSize={'0.8rem'}>Type</Th> */}
-                <Th h={'4vh'} maxW={'6vw'} color={'web.text2'} textAlign={'center'} fontSize={'0.8rem'}>Description</Th>
+                <Th h={'4vh'} color={'web.text2'} fontSize={'0.8rem'}>Action</Th>
+                <Th h={'4vh'} maxW={'6vw'} color={'web.text2'} fontSize={'0.8rem'}>Comment</Th>
                 <Th h={'4vh'} color={'web.text2'} textAlign={'center'} fontSize={'0.8rem'}>Project</Th>
                 <Th h={'4vh'} color={'web.text2'} textAlign={'center'} fontSize={'0.8rem'}>Seller</Th>
               </Tr>

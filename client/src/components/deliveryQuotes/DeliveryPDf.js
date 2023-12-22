@@ -4,12 +4,12 @@ import { Box } from '@chakra-ui/react';
 import { useSelector } from 'react-redux';
 
 
-const DeliveryNotePdf = ({ pdfInfo, setPdfInfo }) => {
+const DeliveryNotePdf = ({ pdfInfo, setPdfInfo, invoice }) => {
   
     const delivery = useSelector(state => state.delivery_by_id)
 
     const viewer = useRef(null);
-   console.log('delivery', delivery)
+
     useEffect(() => {
       CreateForm();
     }, []);
@@ -33,19 +33,15 @@ async function CreateForm() {
 
   const invoiceID = delivery[0].SaleID
   const no = delivery[0].DeliveryNumber
-  const date = new Date().toLocaleDateString('en-US', {
-    day: '2-digit',
-    month: '2-digit',
-    year: 'numeric'
-  });
+  const date = delivery[0].Delivery_Date.split('T')[0]
   let y = 482.8;
 
-  const name = 'Eclipse Designs.'
-  const company = 'Eclipse Designs, Inc.'
-  const street = '700 Quail Ridge Road'
-  const city = 'Aledo'
-  const state = 'Texas'
-  const zipCode = '76008'
+  const name = invoice[0].Contact_Name
+  const company = invoice[0].Company
+  const street = invoice[0].Shipping_Address
+  const city = invoice[0].Shipping_City
+  const state = invoice[0].Shipping_State
+  const zipCode = invoice[0].Shipping_ZipCode
   
 
   page.drawText(`${no}`, { x: 472, y: 666, size: 16, color: rgb(1, 0.3, 0) })
@@ -81,8 +77,6 @@ async function CreateForm() {
   const blob = new Blob([pdfBytes], { type: 'application/pdf' });
   
   setPdfInfo(URL.createObjectURL(blob));
-  
-    console.log("pdfinfio", pdfInfo)
   };
 
 
