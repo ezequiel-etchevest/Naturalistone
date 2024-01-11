@@ -12,6 +12,7 @@ const LoadPdf = ({idpdf, stamp, status}) => {
     const viewer = useRef(null);
     const filename = idpdf
 
+   
 
     useEffect(() => {
       setError('')
@@ -21,8 +22,9 @@ const LoadPdf = ({idpdf, stamp, status}) => {
     function getpdf(filename) {
       return async function () {
         try {
+          console.log({filename})
             const pdfName = await axios.get(`/s3/pdf/search/${filename}`);
-
+            console.log({pdfName})
             const response = await axios.get(`/s3/pdf/${pdfName.data.fileName}`, { responseType: 'arraybuffer' });
             return response;
           

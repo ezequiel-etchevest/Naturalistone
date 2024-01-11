@@ -6,10 +6,11 @@ function getUniqueFinishes(arr) {
     return [...new Set(finishes)];
   }
 
-function getUniqueSizes(arr) {
-    const sizes = arr.map(item => item.Size);
+  function getUniqueSizes(arr) {
+    const sizes = arr.map(item => item.Size).filter(size => size !== null);
     return Array.from(new Set(sizes));
-  }
+}
+
 const thicknessValues = (arr) => {
     const thicknesses = arr.map(item => item.Thickness === null ? item.Thickness = 'N/A' : item.Thickness);
     return [...new Set(thicknesses)];
@@ -18,10 +19,11 @@ const materialsValues = (arr) => {
     const materials = arr.map(item => item.Material);
     return [...new Set(materials)];
   };
-const typesValues = (arr) => {
-  const types = arr.map(item => item.Type);
-  return [...new Set(types)]
-}
+  const typesValues = (arr) => {
+    const types = arr.map(item => item.Type).filter(type => type !== null);
+    return [...new Set(types)];
+  };
+  
 
   let finishValues = getUniqueFinishes(arr)
   let priceMaxmin = price

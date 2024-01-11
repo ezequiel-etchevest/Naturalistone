@@ -36,7 +36,7 @@ export function CreateQuote({ customers, sellers, customersFilter, setCustomersF
   const { isOpen, onOpen, onClose } = useDisclosure();
   const user = useSelector((state) => state.user);
   const values = useSelector(state => state.products_new_quote_values)
-  const posted_quote = useSelector((state) => state.posted_quote);
+  
   const [errorsCustomer, setErrorsCustomer] = useState({});
   const [disable, setDisable] = useState(true);
   const [progress, setProgress] = useState(20);
@@ -324,7 +324,7 @@ export function CreateQuote({ customers, sellers, customersFilter, setCustomersF
         <ModalOverlay />
         <ModalContent
           minW={"50vw"}
-          maxW={'70vw'}
+          maxW={!submited ? '70vw' : '60vw'}
           bg={"web.sideBar"}
           border={"1px solid"}
           borderColor={"web.border"}
@@ -332,11 +332,12 @@ export function CreateQuote({ customers, sellers, customersFilter, setCustomersF
           <Progress
             value={progress}
             colorScheme={"orange"}
-            mb={"2vh"}
+            mb={!submited ? "2vh" : '0'}
             background={"web.border"}
             size={"sm"}
             borderTopRightRadius={"md"}
             borderTopLeftRadius={"md"}
+            hidden={!submited ? false : true}
           />
           <ModalCloseButton
             color={"web.text2"}
@@ -352,7 +353,7 @@ export function CreateQuote({ customers, sellers, customersFilter, setCustomersF
             minH={!submited ? "64vh" : "100%"}
             maxH={!submited ? "64vh" : "100%"}
           >
-            {progress == 20 && (
+            {progress === 20 && (
               <CreateQuoteCustomer
                 customers={customers}
                 setFormData={setFormData}
@@ -363,7 +364,7 @@ export function CreateQuote({ customers, sellers, customersFilter, setCustomersF
                 setCustomersFilter={setCustomersFilter}
               />
             )}
-            {progress == 40 && (
+            {progress === 40 && (
               <CreateQuoteCustomerReview
                 formData={formData}
                 setFormData={setFormData}
@@ -374,14 +375,14 @@ export function CreateQuote({ customers, sellers, customersFilter, setCustomersF
                 user={user}
               />
             )}
-            {progress == 60 && (
+            {progress === 60 && (
               <CreateQuoteCustomerProjets
                 formData={formData}
                 setFormData={setFormData}
                 setDisable={setDisable}
               />
             )}
-            {progress == 80 && (
+            {progress === 80 && (
               <CreateQuoteProducts
                 formData={formData}
                 setFormData={setFormData}
@@ -393,7 +394,7 @@ export function CreateQuote({ customers, sellers, customersFilter, setCustomersF
               />
             )}
             {!submited &&
-              progress == 100 &&
+              progress === 100 &&
               (Object.entries(formData.products).length || Object.entries(formData.specialProducts).length  ? (
                 <CreateQuoteProductsReview
                   formData={formData}
@@ -408,7 +409,7 @@ export function CreateQuote({ customers, sellers, customersFilter, setCustomersF
                   No products selected
                 </Text>
               ))}
-            {submited && progress == 100 && (
+            {submited && progress === 100 && (
               <QuotePdfModal
                 formData={formData}
                 setFormData={setFormData}

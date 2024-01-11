@@ -14,10 +14,14 @@ import {
     useToast,
     Collapse,
     Input,
+    Tooltip,
+    IconButton,
     } from "@chakra-ui/react"
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
+import { TfiSplitV } from "react-icons/tfi";
 import '../../../assets/styleSheet.css'
 import React, { useState } from "react";
+import BreakDrownProduct from "./createQuoteBreakDownProducts";
 
 const CreateQuoteProductsReview = ({ formData, setFormData }) => {
   const toast = useToast();
@@ -120,6 +124,7 @@ const CreateQuoteProductsReview = ({ formData, setFormData }) => {
             <Th color={'web.text2'} fontSize={'sm'} textAlign={'center'}>Price</Th>
             <Th color={'web.text2'} fontSize={'sm'} w={'10vw'} textAlign={'center'}>Finish</Th>
             <Th></Th>
+            <Th></Th>
           </Tr>
         </Thead>
         <Tbody>
@@ -136,12 +141,15 @@ const CreateQuoteProductsReview = ({ formData, setFormData }) => {
                   onClick={() => handleToggle(generateUniqueId("product", i))}
                 >
               <Td fontSize={'xs'} textAlign={'center'}>{e[1].quantity}</Td>
-              <Td fontSize={'xs'} w={'16vw'} textAlign={'center'}>{e[1].prodName}</Td>
+              <Td fontSize={'xs'} w={'16vw'} >{e[1].prodName}</Td>
               <Td fontSize={'xs'} textAlign={'center'}>{e[1].type}</Td>
               <Td fontSize={'xs'} textAlign={'center'}>{e[1].size}</Td>
               <Td fontSize={'xs'} textAlign={'center'}>{e[1].thickness}</Td>
               <Td fontSize={'xs'} textAlign={'center'}>{e[1].price}</Td>
               <Td fontSize={'xs'} textAlign={'center'}>{e[1].finish}</Td>
+              <Td>
+                  <BreakDrownProduct product={e[1]} products = {formData.products} setFormData={setFormData} />
+              </Td>
               <Td> { !isOpenState[`product_${i}`] ? <IoIosArrowDown/> : <IoIosArrowUp /> } </Td>
               </Tr>
               <Tr display= {isOpenState[`product_${i}`] ? 'table-row' : 'none' }>
@@ -197,6 +205,7 @@ const CreateQuoteProductsReview = ({ formData, setFormData }) => {
                   </Collapse>
                   </Td>
                   <Td></Td>
+                  <Td></Td>
                   </Tr>
                 </React.Fragment>
               ))
@@ -216,12 +225,15 @@ const CreateQuoteProductsReview = ({ formData, setFormData }) => {
               onClick={() => handleToggle(generateUniqueId("specialProduct", i))}
               >
               <Td fontSize={'xs'} textAlign={'center'}>{e[1]?.quantity}</Td>
-              <Td fontSize={'xs'} w={'16vw'} textAlign={'center'}>{e[1]?.prodName}</Td>
+              <Td fontSize={'xs'} w={'16vw'}>{e[1]?.prodName}</Td>
               <Td fontSize={'xs'} textAlign={'center'}>{e[1]?.type}</Td>
               <Td fontSize={'xs'} textAlign={'center'}>{e[1]?.size}</Td>
               <Td fontSize={'xs'} textAlign={'center'}>{e[1]?.thickness}</Td>
               <Td fontSize={'xs'} textAlign={'center'}>{e[1]?.price}</Td>
               <Td fontSize={'xs'} textAlign={'center'}>{e[1]?.finish}</Td>
+              <Td>
+                  <BreakDrownProduct product={e[1]} products = {formData.specialProducts} setFormData={setFormData} />
+              </Td>
               <Td> { !isOpenState[`specialProduct_${i}`] ? <IoIosArrowDown/> : <IoIosArrowUp /> } </Td>
             </Tr>
             <Tr display= {isOpenState[`specialProduct_${i}`] ? 'table-row' : 'none' }>
@@ -275,6 +287,7 @@ const CreateQuoteProductsReview = ({ formData, setFormData }) => {
                   </Box>
                 </Collapse>
               </Td>
+              <Td></Td>
               <Td></Td>
             </Tr>
           </React.Fragment> 

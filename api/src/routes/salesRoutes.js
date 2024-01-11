@@ -295,8 +295,7 @@ salesRouter.post('/create-quote/:sellerID', async function(req, res) {
   const { project, products, variables, customer, specialProducts, quote} = formData
 // console.log(formData.customer)
 // console.log(formData.project)
-console.log({specialProducts})
-console.log({products})
+
   const getFormattedDate = () => {
     const date = new Date();
     const year = date.getFullYear();
@@ -315,7 +314,7 @@ console.log({products})
     .map((product, index) => ({ variableName: `${index + 1}`, ...product }));
     const shipVia = variables.shipVia
     const shippingPrice = variables.shippingPrice !== "" ? variables.shippingPrice : 0;
-    console.log({shippingPrice})
+
   const transferFee = variables.transferFee !== "" ? variables.transferFee : 0;
   const cratingFee = variables.cratingFee !== "" ? variables.cratingFee : 0;
   const notes = quote.notes !== "" ? quote.notes : "";

@@ -13,11 +13,12 @@ import { MdOpenInNew } from 'react-icons/md'
 
 
 export default function ModalPDF({invoice}) {
-
+ 
   const { isOpen, onOpen, onClose } = useDisclosure()
   const id = invoice[0].Naturali_Invoice
   const stamp = invoice[0].Payment_Stamp
   const status = invoice[0].Status
+
   return (
     <>
        <ButtonGroup

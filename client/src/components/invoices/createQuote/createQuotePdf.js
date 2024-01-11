@@ -6,15 +6,18 @@ import { states } from '../../../utils/eeuuStates'
 import { formatTextForPdf, formatedPcs, getFontSize, getX, getXForExtPrice, getXForExtSubtotal, getXForExtTotal, getXForID, getXForPrice, getXForQuantity, getXForUM, getXPO, getXPaymentTerms, getXRef, parseThickness, parsedNumbers } from "../../../utils/xYfunctionsPdf";
 import { savePdfOnServer } from "../../../utils/savePdfOnServer";
 import { day0, month0, year } from "../../../utils/todayDate";
+import SendEmailModal from "./createSendEmailQuote";
 
-const CreatedQuotePdf = ({ formData, user, handleChangeEmail }) => {
+const CreatedQuotePdf = ({ formData, user, handleChangeEmail, setPdf }) => {
   const { variables, customer, project } = formData;
-  console.log(formData.products)
+
   const posted_quote = useSelector((state) => state.posted_quote);
 
   let invoiceID = posted_quote.Naturali_Invoice;
+ 
+  
   const date =  `${month0}/${day0}/${year}`;
-
+ 
   const [pdfInfo, setPdfInfo] = useState([]);
   const mappedProducts = posted_quote.parsedProducts;
 
@@ -370,38 +373,42 @@ const CreatedQuotePdf = ({ formData, user, handleChangeEmail }) => {
 
     const pdfBytes = await pdfDoc.save();
     const blob = new Blob([pdfBytes], { type: "application/pdf" });
+    const newFile = new File([blob], `Naturalistone-Invoice_${invoiceID}.pdf`, { type: "application/pdf", lastModified: date });
 
+    
     setPdfInfo(URL.createObjectURL(blob));
 
     savePdfOnServer(pdfBytes, invoiceID);
+    setPdf(newFile)
   }
 
   return (
     <>
       {Object.entries(posted_quote).length ? (
         posted_quote.Naturali_Invoice && posted_quote.InsertDate ? (
-          <Box h={"100vh"} w={"100%"}>
-            <Button
-              size={"sm"}
-              onClick={handleChangeEmail}
-              colorScheme={"orange"}
-              mb={"1.5vw"}
-              hidden={true}
-            >
-              Send Email
-            </Button>
-            <Flex h="100%" flexDir="row">
-              <Box
-                as="object"
-                data={pdfInfo}
-                type="application/pdf"
-                width="82%"
-                height="90%"
-                position="relative"
-                ml={"3vw"}
-              />
-            </Flex>
-          </Box>
+      <Box h={"98vh"} w={"100%"} display="flex" flexDirection="row">          
+        <Box flex="1" w={"100%"} position="relative">
+          <Box
+            as="object"
+            data={pdfInfo}
+            type="application/pdf"
+            width="94%"
+            height="100%"
+            ml={'1vw'}
+          />
+        </Box>
+                
+        <Button
+          size={"sm"}
+          onClick={handleChangeEmail}
+          colorScheme={"orange"}
+          mb={"2vh"}
+          alignSelf="flex-end"  
+        >
+          Send Email
+        </Button>
+                
+        </Box>
         ) : (
           <Center>
             <Spinner thickness={"4px"} size={"xl"} color={"logo.orange"} />

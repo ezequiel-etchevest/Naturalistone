@@ -279,7 +279,7 @@ productsRouter.get("/filtered", async function (req, res) {
   const sqftMax = sqft2 === undefined ? 99999999 : sqft2;
 
   const query = `
-    SELECT    
+  SELECT    
     ProdNames.Naturali_ProdName AS ProductName,
     ProdNames.ProdNameID,
     ProdNames.Material,
@@ -292,23 +292,26 @@ productsRouter.get("/filtered", async function (req, res) {
     Products.ProdID,
     Inventory.*,
     Products.Discontinued_Flag,
-      CASE
-          WHEN Dimension.Type = 'Tile' THEN Inventory.InStock_Available + Inventory.Incoming_Available
-          WHEN Dimension.Type = 'Mosaic' THEN Inventory.InStock_Available + Inventory.Incoming_Available
-          WHEN Dimension.Type = 'Slab' THEN (Inventory.InStock_Available + Inventory.Incoming_Available) * Dimension.SQFT_per_Slab
-      END AS sqft
-    FROM Products
+    CASE
+      WHEN Dimension.Type = 'Tile' THEN Inventory.InStock_Available + Inventory.Incoming_Available
+      WHEN Dimension.Type = 'Mosaic' THEN Inventory.InStock_Available + Inventory.Incoming_Available
+      WHEN Dimension.Type = 'Slab' THEN (Inventory.InStock_Available + Inventory.Incoming_Available) * Dimension.SQFT_per_Slab
+    END AS sqft
+  FROM Products
     INNER JOIN ProdNames ON ProdNames.ProdNameID = Products.ProdNameID
     INNER JOIN Dimension ON Dimension.DimensionID = Products.DimensionID
     INNER JOIN Inventory ON Inventory.ProdID = Products.ProdID
-    WHERE ProdNames.Naturali_ProdName IS NOT NULL
-      ${material.length ? `AND (ProdNames.Material = "${material}")` : ``}
-      ${type.length ? `AND (Dimension.Type = "${type}")` : ``}
-      ${finish.length ? `AND (Dimension.Finish = "${finish}")` : ``}
-      ${size.length ? `AND (Dimension.Size = "${size}")` : ``}
-      ${thickness.length ? `AND (Dimension.Thickness = "${thickness}")` : ``}
-      ${search.length ? `AND (LOWER(ProdNames.Naturali_ProdName) LIKE LOWER('%${search}%'))` : ``}
-    ORDER BY sqft DESC`;
+  WHERE 
+    ProdNames.Naturali_ProdName IS NOT NULL AND Dimension.Type IS NOT NULL
+    ${material.length ? `AND (ProdNames.Material = "${material}")` : ``}
+    ${type.length ? `AND (Dimension.Type = "${type}")` : ``}
+    ${finish.length ? `AND (Dimension.Finish = "${finish}")` : ``}
+    ${size.length ? `AND (Dimension.Size = "${size}")` : ``}
+    ${thickness.length ? `AND (Dimension.Thickness = "${thickness}")` : ``}
+    ${search.length ? `AND (LOWER(ProdNames.Naturali_ProdName) LIKE LOWER('%${search}%'))` : ``}
+    AND Dimension.Type NOT IN ("Special Product Sp-1", "Sample", "Trim")
+    AND ProdNames.Material IS NOT NULL
+  ORDER BY sqft DESC`;
 
   try {
     mysqlConnection.query(query, function (error, results, fields) {

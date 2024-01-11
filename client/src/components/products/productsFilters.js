@@ -49,7 +49,7 @@ const ProductsFilters = ({ values, factories, materials, user }) => {
   const [valueDefault, setValueDefault] = useState([0 , values?.sqftMinMax?.max]) 
 
   const handleFinish = (e) => {
-    const finish = e.target.value;
+    const finish = encodeURIComponent(e.target.value);
     searchParams.set("finish", finish);
     searchParams.set("size", filters?.size);
     searchParams.set("thickness", filters?.thickness);
@@ -61,7 +61,7 @@ const ProductsFilters = ({ values, factories, materials, user }) => {
       ...filters,
       finish,
     });
-
+  
     dispatch(
       getFiltered(
         finish,
@@ -226,7 +226,7 @@ const ProductsFilters = ({ values, factories, materials, user }) => {
       )
     );
   };
-  
+
   useEffect(() => {
     dispatch(getFilteredSearch(''))
   },[])
@@ -467,7 +467,7 @@ const ProductsFilters = ({ values, factories, materials, user }) => {
               borderBottomColor={"web.text2"}
               _hover={{ borderColor: "web.border" }}
               cursor={"pointer"}
-              value={filters.finish}
+              value={decodeURIComponent(filters.finish)}
               mr={"15px"}
             >
               <option value="" className="options">
@@ -477,12 +477,13 @@ const ProductsFilters = ({ values, factories, materials, user }) => {
                 values?.finishValues?.map((v, i) => {
                   return (
                     <option
-                      value={`${v}`}
-                      key={i}
-                      className={"options"}
-                    >{`${v}`}</option>
+                    value={`${v}`}
+                    key={i}
+                    className={"options"}
+                  >{`${v}`}</option>
                   );
-                })}
+                })
+                }
             </Select>
           </Box>
           <Box
@@ -490,7 +491,7 @@ const ProductsFilters = ({ values, factories, materials, user }) => {
             alignItems={"center"}
             flexDir={"row"}
           >
-            <Box display={"flex"} flexDir={"column"}>
+            {/* <Box display={"flex"} flexDir={"column"}>
               <SqftSlider
                 setFilters={setFilters}
                 filters={filters}
@@ -500,7 +501,7 @@ const ProductsFilters = ({ values, factories, materials, user }) => {
                 valueDefault={valueDefault}
                 setValueDefault={setValueDefault}
               />
-            </Box>
+            </Box> */}
             <Divider orientation={"vertical"} h={"5vh"} ml={"2vw"} />
             <Tooltip
               placement={"bottom-start"}

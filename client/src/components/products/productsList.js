@@ -28,7 +28,7 @@ const [flag, setFlag] = useState(a)
 const [priceSt, setPrice] = useState(e.Price !== null ? e.Price : '')
 const navigate = useNavigate()
 const dispatch = useDispatch()
-const validUser = user[0].SellerID === 17 ? true : false
+const validUser = user[0].SellerID === 17 || user[0].SellerID === 2 ? true : false
 
 const handleClickProduct = () => {
   dispatch(getProductById(e.ProdID))
